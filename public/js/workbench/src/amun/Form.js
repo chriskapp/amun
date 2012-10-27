@@ -218,12 +218,14 @@ Ext.define('Amun.Form', {
         var selectedValue = null;
         // build store
         var data = [];
-        for (var j = 0; j < item.children.item.length; j++) {
-            var opt = item.children.item[j];
-            data.push({value: opt.value, name: opt.label});
+        if (typeof item.children.item != 'undefined') {
+            for (var j = 0; j < item.children.item.length; j++) {
+                var opt = item.children.item[j];
+                data.push({value: opt.value, name: opt.label});
 
-            if (opt.value == item.value) {
-                selectedValue = opt.value;
+                if (opt.value == item.value) {
+                    selectedValue = opt.value;
+                }
             }
         }
 

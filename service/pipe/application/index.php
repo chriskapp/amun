@@ -46,7 +46,7 @@ class index extends Amun_Module_ApplicationAbstract
 
 
 			// check whether user has the media right
-			if(!$this->user->hasRightId($recordPipe->mediaRightId)) 
+			if($recordPipe instanceof Service_Pipe && !$this->user->hasRightId($recordPipe->mediaRightId)) 
 			{
 				throw new Amun_Exception('Access not allowed');
 			}
