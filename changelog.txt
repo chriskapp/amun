@@ -1,0 +1,144 @@
+
+0.3.8 beta
+* Added ExtJs based default backend
+* Using bootstrap.css insteadof blueprintcss
+* Changed service architecure files are now loaded directly from the service
+  folder and not copied into amun
+* Improved media upload and added custom html injector
+* Option to add a custom prefix for the table names
+* Update content media upload
+* Fixed oembed server
+
+0.3.7 beta
+* Pw complexity can now be set in the registry
+* Added salt parameter to the config
+* Updated sabredav library at webdav service
+* Added user timezone handling
+* Added hmtlpurifier custom injectors
+* Updated htmlpurifier to 4.4.0
+* Added login wrong attemp limitation
+* Added amun base class wich contains information about the release and loads
+  all necessary basic classes to run amun
+
+0.3.6 beta
+* Added amun workbench to admister amun online without using an 3rd party app
+* Added tracker service
+* Updated jquery
+* Implement insert, update and delete limitations using captchas
+* Added plugin service
+* Improved css structure
+* Add option to install service as tar archive
+
+0.3.5 beta
+* Improved and fixed activity message exchange of connected amun instances
+* Implement basic stomp listener
+* Fixed openid consumer and relying party
+* Update stomp notifier
+* Polish default template css
+
+0.3.4 beta
+* Added markdown support and insert help page on installation
+* Added forum service
+* Redesigned gadget system
+* Improved page tree sort and reparent functions
+* Improved service install system
+* Added mail system to send template based plain text / html mails to users
+* Fixed bugs in my service OpenId authentication
+
+0.3.3 beta
+* Option to connect amun instances into a network
+* Added remote relation so you can follow a user on a different website
+* Added webfinger support
+* Removed TinyMCE editor
+* Added openid provider support to enable users from other amun instances
+  to interact on this website (federated social web)
+* Added stomp support and because of that removed the event module and
+  system/event libraries.
+
+0.3.2 beta
+* Fix bug that friend request doesnt work correct
+* Fixed record owner handling
+* Updated page sort handling
+* Fixed oauth authentication bug that you can not connect with multiple
+  applications
+* Fixed my service api endpoint verifyCredentials
+* Fixed several bugs
+
+0.3.1 beta
+* Fixed critical bug wich causes that Amun doesnt recognize the OAuth header
+  on an API request and therefore authentication was not possible
+* Update HTMLPurifier to version 4.3.0
+* Udated API endpoints
+* Fixed gadget system
+* Implemented new default design
+* Improved event and approval system
+
+0.3 beta
+* Removed extjs based backend from amun. The complete CMF can be controlled
+  with the RESTful API.
+* Update PSX to version 0.4.1 and change coding style
+* Renamed plugin to service and changed the folder structure
+* Remove categories instead you can select as parent another page.
+* Update ace to version 0.1.6
+* Update manual and dev documentation
+* Add CSS and JS concatenation class
+
+0.2.4 beta
+* Add correct UTF-8 handling. All content is now stored in UTF-8 tables
+* Add correct time handling by using the php DateTime class all dates are stored
+  in UTC and converted back on output to your preferred timezone
+* Add idea plugin
+* Implemented user level system
+
+0.2.3 beta
+* url_titles are now properly encoded
+* Fix bug in backend that the js doesnt load because JSMin was not loaded
+* You can add a description to a category
+* Profile can be called with name
+* Add article and idea plugin
+* Fix bug that you can edit groupadmin rights
+
+0.2.2 beta
+* Fix several template bugs
+* Create new default template design
+
+0.2 beta
+* Update of underlying psx framework to 0.3.1
+* Complete rewrote of library
+* Rename from psx cms to amun
+* Extended plugin system
+
+0.1.9 beta
+* Added search plugin
+* Added gallery plugin
+* Redesign default template
+* Add gadget appdata were gadgets can store config options
+
+0.1.8 beta
+* Implemented OpenID native to login
+* psx cms is now an opensocial API server
+* Create friendships between users
+* Removed unnecessary plugins
+* Profile view for users
+
+0.1.6 beta
+* Fixed recaptcha handler
+
+0.1.5 beta
+* Plugin sitemap was added
+* Add common javascript classes
+* Insert api
+* Add class create receive update delete for a general way of making crud staments
+* Update psx to 0.2.0
+
+0.1.4 beta
+* Autologout frontend/backend
+* Gadget cache
+* Add plugin newsletter
+* Bug fixes
+* New default template
+
+________________________________________________________________________________
+$Id: changelog.txt 850 2012-09-22 21:18:34Z k42b3.x@googlemail.com $
+
+
