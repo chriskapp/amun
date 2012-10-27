@@ -34,7 +34,7 @@
  */
 class Amun_Base extends PSX_Base
 {
-	const VERSION = '0.3.8 beta';
+	const VERSION = '0.4 beta';
 
 	protected $sql;
 	protected $registry;
