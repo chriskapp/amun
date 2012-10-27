@@ -1,19 +1,8 @@
 
 [FEATURES]
 
-[ ] Add sitemap service to generate dynamic all links
-[ ] Move to github
-[ ] Update psx library
-[ ] Add remove magic quotes code
-[x] Add pipe service wich redirects the content of an file to the service output
-    Depending on the file extension we use different output. If its an html we
-    use the raw content if its md we use an markdown parser if its txt we use
-    the pre tag etc. In this way you could easily take your content under 
-    version control.
-[x] Add ace editor
-[x] Add page tree to content page panel
-[ ] Implement reference input field
-[x] Add gadgets to page add/edit
+[ ] Create ant build file for building the release and docs
+[ ] Implement reference input field in backend
 [ ] comments wich are added should not force a reload instead they should be
     added directly to the html
 [ ] build namespace package system i.e. org.amun.comment
@@ -21,17 +10,15 @@
 [ ] build general achievment system where a user based on the karma value (or
     probably other conditions) gets specific achievments on the profile
 [ ] my service add possibility to delete (invalidate) an account
-[ ] my service add data export function where a user can export all record wich
-    he made in an XML format
+[ ] my service add data export function where a user can export all records wich
+    he made in an XML or maybe HTML format
 [ ] if someone has subscribed via PSHB to a topic and we receive these messages
     we have to create a remote user for the author of the topic if the user id
     doesnt exist.
-[ ] Implement OpenAjax_Hub_2.0 / OpenSocial gadget javascript libraries for
-    gadgets
 [ ] a general way to embed content like images videos etc to an page using
-    oembed i.e. you can add photo, video. We can attach to a post media data and
-    show a list of links to the embed html or we could insert it direct in the
-    html wich is a potential XSS security risk
+    oembed i.e. you can add photo, video. We could use the html filter to get
+    all urls and make an Oembed request ... if we find an enpoint we attach
+    the meta data to the record
 [ ] A option to create a pasword protected page. This should be general so that
     you can protect any page with an password ... at this move we can also add
     a possibility to add more meta data to a page (i.e. dublin core)
@@ -40,6 +27,17 @@
     framework because its not amun specific and a well written proxy is in
     general needed
 [ ] test ostatus remote subscription interoperability
+[/] Implement OpenAjax_Hub_2.0 / OpenSocial gadget javascript libraries for
+    gadgets
+[x] Move to github
+[x] Add pipe service wich redirects the content of an file to the service output
+    Depending on the file extension we use different output. If its an html we
+    use the raw content if its md we use an markdown parser if its txt we use
+    the pre tag etc. In this way you could easily take your content under 
+    version control.
+[x] Add ace editor
+[x] Add page tree to content page panel
+[x] Add gadgets to page add/edit
 [x] test lrdd / foaf / oembed and media upload
 [x] test whether services can be installed with a custom global namespace and
     not in the "amun service" namespace
@@ -76,6 +74,7 @@
 
 [SERVICES]
 
+[ ] add sitemap service
 [ ] write docbook plugin wich can displays docbook xml
 [ ] build api generator service wich builds based on the library classes an
     api index where all users can comment rate etc.
@@ -114,7 +113,7 @@
     time. Scripts can be clean up inactive user etc. The call it self must be
     made by a cronjob the plugin is only for observing whether the cronjob was
     executed or not
-[ ] write chat plugin. Should be made with AJAX some one can add a message and
+[ ] write chat plugin. Should be made with AJAX someone can add a message and
     every x seconds a script checks via XHR for a new message. (Probably using
     websockets for this)
 [ ] write system mail plugin where the admin can send mails to all users (that
@@ -294,7 +293,6 @@
     a social CMS
 [x] write newsletter plugin (was done but removed because theres no good way to
     send bulk mails)
-
 
 ________________________________________________________________________________
 $Id: todo.txt 880 2012-10-27 13:14:26Z k42b3.x@googlemail.com $

@@ -1,10 +1,10 @@
 
-0.3.8 beta
-* Added ExtJs based default backend
-* Using bootstrap.css insteadof blueprintcss
+0.4 beta
+* Added ExtJs based backend as default
+* Removed htmlpurifier using now the html library of psx
+* Using bootstrap.css instead of blueprintcss
 * Changed service architecure files are now loaded directly from the service
   folder and not copied into amun
-* Improved media upload and added custom html injector
 * Option to add a custom prefix for the table names
 * Update content media upload
 * Fixed oembed server
