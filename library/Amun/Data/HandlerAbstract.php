@@ -146,7 +146,7 @@ SQL;
 				'type'   => $type,
 				'table'  => $this->table->getName(),
 				'record' => serialize($record->getFields()),
-				'date'   => $date->format(psx_time::SQL),
+				'date'   => $date->format(PSX_DateTime::SQL),
 
 			));
 		}
