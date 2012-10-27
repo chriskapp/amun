@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="1c9c85624876e1414f496f03b4cf3f71e9f192f6">
+  <status>system</status>
+  <name>comment</name>
+  <type>http://ns.amun-project.org/2011/amun/service/comment</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <library>
+    <dir name="Amun">
+      <dir name="Service">
+        <dir name="Comment">
+          <file name="Form.php" md5="c443b20d29cb9196ab435311d6926637"/>
+          <file name="Handler.php" md5="94d18e702ba788143c85ce5dc1746cd4"/>
+          <file name="Table.php" md5="f6adb5d98adfbb5726559edbb9488210"/>
+        </dir>
+        <file name="Comment.php" md5="6284a0ec9376092c663bf89d93bc66aa"/>
+      </dir>
+    </dir>
+  </library>
+  <database>
+    <query><![CDATA[INSERT INTO `{table.amun_system_registry}` (`name`, `type`, `value`) VALUES
+('table.amun_service_comment', 'STRING', '{config.table_prefix}service_comment');]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.amun_service_comment}` (
+  `id` INT(10) NOT NULL AUTO_INCREMENT,
+  `globalId` VARCHAR(36) NOT NULL,
+  `pageId` INT(10) NOT NULL,
+  `userId` INT(10) NOT NULL,
+  `refId` INT(10) NOT NULL,
+  `text` LONGTEXT NOT NULL,
+  `date` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `globalId` (`globalId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+    <query storeID="content_api"><![CDATA[INSERT INTO `{table.amun_content_api}` (`serviceId`, `priority`, `endpoint`) VALUES
+({service.id}, 0, 'service/comment');]]></query>
+    <query><![CDATA[INSERT INTO `{table.amun_content_api_type}` (`apiId`, `type`) VALUES
+({id.content_api}, '{service.type}'),
+({id.content_api}, 'http://ns.amun-project.org/2011/amun/data/1.0');]]></query>
+    <query><![CDATA[INSERT INTO `{table.amun_user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
+('INSERT', 'add', 'amun_service_comment', 'view?id={record.refId}#comment-{record.id}', '<p><a href="{user.profileUrl}">{user.name}</a> has created an <a href="{object.url}">comment</a></p><blockquote>{record.text}</blockquote>');]]></query>
+    <query><![CDATA[INSERT INTO `{table.amun_user_right}` (`name`, `description`) VALUES
+('service_comment_view', 'Service Comment view'),
+('service_comment_add', 'Service Comment add'),
+('service_comment_edit', 'Service Comment edit'),
+('service_comment_delete', 'Service Comment delete');]]></query>
+    <if hasService="my">
+      <query><![CDATA[INSERT INTO `{table.amun_service_my_notify_service}` (`table`, `title`) VALUES
+('amun_service_comment', 'Comments');]]></query>
+    </if>
+  </database>
+</service>

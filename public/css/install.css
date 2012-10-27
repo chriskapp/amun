@@ -1,0 +1,67 @@
+
+body
+{
+	font-size:1em;
+	background-color:#EEEEEE;
+}
+
+.container
+{
+	width:360px;
+	margin:0 auto;
+	margin-top:32px;
+	border:2px solid #999999;
+	background-color:#FFFFFF;
+	padding:12px;
+}
+
+.container legend
+{
+	font-weight:bold;
+}
+
+#status
+{
+	margin:4px;
+}
+
+#consoleWindow
+{
+	position:absolute;
+	top:8px;
+	left:8px;
+	width:640px;
+	height:480px;
+	padding:8px;
+	background-color:#FFFFFF;
+	border:2px solid #999999;
+}
+
+#consoleWindow p
+{
+	margin:4px;
+}
+
+#consoleWindow textarea
+{
+	width:630px;
+	height:430px;
+}
+
+#consoleWindow input[type="button"]
+{
+	padding:4px;
+	margin:2px;
+}
+
+.invalid
+{
+	background-color:#FBE3E4;
+}
+
+.error
+{
+	font-size:0.8em;
+}
+
+

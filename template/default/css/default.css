@@ -1,0 +1,143 @@
+
+body
+{
+}
+
+header.amun-header
+{
+	border-bottom:1px solid #ccc;
+	padding:0px;
+	background-color:#eee;
+	background:-webkit-gradient(linear, 100 0, 100 100, from(#fff), to(#eee));
+}
+
+header.amun-header h1
+{
+	margin-top:8px;
+	margin-bottom:8px;
+}
+
+header.amun-header .container
+{
+	box-shadow:0px 1px 2px 1px #888;
+	border-right:1px solid #999;
+	border-left:1px solid #999;
+	padding:0px 6px;
+}
+
+div.amun-header-info
+{
+	margin:8px;
+}
+
+nav.amun-nav
+{
+	background-color:#444;
+}
+
+nav.amun-nav ul
+{
+	margin:8px;
+	list-style-type:none;
+}
+
+nav.amun-nav li
+{
+	float:left;
+}
+
+nav.amun-nav ul li a
+{
+	display:block;
+	padding:10px 12px;
+	color:#eee;
+	font-size:0.9em;
+	font-weight:bold;
+}
+
+nav.amun-nav .active
+{
+	font-weight:bold;
+}
+
+div.amun-path
+{
+	margin-top:6px;
+	padding:4px;
+	font-size:0.9em;
+	color:#999;
+}
+
+div.amun-body
+{
+	background-color:#fff;
+}
+
+div.amun-body .container
+{
+	padding:0px 6px;
+	padding-top:16px;
+	padding-bottom:24px;
+	min-height:400px;
+
+	box-shadow:0px 1px 2px 1px #888;
+	border-right:1px solid #999;
+	border-left:1px solid #999;
+}
+
+div.amun-gadget
+{
+}
+
+div.amun-gadget h2
+{
+	background-color:#444;
+	color:#eee;
+	font-size:0.9em;
+	padding:4px;
+	margin:0px;
+	line-height:2em;
+}
+
+div.amun-options
+{
+	margin-bottom:16px;
+}
+
+div.amun-options ul
+{
+	list-style-type:none;
+	margin:0px;
+}
+
+div.amun-options li
+{
+	float:right;
+}
+
+footer.amun-footer
+{
+	color:#aaa;
+	text-align:right;
+}
+
+footer.amun-footer .container
+{
+	padding:24px 0;
+}
+
+/* */
+p.muted
+{
+	font-size:0.9em;
+	white-space:nowrap;
+	overflow:hidden;
+}
+
+h2
+{
+	margin-bottom:2px;
+}
+
+/* prettify */
+.pln{color:#000}@media screen{.str{color:#080}.kwd{color:#008}.com{color:#800}.typ{color:#606}.lit{color:#066}.pun,.opn,.clo{color:#660}.tag{color:#008}.atn{color:#606}.atv{color:#080}.dec,.var{color:#606}.fun{color:red}}@media print,projection{.str{color:#060}.kwd{color:#006;font-weight:bold}.com{color:#600;font-style:italic}.typ{color:#404;font-weight:bold}.lit{color:#044}.pun,.opn,.clo{color:#440}.tag{color:#006;font-weight:bold}.atn{color:#404}.atv{color:#060}}pre.prettyprint{padding:2px;border:1px solid #888}ol.linenums{margin-top:0;margin-bottom:0}li.L0,li.L1,li.L2,li.L3,li.L5,li.L6,li.L7,li.L8{list-style-type:none}li.L1,li.L3,li.L5,li.L7,li.L9{background:#eee}

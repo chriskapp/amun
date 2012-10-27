@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="444a497b5dd7b16e71bacd29be752bacf6652198">
+  <status>normal</status>
+  <name>profile</name>
+  <type>http://ns.amun-project.org/2011/amun/service/profile</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <database>
+    <query><![CDATA[INSERT INTO `{table.amun_content_service_option}` (`serviceId`, `name`) VALUES
+({service.id}, 'index');]]></query>
+    <query><![CDATA[INSERT INTO `{table.amun_user_right}` (`name`, `description`) VALUES
+('service_profile_view', 'Service Profile view');]]></query>
+  </database>
+</service>

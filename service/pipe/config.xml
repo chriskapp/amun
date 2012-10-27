@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="ca582a0fd73389f33e36fd7b86f85d5a4392804a">
+  <status>normal</status>
+  <name>pipe</name>
+  <type>http://ns.amun-project.org/2011/amun/service/pipe</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <library>
+    <dir name="Amun">
+      <dir name="Service">
+        <dir name="Pipe">
+          <file name="Form.php" md5="1919cd9acc08e8654d6261b1a9d71556"/>
+          <file name="Handler.php" md5="cdb5e9076de8be372dfc4731a0f71598"/>
+          <file name="Table.php" md5="c12eef1633561dded509bb56e0735525"/>
+        </dir>
+        <file name="Pipe.php" md5="f4836c99d721573d0d829f1f469c223b"/>
+      </dir>
+    </dir>
+  </library>
+  <database>
+    <query><![CDATA[INSERT INTO `{table.amun_system_registry}` (`name`, `type`, `value`) VALUES
+('table.amun_service_pipe', 'STRING', '{config.table_prefix}service_pipe');]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.amun_service_pipe}` (
+  `id` INT(10) NOT NULL AUTO_INCREMENT,
+  `globalId` VARCHAR(36) NOT NULL,
+  `pageId` INT(10) NOT NULL,
+  `userId` INT(10) NOT NULL,
+  `mediaId` INT(10) NOT NULL,
+  `date` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `globalId` (`globalId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+    <query storeID="content_api"><![CDATA[INSERT INTO `{table.amun_content_api}` (`serviceId`, `priority`, `endpoint`) VALUES
+({service.id}, 0, 'service/pipe');]]></query>
+    <query><![CDATA[INSERT INTO `{table.amun_content_api_type}` (`apiId`, `type`) VALUES
+({id.content_api}, '{service.type}'),
+({id.content_api}, 'http://ns.amun-project.org/2011/amun/data/1.0');]]></query>
+    <query><![CDATA[INSERT INTO `{table.amun_content_service_option}` (`serviceId`, `name`) VALUES
+({service.id}, 'index');]]></query>
+    <query><![CDATA[INSERT INTO `{table.amun_user_right}` (`name`, `description`) VALUES
+('service_pipe_view', 'Service pipe view'),
+('service_pipe_add', 'Service pipe add'),
+('service_pipe_edit', 'Service pipe edit'),
+('service_pipe_delete', 'Service pipe delete');]]></query>
+  </database>
+</service>

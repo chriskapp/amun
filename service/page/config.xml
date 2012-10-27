@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="2256470baf1397c99d9a0abf93a1b60880b6f4fe">
+  <status>normal</status>
+  <name>page</name>
+  <type>http://ns.amun-project.org/2011/amun/service/page</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <library>
+    <dir name="Amun">
+      <dir name="Service">
+        <dir name="Page">
+          <file name="Form.php" md5="3ead1e855ba633f59a00e021a562c3dd"/>
+          <file name="Handler.php" md5="8d4b0ced8e531b201136f536093b684c"/>
+          <file name="Table.php" md5="3a5e042a278384e5269ce87fe9e40917"/>
+        </dir>
+        <file name="Page.php" md5="722e38719ef886ca2de2bb8179307acb"/>
+      </dir>
+    </dir>
+  </library>
+  <database>
+    <query><![CDATA[INSERT INTO `{table.amun_system_registry}` (`name`, `type`, `value`) VALUES
+('table.amun_service_page', 'STRING', '{config.table_prefix}service_page');]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.amun_service_page}` (
+  `id` INT(10) NOT NULL AUTO_INCREMENT,
+  `globalId` VARCHAR(36) NOT NULL,
+  `pageId` INT(10) NOT NULL,
+  `userId` INT(10) NOT NULL,
+  `content` LONGTEXT NOT NULL,
+  `date` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `globalId` (`globalId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+    <query storeID="content_api"><![CDATA[INSERT INTO `{table.amun_content_api}` (`serviceId`, `priority`, `endpoint`) VALUES
+({service.id}, 0, 'service/page');]]></query>
+    <query><![CDATA[INSERT INTO `{table.amun_content_api_type}` (`apiId`, `type`) VALUES
+({id.content_api}, '{service.type}'),
+({id.content_api}, 'http://ns.amun-project.org/2011/amun/data/1.0');]]></query>
+    <query><![CDATA[INSERT INTO `{table.amun_content_service_option}` (`serviceId`, `name`) VALUES
+({service.id}, 'index');]]></query>
+    <query><![CDATA[INSERT INTO `{table.amun_user_right}` (`name`, `description`) VALUES
+('service_page_view', 'Service Page view'),
+('service_page_add', 'Service Page add'),
+('service_page_edit', 'Service Page edit'),
+('service_page_delete', 'Service Page delete');]]></query>
+  </database>
+</service>

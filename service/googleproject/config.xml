@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="63216e675d270b1a5fe07868137aacf2a9546d9a">
+  <status>normal</status>
+  <name>googleproject</name>
+  <type>http://ns.amun-project.org/2011/amun/service/googleproject</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <library>
+    <dir name="Amun">
+      <dir name="Service">
+        <dir name="Googleproject">
+          <dir name="Author">
+            <file name="Handler.php" md5="c362dafb40ec728d7938a53ef8a186b6"/>
+            <file name="Table.php" md5="b13a00269fd8b31b4a1944f835e1b55a"/>
+          </dir>
+          <dir name="Commit">
+            <file name="Handler.php" md5="c10659ca02c74df5fd6eeb13a5f78a7c"/>
+            <file name="Table.php" md5="119651b8bd957d12df1c9f849d057221"/>
+          </dir>
+          <file name="Author.php" md5="0c0c046c36bd74c5b92cb6aee34ce50a"/>
+          <file name="Commit.php" md5="9e0df4143f7280a0fb8bfb7ca3498293"/>
+          <file name="Form.php" md5="af7a30367f856b290a93aba2b274fa88"/>
+          <file name="Handler.php" md5="b5ff3e83b96fd7a12e55fbe704697b93"/>
+          <file name="Table.php" md5="70e4a3ae35e71ddd9c7f0bd1c124c848"/>
+        </dir>
+        <file name="Googleproject.php" md5="1164f5e005ba942ee44e06631f3e890b"/>
+      </dir>
+    </dir>
+  </library>
+  <database>
+    <query><![CDATA[INSERT INTO `{table.amun_system_registry}` (`name`, `type`, `value`) VALUES
+('table.amun_service_googleproject', 'STRING', '{config.table_prefix}service_googleproject'),
+('table.amun_service_googleproject_commit', 'STRING', '{config.table_prefix}service_googleproject_commit'),
+('table.amun_service_googleproject_author', 'STRING', '{config.table_prefix}service_googleproject_author');]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.amun_service_googleproject}` (
+  `id` INT(10) NOT NULL AUTO_INCREMENT,
+  `globalId` VARCHAR(36) NOT NULL,
+  `pageId` INT(10) NOT NULL,
+  `userId` INT(10) NOT NULL,
+  `name` VARCHAR(32) NOT NULL,
+  `secret` VARCHAR(128) NOT NULL,
+  `date` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `globalId` (`globalId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.amun_service_googleproject_commit}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `globalId` VARCHAR(36),
+  `projectId` INT(10),
+  `authorId` INT(10),
+  `revision` INT(10),
+  `url` VARCHAR(256),
+  `message` VARCHAR(512),
+  `commitDate` DATETIME,
+  `date` DATETIME,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `globalId` (`globalId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.amun_service_googleproject_author}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `userId` INT(10),
+  `name` VARCHAR(32),
+  `date` DATETIME,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+    <query storeID="content_api"><![CDATA[INSERT INTO `{table.amun_content_api}` (`serviceId`, `priority`, `endpoint`) VALUES
+({service.id}, 0, 'service/googleproject');]]></query>
+    <query><![CDATA[INSERT INTO `{table.amun_content_api_type}` (`apiId`, `type`) VALUES
+({id.content_api}, '{service.type}'),
+({id.content_api}, 'http://ns.amun-project.org/2011/amun/data/1.0');]]></query>
+    <query storeID="content_api"><![CDATA[INSERT INTO `{table.amun_content_api}` (`serviceId`, `priority`, `endpoint`) VALUES
+({service.id}, 0, 'service/googleproject/author');]]></query>
+    <query><![CDATA[INSERT INTO `{table.amun_content_api_type}` (`apiId`, `type`) VALUES
+({id.content_api}, '{service.type}/author'),
+({id.content_api}, 'http://ns.amun-project.org/2011/amun/data/1.0');]]></query>
+    <query><![CDATA[INSERT INTO `{table.amun_content_service_option}` (`serviceId`, `name`) VALUES
+({service.id}, 'index'),
+({service.id}, 'view');]]></query>
+    <query><![CDATA[INSERT INTO `{table.amun_user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
+('INSERT', 'add', 'amun_service_googleproject_commit', '', '<p><a href="{user.profileUrl}">{user.name}</a> has commited <a href="{record.url}">r{record.revision}</a></p><blockquote>{record.message}</blockquote>');]]></query>
+    <query><![CDATA[INSERT INTO `{table.amun_user_right}` (`name`, `description`) VALUES
+('service_googleproject_view', 'Service Googleproject view'),
+('service_googleproject_add', 'Service Googleproject add'),
+('service_googleproject_edit', 'Service Googleproject edit'),
+('service_googleproject_delete', 'Service Googleproject delete'),
+('service_googleproject_author_view', 'Service Googleproject Author view'),
+('service_googleproject_author_add', 'Service Googleproject Author add'),
+('service_googleproject_author_edit', 'Service Googleproject Author edit'),
+('service_googleproject_author_delete', 'Service Googleproject Author delete');]]></query>
+  </database>
+</service>

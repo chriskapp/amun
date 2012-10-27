@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="dd294f552e8630670dcea218afa22ee471c745c0">
+  <status>normal</status>
+  <name>webdav</name>
+  <type>http://ns.amun-project.org/2011/amun/service/webdav</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <library>
+    <dir name="Amun">
+      <dir name="Service">
+        <dir name="Webdav">
+          <file name="File.php" md5="c37b182dfacdf8715f47a8f11b8b79f5"/>
+          <file name="Page.php" md5="991f7a7fea57f6fffc1b2f164199c83d"/>
+        </dir>
+      </dir>
+    </dir>
+    <dir name="Sabre">
+      <dir name="CalDAV">
+        <dir name="Backend">
+          <file name="Abstract.php" md5="c189ab71f39de66724e0903d555bd391"/>
+          <file name="PDO.php" md5="0c99207ebabc9623685e9ab36fcb16b9"/>
+        </dir>
+        <file name="Calendar.php" md5="4e8e1b02dc587a205e1af314a4ed15da"/>
+        <file name="CalendarObject.php" md5="9178078c27624f220bc53bdbc870d0e7"/>
+        <file name="CalendarQueryParser.php" md5="f3c01f5e2143841ed2406a52450aac48"/>
+        <file name="CalendarQueryValidator.php" md5="b92417948e924df80c0ae8fdbb9c0d0d"/>
+        <file name="CalendarRootNode.php" md5="a8024258f39b8a5e682cbb2d287e6334"/>
+        <file name="ICSExportPlugin.php" md5="22eb49f624ad1e8d26cb4a02e7666529"/>
+        <file name="ICalendar.php" md5="e233dba5182b0739d851047d9da9782e"/>
+        <file name="ICalendarObject.php" md5="a68738af0e08fd6b13d886470b61c664"/>
+        <file name="Plugin.php" md5="47da6bb513a157ae8d47f2affe533713"/>
+        <dir name="Principal">
+          <file name="Collection.php" md5="0cf2aff64fe76051cc0ecda8c7a37efb"/>
+          <file name="ProxyRead.php" md5="76bce44f06e661ae99f9593ea3f9a493"/>
+          <file name="ProxyWrite.php" md5="fb22a093666e6e596c93660b1e8b7406"/>
+          <file name="User.php" md5="62981b44d23be35b683f6c987fa65662"/>
+        </dir>
+        <dir name="Property">
+          <file name="SupportedCalendarComponentSet.php" md5="82494beaf2c8ba6509ec4df600fece18"/>
+          <file name="SupportedCalendarData.php" md5="563c15690a21814d51b4e3f0a2ed9d72"/>
+          <file name="SupportedCollationSet.php" md5="a696c57a7737c0f07fee72a62041fc3d"/>
+        </dir>
+        <dir name="Schedule">
+          <file name="IMip.php" md5="e1b570c8af1209470da3e9026dd7eb50"/>
+          <file name="IOutbox.php" md5="03932281da4b252d79d9925f2d344534"/>
+          <file name="Outbox.php" md5="6d771661a70225e234ddc9d7d89e2e96"/>
+        </dir>
+        <file name="Server.php" md5="6bbf0ec06d94281eaf78118c7185389f"/>
+        <file name="UserCalendars.php" md5="f0ad202b9c17887e92dd1c91458c3e78"/>
+        <file name="Version.php" md5="eebdd699c02466df693ae85ec5c60887"/>
+        <file name="includes.php" md5="0259343bc5a7470dce2f6b03bfa0090c"/>
+      </dir>
+      <dir name="CardDAV">
+        <file name="AddressBook.php" md5="7cdd4d599c743567382e9adf2d5033e3"/>
+        <file name="AddressBookQueryParser.php" md5="eca54fe4aee9bfa7c019dc446fd72f55"/>
+        <file name="AddressBookRoot.php" md5="8cf1e8ad01265638748007e25f4ef0b5"/>
+        <dir name="Backend">
+          <file name="Abstract.php" md5="429666c6478a0110380b49e3734b3dfe"/>
+          <file name="PDO.php" md5="37806b320990b8589b08726715ecefa3"/>
+        </dir>
+        <file name="Card.php" md5="267160c04a2208ba509048bbef6c50cd"/>
+        <file name="IAddressBook.php" md5="31a539fe751cb158e7d8097af153de21"/>
+        <file name="ICard.php" md5="e57086cf3473fb2ee5565f71cfe8f67d"/>
+        <file name="IDirectory.php" md5="26e2dcff6b2e56a8e6f3a6a136c47dff"/>
+        <file name="Plugin.php" md5="7ef45efca40507ec23c7e174394a294e"/>
+        <dir name="Property">
+          <file name="SupportedAddressData.php" md5="31659fd7fdfe310c9b40d06eb1d208b5"/>
+        </dir>
+        <file name="UserAddressBooks.php" md5="48a26cadd298a2eb763a2bc1914cde00"/>
+        <file name="Version.php" md5="cd81cf922d52a5d84064395cb783db64"/>
+        <file name="includes.php" md5="91e38b5e8fd5ed506661b8986f1a180c"/>
+      </dir>
+      <dir name="DAV">
+        <dir name="Auth">
+          <dir name="Backend">
+            <file name="AbstractBasic.php" md5="3628c9429bfa21d87c38543864e09c86"/>
+            <file name="AbstractDigest.php" md5="d90db56db9ba1612e78f72950c505d8d"/>
+            <file name="Apache.php" md5="aa46ef9a7b8a175c43768f3cb05d794f"/>
+            <file name="File.php" md5="8ecfa6d40e335c00bee3d4e769a9fd7c"/>
+            <file name="PDO.php" md5="121597a910436a5b1b5c6b7813c93a3f"/>
+          </dir>
+          <file name="IBackend.php" md5="15b19c2b11efc8f1015a4d7fca607023"/>
+          <file name="Plugin.php" md5="32edeb31cc114d24157d1e60d0fa35c4"/>
+        </dir>
+        <dir name="Browser">
+          <file name="GuessContentType.php" md5="57f53efec0fa9e90abb5a652b1b8528c"/>
+          <file name="MapGetToPropFind.php" md5="d36f23bfb3c108ba47a4b2bc3a85f5b8"/>
+          <file name="Plugin.php" md5="6f1f4a4b2d5c617439b13537968d8b37"/>
+          <dir name="assets">
+            <file name="favicon.ico" md5="ad382857669c26d08fc33b9b3c6af549"/>
+            <dir name="icons">
+              <file name="addressbook.png" md5="f5c828904bacecdbe429adf13cd8a5e6"/>
+              <file name="calendar.png" md5="7e1dd7a6509acb397106b5f60ae0035b"/>
+              <file name="card.png" md5="151077c627594e03774f4826858f5fa6"/>
+              <file name="collection.png" md5="21eab3b0d660a5d89dc5b386fbc890a2"/>
+              <file name="file.png" md5="188d68e38caf68ce5e6800ed6a7673c0"/>
+              <file name="parent.png" md5="21eab3b0d660a5d89dc5b386fbc890a2"/>
+              <file name="principal.png" md5="e83a65b76ee351e6644c6227d6253dec"/>
+            </dir>
+          </dir>
+        </dir>
+        <file name="Client.php" md5="6473a8a9bb6047ce271df28bb4c98687"/>
+        <file name="Collection.php" md5="9b5762c3b41801bb48306d7b5f612413"/>
+        <file name="Directory.php" md5="b93c61b6ed340aa8ee0849a3cbf45afe"/>
+        <dir name="Exception">
+          <file name="BadRequest.php" md5="0c1aa76f7e286bd6325335eb518e4a4c"/>
+          <file name="Conflict.php" md5="2d2ca18c5e0096e370bc0d02b1f85399"/>
+          <file name="ConflictingLock.php" md5="eac831442860d1cf61c360c5babf063e"/>
+          <file name="FileNotFound.php" md5="66d737587be516aa04f9ba56dfa25884"/>
+          <file name="Forbidden.php" md5="7abb169f476157556f4394ba0906559e"/>
+          <file name="InsufficientStorage.php" md5="874687e36e29ff180d6c96ee3a53379a"/>
+          <file name="InvalidResourceType.php" md5="de7c02877d55ed61302088fb95e13db2"/>
+          <file name="LockTokenMatchesRequestUri.php" md5="2c062ed7f8b749aef17fe72a7faf8a6a"/>
+          <file name="Locked.php" md5="99ceeab60651363056e8355ad95bc88b"/>
+          <file name="MethodNotAllowed.php" md5="58dbe485fea54ec7b72dbccb35d108cd"/>
+          <file name="NotAuthenticated.php" md5="5b6ecfacec82a6fa32c9284c90601c3a"/>
+          <file name="NotFound.php" md5="07ff87b40daf59f104aa0753e91bb91d"/>
+          <file name="NotImplemented.php" md5="d4b4d063c8286629f277f22a83ded816"/>
+          <file name="PaymentRequired.php" md5="8780e5e3e2ee94809fa99759cee8ae81"/>
+          <file name="PreconditionFailed.php" md5="72052f84fc0471091f529c579419e4e8"/>
+          <file name="ReportNotImplemented.php" md5="a51d89dc034709b0eb6ded8de23ccb87"/>
+          <file name="RequestedRangeNotSatisfiable.php" md5="81fe980ddf86ca3d2efd13b0df283ead"/>
+          <file name="UnsupportedMediaType.php" md5="d23c5f60bec31549e1ce5174428133e6"/>
+        </dir>
+        <file name="Exception.php" md5="6f68fc19067ed2b4102b0347c1297986"/>
+        <dir name="FS">
+          <file name="Directory.php" md5="7d3504672a7a40fbce5820dd195c7347"/>
+          <file name="File.php" md5="b6f13aebe5dffb2260eae7d51f914893"/>
+          <file name="Node.php" md5="ba8124abb5e1dd98c3b085d27b080481"/>
+        </dir>
+        <dir name="FSExt">
+          <file name="Directory.php" md5="c647161ce9a5ea5fd7ec2ddea7b6cf23"/>
+          <file name="File.php" md5="c9afbc150cea279e4e7c5de98fd87fc4"/>
+          <file name="Node.php" md5="a945aaa63e13521556d4e3060f4cf045"/>
+        </dir>
+        <file name="File.php" md5="3d1adee572ce5b47229197cb74c84f5e"/>
+        <file name="ICollection.php" md5="04d5cc719812d83053b943b41c5fc1e8"/>
+        <file name="IExtendedCollection.php" md5="28c02dc025855f76084cf1116b22702b"/>
+        <file name="IFile.php" md5="05bd74c562d4f37b2bb52950c0d7de96"/>
+        <file name="INode.php" md5="223d7f9f89a3b60b0d1657d0a163da8d"/>
+        <file name="IProperties.php" md5="26bcaae1e3cda5f35e33f25eacf71b9c"/>
+        <file name="IQuota.php" md5="2cd47424e312cfffb04f494c9cebfd33"/>
+        <dir name="Locks">
+          <dir name="Backend">
+            <file name="Abstract.php" md5="e870d49b364d215efe886f5751bd1d08"/>
+            <file name="FS.php" md5="8c4271524ea693d2f2bfb6af4db67f25"/>
+            <file name="File.php" md5="2b96df19ba023839c86d3efad062a07e"/>
+            <file name="PDO.php" md5="f471b70eb55d0047a0e09db18002cf04"/>
+          </dir>
+          <file name="LockInfo.php" md5="f108e3d2f2af1bc9064d750b84a2f93e"/>
+          <file name="Plugin.php" md5="f4112ed90337830bb63d2cc91844e105"/>
+        </dir>
+        <dir name="Mount">
+          <file name="Plugin.php" md5="66c3749100002159fbaf27b879fa7e8c"/>
+        </dir>
+        <file name="Node.php" md5="de84608b7c4c41ce35b948d96722d764"/>
+        <file name="ObjectTree.php" md5="d0dcac4864da3d07efd3aba4ed6ddb24"/>
+        <dir name="Property">
+          <file name="GetLastModified.php" md5="fcf7e96a9515fecef9aba0991998b8c9"/>
+          <file name="Href.php" md5="be7db0d1d33f5b32139547376f138b43"/>
+          <file name="HrefList.php" md5="002d114c2e8743e2cd6c889923cab050"/>
+          <file name="IHref.php" md5="1424292245d6b382281fa0a13d61df52"/>
+          <file name="LockDiscovery.php" md5="29e03632d8e7f5b699d06f36dd68db38"/>
+          <file name="ResourceType.php" md5="90843e2474da5c969aaa4776ae86ad69"/>
+          <file name="Response.php" md5="13284d9babcb7335fdbcb7e45d185db1"/>
+          <file name="ResponseList.php" md5="bf2c2053ba188aeb285c83d18be6a63c"/>
+          <file name="SupportedLock.php" md5="75cbfceb0bf47dddccaad2d6c02be873"/>
+          <file name="SupportedReportSet.php" md5="31a94401a38f2501473059f6c4d60ba3"/>
+        </dir>
+        <file name="Property.php" md5="b24cf8e69cbc1bffbcdaec2eb98ffa64"/>
+        <file name="Server.php" md5="1e911e9176504962c380f8674d34e607"/>
+        <file name="ServerPlugin.php" md5="19e3bd91b8c70f0d858467f36bcfa3ec"/>
+        <file name="SimpleCollection.php" md5="00e36f56371cc2fa8b1e7f6cae17d1b5"/>
+        <file name="SimpleDirectory.php" md5="a21c57174dca6ee5f2b1610450464ac8"/>
+        <file name="SimpleFile.php" md5="58cc4f5d8097da34e9274482ca49634a"/>
+        <file name="StringUtil.php" md5="b4dd938d1693170094b92406435b30f1"/>
+        <file name="TemporaryFileFilterPlugin.php" md5="93488bf5a4ef3b9480bdf96e3d851456"/>
+        <dir name="Tree">
+          <file name="Filesystem.php" md5="9c4a6c875a977c42a383a1f3c73bf4d4"/>
+        </dir>
+        <file name="Tree.php" md5="6c4a888dab2013eb24ddb3e0b0eb09e2"/>
+        <file name="URLUtil.php" md5="dc75117f94089df0d7b570e6c4a8b6eb"/>
+        <file name="UUIDUtil.php" md5="242d12d448e3a5514560b74abb884aaa"/>
+        <file name="Version.php" md5="a367e82faf2f4365180ce864c1546d0f"/>
+        <file name="XMLUtil.php" md5="643d40a328e05208e4babe17a6d7f9b5"/>
+        <file name="includes.php" md5="aee0f89e3be75da23494b7b2b7790838"/>
+      </dir>
+      <dir name="DAVACL">
+        <file name="AbstractPrincipalCollection.php" md5="adcd87585d864c5268562cecfa54d840"/>
+        <dir name="Exception">
+          <file name="AceConflict.php" md5="b5097c8febe7834764b593456d388250"/>
+          <file name="NeedPrivileges.php" md5="0d6e15709e5142a5618f71186ac98bad"/>
+          <file name="NoAbstract.php" md5="a44b187095964e0dc53e1085399d70fb"/>
+          <file name="NotRecognizedPrincipal.php" md5="3170cca5744165a8a9a02c0ff7e859c2"/>
+          <file name="NotSupportedPrivilege.php" md5="ff40897ccbf07d09bd07d6d13185d723"/>
+        </dir>
+        <file name="IACL.php" md5="d526a66ff09822565d4bac445b93a398"/>
+        <file name="IPrincipal.php" md5="91b7e735bd7b3b259a3caefbb7771a0b"/>
+        <file name="IPrincipalBackend.php" md5="d9cb0016ab674a1bcc4f4501994a05d1"/>
+        <file name="Plugin.php" md5="52f7fed6cadb669c6097a9a6496db90c"/>
+        <file name="Principal.php" md5="d5db4a9106df935ae7f13db246de29e6"/>
+        <dir name="PrincipalBackend">
+          <file name="PDO.php" md5="c420cefce1eef97f827076c9ceccab41"/>
+        </dir>
+        <file name="PrincipalCollection.php" md5="4c78f107b0fbf1ac7c618577d8865682"/>
+        <dir name="Property">
+          <file name="Acl.php" md5="c5387594ed44f4af27ebcf612445b977"/>
+          <file name="AclRestrictions.php" md5="1a09e9466aadf33a90ddc57167c3c918"/>
+          <file name="CurrentUserPrivilegeSet.php" md5="5812eab1a7e128b1224079da0989f638"/>
+          <file name="Principal.php" md5="4dea55dbc975240c997babc894860c35"/>
+          <file name="SupportedPrivilegeSet.php" md5="e612735f5b33d876ef045ee77cc8672c"/>
+        </dir>
+        <file name="Version.php" md5="82ffca2121a415a1e5b772d14bccd6e3"/>
+        <file name="includes.php" md5="0bfb28691e1b94678123005b7b9d8f70"/>
+      </dir>
+      <dir name="HTTP">
+        <file name="AWSAuth.php" md5="b9c6d34d3a5b9af83e7a84b05499aab0"/>
+        <file name="AbstractAuth.php" md5="58f8563b3ff35c4f1d7d040f015e92ed"/>
+        <file name="BasicAuth.php" md5="d3813d178933eba91dfdc584134dfe7f"/>
+        <file name="DigestAuth.php" md5="d2dd58b0ec5aec50a43273af3f41ec1f"/>
+        <file name="Request.php" md5="b778248a43bf374f305f92d6b2c3344d"/>
+        <file name="Response.php" md5="afd1cb3e4da64103d109d8d76e85c9a0"/>
+        <file name="Util.php" md5="ad4d6976d63d5c3bdfd2ba8450fcfe4c"/>
+        <file name="Version.php" md5="e7c558854183d3a4331ba7f82f643766"/>
+        <file name="includes.php" md5="fa6b4310988d2069f36e9a8630278dc3"/>
+      </dir>
+      <dir name="VObject">
+        <dir name="Component">
+          <file name="VAlarm.php" md5="16cf7d003ac789f804016edc41f5002d"/>
+          <file name="VCalendar.php" md5="394c49d4a71f21d53f2e72ce3bacbaf2"/>
+          <file name="VEvent.php" md5="c357e7793b149789246974872b454393"/>
+          <file name="VJournal.php" md5="1b0e8130ba75b24fa467ed34c01cdef9"/>
+          <file name="VTodo.php" md5="35dec78f25ad2a4afcfea58c527929f7"/>
+        </dir>
+        <file name="Component.php" md5="28eb32cb37eb55e5429905987884069e"/>
+        <file name="DateTimeParser.php" md5="6c6092eae39eb072d2c7d6d20ff04b37"/>
+        <dir name="Element">
+          <file name="DateTime.php" md5="94b9d008a9b276920166ba90d3e1e02e"/>
+          <file name="MultiDateTime.php" md5="3b760cf162bc4513df52c47064b60bd4"/>
+        </dir>
+        <file name="Element.php" md5="d7af22fe5dda7e959f2513ad6c326a14"/>
+        <file name="ElementList.php" md5="701393a5fe6b7d4d734ca01476d73f98"/>
+        <file name="FreeBusyGenerator.php" md5="010051f72ed73de2e2479523e9a6dd49"/>
+        <file name="Node.php" md5="b5be0eb84a5a6d8b46a2a602652472a8"/>
+        <file name="Parameter.php" md5="fafa41fdc49d0eda1e0c5eaa74990ab8"/>
+        <file name="ParseException.php" md5="cf96ecf38e525d5f9fe94c3330a78523"/>
+        <dir name="Property">
+          <file name="DateTime.php" md5="267b7894e6a4156ef127b57d9098908a"/>
+          <file name="MultiDateTime.php" md5="0fc65a99e100a9c5a5e62b56ab513305"/>
+        </dir>
+        <file name="Property.php" md5="8f4175433e0d66a2b52c6b7d5d84e263"/>
+        <file name="Reader.php" md5="442d1c79dae940ab6cc97ced1be7f1bc"/>
+        <file name="RecurrenceIterator.php" md5="df4862a2a3481e7f981dcf2c1a618d85"/>
+        <file name="Version.php" md5="d56f4b568185e6661c4f3b3738cf71f5"/>
+        <file name="WindowsTimezoneMap.php" md5="6c35ba7b9627445b2596226cc3aaff9c"/>
+        <file name="includes.php" md5="1ea49ec190d144e9489bb03cfd6a6c86"/>
+      </dir>
+    </dir>
+  </library>
+  <database>
+    <query storeID="content_api"><![CDATA[INSERT INTO `{table.amun_content_api}` (`serviceId`, `priority`, `endpoint`) VALUES
+({service.id}, 0, 'service/webdav');]]></query>
+    <query><![CDATA[INSERT INTO `{table.amun_content_api_type}` (`apiId`, `type`) VALUES
+({id.content_api}, '{service.type}');]]></query>
+  </database>
+</service>
