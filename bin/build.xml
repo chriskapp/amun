@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="amun" default="build-release" basedir="..">
+	<description>PSX build script</description>
+
+	<property name="build" location="bin/amun" />
+
+	<property name="bin" location="bin" />
+	<property name="cache" location="cache" />
+	<property name="doc" location="doc" />
+	<property name="library" location="library" />
+	<property name="module" location="module" />
+	<property name="public" location="public" />
+	<property name="scripts" location="scripts" />
+	<property name="service" location="service" />
+	<property name="template" location="template" />
+	<property name="tests" location="tests" />
+
+	<target name="get-version">
+		<exec dir="${bin}" executable="php" failonerror="true" outputproperty="version">
+			<arg line="get-version.php" />
+		</exec>
+		<echo message="Building version ${version}" />
+	</target>
+
+	<target name="syntax-check">
+		<exec dir="${bin}" executable="php" failonerror="true">
+			<arg line="check-syntax.php .." />
+		</exec>
+	</target>
+
+	<target name="test" depends="syntax-check">
+		<exec executable="phpunit.bat" failonerror="true" />
+	</target>
+
+	<target name="build-dir">
+		<mkdir dir="${build}" />
+		<mkdir dir="${build}/cache" />
+		<copy todir="${build}/doc">
+			<fileset dir="${doc}">
+				<include name="img/**" />
+				<include name="default.css" />
+				<include name="default.js" />
+				<include name="dev.html" />
+				<include name="distributed_network.html" />
+				<include name="gplv3.html" />
+				<include name="manual.html" />
+			</fileset>
+		</copy>
+		<copy todir="${build}/library">
+			<fileset dir="${library}">
+				<include name="PSX/**" />
+				<include name="Amun/**" />
+				<include name="Zend/**" />
+			</fileset>
+		</copy>
+		<copy todir="${build}/module">
+			<fileset dir="${module}" />
+		</copy>
+		<copy todir="${build}/public">
+			<fileset dir="${public}" />
+		</copy>
+		<copy todir="${build}/scripts">
+			<fileset dir="${scripts}" />
+		</copy>
+		<copy todir="${build}/service">
+			<fileset dir="${service}" />
+		</copy>
+		<copy todir="${build}/template">
+			<fileset dir="${template}" />
+		</copy>
+		<copy todir="${build}/tests">
+			<fileset dir="${tests}" />
+		</copy>
+		<copy file="configuration.php" tofile="${build}/configuration.php" />
+	</target>
+
+	<target name="generate-service-config">
+		<exec dir="${bin}" executable="php" failonerror="true">
+			<arg line="generate-service-config.php *" />
+		</exec>
+	</target>
+
+	<target name="build-release" depends="get-version,test,build-dir,generate-service-config">
+		<tar destfile="${bin}/amun_${version}.tar" basedir="${build}" />
+		<gzip destfile="${bin}/amun_${version}.tar.gz" src="${bin}/amun_${version}.tar" />
+		<delete file="${bin}/amun_${version}.tar" />
+		<zip destfile="${bin}/amun_${version}.zip" basedir="${build}" />
+	</target>
+
+	<target name="build-all" depends="build-doc,build-release" />
+
+	<target name="clean" depends="get-version">
+		<delete dir="${build}" />
+		<delete file="${bin}/amun_${version}.tar.gz" />
+		<delete file="${bin}/amun_${version}.zip" />
+	</target>
+
+	<target name="clean-doc">
+		<delete>
+			<fileset dir="${doc}">
+				<include name="dev.html" />
+				<include name="distributed_network.html" />
+				<include name="gplv3.html" />
+				<include name="manual.html" />
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="build-doc" depends="clean-doc">
+		<xslt basedir="${doc}/docbook" destdir="${doc}" includes="**/*.xml" extension=".html" style="${doc}/amun.xsl">
+			<factory name="net.sf.saxon.TransformerFactoryImpl" />
+		</xslt>
+	</target>
+
+</project>
