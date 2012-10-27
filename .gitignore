@@ -3,3 +3,4 @@ template/default/js/ace
 template/default/js/bootstrap
 template/default/js/jquery
 template/default/js/prettify
+service/webdav/library/Sabre
