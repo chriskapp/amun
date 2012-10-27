@@ -45,7 +45,7 @@ class Amun_Content_Gadget_Filter_Path extends PSX_Filter_Url
 	{
 		$value = trim($value, '/');
 
-		return strpos($value, '..') === false && PSX_File::exists($this->config['amun_service_path'] . '/' . $value);
+		return strpos($value, '..') === false && is_file($this->config['amun_service_path'] . '/' . $value);
 	}
 
 	public function getErrorMsg()
