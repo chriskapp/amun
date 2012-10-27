@@ -1,0 +1,367 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN" "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<book lang="en">
+	<bookinfo>
+		<title>Amun distributed network</title>
+		<authorgroup>
+			<author>
+				<firstname>Christoph</firstname>
+				<surname>Kappestein</surname>
+				<email>christoph.kappestein@gmail.com</email>
+			</author>
+		</authorgroup>
+		<releaseinfo>$Revision: 784 $</releaseinfo>
+		<pubdate>$Date: 2012-04-07 01:25:13 +0200 (Sa, 07. Apr 2012) $</pubdate>
+		<abstract>
+			<para>This document describes a way for creating a distributed social network. It makes it possible to connect websites together
+			into one network. In the following an example of two connected websites. A user from website "foo" can login into website "bar"
+			without registering a new account. He can add friends on the website "bar". If users have build an relation each user receives
+			activity messages from the other user. In this way he knows what other friends are doing even if they are on another website.</para>
+		</abstract>
+	</bookinfo>
+
+	<chapter>
+		<title>Requirements Notation and Conventions</title>
+		<para>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY",
+		and "OPTIONAL" in this document are to be interpreted as described in [RFC2119].</para>
+		<para>Throughout this document, values are quoted to indicate that they are to be taken literally. When using these
+		values in protocol messages, the quotes MUST NOT be used as part of the value.</para>
+	</chapter>
+
+	<chapter>
+		<title>Terminology</title>
+		<para>The specification is written from the perspective of an website owner. The term "Local website" referes to your website.</para>
+		<informaltable>
+		<tgroup cols="2">
+		<thead>
+			<row>
+				<entry>Term</entry>
+				<entry>Description</entry>
+			</row>
+		</thead>
+		<tbody>
+			<row>
+				<entry>Website</entry>
+				<entry>A social network, blog or any website with a user base.</entry>
+			</row>
+			<row>
+				<entry>Local website</entry>
+				<entry>Your website.</entry>
+			</row>
+			<row>
+				<entry>Remote website</entry>
+				<entry>A website with that you want connect.</entry>
+			</row>
+			<row>
+				<entry>Local user</entry>
+				<entry>A user wich has an account on the local website.</entry>
+			</row>
+			<row>
+				<entry>Remote user</entry>
+				<entry>A user wich has an account on the remote website.</entry>
+			</row>
+			<row>
+				<entry>Combined Consumer</entry>
+				<entry>A web service that is simultaneously an OpenID Relying Party (RP) and an
+				OAuth Consumer.</entry>
+			</row>
+			<row>
+				<entry>Combined Provider</entry>
+				<entry>A web service that is simultaneously an OpenID Identity Provider (OP) and an
+				OAuth Service Provider (SP).</entry>
+			</row>
+			<row>
+				<entry>Known Host-List</entry>
+				<entry>A list of hosts wich are connected to the local website. That means we have at
+				least the hostname, consumer key and consumer secret from the remote website.</entry>
+			</row>
+		</tbody>
+		</tgroup>
+		</informaltable>
+	</chapter>
+
+	<chapter>
+		<title>Protocol Overview</title>
+		<para>The goal of this protocol is to enable local users adding remote users as friend and receive activity messages from
+		them. This specification tries to combine existing specifications like OAuth, OpenID, WebFinger, HostMeta and LRDD. We try to
+		avoid inventing new technical specifications.</para>
+	</chapter>
+
+	<chapter>
+		<title>Connecting websites</title>
+		<para>In order to add a website to the known host-list of the local website you have to exchange an oauth consumer key and
+		consumer secret with the remote website. This will be used to grant the website access to the users account and acting on its
+		behalf. By this exchange it is required to get also the hostname of the remote website. Typically this is done by having a form
+		with hostname, consumer key and consumer secret. It could be a public form where website owner can register. How the exchange
+		is done is not specified and is out-of-band for this specification. Typically the exchange is also vice versa so that the local
+		website gives also the remote website an consumer key and consumer secret.</para>
+
+		<sect1>
+			<title>Verifying the remote website</title>
+			<para>If you want add a remote website to the known host list you should verify the website with the following steps. The local
+			website should make an webfinger request to the host and try to get the host-meta XRD. Check the Host element whether its equal
+			to the provided host name.</para>
+			<programlisting role="xml"><![CDATA[
+<hm:Host xmlns:hm="http://host-meta.net/xrd/1.0">foo.com</hm:Host>
+]]></programlisting>
+			<para>In this step you should also save data for later use. I.e. look for the lrdd template url.</para>
+			<programlisting role="xml"><![CDATA[
+<Link rel="lrdd" template="https://meta.example.org/?q={uri}"  type="application/xrd+xml" />
+]]></programlisting>
+			<para>The host meta file contains also a list of websites wich are connected to the local website. A connection is represented by
+			the following link tag.</para>
+			<programlisting role="xml"><![CDATA[
+<Link rel="http://ns.amun-project.org/2011/host" href="http://bar.com">
+ <Title>bar.com</Title>
+</Link>
+]]></programlisting>
+			<para>Here an example of an simple host-meta file.</para>
+			<programlisting role="xml"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
+ <Subject>http://foo.com</Subject>
+ <hm:Host xmlns:hm="http://host-meta.net/xrd/1.0">foo.com</hm:Host>
+ <Property type="http://ns.amun-project.org/2011/meta/title">foo</Property>
+ <Property type="http://ns.amun-project.org/2011/meta/subTitle"></Property>
+ <Property type="http://ns.amun-project.org/2011/meta/timezone">UTC</Property>
+ <Link rel="lrdd" type="application/xrd+xml" template="http://foo.com/index.php/api/meta/lrdd?uri={uri}"/>
+</XRD>
+]]></programlisting>
+		</sect1>
+	</chapter>
+
+	<chapter>
+		<title>Remote authentication</title>
+		<para>The authentication is split up in two parts. First how to enable remote users sign in into the local website
+		and second how to enable your local users to sign in into a remote website.</para>
+
+		<sect1>
+			<title>Remote users sign in to the local website</title>
+			<para>Typically you will have an login form on your local website. If a user enters an email address i.e. &lt;user&gt;@&lt;host&gt;
+			you should check whether the &lt;host&gt; is in the list of connected websites. If the host belongs to an connected website you should
+			proceed with Chapter 5.1.1 else you should follow the normal login proccess.</para>
+
+			<sect2>
+				<title>Discover remote user</title>
+				<para>Start an WebFinger request to discover the users XRD file. It is recommended to use the cached template lrdd uri of the remote
+				website and directly request fot acct:&lt;user&gt;@&lt;host&gt;. If we have received an XRD check whether the subject is acct:&lt;user&gt;@&lt;host&gt;. Look
+				for the Link profile element to get the profile url from the user.</para>
+				<programlisting role="xml"><![CDATA[
+<Link rel="profile" type="text/html" href="http://foo.com/profile.htm/foo" />
+]]></programlisting>
+				<para>Take the profile url and start an OpenID Authentication request. Use the SReg and OAuth extension in the request. For the OAuth extension
+				you must use as consumer the consumer key wich we have received on connection. In the following an example user XRD</para>
+				<programlisting role="xml"><![CDATA[
+<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
+ <Subject>acct:foo@foo.com</Subject>
+ <Alias>http://foo.com/profile.htm/foo</Alias>
+ <Property type="http://ns.amun-project.org/2011/meta/id">54846198-6c1b-5f67-9ff3-33243fe61844</Property>
+ <Property type="http://ns.amun-project.org/2011/meta/name">foo</Property>
+ <Property type="http://ns.amun-project.org/2011/meta/timezone">UTC</Property>
+ <Property type="http://ns.amun-project.org/2011/meta/date">2012-03-17T11:41:18+00:00</Property>
+ <Link rel="profile" type="text/html" href="http://foo.com/profile.htm/foo"/>
+ <Link rel="alternate" type="application/atom+xml" href="http://foo.com/api/service/my/activity/foo?format=atom"/>
+ <Link rel="alternate" type="application/stream+json" href="http://foo.com/api/service/my/activity/foo?format=json"/>
+ <Link rel="http://ostatus.org/schema/1.0/subscribe" template="http://foo.com/api/service/my/subscription?topic={uri}"/>
+</XRD>
+]]></programlisting>
+			</sect2>
+
+			<sect2>
+				<title>Authentication callback</title>
+				<para>If the user has authenticated at the remote website and granted the local website access he gets redirected back to the local website.
+				Take the name from the SReg extension and create a new "remote" account. Complete the OAuth request with the request_token wich we have received from
+				the OAuth extension and save the token and token secret to the users profile. The website is now able to act on befhalf of the user.</para>
+			</sect2>
+
+		</sect1>
+
+		<sect1>
+			<title>Local users sign in to remote websites</title>
+			<para>This is the more complicated part because you have to be an Combined Provider. You must support the OpenID Sreg and OAuth Hybrid extension.
+			The services must be exposed via XRDS.</para>
+		</sect1>
+
+	</chapter>
+
+	<chapter>
+		<title>Relation</title>
+		<para>The local website can only use the Relation API if the currently logged in user is an remote user like described in Chapter 5.1. If a remote user has
+		access to the local website he wants to add a local user as friend. If he requests a friendship the local website must inform the remote website that the
+		friendship request was made. For this purpose we define the relation API wich is an endpoint to provide informations about remote relations.</para>
+		<para>While this specification makes each request with OAuth we could also do this in javascript without OAuth. Therefore we could make an OpenID "checkid_immediate"
+		request to see whether the user is authenticated. If the user is authenticated we could display a "Add as friend" button wich triggers an AJAX request to the
+		relation API endpoint. In this case the authentication is done via Cookies.</para>
+
+		<sect1>
+			<title>Discovery</title>
+			<para>The relation API should be added to the XRDS file. In this way we can discover the service by making an YADIS request to the host url. The following
+			namespace is used:</para>
+			<programlisting>http://ns.amun-project.org/2011/amun/user/friend/relation/1.0</programlisting>
+		</sect1>
+
+		<sect1>
+			<title>Request</title>
+			<para>If a user has requested a friendship request to another user and the user is an "remote" user that means he has authenticated like defined in Chapter 5
+			we send the following POST request to the endpoint. In this case the request is OAuth signed with the credentials wich we have optained in Chapter 5 but we
+			could also send an AJAX request where the user is identified based on an cookie.</para>
+			<programlisting><![CDATA[
+relation.ns
+	http://ns.amun-project.org/2011/amun/user/friend/relation/1.0
+relation.mode
+	request
+relation.host
+	foo.com
+relation.name
+	foo
+]]></programlisting>
+			<para>The remote website must verify the relation. First we check whether the host is in the list of connected websites. Then we make an webfinger request to
+			the remote host for &lt;name&gt;@&lt;host&gt; i.e. foo@foo.com. If we have verified that this user actually exist on the website we will create a remote
+			profile for the user. We can attach discovered informations from the webfinger request to the acount it is recommended to get the global id and profile url
+			of the remote user. We create a relation between the created profile and the current user (wich we can determine based on the OAuth credentials). If the request
+			was successful an positive response must sent like described in Chapter 5.2 else an negative response like described in Chapter 5.3.</para>
+		</sect1>
+
+		<sect1>
+			<title>Accept</title>
+			<para>If a user accepts the friendship request and the initiator was an "remote" user we send the following POST request to the endpoint. The request is OAuth
+			signed with the credentials wich we have optained in Chapter 5.</para>
+			<programlisting><![CDATA[
+relation.ns
+	http://ns.amun-project.org/2011/amun/user/friend/relation/1.0
+relation.mode
+	accept
+relation.host
+	foo.com
+relation.name
+	foo
+]]></programlisting>
+			<para>The remote website must verify the relation. First we check whether the host is in the list of connected websites. Then we check whether the account name was
+			already created. If this is true we can establish a relation between the user bar and foo on the remote website.</para>
+		</sect1>
+
+		<sect1>
+			<title>Deny</title>
+			<para>@todo</para>
+		</sect1>
+
+		<sect1>
+			<title>Response</title>
+			<para>The response format must depend on the Accept header field. If it is "application/xml" the endpoint must response with XML else if no Accept header field is
+			set or it is not "application/xml" the response should be JSON. The format has an field "success" as boolean indicating whether the request was successful or not
+			and an field "text" containing an humman readable message whether that the request was successful or that something goes wrong.</para>
+
+			<sect2>
+				<title>Success</title>
+				<para>An successful response must be delivered with an HTTP 200 status code. Here an example of the response in JSON and XML:</para>
+				<programlisting><![CDATA[
+{
+	success: true,
+	text: "You have successful send a request"
+}
+]]></programlisting>
+				<programlisting role="xml"><![CDATA[
+<relation xmlns="http://ns.amun-project.org/2011/amun/user/friend/relation/1.0">
+	<success>true</sccuess>
+	<text>You have successful send a request</text>
+</relation>
+]]></programlisting>
+
+			</sect2>
+
+			<sect2>
+				<title>Error</title>
+				<para>An error response should be delivered with an appropirated HTTP client or server error code. If i.e. a user or host was not found wich was
+				provided in an request you should response with an 404 status code. If an server error occured with an 500 status code etc. Here an example of the response in
+				JSON and XML:</para>
+				<programlisting><![CDATA[
+{
+	success: false,
+	text: "Something went wrong"
+}
+]]></programlisting>
+				<programlisting role="xml"><![CDATA[
+<relation xmlns="http://ns.amun-project.org/2011/amun/user/friend/relation/1.0">
+	<success>false</sccuess>
+	<text>Something went wrong</text>
+</relation>
+]]></programlisting>
+			</sect2>
+
+		</sect1>
+
+		<sect1>
+			<title>Error handling</title>
+			<para>If the "success" field indicates that the request was not successful the value of the "text" field or an costum error message should be displayed to the
+			enduser.</para>
+		</sect1>
+
+	</chapter>
+
+	<chapter>
+		<title>Content distribution</title>
+		<para>A local website must be able to send activities to remote users and to receive activities from remote websites. The following chapter
+		explains how the content distribution of activities works.</para>
+
+		<sect1>
+			<title>Receiving remote activity messages</title>
+			<para>All messages are send with an oauth authentication header. The activity messages are represented by an atom feed. The atom threading extension is used if a
+			activity is an reply of an activity.</para>
+		</sect1>
+
+		<sect1>
+			<title>Sending a activity message to an remote website</title>
+			<para>The activity message is represented by an atom feed. Use the discovered OAuth credentials from the remote user to send an POST request to the endpoint
+			containing the messages as ATOM feed.</para>
+		</sect1>
+
+		<sect1>
+			<title>Discover the message endpoint</title>
+			<para>The content distribution endpoint must be exposed in the XRDS with the following type:</para>
+			<screen>http://ns.amun-project.org/2012/amun/user/activity/message/1.0</screen>
+		</sect1>
+
+	</chapter>
+
+	<chapter>
+		<title>Privacy</title>
+		<para>@todo</para>
+	</chapter>
+
+	<glossary>
+		<glossdiv>
+			<title>Normative References</title>
+			<glossentry>
+				<glossterm>OpenID</glossterm>
+				<glossdef>
+					<para>http://openid.net/specs/openid-authentication-2_0.html</para>
+				</glossdef>
+			</glossentry>
+			<glossentry>
+				<glossterm>OAuth</glossterm>
+				<glossdef>
+					<para>http://tools.ietf.org/html/rfc5849</para>
+				</glossdef>
+			</glossentry>
+			<glossentry>
+				<glossterm>Activitystreams</glossterm>
+				<glossdef>
+					<para>http://activitystrea.ms/specs/atom/1.0/</para>
+				</glossdef>
+			</glossentry>
+			<glossentry>
+				<glossterm>Host-Meta</glossterm>
+				<glossdef>
+					<para>http://tools.ietf.org/html/draft-hammer-hostmeta-17</para>
+				</glossdef>
+			</glossentry>
+			<glossentry>
+				<glossterm>OpenSocial</glossterm>
+				<glossdef>
+					<para>http://opensocial-resources.googlecode.com/svn/spec/2.0/Social-API-Server.xml</para>
+				</glossdef>
+			</glossentry>
+		</glossdiv>
+	</glossary>
+
+</book>
