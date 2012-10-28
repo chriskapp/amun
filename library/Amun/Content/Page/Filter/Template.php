@@ -36,7 +36,7 @@ class Amun_Content_Page_Filter_Template extends PSX_FilterAbstract
 {
 	private $config;
 
-	public function __construct(psx_config $config)
+	public function __construct(PSX_Config $config)
 	{
 		$this->config = $config;
 	}
