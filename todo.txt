@@ -1,7 +1,7 @@
 
 [FEATURES]
 
-[ ] Create ant build file for building the release and docs
+[x] Add possibility to upload media in different folders
 [ ] Implement reference input field in backend
 [ ] comments wich are added should not force a reload instead they should be
     added directly to the html
@@ -27,53 +27,11 @@
     framework because its not amun specific and a well written proxy is in
     general needed
 [ ] test ostatus remote subscription interoperability
-[/] Implement OpenAjax_Hub_2.0 / OpenSocial gadget javascript libraries for
-    gadgets
-[x] Move to github
-[x] Add pipe service wich redirects the content of an file to the service output
-    Depending on the file extension we use different output. If its an html we
-    use the raw content if its md we use an markdown parser if its txt we use
-    the pre tag etc. In this way you could easily take your content under 
-    version control.
-[x] Add ace editor
-[x] Add page tree to content page panel
-[x] Add gadgets to page add/edit
-[x] test lrdd / foaf / oembed and media upload
-[x] test whether services can be installed with a custom global namespace and
-    not in the "amun service" namespace
-[x] implement limitation so that a user can insert max x entries per day to the
-    database to protect from malicious user. we can place it in the backend at
-    system / security ... an admin can set there all limits. We can use the
-    system_logging table to see how much entries a user has made at this day.
-    Probably display an captcha after the user has inserted x entries
-[x] general way for gadgets to add appdata to a specific gadget.
-[x] authorProfileUrl and authorThumbnailUrl are not correct handeled by the
-    fields param by an api request
-[x] If we create a remote user we must get the global id from the remote website
-    so we dont have to generate a global id because else the relation get lost
-[x] implement the activity streams object in the atom feed
-[x] implement a parser wich searches a content for @[user_name] or other
-    commands and add a link to the user profile like on twitter or status.net
-    also add syntax highliting ... all this should be done by hacking something
-    into htmlpurifier at the class amun / filter / htmlpurifier ...
-    so you can type [url_title] to refer to another page and !group for a
-    specific group and #tag for an tag
-[x] test openid statusnet interoperability
-[x] test openid interoperability between different systems i.e. status.net,
-    wordpress, drupal) (tested successful with openid4java library google and
-    yahoo)
-[x] my service add privacy settings so users can set who can see the activity
-    entries ... at the moment all entries are public
-[x] my service option to change password (or set pw if you are logged in via
-    openid)
-[x] option for users to hide an activity
-[x] add user friend groups to my service so users can organize friends into
-    groups wich is useful for other services i.e. pm so you can write a pm to a
-    specific group or privacy to show activiies only to a specific group of
-    users
 
 [SERVICES]
 
+[ ] add tent (https://tent.io/) app wich can post and receive messages for an 
+    user maybe integrate this into my service
 [ ] add sitemap service
 [ ] write docbook plugin wich can displays docbook xml
 [ ] build api generator service wich builds based on the library classes an
@@ -126,6 +84,51 @@
 
 [DONE]
 
+[x] Create ant build file for building the release and docs
+[/] Implement OpenAjax_Hub_2.0 / OpenSocial gadget javascript libraries for
+    gadgets
+[x] Move to github
+[x] Add pipe service wich redirects the content of an file to the service output
+    Depending on the file extension we use different output. If its an html we
+    use the raw content if its md we use an markdown parser if its txt we use
+    the pre tag etc. In this way you could easily take your content under 
+    version control.
+[x] Add ace editor
+[x] Add page tree to content page panel
+[x] Add gadgets to page add/edit
+[x] test lrdd / foaf / oembed and media upload
+[x] test whether services can be installed with a custom global namespace and
+    not in the "amun service" namespace
+[x] implement limitation so that a user can insert max x entries per day to the
+    database to protect from malicious user. we can place it in the backend at
+    system / security ... an admin can set there all limits. We can use the
+    system_logging table to see how much entries a user has made at this day.
+    Probably display an captcha after the user has inserted x entries
+[x] general way for gadgets to add appdata to a specific gadget.
+[x] authorProfileUrl and authorThumbnailUrl are not correct handeled by the
+    fields param by an api request
+[x] If we create a remote user we must get the global id from the remote website
+    so we dont have to generate a global id because else the relation get lost
+[x] implement the activity streams object in the atom feed
+[x] implement a parser wich searches a content for @[user_name] or other
+    commands and add a link to the user profile like on twitter or status.net
+    also add syntax highliting ... all this should be done by hacking something
+    into htmlpurifier at the class amun / filter / htmlpurifier ...
+    so you can type [url_title] to refer to another page and !group for a
+    specific group and #tag for an tag
+[x] test openid statusnet interoperability
+[x] test openid interoperability between different systems i.e. status.net,
+    wordpress, drupal) (tested successful with openid4java library google and
+    yahoo)
+[x] my service add privacy settings so users can set who can see the activity
+    entries ... at the moment all entries are public
+[x] my service option to change password (or set pw if you are logged in via
+    openid)
+[x] option for users to hide an activity
+[x] add user friend groups to my service so users can organize friends into
+    groups wich is useful for other services i.e. pm so you can write a pm to a
+    specific group or privacy to show activiies only to a specific group of
+    users
 [x] write plugin service where users can create and maintain plugins and add new
     releases. Other users can download rat and report problems to this plugin
 [x] write tracker plugin where users can add and download torrent files. The

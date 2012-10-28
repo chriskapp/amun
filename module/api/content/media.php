@@ -38,7 +38,7 @@ class media extends Amun_Module_RestAbstract
 	protected function getSelection()
 	{
 		return $this->getTable()
-			->select(array('id', 'name', 'size', 'mimeType', 'date'));
+			->select(array('id', 'path', 'size', 'mimeType', 'date'));
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)

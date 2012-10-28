@@ -48,6 +48,12 @@ class Amun_Content_Media_Form extends Amun_Data_FormAbstract
 		$panel->add($rightId);
 
 
+		$folder = new Amun_Form_Element_Select('folder', 'Folder', '.');
+		$folder->setOptions($this->getFolder());
+
+		$panel->add($folder);
+
+
 		$path = new Amun_Form_Element_Input('path', 'File');
 		$path->setType('file');
 
@@ -92,11 +98,11 @@ class Amun_Content_Media_Form extends Amun_Data_FormAbstract
 		$panel->add($rightId);
 
 
-		$name = new Amun_Form_Element_Input('name', 'Name', $record->name);
-		$name->setType('text');
-		$name->setDisabled(true);
+		$path = new Amun_Form_Element_Input('path', 'Path', $record->path);
+		$path->setType('text');
+		$path->setDisabled(true);
 
-		$panel->add($name);
+		$panel->add($path);
 
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
@@ -138,11 +144,11 @@ class Amun_Content_Media_Form extends Amun_Data_FormAbstract
 		$panel->add($rightId);
 
 
-		$name = new Amun_Form_Element_Input('name', 'Name', $record->name);
-		$name->setType('text');
-		$name->setDisabled(true);
+		$path = new Amun_Form_Element_Input('path', 'Path', $record->path);
+		$path->setType('text');
+		$path->setDisabled(true);
 
-		$panel->add($name);
+		$panel->add($path);
 
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
@@ -194,6 +200,46 @@ class Amun_Content_Media_Form extends Amun_Data_FormAbstract
 		}
 
 		return $right;
+	}
+
+	private function getFolder($path = null)
+	{
+		$folder = array();
+
+		if($path === null)
+		{
+			$path = $this->registry['core.media_path'];
+
+			array_push($folder, array(
+
+				'label' => '.',
+				'value' => '.',
+
+			));
+		}
+
+		$files = scandir($path);
+
+		foreach($files as $file)
+		{
+			$item = $path . '/' . $file;
+
+			if($file[0] != '.' && is_dir($item))
+			{
+				$value = substr($item, strlen($this->registry['core.media_path']) + 1);
+
+				array_push($folder, array(
+
+					'label' => $value,
+					'value' => $value,
+
+				));
+
+				$folder = array_merge($folder, $this->getFolder($item));
+			}
+		}
+
+		return $folder;
 	}
 }
 

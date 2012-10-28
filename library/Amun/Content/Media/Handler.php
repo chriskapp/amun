@@ -61,8 +61,9 @@ class Amun_Content_Media_Handler extends Amun_Data_HandlerAbstract
 				}
 
 				// move file
-				$name = $record->name;
-				$path = $this->registry['core.media_path'] . '/' . $name;
+				$folder = isset($record->folder) ? $record->folder : '.';
+				$name   = $record->name;
+				$path   = $this->registry['core.media_path'] . '/' . $folder . '/' . $name;
 
 				if(is_file($path))
 				{
@@ -72,7 +73,7 @@ class Amun_Content_Media_Handler extends Amun_Data_HandlerAbstract
 				if($record->path->move($path))
 				{
 					$record->type = $type;
-					$record->path = $name;
+					$record->path = $folder == '.' ? $name : $folder . '/' . $name;
 				}
 				else
 				{

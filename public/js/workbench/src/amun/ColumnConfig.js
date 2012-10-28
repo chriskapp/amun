@@ -26,7 +26,7 @@ Ext.define('Amun.ColumnConfig', {
 
         this.add('http://ns.amun-project.org/2011/amun/content/media', {
             id: '60',
-            name: '328',
+            path: '328',
             size: '80',
             mimeType: '160',
             date: '120'

@@ -36,6 +36,16 @@ class Amun_Content_Media extends Amun_Data_RecordAbstract
 {
 	protected $_user;
 
+	public function getFields()
+	{
+		$fields = parent::getFields();
+
+		// add folder field
+		$fields['folder'] = isset($this->folder) ? $this->folder : null;
+
+		return $fields;
+	}
+
 	public function setId($id)
 	{
 		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
@@ -57,6 +67,20 @@ class Amun_Content_Media extends Amun_Data_RecordAbstract
 		if(!$this->_validate->hasError())
 		{
 			$this->rightId = $rightId;
+		}
+		else
+		{
+			throw new PSX_Data_Exception($this->_validate->getLastError());
+		}
+	}
+
+	public function setFolder($folder)
+	{
+		$folder = $this->_validate->apply($folder, 'string', array(new Amun_Content_Media_Filter_Folder($this->_registry)), 'folder', 'Folder');
+
+		if(!$this->_validate->hasError())
+		{
+			$this->folder = $folder;
 		}
 		else
 		{
