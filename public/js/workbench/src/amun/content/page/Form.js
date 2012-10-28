@@ -10,6 +10,15 @@ Ext.define('Amun.content.page.Form', {
         this.loadGadgets();
     },
 
+    reload: function(){
+        this.getForm().reset();
+
+        // load existing gadgets
+        if (this.recordId > 0) {
+            this.loadExistingGadgets();
+        }
+    },
+
     loadGadgets: function(){
         var gadgetUri = Amun.xrds.Manager.findServiceUri('http://ns.amun-project.org/2011/amun/content/gadget');
         if (gadgetUri !== false) {

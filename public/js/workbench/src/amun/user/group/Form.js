@@ -10,6 +10,15 @@ Ext.define('Amun.user.group.Form', {
         this.loadRights();
     },
 
+    reload: function(){
+        this.getForm().reset();
+
+        // load existing rights
+        if (this.recordId > 0) {
+            this.loadExistingRights();
+        }
+    },
+
     loadRights: function(){
         var rightUri = Amun.xrds.Manager.findServiceUri('http://ns.amun-project.org/2011/amun/user/right');
         if (rightUri !== false) {

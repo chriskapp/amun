@@ -17,7 +17,7 @@ Ext.define('Amun.Form', {
     },
 
     reload: function(){
-        this.fireEvent('reset', this);
+        this.getForm().reset();
     },
 
     getAction: function(){
