@@ -1,6 +1,7 @@
 
 [FEATURES]
 
+[ ] possiblity to add more meta data to a page (keywords, description)
 [x] Add possibility to upload media in different folders
 [ ] Implement reference input field in backend
 [ ] comments wich are added should not force a reload instead they should be
@@ -30,6 +31,8 @@
 
 [SERVICES]
 
+[ ] add phpinfo backend service
+[ ] add database backend service
 [ ] add tent (https://tent.io/) app wich can post and receive messages for an 
     user maybe integrate this into my service
 [ ] add sitemap service
@@ -244,7 +247,6 @@
 [x] add dashboard to backedn tabs: latest user, stats, user map, option to add
     plugin backend to the dashboard, api requests, analytics,
 [x] upgrade underlying psx framework to version 0.3.1 (big task ^^)
-[x] possiblity to add meta data to a page
 [x] check whether ciritcal security hole exists that normal user can login to
     the backend (does not exitst we check whether the user has an admin status)
 [x] we need a general way where gadgets can store config options ... probably we
