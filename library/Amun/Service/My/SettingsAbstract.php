@@ -43,9 +43,11 @@ abstract class Amun_Service_My_SettingsAbstract extends Amun_Service_My_MyAbstra
 		$settings = new Amun_Option('settings', $this->registry, $this->user, $this->page);
 		$settings->add('service_my_view', 'Account', $this->page->url . '/settings');
 		$settings->add('service_my_view', 'Security', $this->page->url . '/settings/security');
+		/*
 		$settings->add('service_my_view', 'Contact', $this->page->url . '/settings/contact');
 		$settings->add('service_my_view', 'Notification', $this->page->url . '/settings/notification');
 		$settings->add('service_my_view', 'Subscription', $this->page->url . '/settings/subscription');
+		*/
 		$settings->add('service_my_view', 'Connection', $this->page->url . '/settings/connection');
 		$settings->add('service_my_view', 'Application', $this->page->url . '/settings/application');
 		$settings->load(array($this->page));
