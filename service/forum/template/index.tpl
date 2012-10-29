@@ -29,7 +29,7 @@
 	<?php foreach($resultForum->entry as $record): ?>
 	<tr class="amun-service-forum-entry" id="thread-<?php echo $record->id; ?>">
 		<td>
-			<h2><a href="<?php echo $record->getUrl(); ?>"><?php echo $record->isSticky() ? '<strong>' . $record->title . '</strong>' : $record->title; ?></a></h2>
+			<h3><a href="<?php echo $record->getUrl(); ?>"><?php echo $record->isSticky() ? '<strong>' . $record->title . '</strong>' : $record->title; ?></a></h3>
 			<p class="muted">
 				by <a href="<?php echo $record->authorProfileUrl; ?>"><?php echo $record->authorName; ?></a>
 				on <time datetime="<?php echo $record->getDate()->format(DateTime::ATOM); ?>"><?php echo $record->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></time>
