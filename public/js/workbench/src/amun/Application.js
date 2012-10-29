@@ -12,10 +12,6 @@ Ext.define('Amun.Application', {
         Ext.apply(this, config);
     },
 
-    statics: {
-        columnConfig: Ext.create('Amun.ColumnConfig')
-    },
-
     start: function(){
         // discover services
         Amun.xrds.Manager.discover({

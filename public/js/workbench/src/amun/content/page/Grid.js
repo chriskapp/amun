@@ -75,7 +75,13 @@ Ext.define('Amun.content.page.Grid', {
             border: false,
             region: 'center',
             service: this.service,
-            result: this.result
+            result: this.result,
+            columnConfig: {
+                id: 80,
+                title: 300,
+                template: 300,
+                date: 120
+            }
         });
 
         this.grid.on('reload', function(){

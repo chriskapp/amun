@@ -6,6 +6,7 @@ Ext.define('Amun.Grid', {
     result: null,
     selectedRecordId: null,
 
+    columnConfig: false,
     windowCache: {},
 
     initComponent: function(){
@@ -39,6 +40,35 @@ Ext.define('Amun.Grid', {
             idProperty: 'id'
         });
 
+        // columns
+        var columns = [];
+        var searchColumns = [];
+        var fields = '';
+
+        // check whether we have an config
+        var config = this.getColumnConfig();
+        if (typeof config == 'object') {
+            for (var k in config) {
+                columns.push({
+                    text: k,
+                    width: config[k],
+                    dataIndex: k
+                });
+                searchColumns.push(k);
+                fields+= k + ',';
+            }
+        } else {
+            // we have no config select all available fields
+            for (var i = 0; i < result.length; i++) {
+                columns.push({
+                    text: result[i],
+                    dataIndex: result[i]
+                });
+                searchColumns.push(k);
+                fields+= k + ',';
+            }
+        }
+
         // create store
         var store = Ext.create('Ext.data.Store', {
             model: modelNs,
@@ -55,6 +85,7 @@ Ext.define('Amun.Grid', {
                 sortParam: 'sortBy',
                 directionParam: 'sortOrder',
                 startParam: 'startIndex',
+                extraParams: {fields: fields},
                 simpleSortMode: true,
                 reader: {
                     type: 'json',
@@ -64,40 +95,6 @@ Ext.define('Amun.Grid', {
                 }
             }
         });
-
-        // columns
-        var columns = [];
-        var searchColumns = [];
-
-        // check whether we have an config
-        var types = service.getTypes();
-        var config = null;
-        for (var i = 0; i < types.length; i++) {
-            var ty = Amun.Application.columnConfig.getConfigByType(types[i]);
-            if (ty != null) {
-                config = ty;
-            }
-        }
-
-        if (config) {
-            for (var k in config) {
-                columns.push({
-                    text: k,
-                    //width: config[k],
-                    dataIndex: k
-                });
-                searchColumns.push(k);
-            }
-        } else {
-            // we have no config select all available fields
-            for (var i = 0; i < result.length; i++) {
-                columns.push({
-                    text: result[i],
-                    dataIndex: result[i]
-                });
-                searchColumns.push(k);
-            }
-        }
 
         // build grid
         return {
@@ -355,6 +352,21 @@ Ext.define('Amun.Grid', {
         if (e.getKey() == e.ENTER) {
             this.onSearchClick(el);
         }
+    },
+
+    /**
+     * This method should be overwrite by extending classes to provide a grid 
+     * config. It is recommended that the complete width of all columns is 800. 
+     * The method should return an object wich looks like:
+     * {
+     *  "column1": "width",
+     *  "column2": "width"
+     * }
+     *
+     * @return object
+     */
+    getColumnConfig: function(){
+        return this.columnConfig;
     }
 
 });
