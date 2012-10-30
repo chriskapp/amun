@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="c488c7bbbcc5b008f7d93f1f32f0dea465a490a5">
+  <status>normal</status>
+  <name>tracker</name>
+  <path>/service/tracker</path>
+  <namespace>Amun_Service_Tracker</namespace>
+  <type>http://ns.amun-project.org/2011/amun/service/tracker</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <required>
+    <service>org.amun-project.comment</service>
+  </required>
+  <permissions>
+    <perm name="view" description="Service Tracker View" />
+    <perm name="add" description="Service Tracker Add" />
+    <perm name="edit" description="Service Tracker Edit" />
+    <perm name="delete" description="Service Tracker Delete" />
+    <perm name="comment_add" description="Service Tracker Comment Add" />
+  </permissions>
+  <library>
+    <dir name="Amun">
+      <dir name="Service">
+        <dir name="Tracker">
+          <dir name="Peer">
+            <file name="Table.php" md5="016eac46a9170a423e4d8d73f02ae856"/>
+          </dir>
+          <file name="Form.php" md5="854ab98d0c0640a9f9cccdba95d65623"/>
+          <file name="Handler.php" md5="7d3b46a8ae704273f8da96878903b8b9"/>
+          <file name="Table.php" md5="9d9996ef00ef03d54e40466d00830c10"/>
+        </dir>
+        <file name="Tracker.php" md5="95c35c58488fc619f01ccf6fc838a7a1"/>
+      </dir>
+    </dir>
+  </library>
+  <database>
+    <query><![CDATA[INSERT INTO `{table.amun_system_registry}` (`name`, `type`, `value`) VALUES
+('tracker.upload_path', 'STRING', '../cache'),
+('table.amun_service_tracker', 'STRING', '{config.table_prefix}service_tracker'),
+('table.amun_service_tracker_peer', 'STRING', '{config.table_prefix}service_tracker_peer');]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.amun_service_tracker}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `globalId` varchar(36) NOT NULL,
+  `pageId` int(10) NOT NULL,
+  `userId` int(10) NOT NULL,
+  `urlTitle` varchar(128) NOT NULL,
+  `title` varchar(128) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `length` int(10) NOT NULL,
+  `seeder` int(10) NOT NULL DEFAULT '0',
+  `leecher` int(10) NOT NULL DEFAULT '0',
+  `completed` int(10) NOT NULL DEFAULT '0',
+  `infoHash` varchar(40) NOT NULL,
+  `torrent` varchar(40) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `globalId` (`globalId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.amun_service_tracker_peer}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `infoHash` varchar(40) NOT NULL,
+  `peerId` varchar(40) NOT NULL,
+  `ip` varchar(32) NOT NULL,
+  `port` int(10) NOT NULL,
+  `uploaded` int(10) NOT NULL,
+  `downloaded` int(10) NOT NULL,
+  `left` int(10) NOT NULL,
+  `event` varchar(12) NOT NULL,
+  `key` varchar(64) NOT NULL,
+  `status` varchar(32) NOT NULL,
+  `client` varchar(128) NOT NULL,
+  `priority` int(10) NOT NULL DEFAULT '0',
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `infoHashPeerId` (`infoHash`,`peerId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+    <query storeID="content_api"><![CDATA[INSERT INTO `{table.amun_content_api}` (`serviceId`, `priority`, `endpoint`) VALUES
+({service.id}, 0, 'service/tracker');]]></query>
+    <query><![CDATA[INSERT INTO `{table.amun_content_api_type}` (`apiId`, `type`) VALUES
+({id.content_api}, '{service.type}'),
+({id.content_api}, 'http://ns.amun-project.org/2011/amun/data/1.0');]]></query>
+    <query storeID="content_api"><![CDATA[INSERT INTO `{table.amun_content_api}` (`serviceId`, `priority`, `endpoint`) VALUES
+({service.id}, 0, 'service/tracker/announce');]]></query>
+    <query><![CDATA[INSERT INTO `{table.amun_content_api_type}` (`apiId`, `type`) VALUES
+({id.content_api}, '{service.type}/announce');]]></query>
+    <query><![CDATA[INSERT INTO `{table.amun_content_service_option}` (`serviceId`, `name`) VALUES
+({service.id}, 'index'),
+({service.id}, 'view');]]></query>
+    <query><![CDATA[INSERT INTO `{table.amun_user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
+('INSERT', 'add', 'amun_service_tracker', 'view?id={record.id}', '<p><a href="{user.profileUrl}">{user.name}</a> has added a <a href="{object.url}">torrent</a></p>');]]></query>
+    <if hasService="my">
+      <query><![CDATA[INSERT INTO `{table.amun_service_my_notify_service}` (`table`, `title`) VALUES
+('amun_service_tracker', 'Tracker');]]></query>
+    </if>
+  </database>
+</service>

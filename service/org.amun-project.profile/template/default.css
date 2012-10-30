@@ -1,0 +1,52 @@
+
+div.amun-service-profile
+{
+}
+
+div.amun-service-profile-header
+{
+}
+
+div.amun-service-profile-header img
+{
+	margin-right:6px;
+}
+
+div.amun-service-profile-activity
+{
+
+}
+
+div.amun-service-profile-activity-entry
+{
+	margin-top:14px;
+}
+
+div.amun-service-profile-activity-entry h4
+{
+	margin:0px
+}
+
+div.amun-service-profile-activity-entry-hidden
+{
+	opacity:0.6;
+}
+
+div.amun-service-profile-activity-entry-avatar
+{
+	width:48px;
+	padding-right:4px;
+}
+
+div.amun-service-profile-activity-entry-content
+{
+	width:742px;
+	padding-left:4px;
+	border-left:1px solid #eee;
+}
+
+.amun-service-profile-activity-entry p.muted
+{
+	margin:0px;
+	font-size:0.8em;
+}

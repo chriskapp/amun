@@ -1,0 +1,24 @@
+
+div.amun-service-comment-entry
+{
+	margin-top:14px;
+}
+
+div.amun-service-comment-avatar
+{
+	width:48px;
+	padding-right:4px;
+}
+
+div.amun-service-comment-content
+{
+	width:742px;
+	padding-left:4px;
+	border-left:1px solid #eee;
+}
+
+div.amun-service-comment-content .muted
+{
+	margin:0px;
+	margin-bottom:4px;
+}
