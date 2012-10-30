@@ -34,45 +34,39 @@
  */
 abstract class Amun_Module_FormAbstract extends Amun_Module_ApiAbstract
 {
-	public function onLoad()
-	{
-		// determine namespace
-		$this->ns = strtolower(str_replace('/', '_', substr($this->basePath, 4, -5)));
-	}
+	protected $method;
+	protected $form;
 
 	public function onGet()
 	{
-		if($this->user->hasRight($this->ns . '_view'))
+		if($this->service->hasViewRight())
 		{
 			try
 			{
-				$method  = $this->get->method('string');
-				$builder = $this->getForm();
+				$this->method = $this->get->method('string');
+				$this->form   = $this->getForm();
 
-				switch($method)
+				if($this->form === null)
+				{
+					throw new Amun_Exception('Form class not available'); 
+				}
+
+				switch($this->method)
 				{
 					case 'create':
-
-						$form = $builder->create();
-
+						$form = $this->getCreateForm();
 						break;
 
 					case 'update':
-
-						$form = $builder->update($this->get->id('integer'));
-
+						$form = $this->getUpdateForm();
 						break;
 
 					case 'delete':
-
-						$form = $builder->delete($this->get->id('integer'));
-
+						$form = $this->getDeleteForm();
 						break;
 
 					default:
-
 						throw new Amun_Exception('Invalid method');
-
 						break;
 				}
 
@@ -93,29 +87,24 @@ abstract class Amun_Module_FormAbstract extends Amun_Module_ApiAbstract
 		}
 	}
 
+	protected function getCreateForm()
+	{
+		return $this->form->create();
+	}
+
+	protected function getUpdateForm()
+	{
+		return $this->form->update($this->get->id('integer'));
+	}
+
+	protected function getDeleteForm()
+	{
+		return $this->form->delete($this->get->id('integer'));
+	}
+
 	protected function getForm()
 	{
-		$name = $this->registry->getTableName($this->ns);
-
-		if($name !== false)
-		{
-			$class = Amun_Registry::getClassName($name . '_Form');
-
-			if(class_exists($class))
-			{
-				$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . substr($this->basePath, 0, -5);
-
-				return new $class($url);
-			}
-			else
-			{
-				throw new PSX_Data_Exception('Form class "' . $class . '" does not exist');
-			}
-		}
-		else
-		{
-			throw new PSX_Data_Exception('Invalid "' . $this->ns . '" form');
-		}
+		return $this->service->getFormInstance();
 	}
 }
 

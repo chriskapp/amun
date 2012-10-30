@@ -42,8 +42,6 @@ class Amun_Gadget extends ArrayObject
 
 	public function __construct(Amun_Registry $registry)
 	{
-		parent::__construct($this->gadgets);
-
 		$this->config   = $registry->getConfig();
 		$this->sql      = $registry->getSql();
 		$this->registry = $registry;
@@ -54,6 +52,11 @@ class Amun_Gadget extends ArrayObject
 		return $this->getIterator()->valid();
 	}
 
+	/**
+	 * Returns the content next gadget and removes it from the list
+	 *
+	 * @return string
+	 */
 	public function get()
 	{
 		$iterator = $this->getIterator();
@@ -79,6 +82,8 @@ class Amun_Gadget extends ArrayObject
 	 */
 	public function load(Amun_Page $page)
 	{
+		$this->exchangeArray($this->gadgets = array());
+
 		$sql = <<<SQL
 SELECT
 

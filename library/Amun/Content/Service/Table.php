@@ -50,7 +50,10 @@ class Amun_Content_Service_Table extends Amun_Sql_TableAbstract
 
 			'id' => self::TYPE_INT | 10 | self::PRIMARY_KEY,
 			'status' => self::TYPE_INT | 10,
+			'source' => self::TYPE_VARCHAR | 128,
 			'name' => self::TYPE_VARCHAR | 32,
+			'path' => self::TYPE_VARCHAR | 256,
+			'namespace' => self::TYPE_VARCHAR | 64,
 			'type' => self::TYPE_VARCHAR | 256,
 			'link' => self::TYPE_VARCHAR | 256,
 			'author' => self::TYPE_VARCHAR | 512,

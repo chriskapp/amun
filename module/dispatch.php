@@ -137,7 +137,7 @@ class dispatch extends Amun_Module_ApplicationAbstract
 			$content = ob_get_contents();
 
 			// proccess response
-			if($service instanceof PSX_ModuleAbstract)
+			if($service instanceof Amun_Module_ApplicationAbstract)
 			{
 				$response = $service->processResponse($content);
 			}

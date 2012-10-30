@@ -39,9 +39,7 @@ class Amun_Page
 	private $registry;
 	private $user;
 
-	public $applicationPath;
-	public $url;
-	public $gadgets;
+	private $_service;
 
 	public $id;
 	public $parentId;
@@ -59,6 +57,9 @@ class Amun_Page
 	public $module;
 	public $date;
 
+	public $applicationPath;
+	public $url;
+
 	public function __construct(Amun_Registry $registry, Amun_User $user)
 	{
 		$this->config   = $registry->getConfig();
@@ -68,7 +69,7 @@ class Amun_Page
 
 
 		$status = Amun_Content_Page::NORMAL;
-		$sql    = <<<EOD
+		$sql    = <<<SQL
 SELECT
 
 	page.id          AS `pageId`,
@@ -84,7 +85,7 @@ SELECT
 	page.cache       AS `pageCache`,
 	page.expire      AS `pageExpire`,
 	page.date        AS `pageDate`,
-	service.name     AS `serviceName`
+	service.source   AS `serviceSource`
 
 	FROM {$this->registry['table.content_page']} `page`
 
@@ -93,7 +94,7 @@ SELECT
 		ON `page`.`serviceId` = `service`.`id`
 
 			WHERE `page`.`id` = ?
-EOD;
+SQL;
 
 		$row = $this->sql->getRow($sql, array($this->getId()));
 
@@ -118,13 +119,23 @@ EOD;
 			$this->expire      = $row['pageExpire'];
 			$this->date        = $row['pageDate'];
 
-			$this->application = $row['serviceName'];
+			$this->application = $row['serviceSource'];
 			$this->url         = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $row['pagePath'] . $this->config['amun_page_delimiter'];
 		}
 		else
 		{
 			throw new Amun_Exception('Invalid page');
 		}
+	}
+
+	public function getService()
+	{
+		if($this->_service === null)
+		{
+			$this->_service = new Amun_Service($this->serviceId, $this->registry, $this->user);
+		}
+
+		return $this->_service;
 	}
 
 	public function getId()
@@ -190,11 +201,6 @@ SQL;
 				$this->user->setRights($row['newGroupId']);
 			}
 		}
-	}
-
-	public function getGadgets()
-	{
-		return $this->gadgets;
 	}
 
 	public function hasRight()

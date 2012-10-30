@@ -38,5 +38,29 @@ abstract class Amun_Module_ApplicationAbstract extends PSX_Module_ViewAbstract
 	{
 		return new Amun_Dependency_Application();
 	}
+
+	/**
+	 * Helper method to build the options for an application. Using the option
+	 * class has the advantage that other services can easily extend the service
+	 * by injecting links into the option menu
+	 *
+	 * @param array $data
+	 * @return void
+	 */
+	protected function setOptions(array $data)
+	{
+		$options = new Amun_Option(__CLASS__, $this->registry, $this->user, $this->page);
+
+		foreach($data as $row)
+		{
+			list($rightName, $title, $url) = $row;
+
+			$options->add($rightName, $title, $url);
+		}
+
+		$options->load(array($this->page));
+
+		$this->template->assign('options', $options);
+	} 
 }
 

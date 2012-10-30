@@ -36,6 +36,7 @@ abstract class Amun_Module_ApiAbstract extends Amun_Oauth
 {
 	protected $session;
 	protected $user;
+	protected $service;
 
 	public function __construct(PSX_Base $base, $basePath, array $uriFragments)
 	{
@@ -55,16 +56,8 @@ abstract class Amun_Module_ApiAbstract extends Amun_Oauth
 			$this->session->start();
 
 			$this->user = $this->base->setUser(Amun_User::getId($this->session, $this->registry));
-		}
 
-		// correct base path if loaded from the service folder
-		$parts = explode('/', $this->basePath, 3);
-
-		if($parts[0] != 'api')
-		{
-			unset($parts[1]);
-
-			$this->basePath = 'api/service/' . implode('/', $parts);
+			$this->setService();
 		}
 	}
 
@@ -81,6 +74,18 @@ abstract class Amun_Module_ApiAbstract extends Amun_Oauth
 
 		$this->user = $this->base->setUser($this->claimedUserId);
 		$this->user->requestId = $this->requestId;
+
+		$this->setService();
+	}
+
+	public function setService()
+	{
+		// set service
+		$parts     = explode('/', $this->basePath, 2);
+		$con       = new PSX_Sql_Condition(array('source', '=', $parts[0]));
+		$serviceId = Amun_Sql_Table_Registry::get('Content_Service')->getField('id', $con);
+
+		$this->service  = new Amun_Service($serviceId, $this->registry, $this->user);
+		$this->basePath = 'api' . $this->service->path;
 	}
 }
-

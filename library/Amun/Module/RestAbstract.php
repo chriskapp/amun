@@ -34,17 +34,9 @@
  */
 abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 {
-	protected $ns;
-
-	public function onLoad()
-	{
-		// determine namespace
-		$this->ns = strtolower(str_replace('/', '_', substr($this->basePath, 4)));
-	}
-
 	public function onGet()
 	{
-		if($this->user->hasRight($this->ns . '_view'))
+		if($this->service->hasViewRight())
 		{
 			try
 			{
@@ -87,7 +79,7 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 
 	public function onPost()
 	{
-		if($this->user->hasRight($this->ns . '_add'))
+		if($this->service->hasAddRight())
 		{
 			try
 			{
@@ -137,7 +129,7 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 
 	public function onPut()
 	{
-		if($this->user->hasRight($this->ns . '_edit'))
+		if($this->service->hasEditRight())
 		{
 			try
 			{
@@ -194,7 +186,7 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 
 	public function onDelete()
 	{
-		if($this->user->hasRight($this->ns . '_delete'))
+		if($this->service->hasDeleteRight())
 		{
 			try
 			{
@@ -249,37 +241,19 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 		}
 	}
 
-	protected function getTable()
-	{
-		return Amun_Sql_Table_Registry::get($this->ns);
-	}
-
 	protected function getSelection()
 	{
 		return $this->getTable()->select(array('*'));
 	}
 
+	protected function getTable()
+	{
+		return $this->service->getTableInstance();
+	}
+
 	protected function getHandler()
 	{
-		$name = $this->registry->getTableName($this->ns);
-
-		if($name !== false)
-		{
-			$class = Amun_Registry::getClassName($name . '_Handler');
-
-			if(class_exists($class))
-			{
-				return new $class($this->user);
-			}
-			else
-			{
-				throw new PSX_Data_Exception('Handler class "' . $class . '" does not exist');
-			}
-		}
-		else
-		{
-			throw new PSX_Data_Exception('Invalid "' . $this->ns . '" handler');
-		}
+		return $this->service->getHandlerInstance();
 	}
 
 	protected function getMode()
@@ -289,17 +263,13 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 		switch($format)
 		{
 			case 'atom':
-
 				return PSX_Sql::FETCH_OBJECT;
-
 				break;
 
 			case 'xml':
 			case 'json':
 			default:
-
 				return PSX_Sql::FETCH_ASSOC;
-
 				break;
 		}
 	}

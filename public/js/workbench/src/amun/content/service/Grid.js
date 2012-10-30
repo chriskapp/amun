@@ -4,7 +4,7 @@ Ext.define('Amun.content.service.Grid', {
 
     columnConfig: {
         id: 80,
-        name: 300,
+        source: 300,
         version: 300,
         date: 120
     }

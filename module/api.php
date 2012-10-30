@@ -31,7 +31,7 @@
  * @category   module
  * @version    $Revision: 716 $
  */
-class api extends PSX_ModuleAbstract
+class api extends Amun_Module_DefaultAbstract
 {
 	public function onLoad()
 	{
@@ -40,9 +40,9 @@ class api extends PSX_ModuleAbstract
 
 		// validate input path
 		$x     = trim($this->config['psx_module_input'], '/');
-		$parts = explode('/', $x, 4);
+		$parts = explode('/', $x, 2);
 
-		if(count($parts) < 3)
+		if(count($parts) < 2)
 		{
 			throw new PSX_Exception('Invalid request', 400);
 		}
@@ -52,27 +52,28 @@ class api extends PSX_ModuleAbstract
 			throw new PSX_Exception('Invalid request', 400);
 		}
 
-		if(!isset($parts[1]) || $parts[1] != 'service')
-		{
-			throw new PSX_Exception('Invalid request', 400);
-		}
+		$path = '/' . $parts[1];
 
-		$con     = new PSX_Sql_Condition(array('name', '=', $parts[2]));
-		$service = Amun_Sql_Table_Registry::get('Content_Service')->getField('name', $con);
+		// get service
+		$sql = "SELECT
+					`id`,
+					`source`,
+					`path`
+				FROM
+					" . $this->registry['table.amun_content_service'] . "
+				WHERE
+					`path` LIKE SUBSTRING(?, 1, CHAR_LENGTH(`path`))
+				LIMIT 1";
+
+		$service = $this->sql->getRow($sql, array($path));
 
 		if(!empty($service))
 		{
-			if(isset($parts[3]))
-			{
-				$path = $service . '/api/' . $parts[3];
-			}
-			else
-			{
-				$path = $service . '/api';
-			}
+			$path = substr($path, strlen($service['path']) + 1);
+			$x    = $service['source'] . '/api/' . $path;
 
 			// load api
-			$this->loader->load($path);
+			$handler = $this->loader->load($x);
 		}
 		else
 		{

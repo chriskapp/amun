@@ -1,6 +1,12 @@
 
 [FEATURES]
 
+[ ] update all services using the new service class for right and api endpoint 
+    issues
+[ ] improve installer design and flow
+[ ] improve right system probably with inheritance
+[ ] renaming record classes from i.e. Amun_Service_News to 
+    Amun_Service_News_Record to eb able to add later a namespace
 [ ] possiblity to add more meta data to a page (keywords, description)
 [x] Add possibility to upload media in different folders
 [ ] Implement reference input field in backend

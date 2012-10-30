@@ -97,13 +97,13 @@ class Amun_Ext_Provider_Js implements Amun_Ext_ProviderInterface
 
 	private function getContentServices()
 	{
-		$result = Amun_Sql_Table_Registry::get('Content_Service')->getCol('name');
+		$result = Amun_Sql_Table_Registry::get('Content_Service')->getAll(array('name', 'source'));
 
-		foreach($result as $srv)
+		foreach($result as $row)
 		{
-			$services[$srv] = array(
+			$services[$row['name']] = array(
 
-				$this->config['amun_service_path'] . '/' . $srv . '/template/default.js',
+				$this->config['amun_service_path'] . '/' . $row['source'] . '/template/default.js',
 
 			);
 		}

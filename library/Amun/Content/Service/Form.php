@@ -42,7 +42,7 @@ class Amun_Content_Service_Form extends Amun_Data_FormAbstract
 		$panel = new Amun_Form_Element_Panel('service', 'Service');
 
 
-		$path = new Amun_Form_Element_Select('name', 'Name');
+		$path = new Amun_Form_Element_Select('source', 'Source');
 		$path->setOptions($this->getInstallableService());
 
 		$panel->add($path);
@@ -83,6 +83,13 @@ class Amun_Content_Service_Form extends Amun_Data_FormAbstract
 		$id->setType('hidden');
 
 		$panel->add($id);
+
+
+		$source = new Amun_Form_Element_Input('source', 'Source', $record->source);
+		$source->setType('text');
+		$source->setDisabled(true);
+
+		$panel->add($source);
 
 
 		$name = new Amun_Form_Element_Input('name', 'Name', $record->name);
@@ -189,8 +196,8 @@ class Amun_Content_Service_Form extends Amun_Data_FormAbstract
 						{
 							array_push($services, array(
 
-								'label' => ucfirst($name),
-								'value' => $name,
+								'label' => $f,
+								'value' => $f,
 
 							));
 

@@ -33,7 +33,13 @@
  */
 class install extends PSX_Module_ViewAbstract
 {
-	protected $services = array('my', 'profile', 'page', 'comment', 'news');
+	protected $services = array(
+		'org.amun-project.my', 
+		'org.amun-project.profile', 
+		'org.amun-project.page', 
+		'org.amun-project.comment', 
+		'org.amun-project.news',
+	);
 
 	protected $validate;
 	protected $get;
@@ -285,7 +291,10 @@ SQL;
 CREATE TABLE IF NOT EXISTS `{$this->registry['table.content_service']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `status` int(10) NOT NULL,
+  `source` varchar(128) NOT NULL,
   `name` varchar(32) NOT NULL,
+  `path` varchar(256) NOT NULL,
+  `namespace` varchar(64) NOT NULL,
   `type` varchar(256) NOT NULL,
   `link` varchar(256) NOT NULL,
   `author` varchar(512) NOT NULL,
@@ -1491,12 +1500,12 @@ SQL;
 				$handler = new Amun_Content_Service_Handler($this->user);
 				$errors  = array();
 
-				foreach($this->services as $name)
+				foreach($this->services as $source)
 				{
 					try
 					{
 						$service = Amun_Sql_Table_Registry::get('Content_Service')->getRecord();
-						$service->setName($name);
+						$service->setSource($source);
 
 						$handler->create($service);
 					}
@@ -1509,7 +1518,7 @@ SQL;
 							$debug.= "\n" . $e->getTraceAsString();
 						}
 
-						$errors[] = '[' . $name . ']: ' . $e->getMessage() . $debug;
+						$errors[] = '[' . $source . ']: ' . $e->getMessage() . $debug;
 					}
 				}
 

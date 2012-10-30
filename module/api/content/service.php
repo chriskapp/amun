@@ -45,7 +45,7 @@ class service extends Amun_Module_RestAbstract
 	protected function getSelection()
 	{
 		return $this->getTable()
-			->select(array('id', 'status', 'name', 'type', 'link', 'author', 'license', 'version', 'date'));
+			->select(array('id', 'status', 'source', 'name', 'type', 'link', 'author', 'license', 'version', 'date'));
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)

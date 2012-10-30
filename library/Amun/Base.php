@@ -86,9 +86,9 @@ class Amun_Base extends PSX_Base
 		return $this->user;
 	}
 
-	public function hasService($name)
+	public function hasService($source)
 	{
-		$con   = new PSX_Sql_Condition(array('name', '=', $name));
+		$con   = new PSX_Sql_Condition(array('source', '=', $source));
 		$count = $this->sql->count($this->registry['table.content_service'], $con);
 
 		return $count > 0;
