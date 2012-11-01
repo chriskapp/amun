@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="cfe5fabc7c8f79ce9bf6b2526d3f91b8da027836">
+<service xmlns="http://amun-project.org" signature="6e039d8487a584e3953c943543fe625e0ecb36ab">
   <status>normal</status>
   <name>my</name>
-  <path>/service/my</path>
+  <path>/my</path>
   <namespace>my</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/my</type>
   <link>http://amun.phpsx.org</link>
   <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
   <license>GPLv3</license>
   <version>0.0.1</version>
+  <api>
+    <service>
+      <type>http://specs.openid.net/auth/2.0/signon</type>
+      <type>http://openid.net/extensions/sreg/1.1</type>
+      <type>http://specs.openid.net/extensions/oauth/1.0</type>
+      <uri>/signon</uri>
+    </service>
+    <service>
+      <type>http://portablecontacts.net/spec/1.0</type>
+      <type>http://ns.opensocial.org/2008/opensocial/people</type>
+      <uri>/people</uri>
+    </service>
+    <service>
+      <type>http://activitystrea.ms/spec/1.0/</type>
+      <type>http://ns.opensocial.org/2008/opensocial/activities</type>
+      <uri>/activity</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/my/verifyCredentials</type>
+      <uri>/verifyCredentials</uri>
+    </service>
+  </api>
   <permissions>
     <perm name="view" description="Service My View"/>
     <perm name="friends_view" description="Service My Friends View"/>
@@ -34,24 +56,24 @@
         <file name="Attempt.php" md5="41b7b6decdfefa121053e98f694806e8"/>
         <dir name="Contact">
           <dir name="Filter">
-            <file name="Status.php" md5="895dd88beaf245cdb7befe30322b726d"/>
-            <file name="Type.php" md5="87cf2db900dbcec730836760c21cc6e3"/>
+            <file name="Status.php" md5="db0b471606bdd0150da3915a4214dc45"/>
+            <file name="Type.php" md5="023f206afeb8289d6c6d0079abb6dc39"/>
           </dir>
-          <file name="Form.php" md5="3b166fee7a04c8828cccf031777e5fb7"/>
-          <file name="Handler.php" md5="e1928e5fac9915cf89665fdaa1ba7e79"/>
-          <file name="Record.php" md5="473edb02f6a8ea1b88208609bf2607b1"/>
+          <file name="Form.php" md5="db4f94f20201ccf40158f42da104271c"/>
+          <file name="Handler.php" md5="b320707cffcf94c10a2c30f77c5a8be6"/>
+          <file name="Record.php" md5="7d7b649c055c2d8f1cbd505bc63cea78"/>
           <file name="Table.php" md5="24b57d32e2548853a3d92d1117836ec1"/>
         </dir>
         <file name="Credentials.php" md5="8a9a255e16a4506a68839cb33b06dabb"/>
-        <file name="FriendsAbstract.php" md5="bacdcd6b3a53c6bc2b638a857843437b"/>
+        <file name="FriendsAbstract.php" md5="b7c8f06095fe9c768075db8dc436f941"/>
         <file name="MyAbstract.php" md5="e405aed127ea5b9ebd0f6e38f1a22eae"/>
         <dir name="Notify">
           <dir name="Filter">
-            <file name="Status.php" md5="495ddf852ed4373553ea2e2be4172c3e"/>
+            <file name="Status.php" md5="c1d8a22f2bb4358007a60eba005bdc35"/>
           </dir>
-          <file name="Form.php" md5="d60a7afbf9ecee31df375a4325de609e"/>
-          <file name="Handler.php" md5="0fd80b40c21cd1375c6262572b867a7c"/>
-          <file name="Record.php" md5="34c8a000c0c62092dbff5378166b6aea"/>
+          <file name="Form.php" md5="daed248436431c4e86bee3b64b39fd9a"/>
+          <file name="Handler.php" md5="7d9f201b56351d8c9eef955510032c6d"/>
+          <file name="Record.php" md5="cf25c899d1ab8d03edd87ed62a16b13a"/>
           <dir name="Service">
             <file name="Table.php" md5="277b5e6869456e9942170729ee30bf91"/>
           </dir>
@@ -60,25 +82,25 @@
         <file name="People.php" md5="42888caf619e506e062dff946bb605f5"/>
         <file name="SettingsAbstract.php" md5="dcb2207e11ff35b81dc460207328ddbc"/>
         <dir name="Subscription">
-          <file name="Form.php" md5="9c53105c09b5b61a87a6c9b6c78d7785"/>
-          <file name="Handler.php" md5="3b3955010df8737da1051bb82e2ee828"/>
-          <file name="Record.php" md5="14673e4ea9e791e79ef4436bfbc5e995"/>
+          <file name="Form.php" md5="5a2d503a35e5ce2fd3b0c0d34950c7e3"/>
+          <file name="Handler.php" md5="a5e604a26644f01665604a206d728ebf"/>
+          <file name="Record.php" md5="939b575e9e504cb3b5d69c6b31dcdbaf"/>
           <file name="Table.php" md5="377c7843d14c1dd2e9648d6cbc20ef7c"/>
         </dir>
       </dir>
     </dir>
   </library>
   <database>
-    <query><![CDATA[INSERT INTO `{table.amun_system_registry}` (`name`, `type`, `value`) VALUES
+    <query><![CDATA[INSERT INTO `{table.core_system_registry}` (`name`, `type`, `value`) VALUES
 ('my.registration_enabled', 'BOOLEAN', '1'),
 ('my.max_group_count', 'INTEGER', '12'),
 ('my.openid_provider', 'STRING', 'googlemail.com, gmail.com, yahoo.com, aol.com, aim.com'),
-('table.amun_service_my_attempt', 'STRING', '{config.table_prefix}service_my_attempt'),
-('table.amun_service_my_contact', 'STRING', '{config.table_prefix}service_my_contact'),
-('table.amun_service_my_notify', 'STRING', '{config.table_prefix}service_my_notify'),
-('table.amun_service_my_notify_service', 'STRING', '{config.table_prefix}service_my_notify_service'),
-('table.amun_service_my_subscription', 'STRING', '{config.table_prefix}service_my_subscription');]]></query>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.amun_service_my_attempt}` (
+('table.my_attempt', 'STRING', '{config.table_prefix}my_attempt'),
+('table.my_contact', 'STRING', '{config.table_prefix}my_contact'),
+('table.my_notify', 'STRING', '{config.table_prefix}my_notify'),
+('table.my_notify_service', 'STRING', '{config.table_prefix}my_notify_service'),
+('table.my_subscription', 'STRING', '{config.table_prefix}my_subscription');]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.my_attempt}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `ip` varchar(40) NOT NULL,
   `count` int(10) NOT NULL,
@@ -86,7 +108,7 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `ip` (`ip`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.amun_service_my_contact}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.my_contact}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,
   `userId` INT(10) NOT NULL,
   `status` INT(10) NOT NULL,
@@ -95,7 +117,7 @@
   `date` DATETIME NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.amun_service_my_notify}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.my_notify}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,
   `userId` INT(10) NOT NULL,
   `serviceId` INT(10) NOT NULL,
@@ -105,13 +127,13 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `serviceContactId` (`serviceId`,`contactId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.amun_service_my_notify_service}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.my_notify_service}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,
   `table` VARCHAR(32) NOT NULL,
   `title` VARCHAR(64) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.amun_service_my_subscription}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.my_subscription}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `userId` INT(10) NOT NULL,
   `status` INT(10) NOT NULL,
@@ -123,31 +145,11 @@
   `date` DATETIME NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query storeID="content_api"><![CDATA[INSERT INTO `{table.amun_content_api}` (`serviceId`, `priority`, `endpoint`) VALUES
-({service.id}, 0, 'service/my/signon');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_content_api_type}` (`apiId`, `type`) VALUES
-({id.content_api}, 'http://specs.openid.net/auth/2.0/signon'),
-({id.content_api}, 'http://openid.net/extensions/sreg/1.1'),
-({id.content_api}, 'http://specs.openid.net/extensions/oauth/1.0');]]></query>
-    <query storeID="content_api"><![CDATA[INSERT INTO `{table.amun_content_api}` (`serviceId`, `priority`, `endpoint`) VALUES
-({service.id}, 0, 'service/my/people');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_content_api_type}` (`apiId`, `type`) VALUES
-({id.content_api}, 'http://portablecontacts.net/spec/1.0'),
-({id.content_api}, 'http://ns.opensocial.org/2008/opensocial/people');]]></query>
-    <query storeID="content_api"><![CDATA[INSERT INTO `{table.amun_content_api}` (`serviceId`, `priority`, `endpoint`) VALUES
-({service.id}, 0, 'service/my/activity');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_content_api_type}` (`apiId`, `type`) VALUES
-({id.content_api}, 'http://activitystrea.ms/spec/1.0/'),
-({id.content_api}, 'http://ns.opensocial.org/2008/opensocial/activities');]]></query>
-    <query storeID="content_api"><![CDATA[INSERT INTO `{table.amun_content_api}` (`serviceId`, `priority`, `endpoint`) VALUES
-({service.id}, 0, 'service/my/verifyCredentials');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_content_api_type}` (`apiId`, `type`) VALUES
-({id.content_api}, 'http://ns.amun-project.org/2011/amun/service/my/verifyCredentials');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_content_service_option}` (`serviceId`, `name`) VALUES
+    <query><![CDATA[INSERT INTO `{table.core_content_service_option}` (`serviceId`, `name`) VALUES
 ({service.id}, 'index'),
 ({service.id}, 'friends'),
 ({service.id}, 'settings');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_system_mail}` (`name`, `from`, `subject`, `text`, `html`, `values`) VALUES
+    <query><![CDATA[INSERT INTO `{table.core_system_mail}` (`name`, `from`, `subject`, `text`, `html`, `values`) VALUES
 ('SERVICE_MY_REGISTRATION', 'noreply@{config.host}', 'Account activation', 'Hello {account.name},
 
 you have successful registered at {host.name}. Your identity is

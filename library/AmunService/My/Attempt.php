@@ -58,7 +58,7 @@ class AmunService_My_Attempt
 		$con->add('ip', '=', $_SERVER['REMOTE_ADDR']);
 		$con->add('date', '>', $date->format(PSX_DateTime::SQL));
 
-		$count = $this->sql->select($this->registry['table.service_my_attempt'], array('count'), $con, PSX_Sql::SELECT_FIELD);
+		$count = $this->sql->select($this->registry['table.my_attempt'], array('count'), $con, PSX_Sql::SELECT_FIELD);
 
 		return (integer) $count;
 	}
@@ -86,14 +86,14 @@ class AmunService_My_Attempt
 		$con = new PSX_Sql_Condition();
 		$con->add('ip', '=', $_SERVER['REMOTE_ADDR']);
 
-		$this->sql->delete($this->registry['table.service_my_attempt'], $con);
+		$this->sql->delete($this->registry['table.my_attempt'], $con);
 	}
 
 	public function increase()
 	{
 		$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-		$this->sql->replace($this->registry['table.service_my_attempt'], array(
+		$this->sql->replace($this->registry['table.my_attempt'], array(
 
 			'ip'    => $_SERVER['REMOTE_ADDR'],
 			'count' => $this->getCount() + 1,

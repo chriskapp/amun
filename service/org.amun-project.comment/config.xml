@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="bf350c3ec0854301aff492d5bd7899aa3c8b3a72">
+<service xmlns="http://amun-project.org" signature="526f151a468db7633f44d5335379e1149bb34602">
   <status>system</status>
   <name>comment</name>
-  <path>/service/comment</path>
+  <path>/comment</path>
   <namespace>comment</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/comment</type>
   <link>http://amun.phpsx.org</link>
   <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
   <license>GPLv3</license>
   <version>0.0.1</version>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/comment</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+  </api>
   <permissions>
     <perm name="view" description="Service Comment View"/>
     <perm name="add" description="Service Comment Add"/>
@@ -18,18 +25,18 @@
   <library>
     <dir name="AmunService">
       <dir name="Comment">
-        <file name="Form.php" md5="c40be5e62e6b3fa1d5d6ff1135d47b9f"/>
+        <file name="Form.php" md5="f299b68279d3847fe0a2b448dfacd5a6"/>
         <file name="Handler.php" md5="22d4eb2287cbc10f48f08c577ae3d22c"/>
-        <file name="Record.php" md5="73cf55aa402a377c2e0c90941498ffe5"/>
-        <file name="Stream.php" md5="e88cd553e7110912222afe2fc366cc61"/>
+        <file name="Record.php" md5="f8892a97659eab5acab6ae4d7e126981"/>
+        <file name="Stream.php" md5="cecfea6d77c16490b2861d074ccfb9df"/>
         <file name="Table.php" md5="712169637ec52f2290115bd2d325be51"/>
       </dir>
     </dir>
   </library>
   <database>
-    <query><![CDATA[INSERT INTO `{table.amun_system_registry}` (`name`, `type`, `value`) VALUES
-('table.amun_service_comment', 'STRING', '{config.table_prefix}service_comment');]]></query>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.amun_service_comment}` (
+    <query><![CDATA[INSERT INTO `{table.core_system_registry}` (`name`, `type`, `value`) VALUES
+('table.comment', 'STRING', '{config.table_prefix}comment');]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.comment}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,
   `globalId` VARCHAR(36) NOT NULL,
   `pageId` INT(10) NOT NULL,
@@ -40,16 +47,11 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query storeID="content_api"><![CDATA[INSERT INTO `{table.amun_content_api}` (`serviceId`, `priority`, `endpoint`) VALUES
-({service.id}, 0, 'service/comment');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_content_api_type}` (`apiId`, `type`) VALUES
-({id.content_api}, '{service.type}'),
-({id.content_api}, 'http://ns.amun-project.org/2011/amun/data/1.0');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
+    <query><![CDATA[INSERT INTO `{table.core_user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
 ('INSERT', 'add', 'amun_service_comment', 'view?id={record.refId}#comment-{record.id}', '<p><a href="{user.profileUrl}">{user.name}</a> has created an <a href="{object.url}">comment</a></p><blockquote>{record.text}</blockquote>');]]></query>
     <if hasService="my">
-      <query><![CDATA[INSERT INTO `{table.amun_service_my_notify_service}` (`table`, `title`) VALUES
-('amun_service_comment', 'Comments');]]></query>
+      <query><![CDATA[INSERT INTO `{table.my_notify_service}` (`table`, `title`) VALUES
+('{config.table_prefix}comment', 'Comments');]]></query>
     </if>
   </database>
 </service>

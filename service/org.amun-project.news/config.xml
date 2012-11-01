@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="8459b19745208a8c4a5c71d3c63e979a4551fd21">
+<service xmlns="http://amun-project.org" signature="90077c99c81c3f52a62b5e95321181635e8bd358">
   <status>normal</status>
   <name>news</name>
-  <path>/service/news</path>
+  <path>/news</path>
   <namespace>news</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/news</type>
   <link>http://amun.phpsx.org</link>
@@ -12,6 +12,13 @@
   <required>
     <service>org.amun-project.comment</service>
   </required>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/news</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+  </api>
   <permissions>
     <perm name="view" description="Service News View"/>
     <perm name="add" description="Service News Add"/>
@@ -21,18 +28,18 @@
   <library>
     <dir name="AmunService">
       <dir name="News">
-        <file name="Form.php" md5="8f36e1a405c4949d12bdeb54d40e71ff"/>
+        <file name="Form.php" md5="beb71027e9e37d46b3664a0363962e8c"/>
         <file name="Handler.php" md5="1228f87507befcf0107c6ad03650ff94"/>
-        <file name="Record.php" md5="c464c4ff601e21e297b5440b1ebdcacf"/>
-        <file name="Stream.php" md5="d21a95f09467b05b095d16124d2d9944"/>
+        <file name="Record.php" md5="ddd4785c5cbfb7bbc8d1bab5db2b9a44"/>
+        <file name="Stream.php" md5="c5f1533a93566df538c15214ee8fd7e2"/>
         <file name="Table.php" md5="cd26e8d6e57573a872b98bc3e162d0ad"/>
       </dir>
     </dir>
   </library>
   <database>
-    <query><![CDATA[INSERT INTO `{table.amun_system_registry}` (`name`, `type`, `value`) VALUES
-('table.amun_service_news', 'STRING', '{config.table_prefix}service_news');]]></query>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.amun_service_news}` (
+    <query><![CDATA[INSERT INTO `{table.core_system_registry}` (`name`, `type`, `value`) VALUES
+('table.news', 'STRING', '{config.table_prefix}news');]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.news}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,
   `globalId` VARCHAR(36) NOT NULL,
   `pageId` INT(10) NOT NULL,
@@ -44,18 +51,13 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query storeID="content_api"><![CDATA[INSERT INTO `{table.amun_content_api}` (`serviceId`, `priority`, `endpoint`) VALUES
-({service.id}, 0, 'service/news');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_content_api_type}` (`apiId`, `type`) VALUES
-({id.content_api}, '{service.type}'),
-({id.content_api}, 'http://ns.amun-project.org/2011/amun/data/1.0');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_content_service_option}` (`serviceId`, `name`) VALUES
+    <query><![CDATA[INSERT INTO `{table.core_content_service_option}` (`serviceId`, `name`) VALUES
 ({service.id}, 'index'),
 ({service.id}, 'view');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
+    <query><![CDATA[INSERT INTO `{table.core_user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
 ('INSERT', 'add', 'amun_service_news', 'view?id={record.id}', '<p><a href="{user.profileUrl}">{user.name}</a> has created a <a href="{object.url}">news</a></p><blockquote>{record.text}</blockquote>');]]></query>
     <if hasService="my">
-      <query><![CDATA[INSERT INTO `{table.amun_service_my_notify_service}` (`table`, `title`) VALUES
+      <query><![CDATA[INSERT INTO `{table.core_service_my_notify_service}` (`table`, `title`) VALUES
 ('amun_service_news', 'News');]]></query>
     </if>
   </database>

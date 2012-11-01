@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="0ce768ec89e10d62f464449d30982c28db1518ce">
+<service xmlns="http://amun-project.org" signature="2a874ee3bf2d54a074ec697cfd871add8f1a3abd">
   <status>normal</status>
   <name>googleproject</name>
-  <path>/service/googleproject</path>
+  <path>/googleproject</path>
   <namespace>googleproject</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/googleproject</type>
   <link>http://amun.phpsx.org</link>
   <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
   <license>GPLv3</license>
   <version>0.0.1</version>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/googleproject</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/googleproject/author</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/author</uri>
+    </service>
+  </api>
   <permissions>
     <perm name="view" description="Service Googleproject View"/>
     <perm name="add" description="Service Googleproject Add"/>
@@ -23,29 +35,29 @@
     <dir name="AmunService">
       <dir name="Googleproject">
         <dir name="Author">
-          <file name="Form.php" md5="b52e0a1ed0de98e1b64a3041daaa4e0e"/>
+          <file name="Form.php" md5="09c1f2a31321c75db78242bb1f17983a"/>
           <file name="Handler.php" md5="8f677a3e47a57e315483f2ef2a420bb2"/>
-          <file name="Record.php" md5="202d831a983f8a38f0e6de6735ecf178"/>
+          <file name="Record.php" md5="f0f4625bcee1a993b1c772a12d594040"/>
           <file name="Table.php" md5="38a8ed097115d546751ede5cafd5897a"/>
         </dir>
         <dir name="Commit">
           <file name="Handler.php" md5="e01caff72ffb621051680b2aeffe1180"/>
-          <file name="Record.php" md5="600b3a16e65668a9b2db4d0dd93a202b"/>
+          <file name="Record.php" md5="db6435904ff90fa162bd1db672c7db00"/>
           <file name="Table.php" md5="57dcf368d37420cb36b8a1ed5e934757"/>
         </dir>
-        <file name="Form.php" md5="b27142368dbc5b9d4f341aeb26e345a3"/>
+        <file name="Form.php" md5="2d3c7eb5f74679d17f94750268b4bc35"/>
         <file name="Handler.php" md5="f7e0d4ea9a82775ae21d3375947565e1"/>
-        <file name="Record.php" md5="4c35a23adeaf12a42108c28e528744ac"/>
+        <file name="Record.php" md5="48ff9374fa392eb0c896b49fb986c5f4"/>
         <file name="Table.php" md5="d430708747ac6130636afff57b7d7fc0"/>
       </dir>
     </dir>
   </library>
   <database>
-    <query><![CDATA[INSERT INTO `{table.amun_system_registry}` (`name`, `type`, `value`) VALUES
-('table.amun_service_googleproject', 'STRING', '{config.table_prefix}service_googleproject'),
-('table.amun_service_googleproject_commit', 'STRING', '{config.table_prefix}service_googleproject_commit'),
-('table.amun_service_googleproject_author', 'STRING', '{config.table_prefix}service_googleproject_author');]]></query>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.amun_service_googleproject}` (
+    <query><![CDATA[INSERT INTO `{table.core_system_registry}` (`name`, `type`, `value`) VALUES
+('table.googleproject', 'STRING', '{config.table_prefix}googleproject'),
+('table.googleproject_commit', 'STRING', '{config.table_prefix}googleproject_commit'),
+('table.googleproject_author', 'STRING', '{config.table_prefix}googleproject_author');]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.googleproject}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,
   `globalId` VARCHAR(36) NOT NULL,
   `pageId` INT(10) NOT NULL,
@@ -56,7 +68,7 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.amun_service_googleproject_commit}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.googleproject_commit}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `globalId` VARCHAR(36),
   `projectId` INT(10),
@@ -69,27 +81,17 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.amun_service_googleproject_author}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.googleproject_author}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `userId` INT(10),
   `name` VARCHAR(32),
   `date` DATETIME,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query storeID="content_api"><![CDATA[INSERT INTO `{table.amun_content_api}` (`serviceId`, `priority`, `endpoint`) VALUES
-({service.id}, 0, 'service/googleproject');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_content_api_type}` (`apiId`, `type`) VALUES
-({id.content_api}, '{service.type}'),
-({id.content_api}, 'http://ns.amun-project.org/2011/amun/data/1.0');]]></query>
-    <query storeID="content_api"><![CDATA[INSERT INTO `{table.amun_content_api}` (`serviceId`, `priority`, `endpoint`) VALUES
-({service.id}, 0, 'service/googleproject/author');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_content_api_type}` (`apiId`, `type`) VALUES
-({id.content_api}, '{service.type}/author'),
-({id.content_api}, 'http://ns.amun-project.org/2011/amun/data/1.0');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_content_service_option}` (`serviceId`, `name`) VALUES
+    <query><![CDATA[INSERT INTO `{table.core_content_service_option}` (`serviceId`, `name`) VALUES
 ({service.id}, 'index'),
 ({service.id}, 'view');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
-('INSERT', 'add', 'amun_service_googleproject_commit', '', '<p><a href="{user.profileUrl}">{user.name}</a> has commited <a href="{record.url}">r{record.revision}</a></p><blockquote>{record.message}</blockquote>');]]></query>
+    <query><![CDATA[INSERT INTO `{table.core_user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
+('INSERT', 'add', '{config.table_prefix}googleproject_commit', '', '<p><a href="{user.profileUrl}">{user.name}</a> has commited <a href="{record.url}">r{record.revision}</a></p><blockquote>{record.message}</blockquote>');]]></query>
   </database>
 </service>

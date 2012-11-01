@@ -44,7 +44,7 @@ abstract class AmunService_My_FriendsAbstract extends AmunService_My_MyAbstract
 		$con->add('friendId', '=', $this->user->id);
 		$con->add('status', '=', Amun_User_Friend::REQUEST);
 
-		$requestCount = $this->sql->count($this->registry['table.user_friend'], $con);
+		$requestCount = $this->sql->count($this->registry['table.core_user_friend'], $con);
 
 		$this->template->assign('requestCount', $requestCount);
 
@@ -54,7 +54,7 @@ abstract class AmunService_My_FriendsAbstract extends AmunService_My_MyAbstract
 		$con->add('userId', '=', $this->user->id);
 		$con->add('status', '=', Amun_User_Friend::REQUEST);
 
-		$pendingCount = $this->sql->count($this->registry['table.user_friend'], $con);
+		$pendingCount = $this->sql->count($this->registry['table.core_user_friend'], $con);
 
 		$this->template->assign('pendingCount', $pendingCount);
 

@@ -213,7 +213,7 @@ class connect extends Amun_Module_ApplicationAbstract
 		{
 			$con = new PSX_Sql_Condition(array('id', '=', $this->oauth['requestId']));
 
-			$this->sql->delete($this->registry['table.system_api_request'], $con);
+			$this->sql->delete($this->registry['table.core_system_api_request'], $con);
 		}
 
 		// insert or update connect
@@ -324,7 +324,7 @@ class connect extends Amun_Module_ApplicationAbstract
 			$verifier = Amun_Security::generateToken(32);
 			$date     = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-			$this->sql->insert($this->registry['table.system_api_request'], array(
+			$this->sql->insert($this->registry['table.core_system_api_request'], array(
 
 				'apiId'       => $row['id'],
 				'userId'      => $this->user->id,
@@ -342,7 +342,7 @@ class connect extends Amun_Module_ApplicationAbstract
 			));
 
 			// insert access
-			$this->sql->replace($this->registry['table.system_api_access'], array(
+			$this->sql->replace($this->registry['table.core_system_api_access'], array(
 
 				'apiId'   => $row['id'],
 				'userId'  => $this->user->id,

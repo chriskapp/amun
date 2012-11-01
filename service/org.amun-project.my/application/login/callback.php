@@ -41,7 +41,7 @@ class callback extends Amun_Module_ApplicationAbstract
 		$this->http = new PSX_Http(new PSX_Http_Handler_Curl());
 
 		// initialize openid
-		$store  = new PSX_OpenId_Store_Sql($this->sql, $this->registry['table.system_assoc']);
+		$store  = new PSX_OpenId_Store_Sql($this->sql, $this->registry['table.core_system_assoc']);
 		$openid = new PSX_OpenId($this->http, $this->config['psx_url'], $store);
 
 		if($openid->verify() === true)
@@ -145,7 +145,7 @@ class callback extends Amun_Module_ApplicationAbstract
 					{
 						$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-						$this->sql->insert($this->registry['table.system_host_request'], array(
+						$this->sql->insert($this->registry['table.core_system_host_request'], array(
 
 							'hostId'      => $hostId,
 							'userId'      => $userId,

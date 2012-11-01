@@ -38,14 +38,14 @@ class AmunService_My_Subscription_Table extends Amun_Sql_TableAbstract
 	{
 		return array(
 
-			'userId' => $this->registry['table.user_account'],
+			'userId' => $this->registry['table.core_user_account'],
 
 		);
 	}
 
 	public function getName()
 	{
-		return $this->registry['table.service_my_subscription'];
+		return $this->registry['table.my_subscription'];
 	}
 
 	public function getColumns()

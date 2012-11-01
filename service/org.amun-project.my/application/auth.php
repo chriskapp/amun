@@ -216,7 +216,7 @@ class auth extends Amun_Module_ApplicationAbstract
 		// insert or update access
 		$now = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-		$this->sql->replace($this->registry['table.system_api_access'], array(
+		$this->sql->replace($this->registry['table.core_system_api_access'], array(
 
 			'apiId'   => $this->apiId,
 			'userId'  => $this->user->id,
@@ -228,7 +228,7 @@ class auth extends Amun_Module_ApplicationAbstract
 		// approve token
 		$con = new PSX_Sql_Condition(array('token', '=', $token));
 
-		$this->sql->update($this->registry['table.system_api_request'], array(
+		$this->sql->update($this->registry['table.core_system_api_request'], array(
 
 			'userId'   => $this->user->id,
 			'status'   => Amun_System_Api::APPROVED,
@@ -259,7 +259,7 @@ class auth extends Amun_Module_ApplicationAbstract
 		// insert access
 		$now = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-		$this->sql->replace($this->registry['table.system_api_access'], array(
+		$this->sql->replace($this->registry['table.core_system_api_access'], array(
 
 			'apiId'   => $this->apiId,
 			'userId'  => $this->user->id,
@@ -271,7 +271,7 @@ class auth extends Amun_Module_ApplicationAbstract
 		// delete token
 		$con = new PSX_Sql_Condition(array('token', '=', $token));
 
-		$this->sql->delete($this->registry['table.system_api_request'], $con);
+		$this->sql->delete($this->registry['table.core_system_api_request'], $con);
 
 		// redirect if callback available
 		if($callback != 'oob')

@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="7a84040830bf4699fd6d0168883555ba1403f4cd">
+<service xmlns="http://amun-project.org" signature="bd740a30a4e5a81a9fd00e38a93e2eca1be714db">
   <status>normal</status>
   <name>php</name>
-  <path>/service/php</path>
+  <path>/php</path>
   <namespace>php</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/php</type>
   <link>http://amun.phpsx.org</link>
   <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
   <license>GPLv3</license>
   <version>0.0.1</version>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/php</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+  </api>
   <permissions>
     <perm name="view" description="Service Php View"/>
     <perm name="add" description="Service Php Add"/>
@@ -18,17 +25,17 @@
   <library>
     <dir name="AmunService">
       <dir name="Php">
-        <file name="Form.php" md5="9a2f6916f6e1c5c6b0a27f9199908548"/>
+        <file name="Form.php" md5="2f7cd326a2fcef6aacf340944361ecba"/>
         <file name="Handler.php" md5="68b778c5eef9c3ed8e14fea57cd85d01"/>
-        <file name="Record.php" md5="27b97bfe502dc0cf2ce638414043b18e"/>
+        <file name="Record.php" md5="1ce4f8cbeefd947c95a581611d376a2b"/>
         <file name="Table.php" md5="59e69c23a8d7e9e257b250f2d26a9d9f"/>
       </dir>
     </dir>
   </library>
   <database>
-    <query><![CDATA[INSERT INTO `{table.amun_system_registry}` (`name`, `type`, `value`) VALUES
-('table.amun_service_php', 'STRING', '{config.table_prefix}service_php');]]></query>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.amun_service_php}` (
+    <query><![CDATA[INSERT INTO `{table.core_system_registry}` (`name`, `type`, `value`) VALUES
+('table.php', 'STRING', '{config.table_prefix}php');]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.php}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,
   `globalId` VARCHAR(36) NOT NULL,
   `pageId` INT(10) NOT NULL,
@@ -38,12 +45,7 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query storeID="content_api"><![CDATA[INSERT INTO `{table.amun_content_api}` (`serviceId`, `priority`, `endpoint`) VALUES
-({service.id}, 0, 'service/php');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_content_api_type}` (`apiId`, `type`) VALUES
-({id.content_api}, '{service.type}'),
-({id.content_api}, 'http://ns.amun-project.org/2011/amun/data/1.0');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_content_service_option}` (`serviceId`, `name`) VALUES
+    <query><![CDATA[INSERT INTO `{table.core_content_service_option}` (`serviceId`, `name`) VALUES
 ({service.id}, 'index');]]></query>
   </database>
 </service>

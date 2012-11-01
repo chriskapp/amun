@@ -50,7 +50,7 @@ SELECT
 
 	FROM {$this->registry['table.user_account']} `account`
 
-		INNER JOIN {$this->registry['table.system_country']} `country`
+		INNER JOIN {$this->registry['table.core_system_country']} `country`
 
 			ON `account`.`countryId` = `country`.`id`
 

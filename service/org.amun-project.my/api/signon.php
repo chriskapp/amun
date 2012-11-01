@@ -66,7 +66,7 @@ SELECT
 	`assoc`.`expires`,
 	`assoc`.`date`
 
-	FROM {$this->registry['table.system_connect_assoc']} `assoc`
+	FROM {$this->registry['table.core_system_connect_assoc']} `assoc`
 
 		WHERE `assoc`.`assocHandle` = ?
 SQL;
@@ -77,7 +77,7 @@ SQL;
 		{
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-			$this->sql->insert($this->registry['table.system_connect_assoc'], array(
+			$this->sql->insert($this->registry['table.core_system_connect_assoc'], array(
 
 				'assocHandle' => $assoc->getAssocHandle(),
 				'assocType'   => $assoc->getAssocType(),
@@ -126,7 +126,7 @@ SELECT
 	`assoc`.`expires`,
 	`assoc`.`date`
 
-	FROM {$this->registry['table.system_connect_assoc']} `assoc`
+	FROM {$this->registry['table.core_system_connect_assoc']} `assoc`
 
 		WHERE `assoc`.`assocHandle` = ?
 SQL;
@@ -153,7 +153,7 @@ SQL;
 				$assocHandle = PSX_OpenId_ProviderAbstract::generateHandle();
 				$secret      = base64_encode(PSX_OpenId_ProviderAbstract::randomBytes(20));
 
-				$this->sql->insert($this->registry['table.system_connect_assoc'], array(
+				$this->sql->insert($this->registry['table.core_system_connect_assoc'], array(
 
 					'assocHandle' => $assocHandle,
 					'assocType'   => 'HMAC-SHA1',
@@ -229,7 +229,7 @@ SELECT
 	`assoc`.`expires`,
 	`assoc`.`date`
 
-	FROM {$this->registry['table.system_connect_assoc']} `assoc`
+	FROM {$this->registry['table.core_system_connect_assoc']} `assoc`
 
 		WHERE `assoc`.`assocHandle` = ?
 SQL;

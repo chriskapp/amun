@@ -161,7 +161,7 @@ class AmunService_Pipe_Form extends Amun_Data_FormAbstract
 	private function getMedia()
 	{
 		$media  = array();
-		$result = $this->sql->getAll('SELECT id, path FROM ' . $this->registry['table.content_media'] . ' ORDER BY path ASC');
+		$result = $this->sql->getAll('SELECT id, path FROM ' . $this->registry['table.core_content_media'] . ' ORDER BY path ASC');
 
 		foreach($result as $row)
 		{

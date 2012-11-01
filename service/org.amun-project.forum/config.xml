@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="50cdd0572fd33e17b6f66d9931b2be1bb7da2a3d">
+<service xmlns="http://amun-project.org" signature="3dcb6f6538029db2396e0a2aba16398e095221d9">
   <status>normal</status>
   <name>forum</name>
-  <path>/service/forum</path>
+  <path>/forum</path>
   <namespace>forum</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/forum</type>
   <link>http://amun.phpsx.org</link>
@@ -12,6 +12,13 @@
   <required>
     <service>org.amun-project.comment</service>
   </required>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/forum</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+  </api>
   <permissions>
     <perm name="view" description="Service Forum View"/>
     <perm name="add" description="Service Forum Add"/>
@@ -24,17 +31,17 @@
   <library>
     <dir name="AmunService">
       <dir name="Forum">
-        <file name="Form.php" md5="1a07548187bc99ffda5adf387930b313"/>
+        <file name="Form.php" md5="6cf277ac6e1ce532a2a15701e470cbc7"/>
         <file name="Handler.php" md5="2c065b86144916789555e7b377cdb8a5"/>
-        <file name="Record.php" md5="26be768752c5fdbad086cea3c7073c9d"/>
+        <file name="Record.php" md5="41257dd83b6ea08cfd947a00c1d0798b"/>
         <file name="Table.php" md5="8683064ad521c247d3afab5160d37bc9"/>
       </dir>
     </dir>
   </library>
   <database>
-    <query><![CDATA[INSERT INTO `{table.amun_system_registry}` (`name`, `type`, `value`) VALUES
-('table.amun_service_forum', 'STRING', '{config.table_prefix}service_forum');]]></query>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.amun_service_forum}` (
+    <query><![CDATA[INSERT INTO `{table.core_system_registry}` (`name`, `type`, `value`) VALUES
+('table.forum', 'STRING', '{config.table_prefix}forum');]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.forum}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,
   `globalId` VARCHAR(36) NOT NULL,
   `pageId` INT(10) NOT NULL,
@@ -48,19 +55,14 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query storeID="content_api"><![CDATA[INSERT INTO `{table.amun_content_api}` (`serviceId`, `priority`, `endpoint`) VALUES
-({service.id}, 0, 'service/forum');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_content_api_type}` (`apiId`, `type`) VALUES
-({id.content_api}, '{service.type}'),
-({id.content_api}, 'http://ns.amun-project.org/2011/amun/data/1.0');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_content_service_option}` (`serviceId`, `name`) VALUES
+    <query><![CDATA[INSERT INTO `{table.core_content_service_option}` (`serviceId`, `name`) VALUES
 ({service.id}, 'index'),
 ({service.id}, 'view');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
+    <query><![CDATA[INSERT INTO `{table.core_user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
 ('INSERT', 'add', 'amun_service_forum', 'view?id={record.id}', '<p><a href="{user.profileUrl}">{user.name}</a> has created a <a href="{object.url}">thread</a></p><blockquote>{record.text}</blockquote>');]]></query>
     <if hasService="my">
-      <query><![CDATA[INSERT INTO `{table.amun_service_my_notify_service}` (`table`, `title`) VALUES
-('amun_service_forum', 'Forum');]]></query>
+      <query><![CDATA[INSERT INTO `{table.my_notify_service}` (`table`, `title`) VALUES
+('{config.table_prefix}forum', 'Forum');]]></query>
     </if>
   </database>
 </service>

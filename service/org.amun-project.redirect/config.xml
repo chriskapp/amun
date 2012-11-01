@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="ca6a4d674f615d6886a3c5647dc91450278b288b">
+<service xmlns="http://amun-project.org" signature="5d73d71ebc3a2021b00c0af355bd3a22d11e3391">
   <status>normal</status>
   <name>redirect</name>
-  <path>/service/redirect</path>
+  <path>/redirect</path>
   <namespace>redirect</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/redirect</type>
   <link>http://amun.phpsx.org</link>
   <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
   <license>GPLv3</license>
   <version>0.0.1</version>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/redirect</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+  </api>
   <permissions>
     <perm name="view" description="Service Redirect View"/>
     <perm name="add" description="Service Redirect Add"/>
@@ -18,17 +25,17 @@
   <library>
     <dir name="AmunService">
       <dir name="Redirect">
-        <file name="Form.php" md5="a43d0129f19e8a7cbd50b4cea3a8e58e"/>
+        <file name="Form.php" md5="fd1910e0ee660522fb2fe2024b5b22b8"/>
         <file name="Handler.php" md5="05d46d89888e67a9e98a709f35fcd136"/>
-        <file name="Record.php" md5="4cb3dff9668c0cf131c3fc13523f581f"/>
+        <file name="Record.php" md5="a5a7ee97a6dc4dbc4ac8b1eed5ccfb31"/>
         <file name="Table.php" md5="ed21edada1a04dabd5233ed88a1f06e9"/>
       </dir>
     </dir>
   </library>
   <database>
-    <query><![CDATA[INSERT INTO `{table.amun_system_registry}` (`name`, `type`, `value`) VALUES
-('table.amun_service_redirect', 'STRING', '{config.table_prefix}service_redirect');]]></query>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.amun_service_redirect}` (
+    <query><![CDATA[INSERT INTO `{table.core_system_registry}` (`name`, `type`, `value`) VALUES
+('table.redirect', 'STRING', '{config.table_prefix}redirect');]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.redirect}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,
   `globalId` VARCHAR(36) NOT NULL,
   `pageId` INT(10) NOT NULL,
@@ -38,10 +45,5 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query storeID="content_api"><![CDATA[INSERT INTO `{table.amun_content_api}` (`serviceId`, `priority`, `endpoint`) VALUES
-({service.id}, 0, 'service/redirect');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_content_api_type}` (`apiId`, `type`) VALUES
-({id.content_api}, '{service.type}'),
-({id.content_api}, 'http://ns.amun-project.org/2011/amun/data/1.0');]]></query>
   </database>
 </service>

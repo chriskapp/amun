@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="5600b8025f4ec4a55485dc96cb8235be15874cf3">
+<service xmlns="http://amun-project.org" signature="473be0823262d8efb035f5518f0927c9e62e3a4f">
   <status>normal</status>
   <name>webdav</name>
   <path>/service/webdav</path>
@@ -16,7 +16,7 @@
     <dir name="AmunService">
       <dir name="Webdav">
         <file name="File.php" md5="23c03cdc9cf9d3450a538dd6ad8887e6"/>
-        <file name="Page.php" md5="ebc122633afb4eef07a4ebfe9caabf02"/>
+        <file name="Page.php" md5="606ade61f39e0d35aab73b2f1b721e18"/>
       </dir>
     </dir>
   </library>

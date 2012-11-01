@@ -246,7 +246,7 @@ class login extends Amun_Module_ApplicationAbstract
 
 		// create an openid object
 		$http   = new PSX_Http(new PSX_Http_Handler_Curl());
-		$store  = new PSX_OpenId_Store_Sql($this->sql, $this->registry['table.system_assoc']);
+		$store  = new PSX_OpenId_Store_Sql($this->sql, $this->registry['table.core_system_assoc']);
 		$openid = new PSX_OpenId($http, $this->config['psx_url'], $store);
 
 		// check whether identity is an url if not it is an email

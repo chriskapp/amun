@@ -34,7 +34,7 @@
 class install extends PSX_Module_ViewAbstract
 {
 	protected $services = array(
-        'org.amun-project.core', 
+		'org.amun-project.core', 
 		'org.amun-project.my', 
 		'org.amun-project.profile', 
 		'org.amun-project.page', 
@@ -681,7 +681,7 @@ SQL;
 		try
 		{
             $query = <<<SQL
-INSERT INTO `{$this->registry['table.system_country']}` (`title`, `code`, `longitude`, `latitude`) VALUES
+INSERT INTO `{$this->registry['table.core_system_country']}` (`title`, `code`, `longitude`, `latitude`) VALUES
 ('Undisclosed', '', '', ''),
 ('Afghanistan', 'AF', '33.0000', '65.0000'),
 ('Albania', 'AL', '41.0000', '20.0000'),
@@ -1500,7 +1500,7 @@ SQL;
 
 
 			// insert page content
-			$count = $this->sql->count($this->registry['table.core_service_page']);
+			$count = $this->sql->count($this->registry['table.page']);
 
 			if($count == 0)
 			{
