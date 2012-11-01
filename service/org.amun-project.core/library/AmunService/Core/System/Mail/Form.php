@@ -93,7 +93,7 @@ class AmunService_Core_System_Mail_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('System_Mail')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Core_System_Mail')->getRecord($id);
 
 
 		$form = new Amun_Form('PUT', $this->url);
@@ -160,24 +160,6 @@ class AmunService_Core_System_Mail_Form extends Amun_Data_FormAbstract
 	public function delete($id)
 	{
 		throw new PSX_Data_Exception('You cant delete a mail record');
-	}
-
-	public function getType()
-	{
-		$type   = array();
-		$result = Amun_System_Registry::getType();
-
-		foreach($result as $k => $v)
-		{
-			array_push($type, array(
-
-				'label' => $v,
-				'value' => $v,
-
-			));
-		}
-
-		return $type;
 	}
 }
 

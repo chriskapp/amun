@@ -76,7 +76,7 @@ class AmunService_Core_User_Account_Handler extends Amun_Data_HandlerAbstract
 			}
 			else
 			{
-				$record->status     = Amun_User_Account::REMOTE;
+				$record->status     = AmunService_Core_User_Account_Record::REMOTE;
 				$record->profileUrl = $this->discoverProfileUrl($record->hostId, $record->name);
 			}
 
@@ -115,7 +115,7 @@ class AmunService_Core_User_Account_Handler extends Amun_Data_HandlerAbstract
 			// insert relation to self
 			$this->sql->insert($this->registry['table.core_user_friend'], array(
 
-				'status'   => Amun_User_Friend::NORMAL,
+				'status'   => AmunService_Core_User_Friend_Record::NORMAL,
 				'userId'   => $record->id,
 				'friendId' => $record->id,
 				'date'     => $date->format(PSX_DateTime::SQL),
@@ -164,7 +164,7 @@ class AmunService_Core_User_Account_Handler extends Amun_Data_HandlerAbstract
 				}
 				else
 				{
-					$record->status     = Amun_User_Account::REMOTE;
+					$record->status     = AmunService_Core_User_Account_Record::REMOTE;
 					$record->profileUrl = $this->discoverProfileUrl($record->hostId, $name);
 				}
 			}
@@ -235,7 +235,7 @@ SELECT
 		AND `host`.`status` = ?
 SQL;
 
-		$row = $this->sql->getRow($sql, array($hostId, Amun_System_Host::NORMAL));
+		$row = $this->sql->getRow($sql, array($hostId, AmunService_Core_System_Host_Record::NORMAL));
 
 		if(!empty($row))
 		{

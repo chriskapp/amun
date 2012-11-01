@@ -87,7 +87,7 @@ abstract class AmunService_My_FriendsAbstract extends AmunService_My_MyAbstract
 
 	private function getGroups()
 	{
-		return Amun_Sql_Table_Registry::get('User_Friend_Group')
+		return Amun_Sql_Table_Registry::get('Core_User_Friend_Group')
 			->select(array('id', 'title', 'date'))
 			->where('userId', '=', $this->user->id)
 			->getAll();

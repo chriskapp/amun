@@ -100,7 +100,7 @@ class AmunService_Core_System_Api_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('System_Api')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Core_System_Api')->getRecord($id);
 
 
 		$form = new Amun_Form('PUT', $this->url);
@@ -173,7 +173,7 @@ class AmunService_Core_System_Api_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('System_Api')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Core_System_Api')->getRecord($id);
 
 
 		$form = new Amun_Form('DELETE', $this->url);
@@ -254,7 +254,7 @@ class AmunService_Core_System_Api_Form extends Amun_Data_FormAbstract
 	private function getStatus()
 	{
 		$status = array();
-		$result = Amun_System_Api::getStatus();
+		$result = AmunService_Core_System_Api_Record::getStatus();
 
 		foreach($result as $k => $v)
 		{

@@ -36,7 +36,7 @@ class AmunService_Core_User_Account_Filter_Gender extends PSX_FilterAbstract
 {
 	public function apply($value)
 	{
-		return Amun_User_Account::getGender($value) === false ? false : true;
+		return AmunService_Core_User_Account_Record::getGender($value) === false ? false : true;
 	}
 
 	public function getErrorMsg()

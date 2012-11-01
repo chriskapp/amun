@@ -120,7 +120,7 @@ class AmunService_Core_User_Activity_Handler extends Amun_Data_HandlerAbstract
 
 		if($verb instanceof DomElement)
 		{
-			$activity = Amun_Sql_Table_Registry::get('User_Activity')->getRecord();
+			$activity = Amun_Sql_Table_Registry::get('Core_User_Activity')->getRecord();
 			$activity->setVerb($verb->nodeValue);
 			$activity->setSummary($entry->content);
 			$activity->table = 'amun_user_activity';

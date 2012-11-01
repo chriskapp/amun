@@ -64,7 +64,7 @@ class AmunService_Core_System_Approval_Record extends Amun_Data_RecordAbstract
 
 	public function setField($field)
 	{
-		$field = $this->_validate->apply($field, 'string', array(new Amun_System_Approval_Filter_Field($this->_sql, $this->table)), 'field', 'Field');
+		$field = $this->_validate->apply($field, 'string', array(new AmunService_Core_System_Approval_Filter_Field($this->_sql, $this->table)), 'field', 'Field');
 
 		if(!$this->_validate->hasError())
 		{

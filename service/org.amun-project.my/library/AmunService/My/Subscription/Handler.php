@@ -158,7 +158,7 @@ class AmunService_My_Subscription_Handler extends Amun_Data_HandlerAbstract
 
 
 			// insert
-			$subscription = new Amun_Service_My_Subscription($this->table);
+			$subscription = new AmunService_My_Subscription_Record($this->table);
 			$subscription->setHub((string) $hub);
 			$subscription->setTopic((string) $topic);
 			$subscription->setSecret($secret);

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="4cdf87f9a12d644d48a93a023caeb37286d86887">
+<service xmlns="http://amun-project.org" signature="0bb9a11cb5c721947a3f2a35837e22ae74466aef">
   <status>normal</status>
   <name>profile</name>
   <path>/service/profile</path>

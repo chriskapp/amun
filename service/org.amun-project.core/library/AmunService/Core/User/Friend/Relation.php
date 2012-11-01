@@ -77,7 +77,7 @@ class AmunService_Core_User_Friend_Relation extends PSX_Data_RecordAbstract
 
 	public function setHost($host)
 	{
-		$host = $this->_validate->apply($host, 'string', array(new Amun_System_Host_Filter_Name()), 'host', 'Host');
+		$host = $this->_validate->apply($host, 'string', array(new AmunService_Core_System_Host_Filter_Name()), 'host', 'Host');
 
 		if(!$this->_validate->hasError())
 		{
@@ -91,7 +91,7 @@ class AmunService_Core_User_Friend_Relation extends PSX_Data_RecordAbstract
 
 	public function setName($name)
 	{
-		$name = $this->_validate->apply($name, 'string', array(new Amun_User_Account_Filter_Name()), 'name', 'Name');
+		$name = $this->_validate->apply($name, 'string', array(new AmunService_Core_User_Account_Filter_Name()), 'name', 'Name');
 
 		if(!$this->_validate->hasError())
 		{

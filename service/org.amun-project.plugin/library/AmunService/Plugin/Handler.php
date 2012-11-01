@@ -40,7 +40,7 @@ class AmunService_Plugin_Handler extends Amun_Data_HandlerAbstract
 		{
 			$record->globalId = $this->base->getUUID('service:plugin:' . $record->pageId . ':' . uniqid());
 			$record->userId   = $this->user->id;
-			$record->status   = Amun_Service_Plugin::NOT_APPROVED;
+			$record->status   = AmunService_Plugin_Record::NOT_APPROVED;
 
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
@@ -55,11 +55,11 @@ class AmunService_Plugin_Handler extends Amun_Data_HandlerAbstract
 
 
 				// add creator as maintainer
-				$maintainer = Amun_Sql_Table_Registry::get('Service_Plugin_Maintainer')->getRecord();
+				$maintainer = Amun_Sql_Table_Registry::get('Plugin_Maintainer')->getRecord();
 				$maintainer->setPluginId($record->id);
 				$maintainer->setUserId($this->user->id);
 
-				$handler = new Amun_Service_Plugin_Maintainer_Handler($this->user);
+				$handler = new AmunService_Plugin_Maintainer_Handler($this->user);
 				$handler->create($maintainer);
 
 

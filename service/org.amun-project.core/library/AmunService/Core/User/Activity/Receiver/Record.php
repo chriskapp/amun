@@ -57,7 +57,7 @@ class AmunService_Core_User_Activity_Receiver_Record extends Amun_Data_RecordAbs
 
 	public function setStatus($status)
 	{
-		$status = $this->_validate->apply($status, 'integer', array(new Amun_User_Activity_Receiver_Filter_Status()), 'status', 'Status');
+		$status = $this->_validate->apply($status, 'integer', array(new AmunService_Core_User_Activity_Receiver_Filter_Status()), 'status', 'Status');
 
 		if(!$this->_validate->hasError())
 		{
@@ -71,7 +71,7 @@ class AmunService_Core_User_Activity_Receiver_Record extends Amun_Data_RecordAbs
 
 	public function setActivityId($activityId)
 	{
-		$activityId = $this->_validate->apply($activityId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('User_Activity'))), 'activityId', 'Activity Id');
+		$activityId = $this->_validate->apply($activityId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_User_Activity'))), 'activityId', 'Activity Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -85,7 +85,7 @@ class AmunService_Core_User_Activity_Receiver_Record extends Amun_Data_RecordAbs
 
 	public function setUserId($userId)
 	{
-		$userId = $this->_validate->apply($userId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('User_Account'))), 'userId', 'User Id');
+		$userId = $this->_validate->apply($userId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_User_Account'))), 'userId', 'User Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -106,7 +106,7 @@ class AmunService_Core_User_Activity_Receiver_Record extends Amun_Data_RecordAbs
 	{
 		if($this->_activity === null)
 		{
-			$this->_activity = Amun_Sql_Table_Registry::get('User_Activity')->getRecord($this->activityId);
+			$this->_activity = Amun_Sql_Table_Registry::get('Core_User_Activity')->getRecord($this->activityId);
 		}
 
 		return $this->_activity;
@@ -116,7 +116,7 @@ class AmunService_Core_User_Activity_Receiver_Record extends Amun_Data_RecordAbs
 	{
 		if($this->_user === null)
 		{
-			$this->_user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->userId);
+			$this->_user = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;

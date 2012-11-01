@@ -36,7 +36,7 @@ class AmunService_My_Notify_Filter_Status extends PSX_FilterAbstract
 {
 	public function apply($value)
 	{
-		return Amun_Service_My_Notify::getStatus($value) === false ? false : true;
+		return AmunService_My_Notify_Record::getStatus($value) === false ? false : true;
 	}
 
 	public function getErrorMsg()

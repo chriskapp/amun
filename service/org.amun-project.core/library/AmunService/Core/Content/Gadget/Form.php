@@ -95,7 +95,7 @@ class AmunService_Core_Content_Gadget_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Content_Gadget')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Core_Content_Gadget')->getRecord($id);
 
 
 		$form = new Amun_Form('PUT', $this->url);
@@ -163,7 +163,7 @@ class AmunService_Core_Content_Gadget_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Content_Gadget')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Core_Content_Gadget')->getRecord($id);
 
 
 		$form = new Amun_Form('DELETE', $this->url);
@@ -241,7 +241,7 @@ class AmunService_Core_Content_Gadget_Form extends Amun_Data_FormAbstract
 		$gadget = array();
 
 		// service gadgets
-		$result = $this->sql->getAll('SELECT id, name FROM ' . $this->registry['table.core_content_service'] . ' WHERE status = ? ORDER BY name ASC', array(Amun_Content_Service::NORMAL));
+		$result = $this->sql->getAll('SELECT id, name FROM ' . $this->registry['table.core_content_service'] . ' WHERE status = ? ORDER BY name ASC', array(AmunService_Core_Content_Service_Record::NORMAL));
 
 		foreach($result as $row)
 		{

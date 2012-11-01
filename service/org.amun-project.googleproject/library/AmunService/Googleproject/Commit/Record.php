@@ -55,7 +55,7 @@ class AmunService_Googleproject_Commit_Record extends Amun_Data_RecordAbstract
 
 	public function setProjectId($projectId)
 	{
-		$projectId = $this->_validate->apply($projectId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Service_Googleproject'))), 'projectId', 'Project Id');
+		$projectId = $this->_validate->apply($projectId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Googleproject'))), 'projectId', 'Project Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -136,7 +136,7 @@ class AmunService_Googleproject_Commit_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_project === null)
 		{
-			$this->_project = Amun_Sql_Table_Registry::get('Service_Googleproject')->getRecord($this->projectId);
+			$this->_project = Amun_Sql_Table_Registry::get('Googleproject')->getRecord($this->projectId);
 		}
 
 		return $this->_project;
@@ -146,7 +146,7 @@ class AmunService_Googleproject_Commit_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_author === null)
 		{
-			$this->_author = Amun_Sql_Table_Registry::get('Service_Googleproject_Author')->getRecord($this->authorId);
+			$this->_author = Amun_Sql_Table_Registry::get('Googleproject_Author')->getRecord($this->authorId);
 		}
 
 		return $this->_author;

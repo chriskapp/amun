@@ -55,7 +55,7 @@ class AmunService_Core_System_Registry_Record extends Amun_Data_RecordAbstract
 
 	public function setName($name)
 	{
-		$name = $this->_validate->apply($name, 'string', array(new PSX_Filter_Length(3, 64), new Amun_System_Registry_Filter_Name()), 'name', 'Name');
+		$name = $this->_validate->apply($name, 'string', array(new PSX_Filter_Length(3, 64), new AmunService_Core_System_Registry_Filter_Name()), 'name', 'Name');
 
 		if(!$this->_validate->hasError())
 		{
@@ -83,7 +83,7 @@ class AmunService_Core_System_Registry_Record extends Amun_Data_RecordAbstract
 
 	public function setClass($class)
 	{
-		$class = $this->_validate->apply($class, 'string', array(new Amun_System_Registry_Filter_Class()), 'class', 'Class');
+		$class = $this->_validate->apply($class, 'string', array(new AmunService_Core_System_Registry_Filter_Class()), 'class', 'Class');
 
 		if(!$this->_validate->hasError())
 		{

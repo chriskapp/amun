@@ -46,7 +46,7 @@ class AmunService_Core_System_Connect_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('System_Connect')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Core_System_Connect')->getRecord($id);
 
 
 		$form = new Amun_Form('DELETE', $this->url);
@@ -121,7 +121,7 @@ class AmunService_Core_System_Connect_Form extends Amun_Data_FormAbstract
 	private function getStatus()
 	{
 		$status = array();
-		$result = Amun_System_Connect::getStatus();
+		$result = AmunService_Core_System_Connect_Record::getStatus();
 
 		foreach($result as $k => $v)
 		{

@@ -58,7 +58,7 @@ class AmunService_Core_Content_Page_Option_Record extends Amun_Data_RecordAbstra
 
 	public function setOptionId($optionId)
 	{
-		$optionId = $this->_validate->apply($optionId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Content_Service_Option'))), 'optionId', 'Option Id');
+		$optionId = $this->_validate->apply($optionId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_Content_Service_Option'))), 'optionId', 'Option Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -72,7 +72,7 @@ class AmunService_Core_Content_Page_Option_Record extends Amun_Data_RecordAbstra
 
 	public function setRightId($rightId)
 	{
-		$rightId = $this->_validate->apply($rightId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('User_Right'))), 'rightId', 'Right Id');
+		$rightId = $this->_validate->apply($rightId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_User_Right'))), 'rightId', 'Right Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -86,7 +86,7 @@ class AmunService_Core_Content_Page_Option_Record extends Amun_Data_RecordAbstra
 
 	public function setSrcPageId($srcPageId)
 	{
-		$srcPageId = $this->_validate->apply($srcPageId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Content_Page'))), 'srcPageId', 'Source Page Id');
+		$srcPageId = $this->_validate->apply($srcPageId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_Content_Page'))), 'srcPageId', 'Source Page Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -100,7 +100,7 @@ class AmunService_Core_Content_Page_Option_Record extends Amun_Data_RecordAbstra
 
 	public function setDestPageId($destPageId)
 	{
-		$destPageId = $this->_validate->apply($destPageId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Content_Page'))), 'destPageId', 'Destination Page Id');
+		$destPageId = $this->_validate->apply($destPageId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_Content_Page'))), 'destPageId', 'Destination Page Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -149,7 +149,7 @@ class AmunService_Core_Content_Page_Option_Record extends Amun_Data_RecordAbstra
 	{
 		if($this->_srcPage === null)
 		{
-			$this->_srcPage = Amun_Sql_Table_Registry::get('Content_Page')->getRecord($this->srcPageId);
+			$this->_srcPage = Amun_Sql_Table_Registry::get('Core_Content_Page')->getRecord($this->srcPageId);
 		}
 
 		return $this->_srcPage;
@@ -159,7 +159,7 @@ class AmunService_Core_Content_Page_Option_Record extends Amun_Data_RecordAbstra
 	{
 		if($this->_destPage === null)
 		{
-			$this->_destPage = Amun_Sql_Table_Registry::get('Content_Page')->getRecord($this->destPageId);
+			$this->_destPage = Amun_Sql_Table_Registry::get('Core_Content_Page')->getRecord($this->destPageId);
 		}
 
 		return $this->_destPage;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="baa7f609cf1249539e6aa8b4495a2a69be632b97">
+<service xmlns="http://amun-project.org" signature="cfe5fabc7c8f79ce9bf6b2526d3f91b8da027836">
   <status>normal</status>
   <name>my</name>
   <path>/service/my</path>
@@ -29,9 +29,43 @@
   </permissions>
   <library>
     <dir name="AmunService">
-        <dir name="My">
-            <include />
+      <dir name="My">
+        <file name="Activity.php" md5="b2fb1b462066a9140e5365fbb18ebfcc"/>
+        <file name="Attempt.php" md5="41b7b6decdfefa121053e98f694806e8"/>
+        <dir name="Contact">
+          <dir name="Filter">
+            <file name="Status.php" md5="895dd88beaf245cdb7befe30322b726d"/>
+            <file name="Type.php" md5="87cf2db900dbcec730836760c21cc6e3"/>
+          </dir>
+          <file name="Form.php" md5="3b166fee7a04c8828cccf031777e5fb7"/>
+          <file name="Handler.php" md5="e1928e5fac9915cf89665fdaa1ba7e79"/>
+          <file name="Record.php" md5="473edb02f6a8ea1b88208609bf2607b1"/>
+          <file name="Table.php" md5="24b57d32e2548853a3d92d1117836ec1"/>
         </dir>
+        <file name="Credentials.php" md5="8a9a255e16a4506a68839cb33b06dabb"/>
+        <file name="FriendsAbstract.php" md5="bacdcd6b3a53c6bc2b638a857843437b"/>
+        <file name="MyAbstract.php" md5="e405aed127ea5b9ebd0f6e38f1a22eae"/>
+        <dir name="Notify">
+          <dir name="Filter">
+            <file name="Status.php" md5="495ddf852ed4373553ea2e2be4172c3e"/>
+          </dir>
+          <file name="Form.php" md5="d60a7afbf9ecee31df375a4325de609e"/>
+          <file name="Handler.php" md5="0fd80b40c21cd1375c6262572b867a7c"/>
+          <file name="Record.php" md5="34c8a000c0c62092dbff5378166b6aea"/>
+          <dir name="Service">
+            <file name="Table.php" md5="277b5e6869456e9942170729ee30bf91"/>
+          </dir>
+          <file name="Table.php" md5="64aac7665f4d753bed4847657268f368"/>
+        </dir>
+        <file name="People.php" md5="42888caf619e506e062dff946bb605f5"/>
+        <file name="SettingsAbstract.php" md5="dcb2207e11ff35b81dc460207328ddbc"/>
+        <dir name="Subscription">
+          <file name="Form.php" md5="9c53105c09b5b61a87a6c9b6c78d7785"/>
+          <file name="Handler.php" md5="3b3955010df8737da1051bb82e2ee828"/>
+          <file name="Record.php" md5="14673e4ea9e791e79ef4436bfbc5e995"/>
+          <file name="Table.php" md5="377c7843d14c1dd2e9648d6cbc20ef7c"/>
+        </dir>
+      </dir>
     </dir>
   </library>
   <database>

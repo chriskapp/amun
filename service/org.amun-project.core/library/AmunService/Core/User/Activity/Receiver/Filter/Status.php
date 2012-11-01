@@ -36,7 +36,7 @@ class AmunService_Core_User_Activity_Receiver_Filter_Status extends PSX_FilterAb
 {
 	public function apply($value)
 	{
-		return Amun_User_Activity_Receiver::getStatus($value) === false ? false : true;
+		return AmunService_Core_User_Activity_Receiver_Record::getStatus($value) === false ? false : true;
 	}
 
 	public function getErrorMsg()

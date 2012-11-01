@@ -59,7 +59,7 @@ class AmunService_Plugin_Record extends Amun_Data_RecordAbstract
 
 	public function setPageId($pageId)
 	{
-		$pageId = $this->_validate->apply($pageId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Content_Page'))), 'pageId', 'Page Id');
+		$pageId = $this->_validate->apply($pageId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_Content_Page'))), 'pageId', 'Page Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -120,7 +120,7 @@ class AmunService_Plugin_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_page === null)
 		{
-			$this->_page = Amun_Sql_Table_Registry::get('Content_Page')->getRecord($this->pageId);
+			$this->_page = Amun_Sql_Table_Registry::get('Core_Content_Page')->getRecord($this->pageId);
 		}
 
 		return $this->_page;
@@ -130,7 +130,7 @@ class AmunService_Plugin_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_user === null)
 		{
-			$this->_user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->userId);
+			$this->_user = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;
@@ -158,11 +158,11 @@ class AmunService_Plugin_Record extends Amun_Data_RecordAbstract
 			$con = new PSX_Sql_Condition();
 			$con->add('pluginId', '=', $this->id);
 
-			$releaseId = Amun_Sql_Table_Registry::get('Service_Plugin_Release')->getField('id', $con, 'id', PSX_Sql::SORT_DESC);
+			$releaseId = Amun_Sql_Table_Registry::get('Plugin_Release')->getField('id', $con, 'id', PSX_Sql::SORT_DESC);
 
 			if(!empty($releaseId))
 			{
-				$this->_latestRelease = Amun_Sql_Table_Registry::get('Service_Plugin_Release')->getRecord($releaseId);
+				$this->_latestRelease = Amun_Sql_Table_Registry::get('Plugin_Release')->getRecord($releaseId);
 			}
 		}
 

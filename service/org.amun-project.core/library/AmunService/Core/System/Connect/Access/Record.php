@@ -66,7 +66,7 @@ class AmunService_Core_System_Connect_Access_Record extends Amun_Data_RecordAbst
 	{
 		if($this->_user === null)
 		{
-			$this->_user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->userId);
+			$this->_user = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;

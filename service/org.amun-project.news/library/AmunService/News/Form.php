@@ -88,7 +88,7 @@ class AmunService_News_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Service_News')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('News')->getRecord($id);
 
 
 		$form = new Amun_Form('PUT', $this->url);
@@ -131,7 +131,7 @@ class AmunService_News_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Service_News')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('News')->getRecord($id);
 
 
 		$form = new Amun_Form('DELETE', $this->url);

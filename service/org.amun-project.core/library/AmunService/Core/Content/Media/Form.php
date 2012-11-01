@@ -77,7 +77,7 @@ class AmunService_Core_Content_Media_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Content_Media')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Core_Content_Media')->getRecord($id);
 
 
 		$form = new Amun_Form('PUT', $this->url);
@@ -122,7 +122,7 @@ class AmunService_Core_Content_Media_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Content_Media')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Core_Content_Media')->getRecord($id);
 
 
 		$form = new Amun_Form('DELETE', $this->url);
@@ -169,7 +169,7 @@ class AmunService_Core_Content_Media_Form extends Amun_Data_FormAbstract
 	private function getType()
 	{
 		$status = array();
-		$result = Amun_Content_Media::getType();
+		$result = AmunService_Core_Content_Media_Record::getType();
 
 		foreach($result as $k => $v)
 		{

@@ -179,7 +179,7 @@ class AmunService_Core_Content_Service_Handler extends Amun_Data_HandlerAbstract
 		}
 	}
 
-	private function parseMeta(Amun_Content_Service $record)
+	private function parseMeta(AmunService_Core_Content_Service_Record $record)
 	{
 		$rootElement = $this->serviceConfig->documentElement;
 
@@ -258,7 +258,7 @@ class AmunService_Core_Content_Service_Handler extends Amun_Data_HandlerAbstract
 		}
 	}
 
-	private function parsePharFiles(Amun_Content_Service $record)
+	private function parsePharFiles(AmunService_Core_Content_Service_Record $record)
 	{
 		// library
 		$library = $this->serviceConfig->getElementsByTagName('library');
@@ -278,7 +278,7 @@ class AmunService_Core_Content_Service_Handler extends Amun_Data_HandlerAbstract
 		}
 	}
 
-	private function parseFolderFiles(Amun_Content_Service $record)
+	private function parseFolderFiles(AmunService_Core_Content_Service_Record $record)
 	{
 		// library
 		$library = $this->serviceConfig->getElementsByTagName('library');
@@ -298,7 +298,7 @@ class AmunService_Core_Content_Service_Handler extends Amun_Data_HandlerAbstract
 		}
 	}
 
-	private function parseDatabase(Amun_Content_Service $record)
+	private function parseDatabase(AmunService_Core_Content_Service_Record $record)
 	{
 		$database = $this->serviceConfig->getElementsByTagName('database')->item(0);
 
@@ -317,7 +317,7 @@ class AmunService_Core_Content_Service_Handler extends Amun_Data_HandlerAbstract
 		}
 	}
 
-	private function parseQueries(DOMNodeList $queries, Amun_Content_Service $record)
+	private function parseQueries(DOMNodeList $queries, AmunService_Core_Content_Service_Record $record)
 	{
 		for($i = 0; $i < $queries->length; $i++)
 		{
@@ -481,7 +481,7 @@ class AmunService_Core_Content_Service_Handler extends Amun_Data_HandlerAbstract
 		}
 	}
 
-	public function substituteVars($sql, Amun_Content_Service $record)
+	public function substituteVars($sql, AmunService_Core_Content_Service_Record $record)
 	{
 		// tables
 		$result = $this->sql->getAll('SELECT name, value FROM ' . $this->registry['table.core_system_registry'] . ' WHERE name LIKE "table.%"');

@@ -86,7 +86,7 @@ class AmunService_Core_Content_Gadget_Record extends Amun_Data_RecordAbstract
 
 	public function setPath($path)
 	{
-		$path = $this->_validate->apply($path, 'string', array(new Amun_Content_Gadget_Filter_Path($this->_config, $this->_sql)), 'path', 'Path');
+		$path = $this->_validate->apply($path, 'string', array(new AmunService_Core_Content_Gadget_Filter_Path($this->_config, $this->_sql)), 'path', 'Path');
 
 		if(!$this->_validate->hasError())
 		{

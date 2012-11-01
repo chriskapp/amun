@@ -73,7 +73,7 @@ class AmunService_Core_Content_Page_Record extends Amun_Data_RecordAbstract
 
 	public function setParentId($parentId)
 	{
-		$parentId = $this->_validate->apply($parentId, 'integer', array(new Amun_Content_Page_Filter_ParentId($this->_table)), 'parentId', 'Parent Id');
+		$parentId = $this->_validate->apply($parentId, 'integer', array(new AmunService_Core_Content_Page_Filter_ParentId($this->_table)), 'parentId', 'Parent Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -87,7 +87,7 @@ class AmunService_Core_Content_Page_Record extends Amun_Data_RecordAbstract
 
 	public function setServiceId($serviceId)
 	{
-		$serviceId = $this->_validate->apply($serviceId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Content_Service'))), 'serviceId', 'Service Id');
+		$serviceId = $this->_validate->apply($serviceId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_Content_Service'))), 'serviceId', 'Service Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -101,7 +101,7 @@ class AmunService_Core_Content_Page_Record extends Amun_Data_RecordAbstract
 
 	public function setRightId($rightId)
 	{
-		$rightId = $this->_validate->apply($rightId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('User_Right'), true)), 'rightId', 'Right Id');
+		$rightId = $this->_validate->apply($rightId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_User_Right'), true)), 'rightId', 'Right Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -115,7 +115,7 @@ class AmunService_Core_Content_Page_Record extends Amun_Data_RecordAbstract
 
 	public function setStatus($status)
 	{
-		$status = $this->_validate->apply($status, 'integer', array(new Amun_Content_Page_Filter_Status()), 'status', 'Status');
+		$status = $this->_validate->apply($status, 'integer', array(new AmunService_Core_Content_Page_Filter_Status()), 'status', 'Status');
 
 		if(!$this->_validate->hasError())
 		{
@@ -129,7 +129,7 @@ class AmunService_Core_Content_Page_Record extends Amun_Data_RecordAbstract
 
 	public function setLoad($load)
 	{
-		$load = $this->_validate->apply($load, 'integer', array(new Amun_Content_Page_Filter_Load()), 'load', 'Load');
+		$load = $this->_validate->apply($load, 'integer', array(new AmunService_Core_Content_Page_Filter_Load()), 'load', 'Load');
 
 		if(!$this->_validate->hasError())
 		{
@@ -178,7 +178,7 @@ class AmunService_Core_Content_Page_Record extends Amun_Data_RecordAbstract
 
 	public function setTemplate($template)
 	{
-		$template = $this->_validate->apply($template, 'string', array(new Amun_Content_Page_Filter_Template($this->_config)));
+		$template = $this->_validate->apply($template, 'string', array(new AmunService_Core_Content_Page_Filter_Template($this->_config)));
 
 		if(!$this->_validate->hasError())
 		{
@@ -214,7 +214,7 @@ class AmunService_Core_Content_Page_Record extends Amun_Data_RecordAbstract
 		$gadgets = array_map('intval', explode(',', $gadgets));
 		$con     = new PSX_Sql_Condition(array('id', 'IN', $gadgets));
 
-		$this->gadgets = Amun_Sql_Table_Registry::get('Content_Gadget')->getCol('id', $con);
+		$this->gadgets = Amun_Sql_Table_Registry::get('Core_Content_Gadget')->getCol('id', $con);
 	}
 
 	public function getId()
@@ -226,7 +226,7 @@ class AmunService_Core_Content_Page_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_parent === null)
 		{
-			$this->_parent = Amun_Sql_Table_Registry::get('Content_Page')->getRecord($this->parentId);
+			$this->_parent = Amun_Sql_Table_Registry::get('Core_Content_Page')->getRecord($this->parentId);
 		}
 
 		return $this->_parent;
@@ -236,7 +236,7 @@ class AmunService_Core_Content_Page_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_service === null)
 		{
-			$this->_service = Amun_Sql_Table_Registry::get('Content_Service')->getRecord($this->serviceId);
+			$this->_service = Amun_Sql_Table_Registry::get('Core_Content_Service')->getRecord($this->serviceId);
 		}
 
 		return $this->_service;

@@ -52,7 +52,7 @@ class AmunService_Core_Content_Api_Type extends Amun_Data_RecordAbstract
 
 	public function setApiId($apiId)
 	{
-		$apiId = $this->_validate->apply($apiId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Content_Api'))), 'apiId', 'Api Id');
+		$apiId = $this->_validate->apply($apiId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_Content_Api'))), 'apiId', 'Api Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -78,7 +78,7 @@ class AmunService_Core_Content_Api_Type extends Amun_Data_RecordAbstract
 	{
 		if($this->_api === null)
 		{
-			$this->_api = Amun_Sql_Table_Registry::get('Content_Api')->getRecord($this->apiId);
+			$this->_api = Amun_Sql_Table_Registry::get('Core_Content_Api')->getRecord($this->apiId);
 		}
 
 		return $this->_api;

@@ -36,7 +36,7 @@ class AmunService_Core_Content_Page_Filter_Load extends PSX_FilterAbstract
 {
 	public function apply($value)
 	{
-		return Amun_Content_Page::getLoad($value) === false ? false : true;
+		return AmunService_Core_Content_Page_Record::getLoad($value) === false ? false : true;
 	}
 
 	public function getErrorMsg()

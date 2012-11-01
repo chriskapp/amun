@@ -58,7 +58,7 @@ class AmunService_Core_System_Approval_Record_Record extends Amun_Data_RecordAbs
 
 	public function setType($type)
 	{
-		$type = $this->_validate->apply($type, 'string', array(new Amun_System_Approval_Record_Filter_Type()), 'type', 'Type');
+		$type = $this->_validate->apply($type, 'string', array(new AmunService_Core_System_Approval_Record_Filter_Type()), 'type', 'Type');
 
 		if(!$this->_validate->hasError())
 		{
@@ -98,7 +98,7 @@ class AmunService_Core_System_Approval_Record_Record extends Amun_Data_RecordAbs
 	{
 		if($this->_user === null)
 		{
-			$this->_user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->userId);
+			$this->_user = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;

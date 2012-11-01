@@ -56,7 +56,7 @@ class AmunService_Core_System_Host_Record extends Amun_Data_RecordAbstract
 
 	public function setStatus($status)
 	{
-		$status = $this->_validate->apply($status, 'integer', array(new Amun_System_Host_Filter_Status()), 'status', 'Status');
+		$status = $this->_validate->apply($status, 'integer', array(new AmunService_Core_System_Host_Filter_Status()), 'status', 'Status');
 
 		if(!$this->_validate->hasError())
 		{

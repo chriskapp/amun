@@ -54,7 +54,7 @@ class AmunService_Core_System_Host_Request_Record extends Amun_Data_RecordAbstra
 
 	public function setHostId($hostId)
 	{
-		$hostId = $this->_validate->apply($hostId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('System_Host'))), 'hostId', 'Host Id');
+		$hostId = $this->_validate->apply($hostId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_System_Host'))), 'hostId', 'Host Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -68,7 +68,7 @@ class AmunService_Core_System_Host_Request_Record extends Amun_Data_RecordAbstra
 
 	public function setUserId($userId)
 	{
-		$userId = $this->_validate->apply($userId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('User_Account'))), 'userId', 'User Id');
+		$userId = $this->_validate->apply($userId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_User_Account'))), 'userId', 'User Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -117,7 +117,7 @@ class AmunService_Core_System_Host_Request_Record extends Amun_Data_RecordAbstra
 	{
 		if($this->_host === null)
 		{
-			$this->_host = Amun_Sql_Table_Registry::get('System_Host')->getRecord($this->hostId);
+			$this->_host = Amun_Sql_Table_Registry::get('Core_System_Host')->getRecord($this->hostId);
 		}
 
 		return $this->_host;
@@ -127,7 +127,7 @@ class AmunService_Core_System_Host_Request_Record extends Amun_Data_RecordAbstra
 	{
 		if($this->_user === null)
 		{
-			$this->_user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->userId);
+			$this->_user = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;

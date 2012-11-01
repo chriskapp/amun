@@ -62,7 +62,7 @@ class AmunService_Core_Content_Media_Record extends Amun_Data_RecordAbstract
 
 	public function setRightId($rightId)
 	{
-		$rightId = $this->_validate->apply($rightId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('User_Right'))), 'rightId', 'Right Id');
+		$rightId = $this->_validate->apply($rightId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_User_Right'))), 'rightId', 'Right Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -76,7 +76,7 @@ class AmunService_Core_Content_Media_Record extends Amun_Data_RecordAbstract
 
 	public function setFolder($folder)
 	{
-		$folder = $this->_validate->apply($folder, 'string', array(new Amun_Content_Media_Filter_Folder($this->_registry)), 'folder', 'Folder');
+		$folder = $this->_validate->apply($folder, 'string', array(new AmunService_Core_Content_Media_Filter_Folder($this->_registry)), 'folder', 'Folder');
 
 		if(!$this->_validate->hasError())
 		{

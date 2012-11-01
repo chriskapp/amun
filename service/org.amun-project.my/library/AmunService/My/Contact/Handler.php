@@ -39,7 +39,7 @@ class AmunService_My_Contact_Handler extends Amun_Data_HandlerAbstract
 		if($record->hasFields('type', 'value'))
 		{
 			$record->userId = $this->user->id;
-			$record->status = Amun_Service_My_Contact::UNCHECKED;
+			$record->status = AmunService_My_Contact_Record::UNCHECKED;
 
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 

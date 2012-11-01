@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="07eaa3d797c78e57b7e89e52f01dfa958ec9bf23">
+<service xmlns="http://amun-project.org" signature="0ce768ec89e10d62f464449d30982c28db1518ce">
   <status>normal</status>
   <name>googleproject</name>
   <path>/service/googleproject</path>
@@ -21,9 +21,23 @@
   </permissions>
   <library>
     <dir name="AmunService">
-        <dir name="Googleproject">
-            <include />
+      <dir name="Googleproject">
+        <dir name="Author">
+          <file name="Form.php" md5="b52e0a1ed0de98e1b64a3041daaa4e0e"/>
+          <file name="Handler.php" md5="8f677a3e47a57e315483f2ef2a420bb2"/>
+          <file name="Record.php" md5="202d831a983f8a38f0e6de6735ecf178"/>
+          <file name="Table.php" md5="38a8ed097115d546751ede5cafd5897a"/>
         </dir>
+        <dir name="Commit">
+          <file name="Handler.php" md5="e01caff72ffb621051680b2aeffe1180"/>
+          <file name="Record.php" md5="600b3a16e65668a9b2db4d0dd93a202b"/>
+          <file name="Table.php" md5="57dcf368d37420cb36b8a1ed5e934757"/>
+        </dir>
+        <file name="Form.php" md5="b27142368dbc5b9d4f341aeb26e345a3"/>
+        <file name="Handler.php" md5="f7e0d4ea9a82775ae21d3375947565e1"/>
+        <file name="Record.php" md5="4c35a23adeaf12a42108c28e528744ac"/>
+        <file name="Table.php" md5="d430708747ac6130636afff57b7d7fc0"/>
+      </dir>
     </dir>
   </library>
   <database>

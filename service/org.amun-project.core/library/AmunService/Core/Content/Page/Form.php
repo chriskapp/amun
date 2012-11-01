@@ -138,7 +138,7 @@ class AmunService_Core_Content_Page_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Content_Page')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Core_Content_Page')->getRecord($id);
 
 
 		$form = new Amun_Form('PUT', $this->url);
@@ -244,7 +244,7 @@ class AmunService_Core_Content_Page_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Content_Page')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Core_Content_Page')->getRecord($id);
 
 
 		$form = new Amun_Form('DELETE', $this->url);
@@ -363,7 +363,7 @@ class AmunService_Core_Content_Page_Form extends Amun_Data_FormAbstract
 	private function getStatus()
 	{
 		$status = array();
-		$result = Amun_Content_Page::getStatus();
+		$result = AmunService_Core_Content_Page_Record::getStatus();
 
 		foreach($result as $k => $v)
 		{
@@ -381,7 +381,8 @@ class AmunService_Core_Content_Page_Form extends Amun_Data_FormAbstract
 	private function getService()
 	{
 		$service = array();
-		$result  = $this->sql->getAll('SELECT id, name FROM ' . $this->registry['table.core_content_service'] . ' WHERE status = ' . intval(Amun_Content_Service::NORMAL) . ' ORDER BY name ASC');
+		$status  = AmunService_Core_Content_Service_Record::NORMAL;
+		$result  = $this->sql->getAll('SELECT id, name FROM ' . $this->registry['table.core_content_service'] . ' WHERE status = ' . $status . ' ORDER BY name ASC');
 
 		foreach($result as $row)
 		{

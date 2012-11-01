@@ -36,7 +36,7 @@ class AmunService_Core_System_Connect_Filter_Status extends PSX_FilterAbstract
 {
 	public function apply($value)
 	{
-		return Amun_System_Connect::getStatus($value) === false ? false : true;
+		return AmunService_Core_System_Connect_Record::getStatus($value) === false ? false : true;
 	}
 
 	public function getErrorMsg()

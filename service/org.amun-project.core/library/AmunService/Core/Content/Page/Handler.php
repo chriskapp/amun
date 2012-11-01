@@ -40,7 +40,7 @@ class AmunService_Core_Content_Page_Handler extends Amun_Data_HandlerAbstract
 		{
 			if(!isset($record->load))
 			{
-				$record->load = Amun_Content_Page::NAV | Amun_Content_Page::PATH;
+				$record->load = AmunService_Core_Content_Page_Record::NAV | AmunService_Core_Content_Page_Record::PATH;
 			}
 
 
@@ -76,11 +76,11 @@ class AmunService_Core_Content_Page_Handler extends Amun_Data_HandlerAbstract
 
 			if(!empty($gadgets))
 			{
-				$handler = new Amun_Content_Page_Gadget_Handler($this->user);
+				$handler = new AmunService_Core_Content_Page_Gadget_Handler($this->user);
 
 				foreach($gadgets as $gadgetId)
 				{
-					$gadgetRecord = Amun_Sql_Table_Registry::get('Content_Page_Gadget')->getRecord();
+					$gadgetRecord = Amun_Sql_Table_Registry::get('Core_Content_Page_Gadget')->getRecord();
 					$gadgetRecord->pageId = $record->id;
 					$gadgetRecord->gadgetId = $gadgetId;
 
@@ -132,14 +132,14 @@ class AmunService_Core_Content_Page_Handler extends Amun_Data_HandlerAbstract
 
 			// update gadgets if available
 			$gadgets    = isset($record->gadgets) ? $record->gadgets : null;
-			$handler    = new Amun_Content_Page_Gadget_Handler($this->user);
+			$handler    = new AmunService_Core_Content_Page_Gadget_Handler($this->user);
 			$con        = new PSX_Sql_Condition(array('pageId', '=', $record->id));
-			$oldGadgets = Amun_Sql_Table_Registry::get('Content_Page_Gadget')->getCol('id', $con);
+			$oldGadgets = Amun_Sql_Table_Registry::get('Core_Content_Page_Gadget')->getCol('id', $con);
 
 			// delete old gadgets
 			foreach($oldGadgets as $id)
 			{
-				$gadgetRecord = Amun_Sql_Table_Registry::get('Content_Page_Gadget')->getRecord();
+				$gadgetRecord = Amun_Sql_Table_Registry::get('Core_Content_Page_Gadget')->getRecord();
 				$gadgetRecord->id = $id;
 
 				$handler->delete($gadgetRecord);
@@ -150,7 +150,7 @@ class AmunService_Core_Content_Page_Handler extends Amun_Data_HandlerAbstract
 				// create new gadgets
 				foreach($gadgets as $gadgetId)
 				{
-					$gadgetRecord = Amun_Sql_Table_Registry::get('Content_Page_Gadget')->getRecord();
+					$gadgetRecord = Amun_Sql_Table_Registry::get('Core_Content_Page_Gadget')->getRecord();
 					$gadgetRecord->pageId = $record->id;
 					$gadgetRecord->gadgetId = $gadgetId;
 
@@ -183,13 +183,13 @@ class AmunService_Core_Content_Page_Handler extends Amun_Data_HandlerAbstract
 
 
 			// delete assigned gadgets
-			$handler    = new Amun_Content_Page_Gadget_Handler($this->user);
+			$handler    = new AmunService_Core_Content_Page_Gadget_Handler($this->user);
 			$con        = new PSX_Sql_Condition(array('pageId', '=', $record->id));
-			$oldGadgets = Amun_Sql_Table_Registry::get('Content_Page_Gadget')->getCol('id', $con);
+			$oldGadgets = Amun_Sql_Table_Registry::get('Core_Content_Page_Gadget')->getCol('id', $con);
 
 			foreach($oldGadgets as $id)
 			{
-				$gadgetRecord = Amun_Sql_Table_Registry::get('Content_Page_Gadget')->getRecord();
+				$gadgetRecord = Amun_Sql_Table_Registry::get('Core_Content_Page_Gadget')->getRecord();
 				$gadgetRecord->id = $id;
 
 				$handler->delete($gadgetRecord);

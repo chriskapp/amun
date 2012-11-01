@@ -54,7 +54,7 @@ class AmunService_Core_System_Api_Access_Record extends Amun_Data_RecordAbstract
 
 	public function setApiId($apiId)
 	{
-		$apiId = $this->_validate->apply($apiId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('System_Api'))), 'apiId', 'Api Id');
+		$apiId = $this->_validate->apply($apiId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_System_Api'))), 'apiId', 'Api Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -80,7 +80,7 @@ class AmunService_Core_System_Api_Access_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_api === null)
 		{
-			$this->_api = Amun_Sql_Table_Registry::get('System_Api')->getRecord($this->apiId);
+			$this->_api = Amun_Sql_Table_Registry::get('Core_System_Api')->getRecord($this->apiId);
 		}
 
 		return $this->_api;
@@ -90,7 +90,7 @@ class AmunService_Core_System_Api_Access_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_user === null)
 		{
-			$this->_user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->userId);
+			$this->_user = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;

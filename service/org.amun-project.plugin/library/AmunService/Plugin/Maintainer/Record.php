@@ -53,7 +53,7 @@ class AmunService_Plugin_Maintainer_Record extends Amun_Data_RecordAbstract
 
 	public function setPluginId($pluginId)
 	{
-		$pluginId = $this->_validate->apply($pluginId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Service_Plugin'))), 'pluginId', 'Plugin Id');
+		$pluginId = $this->_validate->apply($pluginId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Plugin'))), 'pluginId', 'Plugin Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -67,7 +67,7 @@ class AmunService_Plugin_Maintainer_Record extends Amun_Data_RecordAbstract
 
 	public function setUserId($userId)
 	{
-		$userId = $this->_validate->apply($userId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('User_Account'))), 'userId', 'User Id');
+		$userId = $this->_validate->apply($userId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_User_Account'))), 'userId', 'User Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -83,7 +83,7 @@ class AmunService_Plugin_Maintainer_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_plugin === null)
 		{
-			$this->_plugin = Amun_Sql_Table_Registry::get('Service_Plugin')->getRecord($this->pluginId);
+			$this->_plugin = Amun_Sql_Table_Registry::get('Plugin')->getRecord($this->pluginId);
 		}
 
 		return $this->_plugin;
@@ -93,7 +93,7 @@ class AmunService_Plugin_Maintainer_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_user === null)
 		{
-			$this->_user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->userId);
+			$this->_user = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;

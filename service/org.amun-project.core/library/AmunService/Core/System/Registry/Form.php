@@ -41,7 +41,7 @@ class AmunService_Core_System_Registry_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('System_Registry')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Core_System_Registry')->getRecord($id);
 
 
 		$form = new Amun_Form('PUT', $this->url);
@@ -92,7 +92,7 @@ class AmunService_Core_System_Registry_Form extends Amun_Data_FormAbstract
 	public function getType()
 	{
 		$type   = array();
-		$result = Amun_System_Registry::getType();
+		$result = AmunService_Core_System_Registry_Record::getType();
 
 		foreach($result as $k => $v)
 		{

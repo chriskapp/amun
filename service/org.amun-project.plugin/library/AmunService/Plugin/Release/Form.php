@@ -100,7 +100,7 @@ class AmunService_Plugin_Release_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Service_Release')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Plugin_Release')->getRecord($id);
 
 
 		$form = new Amun_Form('DELETE', $this->url);
@@ -145,7 +145,7 @@ class AmunService_Plugin_Release_Form extends Amun_Data_FormAbstract
 	private function getStatus()
 	{
 		$status = array();
-		$result = Amun_Service_Plugin_Release::getStatus();
+		$result = AmunService_Plugin_Release_Record::getStatus();
 
 		foreach($result as $k => $v)
 		{

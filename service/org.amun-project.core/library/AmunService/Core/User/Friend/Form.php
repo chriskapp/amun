@@ -42,7 +42,7 @@ class AmunService_Core_User_Friend_Form extends Amun_Data_FormAbstract
 		$panel = new Amun_Form_Element_Panel('friend', 'Friend');
 
 
-		$status = new Amun_Form_Element_Select('status', 'Status', Amun_User_Friend::REQUEST);
+		$status = new Amun_Form_Element_Select('status', 'Status', AmunService_Core_User_Friend_Record::REQUEST);
 		$status->setOptions($this->getStatus());
 		$status->setDisabled(true);
 
@@ -86,7 +86,7 @@ class AmunService_Core_User_Friend_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('User_Friend')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Core_User_Friend')->getRecord($id);
 
 
 		$form = new Amun_Form('DELETE', $this->url);
@@ -140,7 +140,7 @@ class AmunService_Core_User_Friend_Form extends Amun_Data_FormAbstract
 	public function getStatus()
 	{
 		$status = array();
-		$result = Amun_User_Friend::getStatus();
+		$result = AmunService_Core_User_Friend_Record::getStatus();
 
 		foreach($result as $k => $v)
 		{

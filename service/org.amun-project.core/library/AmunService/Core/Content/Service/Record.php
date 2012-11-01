@@ -55,7 +55,7 @@ class AmunService_Core_Content_Service_Record extends Amun_Data_RecordAbstract
 
 	public function setStatus($status)
 	{
-		$status = $this->_validate->apply($status, 'string', array(new Amun_Content_Service_Filter_Status()), 'status', 'Status');
+		$status = $this->_validate->apply($status, 'string', array(new AmunService_Core_Content_Service_Filter_Status()), 'status', 'Status');
 
 		if(!$this->_validate->hasError())
 		{
@@ -97,7 +97,7 @@ class AmunService_Core_Content_Service_Record extends Amun_Data_RecordAbstract
 
 	public function setLink($link)
 	{
-		$link = $this->_validate->apply($link, 'string', array(new PSX_Filter_Length(7, 256), new Amun_Content_Service_Filter_Link()), 'link', 'Link');
+		$link = $this->_validate->apply($link, 'string', array(new PSX_Filter_Length(7, 256), new AmunService_Core_Content_Service_Filter_Link()), 'link', 'Link');
 
 		if(!$this->_validate->hasError())
 		{

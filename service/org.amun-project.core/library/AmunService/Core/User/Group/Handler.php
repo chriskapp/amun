@@ -54,11 +54,11 @@ class AmunService_Core_User_Group_Handler extends Amun_Data_HandlerAbstract
 
 			if(!empty($rights))
 			{
-				$handler = new Amun_User_Group_Right_Handler($this->user);
+				$handler = new AmunService_Core_User_Group_Right_Handler($this->user);
 
 				foreach($rights as $rightId)
 				{
-					$rightRecord = Amun_Sql_Table_Registry::get('User_Group_Right')->getRecord();
+					$rightRecord = Amun_Sql_Table_Registry::get('Core_User_Group_Right')->getRecord();
 					$rightRecord->groupId = $record->id;
 					$rightRecord->rightId = $rightId;
 
@@ -89,14 +89,14 @@ class AmunService_Core_User_Group_Handler extends Amun_Data_HandlerAbstract
 
 			// update rights if available
 			$rights    = isset($record->rights) ? $record->rights : null;
-			$handler   = new Amun_User_Group_Right_Handler($this->user);
+			$handler   = new AmunService_Core_User_Group_Right_Handler($this->user);
 			$con       = new PSX_Sql_Condition(array('groupId', '=', $record->id));
-			$oldRights = Amun_Sql_Table_Registry::get('User_Group_Right')->getCol('id', $con);
+			$oldRights = Amun_Sql_Table_Registry::get('Core_User_Group_Right')->getCol('id', $con);
 
 			// delete old rights
 			foreach($oldRights as $id)
 			{
-				$rightRecord = Amun_Sql_Table_Registry::get('User_Group_Right')->getRecord();
+				$rightRecord = Amun_Sql_Table_Registry::get('Core_User_Group_Right')->getRecord();
 				$rightRecord->id = $id;
 
 				$handler->delete($rightRecord);
@@ -107,7 +107,7 @@ class AmunService_Core_User_Group_Handler extends Amun_Data_HandlerAbstract
 				// create new rights
 				foreach($rights as $rightId)
 				{
-					$rightRecord = Amun_Sql_Table_Registry::get('User_Group_Right')->getRecord();
+					$rightRecord = Amun_Sql_Table_Registry::get('Core_User_Group_Right')->getRecord();
 					$rightRecord->groupId = $record->id;
 					$rightRecord->rightId = $rightId;
 
@@ -137,13 +137,13 @@ class AmunService_Core_User_Group_Handler extends Amun_Data_HandlerAbstract
 
 
 			// delete assigned rights
-			$handler   = new Amun_User_Group_Right_Handler($this->user);
+			$handler   = new AmunService_Core_User_Group_Right_Handler($this->user);
 			$con       = new PSX_Sql_Condition(array('groupId', '=', $record->id));
-			$oldRights = Amun_Sql_Table_Registry::get('User_Group_Right')->getCol('id', $con);
+			$oldRights = Amun_Sql_Table_Registry::get('Core_User_Group_Right')->getCol('id', $con);
 
 			foreach($oldRights as $id)
 			{
-				$rightRecord = Amun_Sql_Table_Registry::get('User_Group_Right')->getRecord();
+				$rightRecord = Amun_Sql_Table_Registry::get('Core_User_Group_Right')->getRecord();
 				$rightRecord->id = $id;
 
 				$handler->delete($rightRecord);

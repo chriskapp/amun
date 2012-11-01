@@ -73,7 +73,7 @@ class AmunService_Googleproject_Author_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Service_Googleproject_Author')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Googleproject_Author')->getRecord($id);
 
 
 		$form = new Amun_Form('PUT', $this->url);
@@ -119,7 +119,7 @@ class AmunService_Googleproject_Author_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Service_Googleproject_Author')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Googleproject_Author')->getRecord($id);
 
 
 		$form = new Amun_Form('DELETE', $this->url);

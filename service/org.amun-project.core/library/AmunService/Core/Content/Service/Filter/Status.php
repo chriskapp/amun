@@ -36,7 +36,7 @@ class AmunService_Core_Content_Service_Filter_Status extends PSX_FilterAbstract
 {
 	public function apply($value)
 	{
-		$statuuus = Amun_Content_Service::getStatus();
+		$statuuus = AmunService_Core_Content_Service_Record::getStatus();
 
 		foreach($statuuus as $k => $v)
 		{

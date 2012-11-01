@@ -58,7 +58,7 @@ class AmunService_Core_User_Friend_Record extends Amun_Data_RecordAbstract
 
 	public function setGroupId($groupId)
 	{
-		$groupId = $this->_validate->apply($groupId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('User_Friend_Group'))), 'groupId', 'Group Id');
+		$groupId = $this->_validate->apply($groupId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_User_Friend_Group'))), 'groupId', 'Group Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -72,7 +72,7 @@ class AmunService_Core_User_Friend_Record extends Amun_Data_RecordAbstract
 
 	public function setFriendId($friendId)
 	{
-		$friendId = $this->_validate->apply($friendId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('User_Friend'))), 'friendId', 'Friend Id');
+		$friendId = $this->_validate->apply($friendId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_User_Friend'))), 'friendId', 'Friend Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -93,7 +93,7 @@ class AmunService_Core_User_Friend_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_group === null)
 		{
-			$this->_group = Amun_Sql_Table_Registry::get('User_Friend_Group')->getRecord($this->groupId);
+			$this->_group = Amun_Sql_Table_Registry::get('Core_User_Friend_Group')->getRecord($this->groupId);
 		}
 
 		return $this->_group;
@@ -103,7 +103,7 @@ class AmunService_Core_User_Friend_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_user === null)
 		{
-			$this->_user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->userId);
+			$this->_user = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;
@@ -113,7 +113,7 @@ class AmunService_Core_User_Friend_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_friend === null)
 		{
-			$this->_friend = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->friendId);
+			$this->_friend = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord($this->friendId);
 		}
 
 		return $this->_friend;

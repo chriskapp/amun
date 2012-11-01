@@ -89,7 +89,7 @@ class AmunService_Googleproject_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Service_Googleproject')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Googleproject')->getRecord($id);
 
 
 		$form = new Amun_Form('PUT', $this->url);
@@ -133,7 +133,7 @@ class AmunService_Googleproject_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Service_Googleproject')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Googleproject')->getRecord($id);
 
 
 		$form = new Amun_Form('DELETE', $this->url);

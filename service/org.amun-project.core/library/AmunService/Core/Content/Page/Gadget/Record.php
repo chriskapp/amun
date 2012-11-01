@@ -53,7 +53,7 @@ class AmunService_Core_Content_Page_Gadget_Record extends Amun_Data_RecordAbstra
 
 	public function setPageId($pageId)
 	{
-		$pageId = $this->_validate->apply($pageId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Content_Page'))), 'pageId', 'Page Id');
+		$pageId = $this->_validate->apply($pageId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_Content_Page'))), 'pageId', 'Page Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -67,7 +67,7 @@ class AmunService_Core_Content_Page_Gadget_Record extends Amun_Data_RecordAbstra
 
 	public function setGadgetId($gadgetId)
 	{
-		$gadgetId = $this->_validate->apply($gadgetId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Content_Gadget'))), 'gadgetId', 'Gadget Id');
+		$gadgetId = $this->_validate->apply($gadgetId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_Content_Gadget'))), 'gadgetId', 'Gadget Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -93,7 +93,7 @@ class AmunService_Core_Content_Page_Gadget_Record extends Amun_Data_RecordAbstra
 	{
 		if($this->_page === null)
 		{
-			$this->_page = Amun_Sql_Table_Registry::get('Content_Page')->getRecord($this->pageId);
+			$this->_page = Amun_Sql_Table_Registry::get('Core_Content_Page')->getRecord($this->pageId);
 		}
 
 		return $this->_page;
@@ -103,7 +103,7 @@ class AmunService_Core_Content_Page_Gadget_Record extends Amun_Data_RecordAbstra
 	{
 		if($this->_gadget === null)
 		{
-			$this->_gadget = Amun_Sql_Table_Registry::get('Content_Gadget')->getRecord($this->gadgetId);
+			$this->_gadget = Amun_Sql_Table_Registry::get('Core_Content_Gadget')->getRecord($this->gadgetId);
 		}
 
 		return $this->_gadget;

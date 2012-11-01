@@ -46,7 +46,7 @@ class AmunService_Core_System_Api_Access_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('System_Api_Access')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Core_System_Api_Access')->getRecord($id);
 
 
 		$form = new Amun_Form('DELETE', $this->url);

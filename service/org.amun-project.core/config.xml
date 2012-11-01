@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="4cdf87f9a12d644d48a93a023caeb37286d86887">
+<service xmlns="http://amun-project.org" signature="50daadfdd646826c137b281e59c4aaef04d87ca0">
   <status>normal</status>
   <name>core</name>
   <path>/core</path>
@@ -275,9 +275,262 @@
   </permissions>
   <library>
     <dir name="AmunService">
-        <dir name="Core">
-            <include />
+      <dir name="Core">
+        <dir name="Content">
+          <dir name="Api">
+            <file name="Record.php" md5="196bfbf09fe18a3f617aac6cd09837ed"/>
+            <file name="Table.php" md5="07bd584fdbb50eeb8c8e8dad27258dc9"/>
+            <dir name="Type">
+              <file name="Record.php" md5="2e95b6fe437fc964e98719f00f1453b3"/>
+              <file name="Table.php" md5="0f7d7829db0b21d52905edcb4d2c707b"/>
+            </dir>
+          </dir>
+          <dir name="Gadget">
+            <dir name="Filter">
+              <file name="Path.php" md5="cf55f5aa666c851c5a2d55948139f2dc"/>
+            </dir>
+            <file name="Form.php" md5="ba8daf77b9c2abc2f62009c50ad6540e"/>
+            <file name="Handler.php" md5="baa500d1275c28856242ecdefd9b2866"/>
+            <file name="Record.php" md5="11d78936f56a4f29486f0f19aaa7abe3"/>
+            <file name="Table.php" md5="293dd023c7b6b4ac20e34941d6ae904b"/>
+          </dir>
+          <dir name="Media">
+            <dir name="Filter">
+              <file name="Folder.php" md5="bef62a0f31c9ac27af95780395f05860"/>
+            </dir>
+            <file name="Form.php" md5="5353a439cf3bb3f4b213e8429f71ea7a"/>
+            <file name="Handler.php" md5="5b2d210facf349507411be1a3db54f2b"/>
+            <file name="Record.php" md5="de52e297c843e3dab798c5c5c0a6be34"/>
+            <file name="Table.php" md5="ec17dda07c6fa4bd4b574b837429e89b"/>
+          </dir>
+          <dir name="Page">
+            <dir name="Filter">
+              <file name="Load.php" md5="31d827d232101c588fc6b977723e56ef"/>
+              <file name="ParentId.php" md5="b8e737f2826d8811b3a1e66767effcfe"/>
+              <file name="Status.php" md5="6ed5cf4b848e436f0b2fd4f42470a466"/>
+              <file name="Template.php" md5="a474d8f848744213e2291bf49f327d6a"/>
+              <file name="TitleExists.php" md5="bcd36aadfcd1761c485e434158e235c7"/>
+            </dir>
+            <file name="Form.php" md5="3efc54e534b57ac68b58efbb9d30567e"/>
+            <dir name="Gadget">
+              <file name="Form.php" md5="45871622a92247b487d75690c282ee9d"/>
+              <file name="Handler.php" md5="0599e2080756ef213428f33c3730097e"/>
+              <file name="Record.php" md5="214825fdaacd5240add9ce33d2b39b4d"/>
+              <file name="Table.php" md5="ae63889c596817d8c2fa3823b0ed8953"/>
+            </dir>
+            <file name="Handler.php" md5="8c4d42b64011baa3d11744ac62a1546e"/>
+            <dir name="Option">
+              <file name="Form.php" md5="32c411c6642bc30cc40cb0146e54be5f"/>
+              <file name="Handler.php" md5="9ba0bbbd67edbc90fda74b8617268815"/>
+              <file name="Record.php" md5="cd7b05a397ef4c82b9624883c9b802e8"/>
+              <file name="Table.php" md5="366b10d55e222e1f9593f4e0e0cccb89"/>
+            </dir>
+            <file name="Record.php" md5="5baad6466891fee04b0c509d1701c5a2"/>
+            <dir name="Right">
+              <file name="Form.php" md5="6099f3054e10139d72c87b2037592bdf"/>
+              <file name="Handler.php" md5="761de5267db5babc77a28bed3ca3f3cc"/>
+              <file name="Record.php" md5="151d99a55a98c5c5881092701f2246e6"/>
+              <file name="Table.php" md5="c97b80d2fd692d10a0aa96695eb67c78"/>
+            </dir>
+            <file name="Table.php" md5="8fc2121ea9c1c0151a5492823866a589"/>
+          </dir>
+          <dir name="Service">
+            <dir name="Filter">
+              <file name="Link.php" md5="b175c5d461a628da3531b4dcc6190156"/>
+              <file name="Status.php" md5="606c0880024dbd2f4a45da8aaea24686"/>
+            </dir>
+            <file name="Form.php" md5="af2c2c42f7d32793a451d349fe04d30f"/>
+            <file name="Handler.php" md5="6509e8c07c39b36ffa5d76bd515516ef"/>
+            <dir name="Option">
+              <file name="Record.php" md5="2d605e8e44a6e36fe744080d60579699"/>
+              <file name="Table.php" md5="8c495f459842ed8956ea232ad3229fb0"/>
+            </dir>
+            <file name="Record.php" md5="656bdaee55b09f29d788cf13c596851c"/>
+            <file name="Table.php" md5="72e1a82e88308d1b077b03fa010c997f"/>
+          </dir>
         </dir>
+        <dir name="System">
+          <dir name="Api">
+            <dir name="Access">
+              <file name="Form.php" md5="0811561ae29a5f37b67d6441b8d4fd4f"/>
+              <file name="Handler.php" md5="48b7abc237ffce8c15b67822ff73f506"/>
+              <file name="Record.php" md5="5f09926e6c3abdf4ee38d3631a766970"/>
+              <file name="Table.php" md5="3f1ab8e3f424641ac994debfe2cf5f8d"/>
+            </dir>
+            <dir name="Filter">
+              <file name="Callback.php" md5="4441481f46600b27fd14d539c332b59e"/>
+              <file name="Status.php" md5="46f131d8a7cec5f09459e6335f4dd337"/>
+            </dir>
+            <file name="Form.php" md5="3a871bafc96223e686af455daca4a8e5"/>
+            <file name="Handler.php" md5="c39373d12de695cb10bfbb0407eddcf7"/>
+            <file name="Record.php" md5="5fdd0540c27bf9ccfde088a9728cdb01"/>
+            <dir name="Request">
+              <file name="Form.php" md5="ea10c1c71339f8fd93ec6683ca51cae4"/>
+              <file name="Handler.php" md5="8a5ca6184d5dc1ef01ce95d3f303c8f8"/>
+              <file name="Record.php" md5="d4c54c560c4ed61026505c122a8f8ffd"/>
+              <file name="Table.php" md5="dfee64e2b404b550ff987705f6e97af3"/>
+            </dir>
+            <file name="Table.php" md5="62f1d29a977784e25c11dedc54969451"/>
+          </dir>
+          <dir name="Approval">
+            <dir name="Filter">
+              <file name="Field.php" md5="2b9cf5c83cc91bcdfd66d55aa4619b9e"/>
+            </dir>
+            <file name="Form.php" md5="868a91b09512e5881a686df929fcbfe1"/>
+            <file name="Handler.php" md5="eb82cf3a4ee70e45d730306c0019b007"/>
+            <dir name="Record">
+              <dir name="Filter">
+                <file name="Type.php" md5="b9be29909feead11959cfc428ebb746b"/>
+              </dir>
+              <file name="Form.php" md5="138eded7795b75011d0c5a85fb26b638"/>
+              <file name="Handler.php" md5="8b97585bcbce00dc76ed1a7385f93d40"/>
+              <file name="Record.php" md5="e58366c7a764709093235dce78b0d262"/>
+              <file name="Table.php" md5="e45a764ba735635067bec26b6537dd04"/>
+            </dir>
+            <file name="Record.php" md5="495deb769897646b1f04a373664d81a1"/>
+            <file name="Table.php" md5="1ac609be17438828b13e65daef18ec72"/>
+          </dir>
+          <dir name="Connect">
+            <dir name="Access">
+              <file name="Form.php" md5="378236be1f3fa7e8019cce5b964c637d"/>
+              <file name="Handler.php" md5="d4856cd50947f04aebdec1e789579e20"/>
+              <file name="Record.php" md5="9535dc979ca3104f1251b7d35be072ca"/>
+              <file name="Table.php" md5="b30f2b9465fdfab569f7f2b838336dff"/>
+            </dir>
+            <dir name="Assoc">
+              <file name="Table.php" md5="12e26676fc8bab562dc8c0133519825d"/>
+            </dir>
+            <dir name="Filter">
+              <file name="Status.php" md5="783d43e64a1a17ac3b0cadf2865c9d11"/>
+            </dir>
+            <file name="Form.php" md5="459f4d1227242cff9a5d1ba96e9f32f3"/>
+            <file name="Handler.php" md5="129e7c14e66e270cf554a97fb1820a49"/>
+            <file name="Record.php" md5="f00c404e6d5006f11b9d07d847f739f7"/>
+            <file name="Table.php" md5="bd5a4a09d20f44540b9e5f5b8b0cb622"/>
+          </dir>
+          <dir name="Country">
+            <file name="Form.php" md5="8ae7a118fc5a545d04b439a983e5fe88"/>
+            <file name="Handler.php" md5="f7b6efe7fc9de8ced3f40c556b3e112f"/>
+            <file name="Record.php" md5="4420ee712387eb3da3706f6f2edd3f0f"/>
+            <file name="Table.php" md5="a18ab0f6cd968fada1d6eb997482faf4"/>
+          </dir>
+          <dir name="Host">
+            <dir name="Filter">
+              <file name="Name.php" md5="1ca4c5e86c472bd764060d04f96a0575"/>
+              <file name="Status.php" md5="84279d445532fe187105b916c89b9a66"/>
+            </dir>
+            <file name="Form.php" md5="a1d6339ca40e8d245eb509c471a497a6"/>
+            <file name="Handler.php" md5="bd7fd2663d6bd46777c3828738b006d4"/>
+            <file name="Record.php" md5="8fb65bf4a267663418e9abdb3e10399a"/>
+            <dir name="Request">
+              <file name="Record.php" md5="8f78da7048c7625d56f37fa14298b812"/>
+              <file name="Table.php" md5="a345a1fa2b611850a13969fce946ca18"/>
+            </dir>
+            <file name="Table.php" md5="c02d45cd002a8d7abdb17d2593ae36d0"/>
+          </dir>
+          <dir name="Log">
+            <file name="Form.php" md5="34b40beb2471b073ada5113b5551b17b"/>
+            <file name="Handler.php" md5="b8aeac54e8d84a5f3de76049b22a61a7"/>
+            <file name="Record.php" md5="0fdd15db5ff7e78fb5a2e9bea1e13c40"/>
+            <file name="Table.php" md5="95e97e75b4db716778dd015bb66ea871"/>
+          </dir>
+          <dir name="Mail">
+            <file name="Form.php" md5="a855c63a5eb18d6ab58f5ed59e1026c0"/>
+            <file name="Handler.php" md5="ab425b258bb603427598ca0438e893c8"/>
+            <file name="Record.php" md5="352069fde0aa70f1d42fd32822e8cf25"/>
+            <file name="Table.php" md5="cbd7341ce366df8765dfbfd5252a85f3"/>
+          </dir>
+          <dir name="Notify">
+            <dir name="Filter">
+              <file name="Class.php" md5="1032dbb978227063548bbeef0e4a8682"/>
+              <file name="Table.php" md5="2b82029df8c3c45c547baa514782c627"/>
+            </dir>
+            <file name="Handler.php" md5="24487575bd865865dff2e94225d9304c"/>
+            <file name="Record.php" md5="64c6e870b4874eb302034bc734dbfa4f"/>
+            <file name="Table.php" md5="a2502f41c5881d945aefb072dcd9fc12"/>
+          </dir>
+          <dir name="Registry">
+            <dir name="Filter">
+              <file name="Class.php" md5="04ff2ef3023e5bc201f80e4617d15e20"/>
+              <file name="Name.php" md5="2d6f5642dcb930d8be3db164fde23d8a"/>
+            </dir>
+            <file name="Form.php" md5="b0095f55dc757667d1c460bee47948ff"/>
+            <file name="Handler.php" md5="8081686d9e4170602477a344debfc6c0"/>
+            <file name="Record.php" md5="2e1963abcc6f66fc3878aa052fb4a7ef"/>
+            <file name="Table.php" md5="7eaa3c0495fa899ef9780835fc0fee53"/>
+          </dir>
+        </dir>
+        <dir name="User">
+          <dir name="Account">
+            <dir name="Filter">
+              <file name="Email.php" md5="50251ef19a7de8545bc6f1b68e6ad4bc"/>
+              <file name="Gender.php" md5="79338cddefe8ccbc655e6506331b1977"/>
+              <file name="Identity.php" md5="7f465f5d06cc2344b922a3783d3732ec"/>
+              <file name="Name.php" md5="7ab1b2f7fe74ade64c12335b2f47000b"/>
+              <file name="Pw.php" md5="3811882d6ab13622bfe37d0e74859b5a"/>
+              <file name="Status.php" md5="f95d1d6df45c70535ef5d034d2c2ba37"/>
+              <file name="Timezone.php" md5="4706646f7507c2f11a4abd128d8b7e37"/>
+            </dir>
+            <file name="Form.php" md5="c95e7a4dd5f5648eeb5309eb55500790"/>
+            <file name="Handler.php" md5="1a73d638c715e6822964f46cd7582bdc"/>
+            <file name="Record.php" md5="f4d4e0304f54f3ea36e73d2b55d13689"/>
+            <file name="Table.php" md5="5638a051c8515529110ee33ed0923bc4"/>
+          </dir>
+          <dir name="Activity">
+            <dir name="Filter">
+              <file name="Verb.php" md5="2b6584c635b72194d4c8ce691fc6530a"/>
+            </dir>
+            <file name="Form.php" md5="300f333ced9a1203dd15b53dd53d0ae4"/>
+            <file name="Handler.php" md5="d293e0b6ced04122f4c7ebfeb05b7113"/>
+            <dir name="Receiver">
+              <dir name="Filter">
+                <file name="Status.php" md5="4e38096195fe93a9e321b80fe5e16e4c"/>
+              </dir>
+              <file name="Handler.php" md5="d6a1aebae86d99f6619b833b2e4321d1"/>
+              <file name="Record.php" md5="dbec7a41d8a1d1bfafad28f0e6842e31"/>
+              <file name="Table.php" md5="010302976f1a4f3e4078b0271d5beacf"/>
+            </dir>
+            <file name="Record.php" md5="fe2ab361d9bcb6573fbe6739c13131f1"/>
+            <file name="Stream.php" md5="aa2d21fb2359bb10da0bd69f6f22cabe"/>
+            <file name="StreamAbstract.php" md5="3c988d38cf21632f1288ec8d2bd4d1e7"/>
+            <file name="Table.php" md5="b8ea68946271411ee9010f4d2b32e71d"/>
+          </dir>
+          <dir name="Friend">
+            <dir name="Filter">
+              <file name="Status.php" md5="3ede3e9003881f68c5032b4f10000949"/>
+            </dir>
+            <file name="Form.php" md5="3880b45ea1b33211220531b510e162da"/>
+            <dir name="Group">
+              <file name="Form.php" md5="42f82c6335517171234bf6e85b856340"/>
+              <file name="Handler.php" md5="02e82456657f66442e521507fa706b02"/>
+              <file name="Record.php" md5="c794f64ecc381b830126c19c2589725e"/>
+              <file name="Table.php" md5="7d006d7d123122d3289238cfc5cc13dd"/>
+            </dir>
+            <file name="Handler.php" md5="aab5ae5e92c280df1c07c116acd6f11c"/>
+            <file name="Record.php" md5="1e288c056dc9e170398e68f4f7729526"/>
+            <file name="Relation.php" md5="8875f0d3b7f45986e954c0d2323a0453"/>
+            <file name="Table.php" md5="922da4150e80bb841119d0bb8d505cad"/>
+          </dir>
+          <dir name="Group">
+            <file name="Form.php" md5="054486c5b939be382b5412396caca06f"/>
+            <file name="Handler.php" md5="40d6f1d6472d8136988c054cf9365c7f"/>
+            <file name="Record.php" md5="ae5d75228fdf7b1c4cc9a60002284ebd"/>
+            <dir name="Right">
+              <file name="Form.php" md5="f9661f0d74a70e164ab699bec2a6ae8f"/>
+              <file name="Handler.php" md5="034cd3524326d163030103a549b1b4a6"/>
+              <file name="Record.php" md5="b6b6ac6eec9fac409cac520def481647"/>
+              <file name="Table.php" md5="25e0e9768f2ca8d99ea7febdc485d26b"/>
+            </dir>
+            <file name="Table.php" md5="f9993f01a666debff7b53fd1500859d3"/>
+          </dir>
+          <dir name="Right">
+            <file name="Form.php" md5="acd9818580b7d9aeb60f22f4d19d225c"/>
+            <file name="Handler.php" md5="278fc228eaeeaf323e3fa965676b01a7"/>
+            <file name="Record.php" md5="363be43722f39d4bc55e90db61c71976"/>
+            <file name="Table.php" md5="2e79d42e0cb7913cb471171ac6b9dfe6"/>
+          </dir>
+        </dir>
+      </dir>
     </dir>
   </library>
   <database>
@@ -289,14 +542,14 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `endpoint` (`endpoint`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_api_type}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_api_type}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `apiId` int(10) NOT NULL,
   `type` varchar(512) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `apiId_type` (`apiId`,`type`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_gadget}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_gadget}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `globalId` varchar(36) NOT NULL,
   `name` varchar(32) NOT NULL,
@@ -309,7 +562,7 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_media}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_media}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `globalId` varchar(36) NOT NULL,
   `rightId` int(10) DEFAULT NULL,
@@ -323,7 +576,7 @@
   UNIQUE KEY `globalId` (`globalId`),
   UNIQUE KEY `path` (`path`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_page}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_page}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `parentId` int(10) NOT NULL,
   `globalId` varchar(36) NOT NULL,
@@ -343,7 +596,7 @@
   UNIQUE KEY `globalId` (`globalId`),
   UNIQUE KEY `path` (`path`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_page_gadget}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_page_gadget}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `pageId` int(10) NOT NULL,
   `gadgetId` int(10) NOT NULL,
@@ -351,7 +604,7 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `pageGadgetId` (`pageId`,`gadgetId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_page_option}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_page_option}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `optionId` int(10) NOT NULL,
   `rightId` int(10) NOT NULL,
@@ -361,7 +614,7 @@
   `href` varchar(512) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_page_right}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_page_right}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `pageId` int(10) NOT NULL,
   `groupId` int(10) NOT NULL,
@@ -369,7 +622,7 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `pageGroupId` (`pageId`,`groupId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_service}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_service}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `status` int(10) NOT NULL,
   `source` varchar(128) NOT NULL,
@@ -385,13 +638,13 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_service_option}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_service_option}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `serviceId` int(10) NOT NULL,
   `name` varchar(64) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=ascii;]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_api}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_api}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `status` int(10) NOT NULL,
   `name` varchar(64) NOT NULL,
@@ -406,7 +659,7 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `consumerKey` (`consumerKey`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_api_access}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_api_access}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `apiId` int(10) NOT NULL,
   `userId` int(10) NOT NULL,
@@ -415,7 +668,7 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `apiUserId` (`apiId`,`userId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_api_request}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_api_request}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `apiId` int(10) NOT NULL,
   `userId` int(10) NOT NULL,
@@ -432,14 +685,14 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `token` (`token`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=ascii;]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_approval}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_approval}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `table` varchar(64) NOT NULL,
   `field` varchar(32) NOT NULL DEFAULT '',
   `value` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_approval_record}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_approval_record}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `userId` int(10) NOT NULL,
   `type` enum('INSERT','UPDATE','DELETE') NOT NULL,
@@ -448,7 +701,7 @@
   `date` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_assoc}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_assoc}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `opEndpoint` varchar(256) NOT NULL,
   `assocHandle` varchar(512) NOT NULL,
@@ -459,7 +712,7 @@
   `date` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_connect}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_connect}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `userId` int(10) NOT NULL,
   `assocId` int(10) NOT NULL,
@@ -472,7 +725,7 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_assoc_id` (`userId`,`assocId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_connect_access}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_connect_access}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `userId` int(10) NOT NULL,
   `returnTo` varchar(256) NOT NULL,
@@ -481,7 +734,7 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `userId_returnTo` (`userId`,`returnTo`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_connect_assoc}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_connect_assoc}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `assocHandle` varchar(256) NOT NULL,
   `assocType` enum('HMAC-SHA1','HMAC-SHA256') NOT NULL,
@@ -492,7 +745,7 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `assocHandle` (`assocHandle`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_country}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_country}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `title` varchar(64) NOT NULL,
   `code` varchar(2) NOT NULL,
@@ -500,7 +753,7 @@
   `latitude` double NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_host}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_host}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `status` int(10) NOT NULL,
   `name` varchar(256) NOT NULL,
@@ -512,7 +765,7 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_host_request}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_host_request}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `hostId` int(10) NOT NULL,
   `userId` int(10) NOT NULL,
@@ -523,7 +776,7 @@
   `date` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_log}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_log}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `userId` int(10) NOT NULL,
   `refId` int(10) NOT NULL,
@@ -532,7 +785,7 @@
   `date` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_mail}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_mail}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   `from` varchar(64) NOT NULL,
@@ -543,14 +796,14 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `NAME` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_notify}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_notify}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `priority` int(10) NOT NULL DEFAULT '0',
   `table` varchar(64) NOT NULL,
   `class` varchar(64) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_registry}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_registry}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
   `type` enum('STRING','INTEGER','FLOAT','BOOLEAN') NOT NULL,
@@ -559,7 +812,7 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_account}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_account}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `globalId` varchar(36) NOT NULL,
   `groupId` int(10) NOT NULL,
@@ -587,7 +840,7 @@
   UNIQUE KEY `hostIdName` (`hostId`,`name`),
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_activity}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_activity}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `globalId` varchar(36) NOT NULL,
   `parentId` int(10) NOT NULL DEFAULT '0',
@@ -601,7 +854,7 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_activity_receiver}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_activity_receiver}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `status` int(10) NOT NULL DEFAULT '1',
   `activityId` int(10) NOT NULL,
@@ -609,7 +862,7 @@
   `date` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_activity_template}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_activity_template}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `type` enum('INSERT','UPDATE','DELETE') NOT NULL,
   `verb` enum('post','add','cancel','checkin','delete','favorite','follow','give','ignore','invite','join','leave','like','make-friend','play','receive','remove','remove-friend','request-friend','rsvp-maybe','rsvp-no','rsvp-yes','save','share','stop-following','tag','unfavorite','unlike','unsave','update') NOT NULL,
@@ -619,7 +872,7 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `type_table` (`type`,`table`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_friend}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_friend}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `status` int(10) NOT NULL,
   `groupId` int(10) NOT NULL DEFAULT '0',
@@ -629,34 +882,34 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `userFriendId` (`userId`,`friendId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_friend_group}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_friend_group}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `userId` int(10) NOT NULL,
   `title` varchar(64) NOT NULL,
   `date` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_group}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_group}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `title` varchar(32) NOT NULL,
   `date` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_group_right}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_group_right}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `groupId` int(10) NOT NULL,
   `rightId` int(10) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `groupRightId` (`groupId`,`rightId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
-  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_right}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_right}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
   `description` varchar(128) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii]]></query>
-     <query><![CDATA[INSERT INTO `{table.core_user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
-('INSERT', 'add', 'core_user_account', '', '<p><a href="{record.profileUrl}">{record.name}</a> has created an account</p>');]]></query>  
+    <query><![CDATA[INSERT INTO `{table.core_user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
+('INSERT', 'add', 'core_user_account', '', '<p><a href="{record.profileUrl}">{record.name}</a> has created an account</p>');]]></query>
   </database>
 </service>

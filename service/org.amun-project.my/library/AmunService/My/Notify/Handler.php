@@ -39,7 +39,7 @@ class AmunService_My_Notify_Handler extends Amun_Data_HandlerAbstract
 		if($record->hasFields('serviceId', 'contactId'))
 		{
 			$record->userId = $this->user->id;
-			$record->status = Amun_Service_My_Notify::ACTIVE;
+			$record->status = AmunService_My_Notify_Record::ACTIVE;
 
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 

@@ -58,7 +58,7 @@ class AmunService_My_Notify extends Amun_Data_RecordAbstract
 
 	public function setServiceId($serviceId)
 	{
-		$serviceId = $this->_validate->apply($serviceId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Service_My_Notify_Service'))), 'serviceId', 'Service Id');
+		$serviceId = $this->_validate->apply($serviceId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('My_Notify_Service'))), 'serviceId', 'Service Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -72,7 +72,7 @@ class AmunService_My_Notify extends Amun_Data_RecordAbstract
 
 	public function setContactId($contactId)
 	{
-		$contactId = $this->_validate->apply($contactId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Service_My_Contact'))), 'contactId', 'Contact Id');
+		$contactId = $this->_validate->apply($contactId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('My_Contact'))), 'contactId', 'Contact Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -86,7 +86,7 @@ class AmunService_My_Notify extends Amun_Data_RecordAbstract
 
 	public function setStatus($status)
 	{
-		$status = $this->_validate->apply($status, 'integer', array(new Amun_Service_My_Notify_Filter_Status()), 'status', 'Status');
+		$status = $this->_validate->apply($status, 'integer', array(new AmunService_My_Notify_Filter_Status()), 'status', 'Status');
 
 		if(!$this->_validate->hasError())
 		{
@@ -107,7 +107,7 @@ class AmunService_My_Notify extends Amun_Data_RecordAbstract
 	{
 		if($this->_user === null)
 		{
-			$this->_user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->userId);
+			$this->_user = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;
@@ -117,7 +117,7 @@ class AmunService_My_Notify extends Amun_Data_RecordAbstract
 	{
 		if($this->_service === null)
 		{
-			$this->_service = Amun_Sql_Table_Registry::get('Service_My_Notify_Service')->getRecord($this->serviceId);
+			$this->_service = Amun_Sql_Table_Registry::get('My_Notify_Service')->getRecord($this->serviceId);
 		}
 
 		return $this->_service;
@@ -127,7 +127,7 @@ class AmunService_My_Notify extends Amun_Data_RecordAbstract
 	{
 		if($this->_contact === null)
 		{
-			$this->_contact = Amun_Sql_Table_Registry::get('Service_My_Contact')->getRecord($this->contactId);
+			$this->_contact = Amun_Sql_Table_Registry::get('My_Contact')->getRecord($this->contactId);
 		}
 
 		return $this->_contact;

@@ -36,7 +36,7 @@ class AmunService_Core_User_Friend_Filter_Status extends PSX_FilterAbstract
 {
 	public function apply($value)
 	{
-		return Amun_User_Friend::getStatus($value) === false ? false : true;
+		return AmunService_Core_User_Friend_Record::getStatus($value) === false ? false : true;
 	}
 
 	public function getErrorMsg()

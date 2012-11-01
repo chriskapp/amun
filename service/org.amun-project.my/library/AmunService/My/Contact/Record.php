@@ -60,7 +60,7 @@ class AmunService_My_Contact extends Amun_Data_RecordAbstract
 
 	public function setStatus($status)
 	{
-		$status = $this->_validate->apply($status, 'integer', array(new Amun_Service_My_Contact_Filter_Status()), 'status', 'Status');
+		$status = $this->_validate->apply($status, 'integer', array(new AmunService_My_Contact_Filter_Status()), 'status', 'Status');
 
 		if(!$this->_validate->hasError())
 		{
@@ -74,7 +74,7 @@ class AmunService_My_Contact extends Amun_Data_RecordAbstract
 
 	public function setType($type)
 	{
-		$type = $this->_validate->apply($type, 'string', array(new Amun_Service_My_Contact_Filter_Type()), 'status', 'Status');
+		$type = $this->_validate->apply($type, 'string', array(new AmunService_My_Contact_Filter_Type()), 'status', 'Status');
 
 		if(!$this->_validate->hasError())
 		{
@@ -109,7 +109,7 @@ class AmunService_My_Contact extends Amun_Data_RecordAbstract
 	{
 		if($this->_user === null)
 		{
-			$this->_user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->userId);
+			$this->_user = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;

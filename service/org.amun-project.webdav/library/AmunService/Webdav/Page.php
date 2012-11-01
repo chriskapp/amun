@@ -101,7 +101,7 @@ SQL;
 
 			if(!empty($row))
 			{
-				return new Amun_Service_Webdav_Page($row['id']);
+				return new AmunService_Webdav_Page($row['id']);
 			}
 			else
 			{
@@ -122,7 +122,7 @@ SQL;
 
 			if(!empty($row))
 			{
-				return new Amun_Service_Webdav_File($this->page['serviceName'], $row);
+				return new AmunService_Webdav_File($this->page['serviceName'], $row);
 			}
 			else
 			{
@@ -157,7 +157,7 @@ SQL;
 		{
 			if($this->user->hasRight('service_' . $row['serviceName'] . '_view'))
 			{
-				$children[] = new Amun_Service_Webdav_Page($row['id']);
+				$children[] = new AmunService_Webdav_Page($row['id']);
 			}
 		}
 
@@ -175,7 +175,7 @@ SQL;
 
 			foreach($result as $row)
 			{
-				$children[] = new Amun_Service_Webdav_File($this->page['serviceName'], $row);
+				$children[] = new AmunService_Webdav_File($this->page['serviceName'], $row);
 			}
 		}
 

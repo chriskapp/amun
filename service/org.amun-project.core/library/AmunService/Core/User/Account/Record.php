@@ -67,7 +67,7 @@ class AmunService_Core_User_Account_Record extends Amun_Data_RecordAbstract
 
 	public function setGroupId($groupId)
 	{
-		$groupId = $this->_validate->apply($groupId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('User_Group'))), 'groupId', 'Group Id');
+		$groupId = $this->_validate->apply($groupId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_User_Group'))), 'groupId', 'Group Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -81,7 +81,7 @@ class AmunService_Core_User_Account_Record extends Amun_Data_RecordAbstract
 
 	public function setHostId($hostId)
 	{
-		$hostId = $this->_validate->apply($hostId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('System_Host'), true)), 'hostId', 'Host Id');
+		$hostId = $this->_validate->apply($hostId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_System_Host'), true)), 'hostId', 'Host Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -95,7 +95,7 @@ class AmunService_Core_User_Account_Record extends Amun_Data_RecordAbstract
 
 	public function setCountryId($countryId)
 	{
-		$countryId = $this->_validate->apply($countryId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('System_Country'))), 'countryId', 'Country Id');
+		$countryId = $this->_validate->apply($countryId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_System_Country'))), 'countryId', 'Country Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -109,7 +109,7 @@ class AmunService_Core_User_Account_Record extends Amun_Data_RecordAbstract
 
 	public function setStatus($status)
 	{
-		$status = $this->_validate->apply($status, 'integer', array(new Amun_User_Account_Filter_Status()), 'status', 'Status');
+		$status = $this->_validate->apply($status, 'integer', array(new AmunService_Core_User_Account_Filter_Status()), 'status', 'Status');
 
 		if(!$this->_validate->hasError())
 		{
@@ -123,7 +123,7 @@ class AmunService_Core_User_Account_Record extends Amun_Data_RecordAbstract
 
 	public function setIdentity($identity)
 	{
-		$identity = $this->_validate->apply($identity, 'string', array(new Amun_User_Account_Filter_Identity(), new Amun_Filter_Salt()), 'identity', 'Identity');
+		$identity = $this->_validate->apply($identity, 'string', array(new AmunService_Core_User_Account_Filter_Identity(), new Amun_Filter_Salt()), 'identity', 'Identity');
 
 		if(!$this->_validate->hasError())
 		{
@@ -137,7 +137,7 @@ class AmunService_Core_User_Account_Record extends Amun_Data_RecordAbstract
 
 	public function setName($name)
 	{
-		$name = $this->_validate->apply($name, 'string', array(new Amun_User_Account_Filter_Name()), 'name', 'Name');
+		$name = $this->_validate->apply($name, 'string', array(new AmunService_Core_User_Account_Filter_Name()), 'name', 'Name');
 
 		if(!$this->_validate->hasError())
 		{
@@ -151,7 +151,7 @@ class AmunService_Core_User_Account_Record extends Amun_Data_RecordAbstract
 
 	public function setPw($pw)
 	{
-		$pw = $this->_validate->apply($pw, 'string', array(new Amun_User_Account_Filter_Pw(), new Amun_Filter_Salt()), 'pw', 'Password');
+		$pw = $this->_validate->apply($pw, 'string', array(new AmunService_Core_User_Account_Filter_Pw(), new Amun_Filter_Salt()), 'pw', 'Password');
 
 		if(!$this->_validate->hasError())
 		{
@@ -202,7 +202,7 @@ class AmunService_Core_User_Account_Record extends Amun_Data_RecordAbstract
 
 	public function setGender($gender)
 	{
-		$gender = $this->_validate->apply($gender, 'string', array(new Amun_User_Account_Filter_Gender()), 'gender', 'Gender');
+		$gender = $this->_validate->apply($gender, 'string', array(new AmunService_Core_User_Account_Filter_Gender()), 'gender', 'Gender');
 
 		if(!$this->_validate->hasError())
 		{
@@ -216,7 +216,7 @@ class AmunService_Core_User_Account_Record extends Amun_Data_RecordAbstract
 
 	public function setTimezone($timezone)
 	{
-		$timezone = $this->_validate->apply($timezone, 'string', array(new Amun_User_Account_Filter_Timezone()), 'timezone', 'Timezone');
+		$timezone = $this->_validate->apply($timezone, 'string', array(new AmunService_Core_User_Account_Filter_Timezone()), 'timezone', 'Timezone');
 
 		if(!$this->_validate->hasError())
 		{
@@ -265,7 +265,7 @@ class AmunService_Core_User_Account_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_group === null)
 		{
-			$this->_group = Amun_Sql_Table_Registry::get('User_Group')->getRecord($this->groupId);
+			$this->_group = Amun_Sql_Table_Registry::get('Core_User_Group')->getRecord($this->groupId);
 		}
 
 		return $this->_group;
@@ -275,7 +275,7 @@ class AmunService_Core_User_Account_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_host === null && $this->hostId > 0)
 		{
-			$this->_host = Amun_Sql_Table_Registry::get('System_Host')->getRecord($this->hostId);
+			$this->_host = Amun_Sql_Table_Registry::get('Core_System_Host')->getRecord($this->hostId);
 		}
 
 		return $this->_host;
@@ -285,7 +285,7 @@ class AmunService_Core_User_Account_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_country === null)
 		{
-			$this->_country = Amun_Sql_Table_Registry::get('System_Country')->getRecord($this->countryId);
+			$this->_country = Amun_Sql_Table_Registry::get('Core_System_Country')->getRecord($this->countryId);
 		}
 
 		return $this->_country;
@@ -337,7 +337,7 @@ class AmunService_Core_User_Account_Record extends Amun_Data_RecordAbstract
 		{
 			$con = new PSX_Sql_Condition(array('userId', '=', $this->id));
 
-			$this->_karma = Amun_Sql_Table_Registry::get('User_Activity')->count($con);
+			$this->_karma = Amun_Sql_Table_Registry::get('Core_User_Activity')->count($con);
 		}
 
 		return $this->_karma;
@@ -355,9 +355,9 @@ SELECT
 	`request`.`token`,
 	`request`.`tokenSecret`
 
-	FROM {$this->_registry['table.system_host_request']} `request`
+	FROM {$this->_registry['table.core_system_host_request']} `request`
 
-		INNER JOIN {$this->_registry['table.system_host']} `host`
+		INNER JOIN {$this->_registry['table.core_system_host']} `host`
 
 		ON `request`.`hostId` = `host`.`id`
 

@@ -83,7 +83,7 @@ class AmunService_Core_System_Country_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('System_Country')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Core_System_Country')->getRecord($id);
 
 
 		$form = new Amun_Form('PUT', $this->url);
@@ -139,7 +139,7 @@ class AmunService_Core_System_Country_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('System_Country')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Core_System_Country')->getRecord($id);
 
 
 		$form = new Amun_Form('DELETE', $this->url);

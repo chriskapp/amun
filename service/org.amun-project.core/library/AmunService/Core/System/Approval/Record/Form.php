@@ -41,7 +41,7 @@ class AmunService_Core_System_Approval_Record_Form extends Amun_Data_FormAbstrac
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('System_Approval_Record')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Core_System_Approval_Record')->getRecord($id);
 
 
 		$form = new Amun_Form('PUT', $this->url);
@@ -96,7 +96,7 @@ class AmunService_Core_System_Approval_Record_Form extends Amun_Data_FormAbstrac
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('System_Approval_Record')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Core_System_Approval_Record')->getRecord($id);
 
 
 		$form = new Amun_Form('DELETE', $this->url);
@@ -152,7 +152,7 @@ class AmunService_Core_System_Approval_Record_Form extends Amun_Data_FormAbstrac
 	private function getType()
 	{
 		$types  = array();
-		$result = Amun_System_Approval_Record::getType();
+		$result = AmunService_Core_System_Approval_Record_Record::getType();
 
 		foreach($result as $k => $v)
 		{

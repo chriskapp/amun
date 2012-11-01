@@ -59,7 +59,7 @@ class AmunService_Core_System_Api_Record extends Amun_Data_RecordAbstract
 
 	public function setStatus($status)
 	{
-		$status = $this->_validate->apply($status, 'integer', array(new Amun_System_Api_Filter_Status()), 'status', 'Status');
+		$status = $this->_validate->apply($status, 'integer', array(new AmunService_Core_System_Api_Filter_Status()), 'status', 'Status');
 
 		if(!$this->_validate->hasError())
 		{
@@ -143,7 +143,7 @@ class AmunService_Core_System_Api_Record extends Amun_Data_RecordAbstract
 
 	public function setCallback($callback)
 	{
-		$callback = $this->_validate->apply($callback, 'string', array(new PSX_Filter_Length(0, 256), new Amun_System_Api_Filter_Callback()), 'callback', 'Callback');
+		$callback = $this->_validate->apply($callback, 'string', array(new PSX_Filter_Length(0, 256), new AmunService_Core_System_Api_Filter_Callback()), 'callback', 'Callback');
 
 		if(!$this->_validate->hasError())
 		{

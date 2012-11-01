@@ -59,7 +59,7 @@ class AmunService_Core_Content_Page_Right_Record extends Amun_Data_RecordAbstrac
 
 	public function setPageId($pageId)
 	{
-		$pageId = $this->_validate->apply($pageId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Content_Page'))), 'pageId', 'Page Id');
+		$pageId = $this->_validate->apply($pageId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_Content_Page'))), 'pageId', 'Page Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -73,7 +73,7 @@ class AmunService_Core_Content_Page_Right_Record extends Amun_Data_RecordAbstrac
 
 	public function setGroupId($groupId)
 	{
-		$groupId = $this->_validate->apply($groupId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('User_Group'))), 'groupId', 'Group Id');
+		$groupId = $this->_validate->apply($groupId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_User_Group'))), 'groupId', 'Group Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -87,7 +87,7 @@ class AmunService_Core_Content_Page_Right_Record extends Amun_Data_RecordAbstrac
 
 	public function setNewGroupId($newGroupId)
 	{
-		$newGroupId = $this->_validate->apply($newGroupId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('User_Group'))), 'newGroupId', 'New Group Id');
+		$newGroupId = $this->_validate->apply($newGroupId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_User_Group'))), 'newGroupId', 'New Group Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -108,7 +108,7 @@ class AmunService_Core_Content_Page_Right_Record extends Amun_Data_RecordAbstrac
 	{
 		if($this->_page === null)
 		{
-			$this->_page = Amun_Sql_Table_Registry::get('Content_Page')->getRecord($this->pageId);
+			$this->_page = Amun_Sql_Table_Registry::get('Core_Content_Page')->getRecord($this->pageId);
 		}
 
 		return $this->_page;
@@ -118,7 +118,7 @@ class AmunService_Core_Content_Page_Right_Record extends Amun_Data_RecordAbstrac
 	{
 		if($this->_group === null)
 		{
-			$this->_group = Amun_Sql_Table_Registry::get('User_Group')->getRecord($this->groupId);
+			$this->_group = Amun_Sql_Table_Registry::get('Core_User_Group')->getRecord($this->groupId);
 		}
 
 		return $this->_group;
@@ -128,7 +128,7 @@ class AmunService_Core_Content_Page_Right_Record extends Amun_Data_RecordAbstrac
 	{
 		if($this->_newGroup === null)
 		{
-			$this->_newGroup = Amun_Sql_Table_Registry::get('User_Group')->getRecord($this->newGroupId);
+			$this->_newGroup = Amun_Sql_Table_Registry::get('Core_User_Group')->getRecord($this->newGroupId);
 		}
 
 		return $this->_newGroup;

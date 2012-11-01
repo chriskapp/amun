@@ -184,7 +184,7 @@ class AmunService_Core_Content_Media_Handler extends Amun_Data_HandlerAbstract
 					{
 						try
 						{
-							$record = new Amun_Content_Media($this->table);
+							$record = new AmunService_Core_Content_Media_Record($this->table);
 							$record->name = $f;
 							$record->path = realpath($item);
 							$record->type = $type;
@@ -215,7 +215,7 @@ class AmunService_Core_Content_Media_Handler extends Amun_Data_HandlerAbstract
 	private function getType($mimeType)
 	{
 		$mimeType = strtolower($mimeType);
-		$types    = Amun_Content_Media::getType();
+		$types    = AmunService_Core_Content_Media_Record::getType();
 
 		foreach($types as $type => $val)
 		{

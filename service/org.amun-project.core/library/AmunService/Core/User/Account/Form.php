@@ -116,7 +116,7 @@ class AmunService_Core_User_Account_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('User_Account')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord($id);
 
 
 		$form = new Amun_Form('PUT', $this->url);
@@ -194,7 +194,7 @@ class AmunService_Core_User_Account_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('User_Account')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord($id);
 
 
 		$form = new Amun_Form('DELETE', $this->url);
@@ -347,7 +347,7 @@ class AmunService_Core_User_Account_Form extends Amun_Data_FormAbstract
 	private function getStatus()
 	{
 		$status = array();
-		$result = Amun_User_Account::getStatus();
+		$result = AmunService_Core_User_Account_Record::getStatus();
 
 		foreach($result as $k => $v)
 		{
@@ -365,7 +365,7 @@ class AmunService_Core_User_Account_Form extends Amun_Data_FormAbstract
 	private function getGender()
 	{
 		$gender = array();
-		$result = Amun_User_Account::getGender();
+		$result = AmunService_Core_User_Account_Record::getGender();
 
 		foreach($result as $k => $v)
 		{

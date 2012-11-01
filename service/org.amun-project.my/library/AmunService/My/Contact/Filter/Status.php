@@ -36,7 +36,7 @@ class AmunService_My_Contact_Filter_Status extends PSX_FilterAbstract
 {
 	public function apply($value)
 	{
-		return Amun_Service_My_Contact::getStatus($value) === false ? false : true;
+		return AmunService_My_Contact_Record::getStatus($value) === false ? false : true;
 	}
 
 	public function getErrorMsg()

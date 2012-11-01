@@ -60,7 +60,7 @@ class AmunService_Core_User_Group_Record extends Amun_Data_RecordAbstract
 
 	public function setTitle($title)
 	{
-		$title = $this->_validate->apply($title, 'string', array(new PSX_Filter_Length(3, 32), new Amun_System_Registry_Filter_Name()));
+		$title = $this->_validate->apply($title, 'string', array(new PSX_Filter_Length(3, 32), new AmunService_Core_System_Registry_Filter_Name()));
 
 		if(!$this->_validate->hasError())
 		{
@@ -77,7 +77,7 @@ class AmunService_Core_User_Group_Record extends Amun_Data_RecordAbstract
 		$rights = array_map('intval', explode(',', $rights));
 		$con    = new PSX_Sql_Condition(array('id', 'IN', $rights));
 
-		$this->rights = Amun_Sql_Table_Registry::get('User_Right')->getCol('id', $con);
+		$this->rights = Amun_Sql_Table_Registry::get('Core_User_Right')->getCol('id', $con);
 	}
 
 	public function getId()

@@ -55,7 +55,7 @@ class AmunService_Core_System_Notify_Record extends Amun_Data_RecordAbstract
 
 	public function setTable($table)
 	{
-		$table = $this->_validate->apply($table, 'string', array(new Amun_System_Notify_Filter_Table($this->_sql)), 'table', 'Table');
+		$table = $this->_validate->apply($table, 'string', array(new AmunService_Core_System_Notify_Filter_Table($this->_sql)), 'table', 'Table');
 
 		if(!$this->_validate->hasError())
 		{
@@ -69,7 +69,7 @@ class AmunService_Core_System_Notify_Record extends Amun_Data_RecordAbstract
 
 	public function setClass($class)
 	{
-		$class = $this->_validate->apply($class, 'string', array(new Amun_System_Notify_Filter_Class()), 'class', 'Class');
+		$class = $this->_validate->apply($class, 'string', array(new AmunService_Core_System_Notify_Filter_Class()), 'class', 'Class');
 
 		if(!$this->_validate->hasError())
 		{

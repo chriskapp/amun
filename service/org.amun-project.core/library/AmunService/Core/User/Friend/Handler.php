@@ -68,7 +68,7 @@ class AmunService_Core_User_Friend_Handler extends Amun_Data_HandlerAbstract
 
 
 			// build relation
-			if($record->status == Amun_User_Friend::NORMAL)
+			if($record->status == AmunService_Core_User_Friend_Record::NORMAL)
 			{
 				$con = new PSX_Sql_Condition();
 				$con->add('userId', '=', $record->friendId);
@@ -76,7 +76,7 @@ class AmunService_Core_User_Friend_Handler extends Amun_Data_HandlerAbstract
 
 				$this->table->update(array(
 
-					'status' => Amun_User_Friend::NORMAL,
+					'status' => AmunService_Core_User_Friend_Record::NORMAL,
 					'date'   => $date->format(PSX_DateTime::SQL),
 
 				), $con);
@@ -187,7 +187,7 @@ class AmunService_Core_User_Friend_Handler extends Amun_Data_HandlerAbstract
 
 		$count = $this->table->count($con);
 
-		return $count > 0 ? Amun_User_Friend::NORMAL : Amun_User_Friend::REQUEST;
+		return $count > 0 ? AmunService_Core_User_Friend_Record::NORMAL : AmunService_Core_User_Friend_Record::REQUEST;
 	}
 
 	/**
@@ -209,9 +209,9 @@ class AmunService_Core_User_Friend_Handler extends Amun_Data_HandlerAbstract
 		{
 			// a remote user wants to request a user as friend. We must notify
 			// the remote website about the friendship request
-			case Amun_User_Friend::REQUEST:
+			case AmunService_Core_User_Friend_Record::REQUEST:
 
-				if($record->getUser()->status == Amun_User_Account::REMOTE)
+				if($record->getUser()->status == AmunService_Core_User_Account_Record::REMOTE)
 				{
 					$url  = new PSX_Url($record->getUser()->getHost()->url);
 					$mode = Amun_Relation::REQUEST;
@@ -225,9 +225,9 @@ class AmunService_Core_User_Friend_Handler extends Amun_Data_HandlerAbstract
 			// a user accepted a friendship request where the initiator was an
 			// remote user we must inform the remote website that the request
 			// was accepted
-			case Amun_User_Friend::NORMAL:
+			case AmunService_Core_User_Friend_Record::NORMAL:
 
-				if($record->getFriend()->status == Amun_User_Account::REMOTE)
+				if($record->getFriend()->status == AmunService_Core_User_Account_Record::REMOTE)
 				{
 					$url  = new PSX_Url($record->getFriend()->getHost()->url);
 					$mode = Amun_Relation::ACCEPT;
@@ -289,13 +289,13 @@ SQL;
 
 			if(empty($friendId))
 			{
-				$handler = new Amun_User_Account_Handler($this->user);
+				$handler = new AmunService_Core_User_Account_Handler($this->user);
 
-				$account = Amun_Sql_Table_Registry::get('User_Account')->getRecord();
+				$account = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord();
 				$account->globalId = $profile['id'];
 				$account->setGroupId($this->registry['core.default_user_group']);
 				$account->setHostId($row['hostId']);
-				$account->setStatus(Amun_User_Account::REMOTE);
+				$account->setStatus(AmunService_Core_User_Account_Record::REMOTE);
 				$account->setIdentity($identity);
 				$account->setName($profile['name']);
 				$account->setPw(Amun_Security::generatePw());
@@ -306,7 +306,7 @@ SQL;
 
 
 			// create relation
-			$friend = Amun_Sql_Table_Registry::get('User_Friend')->getRecord();
+			$friend = Amun_Sql_Table_Registry::get('Core_User_Friend')->getRecord();
 			$friend->friendId = $friendId;
 
 			return $this->create($friend);
@@ -349,7 +349,7 @@ SELECT
 				AND `account`.`status` = ?
 SQL;
 
-		$row = $this->sql->getRow($sql, array($record->name, $record->host, Amun_User_Account::REMOTE));
+		$row = $this->sql->getRow($sql, array($record->name, $record->host, AmunService_Core_User_Account_Record::REMOTE));
 
 		if(!empty($row))
 		{
@@ -358,7 +358,7 @@ SQL;
 
 			$this->table->insert(array(
 
-				'status'   => Amun_User_Friend::NORMAL,
+				'status'   => AmunService_Core_User_Friend_Record::NORMAL,
 				'userId'   => $row['accountId'],
 				'friendId' => $this->user->id,
 				'date'     => $date->format(PSX_DateTime::SQL),
@@ -373,7 +373,7 @@ SQL;
 
 			$this->table->update(array(
 
-				'status' => Amun_User_Friend::NORMAL,
+				'status' => AmunService_Core_User_Friend_Record::NORMAL,
 				'date'   => $date->format(PSX_DateTime::SQL),
 
 			), $con);

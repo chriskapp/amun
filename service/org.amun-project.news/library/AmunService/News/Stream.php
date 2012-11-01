@@ -37,7 +37,7 @@ class AmunService_News_Stream extends Amun_User_Activity_StreamAbstract
 	public function getObject()
 	{
 		$row = $this->table->select(array('globalId', 'pageId', 'userId', 'title', 'text', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'author')
 			)
 			->where('id', '=', $this->refId)

@@ -71,7 +71,7 @@ class AmunService_My_Contact_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Service_My_Contact')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('My_Contact')->getRecord($id);
 
 
 		$form = new Amun_Form('PUT', $this->url);
@@ -115,7 +115,7 @@ class AmunService_My_Contact_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Service_My_Contact')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('My_Contact')->getRecord($id);
 
 
 		$form = new Amun_Form('DELETE', $this->url);
@@ -162,7 +162,7 @@ class AmunService_My_Contact_Form extends Amun_Data_FormAbstract
 	private function getStatus()
 	{
 		$status = array();
-		$result = Amun_Service_My_Contact::getStatus();
+		$result = AmunService_My_Contact_Record::getStatus();
 
 		foreach($result as $k => $v)
 		{
@@ -180,7 +180,7 @@ class AmunService_My_Contact_Form extends Amun_Data_FormAbstract
 	private function getType()
 	{
 		$status = array();
-		$result = Amun_Service_My_Contact::getType();
+		$result = AmunService_My_Contact_Record::getType();
 
 		foreach($result as $k => $v)
 		{

@@ -83,7 +83,7 @@ class AmunService_Redirect_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Service_Redirect')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Redirect')->getRecord($id);
 
 
 		$form = new Amun_Form('PUT', $this->url);
@@ -121,7 +121,7 @@ class AmunService_Redirect_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Service_Redirect')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Redirect')->getRecord($id);
 
 
 		$form = new Amun_Form('DELETE', $this->url);

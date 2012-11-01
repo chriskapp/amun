@@ -60,7 +60,7 @@ class AmunService_Forum_Record extends Amun_Data_RecordAbstract
 
 	public function setPageId($pageId)
 	{
-		$pageId = $this->_validate->apply($pageId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Content_Page'))), 'pageId', 'Page Id');
+		$pageId = $this->_validate->apply($pageId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_Content_Page'))), 'pageId', 'Page Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -154,7 +154,7 @@ class AmunService_Forum_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_page === null)
 		{
-			$this->_page = Amun_Sql_Table_Registry::get('Content_Page')->getRecord($this->pageId);
+			$this->_page = Amun_Sql_Table_Registry::get('Core_Content_Page')->getRecord($this->pageId);
 		}
 
 		return $this->_page;
@@ -164,7 +164,7 @@ class AmunService_Forum_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_user === null)
 		{
-			$this->_user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->userId);
+			$this->_user = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;
@@ -189,7 +189,7 @@ class AmunService_Forum_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_replyCount === null)
 		{
-			$this->_replyCount = Amun_Sql_Table_Registry::get('Service_Comment')
+			$this->_replyCount = Amun_Sql_Table_Registry::get('Comment')
 				->select()
 				->where('pageId', '=', $this->pageId)
 				->where('refId', '=', $this->id)
@@ -203,9 +203,9 @@ class AmunService_Forum_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_lastReply === null)
 		{
-			$this->_lastReply = Amun_Sql_Table_Registry::get('Service_Comment')
+			$this->_lastReply = Amun_Sql_Table_Registry::get('Comment')
 				->select(array('id', 'sticky', 'closed', 'pageId', 'title', 'url', 'date'))
-				->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+				->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 					->select(array('name', 'profileUrl'), 'author')
 				)
 				->where('pageId', '=', $this->pageId)

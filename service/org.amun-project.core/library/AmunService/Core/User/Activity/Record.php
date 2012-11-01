@@ -53,7 +53,7 @@ class AmunService_Core_User_Activity_Record extends Amun_Data_RecordAbstract
 
 	public function setParentId($parentId)
 	{
-		$parentId = $this->_validate->apply($parentId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('User_Activity'), true)), 'parentId', 'Parent Id');
+		$parentId = $this->_validate->apply($parentId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_User_Activity'), true)), 'parentId', 'Parent Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -67,7 +67,7 @@ class AmunService_Core_User_Activity_Record extends Amun_Data_RecordAbstract
 
 	public function setScope($scope)
 	{
-		$scope = $this->_validate->apply($scope, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('User_Friend_Group'), true)), 'scope', 'Scope');
+		$scope = $this->_validate->apply($scope, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_User_Friend_Group'), true)), 'scope', 'Scope');
 
 		if(!$this->_validate->hasError())
 		{
@@ -81,7 +81,7 @@ class AmunService_Core_User_Activity_Record extends Amun_Data_RecordAbstract
 
 	public function setVerb($verb)
 	{
-		$verb = $this->_validate->apply($verb, 'string', array(new Amun_User_Activity_Filter_Verb()), 'verb', 'Verb');
+		$verb = $this->_validate->apply($verb, 'string', array(new AmunService_Core_User_Activity_Filter_Verb()), 'verb', 'Verb');
 
 		if(!$this->_validate->hasError())
 		{
@@ -117,7 +117,7 @@ class AmunService_Core_User_Activity_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_user === null)
 		{
-			$this->_user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->userId);
+			$this->_user = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;
@@ -141,7 +141,7 @@ class AmunService_Core_User_Activity_Record extends Amun_Data_RecordAbstract
 	public function getComments()
 	{
 		return $this->_table->select(array('id', 'refId', 'table', 'verb', 'summary', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			)
 			->where('parentId', '=', $this->id)
@@ -153,9 +153,9 @@ class AmunService_Core_User_Activity_Record extends Amun_Data_RecordAbstract
 	{
 		$table = Amun_Sql_Table_Registry::get($this->table);
 
-		if($table instanceof Amun_User_Activity_Table)
+		if($table instanceof AmunService_Core_User_Activity_Table)
 		{
-			$stream = new Amun_User_Activity_Stream($table, $this->id);
+			$stream = new AmunService_Core_User_Activity_Stream($table, $this->id);
 
 			return $stream->getObject();
 		}
