@@ -44,7 +44,7 @@ class tabNavigation extends Amun_Module_GadgetAbstract
 		$pageId = $args->get('pageId', $this->page->id);
 
 
-		$result = Amun_Sql_Table_Registry::get('Content_Page')
+		$result = Amun_Sql_Table_Registry::get('Core_Content_Page')
 			->select(array('id', 'urlTitle', 'title', 'path'))
 			->where('parentId', '=', $pageId)
 			->where('status', '=', Amun_Content_Page::NORMAL)

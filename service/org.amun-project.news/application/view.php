@@ -39,37 +39,30 @@ class view extends Amun_Module_ApplicationAbstract
 
 	public function onLoad()
 	{
-		if($this->user->hasRight('service_news_view'))
+		if($this->service->hasViewRight())
 		{
 			// load news
 			$recordNews = $this->getNews();
 
 			$this->template->assign('recordNews', $recordNews);
 
-
 			// load comments
 			$resultComments = $this->getComments();
 
 			$this->template->assign('resultComments', $resultComments);
 
-
 			// add path
 			$this->path->add($recordNews->title, $this->page->url . '/view?id=' . $this->newsId);
 
-
 			// options
-			$options = new Amun_Option(__CLASS__, $this->registry, $this->user, $this->page);
-			$options->add('service_news_edit', 'Edit', $this->page->url . '/edit?id=' . $this->newsId);
-			$options->load(array($this->page, $recordNews));
-
-			$this->template->assign('options', $options);
-
+			$this->setOptions(array(
+				array('edit', 'Edit', $this->page->url . '/edit?id=' . $this->newsId)
+			));
 
 			// form url
 			$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/comment/form?format=json&method=create&pageId=' . $this->page->id . '&refId=' . $this->newsId;
 
 			$this->template->assign('formUrl', $url);
-
 
 			// template
 			$this->htmlCss->add('news');
@@ -94,12 +87,12 @@ class view extends Amun_Module_ApplicationAbstract
 		$id = isset($fragments[0]) ? intval($fragments[0]) : $this->get->id('integer');
 
 		// query
-		$result = Amun_Sql_Table_Registry::get('Service_News')
+		$result = Amun_Sql_Table_Registry::get('News')
 			->select(array('id', 'urlTitle', 'title', 'text', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Content_Page')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_Content_Page')
 				->select(array('path'), 'page')
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			)
 			->where('id', '=', $id)
@@ -119,9 +112,9 @@ class view extends Amun_Module_ApplicationAbstract
 
 	private function getComments()
 	{
-		$table = Amun_Sql_Table_Registry::get('Service_Comment')
+		$table = Amun_Sql_Table_Registry::get('Comment')
 			->select(array('id', 'text', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			)
 			->where('pageId', '=', $this->page->id)

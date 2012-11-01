@@ -43,19 +43,17 @@ class login extends Amun_Module_ApplicationAbstract
 
 	public function onLoad()
 	{
-		if($this->user->hasRight('service_my_view'))
+		if($this->service->hasViewRight())
 		{
 			// assign redirect
 			$this->template->assign('redirect', $this->getRedirect($this->get));
 
-
 			// add path
 			$this->path->add('Login', $this->page->url . '/login');
 
-
 			// load supported provider
 			$defaultProvider = array_map('trim', explode(',', $this->registry['my.openid_provider']));
-			$hostProvider    = Amun_Sql_Table_Registry::get('System_Host')
+			$hostProvider    = Amun_Sql_Table_Registry::get('Core_System_Host')
 				->select(array('name'))
 				->where('status', '=', Amun_System_Host::NORMAL)
 				->getCol();
@@ -63,7 +61,6 @@ class login extends Amun_Module_ApplicationAbstract
 			$provider = array_merge($defaultProvider, $hostProvider);
 
 			$this->template->assign('provider', $provider);
-
 
 			// check login attempts
 			$this->attempt = new Amun_Service_My_Attempt($this->registry);
@@ -79,7 +76,6 @@ class login extends Amun_Module_ApplicationAbstract
 			{
 				throw new Amun_Exception('Your IP ' . $_SERVER['REMOTE_ADDR'] . ' is banned for 30 minutes because of too many wrong logins');
 			}
-
 
 			// template
 			$this->htmlCss->add('my');
@@ -131,7 +127,7 @@ class login extends Amun_Module_ApplicationAbstract
 
 				if(!empty($pw))
 				{
-					$row = Amun_Sql_Table_Registry::get('User_Account')
+					$row = Amun_Sql_Table_Registry::get('Core_User_Account')
 						->select(array('id', 'status', 'pw'))
 						->where('identity', '=', $identity)
 						->getRow();
@@ -245,16 +241,13 @@ class login extends Amun_Module_ApplicationAbstract
 			$identity = 'http://' . $identity;
 		}
 
-
 		// build callback
 		$callback = $this->page->url . '/login/callback';
-
 
 		// create an openid object
 		$http   = new PSX_Http(new PSX_Http_Handler_Curl());
 		$store  = new PSX_OpenId_Store_Sql($this->sql, $this->registry['table.system_assoc']);
 		$openid = new PSX_OpenId($http, $this->config['psx_url'], $store);
-
 
 		// check whether identity is an url if not it is an email
 		$filter = new PSX_Filter_Url();
@@ -275,41 +268,31 @@ class login extends Amun_Module_ApplicationAbstract
 			{
 				case 'googlemail.com':
 				case 'gmail.com':
-
 					$openid = new PSX_OpenId_Op_Google($http, $this->config['psx_url'], $store);
-
 					$openid->initialize($identity, $callback);
 
 					return $openid;
-
 					break;
 
 				case 'yahoo.com':
-
 					$openid = new PSX_OpenId_Op_Yahoo($http, $this->config['psx_url'], $store);
-
 					$openid->initialize($identity, $callback);
 
 					return $openid;
-
 					break;
 
 				case 'aol.com':
 				case 'aim.com':
-
 					$openid = new PSX_OpenId_Op_Aol($http, $this->config['psx_url'], $store);
-
 					$openid->initialize($identity, $callback);
 
 					return $openid;
-
 					break;
 
 				default:
-
 					// check whether the provider belongs to an connected website. If
 					// yes we also try to get an token and tokenSecret for the user
-					$host = Amun_Sql_Table_Registry::get('System_Host')
+					$host = Amun_Sql_Table_Registry::get('Core_System_Host')
 						->select(array('id', 'consumerKey', 'url', 'template'))
 						->where('name', '=', $provider)
 						->where('status', '=', Amun_System_Host::NORMAL)
@@ -341,16 +324,14 @@ class login extends Amun_Module_ApplicationAbstract
 						// get global id
 						$globalId = $xrd->getPropertyValue('http://ns.amun-project.org/2011/meta/id');
 
-
 						// initalize openid
 						$openid->initialize($profileUrl, $callback);
-
 
 						// if the provider is connected with the website and
 						// supports the oauth extension request an token
 						$identity = sha1(Amun_Security::getSalt() . PSX_OpenId::normalizeIdentifier($profileUrl));
 						$con      = new PSX_Sql_Condition(array('identity', '=', $identity));
-						$userId   = Amun_Sql_Table_Registry::get('User_Account')->getField('id', $con);
+						$userId   = Amun_Sql_Table_Registry::get('Core_User_Account')->getField('id', $con);
 						$oauth    = false;
 
 						if(!empty($userId))
@@ -359,7 +340,7 @@ class login extends Amun_Module_ApplicationAbstract
 							$con->add('hostId', '=', $host['id']);
 							$con->add('userId', '=', $userId);
 
-							$requestId = Amun_Sql_Table_Registry::get('System_Host_Request')->getField('id', $con);
+							$requestId = Amun_Sql_Table_Registry::get('Core_System_Host_Request')->getField('id', $con);
 
 							if(empty($requestId))
 							{
@@ -383,7 +364,6 @@ class login extends Amun_Module_ApplicationAbstract
 								$openid->add($oauth);
 							}
 						}
-
 
 						return $openid;
 					}

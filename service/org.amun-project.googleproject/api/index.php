@@ -39,7 +39,7 @@ class index extends Amun_Module_RestAbstract
 	{
 		return $this->getTable()
 			->select(array('id', 'globalId', 'pageId', 'name', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Content_Page')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_Content_Page')
 				->select(array('path'), 'page')
 			);
 	}

@@ -37,17 +37,15 @@ class register extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
-		if($this->user->hasRight('service_my_view'))
+		if($this->service->hasViewRight())
 		{
 			// captcha
 			$captcha = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/system/captcha';
 
 			$this->template->assign('captcha', $captcha);
 
-
 			// add path
 			$this->path->add('Register', $this->page->url . '/register');
-
 
 			// template
 			$this->htmlCss->add('my');
@@ -81,13 +79,11 @@ class register extends Amun_Module_ApplicationAbstract
 					throw new Amun_Exception('Registration is disabled');
 				}
 
-
 				// compare pws
 				if(strcmp($pw, $pwRepeat) != 0)
 				{
 					throw new Amun_Exception('Password ist not the same');
 				}
-
 
 				// check captcha if anonymous
 				$captchaProvider = Amun_Captcha::factory($this->config['amun_captcha']);
@@ -97,9 +93,8 @@ class register extends Amun_Module_ApplicationAbstract
 					throw new Amun_Exception('Invalid captcha');
 				}
 
-
 				// create account record
-				$account = Amun_Sql_Table_Registry::get('User_Account')->getRecord();
+				$account = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord();
 				$account->setGroupId($this->registry['core.default_user_group']);
 				$account->setStatus(Amun_User_Account::NOT_ACTIVATED);
 				$account->setIdentity($identity);
@@ -108,11 +103,9 @@ class register extends Amun_Module_ApplicationAbstract
 				$account->setLongitude($longitude);
 				$account->setLatitude($latitude);
 
-
 				$handler = new Amun_User_Account_Handler($this->user);
 
 				$account = $handler->create($account);
-
 
 				if(isset($account->id))
 				{
@@ -131,7 +124,6 @@ class register extends Amun_Module_ApplicationAbstract
 
 					$mail = new Amun_Mail($this->registry);
 					$mail->send('SERVICE_MY_REGISTRATION', $identity, $values);
-
 
 					$this->template->assign('success', true);
 				}

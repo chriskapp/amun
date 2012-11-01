@@ -99,9 +99,9 @@ class index extends Amun_Module_ApplicationAbstract
 
 	private function getPhp()
 	{
-		return Amun_Sql_Table_Registry::get('Service_Php')
+		return Amun_Sql_Table_Registry::get('Php')
 			->select(array('id', 'content', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('name', 'profileUrl'), 'author')
 			)
 			->where('pageId', '=', $this->page->id)

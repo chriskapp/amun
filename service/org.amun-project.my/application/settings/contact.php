@@ -39,17 +39,14 @@ class contact extends Amun_Service_My_SettingsAbstract
 	{
 		parent::onLoad();
 
-
 		// add path
 		$this->path->add('Settings', $this->page->url . '/settings');
 		$this->path->add('Contact', $this->page->url . '/settings/contact');
-
 
 		// load subscriptions
 		$contacts = $this->getContacts();
 
 		$this->template->assign('contacts', $contacts);
-
 
 		// form url
 		$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/my/contact';
@@ -57,7 +54,6 @@ class contact extends Amun_Service_My_SettingsAbstract
 
 		$this->template->assign('contactUrl', $url);
 		$this->template->assign('formUrl', $formUrl);
-
 
 		// template
 		$this->htmlCss->add('my');
@@ -69,7 +65,7 @@ class contact extends Amun_Service_My_SettingsAbstract
 
 	public function getContacts()
 	{
-		$select = Amun_Sql_Table_Registry::get('Service_My_Contact')
+		$select = Amun_Sql_Table_Registry::get('My_Contact')
 			->select(array('id', 'status', 'type', 'value', 'date'))
 			->where('userId', '=', $this->user->id);
 

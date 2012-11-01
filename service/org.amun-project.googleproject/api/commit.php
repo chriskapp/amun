@@ -39,7 +39,7 @@ class commit extends Amun_Module_RestAbstract
 	{
 		return $this->getTable()
 			->select(array('id', 'globalId', 'revision', 'url', 'message', 'commitDate', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Service_Googleproject_Author')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Googleproject_Author')
 				->select(array('id', 'name'), 'author')
 			);
 	}

@@ -50,12 +50,12 @@ class latestNews extends Amun_Module_GadgetAbstract
 		$this->htmlCss->add('news');
 
 		// get latest news
-		$select = Amun_Sql_Table_Registry::get('Service_News')
+		$select = Amun_Sql_Table_Registry::get('News')
 			->select(array('id', 'urlTitle', 'title', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('id', 'name', 'profileUrl'), 'author')
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Content_Page')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_Content_Page')
 				->select(array('path'), 'page')
 			);
 

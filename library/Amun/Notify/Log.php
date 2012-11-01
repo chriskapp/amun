@@ -36,12 +36,12 @@ class Amun_Notify_Log extends Amun_NotifyAbstract
 {
 	public function notify($type, PSX_Data_RecordInterface $record)
 	{
-		$log = Amun_Sql_Table_Registry::get('System_Log')->getRecord();
+		$log = Amun_Sql_Table_Registry::get('Core_System_Log')->getRecord();
 		$log->setRefId(isset($record->id) ? $record->id : 0);
 		$log->setType(Amun_Data_RecordAbstract::getType($type));
 		$log->setTable($this->table->getName());
 
-		$handler = new Amun_System_Log_Handler($this->user);
+		$handler = new AmunService_Core_System_Log_Handler($this->user);
 		$handler->create($log);
 	}
 }

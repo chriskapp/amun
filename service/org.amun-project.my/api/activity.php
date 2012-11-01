@@ -43,9 +43,9 @@ class activity extends Amun_Module_RestAbstract
 		{
 			try
 			{
-				$table = Amun_Sql_Table_Registry::get('User_Activity')
+				$table = Amun_Sql_Table_Registry::get('Core_User_Activity')
 					->select(array('id', 'globalId', 'parentId', 'userId', 'refId', 'table', 'verb', 'summary', 'date'))
-					->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+					->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 						->select(array('globalId', 'name', 'profileUrl', 'thumbnailUrl'), 'author')
 					)
 					->where('scope', '=', 0);
@@ -135,7 +135,7 @@ class activity extends Amun_Module_RestAbstract
 		{
 			case PSX_Data_WriterInterface::ATOM:
 
-				$account = Amun_Sql_Table_Registry::get('User_Account')
+				$account = Amun_Sql_Table_Registry::get('Core_User_Account')
 					->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated'))
 					->where('id', '=', $this->userId)
 					->getRow(PSX_Sql::FETCH_OBJECT);

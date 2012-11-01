@@ -72,7 +72,7 @@ class download extends Amun_Module_ApplicationAbstract
 		$fragments = $this->getUriFragments();
 		$id = isset($fragments[0]) ? intval($fragments[0]) : $this->get->id('integer');
 
-		$result = Amun_Sql_Table_Registry::get('Service_Tracker')
+		$result = Amun_Sql_Table_Registry::get('Tracker')
 			->select(array('id', 'urlTitle', 'title', 'urlTitle', 'name', 'torrent', 'date'))
 			->where('id', '=', $id)
 			->getRow(PSX_Sql::FETCH_OBJECT);

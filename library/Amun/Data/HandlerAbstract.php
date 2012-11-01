@@ -45,7 +45,7 @@ abstract class Amun_Data_HandlerAbstract implements PSX_Data_HandlerInterface
 
 	public function __construct(Amun_User $user)
 	{
-		$this->table    = Amun_Sql_Table_Registry::get($this->getTableName());
+		$this->table    = $this->getTableInstance();
 		$this->base     = Amun_Base::getInstance();
 		$this->config   = $this->base->getConfig();
 		$this->sql      = $this->base->getSql();
@@ -99,7 +99,7 @@ SELECT
 	approval.field AS `approvalField`,
 	approval.value AS `approvalValue`
 
-	FROM {$this->registry['table.system_approval']} `approval`
+	FROM {$this->registry['table.core_system_approval']} `approval`
 
 		WHERE `approval`.`table` LIKE "{$this->table->getName()}"
 SQL;
@@ -134,13 +134,13 @@ SQL;
 	 */
 	public function approveRecord($type, PSX_Data_RecordInterface $record)
 	{
-		$type = Amun_System_Approval_Record::getType($type);
+		$type = AmunService_Core_System_Approval_Record::getType($type);
 
 		if($type !== false)
 		{
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-			$this->sql->insert($this->registry['table.system_approval_record'], array(
+			$this->sql->insert($this->registry['table.core_system_approval_record'], array(
 
 				'userId' => $this->user->id,
 				'type'   => $type,
@@ -189,7 +189,7 @@ SELECT
 
 	`notify`.`class`
 
-	FROM {$this->registry['table.system_notify']} `notify`
+	FROM {$this->registry['table.core_system_notify']} `notify`
 
 		WHERE "{$this->table->getName()}" REGEXP `notify`.`table`
 
@@ -234,13 +234,17 @@ SQL;
 	}
 
 	/**
-	 * Returns the name of the table for this handler
+	 * Returns the table instance on wich the handler operates
 	 *
-	 * @return string
+	 * @return Amun_Sql_TableInterface
 	 */
-	protected function getTableName()
+	protected function getTableInstance()
 	{
-		return substr(get_class($this), 0, -8);
+		$className = get_class($this);
+		$className = substr($className, 0, -8); // remove _Handler
+		$className = substr($className, 12); // remove AmunService_
+
+		return Amun_Sql_Table_Registry::get($className);
 	}
 }
 

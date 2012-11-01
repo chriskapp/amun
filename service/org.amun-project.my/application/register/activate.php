@@ -41,7 +41,6 @@ class activate extends Amun_Module_ApplicationAbstract
 		$this->path->add('Register', $this->page->url . '/register');
 		$this->path->add('Activate', $this->page->url . '/register/activate');
 
-
 		// template
 		$this->htmlCss->add('my');
 
@@ -56,7 +55,7 @@ class activate extends Amun_Module_ApplicationAbstract
 
 			if($token !== false)
 			{
-				$account = Amun_Sql_Table_Registry::get('User_Account')
+				$account = Amun_Sql_Table_Registry::get('Core_User_Account')
 					->select(array('id', 'ip', 'date'))
 					->where('token', '=', $token)
 					->where('status', '=', Amun_User_Account::NOT_ACTIVATED)

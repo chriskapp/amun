@@ -1,6 +1,8 @@
 
 [FEATURES]
 
+[ ] extract functionality from the core service into different services
+[ ] check activity stream and approval system
 [ ] update all services using the new service class for right and api endpoint 
     issues
 [ ] improve installer design and flow

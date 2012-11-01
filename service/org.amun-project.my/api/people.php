@@ -41,14 +41,14 @@ class people extends Amun_Module_RestAbstract
 		{
 			try
 			{
-				$table = Amun_Sql_Table_Registry::get('User_Friend')
+				$table = Amun_Sql_Table_Registry::get('Core_User_Friend')
 					->select(array('id', 'status', 'date'))
-					->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+					->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 						->select(array('id', 'globalId', 'name', 'profileUrl'), 'author'),
 						'n:1',
 						'userId'
 					)
-					->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+					->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 						->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated'), 'friend'),
 						'n:1',
 						'friendId'

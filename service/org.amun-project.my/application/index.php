@@ -39,12 +39,10 @@ class index extends Amun_Service_My_MyAbstract
 	{
 		parent::onLoad();
 
-
 		// get user details
 		$account = $this->getAccount();
 
 		$this->template->assign('account', $account);
-
 
 		// check whether remote profile
 		if($account->status == Amun_User_Account::REMOTE)
@@ -54,18 +52,15 @@ class index extends Amun_Service_My_MyAbstract
 			exit;
 		}
 
-
 		// get acctivites
 		$activities = $this->getActivities();
 
 		$this->template->assign('activities', $activities);
 
-
 		// load groups
 		$groups = $this->getGroups();
 
 		$this->template->assign('groups', $groups);
-
 
 		// form url
 		$activityUrl = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/activity';
@@ -73,7 +68,6 @@ class index extends Amun_Service_My_MyAbstract
 
 		$this->template->assign('activityUrl', $activityUrl);
 		$this->template->assign('receiverUrl', $receiverUrl);
-
 
 		// template
 		$this->htmlCss->add('my');
@@ -86,12 +80,12 @@ class index extends Amun_Service_My_MyAbstract
 
 	private function getAccount()
 	{
-		return Amun_Sql_Table_Registry::get('User_Account')
+		return Amun_Sql_Table_Registry::get('Core_User_Account')
 			->select(array('id', 'status', 'name', 'gender', 'timezone', 'updated', 'date', 'profileUrl', 'thumbnailUrl'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Group')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Group')
 				->select(array('title'), 'group')
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('System_Country')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_System_Country')
 				->select(array('title'), 'country')
 			)
 			->where('id', '=', $this->user->id)
@@ -100,13 +94,13 @@ class index extends Amun_Service_My_MyAbstract
 
 	private function getActivities()
 	{
-		$select = Amun_Sql_Table_Registry::get('User_Activity')
+		$select = Amun_Sql_Table_Registry::get('Core_User_Activity')
 			->select(array('id', 'parentId', 'status', 'verb', 'summary', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Activity_Receiver')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Activity_Receiver')
 				->select(array('id', 'status', 'activityId', 'userId', 'date'), 'receiver'),
 				'1:n'
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			)
 			->where('receiverUserId', '=', $this->user->id)

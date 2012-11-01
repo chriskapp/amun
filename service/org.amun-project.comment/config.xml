@@ -1,30 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="6ab4337a83825b08f471a29e2f540b5ceab65be7">
+<service xmlns="http://amun-project.org" signature="674ad03397aa07f5c68d08a63b4042cab0d22125">
   <status>system</status>
   <name>comment</name>
   <path>/service/comment</path>
-  <namespace>Amun_Service_Comment</namespace>
+  <namespace>comment</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/comment</type>
   <link>http://amun.phpsx.org</link>
   <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
   <license>GPLv3</license>
   <version>0.0.1</version>
   <permissions>
-    <perm name="view" description="Service Comment View" />
-    <perm name="add" description="Service Comment Add" />
-    <perm name="edit" description="Service Comment Edit" />
-    <perm name="delete" description="Service Comment Delete" />
+    <perm name="view" description="Service Comment View"/>
+    <perm name="add" description="Service Comment Add"/>
+    <perm name="edit" description="Service Comment Edit"/>
+    <perm name="delete" description="Service Comment Delete"/>
   </permissions>
   <library>
-    <dir name="Amun">
-      <dir name="Service">
+    <dir name="AmunService">
         <dir name="Comment">
-          <file name="Form.php" md5="c443b20d29cb9196ab435311d6926637"/>
-          <file name="Handler.php" md5="94d18e702ba788143c85ce5dc1746cd4"/>
-          <file name="Table.php" md5="f6adb5d98adfbb5726559edbb9488210"/>
+            <include />
         </dir>
-        <file name="Comment.php" md5="6284a0ec9376092c663bf89d93bc66aa"/>
-      </dir>
     </dir>
   </library>
   <database>

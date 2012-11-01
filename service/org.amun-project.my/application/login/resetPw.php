@@ -41,7 +41,6 @@ class resetPw extends Amun_Module_ApplicationAbstract
 		$this->path->add('Login', $this->page->url . '/login');
 		$this->path->add('Reset Password', $this->page->url . '/login/resetPw');
 
-
 		// template
 		$this->htmlCss->add('my');
 
@@ -56,7 +55,7 @@ class resetPw extends Amun_Module_ApplicationAbstract
 
 			if($token !== false)
 			{
-				$account = Amun_Sql_Table_Registry::get('User_Account')
+				$account = Amun_Sql_Table_Registry::get('Core_User_Account')
 					->select(array('id', 'name', 'ip', 'email', 'date'))
 					->where('token', '=', $token)
 					->where('status', '=', Amun_User_Account::RECOVER)
@@ -77,7 +76,6 @@ class resetPw extends Amun_Module_ApplicationAbstract
 							$handler = new Amun_User_Account_Handler($this->user);
 							$handler->update($account);
 
-
 							// send mail
 							$values = array(
 
@@ -91,7 +89,6 @@ class resetPw extends Amun_Module_ApplicationAbstract
 
 							$mail = new Amun_Mail($this->registry);
 							$mail->send('SERVICE_MY_RECOVER_SUCCESS', $account->email, $values);
-
 
 							$this->template->assign('success', true);
 						}

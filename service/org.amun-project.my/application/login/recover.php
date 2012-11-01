@@ -41,12 +41,10 @@ class recover extends Amun_Module_ApplicationAbstract
 		$this->path->add('Login', $this->page->url . '/login');
 		$this->path->add('Recover', $this->page->url . '/login/recover');
 
-
 		// captcha
 		$captcha = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/system/captcha';
 
 		$this->template->assign('captcha', $captcha);
-
 
 		// template
 		$this->htmlCss->add('my');
@@ -61,7 +59,6 @@ class recover extends Amun_Module_ApplicationAbstract
 			$email   = $this->post->email('string', array(new PSX_Filter_Length(3, 64), new PSX_Filter_Email()));
 			$captcha = $this->post->captcha('string');
 
-
 			// check captcha if anonymous
 			$captchaProvider = Amun_Captcha::factory($this->config['amun_captcha']);
 
@@ -70,10 +67,9 @@ class recover extends Amun_Module_ApplicationAbstract
 				throw new Amun_Exception('Invalid captcha');
 			}
 
-
 			if(!$this->validate->hasError())
 			{
-				$account = Amun_Sql_Table_Registry::get('User_Account')
+				$account = Amun_Sql_Table_Registry::get('Core_User_Account')
 					->select(array('id', 'status', 'name', 'email'))
 					->where('identity', '=', sha1(Amun_Security::getSalt() . $email))
 					->getRow(PSX_Sql::FETCH_OBJECT);
@@ -91,14 +87,12 @@ class recover extends Amun_Module_ApplicationAbstract
 						$link  = $this->page->url . '/login/resetPw?token=' . $token;
 						$date  = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-
 						// update status
 						$account->setStatus(Amun_User_Account::RECOVER);
 						$account->setToken($token);
 
 						$handler = new Amun_User_Account_Handler($this->user);
 						$handler->update($account);
-
 
 						// send mail
 						$values = array(

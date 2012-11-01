@@ -65,7 +65,7 @@ class Amun_Service
 		$this->user     = $user;
 
 
-		$status = Amun_Content_Service::NORMAL;
+		$status = AmunService_Core_Content_Service_Record::NORMAL;
 		$sql    = <<<SQL
 SELECT
 
@@ -79,7 +79,7 @@ SELECT
 	service.version   AS `serviceVersion`,
 	service.date      AS `serviceDate`
 
-	FROM {$this->registry['table.content_service']} `service`
+	FROM {$this->registry['table.core_content_service']} `service`
 
 		WHERE `service`.`id` = ?
 SQL;
@@ -104,26 +104,28 @@ SQL;
 		}
 	}
 
-	public function getRecordInstance()
+	public function getRecord($ns = null)
 	{
 		if($this->_record === null)
 		{
-			$class = self::getClass($this->namespace, 'Record');
+			$name  = $ns !== null ? $ns . '_Record' : 'Record';
+			$class = self::getClass($this->namespace, $name);
 
 			if($class !== null && $class->isSubclassOf('Amun_Data_RecordAbstract'))
 			{
-				$this->_record = $class->newInstance($this->getTableInstance());
+				$this->_record = $class->newInstance($this->getTable());
 			}
 		}
 
 		return $this->_record;
 	}
 
-	public function getHandlerInstance()
+	public function getHandler($ns = null)
 	{
 		if($this->_handler === null)
 		{
-			$class = self::getClass($this->namespace, 'Handler');
+			$name  = $ns !== null ? $ns . '_Handler' : 'Handler';
+			$class = self::getClass($this->namespace, $name);
 
 			if($class !== null && $class->isSubclassOf('Amun_Data_HandlerAbstract'))
 			{
@@ -134,11 +136,12 @@ SQL;
 		return $this->_handler;
 	}
 
-	public function getTableInstance()
+	public function getTable($ns = null)
 	{
 		if($this->_table === null)
 		{
-			$class = self::getClass($this->namespace, 'Table');
+			$name  = $ns !== null ? $ns . '_Table' : 'Table';
+			$class = self::getClass($this->namespace, $name);
 
 			if($class !== null && $class->isSubclassOf('Amun_Sql_TableAbstract'))
 			{
@@ -149,11 +152,12 @@ SQL;
 		return $this->_table;
 	}
 
-	public function getFormInstance()
+	public function getForm($ns = null)
 	{
 		if($this->_form === null)
 		{
-			$class = self::getClass($this->namespace, 'Form');
+			$name  = $ns !== null ? $ns . '_Form' : 'Form';
+			$class = self::getClass($this->namespace, $name);
 
 			if($class !== null && $class->isSubclassOf('Amun_Data_FormAbstract'))
 			{
@@ -203,7 +207,7 @@ SQL;
 	{
 		try
 		{
-			$class = Amun_Registry::getClassName($namespace . '_' . $className);
+			$class = Amun_Registry::getClassName('AmunService_' . $namespace . '_' . $className);
 
 			return new ReflectionClass($class);
 		}

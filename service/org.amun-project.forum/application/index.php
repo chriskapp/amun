@@ -64,12 +64,12 @@ class index extends Amun_Module_ApplicationAbstract
 
 	private function getForum()
 	{
-		$select = Amun_Sql_Table_Registry::get('Service_Forum')
+		$select = Amun_Sql_Table_Registry::get('Forum')
 			->select(array('id', 'sticky', 'pageId', 'urlTitle', 'title', 'text', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Content_Page')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_Content_Page')
 				->select(array('path'), 'page')
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('name', 'profileUrl'), 'author')
 			)
 			->where('pageId', '=', $this->page->id)

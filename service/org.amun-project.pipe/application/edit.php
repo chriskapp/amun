@@ -44,7 +44,7 @@ class edit extends Amun_Module_ApplicationAbstract
 
 			if($id > 0)
 			{
-				$record = Amun_Sql_Table_Registry::get('Service_Pipe')->getRecord($id);
+				$record = Amun_Sql_Table_Registry::get('Pipe')->getRecord($id);
 
 				$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/pipe/form?format=json&method=update&id=' . $record->id;
 

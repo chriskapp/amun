@@ -111,7 +111,7 @@ class foaf extends Amun_Module_ApiAbstract
 		}
 
 
-		$account = Amun_Sql_Table_Registry::get('User_Account')
+		$account = Amun_Sql_Table_Registry::get('Core_User_Account')
 			->select(array('id', 'globalId', 'name', 'gender', 'profileUrl', 'thumbnailUrl'))
 			->where($col, '=', $val)
 			->getRow();
@@ -128,14 +128,14 @@ class foaf extends Amun_Module_ApiAbstract
 
 	private function getFriends($userId)
 	{
-		return Amun_Sql_Table_Registry::get('User_Friend')
+		return Amun_Sql_Table_Registry::get('Core_User_Friend')
 			->select(array('id', 'status', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('id', 'globalId', 'name'), 'author'),
 				'n:1',
 				'userId'
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('id', 'globalId', 'name', 'gender', 'profileUrl', 'thumbnailUrl'), 'friend'),
 				'n:1',
 				'friendId'

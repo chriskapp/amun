@@ -59,7 +59,7 @@ class callback extends Amun_Module_DefaultAbstract
 
 				if(!empty($id))
 				{
-					$record      = Amun_Sql_Table_Registry::get('Service_Googleproject')->getRecord($id);
+					$record      = Amun_Sql_Table_Registry::get('Googleproject')->getRecord($id);
 					$foreignHash = PSX_Base::getRequestHeader('google-code-project-hosting-hook-hmac');
 					$hash        = hash_hmac('md5', PSX_Base::getRawInput(), $record->secret);
 
@@ -72,7 +72,7 @@ class callback extends Amun_Module_DefaultAbstract
 								$result = new PSX_Data_ReaderResult(PSX_Data_ReaderInterface::JSON, $commit);
 								$result->addParam('projectId', $record->id);
 
-								$record = Amun_Sql_Table_Registry::get('Service_Googleproject_Commit')->getRecord();
+								$record = Amun_Sql_Table_Registry::get('Googleproject_Commit')->getRecord();
 								$record->import($result);
 
 								$user = new Amun_User($record->getAuthor()->userId, $this->registry);

@@ -39,23 +39,19 @@ class application extends Amun_Service_My_SettingsAbstract
 	{
 		parent::onLoad();
 
-
 		// add path
 		$this->path->add('Settings', $this->page->url . '/settings');
 		$this->path->add('Application', $this->page->url . '/settings/application');
-
 
 		// load allowed applications
 		$applications = $this->getApplications();
 
 		$this->template->assign('applications', $applications);
 
-
 		// form url
 		$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/system/api/access';
 
 		$this->template->assign('accessUrl', $url);
-
 
 		// template
 		$this->htmlCss->add('my');
@@ -67,12 +63,12 @@ class application extends Amun_Service_My_SettingsAbstract
 
 	public function getApplications()
 	{
-		$select = Amun_Sql_Table_Registry::get('System_Api_Access')
+		$select = Amun_Sql_Table_Registry::get('Core_System_Api_Access')
 			->select(array('id', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('System_Api')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_System_Api')
 				->select(array('id', 'url', 'title', 'description'), 'api')
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('id', 'name'), 'author')
 			)
 			->where('authorId', '=', $this->user->id)

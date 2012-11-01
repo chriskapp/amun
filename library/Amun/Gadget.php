@@ -94,9 +94,9 @@ SELECT
 	`gadget`.`expire`,
 	`gadget`.`param`
 
-	FROM {$this->registry['table.content_page_gadget']} `pageGadget`
+	FROM {$this->registry['table.core_content_page_gadget']} `pageGadget`
 
-		INNER JOIN {$this->registry['table.content_gadget']} `gadget`
+		INNER JOIN {$this->registry['table.core_content_gadget']} `gadget`
 
 		ON `pageGadget`.`gadgetId` = `gadget`.`id`
 

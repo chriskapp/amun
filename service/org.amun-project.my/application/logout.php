@@ -37,14 +37,12 @@ class logout extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
-		if($this->user->hasRight('service_my_view'))
+		if($this->service->hasViewRight())
 		{
 			$this->session->destroy();
 
-
 			// redirect
 			header('Location: ' . $this->config['psx_url']);
-
 			exit;
 		}
 		else

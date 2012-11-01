@@ -39,22 +39,18 @@ class friends extends Amun_Service_My_FriendsAbstract
 	{
 		parent::onLoad();
 
-
 		// add path
 		$this->path->add('Friends', $this->page->url . '/friends');
-
 
 		// get friends
 		$friends = $this->getFriends();
 
 		$this->template->assign('friends', $friends);
 
-
 		// form url
 		$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/friend';
 
 		$this->template->assign('friendUrl', $url);
-
 
 		// template
 		$this->htmlCss->add('my');
@@ -67,14 +63,14 @@ class friends extends Amun_Service_My_FriendsAbstract
 
 	private function getFriends()
 	{
-		$select = Amun_Sql_Table_Registry::get('User_Friend')
+		$select = Amun_Sql_Table_Registry::get('Core_User_Friend')
 			->select(array('id', 'status', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('id', 'name'), 'author'),
 				'n:1',
 				'userId'
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('id', 'name', 'profileUrl', 'thumbnailUrl'), 'friend'),
 				'n:1',
 				'friendId'

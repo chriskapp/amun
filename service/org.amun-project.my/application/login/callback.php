@@ -40,7 +40,6 @@ class callback extends Amun_Module_ApplicationAbstract
 		// http
 		$this->http = new PSX_Http(new PSX_Http_Handler_Curl());
 
-
 		// initialize openid
 		$store  = new PSX_OpenId_Store_Sql($this->sql, $this->registry['table.system_assoc']);
 		$openid = new PSX_OpenId($this->http, $this->config['psx_url'], $store);
@@ -56,7 +55,7 @@ class callback extends Amun_Module_ApplicationAbstract
 				$hostId   = $this->session->openid_register_user_host_id;
 				$globalId = $this->session->openid_register_user_global_id;
 				$con      = new PSX_Sql_Condition(array('identity', '=', sha1(Amun_Security::getSalt() . $openid->getIdentifier())));
-				$userId   = Amun_Sql_Table_Registry::get('User_Account')->getField('id', $con);
+				$userId   = Amun_Sql_Table_Registry::get('Core_User_Account')->getField('id', $con);
 
 				if(empty($userId))
 				{
@@ -90,7 +89,7 @@ class callback extends Amun_Module_ApplicationAbstract
 						$con = new PSX_Sql_Condition();
 						$con->add('globalId', '=', $globalId);
 
-						$userId = Amun_Sql_Table_Registry::get('User_Account')->getField('id', $con);
+						$userId = Amun_Sql_Table_Registry::get('Core_User_Account')->getField('id', $con);
 					}
 
 					// create user account
@@ -98,7 +97,7 @@ class callback extends Amun_Module_ApplicationAbstract
 					{
 						$handler = new Amun_User_Account_Handler($this->user);
 
-						$account = Amun_Sql_Table_Registry::get('User_Account')->getRecord();
+						$account = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord();
 						$account->setGroupId($this->registry['core.default_user_group']);
 						$account->setHostId($hostId);
 						$account->setStatus($hostId > 0 ? Amun_User_Account::REMOTE : Amun_User_Account::NORMAL);
@@ -174,11 +173,9 @@ class callback extends Amun_Module_ApplicationAbstract
 			throw new Amun_Exception('Authentication failed');
 		}
 
-
 		// add path
 		$this->path->add('Login', $this->page->url . '/login');
 		$this->path->add('Callback', $this->page->url . '/login/callback');
-
 
 		// template
 		$this->htmlCss->add('my');
@@ -254,7 +251,6 @@ class callback extends Amun_Module_ApplicationAbstract
 				}
 			}
 
-
 			if(isset($keys['firstname']) && $keys['lastname'] && isset($params[$keys['firstname']]) && isset($params[$keys['lastname']]))
 			{
 				$account['name'] = $params[$keys['firstname']] . ' ' . $params[$keys['lastname']];
@@ -297,7 +293,7 @@ class callback extends Amun_Module_ApplicationAbstract
 
 		if($hostId > 0 && !empty($token) && !empty($verifier))
 		{
-			$row = Amun_Sql_Table_Registry::get('System_Host')
+			$row = Amun_Sql_Table_Registry::get('Core_System_Host')
 				->select(array('consumerKey', 'consumerSecret', 'url'))
 				->where('id', '=', $hostId)
 				->where('status', '=', Amun_System_Host::NORMAL)
@@ -365,10 +361,8 @@ class callback extends Amun_Module_ApplicationAbstract
 		$norm = '';
 		$len  = strlen($name);
 
-
 		// replace white space with period
 		$name = str_replace(' ', '.', $name);
-
 
 		// name can only contain A-Z a-z 0-9 .
 		$period = false;
@@ -390,7 +384,6 @@ class callback extends Amun_Module_ApplicationAbstract
 				$period = true;
 			}
 		}
-
 
 		return $norm;
 	}

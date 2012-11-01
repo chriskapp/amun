@@ -39,17 +39,14 @@ class subscription extends Amun_Service_My_SettingsAbstract
 	{
 		parent::onLoad();
 
-
 		// add path
 		$this->path->add('Settings', $this->page->url . '/settings');
 		$this->path->add('Subscription', $this->page->url . '/settings/subscription');
-
 
 		// load subscriptions
 		$subscriptions = $this->getSubscriptions();
 
 		$this->template->assign('subscriptions', $subscriptions);
-
 
 		// form url
 		$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/my/subscription';
@@ -57,7 +54,6 @@ class subscription extends Amun_Service_My_SettingsAbstract
 
 		$this->template->assign('subscriptionUrl', $url);
 		$this->template->assign('formUrl', $formUrl);
-
 
 		// template
 		$this->htmlCss->add('my');
@@ -69,9 +65,9 @@ class subscription extends Amun_Service_My_SettingsAbstract
 
 	public function getSubscriptions()
 	{
-		$select = Amun_Sql_Table_Registry::get('Service_My_Subscription')
+		$select = Amun_Sql_Table_Registry::get('My_Subscription')
 			->select(array('id', 'status', 'hub', 'topic', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('id', 'name'), 'author')
 			)
 			->where('userId', '=', $this->user->id);

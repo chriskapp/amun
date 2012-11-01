@@ -41,6 +41,8 @@ class Amun_Base extends PSX_Base
 	protected $tableRegistry;
 	protected $user;
 
+	private $_service;
+
 	public function setup()
 	{
 		parent::setup();
@@ -86,10 +88,30 @@ class Amun_Base extends PSX_Base
 		return $this->user;
 	}
 
+	public function getService($source)
+	{
+		$con = new PSX_Sql_Condition(array('source', '=', $source));
+		$id  = $this->sql->getField($this->registry['table.core_content_service'], $con);
+
+		if(!empty($id))
+		{
+			if(!isset($this->_service[$id]))
+			{
+				$this->_service[$id] = new Amun_Service($id);
+			}
+
+			return $this->_service[$id];
+		}
+		else
+		{
+			throw new Amun_Exception('Invalid service');
+		}
+	}
+
 	public function hasService($source)
 	{
 		$con   = new PSX_Sql_Condition(array('source', '=', $source));
-		$count = $this->sql->count($this->registry['table.content_service'], $con);
+		$count = $this->sql->count($this->registry['table.core_content_service'], $con);
 
 		return $count > 0;
 	}

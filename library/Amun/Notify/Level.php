@@ -47,7 +47,7 @@ SELECT
 
 	`level`.`title`
 
-	FROM {$this->registry['table.user_level']} `level`
+	FROM {$this->registry['table.core_user_level']} `level`
 
 		WHERE `level`.`groupId` = ?
 
@@ -64,7 +64,7 @@ SQL;
 
 		if(!empty($level))
 		{
-			$this->sql->update($this->registry['table.user_account'], array('level' => $level), $con);
+			$this->sql->update($this->registry['table.core_user_account'], array('level' => $level), $con);
 		}
 		*/
 	}

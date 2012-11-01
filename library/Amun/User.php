@@ -62,7 +62,7 @@ class Amun_User
 		$this->registry = $registry;
 
 
-		$status = Amun_User_Account::BANNED;
+		$status = AmunService_Core_User_Account_Record::BANNED;
 		$sql    = <<<EOD
 SELECT
 
@@ -79,9 +79,9 @@ SELECT
 	account.date       AS `accountDate`,
 	group.title        AS `groupTitle`
 
-	FROM {$this->registry['table.user_account']} `account`
+	FROM {$this->registry['table.core_user_account']} `account`
 
-		INNER JOIN {$this->registry['table.user_group']} `group`
+		INNER JOIN {$this->registry['table.core_user_group']} `group`
 
 		ON `account`.`groupId` = `group`.`id`
 
@@ -113,7 +113,7 @@ EOD;
 			$now = new DateTime('NOW', $this->registry['core.default_timezone']);
 			$con = new PSX_Sql_Condition(array('id', '=', $this->id));
 
-			$this->sql->update($this->registry['table.user_account'], array(
+			$this->sql->update($this->registry['table.core_user_account'], array(
 
 				'lastSeen' => $now->format(PSX_DateTime::SQL),
 
@@ -139,9 +139,9 @@ SELECT
 	`right`.`id`,
 	`right`.`name`
 
-	FROM {$this->registry['table.user_group_right']} `groupRight`
+	FROM {$this->registry['table.core_user_group_right']} `groupRight`
 
-		INNER JOIN {$this->registry['table.user_right']} `right`
+		INNER JOIN {$this->registry['table.core_user_right']} `right`
 
 		ON `right`.`id` = `groupRight`.`rightId`
 
@@ -168,12 +168,12 @@ SQL;
 
 	public function isAdministrator()
 	{
-		return $this->status == Amun_User_Account::ADMINISTRATOR;
+		return $this->status == AmunService_Core_User_Account::ADMINISTRATOR;
 	}
 
 	public function isRemote()
 	{
-		return $this->status == Amun_User_Account::REMOTE;
+		return $this->status == AmunService_Core_User_Account::REMOTE;
 	}
 
 	public function isAnonymous()
@@ -203,7 +203,7 @@ SQL;
 		$con->add('userId', '=', $this->id);
 		$con->add('date', '>=', $now->format(PSX_DateTime::SQL));
 
-		$count = $this->sql->count($this->registry['table.system_log'], $con);
+		$count = $this->sql->count($this->registry['table.core_system_log'], $con);
 
 		if($count > $this->registry['security.input_limit'])
 		{
@@ -255,7 +255,7 @@ SQL;
 			$con = new PSX_Sql_Condition();
 			$con->add('id', '=', $record->userId);
 
-			$value = $this->sql->select($this->registry['table.user_account'], array('groupId'), $con, PSX_Sql::SELECT_FIELD);
+			$value = $this->sql->select($this->registry['table.core_user_account'], array('groupId'), $con, PSX_Sql::SELECT_FIELD);
 
 			return $value == $this->groupId;
 		}
@@ -298,17 +298,17 @@ SQL;
 
 	public function getAccount()
 	{
-		return Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->id);
+		return Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord($this->id);
 	}
 
-	public function hasFriend(Amun_User_Account $account)
+	public function hasFriend(AmunService_Core_User_Account $account)
 	{
 		$con = new PSX_Sql_Condition();
 		$con->add('userId', '=', $this->id);
 		$con->add('friendId', '=', $account->id);
-		$con->add('status', '=', Amun_User_Friend::NORMAL);
+		$con->add('status', '=', AmunService_Core_User_Friend::NORMAL);
 
-		$count = $this->sql->count($this->registry['table.user_friend'], $con);
+		$count = $this->sql->count($this->registry['table.core_user_friend'], $con);
 
 		return $count > 0;
 	}

@@ -248,12 +248,12 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 
 	protected function getTable()
 	{
-		return $this->service->getTableInstance();
+		return $this->service->getTable();
 	}
 
 	protected function getHandler()
 	{
-		return $this->service->getHandlerInstance();
+		return $this->service->getHandler();
 	}
 
 	protected function getMode()

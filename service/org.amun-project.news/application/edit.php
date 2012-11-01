@@ -37,29 +37,26 @@ class edit extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
-		if($this->user->hasRight('service_news_edit'))
+		if($this->service->hasEditRight())
 		{
 			// form url
 			$id = $this->get->id('integer');
 
-			$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/news/form?format=json&method=update&id=' . $id;
-
+			$url = $this->service->getApiEndpoint() . '/form?format=json&method=update&id=' . $id;
 
 			// news
-			$news = Amun_Sql_Table_Registry::get('Service_News')->getRecord($id);
-
+			$news = Amun_Sql_Table_Registry::get('News')->getRecord($id);
 
 			// add path
 			$this->path->add($news->title, $this->page->url . '/view?id=' . $news->id);
 			$this->path->add('Edit', $this->page->url . '/edit?id=' . $id);
-
 
 			// template
 			$this->htmlJs->add('amun');
 			$this->htmlJs->add('ace');
 			$this->htmlJs->add('news');
 
-
+			// html
 			echo <<<HTML
 <div id="response"></div>
 

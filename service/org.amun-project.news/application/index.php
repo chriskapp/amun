@@ -37,26 +37,22 @@ class index extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
-		if($this->user->hasRight('service_news_view'))
+		if($this->service->hasViewRight())
 		{
 			// load news
 			$resultNews = $this->getNews();
 
 			$this->template->assign('resultNews', $resultNews);
 
-
 			// options
-			$options = new Amun_Option(__CLASS__, $this->registry, $this->user, $this->page);
-			$options->add('service_news_add', 'Add', $this->page->url . '/add');
-			$options->load(array($this->page));
-
-			$this->template->assign('options', $options);
-
+			$this->setOptions(array(
+				array('add', 'Add', $this->page->url . '/add')
+			));
 
 			// template
 			$this->htmlCss->add('news');
 			$this->htmlJs->add('prettify');
-			$this->htmlContent->add(Amun_Html_Content::META, PSX_Data_Writer_Atom::link($this->page->title, $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/news?format=atom&filterBy=pageId&filterOp=equals&filterValue=' . $this->page->id));
+			$this->htmlContent->add(Amun_Html_Content::META, PSX_Data_Writer_Atom::link($this->page->title, $this->service->getApiEndpoint() . '?format=atom&filterBy=pageId&filterOp=equals&filterValue=' . $this->page->id));
 
 			$this->template->set(__CLASS__ . '.tpl');
 		}
@@ -68,12 +64,12 @@ class index extends Amun_Module_ApplicationAbstract
 
 	private function getNews()
 	{
-		$select = Amun_Sql_Table_Registry::get('Service_News')
+		$select = Amun_Sql_Table_Registry::get('News')
 			->select(array('id', 'urlTitle', 'title', 'text', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('name', 'profileUrl'), 'author')
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Content_Page')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_Content_Page')
 				->select(array('path'), 'page')
 			)
 			->where('pageId', '=', $this->page->id)

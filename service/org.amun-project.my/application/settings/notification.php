@@ -39,17 +39,14 @@ class notification extends Amun_Service_My_SettingsAbstract
 	{
 		parent::onLoad();
 
-
 		// add path
 		$this->path->add('Settings', $this->page->url . '/settings');
 		$this->path->add('Contact', $this->page->url . '/settings/notification');
-
 
 		// load subscriptions
 		$notifications = $this->getNotifications();
 
 		$this->template->assign('notifications', $notifications);
-
 
 		// form url
 		$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/my/notify';
@@ -57,7 +54,6 @@ class notification extends Amun_Service_My_SettingsAbstract
 
 		$this->template->assign('notifyUrl', $url);
 		$this->template->assign('formUrl', $formUrl);
-
 
 		// template
 		$this->htmlCss->add('my');
@@ -69,12 +65,12 @@ class notification extends Amun_Service_My_SettingsAbstract
 
 	public function getNotifications()
 	{
-		$select = Amun_Sql_Table_Registry::get('Service_My_Notify')
+		$select = Amun_Sql_Table_Registry::get('My_Notify')
 			->select(array('id', 'userId', 'status', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Service_My_Notify_Service')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('My_Notify_Service')
 				->select(array('title'), 'service')
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Service_My_Contact')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('My_Contact')
 				->select(array('status', 'type', 'value'), 'contact')
 			)
 			->where('userId', '=', $this->user->id);

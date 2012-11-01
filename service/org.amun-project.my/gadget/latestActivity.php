@@ -47,9 +47,9 @@ class latestActivity extends Amun_Module_GadgetAbstract
 		$this->htmlCss->add('my');
 
 		// get activities
-		$result = Amun_Sql_Table_Registry::get('User_Activity')
+		$result = Amun_Sql_Table_Registry::get('Core_User_Activity')
 			->select(array('id', 'scope', 'summary', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('id', 'name', 'thumbnailUrl'), 'author')
 			)
 			->where('scope', '=', 0)

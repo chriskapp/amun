@@ -1,30 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="0d8ae008fd7801f6aa3b3346b582884c21efd5ba">
+<service xmlns="http://amun-project.org" signature="113400670c8e23b802002ee52d6e41d7b3f53c71">
   <status>normal</status>
   <name>php</name>
   <path>/service/php</path>
-  <namespace>Amun_Service_Php</namespace>
+  <namespace>php</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/php</type>
   <link>http://amun.phpsx.org</link>
   <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
   <license>GPLv3</license>
   <version>0.0.1</version>
   <permissions>
-    <perm name="view" description="Service Php View" />
-    <perm name="add" description="Service Php Add" />
-    <perm name="edit" description="Service Php Edit" />
-    <perm name="delete" description="Service Php Delete" />
+    <perm name="view" description="Service Php View"/>
+    <perm name="add" description="Service Php Add"/>
+    <perm name="edit" description="Service Php Edit"/>
+    <perm name="delete" description="Service Php Delete"/>
   </permissions>
   <library>
-    <dir name="Amun">
-      <dir name="Service">
+    <dir name="AmunService">
         <dir name="Php">
-          <file name="Form.php" md5="dda8f6b1867351381828a9da065f79a4"/>
-          <file name="Handler.php" md5="3c3904dd20d2bb1756b3a2a04ffad891"/>
-          <file name="Table.php" md5="7ab8b0421bb35f8c05aa94be590d559a"/>
+            <include />
         </dir>
-        <file name="Php.php" md5="986d1cb90e07fdddeefaab75916f4ece"/>
-      </dir>
     </dir>
   </library>
   <database>

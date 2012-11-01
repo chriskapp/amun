@@ -39,7 +39,7 @@ class verifyCredentials extends Amun_Module_ApiAbstract
 	{
 		try
 		{
-			$select = Amun_Sql_Table_Registry::get('User_Account')
+			$select = Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('id', 'groupId', 'status', 'name', 'gender', 'profileUrl', 'thumbnailUrl', 'timezone', 'updated', 'date'))
 				->where('id', '=', $this->user->id);
 

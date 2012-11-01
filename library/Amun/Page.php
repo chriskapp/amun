@@ -68,7 +68,7 @@ class Amun_Page
 		$this->user     = $user;
 
 
-		$status = Amun_Content_Page::NORMAL;
+		$status = AmunService_Core_Content_Page_Record::NORMAL;
 		$sql    = <<<SQL
 SELECT
 
@@ -87,9 +87,9 @@ SELECT
 	page.date        AS `pageDate`,
 	service.source   AS `serviceSource`
 
-	FROM {$this->registry['table.content_page']} `page`
+	FROM {$this->registry['table.core_content_page']} `page`
 
-		INNER JOIN {$this->registry['table.content_service']} `service`
+		INNER JOIN {$this->registry['table.core_content_service']} `service`
 
 		ON `page`.`serviceId` = `service`.`id`
 
@@ -159,7 +159,7 @@ SQL;
 			}
 
 			$con = new PSX_Sql_Condition(array('path', '=', $path));
-			$id  = $this->sql->select($this->registry['table.content_page'], array('id'), $con, PSX_Sql::SELECT_FIELD);
+			$id  = $this->sql->select($this->registry['table.core_content_page'], array('id'), $con, PSX_Sql::SELECT_FIELD);
 
 			if(!empty($id))
 			{
@@ -186,7 +186,7 @@ SELECT
 	`pageRight`.`groupId`,
 	`pageRight`.`newGroupId`
 
-	FROM {$this->registry['table.content_page_right']} `pageRight`
+	FROM {$this->registry['table.core_content_page_right']} `pageRight`
 
 		WHERE `pageRight`.`pageId` = {$this->id}
 
@@ -205,22 +205,22 @@ SQL;
 
 	public function hasRight()
 	{
-		return $this->load & Amun_Content_Page::RIGHT;
+		return $this->load & AmunService_Core_Content_Page_Record::RIGHT;
 	}
 
 	public function hasNav()
 	{
-		return $this->load & Amun_Content_Page::NAV;
+		return $this->load & AmunService_Core_Content_Page_Record::NAV;
 	}
 
 	public function hasPath()
 	{
-		return $this->load & Amun_Content_Page::PATH;
+		return $this->load & AmunService_Core_Content_Page_Record::PATH;
 	}
 
 	public function hasGadget()
 	{
-		return $this->load & Amun_Content_Page::GADGET;
+		return $this->load & AmunService_Core_Content_Page_Record::GADGET;
 	}
 
 	public static function getUrl(Amun_Registry $registry, $pageId)
@@ -231,7 +231,7 @@ SELECT
 
 	page.path
 
-	FROM {$registry['table.content_page']} `page`
+	FROM {$registry['table.core_content_page']} `page`
 
 		WHERE `page`.`id` = {$id}
 SQL;

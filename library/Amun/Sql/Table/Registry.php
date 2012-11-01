@@ -56,13 +56,13 @@ class Amun_Sql_Table_Registry extends ArrayObject
 			{
 				$class = Amun_Service::getClass($offset, 'Table');
 
-				if($class !== null)
+				if($class instanceof ReflectionClass)
 				{
 					parent::offsetSet($offset, $class->newInstance($this->registry));
 				}
 				else
 				{
-					throw new Amun_Exception('Table class "' . $class->getName() . '" does not exist');
+					throw new Amun_Exception('Table "' . $offset . '" does not exist');
 				}
 			}
 			else

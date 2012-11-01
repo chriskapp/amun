@@ -47,5 +47,10 @@ abstract class Amun_Sql_TableAbstract extends PSX_Sql_TableAbstract implements A
 	{
 		return $this->registry;
 	}
+
+	public function getDefaultRecordClass()
+	{
+		return substr(get_class($this), 0, -6) . '_Record';
+	}
 }
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="d39980fc8d8773dcfa8511800ff02494f95dcd15">
+<service xmlns="http://amun-project.org" signature="f2759604e23801f000e29ba083a309fd4e8b43b8">
   <status>normal</status>
   <name>forum</name>
   <path>/service/forum</path>
-  <namespace>Amun_Service_Forum</namespace>
+  <namespace>forum</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/forum</type>
   <link>http://amun.phpsx.org</link>
   <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
@@ -13,24 +13,19 @@
     <service>org.amun-project.comment</service>
   </required>
   <permissions>
-    <perm name="view" description="Service Forum View" />
-    <perm name="add" description="Service Forum Add" />
-    <perm name="edit" description="Service Forum Edit" />
-    <perm name="delete" description="Service Forum Delete" />
-    <perm name="sticky" description="Service Forum Sticky" />
-    <perm name="close" description="Service Forum Close" />
-    <perm name="comment_add" description="Service Forum Comment Add" />
+    <perm name="view" description="Service Forum View"/>
+    <perm name="add" description="Service Forum Add"/>
+    <perm name="edit" description="Service Forum Edit"/>
+    <perm name="delete" description="Service Forum Delete"/>
+    <perm name="sticky" description="Service Forum Sticky"/>
+    <perm name="close" description="Service Forum Close"/>
+    <perm name="comment_add" description="Service Forum Comment Add"/>
   </permissions>
   <library>
-    <dir name="Amun">
-      <dir name="Service">
+    <dir name="AmunService">
         <dir name="Forum">
-          <file name="Form.php" md5="ba1f525576d6b1db528270dd413d0f13"/>
-          <file name="Handler.php" md5="84da93b47c7cdfb9de536a18b4881ef7"/>
-          <file name="Table.php" md5="8ad18bba8c7cdc29f16bd2fc5c23ff23"/>
+            <include />
         </dir>
-        <file name="Forum.php" md5="3ec14600349254431e9377eaf1a5989a"/>
-      </dir>
     </dir>
   </library>
   <database>

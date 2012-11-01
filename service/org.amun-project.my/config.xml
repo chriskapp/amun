@@ -1,72 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="271422f6cd1545782b1698142dfb17d019d2614b">
+<service xmlns="http://amun-project.org" signature="baa7f609cf1249539e6aa8b4495a2a69be632b97">
   <status>normal</status>
   <name>my</name>
   <path>/service/my</path>
-  <namespace>Amun_Service_My</namespace>
+  <namespace>my</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/my</type>
   <link>http://amun.phpsx.org</link>
   <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
   <license>GPLv3</license>
   <version>0.0.1</version>
   <permissions>
-    <perm name="view" description="Service My View" />
-    <perm name="friends_view" description="Service My Friends View" />
-    <perm name="activities_view" description="Service My Activites View" />
-    <perm name="settings_view" description="Service My Settings View" />
-    <perm name="contact_view" description="Service My Contact View" />
-    <perm name="contact_add" description="Service My Contact Add" />
-    <perm name="contact_edit" description="Service My Contact Edit" />
-    <perm name="contact_delete" description="Service My Contact Delete" />
-    <perm name="notify_view" description="Service My Notify View" />
-    <perm name="notify_add" description="Service My Notify Add" />
-    <perm name="notify_edit" description="Service My Notify Edit" />
-    <perm name="notify_delete" description="Service My Notify Delete" />
-    <perm name="subscription_view" description="Service My Subscription View" />
-    <perm name="subscription_add" description="Service My Subscription Add" />
-    <perm name="subscription_edit" description="Service My Subscription Edit" />
-    <perm name="subscription_delete" description="Service My Subscription Delete" />
+    <perm name="view" description="Service My View"/>
+    <perm name="friends_view" description="Service My Friends View"/>
+    <perm name="activities_view" description="Service My Activites View"/>
+    <perm name="settings_view" description="Service My Settings View"/>
+    <perm name="contact_view" description="Service My Contact View"/>
+    <perm name="contact_add" description="Service My Contact Add"/>
+    <perm name="contact_edit" description="Service My Contact Edit"/>
+    <perm name="contact_delete" description="Service My Contact Delete"/>
+    <perm name="notify_view" description="Service My Notify View"/>
+    <perm name="notify_add" description="Service My Notify Add"/>
+    <perm name="notify_edit" description="Service My Notify Edit"/>
+    <perm name="notify_delete" description="Service My Notify Delete"/>
+    <perm name="subscription_view" description="Service My Subscription View"/>
+    <perm name="subscription_add" description="Service My Subscription Add"/>
+    <perm name="subscription_edit" description="Service My Subscription Edit"/>
+    <perm name="subscription_delete" description="Service My Subscription Delete"/>
   </permissions>
   <library>
-    <dir name="Amun">
-      <dir name="Service">
+    <dir name="AmunService">
         <dir name="My">
-          <file name="Activity.php" md5="1b9e8c7ebbccfa9a6f5a4e6690a9f348"/>
-          <file name="Attempt.php" md5="546ed483bd0e3c32c72f39643e3e7ed4"/>
-          <dir name="Contact">
-            <dir name="Filter">
-              <file name="Status.php" md5="59ea5f84c843742b27b18a34907e3710"/>
-              <file name="Type.php" md5="7c05ee154b2eed19eeeb8b6adba29af7"/>
-            </dir>
-            <file name="Form.php" md5="bb25e814ec174f66588e324973f343f9"/>
-            <file name="Handler.php" md5="4c4f881dbede8e5b65d8c8f66196fe12"/>
-            <file name="Table.php" md5="6750f1e6aff8f6eff795185561cb4e07"/>
-          </dir>
-          <file name="Contact.php" md5="bd447f3465f9b576d4f22a8b85c72ce8"/>
-          <file name="Credentials.php" md5="df55e296145b1c03c6030706240436fc"/>
-          <file name="FriendsAbstract.php" md5="31eb3b9093cac974c27edc5bd2a4a93b"/>
-          <file name="MyAbstract.php" md5="7aca81b597f1278f1caeacbdc428b5e4"/>
-          <dir name="Notify">
-            <dir name="Filter">
-              <file name="Status.php" md5="bf66c679ae9a6883aea3b055ac1e1f61"/>
-            </dir>
-            <file name="Form.php" md5="ebe4e26fe46e4edb0d9ffb6171d9a916"/>
-            <file name="Handler.php" md5="2a2f404906e1bbd2335c1999de475c61"/>
-            <dir name="Service">
-              <file name="Table.php" md5="dd8fc2a3d3f5669f70866b1e305955a7"/>
-            </dir>
-            <file name="Table.php" md5="8d47497b47638ac4e027c18a18a4d41d"/>
-          </dir>
-          <file name="Notify.php" md5="e1d57a3a0091c79059bfe84f614a4569"/>
-          <file name="People.php" md5="e86b1500b5d8d734483be0643f0ef2ec"/>
-          <file name="SettingsAbstract.php" md5="b675e8f23d8fb3f9e589d630a37eab0f"/>
-          <dir name="Subscription">
-            <file name="Handler.php" md5="d86c6a77c1876885508c18828e63a3e6"/>
-            <file name="Table.php" md5="358a0b82a00e37df3dc04f14700810c8"/>
-          </dir>
-          <file name="Subscription.php" md5="d186d864ead6ff1bc1bbf857480c1452"/>
+            <include />
         </dir>
-      </dir>
     </dir>
   </library>
   <database>

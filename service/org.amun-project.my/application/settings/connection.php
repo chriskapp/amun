@@ -39,23 +39,19 @@ class connection extends Amun_Service_My_SettingsAbstract
 	{
 		parent::onLoad();
 
-
 		// add path
 		$this->path->add('Settings', $this->page->url . '/settings');
 		$this->path->add('Connection', $this->page->url . '/settings/connection');
-
 
 		// load allowed applications
 		$connections = $this->getConnections();
 
 		$this->template->assign('connections', $connections);
 
-
 		// form url
 		$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/system/connect/access';
 
 		$this->template->assign('accessUrl', $url);
-
 
 		// template
 		$this->htmlCss->add('my');
@@ -67,9 +63,9 @@ class connection extends Amun_Service_My_SettingsAbstract
 
 	public function getConnections()
 	{
-		$select = Amun_Sql_Table_Registry::get('System_Connect_Access')
+		$select = Amun_Sql_Table_Registry::get('Core_System_Connect_Access')
 			->select(array('id', 'returnTo', 'allowed', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('id', 'name'), 'author')
 			)
 			->where('userId', '=', $this->user->id);

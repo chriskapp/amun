@@ -37,21 +37,17 @@ class index extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
-		if($this->user->hasRight('service_page_view'))
+		if($this->service->hasViewRight())
 		{
 			// load page
 			$recordPage = $this->getPage();
 
 			$this->template->assign('recordPage', $recordPage);
 
-
 			// options
-			$options = new Amun_Option(__CLASS__, $this->registry, $this->user, $this->page);
-			$options->add('service_page_edit', 'Edit', $this->page->url . '/edit' . (!empty($recordPage) ? '?id=' . $recordPage->id : ''));
-			$options->load(array($this->page));
-
-			$this->template->assign('options', $options);
-
+			$this->setOptions(array(
+				array('edit', 'Edit', $this->page->url . '/edit' . (!empty($recordPage) ? '?id=' . $recordPage->id : ''))
+			));
 
 			// template
 			$this->htmlCss->add('page');
@@ -68,9 +64,9 @@ class index extends Amun_Module_ApplicationAbstract
 
 	private function getPage()
 	{
-		return Amun_Sql_Table_Registry::get('Service_Page')
+		return Amun_Sql_Table_Registry::get('Page')
 			->select(array('id', 'content', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('name', 'profileUrl'), 'author')
 			)
 			->where('pageId', '=', $this->page->id)

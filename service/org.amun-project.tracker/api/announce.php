@@ -89,7 +89,7 @@ class announce extends Amun_Module_DefaultAbstract
 
 			// check whether hash exists
 			$con     = new PSX_Sql_Condition(array('infoHash', '=', $infoHash));
-			$torrent = Amun_Sql_Table_Registry::get('Service_Tracker')->getRow(array('id', 'completed'), $con);
+			$torrent = Amun_Sql_Table_Registry::get('Tracker')->getRow(array('id', 'completed'), $con);
 
 			if(empty($torrent))
 			{
@@ -190,7 +190,7 @@ class announce extends Amun_Module_DefaultAbstract
 		$con->add('infoHash', '=', $infoHash);
 		$con->add('ip', '!=', $ip);
 
-		$result  = Amun_Sql_Table_Registry::get('Service_Tracker_Peer')->getAll(array('peer_id', 'ip', 'port', 'status'), $con, 'priority', PSX_Sql::SORT_DESC, 0, $numwant);
+		$result  = Amun_Sql_Table_Registry::get('Tracker_Peer')->getAll(array('peer_id', 'ip', 'port', 'status'), $con, 'priority', PSX_Sql::SORT_DESC, 0, $numwant);
 		$peers   = array();
 		$seeder  = 0;
 		$leecher = 0;
@@ -261,7 +261,7 @@ class announce extends Amun_Module_DefaultAbstract
 		$con->add('infoHash', '=', $infoHash);
 		$con->add('date', '<', $date->format(PSX_Time::SQL));
 
-		Amun_Sql_Table_Registry::get('Service_Tracker_Peer')->delete($con);
+		Amun_Sql_Table_Registry::get('Tracker_Peer')->delete($con);
 	}
 }
 

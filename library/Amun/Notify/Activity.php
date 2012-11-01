@@ -38,17 +38,17 @@ class Amun_Notify_Activity extends Amun_NotifyAbstract
 	{
 		switch(true)
 		{
-			case $record instanceof Amun_User_Activity:
+			case $record instanceof AmunService_Core_User_Activity_Record:
 
 				// nothing here
 				break;
 
-			case $record instanceof Amun_User_Account:
+			case $record instanceof AmunService_Core_User_Account_Record:
 
 				$this->handleUserAccount($type, $record);
 				break;
 
-			case $record instanceof Amun_User_Friend:
+			case $record instanceof AmunService_Core_User_Friend_Record:
 
 				$this->handleUserFriend($type, $record);
 				break;
@@ -68,13 +68,13 @@ class Amun_Notify_Activity extends Amun_NotifyAbstract
 			$template = $this->applyTemplate($type, $record);
 
 			// insert activity
-			$activity          = Amun_Sql_Table_Registry::get('User_Activity')->getRecord();
+			$activity          = Amun_Sql_Table_Registry::get('Core_User_Activity')->getRecord();
 			$activity->refId   = $record->id;
 			$activity->table   = $this->table->getName();
 			$activity->verb    = $template['verb'];
 			$activity->summary = $template['summary'];
 
-			$handler = new Amun_User_Activity_Handler(new Amun_User($record->id, $this->registry));
+			$handler = new AmunService_Core_User_Activity_Handler(new Amun_User($record->id, $this->registry));
 			$handler->create($activity);
 		}
 	}
@@ -85,30 +85,30 @@ class Amun_Notify_Activity extends Amun_NotifyAbstract
 		{
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-			if($record->status == Amun_User_Friend::REQUEST)
+			if($record->status == AmunService_Core_User_Friend_Record::REQUEST)
 			{
 
 			}
-			else if($record->status == Amun_User_Friend::NORMAL)
+			else if($record->status == AmunService_Core_User_Friend_Record::NORMAL)
 			{
 				// insert activity for user who has accepted the friend request
-				$activity          = Amun_Sql_Table_Registry::get('User_Activity')->getRecord();
+				$activity          = Amun_Sql_Table_Registry::get('Core_User_Activity')->getRecord();
 				$activity->refId   = $record->id;
 				$activity->table   = $this->table->getName();
 				$activity->verb    = 'make-friend';
 				$activity->summary = '<a href="' . $record->getUser()->profileUrl . '">' . $record->getUser()->name . '</a> and <a href="' . $record->getFriend()->profileUrl . '">' . $record->getFriend()->name . '</a> are now friends';
 
-				$handler = new Amun_User_Activity_Handler($this->user);
+				$handler = new AmunService_Core_User_Activity_Handler($this->user);
 				$handler->create($activity);
 
 				// insert activity for user who has requested the friendship
-				$activity          = Amun_Sql_Table_Registry::get('User_Activity')->getRecord();
+				$activity          = Amun_Sql_Table_Registry::get('Core_User_Activity')->getRecord();
 				$activity->refId   = $record->id;
 				$activity->table   = $this->table->getName();
 				$activity->verb    = 'make-friend';
 				$activity->summary = '<a href="' . $record->getFriend()->profileUrl . '">' . $record->getFriend()->name . '</a> and <a href="' . $record->getUser()->profileUrl . '">' . $record->getUser()->name . '</a> are now friends';
 
-				$handler = new Amun_User_Activity_Handler(new Amun_User($record->getFriend()->id, $this->registry));
+				$handler = new AmunService_Core_User_Activity_Handler(new Amun_User($record->getFriend()->id, $this->registry));
 				$handler->create($activity);
 			}
 		}
@@ -120,13 +120,13 @@ class Amun_Notify_Activity extends Amun_NotifyAbstract
 		$template = $this->applyTemplate($type, $record);
 
 		// insert activity
-		$activity          = Amun_Sql_Table_Registry::get('User_Activity')->getRecord();
+		$activity          = Amun_Sql_Table_Registry::get('Core_User_Activity')->getRecord();
 		$activity->refId   = $record->id;
 		$activity->table   = $this->table->getName();
 		$activity->verb    = $template['verb'];
 		$activity->summary = $template['summary'];
 
-		$handler = new Amun_User_Activity_Handler($this->user);
+		$handler = new AmunService_Core_User_Activity_Handler($this->user);
 		$handler->create($activity);
 	}
 
@@ -141,7 +141,7 @@ SELECT
 	`template`.`path`,
 	`template`.`summary`
 
-	FROM {$this->registry['table.user_activity_template']} `template`
+	FROM {$this->registry['table.core_user_activity_template']} `template`
 
 		WHERE `template`.`table` = ?
 
@@ -240,14 +240,14 @@ SQL;
 		if(!empty($activityId))
 		{
 			$sql = <<<SQL
-INSERT INTO {$this->registry['table.user_activity_receiver']}
+INSERT INTO {$this->registry['table.core_user_activity_receiver']}
 	(`activityId`, `receiverId`, `date`)
 	SELECT
 		{$activityId} AS `activityId`,
 		`friendId`    AS `receiverId`,
 		NOW()         AS `date`
 	FROM
-		{$this->registry['table.user_friend']} `friend`
+		{$this->registry['table.core_user_friend']} `friend`
 	WHERE
 		`friend`.`userId` = {$this->user->id}
 SQL;

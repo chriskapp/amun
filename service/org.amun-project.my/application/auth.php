@@ -47,7 +47,6 @@ class auth extends Amun_Module_ApplicationAbstract
 			throw new Amun_Exception($this->validate->getLastError());
 		}
 
-
 		// check whether user is logged in if not redirect them to
 		// the login form
 		if(!$this->session->has('amun_id'))
@@ -59,19 +58,17 @@ class auth extends Amun_Module_ApplicationAbstract
 			exit;
 		}
 
-
-		if($this->user->hasRight('service_my_view'))
+		if($this->service->hasViewRight())
 		{
 			// add path
 			$this->path->add('Auth', $this->page->url . '/auth');
-
 
 			try
 			{
 				if(!empty($oauthToken))
 				{
 					// check token
-					$row = Amun_Sql_Table_Registry::get('System_Api_Request')
+					$row = Amun_Sql_Table_Registry::get('Core_System_Api_Request')
 						->select(array('apiId', 'callback', 'token', 'expire', 'date'))
 						->where('token', '=', $oauthToken)
 						->getRow();
@@ -80,10 +77,8 @@ class auth extends Amun_Module_ApplicationAbstract
 					{
 						$this->template->assign('token', $row['token']);
 
-
 						// assign api id
 						$this->apiId = $row['apiId'];
-
 
 						// check expire
 						$now  = new DateTime('NOW', $this->registry['core.default_timezone']);
@@ -94,16 +89,14 @@ class auth extends Amun_Module_ApplicationAbstract
 						{
 							$con = new PSX_Sql_Condition(array('token', '=', $oauthToken));
 
-							Amun_Sql_Table_Registry::get('System_Api_Request')->delete($con);
+							Amun_Sql_Table_Registry::get('Core_System_Api_Request')->delete($con);
 
 							throw new Amun_Exception('The token is expired');
 						}
 
-
 						// assign token and callback for later use
 						$token    = $row['token'];
 						$callback = $row['callback'];
-
 
 						// parse callback
 						if($callback != 'oob')
@@ -125,9 +118,8 @@ class auth extends Amun_Module_ApplicationAbstract
 						throw new Amun_Exception('The consumer provide an invalid token');
 					}
 
-
 					// request consumer informations
-					$row = Amun_Sql_Table_Registry::get('System_Api')
+					$row = Amun_Sql_Table_Registry::get('Core_System_Api')
 						->select(array('url', 'title', 'description'))
 						->where('id', '=', $this->apiId)
 						->getRow();
@@ -142,9 +134,8 @@ class auth extends Amun_Module_ApplicationAbstract
 						throw new Amun_Exception('Request is not assigned to an user');
 					}
 
-
 					// check whether access is already allowed
-					$allowed = Amun_Sql_Table_Registry::get('System_Api_Access')
+					$allowed = Amun_Sql_Table_Registry::get('Core_System_Api_Access')
 						->select(array('allowed'))
 						->where('apiId', '=', $this->apiId)
 						->where('userId', '=', $this->user->id)
@@ -165,7 +156,6 @@ class auth extends Amun_Module_ApplicationAbstract
 				$this->template->assign('error', $e->getMessage());
 			}
 
-
 			// template
 			$this->htmlCss->add('my');
 
@@ -183,7 +173,7 @@ class auth extends Amun_Module_ApplicationAbstract
 
 		if($token !== false)
 		{
-			$row = Amun_Sql_Table_Registry::get('System_Api_Request')
+			$row = Amun_Sql_Table_Registry::get('Core_System_Api_Request')
 				->select(array('status', 'token', 'callback'))
 				->where('token', '=', $token)
 				->getRow();
@@ -223,7 +213,6 @@ class auth extends Amun_Module_ApplicationAbstract
 		// generate verifier
 		$verifier = Amun_Security::generateToken(32);
 
-
 		// insert or update access
 		$now = new DateTime('NOW', $this->registry['core.default_timezone']);
 
@@ -236,7 +225,6 @@ class auth extends Amun_Module_ApplicationAbstract
 
 		));
 
-
 		// approve token
 		$con = new PSX_Sql_Condition(array('token', '=', $token));
 
@@ -247,7 +235,6 @@ class auth extends Amun_Module_ApplicationAbstract
 			'verifier' => $verifier,
 
 		), $con);
-
 
 		// redirect if callback available
 		if($callback != 'oob')
@@ -281,12 +268,10 @@ class auth extends Amun_Module_ApplicationAbstract
 
 		));
 
-
 		// delete token
 		$con = new PSX_Sql_Condition(array('token', '=', $token));
 
 		$this->sql->delete($this->registry['table.system_api_request'], $con);
-
 
 		// redirect if callback available
 		if($callback != 'oob')
@@ -294,18 +279,15 @@ class auth extends Amun_Module_ApplicationAbstract
 			$url = new PSX_Url($callback);
 
 			// here we can inform the consumer that the request has been denied
-			// the specification discribes no method ... so we invent something
 			$url->addParam('oauth_token', $token);
 			$url->addParam('x_oauth_error', 'request+denied');
 
 			header('Location: ' . strval($url));
-
 			exit;
 		}
 		else
 		{
 			header('Location: ' . $this->config['psx_url']);
-
 			exit;
 		}
 	}

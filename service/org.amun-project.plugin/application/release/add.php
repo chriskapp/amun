@@ -46,7 +46,7 @@ class add extends Amun_Module_ApplicationAbstract
 
 
 			// plugin
-			$plugin = Amun_Sql_Table_Registry::get('Service_Plugin')->getRecord($id);
+			$plugin = Amun_Sql_Table_Registry::get('Plugin')->getRecord($id);
 
 
 			// add path

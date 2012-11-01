@@ -39,7 +39,7 @@ class index extends Amun_Module_RestAbstract
 	{
 		return $this->getTable()
 			->select(array('id', 'globalId', 'userId', 'title', 'text', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('name', 'profileUrl'), 'author')
 			);
 	}
@@ -50,7 +50,7 @@ class index extends Amun_Module_RestAbstract
 		{
 			case PSX_Data_WriterInterface::ATOM:
 
-				$updated = $this->sql->getField('SELECT `date` FROM ' . $this->registry['table.service_comment'] . ' ORDER BY `date` DESC LIMIT 1');
+				$updated = $this->sql->getField('SELECT `date` FROM ' . $this->registry['table.comment'] . ' ORDER BY `date` DESC LIMIT 1');
 
 				$title   = 'Comment';
 				$id      = 'urn:uuid:' . $this->base->getUUID('service:comment');

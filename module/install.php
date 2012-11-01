@@ -34,6 +34,7 @@
 class install extends PSX_Module_ViewAbstract
 {
 	protected $services = array(
+        'org.amun-project.core', 
 		'org.amun-project.my', 
 		'org.amun-project.profile', 
 		'org.amun-project.page', 
@@ -85,7 +86,7 @@ class install extends PSX_Module_ViewAbstract
 		try
 		{
 			$con         = new PSX_Sql_Condition(array('name', '=', 'core.install_date'));
-			$installDate = $this->sql->select($this->registry['table.system_registry'], array('value'), $con, PSX_Sql::SELECT_FIELD);
+			$installDate = $this->sql->select($this->registry['table.core_system_registry'], array('value'), $con, PSX_Sql::SELECT_FIELD);
 
 			if(!empty($installDate))
 			{
@@ -176,7 +177,7 @@ class install extends PSX_Module_ViewAbstract
 		{
 			// tables
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.content_api']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_content_api']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `serviceId` int(10) NOT NULL,
   `priority` int(10) NOT NULL DEFAULT '0',
@@ -187,7 +188,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.content_api']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.content_api_type']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_content_api_type']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `apiId` int(10) NOT NULL,
   `type` varchar(512) NOT NULL,
@@ -197,7 +198,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.content_api_type']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.content_gadget']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_content_gadget']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `globalId` varchar(36) NOT NULL,
   `name` varchar(32) NOT NULL,
@@ -213,7 +214,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.content_gadget']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.content_media']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_content_media']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `globalId` varchar(36) NOT NULL,
   `rightId` int(10) DEFAULT NULL,
@@ -230,7 +231,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.content_media']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.content_page']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_content_page']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `parentId` int(10) NOT NULL,
   `globalId` varchar(36) NOT NULL,
@@ -253,7 +254,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.content_page']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.content_page_gadget']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_content_page_gadget']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `pageId` int(10) NOT NULL,
   `gadgetId` int(10) NOT NULL,
@@ -264,7 +265,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.content_page_gadget']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.content_page_option']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_content_page_option']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `optionId` int(10) NOT NULL,
   `rightId` int(10) NOT NULL,
@@ -277,7 +278,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.content_page_option']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.content_page_right']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_content_page_right']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `pageId` int(10) NOT NULL,
   `groupId` int(10) NOT NULL,
@@ -288,7 +289,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.content_page_right']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.content_service']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_content_service']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `status` int(10) NOT NULL,
   `source` varchar(128) NOT NULL,
@@ -307,7 +308,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.content_service']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.content_service_option']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_content_service_option']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `serviceId` int(10) NOT NULL,
   `name` varchar(64) NOT NULL,
@@ -316,7 +317,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.content_service_option']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_api']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_system_api']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `status` int(10) NOT NULL,
   `name` varchar(64) NOT NULL,
@@ -334,7 +335,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_api']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_api_access']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_system_api_access']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `apiId` int(10) NOT NULL,
   `userId` int(10) NOT NULL,
@@ -346,7 +347,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_api_access']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_api_request']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_system_api_request']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `apiId` int(10) NOT NULL,
   `userId` int(10) NOT NULL,
@@ -366,7 +367,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_api_request']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_approval']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_system_approval']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `table` varchar(64) NOT NULL,
   `field` varchar(32) NOT NULL DEFAULT '',
@@ -376,7 +377,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_approval']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_approval_record']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_system_approval_record']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `userId` int(10) NOT NULL,
   `type` enum('INSERT','UPDATE','DELETE') NOT NULL,
@@ -388,7 +389,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_approval_record']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_assoc']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_system_assoc']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `opEndpoint` varchar(256) NOT NULL,
   `assocHandle` varchar(512) NOT NULL,
@@ -402,7 +403,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_assoc']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_connect']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_system_connect']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `userId` int(10) NOT NULL,
   `assocId` int(10) NOT NULL,
@@ -418,7 +419,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_connect']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_connect_access']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_system_connect_access']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `userId` int(10) NOT NULL,
   `returnTo` varchar(256) NOT NULL,
@@ -430,7 +431,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_connect_access']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_connect_assoc']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_system_connect_assoc']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `assocHandle` varchar(256) NOT NULL,
   `assocType` enum('HMAC-SHA1','HMAC-SHA256') NOT NULL,
@@ -444,7 +445,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_connect_assoc']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_country']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_system_country']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `title` varchar(64) NOT NULL,
   `code` varchar(2) NOT NULL,
@@ -455,7 +456,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_country']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_host']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_system_host']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `status` int(10) NOT NULL,
   `name` varchar(256) NOT NULL,
@@ -470,7 +471,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_host']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_host_request']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_system_host_request']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `hostId` int(10) NOT NULL,
   `userId` int(10) NOT NULL,
@@ -484,7 +485,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_host_request']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_log']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_system_log']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `userId` int(10) NOT NULL,
   `refId` int(10) NOT NULL,
@@ -496,7 +497,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_log']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_mail']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_system_mail']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   `from` varchar(64) NOT NULL,
@@ -510,7 +511,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_mail']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_notify']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_system_notify']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `priority` int(10) NOT NULL DEFAULT '0',
   `table` varchar(64) NOT NULL,
@@ -520,7 +521,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_notify']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_registry']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_system_registry']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
   `type` enum('STRING','INTEGER','FLOAT','BOOLEAN') NOT NULL,
@@ -532,7 +533,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.system_registry']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.user_account']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_user_account']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `globalId` varchar(36) NOT NULL,
   `groupId` int(10) NOT NULL,
@@ -563,7 +564,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.user_account']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.user_activity']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_user_activity']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `globalId` varchar(36) NOT NULL,
   `parentId` int(10) NOT NULL DEFAULT '0',
@@ -580,7 +581,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.user_activity']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.user_activity_receiver']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_user_activity_receiver']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `status` int(10) NOT NULL DEFAULT '1',
   `activityId` int(10) NOT NULL,
@@ -591,7 +592,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.user_activity_receiver']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.user_activity_template']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_user_activity_template']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `type` enum('INSERT','UPDATE','DELETE') NOT NULL,
   `verb` enum('post','add','cancel','checkin','delete','favorite','follow','give','ignore','invite','join','leave','like','make-friend','play','receive','remove','remove-friend','request-friend','rsvp-maybe','rsvp-no','rsvp-yes','save','share','stop-following','tag','unfavorite','unlike','unsave','update') NOT NULL,
@@ -604,7 +605,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.user_activity_template']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.user_friend']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_user_friend']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `status` int(10) NOT NULL,
   `groupId` int(10) NOT NULL DEFAULT '0',
@@ -617,7 +618,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.user_friend']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.user_friend_group']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_user_friend_group']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `userId` int(10) NOT NULL,
   `title` varchar(64) NOT NULL,
@@ -627,7 +628,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.user_friend_group']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.user_group']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_user_group']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `title` varchar(32) NOT NULL,
   `date` datetime NOT NULL,
@@ -636,7 +637,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.user_group']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.user_group_right']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_user_group_right']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `groupId` int(10) NOT NULL,
   `rightId` int(10) NOT NULL,
@@ -646,7 +647,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.user_group_right']}` (
 SQL;
 
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.user_right']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_user_right']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
   `description` varchar(128) NOT NULL,
@@ -679,7 +680,7 @@ SQL;
 	{
 		try
 		{
-			$query = <<<SQL
+            $query = <<<SQL
 INSERT INTO `{$this->registry['table.system_country']}` (`title`, `code`, `longitude`, `latitude`) VALUES
 ('Undisclosed', '', '', ''),
 ('Afghanistan', 'AF', '33.0000', '65.0000'),
@@ -922,258 +923,20 @@ INSERT INTO `{$this->registry['table.system_country']}` (`title`, `code`, `longi
 ('Zimbabwe', 'ZW', '-20.0000', '30.0000');
 SQL;
 
-			$count = $this->sql->count($this->registry['table.system_country']);
+            $count = $this->sql->count($this->registry['table.core_system_country']);
 
-			if($count == 0)
-			{
-				$this->sql->query($query);
-			}
-
-
-			$query = <<<SQL
-INSERT INTO `{$this->registry['table.user_right']}` (`name`, `description`) VALUES
-('content_gadget_view', 'Content Gadget view'),
-('content_gadget_add', 'Content Gadget add'),
-('content_gadget_edit', 'Content Gadget edit'),
-('content_gadget_delete', 'Content Gadget delete'),
-('content_media_view', 'Content Media view'),
-('content_media_add', 'Content Media add'),
-('content_media_edit', 'Content Media edit'),
-('content_media_delete', 'Content Media delete'),
-('content_page_view', 'Content Page view'),
-('content_page_add', 'Content Page add'),
-('content_page_edit', 'Content Page edit'),
-('content_page_delete', 'Content Page delete'),
-('content_page_gadget_view', 'Content Page Gadget view'),
-('content_page_gadget_add', 'Content Page Gadget add'),
-('content_page_gadget_edit', 'Content Page Gadget edit'),
-('content_page_gadget_delete', 'Content Page Gadget delete'),
-('content_page_option_view', 'Content Page Option view'),
-('content_page_option_add', 'Content Page Option add'),
-('content_page_option_edit', 'Content Page Option edit'),
-('content_page_option_delete', 'Content Page Option delete'),
-('content_page_right_view', 'Content Page Right view'),
-('content_page_right_add', 'Content Page Right add'),
-('content_page_right_edit', 'Content Page Right edit'),
-('content_page_right_delete', 'Content Page Right delete'),
-('content_service_view', 'Content Service view'),
-('content_service_add', 'Content Service add'),
-('content_service_edit', 'Content Service edit'),
-('content_service_delete', 'Content Service delete'),
-('system_api_view', 'System API view'),
-('system_api_add', 'System API add'),
-('system_api_edit', 'System API edit'),
-('system_api_delete', 'System API delete'),
-('system_api_access_view', 'System API Access view'),
-('system_api_access_add', 'System API Access add'),
-('system_api_access_edit', 'System API Access edit'),
-('system_api_access_delete', 'System API Access delete'),
-('system_api_request_view', 'System API Request view'),
-('system_api_request_add', 'System API Request add'),
-('system_api_request_edit', 'System API Request edit'),
-('system_api_request_delete', 'System API Request delete'),
-('system_approval_view', 'System Approval view'),
-('system_approval_add', 'System Approval add'),
-('system_approval_edit', 'System Approval edit'),
-('system_approval_delete', 'System Approval delete'),
-('system_approval_record_view', 'System Approval Record view'),
-('system_approval_record_add', 'System Approval Record add'),
-('system_approval_record_edit', 'System Approval Record edit'),
-('system_approval_record_delete', 'System Approval Record delete'),
-('system_connect_view', 'System Connect view'),
-('system_connect_add', 'System Connect add'),
-('system_connect_edit', 'System Connect edit'),
-('system_connect_delete', 'System Connect delete'),
-('system_connect_access_view', 'System Connect Access view'),
-('system_connect_access_add', 'System Connect Access add'),
-('system_connect_access_edit', 'System Connect Access edit'),
-('system_connect_access_delete', 'System Connect Access delete'),
-('system_country_view', 'System Country view'),
-('system_country_add', 'System Country add'),
-('system_country_edit', 'System Country edit'),
-('system_country_delete', 'System Country delete'),
-('system_host_view', 'System Host view'),
-('system_host_add', 'System Host add'),
-('system_host_edit', 'System Host edit'),
-('system_host_delete', 'System Host delete'),
-('system_log_view', 'System Log view'),
-('system_log_add', 'System Log add'),
-('system_log_edit', 'System Log edit'),
-('system_log_delete', 'System Log delete'),
-('system_mail_view', 'System Mail view'),
-('system_mail_add', 'System Mail add'),
-('system_mail_edit', 'System Mail edit'),
-('system_mail_delete', 'System Mail delete'),
-('system_registry_view', 'System Registry view'),
-('system_registry_add', 'System Registry add'),
-('system_registry_edit', 'System Registry edit'),
-('system_registry_delete', 'System Registry delete'),
-('user_account_view', 'User Account view'),
-('user_account_add', 'User Account add'),
-('user_account_edit', 'User Account edit'),
-('user_account_delete', 'User Account delete'),
-('user_activity_view', 'User Activity view'),
-('user_activity_add', 'User Activity add'),
-('user_activity_edit', 'User Activity edit'),
-('user_activity_delete', 'User Activity delete'),
-('user_activity_receiver_view', 'User Activity Receiver view'),
-('user_activity_receiver_add', 'User Activity Receiver add'),
-('user_activity_receiver_edit', 'User Activity Receiver edit'),
-('user_activity_receiver_delete', 'User Activity Receiver delete'),
-('user_friend_view', 'User Friend view'),
-('user_friend_add', 'User Friend add'),
-('user_friend_edit', 'User Friend edit'),
-('user_friend_delete', 'User Friend delete'),
-('user_friend_group_view', 'User Friend Group view'),
-('user_friend_group_add', 'User Friend Group add'),
-('user_friend_group_edit', 'User Friend Group edit'),
-('user_friend_group_delete', 'User Friend Group delete'),
-('user_group_view', 'User Group view'),
-('user_group_add', 'User Group add'),
-('user_group_edit', 'User Group edit'),
-('user_group_delete', 'User Group delete'),
-('user_group_right_view', 'User Group Right view'),
-('user_group_right_add', 'User Group Right add'),
-('user_group_right_edit', 'User Group Right edit'),
-('user_group_right_delete', 'User Group Right delete'),
-('user_right_view', 'User Right view'),
-('user_right_add', 'User Right add'),
-('user_right_edit', 'User Right edit'),
-('user_right_delete', 'User Right delete')
-SQL;
-
-			$count = $this->sql->count($this->registry['table.user_right']);
-
-			if($count == 0)
-			{
-				$this->sql->query($query);
-			}
+            if($count == 0)
+            {
+                $this->sql->query($query);
+            }
 
 
 			$query = <<<SQL
-INSERT INTO `{$this->registry['table.content_api']}` (`id`, `endpoint`) VALUES
-(1, 'auth/request'),
-(2, 'auth/authorization'),
-(3, 'auth/access'),
-(4, 'content/gadget'),
-(5, 'content/media'),
-(6, 'content/page'),
-(7, 'content/page/gadget'),
-(8, 'content/page/option'),
-(9, 'content/page/right'),
-(10, 'content/service'),
-(11, 'system/api'),
-(12, 'system/api/access'),
-(13, 'system/api/request'),
-(14, 'system/approval'),
-(15, 'system/approval/record'),
-(16, 'system/connect'),
-(17, 'system/connect/access'),
-(18, 'system/connect/assoc'),
-(19, 'system/country'),
-(20, 'system/host'),
-(21, 'system/log'),
-(22, 'system/mail'),
-(23, 'system/registry'),
-(24, 'user/account'),
-(25, 'user/activity'),
-(26, 'user/activity/message'),
-(27, 'user/friend'),
-(28, 'user/friend/relation'),
-(29, 'user/friend/group'),
-(30, 'user/group'),
-(31, 'user/group/right'),
-(32, 'user/right')
-SQL;
-
-			$count = $this->sql->count($this->registry['table.content_api']);
-
-			if($count == 0)
-			{
-				$this->sql->query($query);
-			}
-
-
-			$query = <<<SQL
-INSERT INTO `{$this->registry['table.content_api_type']}` (`apiId`, `type`) VALUES
-(1, 'http://oauth.net/core/1.0/endpoint/request'),
-(1, 'http://ns.amun-project.org/2011/amun/auth/request'),
-(2, 'http://oauth.net/core/1.0/endpoint/authorize'),
-(2, 'http://ns.amun-project.org/2011/amun/auth/authorization'),
-(3, 'http://oauth.net/core/1.0/endpoint/access'),
-(3, 'http://ns.amun-project.org/2011/amun/auth/access'),
-(4, 'http://ns.amun-project.org/2011/amun/content/gadget'),
-(4, 'http://ns.amun-project.org/2011/amun/data/1.0'),
-(5, 'http://ns.amun-project.org/2011/amun/content/media'),
-(5, 'http://ns.amun-project.org/2011/amun/data/1.0'),
-(6, 'http://ns.amun-project.org/2011/amun/content/page'),
-(6, 'http://ns.amun-project.org/2011/amun/data/1.0'),
-(7, 'http://ns.amun-project.org/2011/amun/content/page/gadget'),
-(7, 'http://ns.amun-project.org/2011/amun/data/1.0'),
-(8, 'http://ns.amun-project.org/2011/amun/content/page/option'),
-(8, 'http://ns.amun-project.org/2011/amun/data/1.0'),
-(9, 'http://ns.amun-project.org/2011/amun/content/page/right'),
-(9, 'http://ns.amun-project.org/2011/amun/data/1.0'),
-(10, 'http://ns.amun-project.org/2011/amun/content/service'),
-(10, 'http://ns.amun-project.org/2011/amun/data/1.0'),
-(11, 'http://ns.amun-project.org/2011/amun/system/api'),
-(11, 'http://ns.amun-project.org/2011/amun/data/1.0'),
-(12, 'http://ns.amun-project.org/2011/amun/system/api/access'),
-(12, 'http://ns.amun-project.org/2011/amun/data/1.0'),
-(13, 'http://ns.amun-project.org/2011/amun/system/api/request'),
-(13, 'http://ns.amun-project.org/2011/amun/data/1.0'),
-(14, 'http://ns.amun-project.org/2011/amun/system/approval'),
-(14, 'http://ns.amun-project.org/2011/amun/data/1.0'),
-(15, 'http://ns.amun-project.org/2011/amun/system/approval/record'),
-(15, 'http://ns.amun-project.org/2011/amun/data/1.0'),
-(16, 'http://ns.amun-project.org/2011/amun/system/connect'),
-(16, 'http://ns.amun-project.org/2011/amun/data/1.0'),
-(17, 'http://ns.amun-project.org/2011/amun/system/connect/access'),
-(17, 'http://ns.amun-project.org/2011/amun/data/1.0'),
-(18, 'http://ns.amun-project.org/2011/amun/system/connect/assoc'),
-(18, 'http://ns.amun-project.org/2011/amun/data/1.0'),
-(19, 'http://ns.amun-project.org/2011/amun/system/country'),
-(19, 'http://ns.amun-project.org/2011/amun/data/1.0'),
-(20, 'http://ns.amun-project.org/2011/amun/system/host'),
-(20, 'http://ns.amun-project.org/2011/amun/data/1.0'),
-(21, 'http://ns.amun-project.org/2011/amun/system/log'),
-(21, 'http://ns.amun-project.org/2011/amun/data/1.0'),
-(22, 'http://ns.amun-project.org/2011/amun/system/mail'),
-(22, 'http://ns.amun-project.org/2011/amun/data/1.0'),
-(23, 'http://ns.amun-project.org/2011/amun/system/registry'),
-(23, 'http://ns.amun-project.org/2011/amun/data/1.0'),
-(24, 'http://ns.amun-project.org/2011/amun/user/account'),
-(24, 'http://ns.amun-project.org/2011/amun/data/1.0'),
-(25, 'http://ns.amun-project.org/2011/amun/user/activity'),
-(25, 'http://ns.amun-project.org/2011/amun/data/1.0'),
-(26, 'http://ns.amun-project.org/2012/amun/user/activity/message/1.0'),
-(27, 'http://ns.amun-project.org/2011/amun/user/friend'),
-(27, 'http://ns.amun-project.org/2011/amun/data/1.0'),
-(28, 'http://ns.amun-project.org/2011/amun/user/friend/relation/1.0'),
-(29, 'http://ns.amun-project.org/2011/amun/user/friend/group'),
-(29, 'http://ns.amun-project.org/2011/amun/data/1.0'),
-(30, 'http://ns.amun-project.org/2011/amun/user/group'),
-(30, 'http://ns.amun-project.org/2011/amun/data/1.0'),
-(31, 'http://ns.amun-project.org/2011/amun/user/group/right'),
-(31, 'http://ns.amun-project.org/2011/amun/data/1.0'),
-(32, 'http://ns.amun-project.org/2011/amun/user/right'),
-(32, 'http://ns.amun-project.org/2011/amun/data/1.0')
-SQL;
-
-			$count = $this->sql->count($this->registry['table.content_api_type']);
-
-			if($count == 0)
-			{
-				$this->sql->query($query);
-			}
-
-
-			$query = <<<SQL
-INSERT INTO `{$this->registry['table.user_activity_template']}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
+INSERT INTO `{$this->registry['table.core_user_activity_template']}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
 ('INSERT', 'add', 'amun_user_account', '', '<p><a href="{record.profileUrl}">{record.name}</a> has created an account</p>')
 SQL;
 
-			$count = $this->sql->count($this->registry['table.user_activity_template']);
+			$count = $this->sql->count($this->registry['table.core_user_activity_template']);
 
 			if($count == 0)
 			{
@@ -1182,7 +945,7 @@ SQL;
 
 
 			$query = <<<SQL
-INSERT INTO `{$this->registry['table.system_mail']}` (`name`, `from`, `subject`, `text`, `html`, `values`) VALUES
+INSERT INTO `{$this->registry['table.core_system_mail']}` (`name`, `from`, `subject`, `text`, `html`, `values`) VALUES
 ('INSTALL_SUCCESS', 'system@{$this->base->getHost()}', '{$this->base->getHost()} installation of Amun', 'Hello {account.name},
 
 you have successful installed Amun at {host.name}. In order to administer
@@ -1208,7 +971,7 @@ Consumer secret: {consumer.secret}</pre></p>
 </html>', 'host.name;account.name;consumer.key;consumer.secret')
 SQL;
 
-			$count = $this->sql->count($this->registry['table.system_mail']);
+			$count = $this->sql->count($this->registry['table.core_system_mail']);
 
 			if($count == 0)
 			{
@@ -1238,7 +1001,7 @@ SQL;
 			$title    = $this->post->title('string', array(new PSX_Filter_Length(3, 64), new PSX_Filter_Html()), 'title', 'Title');
 			$subTitle = $this->post->subTitle('string', array(new PSX_Filter_Length(0, 128), new PSX_Filter_Html()), 'subTitle', 'Sub Title');
 
-			$count = $this->sql->count($this->registry['table.system_registry']);
+			$count = $this->sql->count($this->registry['table.core_system_registry']);
 
 			if($count == 0)
 			{
@@ -1271,48 +1034,48 @@ SQL;
 
 					foreach($registry as $values)
 					{
-						$this->sql->insert($this->registry['table.system_registry'], array_combine($keys, $values));
+						$this->sql->insert($this->registry['table.core_system_registry'], array_combine($keys, $values));
 					}
 
 
 					// insert tables
 					$query = <<<SQL
-INSERT INTO `{$this->registry['table.system_registry']}` (`name`, `type`, `class`, `value`) VALUES
-('table.amun_content_api', 'STRING', NULL, '{$this->registry['table.content_api']}'),
-('table.amun_content_api_type', 'STRING', NULL, '{$this->registry['table.content_api_type']}'),
-('table.amun_content_gadget', 'STRING', NULL, '{$this->registry['table.content_gadget']}'),
-('table.amun_content_media', 'STRING', NULL, '{$this->registry['table.content_media']}'),
-('table.amun_content_page', 'STRING', NULL, '{$this->registry['table.content_page']}'),
-('table.amun_content_page_gadget', 'STRING', NULL, '{$this->registry['table.content_page_gadget']}'),
-('table.amun_content_page_option', 'STRING', NULL, '{$this->registry['table.content_page_option']}'),
-('table.amun_content_page_right', 'STRING', NULL, '{$this->registry['table.content_page_right']}'),
-('table.amun_content_service', 'STRING', NULL, '{$this->registry['table.content_service']}'),
-('table.amun_content_service_option', 'STRING', NULL, '{$this->registry['table.content_service_option']}'),
-('table.amun_system_api', 'STRING', NULL, '{$this->registry['table.system_api']}'),
-('table.amun_system_api_access', 'STRING', NULL, '{$this->registry['table.system_api_access']}'),
-('table.amun_system_api_request', 'STRING', NULL, '{$this->registry['table.system_api_request']}'),
-('table.amun_system_approval', 'STRING', NULL, '{$this->registry['table.system_approval']}'),
-('table.amun_system_approval_record', 'STRING', NULL, '{$this->registry['table.system_approval_record']}'),
-('table.amun_system_assoc', 'STRING', NULL, '{$this->registry['table.system_assoc']}'),
-('table.amun_system_connect', 'STRING', NULL, '{$this->registry['table.system_connect']}'),
-('table.amun_system_connect_access', 'STRING', NULL, '{$this->registry['table.system_connect_access']}'),
-('table.amun_system_connect_assoc', 'STRING', NULL, '{$this->registry['table.system_connect_assoc']}'),
-('table.amun_system_country', 'STRING', NULL, '{$this->registry['table.system_country']}'),
-('table.amun_system_host', 'STRING', NULL, '{$this->registry['table.system_host']}'),
-('table.amun_system_host_request', 'STRING', NULL, '{$this->registry['table.system_host_request']}'),
-('table.amun_system_log', 'STRING', NULL, '{$this->registry['table.system_log']}'),
-('table.amun_system_mail', 'STRING', NULL, '{$this->registry['table.system_mail']}'),
-('table.amun_system_notify', 'STRING', NULL, '{$this->registry['table.system_notify']}'),
-('table.amun_system_registry', 'STRING', NULL, '{$this->registry['table.system_registry']}'),
-('table.amun_user_account', 'STRING', NULL, '{$this->registry['table.user_account']}'),
-('table.amun_user_activity', 'STRING', NULL, '{$this->registry['table.user_activity']}'),
-('table.amun_user_activity_receiver', 'STRING', NULL, '{$this->registry['table.user_activity_receiver']}'),
-('table.amun_user_activity_template', 'STRING', NULL, '{$this->registry['table.user_activity_template']}'),
-('table.amun_user_friend', 'STRING', NULL, '{$this->registry['table.user_friend']}'),
-('table.amun_user_friend_group', 'STRING', NULL, '{$this->registry['table.user_friend_group']}'),
-('table.amun_user_group', 'STRING', NULL, '{$this->registry['table.user_group']}'),
-('table.amun_user_group_right', 'STRING', NULL, '{$this->registry['table.user_group_right']}'),
-('table.amun_user_right', 'STRING', NULL, '{$this->registry['table.user_right']}')
+INSERT INTO `{$this->registry['table.core_system_registry']}` (`name`, `type`, `class`, `value`) VALUES
+('table.core_content_api', 'STRING', NULL, '{$this->registry['table.core_content_api']}'),
+('table.core_content_api_type', 'STRING', NULL, '{$this->registry['table.core_content_api_type']}'),
+('table.core_content_gadget', 'STRING', NULL, '{$this->registry['table.core_content_gadget']}'),
+('table.core_content_media', 'STRING', NULL, '{$this->registry['table.core_content_media']}'),
+('table.core_content_page', 'STRING', NULL, '{$this->registry['table.core_content_page']}'),
+('table.core_content_page_gadget', 'STRING', NULL, '{$this->registry['table.core_content_page_gadget']}'),
+('table.core_content_page_option', 'STRING', NULL, '{$this->registry['table.core_content_page_option']}'),
+('table.core_content_page_right', 'STRING', NULL, '{$this->registry['table.core_content_page_right']}'),
+('table.core_content_service', 'STRING', NULL, '{$this->registry['table.core_content_service']}'),
+('table.core_content_service_option', 'STRING', NULL, '{$this->registry['table.core_content_service_option']}'),
+('table.core_system_api', 'STRING', NULL, '{$this->registry['table.core_system_api']}'),
+('table.core_system_api_access', 'STRING', NULL, '{$this->registry['table.core_system_api_access']}'),
+('table.core_system_api_request', 'STRING', NULL, '{$this->registry['table.core_system_api_request']}'),
+('table.core_system_approval', 'STRING', NULL, '{$this->registry['table.core_system_approval']}'),
+('table.core_system_approval_record', 'STRING', NULL, '{$this->registry['table.core_system_approval_record']}'),
+('table.core_system_assoc', 'STRING', NULL, '{$this->registry['table.core_system_assoc']}'),
+('table.core_system_connect', 'STRING', NULL, '{$this->registry['table.core_system_connect']}'),
+('table.core_system_connect_access', 'STRING', NULL, '{$this->registry['table.core_system_connect_access']}'),
+('table.core_system_connect_assoc', 'STRING', NULL, '{$this->registry['table.core_system_connect_assoc']}'),
+('table.core_system_country', 'STRING', NULL, '{$this->registry['table.core_system_country']}'),
+('table.core_system_host', 'STRING', NULL, '{$this->registry['table.core_system_host']}'),
+('table.core_system_host_request', 'STRING', NULL, '{$this->registry['table.core_system_host_request']}'),
+('table.core_system_log', 'STRING', NULL, '{$this->registry['table.core_system_log']}'),
+('table.core_system_mail', 'STRING', NULL, '{$this->registry['table.core_system_mail']}'),
+('table.core_system_notify', 'STRING', NULL, '{$this->registry['table.core_system_notify']}'),
+('table.core_system_registry', 'STRING', NULL, '{$this->registry['table.core_system_registry']}'),
+('table.core_user_account', 'STRING', NULL, '{$this->registry['table.core_user_account']}'),
+('table.core_user_activity', 'STRING', NULL, '{$this->registry['table.core_user_activity']}'),
+('table.core_user_activity_receiver', 'STRING', NULL, '{$this->registry['table.core_user_activity_receiver']}'),
+('table.core_user_activity_template', 'STRING', NULL, '{$this->registry['table.core_user_activity_template']}'),
+('table.core_user_friend', 'STRING', NULL, '{$this->registry['table.core_user_friend']}'),
+('table.core_user_friend_group', 'STRING', NULL, '{$this->registry['table.core_user_friend_group']}'),
+('table.core_user_group', 'STRING', NULL, '{$this->registry['table.core_user_group']}'),
+('table.core_user_group_right', 'STRING', NULL, '{$this->registry['table.core_user_group_right']}'),
+('table.core_user_right', 'STRING', NULL, '{$this->registry['table.core_user_right']}')
 SQL;
 
 					$this->sql->query($query);
@@ -1346,13 +1109,13 @@ SQL;
 	{
 		try
 		{
-			$count = $this->sql->count($this->registry['table.user_group']);
+			$count = $this->sql->count($this->registry['table.core_user_group']);
 
 			if($count == 0)
 			{
 				$date = new DateTime('NOW');
 
-				$this->sql->insert($this->registry['table.user_group'], array(
+				$this->sql->insert($this->registry['table.core_user_group'], array(
 
 					'title' => 'Administrator',
 					'date'  => $date->format(PSX_DateTime::SQL),
@@ -1383,15 +1146,15 @@ SQL;
 			$pw    = $this->post->pw('string');
 			$email = $this->post->email('string');
 
-			$count = $this->sql->count($this->registry['table.user_account']);
+			$count = $this->sql->count($this->registry['table.core_user_account']);
 
 			if($count == 0)
 			{
-				$handler = new Amun_User_Account_Handler($this->user);
+				$handler = new AmunService_Core_User_Account_Handler($this->user);
 
-				$account = Amun_Sql_Table_Registry::get('User_Account')->getRecord();
+				$account = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord();
 				$account->setGroupId(1);
-				$account->setStatus(Amun_User_Account::ADMINISTRATOR);
+				$account->setStatus(AmunService_Core_User_Account_Record::ADMINISTRATOR);
 				$account->setIdentity($email);
 				$account->setName($name);
 				$account->setPw($pw);
@@ -1425,7 +1188,7 @@ SQL;
 	{
 		try
 		{
-			$count = $this->sql->count($this->registry['table.system_api']);
+			$count = $this->sql->count($this->registry['table.core_system_api']);
 
 			if($count == 0)
 			{
@@ -1433,10 +1196,10 @@ SQL;
 
 
 				// insert api
-				$handler = new Amun_System_Api_Handler($this->user);
+				$handler = new AmunService_Core_System_Api_Handler($this->user);
 
-				$api = Amun_Sql_Table_Registry::get('System_Api')->getRecord();
-				$api->setStatus(Amun_System_Api::NORMAL);
+				$api = Amun_Sql_Table_Registry::get('Core_System_Api')->getRecord();
+				$api->setStatus(AmunService_Core_System_Api_Record::NORMAL);
 				$api->setName('System');
 				$api->setEmail($email);
 				$api->setUrl($this->config['psx_url']);
@@ -1447,7 +1210,7 @@ SQL;
 
 
 				// save consumer key and secret to file
-				$row = $this->sql->getRow('SELECT consumerKey, consumerSecret FROM ' . $this->registry['table.system_api'] . ' LIMIT 1');
+				$row = $this->sql->getRow('SELECT consumerKey, consumerSecret FROM ' . $this->registry['table.core_system_api'] . ' LIMIT 1');
 
 				if(!empty($row))
 				{
@@ -1493,18 +1256,18 @@ SQL;
 		try
 		{
 			// install services
-			$count = $this->sql->count($this->registry['table.content_service']);
+			$count = $this->sql->count($this->registry['table.core_content_service']);
 
 			if($count == 0)
 			{
-				$handler = new Amun_Content_Service_Handler($this->user);
+				$handler = new AmunService_Core_Content_Service_Handler($this->user);
 				$errors  = array();
 
 				foreach($this->services as $source)
 				{
 					try
 					{
-						$service = Amun_Sql_Table_Registry::get('Content_Service')->getRecord();
+						$service = Amun_Sql_Table_Registry::get('Core_Content_Service')->getRecord();
 						$service->setSource($source);
 
 						$handler->create($service);
@@ -1531,11 +1294,11 @@ SQL;
 
 
 				// set rights
-				$rights = $this->sql->getCol('SELECT id FROM ' . $this->registry['table.user_right']);
+				$rights = $this->sql->getCol('SELECT id FROM ' . $this->registry['table.core_user_right']);
 
 				foreach($rights as $rightId)
 				{
-					$this->sql->insert($this->registry['table.user_group_right'], array(
+					$this->sql->insert($this->registry['table.core_user_group_right'], array(
 
 						'groupId' => 1,
 						'rightId' => $rightId,
@@ -1564,14 +1327,14 @@ SQL;
 		try
 		{
 			// insert notifier
-			$count = $this->sql->count($this->registry['table.system_notify']);
+			$count = $this->sql->count($this->registry['table.core_system_notify']);
 
 			if($count == 0)
 			{
-				$handler = new Amun_System_Notify_Handler($this->user);
+				$handler = new AmunService_Core_System_Notify_Handler($this->user);
 
 				// log notifier
-				$notify = Amun_Sql_Table_Registry::get('System_Notify')->getRecord();
+				$notify = Amun_Sql_Table_Registry::get('Core_System_Notify')->getRecord();
 				$notify->setPriority(32);
 				$notify->setTable('.*');
 				$notify->setClass('Amun_Notify_Log');
@@ -1580,7 +1343,7 @@ SQL;
 
 
 				// pshb notifier
-				$notify = Amun_Sql_Table_Registry::get('System_Notify')->getRecord();
+				$notify = Amun_Sql_Table_Registry::get('Core_System_Notify')->getRecord();
 				$notify->setTable('amun_service_');
 				$notify->setClass('Amun_Notify_Hub');
 
@@ -1588,7 +1351,7 @@ SQL;
 
 
 				// activity notifier
-				$notify = Amun_Sql_Table_Registry::get('System_Notify')->getRecord();
+				$notify = Amun_Sql_Table_Registry::get('Core_System_Notify')->getRecord();
 				$notify->setTable('amun_service_|amun_user_account');
 				$notify->setClass('Amun_Notify_Activity');
 
@@ -1597,15 +1360,15 @@ SQL;
 
 
 			// insert groups
-			$count = $this->sql->count($this->registry['table.user_group']);
+			$count = $this->sql->count($this->registry['table.core_user_group']);
 
 			if($count == 1)
 			{
-				$handler = new Amun_User_Group_Handler($this->user);
+				$handler = new AmunService_Core_User_Group_Handler($this->user);
 
 
 				// normal group
-				$group = Amun_Sql_Table_Registry::get('User_Group')->getRecord();
+				$group = Amun_Sql_Table_Registry::get('Core_User_Group')->getRecord();
 				$group->setTitle('Normal');
 
 				$handler->create($group);
@@ -1620,11 +1383,11 @@ SQL;
 					'user_friend_group_add',
 					'user_friend_group_delete',
 				);
-				$rights = $this->sql->getCol('SELECT id FROM ' . $this->registry['table.user_right'] . ' WHERE name LIKE "service_%_view" OR name IN("' . implode('","', $allowedRights) . '")');
+				$rights = $this->sql->getCol('SELECT id FROM ' . $this->registry['table.core_user_right'] . ' WHERE name LIKE "amun_service_%_view" OR name IN("' . implode('","', $allowedRights) . '")');
 
 				foreach($rights as $rightId)
 				{
-					$this->sql->insert($this->registry['table.user_group_right'], array(
+					$this->sql->insert($this->registry['table.core_user_group_right'], array(
 
 						'groupId' => 2,
 						'rightId' => $rightId,
@@ -1634,16 +1397,16 @@ SQL;
 
 
 				// anonymous group
-				$group = Amun_Sql_Table_Registry::get('User_Group')->getRecord();
+				$group = Amun_Sql_Table_Registry::get('Core_User_Group')->getRecord();
 				$group->setTitle('Anonymous');
 
 				$handler->create($group);
 
-				$rights = $this->sql->getCol('SELECT id FROM ' . $this->registry['table.user_right'] . ' WHERE name LIKE "service_%_view"');
+				$rights = $this->sql->getCol('SELECT id FROM ' . $this->registry['table.core_user_right'] . ' WHERE name LIKE "amun_service_%_view"');
 
 				foreach($rights as $rightId)
 				{
-					$this->sql->insert($this->registry['table.user_group_right'], array(
+					$this->sql->insert($this->registry['table.core_user_group_right'], array(
 
 						'groupId' => 3,
 						'rightId' => $rightId,
@@ -1654,16 +1417,16 @@ SQL;
 
 
 			// insert user
-			$count = $this->sql->count($this->registry['table.user_account']);
+			$count = $this->sql->count($this->registry['table.core_user_account']);
 
 			if($count == 1)
 			{
-				$handler = new Amun_User_Account_Handler($this->user);
+				$handler = new AmunService_Core_User_Account_Handler($this->user);
 
 				// anonymous
-				$record = Amun_Sql_Table_Registry::get('User_Account')->getRecord();
+				$record = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord();
 				$record->setGroupId(3);
-				$record->setStatus(Amun_User_Account::ANONYMOUS);
+				$record->setStatus(AmunService_Core_User_Account_Record::ANONYMOUS);
 				$record->setIdentity('anonymous@anonymous.com');
 				$record->setName('Anonymous');
 				$record->setPw(Amun_Security::generatePw());
@@ -1674,17 +1437,17 @@ SQL;
 
 
 			// insert pages
-			$count = $this->sql->count($this->registry['table.content_page']);
+			$count = $this->sql->count($this->registry['table.core_content_page']);
 
 			if($count == 0)
 			{
-				$handler = new Amun_Content_Page_Handler($this->user);
+				$handler = new AmunService_Core_Content_Page_Handler($this->user);
 
 				// root
-				$record = Amun_Sql_Table_Registry::get('Content_Page')->getRecord();
+				$record = Amun_Sql_Table_Registry::get('Core_Content_Page')->getRecord();
 				$record->setParentId(0);
 				$record->setServiceId(3);
-				$record->setStatus(Amun_Content_Page::HIDDEN);
+				$record->setStatus(AmunService_Core_Content_Page_Record::HIDDEN);
 				$record->setTitle($_SESSION['settingsTitle']);
 				$record->setTemplate(null);
 
@@ -1692,10 +1455,10 @@ SQL;
 
 
 				// home
-				$record = Amun_Sql_Table_Registry::get('Content_Page')->getRecord();
+				$record = Amun_Sql_Table_Registry::get('Core_Content_Page')->getRecord();
 				$record->setParentId(1);
 				$record->setServiceId(3);
-				$record->setStatus(Amun_Content_Page::NORMAL);
+				$record->setStatus(AmunService_Core_Content_Page_Record::NORMAL);
 				$record->setTitle('Home');
 				$record->setTemplate(null);
 
@@ -1703,10 +1466,10 @@ SQL;
 
 
 				// my
-				$record = Amun_Sql_Table_Registry::get('Content_Page')->getRecord();
+				$record = Amun_Sql_Table_Registry::get('Core_Content_Page')->getRecord();
 				$record->setParentId(1);
 				$record->setServiceId(1);
-				$record->setStatus(Amun_Content_Page::HIDDEN);
+				$record->setStatus(AmunService_Core_Content_Page_Record::HIDDEN);
 				$record->setTitle('My');
 				$record->setTemplate(null);
 
@@ -1714,10 +1477,10 @@ SQL;
 
 
 				// profile
-				$record = Amun_Sql_Table_Registry::get('Content_Page')->getRecord();
+				$record = Amun_Sql_Table_Registry::get('Core_Content_Page')->getRecord();
 				$record->setParentId(1);
 				$record->setServiceId(2);
-				$record->setStatus(Amun_Content_Page::HIDDEN);
+				$record->setStatus(AmunService_Core_Content_Page_Record::HIDDEN);
 				$record->setTitle('Profile');
 				$record->setTemplate(null);
 
@@ -1725,10 +1488,10 @@ SQL;
 
 
 				// help
-				$record = Amun_Sql_Table_Registry::get('Content_Page')->getRecord();
+				$record = Amun_Sql_Table_Registry::get('Core_Content_Page')->getRecord();
 				$record->setParentId(1);
 				$record->setServiceId(3);
-				$record->setStatus(Amun_Content_Page::HIDDEN);
+				$record->setStatus(AmunService_Core_Content_Page_Record::HIDDEN);
 				$record->setTitle('Help');
 				$record->setTemplate(null);
 
@@ -1737,11 +1500,11 @@ SQL;
 
 
 			// insert page content
-			$count = $this->sql->count($this->registry['table.service_page']);
+			$count = $this->sql->count($this->registry['table.core_service_page']);
 
 			if($count == 0)
 			{
-				$handler = new Amun_Service_Page_Handler($this->user);
+				$handler = new AmunService_Page_Handler($this->user);
 
 				// home
 				$content = <<<TEXT
@@ -1750,7 +1513,7 @@ SQL;
 <p>The web server software is running but no content has been added, yet.</p>
 TEXT;
 
-				$record = Amun_Sql_Table_Registry::get('Service_Page')->getRecord();
+				$record = Amun_Sql_Table_Registry::get('Page')->getRecord();
 				$record->setPageId(2);
 				$record->setContent($content);
 
@@ -1834,7 +1597,7 @@ tempor invidunt ut labore
 </pre>
 TEXT;
 
-				$record = Amun_Sql_Table_Registry::get('Service_Page')->getRecord();
+				$record = Amun_Sql_Table_Registry::get('Page')->getRecord();
 				$record->setPageId(5);
 				$record->setContent($content);
 
@@ -1845,7 +1608,7 @@ TEXT;
 			// set default_page
 			$con = new PSX_Sql_Condition(array('name', '=', 'core.default_page'));
 
-			$this->sql->update($this->registry['table.system_registry'], array(
+			$this->sql->update($this->registry['table.core_system_registry'], array(
 
 				'value' => 'home',
 
@@ -1855,7 +1618,7 @@ TEXT;
 			// set default user group
 			$con = new PSX_Sql_Condition(array('name', '=', 'core.default_user_group'));
 
-			$this->sql->update($this->registry['table.system_registry'], array(
+			$this->sql->update($this->registry['table.core_system_registry'], array(
 
 				'value' => 2,
 
@@ -1865,7 +1628,7 @@ TEXT;
 			// set anonymous_user
 			$con = new PSX_Sql_Condition(array('name', '=', 'core.anonymous_user'));
 
-			$this->sql->update($this->registry['table.system_registry'], array(
+			$this->sql->update($this->registry['table.core_system_registry'], array(
 
 				'value' => 2,
 
@@ -1876,7 +1639,7 @@ TEXT;
 			$con  = new PSX_Sql_Condition(array('name', '=', 'core.install_date'));
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-			$this->sql->update($this->registry['table.system_registry'], array(
+			$this->sql->update($this->registry['table.core_system_registry'], array(
 
 				'value' => $date->format(PSX_DateTime::SQL),
 
@@ -1911,41 +1674,41 @@ class Amun_Registry_NoDb extends Amun_Registry
 
 		$this->exchangeArray(array(
 
-			'table.amun_content_api'            => $this->config['amun_table_prefix'] . 'content_api',
-			'table.amun_content_api_type'       => $this->config['amun_table_prefix'] . 'content_api_type',
-			'table.amun_content_gadget'         => $this->config['amun_table_prefix'] . 'content_gadget',
-			'table.amun_content_media'          => $this->config['amun_table_prefix'] . 'content_media',
-			'table.amun_content_page'           => $this->config['amun_table_prefix'] . 'content_page',
-			'table.amun_content_page_gadget'    => $this->config['amun_table_prefix'] . 'content_page_gadget',
-			'table.amun_content_page_option'    => $this->config['amun_table_prefix'] . 'content_page_option',
-			'table.amun_content_page_right'     => $this->config['amun_table_prefix'] . 'content_page_right',
-			'table.amun_content_service'        => $this->config['amun_table_prefix'] . 'content_service',
-			'table.amun_content_service_option' => $this->config['amun_table_prefix'] . 'content_service_option',
-			'table.amun_system_api'             => $this->config['amun_table_prefix'] . 'system_api',
-			'table.amun_system_api_access'      => $this->config['amun_table_prefix'] . 'system_api_access',
-			'table.amun_system_api_request'     => $this->config['amun_table_prefix'] . 'system_api_request',
-			'table.amun_system_approval'        => $this->config['amun_table_prefix'] . 'system_approval',
-			'table.amun_system_approval_record' => $this->config['amun_table_prefix'] . 'system_approval_record',
-			'table.amun_system_assoc'           => $this->config['amun_table_prefix'] . 'system_assoc',
-			'table.amun_system_connect'         => $this->config['amun_table_prefix'] . 'system_connect',
-			'table.amun_system_connect_access'  => $this->config['amun_table_prefix'] . 'system_connect_access',
-			'table.amun_system_connect_assoc'   => $this->config['amun_table_prefix'] . 'system_connect_assoc',
-			'table.amun_system_country'         => $this->config['amun_table_prefix'] . 'system_country',
-			'table.amun_system_host'            => $this->config['amun_table_prefix'] . 'system_host',
-			'table.amun_system_host_request'    => $this->config['amun_table_prefix'] . 'system_host_request',
-			'table.amun_system_log'             => $this->config['amun_table_prefix'] . 'system_log',
-			'table.amun_system_mail'            => $this->config['amun_table_prefix'] . 'system_mail',
-			'table.amun_system_notify'          => $this->config['amun_table_prefix'] . 'system_notify',
-			'table.amun_system_registry'        => $this->config['amun_table_prefix'] . 'system_registry',
-			'table.amun_user_account'           => $this->config['amun_table_prefix'] . 'user_account',
-			'table.amun_user_activity'          => $this->config['amun_table_prefix'] . 'user_activity',
-			'table.amun_user_activity_receiver' => $this->config['amun_table_prefix'] . 'user_activity_receiver',
-			'table.amun_user_activity_template' => $this->config['amun_table_prefix'] . 'user_activity_template',
-			'table.amun_user_friend'            => $this->config['amun_table_prefix'] . 'user_friend',
-			'table.amun_user_friend_group'      => $this->config['amun_table_prefix'] . 'user_friend_group',
-			'table.amun_user_group'             => $this->config['amun_table_prefix'] . 'user_group',
-			'table.amun_user_group_right'       => $this->config['amun_table_prefix'] . 'user_group_right',
-			'table.amun_user_right'             => $this->config['amun_table_prefix'] . 'user_right',
+			'table.core_content_api'            => $this->config['amun_table_prefix'] . 'core_content_api',
+			'table.core_content_api_type'       => $this->config['amun_table_prefix'] . 'core_content_api_type',
+			'table.core_content_gadget'         => $this->config['amun_table_prefix'] . 'core_content_gadget',
+			'table.core_content_media'          => $this->config['amun_table_prefix'] . 'core_content_media',
+			'table.core_content_page'           => $this->config['amun_table_prefix'] . 'core_content_page',
+			'table.core_content_page_gadget'    => $this->config['amun_table_prefix'] . 'core_content_page_gadget',
+			'table.core_content_page_option'    => $this->config['amun_table_prefix'] . 'core_content_page_option',
+			'table.core_content_page_right'     => $this->config['amun_table_prefix'] . 'core_content_page_right',
+			'table.core_content_service'        => $this->config['amun_table_prefix'] . 'core_content_service',
+			'table.core_content_service_option' => $this->config['amun_table_prefix'] . 'core_content_service_option',
+			'table.core_system_api'             => $this->config['amun_table_prefix'] . 'core_system_api',
+			'table.core_system_api_access'      => $this->config['amun_table_prefix'] . 'core_system_api_access',
+			'table.core_system_api_request'     => $this->config['amun_table_prefix'] . 'core_system_api_request',
+			'table.core_system_approval'        => $this->config['amun_table_prefix'] . 'core_system_approval',
+			'table.core_system_approval_record' => $this->config['amun_table_prefix'] . 'core_system_approval_record',
+			'table.core_system_assoc'           => $this->config['amun_table_prefix'] . 'core_system_assoc',
+			'table.core_system_connect'         => $this->config['amun_table_prefix'] . 'core_system_connect',
+			'table.core_system_connect_access'  => $this->config['amun_table_prefix'] . 'core_system_connect_access',
+			'table.core_system_connect_assoc'   => $this->config['amun_table_prefix'] . 'core_system_connect_assoc',
+			'table.core_system_country'         => $this->config['amun_table_prefix'] . 'core_system_country',
+			'table.core_system_host'            => $this->config['amun_table_prefix'] . 'core_system_host',
+			'table.core_system_host_request'    => $this->config['amun_table_prefix'] . 'core_system_host_request',
+			'table.core_system_log'             => $this->config['amun_table_prefix'] . 'core_system_log',
+			'table.core_system_mail'            => $this->config['amun_table_prefix'] . 'core_system_mail',
+			'table.core_system_notify'          => $this->config['amun_table_prefix'] . 'core_system_notify',
+			'table.core_system_registry'        => $this->config['amun_table_prefix'] . 'core_system_registry',
+			'table.core_user_account'           => $this->config['amun_table_prefix'] . 'core_user_account',
+			'table.core_user_activity'          => $this->config['amun_table_prefix'] . 'core_user_activity',
+			'table.core_user_activity_receiver' => $this->config['amun_table_prefix'] . 'core_user_activity_receiver',
+			'table.core_user_activity_template' => $this->config['amun_table_prefix'] . 'core_user_activity_template',
+			'table.core_user_friend'            => $this->config['amun_table_prefix'] . 'core_user_friend',
+			'table.core_user_friend_group'      => $this->config['amun_table_prefix'] . 'core_user_friend_group',
+			'table.core_user_group'             => $this->config['amun_table_prefix'] . 'core_user_group',
+			'table.core_user_group_right'       => $this->config['amun_table_prefix'] . 'core_user_group_right',
+			'table.core_user_right'             => $this->config['amun_table_prefix'] . 'core_user_right',
 			'core.default_timezone'             => new DateTimeZone('UTC'),
 
 		));

@@ -37,22 +37,20 @@ class add extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
-		if($this->user->hasRight('service_news_add'))
+		if($this->service->hasAddRight())
 		{
 			// form url
-			$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/news/form?format=json&method=create&pageId=' . $this->page->id;
-
+			$url = $this->service->getApiEndpoint() . '/form?format=json&method=create&pageId=' . $this->page->id;
 
 			// add path
 			$this->path->add('Add', $this->page->url . '/add');
-
 
 			// template
 			$this->htmlJs->add('amun');
 			$this->htmlJs->add('ace');
 			$this->htmlJs->add('news');
 
-
+			// html
 			echo <<<HTML
 <div id="response"></div>
 

@@ -62,7 +62,8 @@ class Amun_Registry extends ArrayObject
 
 	public function load()
 	{
-		$result = $this->sql->getAll('SELECT `name`, `type`, `class`, `value` FROM ' . $this->config['amun_table_registry']);
+		$table  = $this->config['amun_table_prefix'] . $this->config['amun_table_registry'];
+		$result = $this->sql->getAll('SELECT `name`, `type`, `class`, `value` FROM `' . $table . '`');
 
 		foreach($result as $row)
 		{

@@ -39,11 +39,9 @@ class security extends Amun_Service_My_SettingsAbstract
 	{
 		parent::onLoad();
 
-
 		// add path
 		$this->path->add('Settings', $this->page->url . '/settings');
 		$this->path->add('Security', $this->page->url . '/settings/security');
-
 
 		// template
 		$this->htmlCss->add('my');
@@ -68,7 +66,7 @@ class security extends Amun_Service_My_SettingsAbstract
 					throw new Amun_Exception('Passwords doesnt match');
 				}
 
-				$user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->user->id);
+				$user = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord($this->user->id);
 
 				if(strcmp($currentPw, $user->pw) === 0)
 				{

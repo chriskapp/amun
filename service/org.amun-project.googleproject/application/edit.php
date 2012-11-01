@@ -44,7 +44,7 @@ class edit extends Amun_Module_ApplicationAbstract
 
 			if($id > 0)
 			{
-				$record = Amun_Sql_Table_Registry::get('Service_Googleproject')->getRecord($id);
+				$record = Amun_Sql_Table_Registry::get('Googleproject')->getRecord($id);
 
 				$url = $this->service->getApiEndpoint() . '/form?format=json&method=update&id=' . $record->id;
 

@@ -46,7 +46,7 @@ class edit extends Amun_Module_ApplicationAbstract
 
 
 			// tracker
-			$tracker = Amun_Sql_Table_Registry::get('Service_Tracker')->getRecord($id);
+			$tracker = Amun_Sql_Table_Registry::get('Tracker')->getRecord($id);
 
 
 			// add path

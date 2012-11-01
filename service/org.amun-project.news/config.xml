@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="7de37a2f2794459fbebaaaa8156c6244e33c850e">
+<service xmlns="http://amun-project.org" signature="31cd8dc6bd822fe6cd474d8432164115ef7533da">
   <status>normal</status>
   <name>news</name>
   <path>/service/news</path>
-  <namespace>Amun_Service_News</namespace>
+  <namespace>news</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/news</type>
   <link>http://amun.phpsx.org</link>
   <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
@@ -13,21 +13,16 @@
     <service>org.amun-project.comment</service>
   </required>
   <permissions>
-    <perm name="view" description="Service News View" />
-    <perm name="add" description="Service News Add" />
-    <perm name="edit" description="Service News Edit" />
-    <perm name="delete" description="Service News Delete" />
+    <perm name="view" description="Service News View"/>
+    <perm name="add" description="Service News Add"/>
+    <perm name="edit" description="Service News Edit"/>
+    <perm name="delete" description="Service News Delete"/>
   </permissions>
   <library>
-    <dir name="Amun">
-      <dir name="Service">
+    <dir name="AmunService">
         <dir name="News">
-          <file name="Form.php" md5="d52e76d2f3134dafc871c526630372a9"/>
-          <file name="Handler.php" md5="753dad3c3f1fd4ba91a8bbf5b752234b"/>
-          <file name="Table.php" md5="cf703be91159c29b28aba5f6ec4ad789"/>
+            <include />
         </dir>
-        <file name="News.php" md5="3a0572942679d0d599970c8ec16a6183"/>
-      </dir>
     </dir>
   </library>
   <database>

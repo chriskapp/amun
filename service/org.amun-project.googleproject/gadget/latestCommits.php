@@ -48,11 +48,11 @@ class latestCommits extends Amun_Module_GadgetAbstract
 		$this->htmlCss->add('googleproject');
 
 
-		$result = Amun_Sql_Table_Registry::get('Service_Googleproject_Commit')
+		$result = Amun_Sql_Table_Registry::get('Googleproject_Commit')
 			->select(array('id', 'revision', 'url', 'message', 'commitDate', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Service_Googleproject_Author')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Googleproject_Author')
 				->select(array('name'), 'user')
-				->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+				->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 					->select(array('name', 'profileUrl'), 'author')
 				)
 			)

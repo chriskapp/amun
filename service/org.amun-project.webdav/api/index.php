@@ -45,7 +45,7 @@ class index extends Amun_Module_DefaultAbstract
 
 		if(!empty($pw))
 		{
-			$row = Amun_Sql_Table_Registry::get('User_Account')
+			$row = Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('id', 'status', 'pw'))
 				->where('identity', '=', $identity)
 				->getRow();

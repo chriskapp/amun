@@ -47,11 +47,10 @@ class connect extends Amun_Module_ApplicationAbstract
 
 	public function onLoad()
 	{
-		if($this->user->hasRight('service_my_view'))
+		if($this->service->hasViewRight())
 		{
 			// add path
 			$this->path->add('Connect', $this->page->url . '/connect');
-
 
 			// check whether connection was started
 			$this->request = isset($_SESSION['amun_openid_request']) ? $_SESSION['amun_openid_request'] : null;
@@ -99,7 +98,7 @@ class connect extends Amun_Module_ApplicationAbstract
 			$this->assoc = $this->getAssociation();
 
 			// check whether access is already allowed or denied
-			$status = (integer) Amun_Sql_Table_Registry::get('System_Connect')
+			$status = (integer) Amun_Sql_Table_Registry::get('Core_System_Connect')
 				->select(array('status'))
 				->where('userId', '=', $this->user->id)
 				->where('assocId', '=', $this->assoc['id'])
@@ -114,7 +113,6 @@ class connect extends Amun_Module_ApplicationAbstract
 			{
 				$this->denyAccess();
 			}
-
 
 			// template
 			$this->htmlCss->add('my');
@@ -158,7 +156,6 @@ class connect extends Amun_Module_ApplicationAbstract
 		// delete session
 		$_SESSION['amun_openid_request'] = null;
 
-
 		// build redirect
 		$nonce = gmdate('Y-m-d\TH:i:s\Z') . Amun_Security::generateToken(15);
 
@@ -181,7 +178,6 @@ class connect extends Amun_Module_ApplicationAbstract
 			$redirect->addExtension($this->handleOauthExt());
 		}
 
-
 		// insert or update connect
 		$now  = new DateTime('NOW', $this->registry['core.default_timezone']);
 		$data = array(
@@ -201,8 +197,7 @@ class connect extends Amun_Module_ApplicationAbstract
 			$data['status'] = Amun_System_Connect::APPROVED;
 		}
 
-		Amun_Sql_Table_Registry::get('System_Connect')->replace($data);
-
+		Amun_Sql_Table_Registry::get('Core_System_Connect')->replace($data);
 
 		// redirect to rp
 		$redirect->redirect($this->assoc['secret'], $this->assoc['assocType']);
@@ -213,7 +208,6 @@ class connect extends Amun_Module_ApplicationAbstract
 		// delete session
 		$_SESSION['amun_openid_request'] = null;
 
-
 		// delete oauth token
 		if(!empty($this->oauth))
 		{
@@ -221,7 +215,6 @@ class connect extends Amun_Module_ApplicationAbstract
 
 			$this->sql->delete($this->registry['table.system_api_request'], $con);
 		}
-
 
 		// insert or update connect
 		$nonce = gmdate('Y-m-d\TH:i:s\Z') . Amun_Security::generateToken(15);
@@ -243,8 +236,7 @@ class connect extends Amun_Module_ApplicationAbstract
 			$data['status'] = Amun_System_Connect::DENIED;
 		}
 
-		Amun_Sql_Table_Registry::get('System_Connect')->replace($data);
-
+		Amun_Sql_Table_Registry::get('Core_System_Connect')->replace($data);
 
 		// cancel request
 		$this->returnTo->addParam('openid.ns', PSX_OpenId_ProviderAbstract::NS);
@@ -258,7 +250,7 @@ class connect extends Amun_Module_ApplicationAbstract
 	{
 		if(!empty($this->assocHandle))
 		{
-			$row = Amun_Sql_Table_Registry::get('System_Connect_Assoc')
+			$row = Amun_Sql_Table_Registry::get('Core_System_Connect_Assoc')
 				->select(array('id', 'assocHandle', 'assocType', 'sessionType', 'secret', 'expires', 'date'))
 				->where('assocHandle', '=', $this->assocHandle)
 				->getRow();
@@ -321,7 +313,7 @@ class connect extends Amun_Module_ApplicationAbstract
 	{
 		$consumerKey = isset($this->oauth['consumer']) ? $this->oauth['consumer'] : null;
 
-		$row = Amun_Sql_Table_Registry::get('System_Api')
+		$row = Amun_Sql_Table_Registry::get('Core_System_Api')
 			->select(array('id', 'consumerKey'))
 			->where('consumerKey', '=', $consumerKey)
 			->getRow();
@@ -349,7 +341,6 @@ class connect extends Amun_Module_ApplicationAbstract
 
 			));
 
-
 			// insert access
 			$this->sql->replace($this->registry['table.system_api_access'], array(
 
@@ -359,7 +350,6 @@ class connect extends Amun_Module_ApplicationAbstract
 				'date'    => $date->format(PSX_Time::SQL),
 
 			));
-
 
 			// return params
 			$params = array();

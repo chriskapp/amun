@@ -39,23 +39,19 @@ class group extends Amun_Service_My_FriendsAbstract
 	{
 		parent::onLoad();
 
-
 		// add path
 		$this->path->add('Friends', $this->page->url . '/friends');
 		$this->path->add('Groups', $this->page->url . '/friends/group');
-
 
 		// get groups
 		$groups = $this->getGroups();
 
 		$this->template->assign('groups', $groups);
 
-
 		// form url
 		$url = $this->config['psx_url'] . '/index.php/api/user/friend/group';
 
 		$this->template->assign('groupUrl', $url);
-
 
 		// template
 		$this->htmlCss->add('my');
@@ -67,7 +63,7 @@ class group extends Amun_Service_My_FriendsAbstract
 
 	public function getGroups()
 	{
-		$select = Amun_Sql_Table_Registry::get('User_Friend_Group')
+		$select = Amun_Sql_Table_Registry::get('Core_User_Friend_Group')
 			->select(array('id', 'title', 'date'))
 			->where('userId', '=', $this->user->id);
 

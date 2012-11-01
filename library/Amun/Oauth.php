@@ -68,7 +68,7 @@ SELECT
 	api.consumerKey    AS `apiConsumerKey`,
 	api.consumerSecret AS `apiConsumerSecret`
 
-	FROM {$this->registry['table.system_api']} api
+	FROM {$this->registry['table.core_system_api']} api
 
 		WHERE api.consumerKey = ?
 
@@ -104,7 +104,7 @@ SQL;
 
 			if($now > $date)
 			{
-				$this->sql->delete($this->registry['table.system_api_request'], 'token', $token);
+				$this->sql->delete($this->registry['table.core_system_api_request'], 'token', $token);
 
 				throw new PSX_Oauth_Exception('The token is expired');
 			}
@@ -138,7 +138,7 @@ SELECT
 	request.expire      AS `requestExpire`,
 	request.date        AS `requestDate`
 
-	FROM {$this->registry['table.system_api_request']} `request`
+	FROM {$this->registry['table.core_system_api_request']} `request`
 
 		WHERE request.token = ?
 
@@ -147,7 +147,7 @@ SELECT
 			LIMIT 1
 SQL;
 
-		$row = $this->sql->getRow($sql, array($token, Amun_System_Api::ACCESS));
+		$row = $this->sql->getRow($sql, array($token, AmunService_Core_System_Api_Record::ACCESS));
 
 		if(!empty($row))
 		{
@@ -161,7 +161,7 @@ SELECT
 
 	access.allowed AS `accessAllowed`
 
-	FROM {$this->registry['table.system_api_access']} `access`
+	FROM {$this->registry['table.core_system_api_access']} `access`
 
 		WHERE access.apiId = ?
 

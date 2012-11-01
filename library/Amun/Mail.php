@@ -62,7 +62,7 @@ SELECT
 	`mail`.`html`,
 	`mail`.`values`
 
-	FROM {$this->registry['table.system_mail']} `mail`
+	FROM {$this->registry['table.core_system_mail']} `mail`
 
 		WHERE `mail`.`name` = ?
 SQL;

@@ -1,44 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="2318662ed54123482fd28a2217fe30104d38328a">
+<service xmlns="http://amun-project.org" signature="07eaa3d797c78e57b7e89e52f01dfa958ec9bf23">
   <status>normal</status>
   <name>googleproject</name>
   <path>/service/googleproject</path>
-  <namespace>Amun_Service_Googleproject</namespace>
+  <namespace>googleproject</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/googleproject</type>
   <link>http://amun.phpsx.org</link>
   <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
   <license>GPLv3</license>
   <version>0.0.1</version>
   <permissions>
-    <perm name="view" description="Service Googleproject View" />
-    <perm name="add" description="Service Googleproject Add" />
-    <perm name="edit" description="Service Googleproject Edit" />
-    <perm name="delete" description="Service Googleproject Delete" />
-    <perm name="author_view" description="Service Googleproject Author View" />
-    <perm name="author_add" description="Service Googleproject Author Add" />
-    <perm name="author_edit" description="Service Googleproject Author Edit" />
-    <perm name="author_delete" description="Service Googleproject Author Delete" />
+    <perm name="view" description="Service Googleproject View"/>
+    <perm name="add" description="Service Googleproject Add"/>
+    <perm name="edit" description="Service Googleproject Edit"/>
+    <perm name="delete" description="Service Googleproject Delete"/>
+    <perm name="author_view" description="Service Googleproject Author View"/>
+    <perm name="author_add" description="Service Googleproject Author Add"/>
+    <perm name="author_edit" description="Service Googleproject Author Edit"/>
+    <perm name="author_delete" description="Service Googleproject Author Delete"/>
   </permissions>
   <library>
-    <dir name="Amun">
-      <dir name="Service">
+    <dir name="AmunService">
         <dir name="Googleproject">
-          <dir name="Author">
-            <file name="Handler.php" md5="c362dafb40ec728d7938a53ef8a186b6"/>
-            <file name="Table.php" md5="b13a00269fd8b31b4a1944f835e1b55a"/>
-          </dir>
-          <dir name="Commit">
-            <file name="Handler.php" md5="c10659ca02c74df5fd6eeb13a5f78a7c"/>
-            <file name="Table.php" md5="119651b8bd957d12df1c9f849d057221"/>
-          </dir>
-          <file name="Author.php" md5="0c0c046c36bd74c5b92cb6aee34ce50a"/>
-          <file name="Commit.php" md5="9e0df4143f7280a0fb8bfb7ca3498293"/>
-          <file name="Form.php" md5="af7a30367f856b290a93aba2b274fa88"/>
-          <file name="Handler.php" md5="b5ff3e83b96fd7a12e55fbe704697b93"/>
-          <file name="Table.php" md5="70e4a3ae35e71ddd9c7f0bd1c124c848"/>
+            <include />
         </dir>
-        <file name="Googleproject.php" md5="1164f5e005ba942ee44e06631f3e890b"/>
-      </dir>
     </dir>
   </library>
   <database>

@@ -39,7 +39,7 @@ class contact extends Amun_Module_RestAbstract
 	{
 		return $this->getTable()
 			->select(array('id', 'userId', 'status', 'type', 'value', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('name', 'profileUrl'), 'author')
 			);
 	}

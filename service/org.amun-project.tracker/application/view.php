@@ -93,12 +93,12 @@ class view extends Amun_Module_ApplicationAbstract
 		$fragments = $this->getUriFragments();
 		$id = isset($fragments[0]) ? intval($fragments[0]) : $this->get->id('integer');
 
-		$result = Amun_Sql_Table_Registry::get('Service_Tracker')
+		$result = Amun_Sql_Table_Registry::get('Tracker')
 			->select(array('id', 'urlTitle', 'title', 'urlTitle', 'name', 'length', 'seeder', 'leecher', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Content_Page')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_Content_Page')
 				->select(array('path'), 'page')
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			)
 			->where('id', '=', $id)
@@ -118,9 +118,9 @@ class view extends Amun_Module_ApplicationAbstract
 
 	private function getComments()
 	{
-		$table = Amun_Sql_Table_Registry::get('Service_Comment')
+		$table = Amun_Sql_Table_Registry::get('Comment')
 			->select(array('id', 'text', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			)
 			->where('pageId', '=', $this->page->id)
