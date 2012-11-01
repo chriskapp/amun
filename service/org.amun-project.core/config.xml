@@ -1,0 +1,662 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="4cdf87f9a12d644d48a93a023caeb37286d86887">
+  <status>normal</status>
+  <name>core</name>
+  <path>/core</path>
+  <namespace>core</namespace>
+  <type>http://ns.amun-project.org/2011/amun/core</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <api>
+    <service>
+      <type>http://oauth.net/core/1.0/endpoint/request</type>
+      <type>http://ns.amun-project.org/2011/amun/auth/request</type>
+      <uri>/auth/request</uri>
+    </service>
+    <service>
+      <type>http://oauth.net/core/1.0/endpoint/authorize</type>
+      <type>http://ns.amun-project.org/2011/amun/auth/authorization</type>
+      <uri>/auth/authorization</uri>
+    </service>
+    <service>
+      <type>http://oauth.net/core/1.0/endpoint/access</type>
+      <type>http://ns.amun-project.org/2011/amun/auth/authorization</type>
+      <uri>/auth/access</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/content/gadget</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/content/gadget</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/content/media</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/content/media</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/content/page</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/content/page</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/content/page/gadget</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/content/page/gadget</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/content/page/option</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/content/page/option</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/system/api</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/system/api</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/system/api/access</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/system/api/access</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/system/api/request</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/system/api/request</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/system/approval</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/system/approval</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/system/approval/record</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/system/approval/record</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/system/connect</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/system/connect</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/system/connect/access</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/system/connect/access</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/system/connect/assoc</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/system/connect/assoc</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/system/country</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/system/country</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/system/host</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/system/host</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/system/log</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/system/log</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/system/mail</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/system/mail</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/system/registry</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/system/registry</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/user/account</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/user/account</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/user/activity</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/user/activity</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2012/amun/user/activity/message/1.0</type>
+      <uri>/user/activity/message</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/user/friend</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/user/friend</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/user/friend/relation/1.0</type>
+      <uri>/user/friend/relation</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/user/friend/group</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/user/friend/group</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/user/group</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/user/group</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/user/group/right</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/user/group/right</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/user/right</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/user/right</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="core_view" description="Core view"/>
+    <perm name="core_add" description="Core add"/>
+    <perm name="core_edit" description="Core edit"/>
+    <perm name="core_delete" description="Core delete"/>
+    <perm name="core_content_gadget_view" description="Content Gadget view"/>
+    <perm name="core_content_gadget_add" description="Content Gadget add"/>
+    <perm name="core_content_gadget_edit" description="Content Gadget edit"/>
+    <perm name="core_content_gadget_delete" description="Content Gadget delete"/>
+    <perm name="core_content_media_view" description="Content Media view"/>
+    <perm name="core_content_media_add" description="Content Media add"/>
+    <perm name="core_content_media_edit" description="Content Media edit"/>
+    <perm name="core_content_media_delete" description="Content Media delete"/>
+    <perm name="core_content_page_view" description="Content Page view"/>
+    <perm name="core_content_page_add" description="Content Page add"/>
+    <perm name="core_content_page_edit" description="Content Page edit"/>
+    <perm name="core_content_page_delete" description="Content Page delete"/>
+    <perm name="core_content_page_gadget_view" description="Content Page Gadget view"/>
+    <perm name="core_content_page_gadget_add" description="Content Page Gadget add"/>
+    <perm name="core_content_page_gadget_edit" description="Content Page Gadget edit"/>
+    <perm name="core_content_page_gadget_delete" description="Content Page Gadget delete"/>
+    <perm name="core_content_page_option_view" description="Content Page Option view"/>
+    <perm name="core_content_page_option_add" description="Content Page Option add"/>
+    <perm name="core_content_page_option_edit" description="Content Page Option edit"/>
+    <perm name="core_content_page_option_delete" description="Content Page Option delete"/>
+    <perm name="core_content_page_right_view" description="Content Page Right view"/>
+    <perm name="core_content_page_right_add" description="Content Page Right add"/>
+    <perm name="core_content_page_right_edit" description="Content Page Right edit"/>
+    <perm name="core_content_page_right_delete" description="Content Page Right delete"/>
+    <perm name="core_content_service_view" description="Content Service view"/>
+    <perm name="core_content_service_add" description="Content Service add"/>
+    <perm name="core_content_service_edit" description="Content Service edit"/>
+    <perm name="core_content_service_delete" description="Content Service delete"/>
+    <perm name="core_system_api_view" description="System API view"/>
+    <perm name="core_system_api_add" description="System API add"/>
+    <perm name="core_system_api_edit" description="System API edit"/>
+    <perm name="core_system_api_delete" description="System API delete"/>
+    <perm name="core_system_api_access_view" description="System API Access view"/>
+    <perm name="core_system_api_access_add" description="System API Access add"/>
+    <perm name="core_system_api_access_edit" description="System API Access edit"/>
+    <perm name="core_system_api_access_delete" description="System API Access delete"/>
+    <perm name="core_system_api_request_view" description="System API Request view"/>
+    <perm name="core_system_api_request_add" description="System API Request add"/>
+    <perm name="core_system_api_request_edit" description="System API Request edit"/>
+    <perm name="core_system_api_request_delete" description="System API Request delete"/>
+    <perm name="core_system_approval_view" description="System Approval view"/>
+    <perm name="core_system_approval_add" description="System Approval add"/>
+    <perm name="core_system_approval_edit" description="System Approval edit"/>
+    <perm name="core_system_approval_delete" description="System Approval delete"/>
+    <perm name="core_system_approval_record_view" description="System Approval Record view"/>
+    <perm name="core_system_approval_record_add" description="System Approval Record add"/>
+    <perm name="core_system_approval_record_edit" description="System Approval Record edit"/>
+    <perm name="core_system_approval_record_delete" description="System Approval Record delete"/>
+    <perm name="core_system_connect_view" description="System Connect view"/>
+    <perm name="core_system_connect_add" description="System Connect add"/>
+    <perm name="core_system_connect_edit" description="System Connect edit"/>
+    <perm name="core_system_connect_delete" description="System Connect delete"/>
+    <perm name="core_system_connect_access_view" description="System Connect Access view"/>
+    <perm name="core_system_connect_access_add" description="System Connect Access add"/>
+    <perm name="core_system_connect_access_edit" description="System Connect Access edit"/>
+    <perm name="core_system_connect_access_delete" description="System Connect Access delete"/>
+    <perm name="core_system_country_view" description="System Country view"/>
+    <perm name="core_system_country_add" description="System Country add"/>
+    <perm name="core_system_country_edit" description="System Country edit"/>
+    <perm name="core_system_country_delete" description="System Country delete"/>
+    <perm name="core_system_host_view" description="System Host view"/>
+    <perm name="core_system_host_add" description="System Host add"/>
+    <perm name="core_system_host_edit" description="System Host edit"/>
+    <perm name="core_system_host_delete" description="System Host delete"/>
+    <perm name="core_system_log_view" description="System Log view"/>
+    <perm name="core_system_log_add" description="System Log add"/>
+    <perm name="core_system_log_edit" description="System Log edit"/>
+    <perm name="core_system_log_delete" description="System Log delete"/>
+    <perm name="core_system_mail_view" description="System Mail view"/>
+    <perm name="core_system_mail_add" description="System Mail add"/>
+    <perm name="core_system_mail_edit" description="System Mail edit"/>
+    <perm name="core_system_mail_delete" description="System Mail delete"/>
+    <perm name="core_system_registry_view" description="System Registry view"/>
+    <perm name="core_system_registry_add" description="System Registry add"/>
+    <perm name="core_system_registry_edit" description="System Registry edit"/>
+    <perm name="core_system_registry_delete" description="System Registry delete"/>
+    <perm name="core_user_account_view" description="User Account view"/>
+    <perm name="core_user_account_add" description="User Account add"/>
+    <perm name="core_user_account_edit" description="User Account edit"/>
+    <perm name="core_user_account_delete" description="User Account delete"/>
+    <perm name="core_user_activity_view" description="User Activity view"/>
+    <perm name="core_user_activity_add" description="User Activity add"/>
+    <perm name="core_user_activity_edit" description="User Activity edit"/>
+    <perm name="core_user_activity_delete" description="User Activity delete"/>
+    <perm name="core_user_activity_receiver_view" description="User Activity Receiver view"/>
+    <perm name="core_user_activity_receiver_add" description="User Activity Receiver add"/>
+    <perm name="core_user_activity_receiver_edit" description="User Activity Receiver edit"/>
+    <perm name="core_user_activity_receiver_delete" description="User Activity Receiver delete"/>
+    <perm name="core_user_friend_view" description="User Friend view"/>
+    <perm name="core_user_friend_add" description="User Friend add"/>
+    <perm name="core_user_friend_edit" description="User Friend edit"/>
+    <perm name="core_user_friend_delete" description="User Friend delete"/>
+    <perm name="core_user_friend_group_view" description="User Friend Group view"/>
+    <perm name="core_user_friend_group_add" description="User Friend Group add"/>
+    <perm name="core_user_friend_group_edit" description="User Friend Group edit"/>
+    <perm name="core_user_friend_group_delete" description="User Friend Group delete"/>
+    <perm name="core_user_group_view" description="User Group view"/>
+    <perm name="core_user_group_add" description="User Group add"/>
+    <perm name="core_user_group_edit" description="User Group edit"/>
+    <perm name="core_user_group_delete" description="User Group delete"/>
+    <perm name="core_user_group_right_view" description="User Group Right view"/>
+    <perm name="core_user_group_right_add" description="User Group Right add"/>
+    <perm name="core_user_group_right_edit" description="User Group Right edit"/>
+    <perm name="core_user_group_right_delete" description="User Group Right delete"/>
+    <perm name="core_user_right_view" description="User Right view"/>
+    <perm name="core_user_right_add" description="User Right add"/>
+    <perm name="core_user_right_edit" description="User Right edit"/>
+    <perm name="core_user_right_delete" description="User Right delete"/>
+  </permissions>
+  <library>
+    <dir name="AmunService">
+        <dir name="Core">
+            <include />
+        </dir>
+    </dir>
+  </library>
+  <database>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_api}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `serviceId` int(10) NOT NULL,
+  `priority` int(10) NOT NULL DEFAULT '0',
+  `endpoint` varchar(256) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `endpoint` (`endpoint`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_api_type}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `apiId` int(10) NOT NULL,
+  `type` varchar(512) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `apiId_type` (`apiId`,`type`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_gadget}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `globalId` varchar(36) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `title` varchar(32) NOT NULL,
+  `path` varchar(256) NOT NULL,
+  `param` text,
+  `cache` tinyint(1) NOT NULL,
+  `expire` varchar(25) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `globalId` (`globalId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_media}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `globalId` varchar(36) NOT NULL,
+  `rightId` int(10) DEFAULT NULL,
+  `name` varchar(128) NOT NULL,
+  `path` varchar(320) NOT NULL,
+  `type` enum('application','audio','text','image','video') NOT NULL,
+  `size` int(10) NOT NULL,
+  `mimeType` varchar(64) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `globalId` (`globalId`),
+  UNIQUE KEY `path` (`path`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_page}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `parentId` int(10) NOT NULL,
+  `globalId` varchar(36) NOT NULL,
+  `serviceId` int(10) NOT NULL,
+  `rightId` int(10) NOT NULL,
+  `status` int(10) NOT NULL,
+  `load` int(10) NOT NULL DEFAULT '3',
+  `sort` int(10) NOT NULL DEFAULT '0',
+  `path` varchar(256) NOT NULL,
+  `urlTitle` varchar(32) NOT NULL,
+  `title` varchar(32) NOT NULL,
+  `template` text NOT NULL,
+  `cache` tinyint(1) NOT NULL,
+  `expire` varchar(25) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `globalId` (`globalId`),
+  UNIQUE KEY `path` (`path`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_page_gadget}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `pageId` int(10) NOT NULL,
+  `gadgetId` int(10) NOT NULL,
+  `sort` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `pageGadgetId` (`pageId`,`gadgetId`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_page_option}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `optionId` int(10) NOT NULL,
+  `rightId` int(10) NOT NULL,
+  `srcPageId` int(10) NOT NULL,
+  `destPageId` int(10) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `href` varchar(512) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_page_right}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `pageId` int(10) NOT NULL,
+  `groupId` int(10) NOT NULL,
+  `newGroupId` int(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `pageGroupId` (`pageId`,`groupId`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_service}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `status` int(10) NOT NULL,
+  `source` varchar(128) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `path` varchar(256) NOT NULL,
+  `namespace` varchar(64) NOT NULL,
+  `type` varchar(256) NOT NULL,
+  `link` varchar(256) NOT NULL,
+  `author` varchar(512) NOT NULL,
+  `license` varchar(256) NOT NULL,
+  `version` varchar(16) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_content_service_option}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `serviceId` int(10) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=ascii;]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_api}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `status` int(10) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `email` varchar(64) NOT NULL,
+  `url` varchar(256) NOT NULL,
+  `title` varchar(64) NOT NULL,
+  `description` longtext NOT NULL,
+  `consumerKey` varchar(40) NOT NULL,
+  `consumerSecret` varchar(40) NOT NULL,
+  `callback` varchar(256) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `consumerKey` (`consumerKey`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_api_access}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `apiId` int(10) NOT NULL,
+  `userId` int(10) NOT NULL,
+  `allowed` tinyint(1) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `apiUserId` (`apiId`,`userId`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_api_request}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `apiId` int(10) NOT NULL,
+  `userId` int(10) NOT NULL,
+  `status` int(10) NOT NULL,
+  `ip` varchar(32) NOT NULL,
+  `nonce` varchar(16) NOT NULL,
+  `callback` varchar(256) NOT NULL,
+  `token` varchar(40) NOT NULL,
+  `tokenSecret` varchar(40) NOT NULL,
+  `verifier` varchar(32) NOT NULL,
+  `timestamp` varchar(25) NOT NULL,
+  `expire` varchar(25) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `token` (`token`)
+) ENGINE=MyISAM  DEFAULT CHARSET=ascii;]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_approval}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `table` varchar(64) NOT NULL,
+  `field` varchar(32) NOT NULL DEFAULT '',
+  `value` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_approval_record}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `userId` int(10) NOT NULL,
+  `type` enum('INSERT','UPDATE','DELETE') NOT NULL,
+  `table` varchar(64) NOT NULL,
+  `record` text NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_assoc}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `opEndpoint` varchar(256) NOT NULL,
+  `assocHandle` varchar(512) NOT NULL,
+  `assocType` enum('HMAC-SHA1','HMAC-SHA256') NOT NULL,
+  `sessionType` enum('DH-SHA1','DH-SHA256') NOT NULL,
+  `secret` varchar(256) NOT NULL,
+  `expires` int(10) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_connect}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `userId` int(10) NOT NULL,
+  `assocId` int(10) NOT NULL,
+  `status` int(10) NOT NULL DEFAULT '1',
+  `claimedId` varchar(256) NOT NULL,
+  `identity` varchar(256) NOT NULL,
+  `returnTo` varchar(256) NOT NULL,
+  `responseNonce` varchar(32) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_assoc_id` (`userId`,`assocId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_connect_access}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `userId` int(10) NOT NULL,
+  `returnTo` varchar(256) NOT NULL,
+  `allowed` tinyint(1) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `userId_returnTo` (`userId`,`returnTo`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_connect_assoc}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `assocHandle` varchar(256) NOT NULL,
+  `assocType` enum('HMAC-SHA1','HMAC-SHA256') NOT NULL,
+  `sessionType` enum('DH-SHA1','DH-SHA256'),
+  `secret` varchar(256) NOT NULL,
+  `expires` varchar(25) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `assocHandle` (`assocHandle`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_country}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `title` varchar(64) NOT NULL,
+  `code` varchar(2) NOT NULL,
+  `longitude` double NOT NULL,
+  `latitude` double NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_host}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `status` int(10) NOT NULL,
+  `name` varchar(256) NOT NULL,
+  `consumerKey` varchar(40) NOT NULL,
+  `consumerSecret` varchar(40) NOT NULL,
+  `url` varchar(256) NOT NULL,
+  `template` varchar(256) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_host_request}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `hostId` int(10) NOT NULL,
+  `userId` int(10) NOT NULL,
+  `ip` varchar(40) NOT NULL,
+  `token` varchar(40) NOT NULL,
+  `tokenSecret` varchar(40) NOT NULL,
+  `expire` varchar(25) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_log}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `userId` int(10) NOT NULL,
+  `refId` int(10) NOT NULL,
+  `type` enum('INSERT','UPDATE','DELETE') NOT NULL,
+  `table` varchar(64) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_mail}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) NOT NULL,
+  `from` varchar(64) NOT NULL,
+  `subject` varchar(256) NOT NULL,
+  `text` text NOT NULL,
+  `html` text NOT NULL,
+  `values` varchar(512) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `NAME` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_notify}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `priority` int(10) NOT NULL DEFAULT '0',
+  `table` varchar(64) NOT NULL,
+  `class` varchar(64) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_system_registry}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) NOT NULL,
+  `type` enum('STRING','INTEGER','FLOAT','BOOLEAN') NOT NULL,
+  `class` varchar(64) DEFAULT NULL,
+  `value` varchar(128) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_account}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `globalId` varchar(36) NOT NULL,
+  `groupId` int(10) NOT NULL,
+  `hostId` int(10) NOT NULL DEFAULT '0',
+  `countryId` int(10) NOT NULL,
+  `status` int(10) NOT NULL,
+  `identity` varchar(40) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `pw` varchar(40) NOT NULL,
+  `email` varchar(64) DEFAULT NULL,
+  `token` varchar(40) NOT NULL,
+  `ip` varchar(40) NOT NULL,
+  `gender` enum('male','female','undisclosed') NOT NULL DEFAULT 'undisclosed',
+  `profileUrl` varchar(256) NOT NULL,
+  `thumbnailUrl` varchar(256) DEFAULT NULL,
+  `longitude` double NOT NULL DEFAULT '0',
+  `latitude` double NOT NULL DEFAULT '0',
+  `timezone` varchar(32) NOT NULL DEFAULT 'UTC',
+  `lastSeen` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `identity` (`identity`),
+  UNIQUE KEY `token` (`token`),
+  UNIQUE KEY `hostIdName` (`hostId`,`name`),
+  UNIQUE KEY `globalId` (`globalId`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_activity}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `globalId` varchar(36) NOT NULL,
+  `parentId` int(10) NOT NULL DEFAULT '0',
+  `userId` int(10) NOT NULL,
+  `refId` int(10) NOT NULL DEFAULT '0',
+  `table` varchar(32) DEFAULT NULL,
+  `scope` int(10) NOT NULL DEFAULT '0',
+  `verb` enum('post','add','cancel','checkin','delete','favorite','follow','give','ignore','invite','join','leave','like','make-friend','play','receive','remove','remove-friend','request-friend','rsvp-maybe','rsvp-no','rsvp-yes','save','share','stop-following','tag','unfavorite','unlike','unsave','update') NOT NULL,
+  `summary` text NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `globalId` (`globalId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_activity_receiver}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `status` int(10) NOT NULL DEFAULT '1',
+  `activityId` int(10) NOT NULL,
+  `userId` int(10) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_activity_template}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `type` enum('INSERT','UPDATE','DELETE') NOT NULL,
+  `verb` enum('post','add','cancel','checkin','delete','favorite','follow','give','ignore','invite','join','leave','like','make-friend','play','receive','remove','remove-friend','request-friend','rsvp-maybe','rsvp-no','rsvp-yes','save','share','stop-following','tag','unfavorite','unlike','unsave','update') NOT NULL,
+  `table` varchar(64) NOT NULL,
+  `path` varchar(256) NOT NULL,
+  `summary` text NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `type_table` (`type`,`table`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_friend}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `status` int(10) NOT NULL,
+  `groupId` int(10) NOT NULL DEFAULT '0',
+  `userId` int(10) NOT NULL,
+  `friendId` int(10) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `userFriendId` (`userId`,`friendId`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_friend_group}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `userId` int(10) NOT NULL,
+  `title` varchar(64) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_group}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `title` varchar(32) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_group_right}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `groupId` int(10) NOT NULL,
+  `rightId` int(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `groupRightId` (`groupId`,`rightId`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
+  <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_user_right}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) NOT NULL,
+  `description` varchar(128) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii]]></query>
+     <query><![CDATA[INSERT INTO `{table.core_user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
+('INSERT', 'add', 'core_user_account', '', '<p><a href="{record.profileUrl}">{record.name}</a> has created an account</p>');]]></query>  
+  </database>
+</service>
