@@ -68,7 +68,7 @@
 			// redirect after one second
 			window.setTimeout(function(){
 
-				//window.location.href = psx_url;
+				window.location.href = psx_url;
 
 			}, 1000);
 		}
