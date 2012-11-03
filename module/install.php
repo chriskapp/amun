@@ -1446,7 +1446,7 @@ SQL;
 				// root
 				$record = Amun_Sql_Table_Registry::get('Core_Content_Page')->getRecord();
 				$record->setParentId(0);
-				$record->setServiceId(3);
+				$record->setServiceId(4);
 				$record->setStatus(AmunService_Core_Content_Page_Record::HIDDEN);
 				$record->setTitle($_SESSION['settingsTitle']);
 				$record->setTemplate(null);
@@ -1457,7 +1457,7 @@ SQL;
 				// home
 				$record = Amun_Sql_Table_Registry::get('Core_Content_Page')->getRecord();
 				$record->setParentId(1);
-				$record->setServiceId(3);
+				$record->setServiceId(4);
 				$record->setStatus(AmunService_Core_Content_Page_Record::NORMAL);
 				$record->setTitle('Home');
 				$record->setTemplate(null);
@@ -1468,7 +1468,7 @@ SQL;
 				// my
 				$record = Amun_Sql_Table_Registry::get('Core_Content_Page')->getRecord();
 				$record->setParentId(1);
-				$record->setServiceId(1);
+				$record->setServiceId(2);
 				$record->setStatus(AmunService_Core_Content_Page_Record::HIDDEN);
 				$record->setTitle('My');
 				$record->setTemplate(null);
@@ -1479,7 +1479,7 @@ SQL;
 				// profile
 				$record = Amun_Sql_Table_Registry::get('Core_Content_Page')->getRecord();
 				$record->setParentId(1);
-				$record->setServiceId(2);
+				$record->setServiceId(3);
 				$record->setStatus(AmunService_Core_Content_Page_Record::HIDDEN);
 				$record->setTitle('Profile');
 				$record->setTemplate(null);
@@ -1490,7 +1490,7 @@ SQL;
 				// help
 				$record = Amun_Sql_Table_Registry::get('Core_Content_Page')->getRecord();
 				$record->setParentId(1);
-				$record->setServiceId(3);
+				$record->setServiceId(4);
 				$record->setStatus(AmunService_Core_Content_Page_Record::HIDDEN);
 				$record->setTitle('Help');
 				$record->setTemplate(null);

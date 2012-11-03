@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: index.php 844 2012-09-16 13:02:23Z k42b3.x@googlemail.com $
+ *  $Id: index.php 646 2012-09-30 23:00:35Z k42b3.x@googlemail.com $
  *
  * psx
  * A object oriented and modular based PHP framework for developing

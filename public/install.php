@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: install.php 773 2012-07-02 20:18:21Z k42b3.x@googlemail.com $
+ *  $Id: index.php 646 2012-09-30 23:00:35Z k42b3.x@googlemail.com $
  *
  * psx
  * A object oriented and modular based PHP framework for developing
@@ -27,12 +27,13 @@ require_once('../library/PSX/Config.php');
 require_once('../library/PSX/Bootstrap.php');
 
 $config    = new PSX_Config('../configuration.php');
+$config['psx_module_default'] = 'install';
 $bootstrap = new PSX_Bootstrap($config);
+
+ob_start('responseProcess');
 
 try
 {
-	ob_start('responseProcess');
-
 	// initialize base class
 	$base = PSX_Base_Default::initInstance($config);
 
@@ -41,8 +42,6 @@ try
 
 	// get output
 	$content = ob_get_contents();
-
-	ob_end_clean();
 
 	// proccess response
 	$response = $module->processResponse($content);
@@ -91,6 +90,8 @@ HTML;
 	PSX_Log::error($e->getMessage() . "\n" . 'Stack trace:' . "\n" . $e->getTraceAsString() . "\n");
 }
 
+ob_end_clean();
+
 echo $response;
 
 /**
@@ -124,7 +125,7 @@ function responseProcess($content)
 function loadModule(PSX_Base $base)
 {
 	$config  = $base->getConfig();
-	$default = 'install';
+	$default = $config['psx_module_default'];
 	$input   = $config['psx_module_input'];
 	$length  = $config['psx_module_input_length'];
 
@@ -152,5 +153,3 @@ function loadModule(PSX_Base $base)
 
 	return $base->getLoader()->load($x);
 }
-
-

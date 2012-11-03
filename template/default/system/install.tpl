@@ -8,6 +8,7 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 	<script type="text/javascript">
 	var psx_url = '<?php echo $config['psx_url']; ?>';
+	var length;
 	var steps = [];
 	var step;
 
@@ -33,13 +34,16 @@
 			var cb    = step.callback;
 			var data  = typeof(cb) != 'undefined' ? cb.call(this) : {};
 
-			$('#status').html(title);
+			$('#progressStatus').html(title);
 
-			$.post(psx_url + '/install.php/install/' + path, data, function(response){
+			$.post(psx_url + '/install.php/' + path, data, function(response){
 
 				if(response.success)
 				{
+					var per = steps.length * 100 / length;
+
 					$('#console').append('[OK] ' + step.title + "\n");
+					$('#progressBar').css('width', (100 - per) + '%');
 
 					loadStep();
 				}
@@ -50,8 +54,7 @@
 					steps.unshift(step);
 
 					$('#console').append('[FAILED] ' + step.title + "\n" + response.msg + "\n");
-
-					$('#status').html('An error occured. Click <a href="#" onclick="$(\'#consoleWindow\').fadeIn();">here</a> to see the logs');
+					$('#progressStatus').html('An error occured. Click <a href="#" onclick="$(\'#consoleWindow\').slideDown();">here</a> to see the logs');
 
 					$('#submitButton').val('Retry');
 				}
@@ -60,12 +63,12 @@
 		}
 		else
 		{
-			$('#status').html('Installation of amun was successful!');
+			$('#progressStatus').html('Installation of amun was successful!');
 
 			// redirect after one second
 			window.setTimeout(function(){
 
-				window.location.href = psx_url;
+				//window.location.href = psx_url;
 
 			}, 1000);
 		}
@@ -75,9 +78,12 @@
 	{
 		if(validateName() && validatePw() && validateEmail() && validateTitle() && validateSubTitle())
 		{
-			loadStep();
+			$('#console').html('');
+			$('.progress').fadeIn();
 
-			$('#status').fadeIn();
+			length = steps.length;
+
+			loadStep();
 
 			return true;
 		}
@@ -93,19 +99,17 @@
 
 		if(!pattern.test($('#administratorName').val()))
 		{
-			$('#administratorName').attr('class', 'invalid');
 			$('#administratorName').focus();
 
+			$('#nameError').parents('.control-group').removeClass('success').addClass('error');
 			$('#nameError').html('Invalid length min 3 and max 32 signs. Must contain only a-z, A-Z, 0-9');
-			$('#nameError').fadeIn();
 
 			return false;
 		}
 		else
 		{
-			$('#administratorName').removeAttr('class');
-
-			$('#nameError').fadeOut();
+			$('#nameError').parents('.control-group').removeClass('error').addClass('success');
+			$('#nameError').html('');
 
 			return true;
 		}
@@ -168,19 +172,17 @@
 
 		if(!isValid)
 		{
-			$('#administratorPw').attr('class', 'invalid');
 			$('#administratorPw').focus();
 
+			$('#pwError').parents('.control-group').removeClass('success').addClass('error');
 			$('#pwError').html('Invalid length min ' + config.min_pw_length + ' and max ' + config.max_pw_length + ' signs. Must contain ' + config.pw_alpha_count + ' alpha, ' + config.pw_numeric_count + ' numeric and ' + config.pw_special_count + ' special signs');
-			$('#pwError').fadeIn();
 
 			return false;
 		}
 		else
 		{
-			$('#administratorPw').removeAttr('class');
-
-			$('#pwError').fadeOut();
+			$('#pwError').parents('.control-group').removeClass('error').addClass('success');
+			$('#pwError').html('');
 
 			return true;
 		}
@@ -192,19 +194,17 @@
 
 		if(!pattern.test($('#administratorEmail').val()))
 		{
-			$('#administratorEmail').attr('class', 'invalid');
 			$('#administratorEmail').focus();
 
+			$('#emailError').parents('.control-group').removeClass('success').addClass('error');
 			$('#emailError').html('Must be a valid Email format "user@domain.tld"');
-			$('#emailError').fadeIn();
 
 			return false;
 		}
 		else
 		{
-			$('#administratorEmail').removeAttr('class');
-
-			$('#emailError').fadeOut();
+			$('#emailError').parents('.control-group').removeClass('error').addClass('success');
+			$('#emailError').html('');
 
 			return true;
 		}
@@ -214,19 +214,17 @@
 	{
 		if($('#settingsTitle').val().length < 3 || $('#settingsTitle').val().length > 64)
 		{
-			$('#settingsTitle').attr('class', 'invalid');
 			$('#settingsTitle').focus();
 
+			$('#titleError').parents('.control-group').removeClass('success').addClass('error');
 			$('#titleError').html('Invalid length min 3 and max 64 signs');
-			$('#titleError').fadeIn();
 
 			return false;
 		}
 		else
 		{
-			$('#settingsTitle').removeAttr('class');
-
-			$('#titleError').fadeOut();
+			$('#titleError').parents('.control-group').removeClass('error').addClass('success');
+			$('#titleError').html('');
 
 			return true;
 		}
@@ -236,49 +234,38 @@
 	{
 		if($('#settingsSubTitle').val().length > 128)
 		{
-			$('#settingsSubTitle').attr('class', 'invalid');
 			$('#settingsSubTitle').focus();
 
+			$('#subTitleError').parents('.control-group').removeClass('success').addClass('error');
 			$('#subTitleError').html('Invalid length max 128 signs');
-			$('#subTitleError').fadeIn();
 
 			return false;
 		}
 		else
 		{
-			$('#settingsSubTitle').removeAttr('class');
-
-			$('#subTitleError').fadeOut();
+			$('#subTitleError').parents('.control-group').removeClass('error').addClass('success');
+			$('#subTitleError').html('');
 
 			return true;
 		}
 	}
 
-
 	addStep('setupCheckRequirements', 'Check requirements ...');
 	addStep('setupCreateTables', 'Create tables ...');
 	addStep('setupInsertData', 'Insert data ...');
 	addStep('setupInsertRegistry', 'Insert registry ...', function(){
-
 		return {
-
 			title: $('#settingsTitle').val(),
 			subTitle: $('#settingsSubTitle').val()
-
 		};
-
 	});
 	addStep('setupInsertGroup', 'Insert group ...');
 	addStep('setupInsertAdmin', 'Insert admin ...', function(){
-
 		return {
-
 			name: $('#administratorName').val(),
 			pw: $('#administratorPw').val(),
 			email: $('#administratorEmail').val()
-
 		};
-
 	});
 	addStep('setupInsertApi', 'Insert api ...');
 	addStep('setupInstallService', 'Install services ...');
@@ -287,49 +274,67 @@
 </head>
 <body>
 
-
-<div id="consoleWindow" style="display:none;">
-	<textarea readonly="readonly" id="console"></textarea>
-	<p><input type="button" value="Close" onclick="$('#consoleWindow').fadeOut();" /></p>
-</div>
-
 <div class="container">
-	<div class="alert alert-info" id="status" style="display:none;"></div>
+	<h1>Amun Installation</h1>
+	<div class="progress" style="display:none">
+		<div id="progressStatus"></div>
+		<div id="progressBar" class="bar" style="width:0%;"></div>
+	</div>
+	<form class="form-horizontal">
 	<fieldset>
 		<legend>Administrator</legend>
-		<p>
-			<label for="administratorName">Name</label>
-			<input type="text" id="administratorName" name="administratorName" value="<?php echo $administratorName; ?>" onchange="validateName();" />
-			<p class="alert alert-error" id="nameError" style="display:none;"></p>
-		</p>
-		<p>
-			<label for="administratorPw">Password</label>
-			<input type="password" id="administratorPw" name="administratorPw" value="<?php echo $administratorPw; ?>" onchange="validatePw();" />
-			<p class="alert alert-error" id="pwError" style="display:none;"></p>
-		</p>
-		<p>
-			<label for="administratorEmail">Email</label>
-			<input type="text" id="administratorEmail" name="administratorEmail" value="<?php echo $administratorEmail; ?>" onchange="validateEmail();" />
-			<p class="alert alert-error" id="emailError" style="display:none;"></p>
-		</p>
+		<div class="control-group">
+			<label class="control-label" for="administratorName">Name</label>
+			<div class="controls">
+				<input type="text" id="administratorName" name="administratorName" value="<?php echo $administratorName; ?>" onchange="validateName();" />
+				<span class="help-block" id="nameError"></span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="administratorPw">Password</label>
+			<div class="controls">
+				<input type="password" id="administratorPw" name="administratorPw" value="<?php echo $administratorPw; ?>" onchange="validatePw();" />
+				<span class="help-block" id="pwError"></span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="administratorEmail">Email</label>
+			<div class="controls">
+				<input type="text" id="administratorEmail" name="administratorEmail" value="<?php echo $administratorEmail; ?>" onchange="validateEmail();" />
+				<span class="help-block" id="emailError"></span>
+			</div>
+		</div>
 	</fieldset>
 
 	<fieldset>
 		<legend>Settings</legend>
-		<p>
-			<label for="settingsTitle">Title</label>
-			<input type="text" id="settingsTitle" name="settingsTitle" value="<?php echo $settingsTitle; ?>" onchange="validateTitle();" />
-			<p class="alert alert-error" id="titleError" style="display:none;"></p>
-		</p>
-		<p>
-			<label for="settingsSubTitle">Sub Title</label>
-			<input type="text" id="settingsSubTitle" name="settingsSubTitle" value="<?php echo $settingsSubTitle; ?>" onchange="validateSubTitle();" />
-			<p class="alert alert-error" id="subTitleError" style="display:none;"></p>
-		</p>
+		<div class="control-group">
+			<label class="control-label" for="settingsTitle">Title</label>
+			<div class="controls">
+				<input type="text" id="settingsTitle" name="settingsTitle" value="<?php echo $settingsTitle; ?>" onchange="validateTitle();" />
+				<span class="help-block" id="titleError"></span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="settingsSubTitle">Sub Title</label>
+			<div class="controls">
+				<input type="text" id="settingsSubTitle" name="settingsSubTitle" value="<?php echo $settingsSubTitle; ?>" onchange="validateSubTitle();" />
+				<span class="help-block" id="subTitleError"></span>
+			</div>
+		</div>
 	</fieldset>
+	</form>
+
+	<div id="consoleWindow" style="display:none;">
+		<fieldset>
+			<legend>Console</legend>
+			<textarea id="console"></textarea>
+			<p><input class="btn" type="button" value="Close" onclick="$('#consoleWindow').fadeOut();" /></p>
+		</fieldset>
+	</div>
 
 	<p>
-		<input class="btn btn-primary" type="button" id="submitButton" onclick="submitForm();" value="Install" />
+		<input class="btn btn-primary pull-right" type="button" id="submitButton" onclick="submitForm();" value="Install" />
 	</p>
 </div>
 
