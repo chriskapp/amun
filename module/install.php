@@ -1374,16 +1374,16 @@ SQL;
 				$handler->create($group);
 
 				$allowedRights = array(
-					'user_account_view',
-					'user_account_edit',
-					'user_activity_view',
-					'user_activity_add',
-					'user_friend_add',
-					'user_friend_delete',
-					'user_friend_group_add',
-					'user_friend_group_delete',
+					'core_user_account_view',
+					'core_user_account_edit',
+					'core_user_activity_view',
+					'core_user_activity_add',
+					'core_user_friend_add',
+					'core_user_friend_delete',
+					'core_user_friend_group_add',
+					'core_user_friend_group_delete',
 				);
-				$rights = $this->sql->getCol('SELECT id FROM ' . $this->registry['table.core_user_right'] . ' WHERE name LIKE "amun_service_%_view" OR name IN("' . implode('","', $allowedRights) . '")');
+				$rights = $this->sql->getCol('SELECT id FROM ' . $this->registry['table.core_user_right'] . ' WHERE (name LIKE "%_view" AND name NOT LIKE "core_%") OR name IN("' . implode('","', $allowedRights) . '")');
 
 				foreach($rights as $rightId)
 				{
@@ -1402,7 +1402,7 @@ SQL;
 
 				$handler->create($group);
 
-				$rights = $this->sql->getCol('SELECT id FROM ' . $this->registry['table.core_user_right'] . ' WHERE name LIKE "amun_service_%_view"');
+				$rights = $this->sql->getCol('SELECT id FROM ' . $this->registry['table.core_user_right'] . ' WHERE name LIKE "%_view" AND name NOT LIKE "core_%"');
 
 				foreach($rights as $rightId)
 				{
