@@ -66,7 +66,7 @@ class subscription extends Amun_Module_RestAbstract
 
 
 				// subscribe to hub
-				$handler = new Amun_Service_My_Subscription_Handler($this->user);
+				$handler = new AmunService_My_Subscription_Handler($this->user);
 				$handler->create($topic);
 
 

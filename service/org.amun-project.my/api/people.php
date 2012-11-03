@@ -53,7 +53,7 @@ class people extends Amun_Module_RestAbstract
 						'n:1',
 						'friendId'
 					)
-					->where('status', '=', Amun_User_Friend::NORMAL);
+					->where('status', '=', AmunService_Core_User_Friend_Record::NORMAL);
 
 				$fragments = $this->getUriFragments();
 				$params    = $this->getRequestParams();
@@ -88,7 +88,7 @@ class people extends Amun_Module_RestAbstract
 						$table->setColumns($params['fields']);
 					}
 
-					$resultSet = $table->getResultSet($params['startIndex'], $params['count'], $params['sortBy'], $params['sortOrder'], $params['filterBy'], $params['filterOp'], $params['filterValue'], $params['updatedSince'], PSX_Sql::FETCH_OBJECT, 'Amun_Service_My_People', array($table->getTable()));
+					$resultSet = $table->getResultSet($params['startIndex'], $params['count'], $params['sortBy'], $params['sortOrder'], $params['filterBy'], $params['filterOp'], $params['filterValue'], $params['updatedSince'], PSX_Sql::FETCH_OBJECT, 'AmunService_My_People', array($table->getTable()));
 
 					$this->setResponse($resultSet);
 				}

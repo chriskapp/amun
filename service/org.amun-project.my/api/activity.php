@@ -88,7 +88,7 @@ class activity extends Amun_Module_RestAbstract
 						$table->setColumns($params['fields']);
 					}
 
-					$resultSet = $table->getResultSet($params['startIndex'], $params['count'], $params['sortBy'], $params['sortOrder'], $params['filterBy'], $params['filterOp'], $params['filterValue'], $params['updatedSince'], PSX_Sql::FETCH_OBJECT, 'Amun_Service_My_Activity', array($table->getTable()));
+					$resultSet = $table->getResultSet($params['startIndex'], $params['count'], $params['sortBy'], $params['sortOrder'], $params['filterBy'], $params['filterOp'], $params['filterValue'], $params['updatedSince'], PSX_Sql::FETCH_OBJECT, 'AmunService_My_Activity', array($table->getTable()));
 
 					$this->setResponse($resultSet);
 				}
@@ -140,7 +140,7 @@ class activity extends Amun_Module_RestAbstract
 					->where('id', '=', $this->userId)
 					->getRow(PSX_Sql::FETCH_OBJECT);
 
-				if($account instanceof Amun_User_Account)
+				if($account instanceof AmunService_Core_User_Account_Record)
 				{
 					$writer = $writer->getWriter();
 

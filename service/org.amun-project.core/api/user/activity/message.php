@@ -114,7 +114,7 @@ class message extends Amun_Module_ApiAbstract
 
 			$userId  = $this->sql->select($this->registry['table.core_user_account'], array('id'), $con, PSX_Sql::SELECT_FIELD);
 			$user    = new Amun_User($userId, $this->registry);
-			$handler = new Amun_User_Activity_Handler($user);
+			$handler = new AmunService_Core_User_Activity_Handler($user);
 		}
 		else
 		{

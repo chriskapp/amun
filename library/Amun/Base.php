@@ -42,6 +42,7 @@ class Amun_Base extends PSX_Base
 	protected $user;
 
 	private $_service;
+	private $_serviceMapper;
 
 	public function setup()
 	{
@@ -90,22 +91,22 @@ class Amun_Base extends PSX_Base
 
 	public function getService($source)
 	{
-		$con = new PSX_Sql_Condition(array('source', '=', $source));
-		$id  = $this->sql->getField($this->registry['table.core_content_service'], $con);
-
-		if(!empty($id))
+		if(isset($this->_serviceMapper[$source]))
 		{
-			if(!isset($this->_service[$id]))
+			$id = $this->_serviceMapper[$source];
+
+			if(isset($this->_service[$id]))
 			{
-				$this->_service[$id] = new Amun_Service($id);
+				return $this->_service[$id];
 			}
+		}
 
-			return $this->_service[$id];
-		}
-		else
-		{
-			throw new Amun_Exception('Invalid service');
-		}
+		$service = new Amun_Service($source, $this->registry, $this->user);
+
+		$this->_service[$service->id]  = $service;
+		$this->_serviceMapper[$source] = $service->id;
+
+		return $service;
 	}
 
 	public function hasService($source)

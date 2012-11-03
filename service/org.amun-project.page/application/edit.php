@@ -46,14 +46,14 @@ class edit extends Amun_Module_ApplicationAbstract
 			{
 				$record = Amun_Sql_Table_Registry::get('Page')->getRecord($id);
 
-				$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/page/form?format=json&method=update&id=' . $record->id;
+				$url = $this->service->getApiEndpoint() . '/form?format=json&method=update&id=' . $record->id;
 
 				// add path
 				$this->path->add('Edit', $this->page->url . '/edit?id=' . $record->id);
 			}
 			else
 			{
-				$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/page/form?format=json&method=create&pageId=' . $this->page->id;
+				$url = $this->service->getApiEndpoint() . '/form?format=json&method=create&pageId=' . $this->page->id;
 
 				// add path
 				$this->path->add('Edit', $this->page->url . '/edit');

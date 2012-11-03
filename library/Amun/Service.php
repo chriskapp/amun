@@ -64,6 +64,18 @@ class Amun_Service
 		$this->registry = $registry;
 		$this->user     = $user;
 
+		if(is_numeric($id))
+		{
+			$column = 'id';
+		}
+		else if($id[0] == '/')
+		{
+			$column = 'path';
+		}
+		else
+		{
+			$column = 'source';
+		}
 
 		$status = AmunService_Core_Content_Service_Record::NORMAL;
 		$sql    = <<<SQL
@@ -81,7 +93,7 @@ SELECT
 
 	FROM {$this->registry['table.core_content_service']} `service`
 
-		WHERE `service`.`id` = ?
+		WHERE `service`.`{$column}` = ?
 SQL;
 
 		$row = $this->sql->getRow($sql, array($id));

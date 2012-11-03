@@ -47,7 +47,7 @@ class navigation extends Amun_Module_GadgetAbstract
 		$result = Amun_Sql_Table_Registry::get('Core_Content_Page')
 			->select(array('id', 'urlTitle', 'title', 'path'))
 			->where('parentId', '=', $pageId)
-			->where('status', '=', Amun_Content_Page::NORMAL)
+			->where('status', '=', AmunService_Core_Content_Page_Record::NORMAL)
 			->orderBy('sort', PSX_Sql::SORT_ASC)
 			->getAll();
 

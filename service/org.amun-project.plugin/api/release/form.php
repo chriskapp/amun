@@ -35,57 +35,9 @@
  */
 class form extends Amun_Module_FormAbstract
 {
-	public function onGet()
+	protected function getCreateForm()
 	{
-		if($this->user->hasRight('service_plugin_release_view'))
-		{
-			try
-			{
-				$method  = $this->get->method('string');
-				$builder = $this->getForm();
-
-				switch($method)
-				{
-					case 'create':
-
-						$form = $builder->create($this->get->pluginId('integer'));
-
-						break;
-
-					case 'update':
-
-						$form = $builder->update($this->get->id('integer'));
-
-						break;
-
-					case 'delete':
-
-						$form = $builder->delete($this->get->id('integer'));
-
-						break;
-
-					default:
-
-						throw new Amun_Exception('Invalid method');
-
-						break;
-				}
-
-				$this->setResponse($form);
-			}
-			catch(Exception $e)
-			{
-				$msg = new PSX_Data_Message($e->getMessage(), false);
-
-				$this->setResponse($msg);
-			}
-		}
-		else
-		{
-			$msg = new PSX_Data_Message('Access not allowed', false);
-
-			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
-		}
+		return $this->form->create($this->get->pluginId('integer'));
 	}
 }
 

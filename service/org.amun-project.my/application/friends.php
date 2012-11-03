@@ -33,7 +33,7 @@
  * @subpackage my
  * @version    $Revision: 875 $
  */
-class friends extends Amun_Service_My_FriendsAbstract
+class friends extends AmunService_My_FriendsAbstract
 {
 	public function onLoad()
 	{
@@ -76,7 +76,7 @@ class friends extends Amun_Service_My_FriendsAbstract
 				'friendId'
 			)
 			->where('authorId', '=', $this->user->id)
-			->where('status', '=', Amun_User_Friend::NORMAL);
+			->where('status', '=', AmunService_Core_User_Friend_Record::NORMAL);
 
 		// search
 		$search = $this->post->search('string');

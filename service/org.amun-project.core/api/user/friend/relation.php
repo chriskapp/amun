@@ -48,10 +48,10 @@ class relation extends Amun_Module_ApiAbstract
 		{
 			try
 			{
-				$relation = new Amun_User_Friend_Relation();
+				$relation = new AmunService_Core_User_Friend_Relation();
 				$relation->import($this->getRequest(PSX_Data_ReaderInterface::FORM));
 
-				$handler = new Amun_User_Friend_Handler($this->user);
+				$handler = new AmunService_Core_User_Friend_Handler($this->user);
 
 
 				// check if anonymous

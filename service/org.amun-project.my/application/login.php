@@ -63,16 +63,16 @@ class login extends Amun_Module_ApplicationAbstract
 			$this->template->assign('provider', $provider);
 
 			// check login attempts
-			$this->attempt = new Amun_Service_My_Attempt($this->registry);
+			$this->attempt = new AmunService_My_Attempt($this->registry);
 			$this->stage   = $this->attempt->getStage();
 
-			if($this->stage == Amun_Service_My_Attempt::TRYING)
+			if($this->stage == AmunService_My_Attempt::TRYING)
 			{
 				$captcha = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/system/captcha';
 
 				$this->template->assign('captcha', $captcha);
 			}
-			else if($this->stage == Amun_Service_My_Attempt::ABUSE)
+			else if($this->stage == AmunService_My_Attempt::ABUSE)
 			{
 				throw new Amun_Exception('Your IP ' . $_SERVER['REMOTE_ADDR'] . ' is banned for 30 minutes because of too many wrong logins');
 			}
@@ -99,8 +99,8 @@ class login extends Amun_Module_ApplicationAbstract
 		}
 
 		$redirect = $this->getRedirect($this->post);
-		$identity = $this->post->identity('string', array(new Amun_User_Account_Filter_Identity()));
-		$pw       = $this->post->pw('string', array(new Amun_User_Account_Filter_Pw()));
+		$identity = $this->post->identity('string', array(new AmunService_Core_User_Account_Filter_Identity()));
+		$pw       = $this->post->pw('string', array(new AmunService_Core_User_Account_Filter_Pw()));
 		$captcha  = $this->post->captcha('integer');
 
 		try
@@ -113,7 +113,7 @@ class login extends Amun_Module_ApplicationAbstract
 			if(($openid = $this->isOpenidProvider($identity)) === false)
 			{
 				// check captcha if needed
-				if($this->stage == Amun_Service_My_Attempt::TRYING)
+				if($this->stage == AmunService_My_Attempt::TRYING)
 				{
 					if(!Amun_Captcha::factory($this->config['amun_captcha'])->verify($captcha))
 					{
@@ -143,7 +143,7 @@ class login extends Amun_Module_ApplicationAbstract
 								$this->session->set('amun_t', time());
 
 								// clear attempts
-								if($this->stage != Amun_Service_My_Attempt::NONE)
+								if($this->stage != AmunService_My_Attempt::NONE)
 								{
 									$this->attempt->clear();
 								}
@@ -165,7 +165,7 @@ class login extends Amun_Module_ApplicationAbstract
 							$this->attempt->increase();
 
 							// if none assign captcha
-							if($this->stage == Amun_Service_My_Attempt::NONE)
+							if($this->stage == AmunService_My_Attempt::NONE)
 							{
 								$captcha = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/system/captcha';
 
@@ -382,35 +382,25 @@ class login extends Amun_Module_ApplicationAbstract
 	{
 		switch($status)
 		{
-			case Amun_User_Account::NORMAL:
-			case Amun_User_Account::ADMINISTRATOR:
-
+			case AmunService_Core_User_Account_Record::NORMAL:
+			case AmunService_Core_User_Account_Record::ADMINISTRATOR:
 				return true;
-
 				break;
 
-			case Amun_User_Account::NOT_ACTIVATED:
-
+			case AmunService_Core_User_Account_Record::NOT_ACTIVATED:
 				return 'Account is not activated';
-
 				break;
 
-			case Amun_User_Account::BANNED:
-
+			case AmunService_Core_User_Account_Record::BANNED:
 				return 'Account is banned';
-
 				break;
 
-			case Amun_User_Account::RECOVER:
-
+			case AmunService_Core_User_Account_Record::RECOVER:
 				return 'Account is under recovery';
-
 				break;
 
 			default:
-
 				return 'Unknown status';
-
 				break;
 		}
 	}

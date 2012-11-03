@@ -77,7 +77,7 @@ class callback extends Amun_Module_DefaultAbstract
 
 								$user = new Amun_User($record->getAuthor()->userId, $this->registry);
 
-								$handler = new Amun_Service_Googleproject_Commit_Handler($user);
+								$handler = new AmunService_Googleproject_Commit_Handler($user);
 								$handler->create($record);
 
 								$count++;

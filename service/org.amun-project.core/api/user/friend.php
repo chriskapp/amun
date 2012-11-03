@@ -49,7 +49,7 @@ class friend extends Amun_Module_RestAbstract
 				'n:1',
 				'friendId'
 			)
-			->where('status', '=', Amun_User_Friend::NORMAL);
+			->where('status', '=', AmunService_Core_User_Friend_Record::NORMAL);
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)

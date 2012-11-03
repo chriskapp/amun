@@ -141,7 +141,7 @@ class foaf extends Amun_Module_ApiAbstract
 				'friendId'
 			)
 			->where('authorId', '=', $userId)
-			->where('status', '=', Amun_User_Friend::NORMAL)
+			->where('status', '=', AmunService_Core_User_Friend_Record::NORMAL)
 			->getAll();
 	}
 }

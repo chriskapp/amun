@@ -104,7 +104,7 @@ abstract class Amun_Module_FormAbstract extends Amun_Module_ApiAbstract
 
 	protected function getForm()
 	{
-		return $this->service->getFormInstance();
+		return $this->service->getForm();
 	}
 }
 

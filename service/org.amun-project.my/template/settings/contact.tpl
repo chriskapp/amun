@@ -42,7 +42,7 @@
 		<?php if(count($contacts) > 0): ?>
 		<?php foreach($contacts as $contact): ?>
 		<tr>
-			<?php if($contact->status == Amun_Service_My_Contact::UNCHECKED): ?>
+			<?php if($contact->status == AmunService_My_Contact_Record::UNCHECKED): ?>
 			<td><div style="overflow:hidden;width:380px;color:#999;" data-type="<?php echo $contact->type; ?>"><?php echo $contact->getValue(); ?></div></td>
 			<?php else: ?>
 			<td><div style="overflow:hidden;width:380px;" data-type="<?php echo $contact->type; ?>"><?php echo $contact->getValue(); ?></div></td>

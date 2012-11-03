@@ -95,12 +95,12 @@ class callback extends Amun_Module_ApplicationAbstract
 					// create user account
 					if(empty($userId))
 					{
-						$handler = new Amun_User_Account_Handler($this->user);
+						$handler = new AmunService_Core_User_Account_Handler($this->user);
 
 						$account = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord();
 						$account->setGroupId($this->registry['core.default_user_group']);
 						$account->setHostId($hostId);
-						$account->setStatus($hostId > 0 ? Amun_User_Account::REMOTE : Amun_User_Account::NORMAL);
+						$account->setStatus($hostId > 0 ? AmunService_Core_User_Account_Record::REMOTE : AmunService_Core_User_Account_Record::NORMAL);
 						$account->setIdentity($identity);
 						$account->setName($name);
 						$account->setPw(Amun_Security::generatePw());

@@ -58,10 +58,10 @@ class activate extends Amun_Module_ApplicationAbstract
 				$account = Amun_Sql_Table_Registry::get('Core_User_Account')
 					->select(array('id', 'ip', 'date'))
 					->where('token', '=', $token)
-					->where('status', '=', Amun_User_Account::NOT_ACTIVATED)
+					->where('status', '=', AmunService_Core_User_Account_Record::NOT_ACTIVATED)
 					->getRow(PSX_Sql::FETCH_OBJECT);
 
-				if($account instanceof Amun_User_Account)
+				if($account instanceof AmunService_Core_User_Account_Record)
 				{
 					try
 					{
@@ -75,7 +75,7 @@ class activate extends Amun_Module_ApplicationAbstract
 
 						if($_SERVER['REMOTE_ADDR'] == $account->ip)
 						{
-							$account->setStatus(Amun_User_Account::NORMAL);
+							$account->setStatus(AmunService_Core_User_Account_Record::NORMAL);
 
 							$handler = new Amun_User_Account_Handler($this->user);
 							$handler->update($account);
@@ -92,7 +92,7 @@ class activate extends Amun_Module_ApplicationAbstract
 					{
 						$con = new PSX_Sql_Condition();
 						$con->add('id', '=', $account->id);
-						$con->add('status', '=', Amun_User_Account::NOT_ACTIVATED);
+						$con->add('status', '=', AmunService_Core_User_Account_Record::NOT_ACTIVATED);
 
 						$this->sql->delete($this->registry['table.user_account'], $con);
 

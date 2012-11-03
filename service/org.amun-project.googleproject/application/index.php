@@ -47,7 +47,7 @@ class index extends Amun_Module_ApplicationAbstract
 			$this->template->assign('recordProject', $this->project);
 
 			// load commits
-			if($this->project instanceof Amun_Service_Googleproject)
+			if($this->project instanceof AmunService_Googleproject_Record)
 			{
 				$resultCommit = $this->getCommits();
 

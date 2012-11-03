@@ -58,7 +58,7 @@ class index extends Amun_Module_DefaultAbstract
 					{
 						$this->base->setUser($row['id']);
 
-						$root = new Amun_Service_Webdav_Page(1);
+						$root = new AmunService_Webdav_Page(1);
 						$url  = new PSX_Url($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/webdav');
 
 						$server = new Sabre_DAV_Server($root);
@@ -82,11 +82,9 @@ class index extends Amun_Module_DefaultAbstract
 	{
 		switch($status)
 		{
-			case Amun_User_Account::NORMAL:
-			case Amun_User_Account::ADMINISTRATOR:
-
+			case AmunService_Core_User_Account_Record::NORMAL:
+			case AmunService_Core_User_Account_Record::ADMINISTRATOR:
 				return true;
-
 				break;
 		}
 

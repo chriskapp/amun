@@ -57,7 +57,7 @@ class index extends Amun_Module_ApplicationAbstract
 			$phpResponse = null;
 			$phpError    = null;
 
-			if($recordPhp instanceof Amun_Service_Php)
+			if($recordPhp instanceof AmunService_Php_Record)
 			{
 				ob_start();
 

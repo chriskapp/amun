@@ -54,13 +54,13 @@ class lrdd extends Amun_Module_ApiAbstract
 
 			switch(true)
 			{
-				case $record instanceof Amun_User_Account:
+				case $record instanceof AmunService_Core_User_Account_Record:
 
 					$this->buildAccountXrd($record);
 
 					break;
 
-				case $record instanceof Amun_Content_Page:
+				case $record instanceof AmunService_Core_Content_Page_Record:
 
 					$this->buildPageXrd($record);
 
@@ -84,7 +84,7 @@ class lrdd extends Amun_Module_ApiAbstract
 		}
 	}
 
-	private function buildAccountXrd(Amun_User_Account $account)
+	private function buildAccountXrd(AmunService_Core_User_Account_Record $account)
 	{
 		// subject
 		$this->writer->writeElement('Subject', $this->uri);
@@ -155,7 +155,7 @@ class lrdd extends Amun_Module_ApiAbstract
 		}
 	}
 
-	private function buildPageXrd(Amun_Content_Page $page)
+	private function buildPageXrd(AmunService_Core_Content_Page_Record $page)
 	{
 		// subject
 		$subject = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $page->path . $this->config['amun_page_delimiter'];
@@ -201,7 +201,7 @@ class lrdd extends Amun_Module_ApiAbstract
 					->where('name', '=', $name)
 					->getRow(PSX_Sql::FETCH_OBJECT);
 
-				if($account instanceof Amun_User_Account)
+				if($account instanceof AmunService_Core_User_Account_Record)
 				{
 					return $account;
 				}
@@ -243,7 +243,7 @@ class lrdd extends Amun_Module_ApiAbstract
 					->where('path', '=', $path)
 					->getRow(PSX_Sql::FETCH_OBJECT);
 
-				if($page instanceof Amun_Content_Page)
+				if($page instanceof AmunService_Core_Content_Page_Record)
 				{
 					return $page;
 				}

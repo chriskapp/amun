@@ -33,7 +33,7 @@
  * @subpackage my
  * @version    $Revision: 875 $
  */
-class group extends Amun_Service_My_FriendsAbstract
+class group extends AmunService_My_FriendsAbstract
 {
 	public function onLoad()
 	{

@@ -33,7 +33,7 @@
  * @subpackage my
  * @version    $Revision: 875 $
  */
-class request extends Amun_Service_My_FriendsAbstract
+class request extends AmunService_My_FriendsAbstract
 {
 	public function onLoad()
 	{
@@ -76,7 +76,7 @@ class request extends Amun_Service_My_FriendsAbstract
 				'friendId'
 			)
 			->where('friendId', '=', $this->user->id)
-			->where('status', '=', Amun_User_Friend::REQUEST);
+			->where('status', '=', AmunService_Core_User_Friend_Record::REQUEST);
 
 
 		// get data

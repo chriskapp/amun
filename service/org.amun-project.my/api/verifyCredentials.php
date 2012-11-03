@@ -43,7 +43,7 @@ class verifyCredentials extends Amun_Module_ApiAbstract
 				->select(array('id', 'groupId', 'status', 'name', 'gender', 'profileUrl', 'thumbnailUrl', 'timezone', 'updated', 'date'))
 				->where('id', '=', $this->user->id);
 
-			$account = $select->getRow(PSX_Sql::FETCH_OBJECT, 'Amun_Service_My_Credentials', array($select->getTable(), $this->user));
+			$account = $select->getRow(PSX_Sql::FETCH_OBJECT, 'AmunService_My_Credentials', array($select->getTable(), $this->user));
 
 			$this->setResponse($account);
 		}

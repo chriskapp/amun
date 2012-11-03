@@ -41,7 +41,7 @@ class index extends Amun_Module_ApplicationAbstract
 		{
 			$account = $this->getAccount();
 
-			if(!$account instanceof Amun_User_Account)
+			if(!$account instanceof AmunService_Core_User_Account_Record)
 			{
 				throw new Amun_Exception('Invalid user');
 			}
@@ -50,7 +50,7 @@ class index extends Amun_Module_ApplicationAbstract
 
 
 			// check whether remote profile
-			if($account->status == Amun_User_Account::REMOTE)
+			if($account->status == AmunService_Core_User_Account_Record::REMOTE)
 			{
 				PSX_Base::setResponseCode(301);
 				header('Location: ' . $account->profileUrl);

@@ -105,7 +105,7 @@ class callback extends Amun_PubSubHubBub_CallbackAbstract
 
 
 		// insert entries
-		$handler = new Amun_User_Activity_Handler($this->user);
+		$handler = new AmunService_Core_User_Activity_Handler($this->user);
 
 		foreach($atom as $entry)
 		{

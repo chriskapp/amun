@@ -81,11 +81,9 @@ abstract class Amun_Module_ApiAbstract extends Amun_Oauth
 	public function setService()
 	{
 		// set service
-		$parts     = explode('/', $this->basePath, 2);
-		$con       = new PSX_Sql_Condition(array('source', '=', $parts[0]));
-		$serviceId = Amun_Sql_Table_Registry::get('Core_Content_Service')->getField('id', $con);
+		$parts = explode('/', $this->basePath, 2);
 
-		$this->service  = new Amun_Service($serviceId, $this->registry, $this->user);
+		$this->service = $this->base->getService($parts[0]);
 		$this->basePath = 'api' . $this->service->path;
 	}
 }

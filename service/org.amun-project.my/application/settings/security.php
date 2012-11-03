@@ -33,7 +33,7 @@
  * @subpackage my
  * @version    $Revision: 875 $
  */
-class security extends Amun_Service_My_SettingsAbstract
+class security extends AmunService_My_SettingsAbstract
 {
 	public function onLoad()
 	{
@@ -55,9 +55,9 @@ class security extends Amun_Service_My_SettingsAbstract
 	{
 		try
 		{
-			$currentPw = $this->post->current_password('string', array(new Amun_User_Account_Filter_Pw(), new Amun_Filter_Salt()), 'Current password');
-			$newPw     = $this->post->new_password('string', array(new Amun_User_Account_Filter_Pw()), 'New password');
-			$verifyPw  = $this->post->verify_password('string', array(new Amun_User_Account_Filter_Pw()), 'Verify password');
+			$currentPw = $this->post->current_password('string', array(new AmunService_Core_User_Account_Filter_Pw(), new Amun_Filter_Salt()), 'Current password');
+			$newPw     = $this->post->new_password('string', array(new AmunService_Core_User_Account_Filter_Pw()), 'New password');
+			$verifyPw  = $this->post->verify_password('string', array(new AmunService_Core_User_Account_Filter_Pw()), 'Verify password');
 
 			if(!$this->validate->hasError())
 			{
@@ -72,7 +72,7 @@ class security extends Amun_Service_My_SettingsAbstract
 				{
 					$user->setPw($newPw);
 
-					$handler = new Amun_User_Account_Handler($this->user);
+					$handler = new AmunService_Core_User_Account_Handler($this->user);
 					$handler->update($user);
 
 					$this->template->assign('success', true);

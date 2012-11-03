@@ -33,7 +33,7 @@
  * @subpackage my
  * @version    $Revision: 875 $
  */
-class notification extends Amun_Service_My_SettingsAbstract
+class notification extends AmunService_My_SettingsAbstract
 {
 	public function onLoad()
 	{

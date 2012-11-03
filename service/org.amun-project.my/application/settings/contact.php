@@ -33,7 +33,7 @@
  * @subpackage my
  * @version    $Revision: 875 $
  */
-class contact extends Amun_Service_My_SettingsAbstract
+class contact extends AmunService_My_SettingsAbstract
 {
 	public function onLoad()
 	{

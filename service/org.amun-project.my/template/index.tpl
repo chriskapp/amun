@@ -68,7 +68,7 @@
 				<img src="<?php echo $activity->authorThumbnailUrl; ?>" alt="avatar" />
 			</div>
 			<div class="pull-left amun-service-my-activity-entry-content">
-				<?php if($activity->receiverStatus == Amun_User_Activity_Receiver::VISIBLE): ?>
+				<?php if($activity->receiverStatus == AmunService_Core_User_Activity_Receiver_Record::VISIBLE): ?>
 					<div class="pull-right"><a class="btn" href="#" onclick="amun.services.my.setActivityStatus(<?php echo $activity->receiverId . ',\'' . $receiverUrl . '\',this'; ?>);return false;" data-status="2" title="Hides the activity on your public profile">Hide</a></div>
 				<?php else: ?>
 					<div class="pull-right"><a class="btn" href="#" onclick="amun.services.my.setActivityStatus(<?php echo $activity->receiverId . ',\'' . $receiverUrl . '\',this'; ?>);return false;" data-status="1" title="Shows the activity on your public profile">Show</a></div>

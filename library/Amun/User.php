@@ -168,12 +168,12 @@ SQL;
 
 	public function isAdministrator()
 	{
-		return $this->status == AmunService_Core_User_Account::ADMINISTRATOR;
+		return $this->status == AmunService_Core_User_Account_Record::ADMINISTRATOR;
 	}
 
 	public function isRemote()
 	{
-		return $this->status == AmunService_Core_User_Account::REMOTE;
+		return $this->status == AmunService_Core_User_Account_Record::REMOTE;
 	}
 
 	public function isAnonymous()
@@ -301,7 +301,7 @@ SQL;
 		return Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord($this->id);
 	}
 
-	public function hasFriend(AmunService_Core_User_Account $account)
+	public function hasFriend(AmunService_Core_User_Account_Record $account)
 	{
 		$con = new PSX_Sql_Condition();
 		$con->add('userId', '=', $this->id);

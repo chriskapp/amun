@@ -33,7 +33,7 @@
  * @subpackage my
  * @version    $Revision: 875 $
  */
-class index extends Amun_Service_My_MyAbstract
+class index extends AmunService_My_MyAbstract
 {
 	public function onLoad()
 	{
@@ -45,7 +45,7 @@ class index extends Amun_Service_My_MyAbstract
 		$this->template->assign('account', $account);
 
 		// check whether remote profile
-		if($account->status == Amun_User_Account::REMOTE)
+		if($account->status == AmunService_Core_User_Account_Record::REMOTE)
 		{
 			header('HTTP/1.1 301 Moved Permanently');
 			header('Location: ' . $account->profileUrl);

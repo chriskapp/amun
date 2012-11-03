@@ -39,8 +39,6 @@ class Amun_Page
 	private $registry;
 	private $user;
 
-	private $_service;
-
 	public $id;
 	public $parentId;
 	public $serviceId;
@@ -130,12 +128,7 @@ SQL;
 
 	public function getService()
 	{
-		if($this->_service === null)
-		{
-			$this->_service = new Amun_Service($this->serviceId, $this->registry, $this->user);
-		}
-
-		return $this->_service;
+		return Amun_Base::getInstance()->getService($this->serviceId);
 	}
 
 	public function getId()

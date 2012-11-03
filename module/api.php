@@ -60,7 +60,7 @@ class api extends Amun_Module_DefaultAbstract
 					`source`,
 					`path`
 				FROM
-					" . $this->registry['table.amun_content_service'] . "
+					" . $this->registry['table.core_content_service'] . "
 				WHERE
 					`path` LIKE SUBSTRING(?, 1, CHAR_LENGTH(`path`))
 				LIMIT 1";

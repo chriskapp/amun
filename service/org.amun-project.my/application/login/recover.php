@@ -74,9 +74,9 @@ class recover extends Amun_Module_ApplicationAbstract
 					->where('identity', '=', sha1(Amun_Security::getSalt() . $email))
 					->getRow(PSX_Sql::FETCH_OBJECT);
 
-				if($account instanceof Amun_User_Account)
+				if($account instanceof AmunService_Core_User_Account_Record)
 				{
-					if(!in_array($account->status, array(Amun_User_Account::NORMAL, Amun_User_Account::ADMINISTRATOR)))
+					if(!in_array($account->status, array(AmunService_Core_User_Account_Record::NORMAL, AmunService_Core_User_Account_Record::ADMINISTRATOR)))
 					{
 						throw new Amun_Exception('Account has an invalid status');
 					}
@@ -88,10 +88,10 @@ class recover extends Amun_Module_ApplicationAbstract
 						$date  = new DateTime('NOW', $this->registry['core.default_timezone']);
 
 						// update status
-						$account->setStatus(Amun_User_Account::RECOVER);
+						$account->setStatus(AmunService_Core_User_Account_Record::RECOVER);
 						$account->setToken($token);
 
-						$handler = new Amun_User_Account_Handler($this->user);
+						$handler = new AmunService_Core_User_Account_Handler($this->user);
 						$handler->update($account);
 
 						// send mail
