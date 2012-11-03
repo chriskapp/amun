@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="0d1b37e3cb6c73131591241d3691882981cdfabe">
+<service xmlns="http://amun-project.org" signature="0a07c777cdb5e7ec4e0d0829b3cf75e75f13fafd">
   <status>normal</status>
   <name>core</name>
   <path>/core</path>
@@ -160,118 +160,118 @@
     </service>
   </api>
   <permissions>
-    <perm name="core_view" description="Core view"/>
-    <perm name="core_add" description="Core add"/>
-    <perm name="core_edit" description="Core edit"/>
-    <perm name="core_delete" description="Core delete"/>
-    <perm name="core_content_gadget_view" description="Content Gadget view"/>
-    <perm name="core_content_gadget_add" description="Content Gadget add"/>
-    <perm name="core_content_gadget_edit" description="Content Gadget edit"/>
-    <perm name="core_content_gadget_delete" description="Content Gadget delete"/>
-    <perm name="core_content_media_view" description="Content Media view"/>
-    <perm name="core_content_media_add" description="Content Media add"/>
-    <perm name="core_content_media_edit" description="Content Media edit"/>
-    <perm name="core_content_media_delete" description="Content Media delete"/>
-    <perm name="core_content_page_view" description="Content Page view"/>
-    <perm name="core_content_page_add" description="Content Page add"/>
-    <perm name="core_content_page_edit" description="Content Page edit"/>
-    <perm name="core_content_page_delete" description="Content Page delete"/>
-    <perm name="core_content_page_gadget_view" description="Content Page Gadget view"/>
-    <perm name="core_content_page_gadget_add" description="Content Page Gadget add"/>
-    <perm name="core_content_page_gadget_edit" description="Content Page Gadget edit"/>
-    <perm name="core_content_page_gadget_delete" description="Content Page Gadget delete"/>
-    <perm name="core_content_page_option_view" description="Content Page Option view"/>
-    <perm name="core_content_page_option_add" description="Content Page Option add"/>
-    <perm name="core_content_page_option_edit" description="Content Page Option edit"/>
-    <perm name="core_content_page_option_delete" description="Content Page Option delete"/>
-    <perm name="core_content_page_right_view" description="Content Page Right view"/>
-    <perm name="core_content_page_right_add" description="Content Page Right add"/>
-    <perm name="core_content_page_right_edit" description="Content Page Right edit"/>
-    <perm name="core_content_page_right_delete" description="Content Page Right delete"/>
-    <perm name="core_content_service_view" description="Content Service view"/>
-    <perm name="core_content_service_add" description="Content Service add"/>
-    <perm name="core_content_service_edit" description="Content Service edit"/>
-    <perm name="core_content_service_delete" description="Content Service delete"/>
-    <perm name="core_system_api_view" description="System API view"/>
-    <perm name="core_system_api_add" description="System API add"/>
-    <perm name="core_system_api_edit" description="System API edit"/>
-    <perm name="core_system_api_delete" description="System API delete"/>
-    <perm name="core_system_api_access_view" description="System API Access view"/>
-    <perm name="core_system_api_access_add" description="System API Access add"/>
-    <perm name="core_system_api_access_edit" description="System API Access edit"/>
-    <perm name="core_system_api_access_delete" description="System API Access delete"/>
-    <perm name="core_system_api_request_view" description="System API Request view"/>
-    <perm name="core_system_api_request_add" description="System API Request add"/>
-    <perm name="core_system_api_request_edit" description="System API Request edit"/>
-    <perm name="core_system_api_request_delete" description="System API Request delete"/>
-    <perm name="core_system_approval_view" description="System Approval view"/>
-    <perm name="core_system_approval_add" description="System Approval add"/>
-    <perm name="core_system_approval_edit" description="System Approval edit"/>
-    <perm name="core_system_approval_delete" description="System Approval delete"/>
-    <perm name="core_system_approval_record_view" description="System Approval Record view"/>
-    <perm name="core_system_approval_record_add" description="System Approval Record add"/>
-    <perm name="core_system_approval_record_edit" description="System Approval Record edit"/>
-    <perm name="core_system_approval_record_delete" description="System Approval Record delete"/>
-    <perm name="core_system_connect_view" description="System Connect view"/>
-    <perm name="core_system_connect_add" description="System Connect add"/>
-    <perm name="core_system_connect_edit" description="System Connect edit"/>
-    <perm name="core_system_connect_delete" description="System Connect delete"/>
-    <perm name="core_system_connect_access_view" description="System Connect Access view"/>
-    <perm name="core_system_connect_access_add" description="System Connect Access add"/>
-    <perm name="core_system_connect_access_edit" description="System Connect Access edit"/>
-    <perm name="core_system_connect_access_delete" description="System Connect Access delete"/>
-    <perm name="core_system_country_view" description="System Country view"/>
-    <perm name="core_system_country_add" description="System Country add"/>
-    <perm name="core_system_country_edit" description="System Country edit"/>
-    <perm name="core_system_country_delete" description="System Country delete"/>
-    <perm name="core_system_host_view" description="System Host view"/>
-    <perm name="core_system_host_add" description="System Host add"/>
-    <perm name="core_system_host_edit" description="System Host edit"/>
-    <perm name="core_system_host_delete" description="System Host delete"/>
-    <perm name="core_system_log_view" description="System Log view"/>
-    <perm name="core_system_log_add" description="System Log add"/>
-    <perm name="core_system_log_edit" description="System Log edit"/>
-    <perm name="core_system_log_delete" description="System Log delete"/>
-    <perm name="core_system_mail_view" description="System Mail view"/>
-    <perm name="core_system_mail_add" description="System Mail add"/>
-    <perm name="core_system_mail_edit" description="System Mail edit"/>
-    <perm name="core_system_mail_delete" description="System Mail delete"/>
-    <perm name="core_system_registry_view" description="System Registry view"/>
-    <perm name="core_system_registry_add" description="System Registry add"/>
-    <perm name="core_system_registry_edit" description="System Registry edit"/>
-    <perm name="core_system_registry_delete" description="System Registry delete"/>
-    <perm name="core_user_account_view" description="User Account view"/>
-    <perm name="core_user_account_add" description="User Account add"/>
-    <perm name="core_user_account_edit" description="User Account edit"/>
-    <perm name="core_user_account_delete" description="User Account delete"/>
-    <perm name="core_user_activity_view" description="User Activity view"/>
-    <perm name="core_user_activity_add" description="User Activity add"/>
-    <perm name="core_user_activity_edit" description="User Activity edit"/>
-    <perm name="core_user_activity_delete" description="User Activity delete"/>
-    <perm name="core_user_activity_receiver_view" description="User Activity Receiver view"/>
-    <perm name="core_user_activity_receiver_add" description="User Activity Receiver add"/>
-    <perm name="core_user_activity_receiver_edit" description="User Activity Receiver edit"/>
-    <perm name="core_user_activity_receiver_delete" description="User Activity Receiver delete"/>
-    <perm name="core_user_friend_view" description="User Friend view"/>
-    <perm name="core_user_friend_add" description="User Friend add"/>
-    <perm name="core_user_friend_edit" description="User Friend edit"/>
-    <perm name="core_user_friend_delete" description="User Friend delete"/>
-    <perm name="core_user_friend_group_view" description="User Friend Group view"/>
-    <perm name="core_user_friend_group_add" description="User Friend Group add"/>
-    <perm name="core_user_friend_group_edit" description="User Friend Group edit"/>
-    <perm name="core_user_friend_group_delete" description="User Friend Group delete"/>
-    <perm name="core_user_group_view" description="User Group view"/>
-    <perm name="core_user_group_add" description="User Group add"/>
-    <perm name="core_user_group_edit" description="User Group edit"/>
-    <perm name="core_user_group_delete" description="User Group delete"/>
-    <perm name="core_user_group_right_view" description="User Group Right view"/>
-    <perm name="core_user_group_right_add" description="User Group Right add"/>
-    <perm name="core_user_group_right_edit" description="User Group Right edit"/>
-    <perm name="core_user_group_right_delete" description="User Group Right delete"/>
-    <perm name="core_user_right_view" description="User Right view"/>
-    <perm name="core_user_right_add" description="User Right add"/>
-    <perm name="core_user_right_edit" description="User Right edit"/>
-    <perm name="core_user_right_delete" description="User Right delete"/>
+    <perm name="view" description="Core view"/>
+    <perm name="add" description="Core add"/>
+    <perm name="edit" description="Core edit"/>
+    <perm name="delete" description="Core delete"/>
+    <perm name="content_gadget_view" description="Content Gadget view"/>
+    <perm name="content_gadget_add" description="Content Gadget add"/>
+    <perm name="content_gadget_edit" description="Content Gadget edit"/>
+    <perm name="content_gadget_delete" description="Content Gadget delete"/>
+    <perm name="content_media_view" description="Content Media view"/>
+    <perm name="content_media_add" description="Content Media add"/>
+    <perm name="content_media_edit" description="Content Media edit"/>
+    <perm name="content_media_delete" description="Content Media delete"/>
+    <perm name="content_page_view" description="Content Page view"/>
+    <perm name="content_page_add" description="Content Page add"/>
+    <perm name="content_page_edit" description="Content Page edit"/>
+    <perm name="content_page_delete" description="Content Page delete"/>
+    <perm name="content_page_gadget_view" description="Content Page Gadget view"/>
+    <perm name="content_page_gadget_add" description="Content Page Gadget add"/>
+    <perm name="content_page_gadget_edit" description="Content Page Gadget edit"/>
+    <perm name="content_page_gadget_delete" description="Content Page Gadget delete"/>
+    <perm name="content_page_option_view" description="Content Page Option view"/>
+    <perm name="content_page_option_add" description="Content Page Option add"/>
+    <perm name="content_page_option_edit" description="Content Page Option edit"/>
+    <perm name="content_page_option_delete" description="Content Page Option delete"/>
+    <perm name="content_page_right_view" description="Content Page Right view"/>
+    <perm name="content_page_right_add" description="Content Page Right add"/>
+    <perm name="content_page_right_edit" description="Content Page Right edit"/>
+    <perm name="content_page_right_delete" description="Content Page Right delete"/>
+    <perm name="content_service_view" description="Content Service view"/>
+    <perm name="content_service_add" description="Content Service add"/>
+    <perm name="content_service_edit" description="Content Service edit"/>
+    <perm name="content_service_delete" description="Content Service delete"/>
+    <perm name="system_api_view" description="System API view"/>
+    <perm name="system_api_add" description="System API add"/>
+    <perm name="system_api_edit" description="System API edit"/>
+    <perm name="system_api_delete" description="System API delete"/>
+    <perm name="system_api_access_view" description="System API Access view"/>
+    <perm name="system_api_access_add" description="System API Access add"/>
+    <perm name="system_api_access_edit" description="System API Access edit"/>
+    <perm name="system_api_access_delete" description="System API Access delete"/>
+    <perm name="system_api_request_view" description="System API Request view"/>
+    <perm name="system_api_request_add" description="System API Request add"/>
+    <perm name="system_api_request_edit" description="System API Request edit"/>
+    <perm name="system_api_request_delete" description="System API Request delete"/>
+    <perm name="system_approval_view" description="System Approval view"/>
+    <perm name="system_approval_add" description="System Approval add"/>
+    <perm name="system_approval_edit" description="System Approval edit"/>
+    <perm name="system_approval_delete" description="System Approval delete"/>
+    <perm name="system_approval_record_view" description="System Approval Record view"/>
+    <perm name="system_approval_record_add" description="System Approval Record add"/>
+    <perm name="system_approval_record_edit" description="System Approval Record edit"/>
+    <perm name="system_approval_record_delete" description="System Approval Record delete"/>
+    <perm name="system_connect_view" description="System Connect view"/>
+    <perm name="system_connect_add" description="System Connect add"/>
+    <perm name="system_connect_edit" description="System Connect edit"/>
+    <perm name="system_connect_delete" description="System Connect delete"/>
+    <perm name="system_connect_access_view" description="System Connect Access view"/>
+    <perm name="system_connect_access_add" description="System Connect Access add"/>
+    <perm name="system_connect_access_edit" description="System Connect Access edit"/>
+    <perm name="system_connect_access_delete" description="System Connect Access delete"/>
+    <perm name="system_country_view" description="System Country view"/>
+    <perm name="system_country_add" description="System Country add"/>
+    <perm name="system_country_edit" description="System Country edit"/>
+    <perm name="system_country_delete" description="System Country delete"/>
+    <perm name="system_host_view" description="System Host view"/>
+    <perm name="system_host_add" description="System Host add"/>
+    <perm name="system_host_edit" description="System Host edit"/>
+    <perm name="system_host_delete" description="System Host delete"/>
+    <perm name="system_log_view" description="System Log view"/>
+    <perm name="system_log_add" description="System Log add"/>
+    <perm name="system_log_edit" description="System Log edit"/>
+    <perm name="system_log_delete" description="System Log delete"/>
+    <perm name="system_mail_view" description="System Mail view"/>
+    <perm name="system_mail_add" description="System Mail add"/>
+    <perm name="system_mail_edit" description="System Mail edit"/>
+    <perm name="system_mail_delete" description="System Mail delete"/>
+    <perm name="system_registry_view" description="System Registry view"/>
+    <perm name="system_registry_add" description="System Registry add"/>
+    <perm name="system_registry_edit" description="System Registry edit"/>
+    <perm name="system_registry_delete" description="System Registry delete"/>
+    <perm name="user_account_view" description="User Account view"/>
+    <perm name="user_account_add" description="User Account add"/>
+    <perm name="user_account_edit" description="User Account edit"/>
+    <perm name="user_account_delete" description="User Account delete"/>
+    <perm name="user_activity_view" description="User Activity view"/>
+    <perm name="user_activity_add" description="User Activity add"/>
+    <perm name="user_activity_edit" description="User Activity edit"/>
+    <perm name="user_activity_delete" description="User Activity delete"/>
+    <perm name="user_activity_receiver_view" description="User Activity Receiver view"/>
+    <perm name="user_activity_receiver_add" description="User Activity Receiver add"/>
+    <perm name="user_activity_receiver_edit" description="User Activity Receiver edit"/>
+    <perm name="user_activity_receiver_delete" description="User Activity Receiver delete"/>
+    <perm name="user_friend_view" description="User Friend view"/>
+    <perm name="user_friend_add" description="User Friend add"/>
+    <perm name="user_friend_edit" description="User Friend edit"/>
+    <perm name="user_friend_delete" description="User Friend delete"/>
+    <perm name="user_friend_group_view" description="User Friend Group view"/>
+    <perm name="user_friend_group_add" description="User Friend Group add"/>
+    <perm name="user_friend_group_edit" description="User Friend Group edit"/>
+    <perm name="user_friend_group_delete" description="User Friend Group delete"/>
+    <perm name="user_group_view" description="User Group view"/>
+    <perm name="user_group_add" description="User Group add"/>
+    <perm name="user_group_edit" description="User Group edit"/>
+    <perm name="user_group_delete" description="User Group delete"/>
+    <perm name="user_group_right_view" description="User Group Right view"/>
+    <perm name="user_group_right_add" description="User Group Right add"/>
+    <perm name="user_group_right_edit" description="User Group Right edit"/>
+    <perm name="user_group_right_delete" description="User Group Right delete"/>
+    <perm name="user_right_view" description="User Right view"/>
+    <perm name="user_right_add" description="User Right add"/>
+    <perm name="user_right_edit" description="User Right edit"/>
+    <perm name="user_right_delete" description="User Right delete"/>
   </permissions>
   <library>
     <dir name="AmunService">
