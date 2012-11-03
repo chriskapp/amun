@@ -104,12 +104,12 @@ class connect extends Amun_Module_ApplicationAbstract
 				->where('assocId', '=', $this->assoc['id'])
 				->getField();
 
-			if($status === Amun_System_Connect::APPROVED)
+			if($status === AmunService_Core_System_Connect_Record::APPROVED)
 			{
 				$this->allowAccess();
 			}
 
-			if($status === Amun_System_Connect::DENIED)
+			if($status === AmunService_Core_System_Connect_Record::DENIED)
 			{
 				$this->denyAccess();
 			}
@@ -194,7 +194,7 @@ class connect extends Amun_Module_ApplicationAbstract
 
 		if(isset($_POST['remember']) && $_POST['remember'] === '1')
 		{
-			$data['status'] = Amun_System_Connect::APPROVED;
+			$data['status'] = AmunService_Core_System_Connect_Record::APPROVED;
 		}
 
 		Amun_Sql_Table_Registry::get('Core_System_Connect')->replace($data);
@@ -233,7 +233,7 @@ class connect extends Amun_Module_ApplicationAbstract
 
 		if(isset($_POST['remember']) && $_POST['remember'] === '1')
 		{
-			$data['status'] = Amun_System_Connect::DENIED;
+			$data['status'] = AmunService_Core_System_Connect_Record::DENIED;
 		}
 
 		Amun_Sql_Table_Registry::get('Core_System_Connect')->replace($data);
@@ -328,7 +328,7 @@ class connect extends Amun_Module_ApplicationAbstract
 
 				'apiId'       => $row['id'],
 				'userId'      => $this->user->id,
-				'status'      => Amun_System_Api::APPROVED,
+				'status'      => AmunService_Core_System_Api_Record::APPROVED,
 				'ip'          => $_SERVER['REMOTE_ADDR'],
 				'nonce'       => Amun_Security::generateToken(16),
 				'callback'    => 'oob',

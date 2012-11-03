@@ -42,7 +42,7 @@ abstract class AmunService_My_FriendsAbstract extends AmunService_My_MyAbstract
 		// friend request count
 		$con = new PSX_Sql_Condition();
 		$con->add('friendId', '=', $this->user->id);
-		$con->add('status', '=', Amun_User_Friend::REQUEST);
+		$con->add('status', '=', AmunService_Core_User_Friend_Record::REQUEST);
 
 		$requestCount = $this->sql->count($this->registry['table.core_user_friend'], $con);
 
@@ -52,7 +52,7 @@ abstract class AmunService_My_FriendsAbstract extends AmunService_My_MyAbstract
 		// pending count
 		$con = new PSX_Sql_Condition();
 		$con->add('userId', '=', $this->user->id);
-		$con->add('status', '=', Amun_User_Friend::REQUEST);
+		$con->add('status', '=', AmunService_Core_User_Friend_Record::REQUEST);
 
 		$pendingCount = $this->sql->count($this->registry['table.core_user_friend'], $con);
 

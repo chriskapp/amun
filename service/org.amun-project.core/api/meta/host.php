@@ -120,7 +120,7 @@ class host extends Amun_Module_ApiAbstract
 			// connected hosts
 			$result = Amun_Sql_Table_Registry::get('Core_System_Host')
 				->select(array('name', 'url'))
-				->where('status', '=', Amun_System_Host::NORMAL)
+				->where('status', '=', AmunService_Core_System_Host_Record::NORMAL)
 				->getAll();
 
 			foreach($result as $row)

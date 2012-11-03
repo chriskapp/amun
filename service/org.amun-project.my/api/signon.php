@@ -177,7 +177,7 @@ SQL;
 		// count connect requests
 		/*
 		$maxCount = 5;
-		$con      = new PSX_Sql_Condition(array('userId', '=', $this->user->id), array('status', '=', Amun_System_Api::TEMPORARY));
+		$con      = new PSX_Sql_Condition(array('userId', '=', $this->user->id), array('status', '=', AmunService_Core_System_Api_Record::TEMPORARY));
 		$count    = $this->sql->count($this->registry['table.user_account_connect'], $con);
 
 		if($count > $maxCount)

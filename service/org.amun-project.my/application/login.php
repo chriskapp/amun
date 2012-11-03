@@ -55,7 +55,7 @@ class login extends Amun_Module_ApplicationAbstract
 			$defaultProvider = array_map('trim', explode(',', $this->registry['my.openid_provider']));
 			$hostProvider    = Amun_Sql_Table_Registry::get('Core_System_Host')
 				->select(array('name'))
-				->where('status', '=', Amun_System_Host::NORMAL)
+				->where('status', '=', AmunService_Core_System_Host_Record::NORMAL)
 				->getCol();
 
 			$provider = array_merge($defaultProvider, $hostProvider);
@@ -295,7 +295,7 @@ class login extends Amun_Module_ApplicationAbstract
 					$host = Amun_Sql_Table_Registry::get('Core_System_Host')
 						->select(array('id', 'consumerKey', 'url', 'template'))
 						->where('name', '=', $provider)
-						->where('status', '=', Amun_System_Host::NORMAL)
+						->where('status', '=', AmunService_Core_System_Host_Record::NORMAL)
 						->getRow();
 
 					if(!empty($host))

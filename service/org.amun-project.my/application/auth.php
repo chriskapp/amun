@@ -180,7 +180,7 @@ class auth extends Amun_Module_ApplicationAbstract
 
 			if(!empty($row))
 			{
-				if($row['status'] == Amun_System_Api::TEMPORARY)
+				if($row['status'] == AmunService_Core_System_Api_Record::TEMPORARY)
 				{
 					if(isset($_POST['allow']))
 					{
@@ -231,7 +231,7 @@ class auth extends Amun_Module_ApplicationAbstract
 		$this->sql->update($this->registry['table.core_system_api_request'], array(
 
 			'userId'   => $this->user->id,
-			'status'   => Amun_System_Api::APPROVED,
+			'status'   => AmunService_Core_System_Api_Record::APPROVED,
 			'verifier' => $verifier,
 
 		), $con);

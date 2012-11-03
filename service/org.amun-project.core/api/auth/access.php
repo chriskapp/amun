@@ -157,7 +157,7 @@ SQL;
 
 		$this->sql->update($this->registry['table.core_system_api_request'], array(
 
-			'status'      => Amun_System_Api::ACCESS,
+			'status'      => AmunService_Core_System_Api_Record::ACCESS,
 			'token'       => $token,
 			'tokenSecret' => $tokenSecret,
 			'expire'      => $expire,
@@ -199,7 +199,7 @@ SELECT
 			LIMIT 1
 SQL;
 
-		return $this->sql->getRow($sql, array($token, Amun_System_Api::APPROVED));
+		return $this->sql->getRow($sql, array($token, AmunService_Core_System_Api_Record::APPROVED));
 	}
 }
 

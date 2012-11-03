@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="184c0a5ee7fc4edf2693367f884794c9357286fe">
+<service xmlns="http://amun-project.org" signature="57b1958a9dce3f7e0c8fd0922bf85754a01b2849">
   <status>normal</status>
   <name>plugin</name>
   <path>/service/plugin</path>
@@ -31,17 +31,17 @@
     <dir name="AmunService">
       <dir name="Plugin">
         <file name="Form.php" md5="724dcc0825aaf0f6232f9490cfaafdef"/>
-        <file name="Handler.php" md5="23efcf738845ac0666d8f3236d95439a"/>
+        <file name="Handler.php" md5="da3bf9ed608408e636f9d3d5a4220931"/>
         <dir name="Maintainer">
           <file name="Form.php" md5="07e59888263b5a15c7974ca521c12ab9"/>
-          <file name="Handler.php" md5="211ff4dff86b1054b521fd28c9d9b45a"/>
+          <file name="Handler.php" md5="3822bcaa1aa4edda033a16b23e7c88f1"/>
           <file name="Record.php" md5="a9f2591098c72110ba9dc199df1c443e"/>
           <file name="Table.php" md5="2d675735ccbc8f2a74564297a34c67a6"/>
         </dir>
         <file name="Record.php" md5="b80ef7569dcd2e3560703e5e7539e532"/>
         <dir name="Release">
           <file name="Form.php" md5="8742c9487f870d1969d5b929f6fc899b"/>
-          <file name="Handler.php" md5="b4438b0bc113ad557d140afaee20616f"/>
+          <file name="Handler.php" md5="56007880fdb5b210aad1514985792f73"/>
           <file name="Record.php" md5="c7038a853057ae60e35f617e523be6c5"/>
           <file name="Table.php" md5="b73442e81aec578aa40be4a9c5de28ee"/>
         </dir>

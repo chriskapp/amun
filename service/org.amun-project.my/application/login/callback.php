@@ -296,7 +296,7 @@ class callback extends Amun_Module_ApplicationAbstract
 			$row = Amun_Sql_Table_Registry::get('Core_System_Host')
 				->select(array('consumerKey', 'consumerSecret', 'url'))
 				->where('id', '=', $hostId)
-				->where('status', '=', Amun_System_Host::NORMAL)
+				->where('status', '=', AmunService_Core_System_Host_Record::NORMAL)
 				->getRow();
 
 			if(!empty($row))

@@ -102,7 +102,7 @@ SQL;
 		// of security reasons each consumer can have max 5 request tokens
 		$maxCount = 5;
 		$ip       = $_SERVER['REMOTE_ADDR'];
-		$con      = new PSX_Sql_Condition(array('ip', '=', $ip), array('status', '=', Amun_System_Api::TEMPORARY));
+		$con      = new PSX_Sql_Condition(array('ip', '=', $ip), array('status', '=', AmunService_Core_System_Api_Record::TEMPORARY));
 		$count    = $this->sql->count($this->registry['table.core_system_api_request'], $con);
 
 		if($count >= $maxCount)
@@ -159,7 +159,7 @@ SQL;
 		$this->sql->insert($this->registry['table.core_system_api_request'], array(
 
 			'apiId'       => $this->apiId,
-			'status'      => Amun_System_Api::TEMPORARY,
+			'status'      => AmunService_Core_System_Api_Record::TEMPORARY,
 			'ip'          => $ip,
 			'nonce'       => $nonce,
 			'callback'    => $callback,

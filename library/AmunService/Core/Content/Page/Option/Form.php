@@ -249,7 +249,7 @@ class AmunService_Core_Content_Page_Option_Form extends Amun_Data_FormAbstract
 
 	private function getOption()
 	{
-		$status = Amun_Content_Service::NORMAL;
+		$status = AmunService_Core_Content_Service_Record::NORMAL;
 		$sql    = <<<SQL
 SELECT
 
