@@ -162,7 +162,7 @@ class AmunService_My_Notify_Form extends Amun_Data_FormAbstract
 	private function getService()
 	{
 		$service = array();
-		$result  = $this->sql->getAll('SELECT id, title FROM ' . $this->registry['table.service_my_notify_service']);
+		$result  = $this->sql->getAll('SELECT id, title FROM ' . $this->registry['table.my_notify_service']);
 
 		foreach($result as $row)
 		{
@@ -180,7 +180,7 @@ class AmunService_My_Notify_Form extends Amun_Data_FormAbstract
 	private function getContact()
 	{
 		$contact = array();
-		$result  = $this->sql->getAll('SELECT id, value FROM ' . $this->registry['table.service_my_contact']);
+		$result  = $this->sql->getAll('SELECT id, value FROM ' . $this->registry['table.my_contact']);
 
 		foreach($result as $row)
 		{

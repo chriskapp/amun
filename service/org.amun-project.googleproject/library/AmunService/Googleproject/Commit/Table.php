@@ -38,15 +38,15 @@ class AmunService_Googleproject_Commit_Table extends Amun_Sql_TableAbstract
 	{
 		return array(
 
-			'projectId' => $this->registry['table.service_googleproject'],
-			'authorId'  => $this->registry['table.service_googleproject_author'],
+			'projectId' => $this->registry['table.googleproject'],
+			'authorId'  => $this->registry['table.googleproject_author'],
 
 		);
 	}
 
 	public function getName()
 	{
-		return $this->registry['table.service_googleproject_commit'];
+		return $this->registry['table.googleproject_commit'];
 	}
 
 	public function getColumns()

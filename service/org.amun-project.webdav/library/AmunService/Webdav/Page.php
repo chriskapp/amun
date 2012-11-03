@@ -59,9 +59,9 @@ SELECT
 	`service`.`id`    AS `serviceId`,
 	`service`.`name`  AS `serviceName`
 
-	FROM {$this->registry['table.content_page']} `page`
+	FROM {$this->registry['table.core_content_page']} `page`
 
-		INNER JOIN {$this->registry['table.content_service']} `service`
+		INNER JOIN {$this->registry['table.core_content_service']} `service`
 
 		ON `page`.`serviceId` = `service`.`id`
 
@@ -97,7 +97,7 @@ SQL;
 
 		if($pos === false)
 		{
-			$row = $this->sql->getRow('SELECT id FROM ' . $this->registry['table.content_page'] . ' WHERE urlTitle = ?', array($name));
+			$row = $this->sql->getRow('SELECT id FROM ' . $this->registry['table.core_content_page'] . ' WHERE urlTitle = ?', array($name));
 
 			if(!empty($row))
 			{
@@ -142,9 +142,9 @@ SELECT
 	`page`.`id`      AS `id`,
 	`service`.`name` AS `serviceName`
 
-	FROM {$this->registry['table.content_page']} `page`
+	FROM {$this->registry['table.core_content_page']} `page`
 
-		INNER JOIN {$this->registry['table.content_service']} `service`
+		INNER JOIN {$this->registry['table.core_content_service']} `service`
 
 		ON `page`.`serviceId` = `service`.`id`
 
@@ -188,7 +188,7 @@ SQL;
 		$con->add('parentId', '=', $this->page['id']);
 		$con->add('urlTitle', '=', $name);
 
-		return $this->sql->count($this->registry['table.content_page'], $con) > 0;
+		return $this->sql->count($this->registry['table.core_content_page'], $con) > 0;
 	}
 }
 

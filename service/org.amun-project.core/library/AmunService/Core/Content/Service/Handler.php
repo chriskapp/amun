@@ -23,7 +23,7 @@
  */
 
 /**
- * AmunService_Core_Content_Service_Handler
+ * Amun_Content_Service_Handler
  *
  * @author     Christoph Kappestein <k42b3.x@gmail.com>
  * @license    http://www.gnu.org/licenses/gpl.html GPLv3
@@ -43,10 +43,10 @@ class AmunService_Core_Content_Service_Handler extends Amun_Data_HandlerAbstract
 
 	public function create(PSX_Data_RecordInterface $record)
 	{
-		if($record->hasFields('name'))
+		if($record->hasFields('source'))
 		{
 			// already installed
-			if($this->base->hasService($record->name))
+			if($this->base->hasService($record->source))
 			{
 				throw new PSX_Data_Exception('Service already installed');
 			}
@@ -57,12 +57,12 @@ class AmunService_Core_Content_Service_Handler extends Amun_Data_HandlerAbstract
 			{
 				PSX_Log::getLogger()->addHandler(new PSX_Log_Handler_File(PSX_PATH_CACHE . '/log.txt'));
 
-				PSX_Log::info('Start installation of service ' . $record->name);
+				PSX_Log::info('Start installation of service ' . $record->source);
 			}
 
 
 			// check whether phar or folder installation
-			$phar = $this->config['amun_service_path'] . '/' . $record->name . '.tar';
+			$phar = $this->config['amun_service_path'] . '/' . $record->source;
 
 			if(is_file($phar))
 			{
@@ -76,6 +76,7 @@ class AmunService_Core_Content_Service_Handler extends Amun_Data_HandlerAbstract
 					$this->serviceConfig->loadXML($configXml, LIBXML_NOBLANKS);
 
 					$this->parseMeta($record);
+					$this->parsePermissions($record);
 				}
 				else
 				{
@@ -88,7 +89,7 @@ class AmunService_Core_Content_Service_Handler extends Amun_Data_HandlerAbstract
 			else
 			{
 				// parse config
-				$configFile = $this->config['amun_service_path'] . '/' . $record->name . '/config.xml';
+				$configFile = $this->config['amun_service_path'] . '/' . $record->source . '/config.xml';
 
 				if(is_file($configFile))
 				{
@@ -96,6 +97,7 @@ class AmunService_Core_Content_Service_Handler extends Amun_Data_HandlerAbstract
 					$this->serviceConfig->load($configFile, LIBXML_NOBLANKS);
 
 					$this->parseMeta($record);
+					$this->parsePermissions($record);
 				}
 				else
 				{
@@ -108,7 +110,7 @@ class AmunService_Core_Content_Service_Handler extends Amun_Data_HandlerAbstract
 
 
 			// check config fields
-			if(!$record->hasFields('type', 'link', 'author', 'license', 'version'))
+			if(!$record->hasFields('status', 'name', 'path', 'namespace', 'type', 'link', 'author', 'license', 'version'))
 			{
 				throw new PSX_Data_Exception('Missing fields in config');
 			}
@@ -206,7 +208,7 @@ class AmunService_Core_Content_Service_Handler extends Amun_Data_HandlerAbstract
 
 
 		// get meta data
-		$fields = array('status', 'name', 'type', 'link', 'author', 'license', 'version');
+		$fields = array('status', 'name', 'path', 'namespace', 'type', 'link', 'author', 'license', 'version');
 
 		for($i = 0; $i < $rootElement->childNodes->length; $i++)
 		{
@@ -269,7 +271,7 @@ class AmunService_Core_Content_Service_Handler extends Amun_Data_HandlerAbstract
 			{
 				PSX_Log::info('Copy library files');
 
-				$this->copyFiles('phar://' . $this->config['amun_service_path'] . '/' . $record->name . '.tar/library', PSX_PATH_LIBRARY, $library->item(0));
+				$this->copyFiles('phar://' . $this->config['amun_service_path'] . '/' . $record->source . '/library', PSX_PATH_LIBRARY, $library->item(0));
 			}
 			else
 			{
@@ -289,11 +291,111 @@ class AmunService_Core_Content_Service_Handler extends Amun_Data_HandlerAbstract
 			{
 				PSX_Log::info('Copy library files');
 
-				$this->copyFiles($this->config['amun_service_path'] . '/' . $record->name . '/library', PSX_PATH_LIBRARY, $library->item(0));
+				$this->copyFiles($this->config['amun_service_path'] . '/' . $record->source . '/library', PSX_PATH_LIBRARY, $library->item(0));
 			}
 			else
 			{
 				PSX_Log::info('Library path is not an folder');
+			}
+		}
+	}
+
+	private function parseApi(AmunService_Core_Content_Service_Record $record)
+	{
+		$api = $this->serviceConfig->getElementsByTagName('api')->item(0);
+
+		if($api !== null)
+		{
+			PSX_Log::info('Create api');
+
+			try
+			{
+				$services = $api->childNodes;
+
+				for($i = 0; $i < $services->length; $i++)
+				{
+					$service = $services->item($i);
+
+					if(!($service instanceof DOMElement))
+					{
+						continue;
+					}
+
+					if($service->nodeName == 'service')
+					{
+						$types = $service->getElementsByTagName('type');
+						$uri   = $service->getElementsByTagName('uri')->item(0);
+
+						if(!empty($uri))
+						{
+							$apiId = $this->sql->insert($this->registry['table.core_content_api'], array(
+								'serviceId' => $record->id,
+								'priority'  => 0,
+								'endpoint'  => $record->path . $uri,
+							));
+
+							foreach($types as $type)
+							{
+								$this->sql->insert($this->registry['table.core_content_api_type'], array(
+									'apiId' => $apiId,
+									'type'  => $type->textContent,
+								));
+							}
+						}
+					}
+				}
+			}
+			catch(Exception $e)
+			{
+				PSX_Log::error($e->getMessage());
+			}
+		}
+	}
+
+	private function parsePermissions(AmunService_Core_Content_Service_Record $record)
+	{
+		$permissions = $this->serviceConfig->getElementsByTagName('permissions')->item(0);
+
+		if($permissions !== null)
+		{
+			PSX_Log::info('Create permissions');
+
+			try
+			{
+				$namespace = strtolower($record->namespace);
+				$perms     = $permissions->childNodes;
+
+				for($i = 0; $i < $perms->length; $i++)
+				{
+					$perm = $perms->item($i);
+
+					if(!($perm instanceof DOMElement))
+					{
+						continue;
+					}
+
+					if($perm->nodeName == 'perm')
+					{
+						$name = $perm->getAttribute('name');
+						$desc = $perm->getAttribute('description');
+
+						if(!empty($name) && !empty($desc))
+						{
+							$name = $namespace . '_' . $name;
+
+							$this->sql->insert($this->registry['table.core_user_right'], array(
+								'name'        => $name,
+								'description' => $desc,
+							));
+
+							PSX_Log::info('> Created permission "' . $name . '"');
+						}
+					}
+				}
+			}
+			catch(Exception $e)
+			{
+				PSX_Log::error($e->getMessage());
 			}
 		}
 	}

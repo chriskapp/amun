@@ -38,15 +38,15 @@ class AmunService_Tracker_Peer_Table extends Amun_Sql_TableAbstract
 	{
 		return array(
 
-			'pageId' => $this->registry['table.content_page'],
-			'userId' => $this->registry['table.user_account'],
+			'pageId' => $this->registry['table.core_content_page'],
+			'userId' => $this->registry['table.core_user_account'],
 
 		);
 	}
 
 	public function getName()
 	{
-		return $this->registry['table.service_tracker_peer'];
+		return $this->registry['table.tracker_peer'];
 	}
 
 	public function getColumns()

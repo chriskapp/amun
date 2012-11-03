@@ -32,7 +32,7 @@
  * @package    Amun_Service_Comment
  * @version    $Revision: 635 $
  */
-class AmunService_Comment_Stream extends Amun_User_Activity_StreamAbstract
+class AmunService_Comment_Stream extends AmunService_Core_User_Activity_StreamAbstract
 {
 	public function getObject()
 	{

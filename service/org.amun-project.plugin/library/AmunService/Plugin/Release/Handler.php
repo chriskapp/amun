@@ -62,7 +62,7 @@ class AmunService_Plugin_Release_Handler extends Amun_Data_HandlerAbstract
 				$con = new PSX_Sql_Condition();
 				$con->add('id', '=', $record->pluginId);
 
-				$this->sql->update($this->registry['table.service_plugin'], array(
+				$this->sql->update($this->registry['table.plugin'], array(
 
 					'releaseDate' => $date->format(PSX_DateTime::SQL),
 
@@ -73,7 +73,7 @@ class AmunService_Plugin_Release_Handler extends Amun_Data_HandlerAbstract
 			}
 			else
 			{
-				$this->approveRecord(AmunService_Core_System_Approval_Record_Record::INSERT, $record);
+				$this->approveRecord(Amun_System_Approval_Record::INSERT, $record);
 			}
 
 			return $record;
@@ -99,7 +99,7 @@ class AmunService_Plugin_Release_Handler extends Amun_Data_HandlerAbstract
 			}
 			else
 			{
-				$this->approveRecord(AmunService_Core_System_Approval_Record_Record::UPDATE, $record);
+				$this->approveRecord(Amun_System_Approval_Record::UPDATE, $record);
 			}
 
 			return $record;
@@ -125,7 +125,7 @@ class AmunService_Plugin_Release_Handler extends Amun_Data_HandlerAbstract
 			}
 			else
 			{
-				$this->approveRecord(AmunService_Core_System_Approval_Record_Record::DELETE, $record);
+				$this->approveRecord(Amun_System_Approval_Record::DELETE, $record);
 			}
 
 			return $record;

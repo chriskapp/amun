@@ -41,7 +41,7 @@ class AmunService_My_Notify_Service_Table extends Amun_Sql_TableAbstract
 
 	public function getName()
 	{
-		return $this->registry['table.service_my_notify_service'];
+		return $this->registry['table.my_notify_service'];
 	}
 
 	public function getColumns()

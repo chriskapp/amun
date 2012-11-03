@@ -38,14 +38,14 @@ class AmunService_Googleproject_Author_Table extends Amun_Sql_TableAbstract
 	{
 		return array(
 
-			'userId' => $this->registry['table.user_account'],
+			'userId' => $this->registry['table.core_user_account'],
 
 		);
 	}
 
 	public function getName()
 	{
-		return $this->registry['table.service_googleproject_author'];
+		return $this->registry['table.googleproject_author'];
 	}
 
 	public function getColumns()

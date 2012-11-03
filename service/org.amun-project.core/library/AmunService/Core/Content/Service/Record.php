@@ -67,13 +67,55 @@ class AmunService_Core_Content_Service_Record extends Amun_Data_RecordAbstract
 		}
 	}
 
-	public function setName($name)
+	public function setSource($source)
 	{
-		$name = $this->_validate->apply($name, 'string', array(new PSX_Filter_Length(2, 64)), 'name', 'Name');
+		$source = $this->_validate->apply($source, 'string', array(new PSX_Filter_Length(2, 128)), 'source', 'Source');
 
 		if(!$this->_validate->hasError())
 		{
-			$this->name = strtolower($name);
+			$this->source = strtolower($source);
+		}
+		else
+		{
+			throw new PSX_Data_Exception($this->_validate->getLastError());
+		}
+	}
+
+	public function setName($name)
+	{
+		$name = $this->_validate->apply($name, 'string', array(new PSX_Filter_Length(2, 32)), 'name', 'Name');
+
+		if(!$this->_validate->hasError())
+		{
+			$this->name = $name;
+		}
+		else
+		{
+			throw new PSX_Data_Exception($this->_validate->getLastError());
+		}
+	}
+
+	public function setPath($path)
+	{
+		$path = $this->_validate->apply($path, 'string', array(new PSX_Filter_Length(2, 256)), 'path', 'Path');
+
+		if(!$this->_validate->hasError())
+		{
+			$this->path = $path;
+		}
+		else
+		{
+			throw new PSX_Data_Exception($this->_validate->getLastError());
+		}
+	}
+
+	public function setNamespace($namespace)
+	{
+		$namespace = $this->_validate->apply($namespace, 'string', array(new PSX_Filter_Length(2, 64)), 'namespace', 'Namespace');
+
+		if(!$this->_validate->hasError())
+		{
+			$this->namespace = $namespace;
 		}
 		else
 		{

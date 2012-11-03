@@ -38,15 +38,15 @@ class AmunService_Plugin_Release_Table extends Amun_Sql_TableAbstract
 	{
 		return array(
 
-			'pluginId' => $this->registry['table.service_plugin'],
-			'userId'   => $this->registry['table.user_account'],
+			'pluginId' => $this->registry['table.plugin'],
+			'userId'   => $this->registry['table.core_user_account'],
 
 		);
 	}
 
 	public function getName()
 	{
-		return $this->registry['table.service_plugin_release'];
+		return $this->registry['table.plugin_release'];
 	}
 
 	public function getColumns()
