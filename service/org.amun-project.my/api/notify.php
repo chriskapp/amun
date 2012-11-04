@@ -43,5 +43,10 @@ class notify extends Amun_Module_RestAbstract
 				->select(array('name', 'profileUrl'), 'author')
 			);
 	}
+
+	protected function getTable()
+	{
+		return $this->service->getTable('My_Notify');
+	}
 }
 

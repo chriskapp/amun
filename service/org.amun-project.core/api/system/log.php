@@ -65,6 +65,11 @@ class log extends Amun_Module_RestAbstract
 			);
 	}
 
+	protected function getTable()
+	{
+		return $this->service->getTable('Core_System_Log');
+	}
+
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)
 	{
 		switch($writer->getType())

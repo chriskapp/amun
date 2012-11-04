@@ -42,6 +42,11 @@ class service extends Amun_Module_RestAbstract
 		$this->setResponse($msg, null, 500);
 	}
 
+	protected function getTable()
+	{
+		return $this->service->getTable('Core_Content_Service');
+	}
+
 	protected function getSelection()
 	{
 		return $this->getTable()

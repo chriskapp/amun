@@ -52,6 +52,11 @@ class friend extends Amun_Module_RestAbstract
 			->where('status', '=', AmunService_Core_User_Friend_Record::NORMAL);
 	}
 
+	protected function getTable()
+	{
+		return $this->service->getTable('Core_User_Friend');
+	}
+
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)
 	{
 		switch($writer->getType())

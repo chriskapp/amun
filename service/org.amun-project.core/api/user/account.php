@@ -47,6 +47,11 @@ class account extends Amun_Module_RestAbstract
 			);
 	}
 
+	protected function getTable()
+	{
+		return $this->service->getTable('Core_User_Account');
+	}
+
 	protected function getRestrictedFields()
 	{
 		return array('pw', 'email', 'token', 'ip');

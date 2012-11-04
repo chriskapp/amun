@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="4bc7e91d469e7c7df3c9b7c47e027b036bf8424b">
+<service xmlns="http://amun-project.org" signature="ae717ead0c957f4ecbada66b0a9f53275b5ab5b0">
   <status>normal</status>
   <name>page</name>
   <path>/page</path>
@@ -22,19 +22,20 @@
     <perm name="edit" description="Service Page Edit"/>
     <perm name="delete" description="Service Page Delete"/>
   </permissions>
+  <registry>
+    <table name="page"/>
+  </registry>
   <library>
     <dir name="AmunService">
       <dir name="Page">
         <file name="Form.php" md5="6e4e5654ba583000c6fb196a070117f5"/>
         <file name="Handler.php" md5="b37250a3e52f7bf70e3afcbfcbf73e0e"/>
         <file name="Record.php" md5="12388e5dfc071736d545916c5f1c442f"/>
-        <file name="Table.php" md5="ff9a3d894f04eb8b4c685ff1cb4ccd55"/>
+        <file name="Table.php" md5="a415bf91e5ad548aa4184b8faca83446"/>
       </dir>
     </dir>
   </library>
   <database>
-    <query><![CDATA[INSERT INTO `{table.core_system_registry}` (`name`, `type`, `value`) VALUES
-('table.page', 'STRING', '{config.table_prefix}page');]]></query>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.page}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,
   `globalId` VARCHAR(36) NOT NULL,

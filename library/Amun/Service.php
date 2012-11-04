@@ -38,12 +38,8 @@ class Amun_Service
 	private $sql;
 	private $registry;
 	private $user;
-	private $ns;
 
-	private $_record;
-	private $_handler;
-	private $_table;
-	private $_form;
+	private $_factory;
 
 	public $id;
 	public $status;
@@ -117,73 +113,42 @@ SQL;
 		}
 	}
 
-	public function setNamespace($ns)
+	public function getDataFactory($name)
 	{
-		$this->ns = !empty($ns) ? $ns : null;
-	}
-
-	public function getRecord()
-	{
-		if($this->_record === null)
+		if(!isset($this->_factory[$name]))
 		{
-			$name  = $this->ns !== null ? $this->ns . '_Record' : 'Record';
-			$class = self::getClass($this->namespace, $name);
-
-			if($class !== null && $class->isSubclassOf('Amun_Data_RecordAbstract'))
-			{
-				$this->_record = $class->newInstance($this->getTable());
-			}
+			$this->_factory[$name] = new Amun_DataFactory($name, $this);
 		}
 
-		return $this->_record;
+		return $this->_factory[$name];
 	}
 
-	public function getHandler()
+	public function getRecord($name = null)
 	{
-		if($this->_handler === null)
-		{
-			$name  = $this->ns !== null ? $this->ns . '_Handler' : 'Handler';
-			$class = self::getClass($this->namespace, $name);
+		$name = $name == null ? $this->namespace : $name;
 
-			if($class !== null && $class->isSubclassOf('Amun_Data_HandlerAbstract'))
-			{
-				$this->_handler = $class->newInstance($this->user);
-			}
-		}
-
-		return $this->_handler;
+		return $this->getDataFactory($name)->getRecord();
 	}
 
-	public function getTable()
+	public function getHandler($name = null)
 	{
-		if($this->_table === null)
-		{
-			$name  = $this->ns !== null ? $this->ns . '_Table' : 'Table';
-			$class = self::getClass($this->namespace, $name);
+		$name = $name == null ? $this->namespace : $name;
 
-			if($class !== null && $class->isSubclassOf('Amun_Sql_TableAbstract'))
-			{
-				$this->_table = $class->newInstance($this->registry);
-			}
-		}
-
-		return $this->_table;
+		return $this->getDataFactory($name)->getHandler();
 	}
 
-	public function getForm()
+	public function getTable($name = null)
 	{
-		if($this->_form === null)
-		{
-			$name  = $this->ns !== null ? $this->ns . '_Form' : 'Form';
-			$class = self::getClass($this->namespace, $name);
+		$name = $name == null ? $this->namespace : $name;
 
-			if($class !== null && $class->isSubclassOf('Amun_Data_FormAbstract'))
-			{
-				$this->_form = $class->newInstance($this->getApiEndpoint());
-			}
-		}
+		return $this->getDataFactory($name)->getTable();
+	}
 
-		return $this->_form;
+	public function getForm($name = null)
+	{
+		$name = $name == null ? $this->namespace : $name;
+
+		return $this->getDataFactory($name)->getForm();
 	}
 
 	public function hasRight($rightName)
@@ -219,19 +184,5 @@ SQL;
 	protected function getRightName($actionName)
 	{
 		return strtolower($this->namespace . '_' . $actionName);
-	}
-
-	public static function getClass($namespace, $className)
-	{
-		try
-		{
-			$class = Amun_Registry::getClassName('AmunService_' . $namespace . '_' . $className);
-
-			return new ReflectionClass($class);
-		}
-		catch(ReflectionException $e)
-		{
-			return null;
-		}
 	}
 }

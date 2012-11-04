@@ -41,6 +41,11 @@ class host extends Amun_Module_RestAbstract
 			->select(array('id', 'status', 'name', 'url', 'template', 'date'));
 	}
 
+	protected function getTable()
+	{
+		return $this->service->getTable('Core_System_Host');
+	}
+
 	protected function getRestrictedFields()
 	{
 		return array('consumerKey', 'consumerSecret');

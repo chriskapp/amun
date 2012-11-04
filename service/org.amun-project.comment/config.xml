@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="e2ad4e1a3214b4a99d6a792d3f38676df6920120">
+<service xmlns="http://amun-project.org" signature="91c2fbeae65cd576c5b17bbf3d8f1d8df207b197">
   <status>system</status>
   <name>comment</name>
   <path>/comment</path>
@@ -22,20 +22,21 @@
     <perm name="edit" description="Service Comment Edit"/>
     <perm name="delete" description="Service Comment Delete"/>
   </permissions>
+  <registry>
+    <table name="comment"/>
+  </registry>
   <library>
     <dir name="AmunService">
       <dir name="Comment">
         <file name="Form.php" md5="f299b68279d3847fe0a2b448dfacd5a6"/>
         <file name="Handler.php" md5="122ff5b8976256ff1423c1e6ca83fa3a"/>
         <file name="Record.php" md5="f8892a97659eab5acab6ae4d7e126981"/>
-        <file name="Stream.php" md5="cecfea6d77c16490b2861d074ccfb9df"/>
-        <file name="Table.php" md5="712169637ec52f2290115bd2d325be51"/>
+        <file name="Stream.php" md5="06881693e1fc69fa19be94c31f1e0ecc"/>
+        <file name="Table.php" md5="ca7d4ccb964c322bb647492c01f4e7bb"/>
       </dir>
     </dir>
   </library>
   <database>
-    <query><![CDATA[INSERT INTO `{table.core_system_registry}` (`name`, `type`, `value`) VALUES
-('table.comment', 'STRING', '{config.table_prefix}comment');]]></query>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.comment}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,
   `globalId` VARCHAR(36) NOT NULL,

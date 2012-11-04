@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="2a874ee3bf2d54a074ec697cfd871add8f1a3abd">
+<service xmlns="http://amun-project.org" signature="33983c870932ad3f420855ad9c948ee65fe7737d">
   <status>normal</status>
   <name>googleproject</name>
   <path>/googleproject</path>
@@ -31,6 +31,11 @@
     <perm name="author_edit" description="Service Googleproject Author Edit"/>
     <perm name="author_delete" description="Service Googleproject Author Delete"/>
   </permissions>
+  <registry>
+    <table name="googleproject"/>
+    <table name="googleproject_commit"/>
+    <table name="googleproject_author"/>
+  </registry>
   <library>
     <dir name="AmunService">
       <dir name="Googleproject">
@@ -38,25 +43,21 @@
           <file name="Form.php" md5="09c1f2a31321c75db78242bb1f17983a"/>
           <file name="Handler.php" md5="8f677a3e47a57e315483f2ef2a420bb2"/>
           <file name="Record.php" md5="f0f4625bcee1a993b1c772a12d594040"/>
-          <file name="Table.php" md5="38a8ed097115d546751ede5cafd5897a"/>
+          <file name="Table.php" md5="68aa85286996c5d0c4a5382a7a76edc4"/>
         </dir>
         <dir name="Commit">
           <file name="Handler.php" md5="e01caff72ffb621051680b2aeffe1180"/>
           <file name="Record.php" md5="db6435904ff90fa162bd1db672c7db00"/>
-          <file name="Table.php" md5="57dcf368d37420cb36b8a1ed5e934757"/>
+          <file name="Table.php" md5="977b872f08c201e365b21c9987eae7a4"/>
         </dir>
         <file name="Form.php" md5="2d3c7eb5f74679d17f94750268b4bc35"/>
         <file name="Handler.php" md5="f7e0d4ea9a82775ae21d3375947565e1"/>
         <file name="Record.php" md5="48ff9374fa392eb0c896b49fb986c5f4"/>
-        <file name="Table.php" md5="d430708747ac6130636afff57b7d7fc0"/>
+        <file name="Table.php" md5="62d1b3b3b1bd972fe8597fdaf88c1d2d"/>
       </dir>
     </dir>
   </library>
   <database>
-    <query><![CDATA[INSERT INTO `{table.core_system_registry}` (`name`, `type`, `value`) VALUES
-('table.googleproject', 'STRING', '{config.table_prefix}googleproject'),
-('table.googleproject_commit', 'STRING', '{config.table_prefix}googleproject_commit'),
-('table.googleproject_author', 'STRING', '{config.table_prefix}googleproject_author');]]></query>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.googleproject}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,
   `globalId` VARCHAR(36) NOT NULL,

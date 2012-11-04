@@ -58,6 +58,11 @@ class connect extends Amun_Module_RestAbstract
 			);
 	}
 
+	protected function getTable()
+	{
+		return $this->service->getTable('Core_System_Connect');
+	}
+
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)
 	{
 		switch($writer->getType())

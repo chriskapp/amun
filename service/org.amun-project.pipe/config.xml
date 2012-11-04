@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="fed87070cce021b1245db94c59ef3549ed68fa4e">
+<service xmlns="http://amun-project.org" signature="8830e48e7415f4ea1efd68af1e5f96f725ba8804">
   <status>normal</status>
   <name>pipe</name>
   <path>/pipe</path>
@@ -22,19 +22,20 @@
     <perm name="edit" description="Service Pipe Edit"/>
     <perm name="delete" description="Service Pipe Delete"/>
   </permissions>
+  <registry>
+    <table name="pipe"/>
+  </registry>
   <library>
     <dir name="AmunService">
       <dir name="Pipe">
-        <file name="Form.php" md5="c8d004257235290eeac0e640eca3b145"/>
+        <file name="Form.php" md5="2c7fd5ad5da5e22c14d14b144d302587"/>
         <file name="Handler.php" md5="66239ba5b72dfd5e2cd9aba5149d46da"/>
         <file name="Record.php" md5="9ccfd5edc5192ab0d2929494fee2ebd1"/>
-        <file name="Table.php" md5="ce8aae8bfabec315c65461f1e5ed6ab0"/>
+        <file name="Table.php" md5="9abf133108e28f7c8942501cf309118b"/>
       </dir>
     </dir>
   </library>
   <database>
-    <query><![CDATA[INSERT INTO `{table.core_system_registry}` (`name`, `type`, `value`) VALUES
-('table.pipe', 'STRING', '{config.table_prefix}pipe');]]></query>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.pipe}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,
   `globalId` VARCHAR(36) NOT NULL,

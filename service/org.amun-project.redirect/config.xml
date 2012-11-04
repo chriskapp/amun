@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="9401346adce50a56bc4631b74f87ea9d518600e1">
+<service xmlns="http://amun-project.org" signature="33ba2449f711c1fefa40bc5a27a7927f058c8db1">
   <status>normal</status>
   <name>redirect</name>
   <path>/redirect</path>
@@ -22,19 +22,20 @@
     <perm name="edit" description="Service Redirect Edit"/>
     <perm name="delete" description="Service Redirect Delete"/>
   </permissions>
+  <registry>
+    <table name="redirect"/>
+  </registry>
   <library>
     <dir name="AmunService">
       <dir name="Redirect">
         <file name="Form.php" md5="fd1910e0ee660522fb2fe2024b5b22b8"/>
         <file name="Handler.php" md5="9571323490e3a7bbc81c7308f9d75aad"/>
         <file name="Record.php" md5="a5a7ee97a6dc4dbc4ac8b1eed5ccfb31"/>
-        <file name="Table.php" md5="ed21edada1a04dabd5233ed88a1f06e9"/>
+        <file name="Table.php" md5="ce7ba4c25171bda19e3a5af6822cafcf"/>
       </dir>
     </dir>
   </library>
   <database>
-    <query><![CDATA[INSERT INTO `{table.core_system_registry}` (`name`, `type`, `value`) VALUES
-('table.redirect', 'STRING', '{config.table_prefix}redirect');]]></query>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.redirect}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,
   `globalId` VARCHAR(36) NOT NULL,

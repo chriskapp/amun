@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="6e039d8487a584e3953c943543fe625e0ecb36ab">
+<service xmlns="http://amun-project.org" signature="91b3f95d1ff7392f004a5040c55937de14098d67">
   <status>normal</status>
   <name>my</name>
   <path>/my</path>
@@ -49,11 +49,21 @@
     <perm name="subscription_edit" description="Service My Subscription Edit"/>
     <perm name="subscription_delete" description="Service My Subscription Delete"/>
   </permissions>
+  <registry>
+    <table name="my_attempt"/>
+    <table name="my_contact"/>
+    <table name="my_notify"/>
+    <table name="my_notify_service"/>
+    <table name="my_subscription"/>
+    <param name="registration_enabled" value="1" type="BOOLEAN"/>
+    <param name="max_group_count" value="12" type="INTEGER"/>
+    <param name="openid_provider" value="googlemail.com, gmail.com, yahoo.com, aol.com, aim.com" type="STRING"/>
+  </registry>
   <library>
     <dir name="AmunService">
       <dir name="My">
         <file name="Activity.php" md5="b2fb1b462066a9140e5365fbb18ebfcc"/>
-        <file name="Attempt.php" md5="41b7b6decdfefa121053e98f694806e8"/>
+        <file name="Attempt.php" md5="c048b6355c9ad868f5539fea8c5252b4"/>
         <dir name="Contact">
           <dir name="Filter">
             <file name="Status.php" md5="db0b471606bdd0150da3915a4214dc45"/>
@@ -62,44 +72,35 @@
           <file name="Form.php" md5="db4f94f20201ccf40158f42da104271c"/>
           <file name="Handler.php" md5="b320707cffcf94c10a2c30f77c5a8be6"/>
           <file name="Record.php" md5="7d7b649c055c2d8f1cbd505bc63cea78"/>
-          <file name="Table.php" md5="24b57d32e2548853a3d92d1117836ec1"/>
+          <file name="Table.php" md5="7590dca94b2cbc7fc6fae48bf024c17d"/>
         </dir>
         <file name="Credentials.php" md5="8a9a255e16a4506a68839cb33b06dabb"/>
-        <file name="FriendsAbstract.php" md5="b7c8f06095fe9c768075db8dc436f941"/>
-        <file name="MyAbstract.php" md5="e405aed127ea5b9ebd0f6e38f1a22eae"/>
+        <file name="FriendsAbstract.php" md5="15336733a35f26de1b0e82d9b11cb360"/>
+        <file name="MyAbstract.php" md5="d9d64b78e3c01267da649e639e95edbe"/>
         <dir name="Notify">
           <dir name="Filter">
             <file name="Status.php" md5="c1d8a22f2bb4358007a60eba005bdc35"/>
           </dir>
-          <file name="Form.php" md5="daed248436431c4e86bee3b64b39fd9a"/>
+          <file name="Form.php" md5="4c059278e60bf06c9230306eabaff3b6"/>
           <file name="Handler.php" md5="7d9f201b56351d8c9eef955510032c6d"/>
           <file name="Record.php" md5="cf25c899d1ab8d03edd87ed62a16b13a"/>
           <dir name="Service">
-            <file name="Table.php" md5="277b5e6869456e9942170729ee30bf91"/>
+            <file name="Table.php" md5="9348f19db93206037a9da93117737956"/>
           </dir>
-          <file name="Table.php" md5="64aac7665f4d753bed4847657268f368"/>
+          <file name="Table.php" md5="b004c60d50cf0b34ef8173bb5bfba865"/>
         </dir>
         <file name="People.php" md5="42888caf619e506e062dff946bb605f5"/>
         <file name="SettingsAbstract.php" md5="dcb2207e11ff35b81dc460207328ddbc"/>
         <dir name="Subscription">
           <file name="Form.php" md5="5a2d503a35e5ce2fd3b0c0d34950c7e3"/>
-          <file name="Handler.php" md5="a5e604a26644f01665604a206d728ebf"/>
+          <file name="Handler.php" md5="5162f3434e9dab8b010d8d6a82f25bfc"/>
           <file name="Record.php" md5="939b575e9e504cb3b5d69c6b31dcdbaf"/>
-          <file name="Table.php" md5="377c7843d14c1dd2e9648d6cbc20ef7c"/>
+          <file name="Table.php" md5="79863a917740480c444d8a32ba0aedcf"/>
         </dir>
       </dir>
     </dir>
   </library>
   <database>
-    <query><![CDATA[INSERT INTO `{table.core_system_registry}` (`name`, `type`, `value`) VALUES
-('my.registration_enabled', 'BOOLEAN', '1'),
-('my.max_group_count', 'INTEGER', '12'),
-('my.openid_provider', 'STRING', 'googlemail.com, gmail.com, yahoo.com, aol.com, aim.com'),
-('table.my_attempt', 'STRING', '{config.table_prefix}my_attempt'),
-('table.my_contact', 'STRING', '{config.table_prefix}my_contact'),
-('table.my_notify', 'STRING', '{config.table_prefix}my_notify'),
-('table.my_notify_service', 'STRING', '{config.table_prefix}my_notify_service'),
-('table.my_subscription', 'STRING', '{config.table_prefix}my_subscription');]]></query>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.my_attempt}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `ip` varchar(40) NOT NULL,

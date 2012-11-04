@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="473be0823262d8efb035f5518f0927c9e62e3a4f">
+<service xmlns="http://amun-project.org" signature="6a39b7d91155c6303e1fc8bd4774086284259f15">
   <status>normal</status>
   <name>webdav</name>
-  <path>/service/webdav</path>
+  <path>/webdav</path>
   <namespace>webdav</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/webdav</type>
   <link>http://amun.phpsx.org</link>
   <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
   <license>GPLv3</license>
   <version>0.0.1</version>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/webdav</type>
+      <uri>/</uri>
+    </service>
+  </api>
   <permissions>
     <perm name="view" description="Service Webdav View"/>
   </permissions>
@@ -16,14 +22,8 @@
     <dir name="AmunService">
       <dir name="Webdav">
         <file name="File.php" md5="23c03cdc9cf9d3450a538dd6ad8887e6"/>
-        <file name="Page.php" md5="606ade61f39e0d35aab73b2f1b721e18"/>
+        <file name="Page.php" md5="34061ac1ae08b29879b1e7a0e57db143"/>
       </dir>
     </dir>
   </library>
-  <database>
-    <query storeID="content_api"><![CDATA[INSERT INTO `{table.amun_content_api}` (`serviceId`, `priority`, `endpoint`) VALUES
-({service.id}, 0, 'service/webdav');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_content_api_type}` (`apiId`, `type`) VALUES
-({id.content_api}, '{service.type}');]]></query>
-  </database>
 </service>

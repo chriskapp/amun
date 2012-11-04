@@ -41,6 +41,11 @@ class mail extends Amun_Module_RestAbstract
 			->select(array('id', 'name', 'from', 'subject', 'values'));
 	}
 
+	protected function getTable()
+	{
+		return $this->service->getTable('Core_System_Mail');
+	}
+
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)
 	{
 		switch($writer->getType())

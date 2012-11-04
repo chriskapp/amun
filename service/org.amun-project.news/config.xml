@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="be333297ba988473ccffe4398c536eb33cf787fb">
+<service xmlns="http://amun-project.org" signature="4a08fcd5704fdec8eec094c3516f597be734f1f3">
   <status>normal</status>
   <name>news</name>
   <path>/news</path>
@@ -25,20 +25,21 @@
     <perm name="edit" description="Service News Edit"/>
     <perm name="delete" description="Service News Delete"/>
   </permissions>
+  <registry>
+    <table name="news"/>
+  </registry>
   <library>
     <dir name="AmunService">
       <dir name="News">
         <file name="Form.php" md5="beb71027e9e37d46b3664a0363962e8c"/>
         <file name="Handler.php" md5="9441e6b4ce20fc6731a599078359ad48"/>
         <file name="Record.php" md5="ddd4785c5cbfb7bbc8d1bab5db2b9a44"/>
-        <file name="Stream.php" md5="c5f1533a93566df538c15214ee8fd7e2"/>
-        <file name="Table.php" md5="cd26e8d6e57573a872b98bc3e162d0ad"/>
+        <file name="Stream.php" md5="2a54254f695893ab2d0105fbeb4e911c"/>
+        <file name="Table.php" md5="ba76a7f1d6626912da7bf2070699122f"/>
       </dir>
     </dir>
   </library>
   <database>
-    <query><![CDATA[INSERT INTO `{table.core_system_registry}` (`name`, `type`, `value`) VALUES
-('table.news', 'STRING', '{config.table_prefix}news');]]></query>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.news}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,
   `globalId` VARCHAR(36) NOT NULL,

@@ -41,6 +41,11 @@ class media extends Amun_Module_RestAbstract
 			->select(array('id', 'path', 'size', 'mimeType', 'date'));
 	}
 
+	protected function getTable()
+	{
+		return $this->service->getTable('Core_Content_Media');
+	}
+
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)
 	{
 		switch($writer->getType())

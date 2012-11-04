@@ -4,6 +4,8 @@
 [ ] fix api insert
 [ ] update webdav service probably with handler so that services can provide 
     their own content
+[ ] possibility for services to extend the service config.xml
+[ ] possibility for services to extend the meta lrdd api
 [ ] add improved observer system wich replaces the notify table
 [ ] extract functionality from the core service into different services
 [ ] check activity stream and approval system

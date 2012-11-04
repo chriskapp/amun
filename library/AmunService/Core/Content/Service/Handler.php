@@ -55,7 +55,8 @@ class AmunService_Core_Content_Service_Handler extends Amun_Data_HandlerAbstract
 			// set logger if in debug mode
 			if($this->config['psx_debug'] === true)
 			{
-				PSX_Log::getLogger()->addHandler(new PSX_Log_Handler_File(PSX_PATH_CACHE . '/log.txt'));
+				PSX_Log::getLogger()->setHandler(new PSX_Log_Handler_File(PSX_PATH_CACHE . '/log.txt'));
+				PSX_Log::getLogger()->setLevel(PSX_Log::ALL);
 
 				PSX_Log::info('Start installation of service ' . $record->source);
 			}
@@ -76,7 +77,6 @@ class AmunService_Core_Content_Service_Handler extends Amun_Data_HandlerAbstract
 					$this->serviceConfig->loadXML($configXml, LIBXML_NOBLANKS);
 
 					$this->parseMeta($record);
-					$this->parsePermissions($record);
 				}
 				else
 				{
@@ -97,7 +97,6 @@ class AmunService_Core_Content_Service_Handler extends Amun_Data_HandlerAbstract
 					$this->serviceConfig->load($configFile, LIBXML_NOBLANKS);
 
 					$this->parseMeta($record);
-					$this->parsePermissions($record);
 				}
 				else
 				{
@@ -127,7 +126,16 @@ class AmunService_Core_Content_Service_Handler extends Amun_Data_HandlerAbstract
 			$record->id = $this->sql->getLastInsertId();
 
 
-			// try to execute queries
+			// parse registry
+			$this->parseRegistry($record);
+
+			// insert permissions
+			$this->parsePermissions($record);
+
+			// insert api endpoints
+			$this->parseApi($record);
+
+			// execute queries
 			$this->parseDatabase($record);
 
 
@@ -326,22 +334,109 @@ class AmunService_Core_Content_Service_Handler extends Amun_Data_HandlerAbstract
 						$types = $service->getElementsByTagName('type');
 						$uri   = $service->getElementsByTagName('uri')->item(0);
 
-						if(!empty($uri))
+						if($uri instanceof DOMElement)
 						{
-							$apiId = $this->sql->insert($this->registry['table.core_content_api'], array(
+							$this->sql->insert($this->registry['table.core_content_api'], array(
 								'serviceId' => $record->id,
 								'priority'  => 0,
-								'endpoint'  => $record->path . $uri,
+								'endpoint'  => $record->path . $uri->nodeValue,
 							));
+
+							$apiId = $this->sql->getLastInsertId();
 
 							foreach($types as $type)
 							{
 								$this->sql->insert($this->registry['table.core_content_api_type'], array(
 									'apiId' => $apiId,
-									'type'  => $type->textContent,
+									'type'  => $type->nodeValue,
 								));
 							}
 						}
+					}
+				}
+			}
+			catch(Exception $e)
+			{
+				PSX_Log::error($e->getMessage());
+			}
+		}
+	}
+
+	private function parseRegistry(AmunService_Core_Content_Service_Record $record)
+	{
+		$registry = $this->serviceConfig->getElementsByTagName('registry')->item(0);
+
+		if($registry !== null)
+		{
+			PSX_Log::info('Create registry entries');
+
+			try
+			{
+				$params = $registry->childNodes;
+
+				for($i = 0; $i < $params->length; $i++)
+				{
+					$param = $params->item($i);
+
+					if(!($param instanceof DOMElement))
+					{
+						continue;
+					}
+
+					if($param->nodeName == 'param')
+					{
+						$name  = $param->getAttribute('name');
+						$value = $param->getAttribute('value');
+						$type  = $param->getAttribute('type');
+						$class = $param->getAttribute('class');
+
+						if(empty($name))
+						{
+							throw new PSX_Exception('Empty param name');
+						}
+
+						$name = $record->namespace . '.' . $name;
+
+						if(empty($type))
+						{
+							$type = 'STRING';
+						}
+
+						if(empty($class))
+						{
+							$class = null;
+						}
+
+						$this->sql->insert($this->registry['table.core_system_registry'], array(
+							'name'  => $name,
+							'value' => $value,
+							'type'  => $type,
+							'class' => $class,
+						));
+
+						PSX_Log::info('> Created registry entry "' . $name . '" = "' . $value . '"');
+					}
+					else if($param->nodeName == 'table')
+					{
+						$name  = $param->getAttribute('name');
+						$value = $param->getAttribute('value');
+
+						if(empty($name))
+						{
+							throw new PSX_Exception('Empty table name');
+						}
+
+						$value = empty($value) ? $name : $value;
+						$value = $this->config['amun_table_prefix'] . $value;
+						$name  = 'table.' . $name;
+
+						$this->sql->insert($this->registry['table.core_system_registry'], array(
+							'name'  => $name,
+							'value' => $value,
+							'type'  => 'STRING',
+						));
+
+						PSX_Log::info('> Created registry entry "' . $name . '" = "' . $value . '"');
 					}
 				}
 			}

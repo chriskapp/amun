@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="0a07c777cdb5e7ec4e0d0829b3cf75e75f13fafd">
+<service xmlns="http://amun-project.org" signature="e16dc008b480c721e1366e653f8adb7c8819aec6">
   <status>normal</status>
   <name>core</name>
   <path>/core</path>
@@ -22,7 +22,7 @@
     </service>
     <service>
       <type>http://oauth.net/core/1.0/endpoint/access</type>
-      <type>http://ns.amun-project.org/2011/amun/auth/authorization</type>
+      <type>http://ns.amun-project.org/2011/amun/auth/access</type>
       <uri>/auth/access</uri>
     </service>
     <service>
@@ -273,6 +273,45 @@
     <perm name="user_right_edit" description="User Right edit"/>
     <perm name="user_right_delete" description="User Right delete"/>
   </permissions>
+  <!--
+  <registry>
+    <table name="core_content_api"/>
+    <table name="core_content_api_type"/>
+    <table name="core_content_gadget"/>
+    <table name="core_content_media"/>
+    <table name="core_content_page"/>
+    <table name="core_content_page_gadget"/>
+    <table name="core_content_page_option"/>
+    <table name="core_content_page_right"/>
+    <table name="core_content_service"/>
+    <table name="core_content_service_option"/>
+    <table name="core_system_api"/>
+    <table name="core_system_api_access"/>
+    <table name="core_system_api_request"/>
+    <table name="core_system_approval"/>
+    <table name="core_system_approval_record"/>
+    <table name="core_system_assoc"/>
+    <table name="core_system_connect"/>
+    <table name="core_system_connect_access"/>
+    <table name="core_system_connect_assoc"/>
+    <table name="core_system_country"/>
+    <table name="core_system_host"/>
+    <table name="core_system_host_request"/>
+    <table name="core_system_log"/>
+    <table name="core_system_mail"/>
+    <table name="core_system_notify"/>
+    <table name="core_system_registry"/>
+    <table name="core_user_account"/>
+    <table name="core_user_activity"/>
+    <table name="core_user_activity_receiver"/>
+    <table name="core_user_activity_template"/>
+    <table name="core_user_friend"/>
+    <table name="core_user_friend_group"/>
+    <table name="core_user_group"/>
+    <table name="core_user_group_right"/>
+    <table name="core_user_right"/>
+  </registry>
+  -->
   <library>
     <dir name="AmunService">
       <dir name="Core">
@@ -320,7 +359,7 @@
             </dir>
             <file name="Handler.php" md5="78786f425eda5004532b1b926c3ac513"/>
             <dir name="Option">
-              <file name="Form.php" md5="f1ffd6966f8d6dba9250175a4fb1966c"/>
+              <file name="Form.php" md5="cf9e1a015e9849df9de5830a07df160d"/>
               <file name="Handler.php" md5="9ba0bbbd67edbc90fda74b8617268815"/>
               <file name="Record.php" md5="d2f09e770cb6b4467ef40f82720f279b"/>
               <file name="Table.php" md5="366b10d55e222e1f9593f4e0e0cccb89"/>
@@ -340,12 +379,12 @@
               <file name="Status.php" md5="3eeedc562d6d5649c130fce007b37327"/>
             </dir>
             <file name="Form.php" md5="8e27f475f30d06c685e53e83abd88ec9"/>
-            <file name="Handler.php" md5="74dec07d04048260d20558f3e5d7fba7"/>
+            <file name="Handler.php" md5="92846310555651af58e2af2d86685459"/>
             <dir name="Option">
               <file name="Record.php" md5="521062c868f666d41907ddd33559375a"/>
               <file name="Table.php" md5="8c495f459842ed8956ea232ad3229fb0"/>
             </dir>
-            <file name="Record.php" md5="8d1e9b5c9fccb7cd5168e9742f983fdf"/>
+            <file name="Record.php" md5="7348886495f70f16037b1021b5e93c5d"/>
             <file name="Table.php" md5="72e1a82e88308d1b077b03fa010c997f"/>
           </dir>
         </dir>

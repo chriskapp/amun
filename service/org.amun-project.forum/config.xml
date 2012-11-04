@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="a68f89c3956238047897a15e4e8f1205a362884a">
+<service xmlns="http://amun-project.org" signature="0edd2eb0dbc94266d24413b8b3396df9142b9225">
   <status>normal</status>
   <name>forum</name>
   <path>/forum</path>
@@ -28,19 +28,20 @@
     <perm name="close" description="Service Forum Close"/>
     <perm name="comment_add" description="Service Forum Comment Add"/>
   </permissions>
+  <registry>
+    <table name="forum"/>
+  </registry>
   <library>
     <dir name="AmunService">
       <dir name="Forum">
         <file name="Form.php" md5="6cf277ac6e1ce532a2a15701e470cbc7"/>
-        <file name="Handler.php" md5="53ccd0852f3eca6107e54358dd3aa276"/>
+        <file name="Handler.php" md5="8a37e5744b1ed4063ee4c11a0a8c6b3a"/>
         <file name="Record.php" md5="41257dd83b6ea08cfd947a00c1d0798b"/>
-        <file name="Table.php" md5="8683064ad521c247d3afab5160d37bc9"/>
+        <file name="Table.php" md5="36d49ed41fd1e49520c021fb885a0fc2"/>
       </dir>
     </dir>
   </library>
   <database>
-    <query><![CDATA[INSERT INTO `{table.core_system_registry}` (`name`, `type`, `value`) VALUES
-('table.forum', 'STRING', '{config.table_prefix}forum');]]></query>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.forum}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,
   `globalId` VARCHAR(36) NOT NULL,

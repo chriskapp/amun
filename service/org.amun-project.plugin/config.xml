@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="57b1958a9dce3f7e0c8fd0922bf85754a01b2849">
+<service xmlns="http://amun-project.org" signature="c2bb1c996dd7f82d230ec0e49d5bfc87a78c460c">
   <status>normal</status>
   <name>plugin</name>
-  <path>/service/plugin</path>
+  <path>/plugin</path>
   <namespace>plugin</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/plugin</type>
   <link>http://amun.phpsx.org</link>
@@ -12,6 +12,23 @@
   <required>
     <service>org.amun-project.comment</service>
   </required>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/plugin</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/plugin/maintainer</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/maintainer</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/plugin/release</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/release</uri>
+    </service>
+  </api>
   <permissions>
     <perm name="view" description="Service Plugin View"/>
     <perm name="add" description="Service Plugin Add"/>
@@ -27,34 +44,35 @@
     <perm name="release_edit" description="Service Plugin Release Edit"/>
     <perm name="release_delete" description="Service Plugin Release Delete"/>
   </permissions>
+  <registry>
+    <table name="plugin"/>
+    <table name="plugin_maintainer"/>
+    <table name="plugin_release"/>
+  </registry>
   <library>
     <dir name="AmunService">
       <dir name="Plugin">
         <file name="Form.php" md5="724dcc0825aaf0f6232f9490cfaafdef"/>
         <file name="Handler.php" md5="da3bf9ed608408e636f9d3d5a4220931"/>
         <dir name="Maintainer">
-          <file name="Form.php" md5="07e59888263b5a15c7974ca521c12ab9"/>
+          <file name="Form.php" md5="677a9e0f90c4c6408831106bbd44ccca"/>
           <file name="Handler.php" md5="3822bcaa1aa4edda033a16b23e7c88f1"/>
           <file name="Record.php" md5="a9f2591098c72110ba9dc199df1c443e"/>
-          <file name="Table.php" md5="2d675735ccbc8f2a74564297a34c67a6"/>
+          <file name="Table.php" md5="847856707cd5c9531e4f3ba7b9daaa3a"/>
         </dir>
         <file name="Record.php" md5="b80ef7569dcd2e3560703e5e7539e532"/>
         <dir name="Release">
-          <file name="Form.php" md5="8742c9487f870d1969d5b929f6fc899b"/>
-          <file name="Handler.php" md5="56007880fdb5b210aad1514985792f73"/>
+          <file name="Form.php" md5="835815c6519bba3a3aecd128dab3422d"/>
+          <file name="Handler.php" md5="ae3149f0ccf0f0674640868183621458"/>
           <file name="Record.php" md5="c7038a853057ae60e35f617e523be6c5"/>
-          <file name="Table.php" md5="b73442e81aec578aa40be4a9c5de28ee"/>
+          <file name="Table.php" md5="db284691303b340cbfa397819b76c827"/>
         </dir>
-        <file name="Table.php" md5="08febef252581ace63d247997b554dde"/>
+        <file name="Table.php" md5="6dbbf085d114b8f964e84a370b1ce78e"/>
       </dir>
     </dir>
   </library>
   <database>
-    <query><![CDATA[INSERT INTO `{table.amun_system_registry}` (`name`, `type`, `value`) VALUES
-('table.amun_service_plugin', 'STRING', '{config.table_prefix}service_plugin'),
-('table.amun_service_plugin_maintainer', 'STRING', '{config.table_prefix}service_plugin_maintainer'),
-('table.amun_service_plugin_release', 'STRING', '{config.table_prefix}service_plugin_release');]]></query>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.amun_service_plugin}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.plugin}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,
   `globalId` VARCHAR(36) NOT NULL,
   `pageId` INT(10) NOT NULL,
@@ -70,14 +88,14 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.amun_service_plugin_maintainer}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.plugin_maintainer}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,
   `pluginId` INT(10) NOT NULL,
   `userId` INT(10) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `pluginUserId` (`pluginId`,`userId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.amun_service_plugin_release}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.plugin_release}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,
   `globalId` VARCHAR(36) NOT NULL,
   `pluginId` INT(10) NOT NULL,
@@ -88,25 +106,10 @@
   `date` DATETIME NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query storeID="content_api"><![CDATA[INSERT INTO `{table.amun_content_api}` (`serviceId`, `priority`, `endpoint`) VALUES
-({service.id}, 0, 'service/plugin');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_content_api_type}` (`apiId`, `type`) VALUES
-({id.content_api}, '{service.type}'),
-({id.content_api}, 'http://ns.amun-project.org/2011/amun/data/1.0');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_content_service_option}` (`serviceId`, `name`) VALUES
+    <query><![CDATA[INSERT INTO `{table.core_content_service_option}` (`serviceId`, `name`) VALUES
 ({service.id}, 'index'),
 ({service.id}, 'view');]]></query>
-    <query storeID="content_api"><![CDATA[INSERT INTO `{table.amun_content_api}` (`serviceId`, `priority`, `endpoint`) VALUES
-({service.id}, 0, 'service/plugin/maintainer');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_content_api_type}` (`apiId`, `type`) VALUES
-({id.content_api}, '{service.type}/maintainer'),
-({id.content_api}, 'http://ns.amun-project.org/2011/amun/data/1.0');]]></query>
-    <query storeID="content_api"><![CDATA[INSERT INTO `{table.amun_content_api}` (`serviceId`, `priority`, `endpoint`) VALUES
-({service.id}, 0, 'service/plugin/release');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_content_api_type}` (`apiId`, `type`) VALUES
-({id.content_api}, '{service.type}/release'),
-({id.content_api}, 'http://ns.amun-project.org/2011/amun/data/1.0');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
+    <query><![CDATA[INSERT INTO `{table.core_user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
 ('INSERT', 'add', 'amun_service_plugin_release', 'view?id={record.id}', '<p><a href="{user.profileUrl}">{user.name}</a> has released version {record.version} ({record.status})</p>');]]></query>
   </database>
 </service>

@@ -47,6 +47,11 @@ class right extends Amun_Module_RestAbstract
 			);
 	}
 
+	protected function getTable()
+	{
+		return $this->service->getTable('Core_User_Group');
+	}
+
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)
 	{
 		switch($writer->getType())

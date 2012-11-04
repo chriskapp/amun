@@ -70,22 +70,18 @@ class Amun_Registry extends ArrayObject
 			switch($row['type'])
 			{
 				case 'STRING':
-
 					$value = (string) $row['value'];
 					break;
 
 				case 'INTEGER':
-
 					$value = (integer) $row['value'];
 					break;
 
 				case 'FLOAT':
-
 					$value = (float) $row['value'];
 					break;
 
 				case 'BOOLEAN':
-
 					$value = (boolean) $row['value'];
 					break;
 			}

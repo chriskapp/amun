@@ -35,5 +35,9 @@
  */
 class form extends Amun_Module_FormAbstract
 {
+	protected function getForm()
+	{
+		return $this->service->getForm('Plugin_Maintainer');
+	}
 }
 

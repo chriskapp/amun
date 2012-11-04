@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="ef8e4abf67dafcc28177227babf106fdff8c4ec9">
+<service xmlns="http://amun-project.org" signature="fd8b020203da58d6daaaf7fadd0d872de2f63888">
   <status>normal</status>
   <name>tracker</name>
-  <path>/service/tracker</path>
+  <path>/tracker</path>
   <namespace>tracker</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/tracker</type>
   <link>http://amun.phpsx.org</link>
@@ -12,6 +12,17 @@
   <required>
     <service>org.amun-project.comment</service>
   </required>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/tracker</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/tracker/announce</type>
+      <uri>/announce</uri>
+    </service>
+  </api>
   <permissions>
     <perm name="view" description="Service Tracker View"/>
     <perm name="add" description="Service Tracker Add"/>
@@ -19,25 +30,26 @@
     <perm name="delete" description="Service Tracker Delete"/>
     <perm name="comment_add" description="Service Tracker Comment Add"/>
   </permissions>
+  <registry>
+    <table name="tracker"/>
+    <table name="tracker_peer"/>
+    <param name="upload_path" value="../cache" type="STRING"/>
+  </registry>
   <library>
     <dir name="AmunService">
       <dir name="Tracker">
         <file name="Form.php" md5="43467ad1d8e528808137dbddf22eb781"/>
         <file name="Handler.php" md5="a7c787fa0dfda305ec75cfea1051eeca"/>
         <dir name="Peer">
-          <file name="Table.php" md5="d86cbc5b167df3d2c4ef308872931dd9"/>
+          <file name="Table.php" md5="0434c8695fae7ff9966d8f15cb20ee65"/>
         </dir>
-        <file name="Record.php" md5="07f81fadafbcbb53cbf2a2e493b484c0"/>
-        <file name="Table.php" md5="a67d98434bad8e4247bf151a09efc0c0"/>
+        <file name="Record.php" md5="236d3621f4b2861abcc6d924a9bc4f1d"/>
+        <file name="Table.php" md5="73d45d8bcfee826c857aa21065aa22a2"/>
       </dir>
     </dir>
   </library>
   <database>
-    <query><![CDATA[INSERT INTO `{table.amun_system_registry}` (`name`, `type`, `value`) VALUES
-('tracker.upload_path', 'STRING', '../cache'),
-('table.amun_service_tracker', 'STRING', '{config.table_prefix}service_tracker'),
-('table.amun_service_tracker_peer', 'STRING', '{config.table_prefix}service_tracker_peer');]]></query>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.amun_service_tracker}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.tracker}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `globalId` varchar(36) NOT NULL,
   `pageId` int(10) NOT NULL,
@@ -55,7 +67,7 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.amun_service_tracker_peer}` (
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.tracker_peer}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `infoHash` varchar(40) NOT NULL,
   `peerId` varchar(40) NOT NULL,
@@ -73,15 +85,6 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `infoHashPeerId` (`infoHash`,`peerId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query storeID="content_api"><![CDATA[INSERT INTO `{table.amun_content_api}` (`serviceId`, `priority`, `endpoint`) VALUES
-({service.id}, 0, 'service/tracker');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_content_api_type}` (`apiId`, `type`) VALUES
-({id.content_api}, '{service.type}'),
-({id.content_api}, 'http://ns.amun-project.org/2011/amun/data/1.0');]]></query>
-    <query storeID="content_api"><![CDATA[INSERT INTO `{table.amun_content_api}` (`serviceId`, `priority`, `endpoint`) VALUES
-({service.id}, 0, 'service/tracker/announce');]]></query>
-    <query><![CDATA[INSERT INTO `{table.amun_content_api_type}` (`apiId`, `type`) VALUES
-({id.content_api}, '{service.type}/announce');]]></query>
     <query><![CDATA[INSERT INTO `{table.amun_content_service_option}` (`serviceId`, `name`) VALUES
 ({service.id}, 'index'),
 ({service.id}, 'view');]]></query>
