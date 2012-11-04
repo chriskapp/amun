@@ -37,7 +37,7 @@ class index extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
-		if($this->user->hasRight('service_pipe_view'))
+		if($this->user->hasRight('pipe_view'))
 		{
 			// load pipe
 			$recordPipe = $this->getPipe();

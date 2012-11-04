@@ -37,7 +37,7 @@ class index extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
-		if($this->user->hasRight('service_redirect_view'))
+		if($this->user->hasRight('redirect_view'))
 		{
 			$redirect = Amun_Sql_Table_Registry::get('Redirect')
 				->select(array('href', 'date'))

@@ -178,12 +178,12 @@ SQL;
 		/*
 		$maxCount = 5;
 		$con      = new PSX_Sql_Condition(array('userId', '=', $this->user->id), array('status', '=', AmunService_Core_System_Api_Record::TEMPORARY));
-		$count    = $this->sql->count($this->registry['table.user_account_connect'], $con);
+		$count    = $this->sql->count($this->registry['table.core_user_account_connect'], $con);
 
 		if($count > $maxCount)
 		{
 			$conDelete = new PSX_Sql_Condition();
-			$result    = $this->sql->select($this->registry['table.user_account_connect'], array('id', 'expire', 'date'), $con, PSX_Sql::SELECT_ALL);
+			$result    = $this->sql->select($this->registry['table.core_user_account_connect'], array('id', 'expire', 'date'), $con, PSX_Sql::SELECT_ALL);
 
 			foreach($result as $row)
 			{
@@ -199,7 +199,7 @@ SQL;
 
 			if($conDelete->hasCondition())
 			{
-				$this->sql->delete($this->registry['table.user_account_connect'], $conDelete);
+				$this->sql->delete($this->registry['table.core_user_account_connect'], $conDelete);
 			}
 
 			throw new Amun_Exception('You can have max ' . $maxCount . ' temporary account connect requests. Each request expires after 30 hour');

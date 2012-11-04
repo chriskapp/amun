@@ -55,6 +55,7 @@ SELECT
 
 	`page`.`id`       AS `id`,
 	`page`.`urlTitle` AS `urlTitle`,
+	`page`.`rightId`  AS `rightId`,
 	`page`.`date`     AS `date`,
 	`service`.`id`    AS `serviceId`,
 	`service`.`name`  AS `serviceName`
@@ -75,7 +76,7 @@ SQL;
 			throw new Sabre_DAV_Exception_FileNotFound('Page doesnt exist');
 		}
 
-		if(!$this->user->hasRight('service_' . $this->page['serviceName'] . '_view'))
+		if(!$this->user->hasRightId($this->page['rightId']))
 		{
 			throw new Sabre_DAV_Exception_Forbidden('Access not allowed');
 		}
@@ -114,13 +115,17 @@ SQL;
 
 			list($service, $id) = explode('_', $name);
 
-			$name  = 'Service_' . ucfirst($service);
-			$table = Amun_Sql_Table_Registry::get($name);
-			$row   = $table->select(array('*'))
-				->where('id', '=', $id)
-				->getRow(PSX_Sql::FETCH_OBJECT);
+			$table = $this->base->getService($this->page['serviceId'])->getTable();
+			$row   = null;
 
-			if(!empty($row))
+			if($table !== null)
+			{
+				$row = $table->select(array('*'))
+					->where('id', '=', $id)
+					->getRow(PSX_Sql::FETCH_OBJECT);
+			}
+
+			if($row instanceof PSX_Data_RecordInterface)
 			{
 				return new AmunService_Webdav_File($this->page['serviceName'], $row);
 			}

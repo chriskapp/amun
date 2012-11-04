@@ -49,8 +49,8 @@ class subscription extends AmunService_My_SettingsAbstract
 		$this->template->assign('subscriptions', $subscriptions);
 
 		// form url
-		$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/my/subscription';
-		$formUrl = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/my/subscription/form?format=json&method=create';
+		$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/subscription';
+		$formUrl = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/subscription/form?format=json&method=create';
 
 		$this->template->assign('subscriptionUrl', $url);
 		$this->template->assign('formUrl', $formUrl);

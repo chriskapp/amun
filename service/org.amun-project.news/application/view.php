@@ -60,7 +60,7 @@ class view extends Amun_Module_ApplicationAbstract
 			));
 
 			// form url
-			$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/comment/form?format=json&method=create&pageId=' . $this->page->id . '&refId=' . $this->newsId;
+			$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/comment/form?format=json&method=create&pageId=' . $this->page->id . '&refId=' . $this->newsId;
 
 			$this->template->assign('formUrl', $url);
 

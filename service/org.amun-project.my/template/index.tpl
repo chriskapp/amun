@@ -63,7 +63,7 @@
 		</div>
 
 		<?php foreach($activities as $activity): ?>
-		<div class="row amun-service-my-activity-entry <?php if($activity->receiverStatus == Amun_User_Activity_Receiver::HIDDEN): ?>amun-service-my-activity-entry-hidden<?php endif; ?>" id="activity-<?php echo $activity->id; ?>">
+		<div class="row amun-service-my-activity-entry <?php if($activity->receiverStatus == AmunService_Core_User_Activity_Receiver_Record::HIDDEN): ?>amun-service-my-activity-entry-hidden<?php endif; ?>" id="activity-<?php echo $activity->id; ?>">
 			<div class="pull-left amun-service-my-activity-entry-avatar">
 				<img src="<?php echo $activity->authorThumbnailUrl; ?>" alt="avatar" />
 			</div>

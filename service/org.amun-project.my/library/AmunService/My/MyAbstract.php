@@ -36,7 +36,7 @@ abstract class AmunService_My_MyAbstract extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
-		if($this->user->hasRight('service_my_view'))
+		if($this->user->hasRight('my_view'))
 		{
 			// check status of current user
 			if($this->user->isAnonymous())
@@ -52,9 +52,9 @@ abstract class AmunService_My_MyAbstract extends Amun_Module_ApplicationAbstract
 
 		// options
 		$options = new Amun_Option('index', $this->registry, $this->user, $this->page);
-		$options->add('service_my_view', 'Account', $this->page->url);
-		$options->add('service_my_view', 'Friends', $this->page->url . '/friends');
-		$options->add('service_my_view', 'Settings', $this->page->url . '/settings');
+		$options->add('my_view', 'Account', $this->page->url);
+		$options->add('my_view', 'Friends', $this->page->url . '/friends');
+		$options->add('my_view', 'Settings', $this->page->url . '/settings');
 		$options->load(array($this->page));
 
 		$this->template->assign('options', $options);

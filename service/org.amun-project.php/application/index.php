@@ -37,7 +37,7 @@ class index extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
-		if($this->user->hasRight('service_php_view'))
+		if($this->user->hasRight('php_view'))
 		{
 			// load php
 			$recordPhp = $this->getPhp();

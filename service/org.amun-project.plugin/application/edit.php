@@ -37,12 +37,12 @@ class edit extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
-		if($this->user->hasRight('service_plugin_edit'))
+		if($this->user->hasRight('plugin_edit'))
 		{
 			// form url
 			$id = $this->get->id('integer');
 
-			$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/plugin/form?format=json&method=update&id=' . $id;
+			$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/plugin/form?format=json&method=update&id=' . $id;
 
 
 			// plugin

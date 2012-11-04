@@ -71,7 +71,7 @@ class commit extends Amun_Module_RestAbstract
 		{
 			case PSX_Data_WriterInterface::ATOM:
 
-				$updated = $this->sql->getField('SELECT `date` FROM ' . $this->registry['table.service_googleproject_commit'] . ' ORDER BY `date` DESC LIMIT 1');
+				$updated = $this->sql->getField('SELECT `date` FROM ' . $this->registry['table.googleproject_commit'] . ' ORDER BY `date` DESC LIMIT 1');
 
 				$title   = 'Commit';
 				$id      = 'urn:uuid:' . $this->base->getUUID('service:googleproject:commit');

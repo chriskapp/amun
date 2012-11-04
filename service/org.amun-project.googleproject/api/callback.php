@@ -55,7 +55,7 @@ class callback extends Amun_Module_DefaultAbstract
 			if(isset($project['project_name']))
 			{
 				$con = new PSX_Sql_Condition(array('name', '=', $project['project_name']));
-				$id  = $this->sql->select($this->registry['table.service_googleproject'], array('id'), $con, PSX_Sql::SELECT_FIELD);
+				$id  = $this->sql->select($this->registry['table.googleproject'], array('id'), $con, PSX_Sql::SELECT_FIELD);
 
 				if(!empty($id))
 				{

@@ -36,7 +36,7 @@ class dispatch extends Amun_Module_ApplicationAbstract
 	public function onLoad()
 	{
 		// set xrds location header
-		header('X-XRDS-Location: ' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/meta/xrds');
+		header('X-XRDS-Location: ' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/meta/xrds');
 
 		if(!empty($this->page->id))
 		{

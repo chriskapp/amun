@@ -49,8 +49,8 @@ class contact extends AmunService_My_SettingsAbstract
 		$this->template->assign('contacts', $contacts);
 
 		// form url
-		$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/my/contact';
-		$formUrl = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/my/contact/form?format=json&method=create';
+		$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/contact';
+		$formUrl = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/contact/form?format=json&method=create';
 
 		$this->template->assign('contactUrl', $url);
 		$this->template->assign('formUrl', $formUrl);

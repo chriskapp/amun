@@ -1,11 +1,15 @@
 
 [FEATURES]
 
+[ ] fix api insert
+[ ] update webdav service probably with handler so that services can provide 
+    their own content
+[ ] add improved observer system wich replaces the notify table
 [ ] extract functionality from the core service into different services
 [ ] check activity stream and approval system
 [ ] update all services using the new service class for right and api endpoint 
     issues
-[ ] improve installer design and flow
+[x] improve installer design and flow
 [ ] improve right system probably with inheritance
 [ ] renaming record classes from i.e. Amun_Service_News to 
     Amun_Service_News_Record to eb able to add later a namespace

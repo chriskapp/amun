@@ -94,7 +94,7 @@ class activate extends Amun_Module_ApplicationAbstract
 						$con->add('id', '=', $account->id);
 						$con->add('status', '=', AmunService_Core_User_Account_Record::NOT_ACTIVATED);
 
-						$this->sql->delete($this->registry['table.user_account'], $con);
+						$this->sql->delete($this->registry['table.core_user_account'], $con);
 
 						throw $e;
 					}

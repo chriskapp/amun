@@ -52,57 +52,9 @@ class account extends Amun_Module_RestAbstract
 		return array('pw', 'email', 'token', 'ip');
 	}
 
-	public function onPut()
+	protected function isOwner(Amun_Data_RecordAbstract $record)
 	{
-		if($this->user->hasRight($this->ns . '_edit'))
-		{
-			try
-			{
-				$handler = $this->getHandler();
-
-				$record = $this->getTable()->getRecord();
-				$record->import($this->getRequest());
-
-
-				// check owner
-				if(!$handler->isOwner($record, 'id'))
-				{
-					throw new PSX_Data_Exception('You are not the owner of the record');
-				}
-
-
-				// check captcha if anonymous
-				if($this->user->isAnonymous())
-				{
-					$captcha = Amun_Captcha::factory($this->config['amun_captcha']);
-
-					if(!$captcha->verify($record->captcha))
-					{
-						throw new PSX_Data_Exception('Invalid captcha');
-					}
-				}
-
-
-				$handler->update($record);
-
-
-				$msg = new PSX_Data_Message('You have successful edit a ' . $this->getTable()->getDisplayName(), true);
-
-				$this->setResponse($msg);
-			}
-			catch(Exception $e)
-			{
-				$msg = new PSX_Data_Message($e->getMessage(), false);
-
-				$this->setResponse($msg);
-			}
-		}
-		else
-		{
-			$msg = new PSX_Data_Message('Access not allowed', false);
-
-			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
-		}
+		return $this->getHandler()->isOwner($record, 'id');
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)
@@ -113,7 +65,7 @@ class account extends Amun_Module_RestAbstract
 
 				$updated = $this->sql->getField('SELECT `date` FROM ' . $this->registry['table.core_user_account'] . ' ORDER BY `date` DESC LIMIT 1');
 
-				$title   = 'News';
+				$title   = 'User';
 				$id      = 'urn:uuid:' . $this->base->getUUID('user:account');
 				$updated = new DateTime($updated, $this->registry['core.default_timezone']);
 

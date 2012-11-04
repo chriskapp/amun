@@ -47,7 +47,7 @@ class AmunService_Plugin_Maintainer_Form extends Amun_Data_FormAbstract
 			$pluginId = new Amun_Form_Element_Reference('pluginId', 'Plugin ID');
 			$pluginId->setValueField('id');
 			$pluginId->setLabelField('title');
-			$pluginId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/plugin');
+			$pluginId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/plugin');
 
 			$panel->add($pluginId);
 		}
@@ -108,7 +108,7 @@ class AmunService_Plugin_Maintainer_Form extends Amun_Data_FormAbstract
 		$pluginId = new Amun_Form_Element_Reference('pluginId', 'Plugin ID', $record->pluginId);
 		$pluginId->setValueField('id');
 		$pluginId->setLabelField('title');
-		$pluginId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/plugin');
+		$pluginId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/plugin');
 
 		$panel->add($pluginId);
 
@@ -116,7 +116,7 @@ class AmunService_Plugin_Maintainer_Form extends Amun_Data_FormAbstract
 		$userId = new Amun_Form_Element_Reference('userId', 'User ID', $record->userId);
 		$userId->setValueField('id');
 		$userId->setLabelField('name');
-		$userId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/account');
+		$userId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/user/account');
 
 		$panel->add($userId);
 
@@ -124,7 +124,7 @@ class AmunService_Plugin_Maintainer_Form extends Amun_Data_FormAbstract
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
 			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
-			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/system/captcha');
+			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/system/captcha');
 
 			$panel->add($captcha);
 		}

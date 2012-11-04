@@ -128,7 +128,7 @@ class lrdd extends Amun_Module_ApiAbstract
 		if($this->base->hasService('my'))
 		{
 			// activity atom feed
-			$href = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/my/activity/' . $account->name . '?format=atom';
+			$href = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/activity/' . $account->name . '?format=atom';
 
 			$this->writer->startElement('Link');
 			$this->writer->writeAttribute('rel', 'alternate');
@@ -137,7 +137,7 @@ class lrdd extends Amun_Module_ApiAbstract
 			$this->writer->endElement();
 
 			// json activity streams
-			$href = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/my/activity/' . $account->name . '?format=json';
+			$href = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/activity/' . $account->name . '?format=json';
 
 			$this->writer->startElement('Link');
 			$this->writer->writeAttribute('rel', 'alternate');
@@ -146,7 +146,7 @@ class lrdd extends Amun_Module_ApiAbstract
 			$this->writer->endElement();
 
 			// ostatus subcribe
-			$template = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/my/subscription?topic={uri}';
+			$template = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/subscription?topic={uri}';
 
 			$this->writer->startElement('Link');
 			$this->writer->writeAttribute('rel', 'http://ostatus.org/schema/1.0/subscribe');

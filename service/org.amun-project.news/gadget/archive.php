@@ -65,9 +65,9 @@ SELECT
 	YEAR(`news`.`date`)              AS `newsYear`,
 	`page`.`path`                    AS `pagePath`
 
-	FROM {$this->registry['table.service_news']} `news`
+	FROM {$this->registry['table.news']} `news`
 
-		INNER JOIN {$this->registry['table.content_page']} `page`
+		INNER JOIN {$this->registry['table.core_content_page']} `page`
 
 		ON `news`.`pageId` = `page`.`id`
 

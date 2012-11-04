@@ -37,12 +37,12 @@ class add extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
-		if($this->user->hasRight('service_plugin_add'))
+		if($this->user->hasRight('plugin_add'))
 		{
 			// form url
 			$id = $this->get->id('integer');
 
-			$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/plugin/release/form?format=json&method=create&pluginId=' . $id;
+			$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/plugin/release/form?format=json&method=create&pluginId=' . $id;
 
 
 			// plugin

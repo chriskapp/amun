@@ -160,7 +160,7 @@ class connect extends Amun_Module_ApplicationAbstract
 		$nonce = gmdate('Y-m-d\TH:i:s\Z') . Amun_Security::generateToken(15);
 
 		$redirect = new PSX_OpenId_Provider_Data_Redirect();
-		$redirect->setOpEndpoint($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/my/signon');
+		$redirect->setOpEndpoint($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/signon');
 		$redirect->setClaimedId($this->claimedId);
 		$redirect->setIdentity($this->identity);
 		$redirect->setReturnTo($this->returnTo);

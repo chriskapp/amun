@@ -83,29 +83,14 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 		{
 			try
 			{
-				$handler = $this->getHandler();
-
 				$record = $this->getTable()->getRecord();
 				$record->import($this->getRequest());
 
+				// check captcha
+				$this->handleCaptcha($record);
 
-				// check captcha if anonymous
-				if($this->user->isAnonymous() || $this->user->hasInputExceeded())
-				{
-					$captcha = Amun_Captcha::factory($this->config['amun_captcha']);
-
-					if($captcha->verify($record->captcha))
-					{
-						$this->session->set('captcha_verified', time());
-					}
-					else
-					{
-						throw new PSX_Data_Exception('Invalid captcha');
-					}
-				}
-
-
-				$handler->create($record);
+				// insert
+				$this->getHandler()->create($record);
 
 
 				$msg = new PSX_Data_Message('You have successful create a ' . $this->getTable()->getDisplayName(), true);
@@ -133,36 +118,20 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 		{
 			try
 			{
-				$handler = $this->getHandler();
-
 				$record = $this->getTable()->getRecord();
 				$record->import($this->getRequest());
 
-
 				// check owner
-				if(!$handler->isOwner($record))
+				if(!$this->isOwner($record))
 				{
 					throw new PSX_Data_Exception('You are not the owner of the record');
 				}
 
+				// check captcha
+				$this->handleCaptcha($record);
 
-				// check captcha if anonymous
-				if($this->user->isAnonymous() || $this->user->hasInputExceeded())
-				{
-					$captcha = Amun_Captcha::factory($this->config['amun_captcha']);
-
-					if($captcha->verify($record->captcha))
-					{
-						$this->session->set('captcha_verified', time());
-					}
-					else
-					{
-						throw new PSX_Data_Exception('Invalid captcha');
-					}
-				}
-
-
-				$handler->update($record);
+				// update
+				$this->getHandler()->update($record);
 
 
 				$msg = new PSX_Data_Message('You have successful edit a ' . $this->getTable()->getDisplayName(), true);
@@ -190,36 +159,20 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 		{
 			try
 			{
-				$handler = $this->getHandler();
-
 				$record = $this->getTable()->getRecord();
 				$record->import($this->getRequest());
 
-
 				// check owner
-				if(!$handler->isOwner($record))
+				if(!$this->isOwner($record))
 				{
 					throw new PSX_Data_Exception('You are not the owner of the record');
 				}
 
+				// check captcha
+				$this->handleCaptcha($record);
 
-				// check captcha if anonymous
-				if($this->user->isAnonymous() || $this->user->hasInputExceeded())
-				{
-					$captcha = Amun_Captcha::factory($this->config['amun_captcha']);
-
-					if($captcha->verify($record->captcha))
-					{
-						$this->session->set('captcha_verified', time());
-					}
-					else
-					{
-						throw new PSX_Data_Exception('Invalid captcha');
-					}
-				}
-
-
-				$handler->delete($record);
+				// delete
+				$this->getHandler()->delete($record);
 
 
 				$msg = new PSX_Data_Message('You have successful delete a ' . $this->getTable()->getDisplayName(), true);
@@ -254,6 +207,28 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 	protected function getHandler()
 	{
 		return $this->service->getHandler();
+	}
+
+	protected function isOwner(Amun_Data_RecordAbstract $record)
+	{
+		return $this->getHandler()->isOwner($record);
+	}
+
+	protected function handleCaptcha(Amun_Data_RecordAbstract $record)
+	{
+		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
+		{
+			$captcha = Amun_Captcha::factory($this->config['amun_captcha']);
+
+			if($captcha->verify($record->captcha))
+			{
+				$this->session->set('captcha_verified', time());
+			}
+			else
+			{
+				throw new PSX_Data_Exception('Invalid captcha');
+			}
+		}
 	}
 
 	protected function getMode()

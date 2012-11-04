@@ -61,7 +61,7 @@ class callback extends Amun_PubSubHubBub_CallbackAbstract
 		$con->add('status', '=', self::SUBSCRIBE);
 		$con->add('topic', '=', $topic);
 
-		$subscription = $this->sql->select($this->registry['table.service_my_subscription'], array('userId', 'secret'), $con, PSX_SQL::SELECT_ROW);
+		$subscription = $this->sql->select($this->registry['table.my_subscription'], array('userId', 'secret'), $con, PSX_SQL::SELECT_ROW);
 
 		if(empty($subscription))
 		{
@@ -135,7 +135,7 @@ SELECT
 	`subscription`.`hub`,
 	`subscription`.`topic`
 
-	FROM {$this->registry['table.service_my_subscription']} `subscription`
+	FROM {$this->registry['table.my_subscription']} `subscription`
 
 		WHERE `subscription`.`status` = ?
 
@@ -172,7 +172,7 @@ SQL;
 
 			$con = new PSX_Sql_Condition(array('topic', '=', (string) $topic));
 
-			$this->sql->update($this->registry['table.service_my_subscription'], array(
+			$this->sql->update($this->registry['table.my_subscription'], array(
 
 				'status' => $status,
 

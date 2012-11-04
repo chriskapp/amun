@@ -112,7 +112,7 @@ class AmunService_Tracker_Record extends Amun_Data_RecordAbstract
 		if(isset($torrent['announce']))
 		{
 			$announceUrl = new PSX_Url($torrent['announce']);
-			$trackerUrl  = new PSX_Url($this->_config['psx_url'] . '/' . $this->_config['psx_dispatch'] . 'api/service/tracker/announce');
+			$trackerUrl  = new PSX_Url($this->_config['psx_url'] . '/' . $this->_config['psx_dispatch'] . 'api/tracker/announce');
 
 			if($announceUrl->getHost() != $trackerUrl->getHost() || $announceUrl->getPath() != $trackerUrl->getPath())
 			{

@@ -53,7 +53,7 @@ class index extends Amun_Module_RestAbstract
 		{
 			case PSX_Data_WriterInterface::ATOM:
 
-				$updated = $this->sql->getField('SELECT `date` FROM ' . $this->registry['table.service_plugin'] . ' ORDER BY `date` DESC LIMIT 1');
+				$updated = $this->sql->getField('SELECT `date` FROM ' . $this->registry['table.plugin'] . ' ORDER BY `date` DESC LIMIT 1');
 
 				$title   = 'Plugin';
 				$id      = 'urn:uuid:' . $this->base->getUUID('service:plugin');

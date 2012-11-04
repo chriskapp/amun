@@ -59,7 +59,7 @@ class index extends Amun_Module_DefaultAbstract
 						$this->base->setUser($row['id']);
 
 						$root = new AmunService_Webdav_Page(1);
-						$url  = new PSX_Url($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/webdav');
+						$url  = new PSX_Url($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/webdav');
 
 						$server = new Sabre_DAV_Server($root);
 						$server->setBaseUri($url->getPath());

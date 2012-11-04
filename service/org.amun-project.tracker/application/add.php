@@ -37,10 +37,10 @@ class add extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
-		if($this->user->hasRight('service_tracker_add'))
+		if($this->user->hasRight('tracker_add'))
 		{
 			// form url
-			$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/tracker/form?format=json&method=create&pageId=' . $this->page->id;
+			$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/tracker/form?format=json&method=create&pageId=' . $this->page->id;
 
 
 			// add path

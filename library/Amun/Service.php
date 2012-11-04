@@ -38,6 +38,7 @@ class Amun_Service
 	private $sql;
 	private $registry;
 	private $user;
+	private $ns;
 
 	private $_record;
 	private $_handler;
@@ -116,11 +117,16 @@ SQL;
 		}
 	}
 
-	public function getRecord($ns = null)
+	public function setNamespace($ns)
+	{
+		$this->ns = !empty($ns) ? $ns : null;
+	}
+
+	public function getRecord()
 	{
 		if($this->_record === null)
 		{
-			$name  = $ns !== null ? $ns . '_Record' : 'Record';
+			$name  = $this->ns !== null ? $this->ns . '_Record' : 'Record';
 			$class = self::getClass($this->namespace, $name);
 
 			if($class !== null && $class->isSubclassOf('Amun_Data_RecordAbstract'))
@@ -132,11 +138,11 @@ SQL;
 		return $this->_record;
 	}
 
-	public function getHandler($ns = null)
+	public function getHandler()
 	{
 		if($this->_handler === null)
 		{
-			$name  = $ns !== null ? $ns . '_Handler' : 'Handler';
+			$name  = $this->ns !== null ? $this->ns . '_Handler' : 'Handler';
 			$class = self::getClass($this->namespace, $name);
 
 			if($class !== null && $class->isSubclassOf('Amun_Data_HandlerAbstract'))
@@ -148,11 +154,11 @@ SQL;
 		return $this->_handler;
 	}
 
-	public function getTable($ns = null)
+	public function getTable()
 	{
 		if($this->_table === null)
 		{
-			$name  = $ns !== null ? $ns . '_Table' : 'Table';
+			$name  = $this->ns !== null ? $this->ns . '_Table' : 'Table';
 			$class = self::getClass($this->namespace, $name);
 
 			if($class !== null && $class->isSubclassOf('Amun_Sql_TableAbstract'))
@@ -164,11 +170,11 @@ SQL;
 		return $this->_table;
 	}
 
-	public function getForm($ns = null)
+	public function getForm()
 	{
 		if($this->_form === null)
 		{
-			$name  = $ns !== null ? $ns . '_Form' : 'Form';
+			$name  = $this->ns !== null ? $this->ns . '_Form' : 'Form';
 			$class = self::getClass($this->namespace, $name);
 
 			if($class !== null && $class->isSubclassOf('Amun_Data_FormAbstract'))

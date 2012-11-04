@@ -39,7 +39,7 @@ class view extends Amun_Module_ApplicationAbstract
 
 	public function onLoad()
 	{
-		if($this->user->hasRight('service_plugin_view'))
+		if($this->user->hasRight('plugin_view'))
 		{
 			// load plugin
 			$recordPlugin = $this->getPlugin();
@@ -79,7 +79,7 @@ class view extends Amun_Module_ApplicationAbstract
 
 
 			// form url
-			$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/comment/form?format=json&method=create&pageId=' . $this->page->id . '&refId=' . $this->pluginId;
+			$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/comment/form?format=json&method=create&pageId=' . $this->page->id . '&refId=' . $this->pluginId;
 
 			$this->template->assign('formUrl', $url);
 

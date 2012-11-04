@@ -169,8 +169,8 @@ SQL;
 
 	/**
 	 * This method should be called by each handler if an record was inserted, 
-	 * updated or deleted. It notifies all classes in the table system_notify 
-	 * about the changes
+	 * updated or deleted. It notifies all classes in the table 
+	 * core_system_notify about the changes
 	 *
 	 * @param integer $type
 	 * @param PSX_Data_RecordInterface $record

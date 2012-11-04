@@ -37,7 +37,7 @@ class edit extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
-		if($this->user->hasRight('service_pipe_edit'))
+		if($this->user->hasRight('pipe_edit'))
 		{
 			// form url
 			$id = $this->get->id('integer');
@@ -46,7 +46,7 @@ class edit extends Amun_Module_ApplicationAbstract
 			{
 				$record = Amun_Sql_Table_Registry::get('Pipe')->getRecord($id);
 
-				$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/pipe/form?format=json&method=update&id=' . $record->id;
+				$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/pipe/form?format=json&method=update&id=' . $record->id;
 
 
 				// add path
@@ -54,7 +54,7 @@ class edit extends Amun_Module_ApplicationAbstract
 			}
 			else
 			{
-				$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/pipe/form?format=json&method=create&pageId=' . $this->page->id;
+				$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/pipe/form?format=json&method=create&pageId=' . $this->page->id;
 
 
 				// add path

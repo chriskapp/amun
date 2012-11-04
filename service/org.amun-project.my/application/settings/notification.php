@@ -49,8 +49,8 @@ class notification extends AmunService_My_SettingsAbstract
 		$this->template->assign('notifications', $notifications);
 
 		// form url
-		$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/my/notify';
-		$formUrl = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/my/notify/form?format=json&method=create';
+		$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/notify';
+		$formUrl = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/notify/form?format=json&method=create';
 
 		$this->template->assign('notifyUrl', $url);
 		$this->template->assign('formUrl', $formUrl);

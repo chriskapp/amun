@@ -147,7 +147,7 @@ class AmunService_My_Subscription_Handler extends Amun_Data_HandlerAbstract
 		// subscribe if hub available
 		if($hub instanceof PSX_Url)
 		{
-			$callback    = new PSX_Url($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/my/subscription/callback');
+			$callback    = new PSX_Url($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/subscription/callback');
 			$topic       = $url;
 			$secret      = Amun_Security::generateToken();
 			$verifyToken = Amun_Security::generateToken(32);

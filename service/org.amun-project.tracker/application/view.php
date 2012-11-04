@@ -39,7 +39,7 @@ class view extends Amun_Module_ApplicationAbstract
 
 	public function onLoad()
 	{
-		if($this->user->hasRight('service_tracker_view'))
+		if($this->user->hasRight('tracker_view'))
 		{
 			// load tracker
 			$recordTracker = $this->getTracker();
@@ -66,7 +66,7 @@ class view extends Amun_Module_ApplicationAbstract
 
 
 			// form url
-			$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/comment/form?format=json&method=create&pageId=' . $this->page->id . '&refId=' . $this->trackerId;
+			$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/comment/form?format=json&method=create&pageId=' . $this->page->id . '&refId=' . $this->trackerId;
 
 			$this->template->assign('url', $url);
 

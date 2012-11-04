@@ -141,7 +141,7 @@ class announce extends Amun_Module_DefaultAbstract
 			// update torrent
 			$con = new PSX_Sql_Condition(array('id', '=', $torrent['id']));
 
-			$this->sql->update($this->registry['table.service_tracker'], array(
+			$this->sql->update($this->registry['table.tracker'], array(
 
 				'seeder'    => $peerList['complete'],
 				'leecher'   => $peerList['incomplete'],
@@ -174,12 +174,12 @@ class announce extends Amun_Module_DefaultAbstract
 
 	protected function insertPeer(array $data)
 	{
-		$this->sql->replace($this->registry['table.service_tracker_peer'], $data);
+		$this->sql->replace($this->registry['table.tracker_peer'], $data);
 	}
 
 	protected function deletePeer($id)
 	{
-		$con = new PSX_Sql_Condition($this->registry['table.service_tracker_peer'], array('id', '=', $id));
+		$con = new PSX_Sql_Condition($this->registry['table.tracker_peer'], array('id', '=', $id));
 
 		$this->sql->delete($con);
 	}

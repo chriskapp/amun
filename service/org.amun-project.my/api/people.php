@@ -37,7 +37,7 @@ class people extends Amun_Module_RestAbstract
 {
 	public function onGet()
 	{
-		if($this->user->hasRight('user_friend_view'))
+		if($this->service->hasRight('friends_view'))
 		{
 			try
 			{
@@ -135,7 +135,7 @@ class people extends Amun_Module_RestAbstract
 		{
 			case PSX_Data_WriterInterface::ATOM:
 
-				$updated = $this->sql->getField('SELECT `date` FROM ' . $this->registry['table.user_friend'] . ' ORDER BY `date` DESC LIMIT 1');
+				$updated = $this->sql->getField('SELECT `date` FROM ' . $this->registry['table.core_user_friend'] . ' ORDER BY `date` DESC LIMIT 1');
 
 				$title   = 'Friend';
 				$id      = 'urn:uuid:' . $this->base->getUUID('user:friend');

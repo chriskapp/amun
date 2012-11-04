@@ -37,7 +37,7 @@ class subscription extends Amun_Module_RestAbstract
 {
 	public function onGet()
 	{
-		if($this->user->hasRight('service_my_view'))
+		if($this->service->hasRight('subscription_add'))
 		{
 			try
 			{
@@ -49,25 +49,18 @@ class subscription extends Amun_Module_RestAbstract
 					throw new PSX_Data_Exception('Invalid topic url');
 				}
 
-
 				// redirect to login
 				if($this->user->isAnonymous())
 				{
 					throw new PSX_Data_Exception('Please sign in to subscribe to an topic');
-
-					/*
-					$redirect = urlencode($this->base->getSelf());
-					$url      = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'my.htm/login?redirect=' . $redirect;
-
-					header('Location: ' . $url);
-					exit;
-					*/
 				}
 
-
 				// subscribe to hub
+				$record = new PSX_Data_Record();
+				$record->setFields(array('topic' => $topic));
+
 				$handler = new AmunService_My_Subscription_Handler($this->user);
-				$handler->create($topic);
+				$handler->create($record);
 
 
 				$msg = new PSX_Data_Message('You have successful subscribe a topic', true);

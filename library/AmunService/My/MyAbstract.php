@@ -36,7 +36,7 @@ abstract class AmunService_My_MyAbstract extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
-		if($this->user->hasRight('service_my_view'))
+		if($this->service->hasViewRight())
 		{
 			// check status of current user
 			if($this->user->isAnonymous())

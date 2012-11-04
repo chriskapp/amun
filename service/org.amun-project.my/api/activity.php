@@ -39,7 +39,7 @@ class activity extends Amun_Module_RestAbstract
 
 	public function onGet()
 	{
-		if($this->user->hasRight('user_activity_view'))
+		if($this->service->hasRight('activities_view'))
 		{
 			try
 			{
@@ -59,7 +59,7 @@ class activity extends Amun_Module_RestAbstract
 					if(!is_numeric($fragments[0]))
 					{
 						$con    = new PSX_Sql_Condition(array('name', '=', $fragments[0]));
-						$userId = $this->sql->select($this->registry['table.user_account'], array('id'), $con, PSX_Sql::SELECT_FIELD);
+						$userId = $this->sql->select($this->registry['table.core_user_account'], array('id'), $con, PSX_Sql::SELECT_FIELD);
 
 						$this->userId = $userId;
 					}

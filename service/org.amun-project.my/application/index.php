@@ -63,8 +63,8 @@ class index extends AmunService_My_MyAbstract
 		$this->template->assign('groups', $groups);
 
 		// form url
-		$activityUrl = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/activity';
-		$receiverUrl = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/activity/receiver';
+		$activityUrl = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/user/activity';
+		$receiverUrl = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/user/activity/receiver';
 
 		$this->template->assign('activityUrl', $activityUrl);
 		$this->template->assign('receiverUrl', $receiverUrl);
@@ -73,7 +73,7 @@ class index extends AmunService_My_MyAbstract
 		$this->htmlCss->add('my');
 		$this->htmlJs->add('amun');
 		$this->htmlJs->add('my');
-		$this->htmlContent->add(Amun_Html_Content::META, PSX_Data_Writer_Atom::link($this->page->title, $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/my/activity/' . $this->user->name . '?format=atom'));
+		$this->htmlContent->add(Amun_Html_Content::META, PSX_Data_Writer_Atom::link($this->page->title, $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/activity/' . $this->user->name . '?format=atom'));
 
 		$this->template->set(__CLASS__ . '.tpl');
 	}
@@ -124,7 +124,7 @@ class index extends AmunService_My_MyAbstract
 
 	private function getGroups()
 	{
-		return Amun_Sql_Table_Registry::get('User_Friend_Group')
+		return Amun_Sql_Table_Registry::get('Core_User_Friend_Group')
 			->select(array('id', 'title', 'date'))
 			->where('userId', '=', $this->user->id)
 			->getAll();

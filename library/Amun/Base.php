@@ -89,6 +89,19 @@ class Amun_Base extends PSX_Base
 		return $this->user;
 	}
 
+	public function getServices()
+	{
+		$serviceIds = $this->sql->getCol("SELECT id FROM " . $this->registry['table.core_content_service']);
+		$result     = array();
+
+		foreach($serviceIds as $serviceId)
+		{
+			$result[] = $this->getService($serviceId);
+		}
+
+		return $result;
+	}
+
 	public function getService($source)
 	{
 		if(isset($this->_serviceMapper[$source]))

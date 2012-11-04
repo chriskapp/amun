@@ -37,7 +37,7 @@ class index extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
-		if($this->user->hasRight('service_profile_view'))
+		if($this->user->hasRight('profile_view'))
 		{
 			$account = $this->getAccount();
 

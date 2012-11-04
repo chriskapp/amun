@@ -37,7 +37,7 @@ class download extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
-		if($this->user->hasRight('service_tracker_view'))
+		if($this->user->hasRight('tracker_view'))
 		{
 			// load tracker
 			$resultTracker = $this->getTracker();

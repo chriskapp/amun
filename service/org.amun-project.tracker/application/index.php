@@ -37,7 +37,7 @@ class index extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
-		if($this->user->hasRight('service_tracker_view'))
+		if($this->user->hasRight('tracker_view'))
 		{
 			// load tracker
 			$resultTracker = $this->getTracker();
@@ -56,7 +56,7 @@ class index extends Amun_Module_ApplicationAbstract
 			// template
 			$this->htmlCss->add('tracker');
 			$this->htmlJs->add('prettify');
-			$this->htmlContent->add(Amun_Html_Content::META, PSX_Data_Writer_Atom::link($this->page->title, $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/tracker?format=atom&filterBy=pageId&filterOp=equals&filterValue=' . $this->page->id));
+			$this->htmlContent->add(Amun_Html_Content::META, PSX_Data_Writer_Atom::link($this->page->title, $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/tracker?format=atom&filterBy=pageId&filterOp=equals&filterValue=' . $this->page->id));
 
 			$this->template->set(__CLASS__ . '.tpl');
 		}
