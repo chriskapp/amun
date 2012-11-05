@@ -38,18 +38,17 @@ abstract class AmunService_My_SettingsAbstract extends AmunService_My_MyAbstract
 	{
 		parent::onLoad();
 
-
 		// options
 		$settings = new Amun_Option('settings', $this->registry, $this->user, $this->page);
-		$settings->add('service_my_view', 'Account', $this->page->url . '/settings');
-		$settings->add('service_my_view', 'Security', $this->page->url . '/settings/security');
+		$settings->add('my_view', 'Account', $this->page->url . '/settings');
+		$settings->add('my_view', 'Security', $this->page->url . '/settings/security');
 		/*
-		$settings->add('service_my_view', 'Contact', $this->page->url . '/settings/contact');
-		$settings->add('service_my_view', 'Notification', $this->page->url . '/settings/notification');
-		$settings->add('service_my_view', 'Subscription', $this->page->url . '/settings/subscription');
+		$settings->add('my_view', 'Contact', $this->page->url . '/settings/contact');
+		$settings->add('my_view', 'Notification', $this->page->url . '/settings/notification');
+		$settings->add('my_view', 'Subscription', $this->page->url . '/settings/subscription');
 		*/
-		$settings->add('service_my_view', 'Connection', $this->page->url . '/settings/connection');
-		$settings->add('service_my_view', 'Application', $this->page->url . '/settings/application');
+		$settings->add('my_view', 'Connection', $this->page->url . '/settings/connection');
+		$settings->add('my_view', 'Application', $this->page->url . '/settings/application');
 		$settings->load(array($this->page));
 
 		$this->template->assign('optionsSettings', $settings);

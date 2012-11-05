@@ -47,7 +47,7 @@ class AmunService_Plugin_Release_Form extends Amun_Data_FormAbstract
 			$pluginId = new Amun_Form_Element_Reference('pluginId', 'Plugin ID');
 			$pluginId->setValueField('id');
 			$pluginId->setLabelField('title');
-			$pluginId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/plugin');
+			$pluginId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/plugin');
 
 			$panel->add($pluginId);
 		}

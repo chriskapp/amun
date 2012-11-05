@@ -111,21 +111,21 @@ SQL;
 		}
 		else
 		{
-			$table = $this->base->getService($this->page['serviceId'])->getTable();
-
-			
-
 			$name = substr($name, 0, $pos);
 
 			list($service, $id) = explode('_', $name);
 
-			$name  = 'Service_' . ucfirst($service);
-			$table = Amun_Sql_Table_Registry::get($name);
-			$row   = $table->select(array('*'))
-				->where('id', '=', $id)
-				->getRow(PSX_Sql::FETCH_OBJECT);
+			$table = $this->base->getService($this->page['serviceId'])->getTable();
+			$row   = null;
 
-			if(!empty($row))
+			if($table !== null)
+			{
+				$row = $table->select(array('*'))
+					->where('id', '=', $id)
+					->getRow(PSX_Sql::FETCH_OBJECT);
+			}
+
+			if($row instanceof PSX_Data_RecordInterface)
 			{
 				return new AmunService_Webdav_File($this->page['serviceName'], $row);
 			}

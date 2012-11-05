@@ -36,7 +36,7 @@ abstract class AmunService_My_MyAbstract extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
-		if($this->user->hasRight('my_view'))
+		if($this->getProvider()->hasViewRight())
 		{
 			// check status of current user
 			if($this->user->isAnonymous())
@@ -48,7 +48,6 @@ abstract class AmunService_My_MyAbstract extends Amun_Module_ApplicationAbstract
 		{
 			throw new Amun_Exception('Access not allowed');
 		}
-
 
 		// options
 		$options = new Amun_Option('index', $this->registry, $this->user, $this->page);

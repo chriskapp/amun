@@ -38,7 +38,6 @@ abstract class AmunService_My_FriendsAbstract extends AmunService_My_MyAbstract
 	{
 		parent::onLoad();
 
-
 		// friend request count
 		$con = new PSX_Sql_Condition();
 		$con->add('friendId', '=', $this->user->id);
@@ -47,7 +46,6 @@ abstract class AmunService_My_FriendsAbstract extends AmunService_My_MyAbstract
 		$requestCount = $this->sql->count($this->registry['table.core_user_friend'], $con);
 
 		$this->template->assign('requestCount', $requestCount);
-
 
 		// pending count
 		$con = new PSX_Sql_Condition();
@@ -58,28 +56,26 @@ abstract class AmunService_My_FriendsAbstract extends AmunService_My_MyAbstract
 
 		$this->template->assign('pendingCount', $pendingCount);
 
-
 		// load groups
 		$groupList = $this->getGroups();
 
 		$this->template->assign('groupList', $groupList);
 
-
 		// options
 		$friends = new Amun_Option('friends', $this->registry, $this->user, $this->page);
-		$friends->add('service_my_view', 'Friends', $this->page->url . '/friends');
+		$friends->add('my_view', 'Friends', $this->page->url . '/friends');
 
 		if($requestCount > 0)
 		{
-			$friends->add('service_my_view', 'Request (' . $requestCount . ')', $this->page->url . '/friends/request');
+			$friends->add('my_view', 'Request (' . $requestCount . ')', $this->page->url . '/friends/request');
 		}
 
 		if($pendingCount > 0)
 		{
-			$friends->add('service_my_view', 'Pending (' . $pendingCount . ')', $this->page->url . '/friends/pending');
+			$friends->add('my_view', 'Pending (' . $pendingCount . ')', $this->page->url . '/friends/pending');
 		}
 
-		$friends->add('service_my_view', 'Groups', $this->page->url . '/friends/group');
+		$friends->add('my_view', 'Groups', $this->page->url . '/friends/group');
 		$friends->load(array($this->page));
 
 		$this->template->assign('optionsFriends', $friends);

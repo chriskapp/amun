@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="91b3f95d1ff7392f004a5040c55937de14098d67">
+<service xmlns="http://amun-project.org" signature="4b55b10e7e3415284b0e8ad245d3603c2f7783e1">
   <status>normal</status>
   <name>my</name>
   <path>/my</path>
@@ -62,7 +62,7 @@
   <library>
     <dir name="AmunService">
       <dir name="My">
-        <file name="Activity.php" md5="b2fb1b462066a9140e5365fbb18ebfcc"/>
+        <file name="Activity.php" md5="9a05ae7e7bb0460b4b8e0430662baf7a"/>
         <file name="Attempt.php" md5="c048b6355c9ad868f5539fea8c5252b4"/>
         <dir name="Contact">
           <dir name="Filter">
@@ -74,9 +74,9 @@
           <file name="Record.php" md5="7d7b649c055c2d8f1cbd505bc63cea78"/>
           <file name="Table.php" md5="7590dca94b2cbc7fc6fae48bf024c17d"/>
         </dir>
-        <file name="Credentials.php" md5="8a9a255e16a4506a68839cb33b06dabb"/>
-        <file name="FriendsAbstract.php" md5="15336733a35f26de1b0e82d9b11cb360"/>
-        <file name="MyAbstract.php" md5="d9d64b78e3c01267da649e639e95edbe"/>
+        <file name="Credentials.php" md5="4fd7c0d1e8da6dbc3493249c01c3e3b7"/>
+        <file name="FriendsAbstract.php" md5="0c482dff649d747702675d750ac1659f"/>
+        <file name="MyAbstract.php" md5="eb8ed0210f7ee27f56e934441c9e75b6"/>
         <dir name="Notify">
           <dir name="Filter">
             <file name="Status.php" md5="c1d8a22f2bb4358007a60eba005bdc35"/>
@@ -90,10 +90,10 @@
           <file name="Table.php" md5="b004c60d50cf0b34ef8173bb5bfba865"/>
         </dir>
         <file name="People.php" md5="42888caf619e506e062dff946bb605f5"/>
-        <file name="SettingsAbstract.php" md5="dcb2207e11ff35b81dc460207328ddbc"/>
+        <file name="SettingsAbstract.php" md5="fb509d4551e7016f9a6c2e8075014f06"/>
         <dir name="Subscription">
           <file name="Form.php" md5="5a2d503a35e5ce2fd3b0c0d34950c7e3"/>
-          <file name="Handler.php" md5="5162f3434e9dab8b010d8d6a82f25bfc"/>
+          <file name="Handler.php" md5="a5e604a26644f01665604a206d728ebf"/>
           <file name="Record.php" md5="939b575e9e504cb3b5d69c6b31dcdbaf"/>
           <file name="Table.php" md5="79863a917740480c444d8a32ba0aedcf"/>
         </dir>

@@ -32,7 +32,7 @@
  * @package    Amun_Service_My
  * @version    $Revision: 635 $
  */
-class AmunService_My_Activity extends AmunService_Core_User_Activity
+class AmunService_My_Activity extends AmunService_Core_User_Activity_Record
 {
 	public function export(PSX_Data_WriterResult $result)
 	{

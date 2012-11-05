@@ -46,12 +46,12 @@ class AmunService_Forum_Handler extends Amun_Data_HandlerAbstract
 			$record->date = $date->format(PSX_DateTime::SQL);
 
 
-			if(isset($record->sticky) && !$this->user->hasRight('forum_sticky'))
+			if(isset($record->sticky) && !$this->user->hasRight('service_forum_sticky'))
 			{
 				unset($record->sticky);
 			}
 
-			if(isset($record->closed) && !$this->user->hasRight('forum_close'))
+			if(isset($record->closed) && !$this->user->hasRight('service_forum_close'))
 			{
 				unset($record->closed);
 			}
@@ -68,7 +68,7 @@ class AmunService_Forum_Handler extends Amun_Data_HandlerAbstract
 			}
 			else
 			{
-				$this->approveRecord(AmunService_Core_System_Approval_Record_Record::INSERT, $record);
+				$this->approveRecord(Amun_System_Approval_Record::INSERT, $record);
 			}
 
 			return $record;
@@ -85,12 +85,12 @@ class AmunService_Forum_Handler extends Amun_Data_HandlerAbstract
 		{
 			if(!$this->hasApproval($record))
 			{
-				if(isset($record->sticky) && !$this->user->hasRight('forum_sticky'))
+				if(isset($record->sticky) && !$this->user->hasRight('service_forum_sticky'))
 				{
 					unset($record->sticky);
 				}
 
-				if(isset($record->closed) && !$this->user->hasRight('forum_close'))
+				if(isset($record->closed) && !$this->user->hasRight('service_forum_close'))
 				{
 					unset($record->closed);
 				}
@@ -105,7 +105,7 @@ class AmunService_Forum_Handler extends Amun_Data_HandlerAbstract
 			}
 			else
 			{
-				$this->approveRecord(AmunService_Core_System_Approval_Record_Record::UPDATE, $record);
+				$this->approveRecord(Amun_System_Approval_Record::UPDATE, $record);
 			}
 
 			return $record;
@@ -131,7 +131,7 @@ class AmunService_Forum_Handler extends Amun_Data_HandlerAbstract
 			}
 			else
 			{
-				$this->approveRecord(AmunService_Core_System_Approval_Record_Record::DELETE, $record);
+				$this->approveRecord(Amun_System_Approval_Record::DELETE, $record);
 			}
 
 			return $record;
