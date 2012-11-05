@@ -306,7 +306,7 @@ SQL;
 		$con = new PSX_Sql_Condition();
 		$con->add('userId', '=', $this->id);
 		$con->add('friendId', '=', $account->id);
-		$con->add('status', '=', AmunService_Core_User_Friend::NORMAL);
+		$con->add('status', '=', AmunService_Core_User_Friend_Record::NORMAL);
 
 		$count = $this->sql->count($this->registry['table.core_user_friend'], $con);
 

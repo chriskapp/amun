@@ -59,7 +59,7 @@
 	</div>
 	<?php endif; ?>
 
-	<?php if($user->hasRight('service_news_comment_add')): ?>
+	<?php if($user->hasRight('news_comment_add')): ?>
 		<div id="response"></div>
 		<div id="form"></div>
 

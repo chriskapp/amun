@@ -24,6 +24,7 @@
     <perm name="add" description="Service News Add"/>
     <perm name="edit" description="Service News Edit"/>
     <perm name="delete" description="Service News Delete"/>
+    <perm name="comment_add" description="Service News Comment Add"/>
   </permissions>
   <registry>
     <table name="news"/>

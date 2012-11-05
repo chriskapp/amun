@@ -43,7 +43,7 @@ class settings extends AmunService_My_SettingsAbstract
 		$this->path->add('Settings', $this->page->url . '/settings');
 
 		// url
-		$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/account/form?format=json&method=update&id=' . $this->user->id;
+		$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/user/account/form?format=json&method=update&id=' . $this->user->id;
 
 		$this->template->assign('formUrl', $url);
 
