@@ -23,7 +23,24 @@
  */
 
 /**
- * Amun_DataProvider
+ * The data provider class offers a general concept of handling data. The data
+ * provider knows where and who wants to insert the data. Here an example howto
+ * simple create a new record
+ * <code>
+ *
+ * </code>
+ *
+ * The name wich must be passed as first argument to the constructor tells the
+ * data provider where to look for so i.e. if you pass as name "news" the data
+ * provider gets the following informations:
+ *
+ * - The data is in the table [prefix]_news
+ * - The api endpoint is /api/news
+ * - The view, add, edit and delete rights are news_view, news_add, news_edit
+ *   and news_delete
+ * - The handler class is AmunService_News_Handler
+ *
+ *Amun_DataProvider
  *
  * @author     Christoph Kappestein <k42b3.x@gmail.com>
  * @license    http://www.gnu.org/licenses/gpl.html GPLv3
