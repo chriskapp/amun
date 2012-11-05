@@ -33,89 +33,61 @@
  */
 class host extends Amun_Module_ApiAbstract
 {
+	private $writer;
+
 	public function onLoad()
 	{
 		try
 		{
 			header('Content-type: application/xrd+xml');
 
-
 			$this->writer = new XMLWriter();
-
 			$this->writer->openURI('php://output');
-
 			$this->writer->setIndent(true);
-
 			$this->writer->startDocument('1.0', 'UTF-8');
 
-
 			$this->writer->startElement('XRD');
-
 			$this->writer->writeAttribute('xmlns', 'http://docs.oasis-open.org/ns/xri/xrd-1.0');
-
 
 			// subject
 			$this->writer->writeElement('Subject', $this->config['psx_url']);
 
-
 			// host
 			$this->writer->writeElementNs('hm', 'Host', 'http://host-meta.net/xrd/1.0', $this->base->getHost());
 
-
 			// title
 			$this->writer->startElement('Property');
-
 			$this->writer->writeAttribute('type', 'http://ns.amun-project.org/2011/meta/title');
-
 			$this->writer->text($this->registry['core.title']);
-
 			$this->writer->endElement();
-
 
 			// sub title
 			$this->writer->startElement('Property');
-
 			$this->writer->writeAttribute('type', 'http://ns.amun-project.org/2011/meta/subTitle');
-
 			$this->writer->text($this->registry['core.sub_title']);
-
 			$this->writer->endElement();
-
 
 			// timezone
 			$this->writer->startElement('Property');
-
 			$this->writer->writeAttribute('type', 'http://ns.amun-project.org/2011/meta/timezone');
-
 			$this->writer->text($this->registry['core.default_timezone']->getName());
-
 			$this->writer->endElement();
-
 
 			// hub
 			if(!empty($this->config['amun_hub']))
 			{
 				$this->writer->startElement('Link');
-
 				$this->writer->writeAttribute('rel', 'hub');
-
 				$this->writer->writeAttribute('href', $this->config['amun_hub']);
-
 				$this->writer->endElement();
 			}
 
-
 			// lrdd
 			$this->writer->startElement('Link');
-
 			$this->writer->writeAttribute('rel', 'lrdd');
-
 			$this->writer->writeAttribute('type', 'application/xrd+xml');
-
-			$this->writer->writeAttribute('template', $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/meta/lrdd?uri={uri}');
-
+			$this->writer->writeAttribute('template', $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/meta/lrdd?uri={uri}');
 			$this->writer->endElement();
-
 
 			// connected hosts
 			$result = Amun_Sql_Table_Registry::get('Core_System_Host')
@@ -126,21 +98,14 @@ class host extends Amun_Module_ApiAbstract
 			foreach($result as $row)
 			{
 				$this->writer->startElement('Link');
-
 				$this->writer->writeAttribute('rel', 'http://ns.amun-project.org/2011/host');
-
 				$this->writer->writeAttribute('href', $row['url']);
-
 				$this->writer->writeElement('Title', $row['name']);
-
 				$this->writer->endElement();
 			}
 
-
 			$this->writer->endElement();
-
 			$this->writer->endDocument();
-
 			$this->writer->flush();
 		}
 		catch(Exception $e)

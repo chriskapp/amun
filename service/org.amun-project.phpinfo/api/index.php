@@ -37,7 +37,7 @@ class index extends Amun_Module_ApiAbstract
 {
 	public function onGet()
 	{
-		if($this->user->hasRight('page_view'))
+		if($this->getProvider()->hasViewRight())
 		{
 			try
 			{

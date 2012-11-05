@@ -42,7 +42,7 @@ class AmunService_Core_Content_Service_Form extends Amun_Data_FormAbstract
 		$panel = new Amun_Form_Element_Panel('service', 'Service');
 
 
-		$path = new Amun_Form_Element_Select('name', 'Name');
+		$path = new Amun_Form_Element_Select('source', 'Source');
 		$path->setOptions($this->getInstallableService());
 
 		$panel->add($path);
@@ -145,7 +145,7 @@ class AmunService_Core_Content_Service_Form extends Amun_Data_FormAbstract
 	private function getInstallableService()
 	{
 		$services          = array();
-		$installedServices = $this->sql->getCol('SELECT name FROM ' . $this->registry['table.core_content_service']);
+		$installedServices = $this->sql->getCol('SELECT source FROM ' . $this->registry['table.core_content_service']);
 		$listedServices    = array();
 
 		$path = $this->config['amun_service_path'];
@@ -183,18 +183,19 @@ class AmunService_Core_Content_Service_Form extends Amun_Data_FormAbstract
 				{
 					if(isset($xml->name))
 					{
-						$name = strval($xml->name);
+						$name    = strval($xml->name);
+						$version = strval($xml->version);
 
-						if(!in_array($name, $installedServices) && !in_array($name, $listedServices))
+						if(!in_array($f, $installedServices) && !in_array($f, $listedServices))
 						{
 							array_push($services, array(
 
-								'label' => ucfirst($name),
-								'value' => $name,
+								'label' => $name . ' (' . $version . ')',
+								'value' => $f,
 
 							));
 
-							$listedServices[] = $name;
+							$listedServices[] = $f;
 						}
 					}
 				}

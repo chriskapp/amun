@@ -1,7 +1,7 @@
 
 [FEATURES]
 
-[ ] fix api insert
+[x] fix api insert
 [ ] update webdav service probably with handler so that services can provide 
     their own content
 [ ] possibility for services to extend the service config.xml
@@ -13,7 +13,7 @@
     issues
 [x] improve installer design and flow
 [ ] improve right system probably with inheritance
-[ ] renaming record classes from i.e. Amun_Service_News to 
+[x] renaming record classes from i.e. Amun_Service_News to 
     Amun_Service_News_Record to eb able to add later a namespace
 [ ] possiblity to add more meta data to a page (keywords, description)
 [x] Add possibility to upload media in different folders
@@ -45,11 +45,11 @@
 
 [SERVICES]
 
-[ ] add phpinfo backend service
+[x] add phpinfo backend service
 [ ] add database backend service
 [ ] add tent (https://tent.io/) app wich can post and receive messages for an 
     user maybe integrate this into my service
-[ ] add sitemap service
+[x] add sitemap service
 [ ] write docbook plugin wich can displays docbook xml
 [ ] build api generator service wich builds based on the library classes an
     api index where all users can comment rate etc.

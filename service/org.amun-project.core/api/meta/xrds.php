@@ -35,6 +35,8 @@
  */
 class xrds extends Amun_Module_ApiAbstract
 {
+	private $writer;
+
 	public function onGet()
 	{
 		try

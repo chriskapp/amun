@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="0bb9a11cb5c721947a3f2a35837e22ae74466aef">
+<service xmlns="http://amun-project.org" signature="c748aa5f67aeae831f98b26d9e820d8a98b8b16a">
   <status>normal</status>
   <name>profile</name>
-  <path>/service/profile</path>
+  <path>/profile</path>
   <namespace>profile</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/profile</type>
   <link>http://amun.phpsx.org</link>
