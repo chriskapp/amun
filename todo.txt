@@ -20,7 +20,7 @@
 [ ] Implement reference input field in backend
 [ ] comments wich are added should not force a reload instead they should be
     added directly to the html
-[ ] build namespace package system i.e. org.amun.comment
+[x] build namespace package system i.e. org.amun.comment
 [ ] update phpdoc for proper API generation
 [ ] build general achievment system where a user based on the karma value (or
     probably other conditions) gets specific achievments on the profile

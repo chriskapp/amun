@@ -91,7 +91,7 @@ class xrds extends Amun_Module_ApiAbstract
 					$this->writer->writeElement('Type', $type);
 				}
 
-				$this->writer->writeElement('URI', $baseUrl . 'api/' . $service['endpoint']);
+				$this->writer->writeElement('URI', $baseUrl . 'api' . $service['endpoint']);
 
 				$this->writer->endElement();
 			}
