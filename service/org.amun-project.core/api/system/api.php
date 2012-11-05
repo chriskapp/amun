@@ -41,9 +41,9 @@ class api extends Amun_Module_RestAbstract
 			->select(array('id', 'status', 'url', 'title', 'description', 'date'));
 	}
 
-	protected function getTable()
+	protected function getProvider()
 	{
-		return $this->service->getTable('Core_System_Api');
+		return $this->getDataProvider('Core_System_Api');
 	}
 
 	protected function getRestrictedFields()

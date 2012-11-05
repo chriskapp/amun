@@ -241,11 +241,11 @@ class AmunService_Core_Content_Gadget_Form extends Amun_Data_FormAbstract
 		$gadget = array();
 
 		// service gadgets
-		$result = $this->sql->getAll('SELECT id, name FROM ' . $this->registry['table.core_content_service'] . ' WHERE status = ? ORDER BY name ASC', array(AmunService_Core_Content_Service_Record::NORMAL));
+		$result = $this->sql->getAll('SELECT id, source, name FROM ' . $this->registry['table.core_content_service'] . ' WHERE status = ? ORDER BY name ASC', array(AmunService_Core_Content_Service_Record::NORMAL));
 
 		foreach($result as $row)
 		{
-			$this->scanDir($gadget, $row['name'], $this->config['amun_service_path'] . '/' . $row['name'] . '/gadget');
+			$this->scanDir($gadget, $row['name'], $this->config['amun_service_path'] . '/' . $row['source'] . '/gadget');
 		}
 
 		return $gadget;

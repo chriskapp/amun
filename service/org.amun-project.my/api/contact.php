@@ -44,9 +44,9 @@ class contact extends Amun_Module_RestAbstract
 			);
 	}
 
-	protected function getTable()
+	protected function getProvider()
 	{
-		return $this->service->getTable('My_Contact');
+		return $this->getDataProvider('My_Contact');
 	}
 }
 

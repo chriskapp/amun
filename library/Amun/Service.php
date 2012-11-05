@@ -37,7 +37,6 @@ class Amun_Service
 	private $config;
 	private $sql;
 	private $registry;
-	private $user;
 
 	private $_factory;
 
@@ -54,12 +53,11 @@ class Amun_Service
 	public $version;
 	public $date;
 
-	public function __construct($id, Amun_Registry $registry, Amun_User $user)
+	public function __construct($id, Amun_Registry $registry)
 	{
 		$this->config   = $registry->getConfig();
 		$this->sql      = $registry->getSql();
 		$this->registry = $registry;
-		$this->user     = $user;
 
 		if(is_numeric($id))
 		{
@@ -113,7 +111,7 @@ SQL;
 		}
 	}
 
-	public function getDataFactory($name)
+	public function getDataFactory($name, Amun_User $user)
 	{
 		if(!isset($this->_factory[$name]))
 		{
@@ -123,66 +121,8 @@ SQL;
 		return $this->_factory[$name];
 	}
 
-	public function getRecord($name = null)
-	{
-		$name = $name == null ? $this->namespace : $name;
-
-		return $this->getDataFactory($name)->getRecord();
-	}
-
-	public function getHandler($name = null)
-	{
-		$name = $name == null ? $this->namespace : $name;
-
-		return $this->getDataFactory($name)->getHandler();
-	}
-
-	public function getTable($name = null)
-	{
-		$name = $name == null ? $this->namespace : $name;
-
-		return $this->getDataFactory($name)->getTable();
-	}
-
-	public function getForm($name = null)
-	{
-		$name = $name == null ? $this->namespace : $name;
-
-		return $this->getDataFactory($name)->getForm();
-	}
-
-	public function hasRight($rightName)
-	{
-		return $this->user->hasRight($this->getRightName($rightName));
-	}
-
-	public function hasViewRight()
-	{
-		return $this->hasRight('view');
-	}
-
-	public function hasAddRight()
-	{
-		return $this->hasRight('add');
-	}
-
-	public function hasEditRight()
-	{
-		return $this->hasRight('edit');
-	}
-
-	public function hasDeleteRight()
-	{
-		return $this->hasRight('delete');
-	}
-
 	public function getApiEndpoint()
 	{
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api' . $this->path;
-	}
-
-	protected function getRightName($actionName)
-	{
-		return strtolower($this->namespace . '_' . $actionName);
 	}
 }

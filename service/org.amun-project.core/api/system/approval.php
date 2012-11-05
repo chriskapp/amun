@@ -41,9 +41,9 @@ class approval extends Amun_Module_RestAbstract
 			->select(array('id', 'table', 'field', 'value'));
 	}
 
-	protected function getTable()
+	protected function getProvider()
 	{
-		return $this->service->getTable('Core_System_Approval');
+		return $this->getDataProvider('Core_System_Approval');
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)

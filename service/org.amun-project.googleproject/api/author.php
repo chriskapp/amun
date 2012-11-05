@@ -44,6 +44,11 @@ class author extends Amun_Module_RestAbstract
 			);
 	}
 
+	protected function getProvider()
+	{
+		return $this->getDataProvider('Googleproject_Author');
+	}
+
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)
 	{
 		switch($writer->getType())

@@ -37,7 +37,7 @@ class index extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
-		if($this->service->hasViewRight())
+		if($this->getProvider()->hasViewRight())
 		{
 			// load page
 			$recordPage = $this->getPage();
@@ -46,7 +46,7 @@ class index extends Amun_Module_ApplicationAbstract
 
 			// options
 			$this->setOptions(array(
-				array('edit', 'Edit', $this->page->url . '/edit' . (!empty($recordPage) ? '?id=' . $recordPage->id : ''))
+				array('page_edit', 'Edit', $this->page->url . '/edit' . (!empty($recordPage) ? '?id=' . $recordPage->id : ''))
 			));
 
 			// template

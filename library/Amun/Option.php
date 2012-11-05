@@ -62,7 +62,7 @@ class Amun_Option extends RecursiveArrayIterator
 
 	public function add($right, $name, $href)
 	{
-		if($this->page->getService()->hasRight($right))
+		if($this->user->hasRight($right))
 		{
 			$this->append(array(
 

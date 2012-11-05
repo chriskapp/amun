@@ -44,6 +44,11 @@ class commit extends Amun_Module_RestAbstract
 			);
 	}
 
+	protected function getProvider()
+	{
+		return $this->getDataProvider('Googleproject_Commit');
+	}
+
 	public function onPost()
 	{
 		$msg = new PSX_Data_Message('Create a commit record is not possible', false);

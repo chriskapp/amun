@@ -55,9 +55,9 @@ class registry extends Amun_Module_RestAbstract
 			->select(array('id', 'name', 'value'));
 	}
 
-	protected function getTable()
+	protected function getProvider()
 	{
-		return $this->service->getTable('Core_System_Registry');
+		return $this->getDataProvider('Core_System_Registry');
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)

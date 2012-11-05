@@ -59,7 +59,13 @@ class Amun_Dependency_Application extends Amun_Dependency_Default
 		{
 			$page = new Amun_Page($this->registry->offsetGet('registry'), $this->registry->offsetGet('user'));
 			$this->registry->offsetSet('page', $page);
-			$this->registry->offsetSet('service', $page->getService());
+		}
+
+		// service
+		if(!$this->registry->offsetExists('service'))
+		{
+			$service = $this->base->getService($this->registry->offsetGet('page')->serviceId);
+			$this->registry->offsetSet('service', $service);
 		}
 
 		// nav

@@ -39,7 +39,7 @@ class view extends Amun_Module_ApplicationAbstract
 
 	public function onLoad()
 	{
-		if($this->service->hasViewRight())
+		if($this->getProvider()->hasViewRight())
 		{
 			// load news
 			$recordNews = $this->getNews();
@@ -56,7 +56,7 @@ class view extends Amun_Module_ApplicationAbstract
 
 			// options
 			$this->setOptions(array(
-				array('edit', 'Edit', $this->page->url . '/edit?id=' . $this->newsId)
+				array('news_edit', 'Edit', $this->page->url . '/edit?id=' . $this->newsId)
 			));
 
 			// form url

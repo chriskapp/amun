@@ -39,7 +39,7 @@ class index extends Amun_Module_ApplicationAbstract
 
 	public function onLoad()
 	{
-		if($this->service->hasViewRight())
+		if($this->getProvider()->hasViewRight())
 		{
 			// load page
 			$this->project = $this->getProject();
@@ -56,7 +56,7 @@ class index extends Amun_Module_ApplicationAbstract
 
 			// options
 			$this->setOptions(array(
-				array('edit', 'Edit', $this->page->url . '/edit' . (!empty($this->project) ? '?id=' . $this->project->id : ''))
+				array('googleproject_edit', 'Edit', $this->page->url . '/edit' . (!empty($this->project) ? '?id=' . $this->project->id : ''))
 			));
 
 			// template

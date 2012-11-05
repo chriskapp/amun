@@ -46,5 +46,10 @@ class release extends Amun_Module_RestAbstract
 				->select(array('title'), 'plugin')
 			);
 	}
+
+	protected function getProvider()
+	{
+		return $this->getDataProvider('Plugin_Release');
+	}
 }
 

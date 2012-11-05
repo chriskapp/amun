@@ -42,15 +42,15 @@ class service extends Amun_Module_RestAbstract
 		$this->setResponse($msg, null, 500);
 	}
 
-	protected function getTable()
-	{
-		return $this->service->getTable('Core_Content_Service');
-	}
-
 	protected function getSelection()
 	{
 		return $this->getTable()
 			->select(array('id', 'status', 'name', 'type', 'link', 'author', 'license', 'version', 'date'));
+	}
+
+	protected function getProvider()
+	{
+		return $this->getDataProvider('Core_Content_Service');
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)

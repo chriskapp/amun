@@ -47,9 +47,9 @@ class receiver extends Amun_Module_RestAbstract
 			);
 	}
 
-	protected function getTable()
+	protected function getProvider()
 	{
-		return $this->service->getTable('Core_User_Activity_Receiver');
+		return $this->getDataProvider('Core_User_Activity_Receiver');
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)

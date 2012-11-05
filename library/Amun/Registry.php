@@ -119,21 +119,14 @@ class Amun_Registry extends ArrayObject
 	{
 		$offset = strtolower($offset);
 
-		if(!parent::offsetExists('table.' . $offset))
-		{
-			$offset = 'amun_' . $offset; # check for amun namespace
-
-			if(parent::offsetExists('table.' . $offset))
-			{
-				return $offset;
-			}
-		}
-		else
+		if(parent::offsetExists('table.' . $offset))
 		{
 			return $offset;
 		}
-
-		return false;
+		else
+		{
+			return false;
+		}
 	}
 
 	public function getClassNameFromTable($table)

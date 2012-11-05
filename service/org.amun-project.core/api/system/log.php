@@ -65,9 +65,9 @@ class log extends Amun_Module_RestAbstract
 			);
 	}
 
-	protected function getTable()
+	protected function getProvider()
 	{
-		return $this->service->getTable('Core_System_Log');
+		return $this->getDataProvider('Core_System_Log');
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)

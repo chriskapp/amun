@@ -37,7 +37,7 @@ class subscription extends Amun_Module_RestAbstract
 {
 	public function onGet()
 	{
-		if($this->service->hasRight('subscription_add'))
+		if($this->getProvider()->hasAddRight())
 		{
 			try
 			{

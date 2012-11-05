@@ -38,6 +38,8 @@ abstract class Amun_Module_ApiAbstract extends Amun_Oauth
 	protected $user;
 	protected $service;
 
+	protected $_provider = array();
+
 	public function __construct(PSX_Base $base, $basePath, array $uriFragments)
 	{
 		parent::__construct($base, $basePath, $uriFragments);
@@ -86,4 +88,20 @@ abstract class Amun_Module_ApiAbstract extends Amun_Oauth
 		$this->service  = $this->base->getService($parts[0]);
 		$this->basePath = 'api' . $this->service->path;
 	}
+
+	protected function getDataProvider($name)
+	{
+		if(!isset($this->_provider[$name]))
+		{
+			$this->_provider[$name] = new Amun_DataProvider($name, $this->registry, $this->user);
+		}
+
+		return $this->_provider[$name];
+	}
+
+	protected function getProvider()
+	{
+		return $this->getDataProvider($this->service->namespace);
+	}
 }
+

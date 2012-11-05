@@ -43,5 +43,10 @@ class right extends Amun_Module_RestAbstract
 				->select(array('id', 'title'), 'page')
 			);
 	}
+
+	protected function getProvider()
+	{
+		return $this->getDataProvider('Core_Content_Page_Right');
+	}
 }
 

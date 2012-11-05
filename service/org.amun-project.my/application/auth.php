@@ -58,7 +58,7 @@ class auth extends Amun_Module_ApplicationAbstract
 			exit;
 		}
 
-		if($this->service->hasViewRight())
+		if($this->getProvider()->hasViewRight())
 		{
 			// add path
 			$this->path->add('Auth', $this->page->url . '/auth');

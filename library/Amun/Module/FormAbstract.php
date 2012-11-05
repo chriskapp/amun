@@ -39,12 +39,12 @@ abstract class Amun_Module_FormAbstract extends Amun_Module_ApiAbstract
 
 	public function onGet()
 	{
-		if($this->service->hasViewRight())
+		if($this->getProvider()->hasViewRight())
 		{
 			try
 			{
 				$this->method = $this->get->method('string');
-				$this->form   = $this->getForm();
+				$this->form   = $this->getProvider()->getForm();
 
 				if($this->form === null)
 				{
@@ -100,11 +100,6 @@ abstract class Amun_Module_FormAbstract extends Amun_Module_ApiAbstract
 	protected function getDeleteForm()
 	{
 		return $this->form->delete($this->get->id('integer'));
-	}
-
-	protected function getForm()
-	{
-		return $this->service->getForm();
 	}
 }
 

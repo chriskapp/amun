@@ -41,9 +41,9 @@ class gadget extends Amun_Module_RestAbstract
 			->select(array('id', 'name', 'title', 'date'));
 	}
 
-	protected function getTable()
+	protected function getProvider()
 	{
-		return $this->service->getTable('Core_Content_Gadget');
+		return $this->getDataProvider('Core_Content_Gadget');
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)

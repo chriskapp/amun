@@ -43,7 +43,7 @@ class login extends Amun_Module_ApplicationAbstract
 
 	public function onLoad()
 	{
-		if($this->service->hasViewRight())
+		if($this->getProvider()->hasViewRight())
 		{
 			// assign redirect
 			$this->template->assign('redirect', $this->getRedirect($this->get));

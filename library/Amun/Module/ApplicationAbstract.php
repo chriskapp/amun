@@ -34,9 +34,26 @@
  */
 abstract class Amun_Module_ApplicationAbstract extends PSX_Module_ViewAbstract
 {
+	protected $_provider = array();
+
 	public function getDependencies()
 	{
 		return new Amun_Dependency_Application();
+	}
+
+	protected function getDataProvider($name = null)
+	{
+		if(!isset($this->_provider[$name]))
+		{
+			$this->_provider[$name] = new Amun_DataProvider($name, $this->registry, $this->user);
+		}
+
+		return $this->_provider[$name];
+	}
+
+	protected function getProvider()
+	{
+		return $this->getDataProvider($this->service->namespace);
 	}
 
 	/**

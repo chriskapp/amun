@@ -39,7 +39,7 @@ class view extends Amun_Module_ApplicationAbstract
 
 	public function onLoad()
 	{
-		if($this->service->hasViewRight())
+		if($this->getProvider()->hasViewRight())
 		{
 			// load forum
 			$recordForum = $this->getForum();
@@ -75,7 +75,7 @@ class view extends Amun_Module_ApplicationAbstract
 				$options[] = array('close', 'Close', 'javascript:amun.services.forum.setClosed(' . $this->forumId . ',1,\'' . $this->service->getApiEndpoint() . '\',this)');
 			}
 
-			$options[] = array('edit', 'Edit', $this->page->url . '/edit?id=' . $this->forumId);
+			$options[] = array('forum_edit', 'Edit', $this->page->url . '/edit?id=' . $this->forumId);
 
 			$this->setOptions($options);
 

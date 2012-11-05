@@ -47,7 +47,7 @@ class connect extends Amun_Module_ApplicationAbstract
 
 	public function onLoad()
 	{
-		if($this->service->hasViewRight())
+		if($this->getProvider()->hasViewRight())
 		{
 			// add path
 			$this->path->add('Connect', $this->page->url . '/connect');

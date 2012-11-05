@@ -41,9 +41,9 @@ class right extends Amun_Module_RestAbstract
 			->select(array('id', 'name', 'description'));
 	}
 
-	protected function getTable()
+	protected function getProvider()
 	{
-		return $this->service->getTable('Core_User_Right');
+		return $this->getDataProvider('Core_User_Right');
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)

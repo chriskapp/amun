@@ -36,7 +36,7 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 {
 	public function onGet()
 	{
-		if($this->service->hasViewRight())
+		if($this->getProvider()->hasViewRight())
 		{
 			try
 			{
@@ -79,7 +79,7 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 
 	public function onPost()
 	{
-		if($this->service->hasAddRight())
+		if($this->getProvider()->hasAddRight())
 		{
 			try
 			{
@@ -114,7 +114,7 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 
 	public function onPut()
 	{
-		if($this->service->hasEditRight())
+		if($this->getProvider()->hasEditRight())
 		{
 			try
 			{
@@ -155,7 +155,7 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 
 	public function onDelete()
 	{
-		if($this->service->hasDeleteRight())
+		if($this->getProvider()->hasDeleteRight())
 		{
 			try
 			{
@@ -199,19 +199,19 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 		return $this->getTable()->select(array('*'));
 	}
 
+	protected function isOwner(Amun_Data_RecordAbstract $record)
+	{
+		return $this->getHandler()->isOwner($record);
+	}
+
 	protected function getTable()
 	{
-		return $this->service->getTable();
+		return $this->getProvider()->getTable();
 	}
 
 	protected function getHandler()
 	{
-		return $this->service->getHandler();
-	}
-
-	protected function isOwner(Amun_Data_RecordAbstract $record)
-	{
-		return $this->getHandler()->isOwner($record);
+		return $this->getProvider()->getHandler();
 	}
 
 	protected function handleCaptcha(Amun_Data_RecordAbstract $record)

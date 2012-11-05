@@ -41,9 +41,9 @@ class country extends Amun_Module_RestAbstract
 			->select(array('id', 'title', 'code', 'longitude', 'latitude'));
 	}
 
-	protected function getTable()
+	protected function getProvider()
 	{
-		return $this->service->getTable('Core_System_Country');
+		return $this->getDataProvider('Core_System_Country');
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)

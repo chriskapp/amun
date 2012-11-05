@@ -126,11 +126,6 @@ SQL;
 		}
 	}
 
-	public function getService()
-	{
-		return Amun_Base::getInstance()->getService($this->serviceId);
-	}
-
 	public function getId()
 	{
 		$id = isset($_GET['page_id']) ? intval($_GET['page_id']) : null;

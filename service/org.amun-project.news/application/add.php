@@ -37,7 +37,7 @@ class add extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
-		if($this->service->hasAddRight())
+		if($this->getProvider()->hasAddRight())
 		{
 			// form url
 			$url = $this->service->getApiEndpoint() . '/form?format=json&method=create&pageId=' . $this->page->id;

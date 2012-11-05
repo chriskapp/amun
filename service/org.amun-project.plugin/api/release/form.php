@@ -35,9 +35,9 @@
  */
 class form extends Amun_Module_FormAbstract
 {
-	protected function getForm()
+	protected function getProvider()
 	{
-		return $this->service->getForm('Plugin_Release');
+		return $this->getDataProvider('Plugin_Release');
 	}
 
 	protected function getCreateForm()

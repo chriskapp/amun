@@ -41,9 +41,9 @@ class page extends Amun_Module_RestAbstract
 			->select(array('id', 'parentId', 'globalId', 'status', 'load', 'path', 'title', 'template', 'date'));
 	}
 
-	protected function getTable()
+	protected function getProvider()
 	{
-		return $this->service->getTable('Core_Content_Page');
+		return $this->getDataProvider('Core_Content_Page');
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)

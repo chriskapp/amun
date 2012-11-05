@@ -37,7 +37,7 @@ class index extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
-		if($this->service->hasViewRight())
+		if($this->getProvider()->hasViewRight())
 		{
 			// load news
 			$resultNews = $this->getNews();
@@ -46,7 +46,7 @@ class index extends Amun_Module_ApplicationAbstract
 
 			// options
 			$this->setOptions(array(
-				array('add', 'Add', $this->page->url . '/add')
+				array('news_add', 'Add', $this->page->url . '/add')
 			));
 
 			// template

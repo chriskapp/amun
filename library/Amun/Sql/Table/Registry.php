@@ -54,7 +54,7 @@ class Amun_Sql_Table_Registry extends ArrayObject
 
 			if($offset !== false)
 			{
-				$class = Amun_DataFactory::getClass($offset, 'Table');
+				$class = Amun_DataProvider::getClass($offset, 'Table');
 
 				if($class instanceof ReflectionClass)
 				{

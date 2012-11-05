@@ -37,7 +37,7 @@ class tree extends Amun_Module_ApiAbstract
 {
 	public function onLoad()
 	{
-		if($this->service->hasRight('content_page_view'))
+		if($this->getProvider()->hasViewRight())
 		{
 			try
 			{

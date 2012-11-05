@@ -44,7 +44,7 @@ class relation extends Amun_Module_ApiAbstract
 
 	public function onPost()
 	{
-		if($this->service->hasRight('user_friend_add'))
+		if($this->getProvider()->hasAddRight())
 		{
 			try
 			{

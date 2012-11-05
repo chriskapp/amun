@@ -47,9 +47,9 @@ class request extends Amun_Module_RestAbstract
 			);
 	}
 
-	protected function getTable()
+	protected function getProvider()
 	{
-		return $this->service->getTable('Core_System_Api_Request');
+		return $this->getDataProvider('Core_System_Api_Request');
 	}
 
 	protected function getRestrictedFields()

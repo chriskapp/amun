@@ -46,5 +46,10 @@ class gadget extends Amun_Module_RestAbstract
 				->select(array('id', 'title'), 'gadget')
 			);
 	}
+
+	protected function getProvider()
+	{
+		return $this->getDataProvider('Core_Content_Page_Gadget');
+	}
 }
 

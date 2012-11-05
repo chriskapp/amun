@@ -114,7 +114,7 @@ class Amun_Base extends PSX_Base
 			}
 		}
 
-		$service = new Amun_Service($source, $this->registry, $this->user);
+		$service = new Amun_Service($source, $this->registry);
 
 		$this->_service[$service->id]  = $service;
 		$this->_serviceMapper[$source] = $service->id;

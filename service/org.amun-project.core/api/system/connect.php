@@ -58,9 +58,9 @@ class connect extends Amun_Module_RestAbstract
 			);
 	}
 
-	protected function getTable()
+	protected function getProvider()
 	{
-		return $this->service->getTable('Core_System_Connect');
+		return $this->getDataProvider('Core_System_Connect');
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)

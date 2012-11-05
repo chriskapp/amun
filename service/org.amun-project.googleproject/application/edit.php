@@ -37,7 +37,7 @@ class edit extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
-		if($this->service->hasEditRight())
+		if($this->getProvider()->hasEditRight())
 		{
 			// form url
 			$id = $this->get->id('integer');

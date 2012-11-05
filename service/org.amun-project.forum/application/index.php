@@ -37,7 +37,7 @@ class index extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
-		if($this->service->hasViewRight())
+		if($this->getProvider()->hasViewRight())
 		{
 			// load forum
 			$resultForum = $this->getForum();
@@ -46,7 +46,7 @@ class index extends Amun_Module_ApplicationAbstract
 
 			// options
 			$this->setOptions(array(
-				array('add', 'Add', $this->page->url . '/add')
+				array('forum_add', 'Add', $this->page->url . '/add')
 			));
 
 			// template

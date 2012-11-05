@@ -44,9 +44,9 @@ class activity extends Amun_Module_RestAbstract
 			);
 	}
 
-	protected function getTable()
+	protected function getProvider()
 	{
-		return $this->service->getTable('Core_User_Activity');
+		return $this->getDataProvider('Core_User_Activity');
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)

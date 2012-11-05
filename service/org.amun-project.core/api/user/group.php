@@ -41,9 +41,9 @@ class group extends Amun_Module_RestAbstract
 			->select(array('id', 'title', 'date'));
 	}
 
-	protected function getTable()
+	protected function getProvider()
 	{
-		return $this->service->getTable('Core_User_Group');
+		return $this->getDataProvider('Core_User_Group');
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)
