@@ -41,9 +41,6 @@ class Amun_Base extends PSX_Base
 	protected $tableRegistry;
 	protected $user;
 
-	private $_service;
-	private $_serviceMapper;
-
 	public function setup()
 	{
 		parent::setup();
@@ -96,30 +93,10 @@ class Amun_Base extends PSX_Base
 
 		foreach($serviceIds as $serviceId)
 		{
-			$result[] = $this->getService($serviceId);
+			$result[] = new Amun_Service($serviceId, $this->registry);
 		}
 
 		return $result;
-	}
-
-	public function getService($source)
-	{
-		if(isset($this->_serviceMapper[$source]))
-		{
-			$id = $this->_serviceMapper[$source];
-
-			if(isset($this->_service[$id]))
-			{
-				return $this->_service[$id];
-			}
-		}
-
-		$service = new Amun_Service($source, $this->registry);
-
-		$this->_service[$service->id]  = $service;
-		$this->_serviceMapper[$source] = $service->id;
-
-		return $service;
 	}
 
 	public function hasService($source)
