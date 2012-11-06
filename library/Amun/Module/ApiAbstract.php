@@ -85,7 +85,7 @@ abstract class Amun_Module_ApiAbstract extends Amun_Oauth
 		// set service
 		$parts = explode('/', $this->basePath, 2);
 
-		$this->service  = $this->base->getService($parts[0]);
+		$this->service  = new Amun_Service($parts[0], $this->registry);
 		$this->basePath = 'api' . $this->service->path;
 	}
 
