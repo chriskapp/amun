@@ -111,16 +111,6 @@ SQL;
 		}
 	}
 
-	public function getDataFactory($name, Amun_User $user)
-	{
-		if(!isset($this->_factory[$name]))
-		{
-			$this->_factory[$name] = new Amun_DataFactory($name, $this);
-		}
-
-		return $this->_factory[$name];
-	}
-
 	public function getApiEndpoint()
 	{
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api' . $this->path;
