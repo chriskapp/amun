@@ -48,13 +48,15 @@ class Amun_Sql_Table_Registry extends ArrayObject
 
 	public function offsetGet($offset)
 	{
+		$offset = strtolower($offset);
+
 		if(!parent::offsetExists($offset))
 		{
-			$offset = $this->registry->getTableName($offset);
+			$tableName = $this->registry->getTableName($offset);
 
-			if($offset !== false)
+			if($tableName !== false)
 			{
-				$class = Amun_DataProvider::getClass($offset, 'Table');
+				$class = Amun_DataProvider::getClass($tableName, 'Table');
 
 				if($class instanceof ReflectionClass)
 				{
@@ -62,12 +64,12 @@ class Amun_Sql_Table_Registry extends ArrayObject
 				}
 				else
 				{
-					throw new Amun_Exception('Table "' . $offset . '" does not exist');
+					throw new Amun_Exception('Table "' . $tableName . '" does not exist');
 				}
 			}
 			else
 			{
-				throw new Amun_Exception('Invalid "' . $offset . '" table');
+				throw new Amun_Exception('Invalid table "' . $offset . '"');
 			}
 		}
 
