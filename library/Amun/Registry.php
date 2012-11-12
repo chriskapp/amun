@@ -103,18 +103,6 @@ class Amun_Registry extends ArrayObject
 		}
 	}
 
-	public function offsetGet($offset)
-	{
-		if(substr($offset, 0, 6) == 'table.')
-		{
-			return parent::offsetGet('table.' . $this->getTableName(substr($offset, 6)));
-		}
-		else
-		{
-			return parent::offsetGet($offset);
-		}
-	}
-
 	public function getTableName($offset)
 	{
 		$offset = strtolower($offset);
