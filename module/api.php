@@ -58,7 +58,8 @@ class api extends Amun_Module_DefaultAbstract
 		$sql = "SELECT
 					`id`,
 					`source`,
-					`path`
+					`path`,
+					`namespace`
 				FROM
 					" . $this->registry['table.core_content_service'] . "
 				WHERE
@@ -69,11 +70,16 @@ class api extends Amun_Module_DefaultAbstract
 
 		if(!empty($service))
 		{
+			// set loader namespace strategy
+			$nss = new Amun_Loader_NamespaceStrategy($service['namespace'], $service['source']);
+
+			$this->loader->setNamespaceStrategy($nss);
+
+			// load module
 			$path = substr($path, strlen($service['path']) + 1);
 			$x    = $service['source'] . '/api/' . $path;
 
-			// load api
-			$handler = $this->loader->load($x);
+			$this->loader->load($x);
 		}
 		else
 		{
