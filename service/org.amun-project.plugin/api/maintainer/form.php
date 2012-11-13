@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace plugin\api\maintainer;
+
+use Amun_Module_FormAbstract;
+
 /**
  * form
  *

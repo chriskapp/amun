@@ -22,6 +22,22 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace core\api\auth;
+
+use AmunService_Core_System_Api_Record;
+use Amun_Dependency_Default;
+use Amun_Security;
+use DateInterval;
+use DateTime;
+use Exception;
+use PSX_DateTime;
+use PSX_Oauth_Exception;
+use PSX_Oauth_Provider_AccessAbstract;
+use PSX_Oauth_Provider_Data_Consumer;
+use PSX_Oauth_Provider_Data_Request;
+use PSX_Oauth_Provider_Data_Response;
+use PSX_Sql_Condition;
+
 /**
  * access
  *

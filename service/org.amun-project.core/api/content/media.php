@@ -22,6 +22,13 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace core\api\content;
+
+use Amun_Module_RestAbstract;
+use PSX_Data_Exception;
+use PSX_Data_WriterInterface;
+use PSX_Data_WriterResult;
+
 /**
  * media
  *

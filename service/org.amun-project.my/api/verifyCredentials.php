@@ -22,6 +22,14 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\api;
+
+use Amun_Module_ApiAbstract;
+use Amun_Sql_Table_Registry;
+use Exception;
+use PSX_Data_Message;
+use PSX_Sql;
+
 /**
  * verifyCredentials
  *

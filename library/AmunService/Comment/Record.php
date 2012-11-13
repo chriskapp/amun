@@ -38,6 +38,11 @@ class AmunService_Comment_Record extends Amun_Data_RecordAbstract
 	protected $_user;
 	protected $_date;
 
+	/**
+	 * Sets the id
+	 *
+	 * @param integer $id
+	 */
 	public function setId($id)
 	{
 		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
@@ -52,6 +57,11 @@ class AmunService_Comment_Record extends Amun_Data_RecordAbstract
 		}
 	}
 
+	/**
+	 * Sets the page id
+	 *
+	 * @param integer $pageId
+	 */
 	public function setPageId($pageId)
 	{
 		$pageId = $this->_validate->apply($pageId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_Content_Page'))), 'pageId', 'Page Id');

@@ -22,6 +22,17 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\api;
+
+use AmunService_My_Subscription_Handler;
+use Amun_Module_RestAbstract;
+use Exception;
+use PSX_Data_Exception;
+use PSX_Data_Message;
+use PSX_Data_Record;
+use PSX_Filter_Length;
+use PSX_Filter_Url;
+
 /**
  * subscription
  *

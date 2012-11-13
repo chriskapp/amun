@@ -22,6 +22,16 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace comment\api;
+
+use Amun_Base;
+use Amun_Module_RestAbstract;
+use Amun_Sql_Table_Registry;
+use DateTime;
+use PSX_Data_WriterInterface;
+use PSX_Data_WriterResult;
+use PSX_Sql_Join;
+
 /**
  * index
  *
@@ -35,6 +45,23 @@
  */
 class index extends Amun_Module_RestAbstract
 {
+	/**
+	 * @summary foo
+	 */
+	public function onGet()
+	{
+		parent::onGet();
+	}
+
+	/**
+	 * @summary foo
+	 * @parameter body record AmunService_Comment_Record
+	 */
+	public function onPost()
+	{
+		parent::onPost();
+	}
+
 	protected function getSelection()
 	{
 		return $this->getTable()

@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\api\notify;
+
+use Amun_Module_FormAbstract;
+
 /**
  * form
  *

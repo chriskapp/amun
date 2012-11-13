@@ -34,6 +34,17 @@
  */
 abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 {
+	/**
+	 * @httpMethod GET
+	 * @parameter query startIndex integer
+	 * @parameter query count integer
+	 * @parameter query sortBy integer
+	 * @parameter query sortOrder string
+	 * @parameter query filterBy integer
+	 * @parameter query filterOp integer
+	 * @parameter query filterValue string
+	 * @parameter query updatedSince DateTime
+	 */
 	public function onGet()
 	{
 		if($this->getProvider()->hasViewRight())
@@ -77,6 +88,9 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 		}
 	}
 
+	/**
+	 * @httpMethod POST
+	 */
 	public function onPost()
 	{
 		if($this->getProvider()->hasAddRight())

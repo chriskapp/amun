@@ -22,6 +22,12 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace core\api\system;
+
+use Amun_Captcha;
+use Amun_Module_ApiAbstract;
+use Exception;
+
 /**
  * captcha
  *

@@ -22,6 +22,26 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace core\api\user\activity;
+
+use AmunService_Core_User_Activity_Handler;
+use Amun_Module_ApiAbstract;
+use Amun_Sql_Table_Registry;
+use Amun_User;
+use Exception;
+use PSX_Atom;
+use PSX_Atom_Entry;
+use PSX_Base;
+use PSX_Data_Exception;
+use PSX_Data_Message;
+use PSX_Data_ReaderInterface;
+use PSX_Data_WriterInterface;
+use PSX_Data_Writer_Atom;
+use PSX_DateTime;
+use PSX_Sql;
+use PSX_Sql_Condition;
+use PSX_Urn;
+
 /**
  * message
  *

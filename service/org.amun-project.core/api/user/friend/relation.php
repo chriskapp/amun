@@ -22,6 +22,16 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace core\api\user\friend;
+
+use AmunService_Core_User_Friend_Handler;
+use AmunService_Core_User_Friend_Relation;
+use Amun_Module_ApiAbstract;
+use Exception;
+use PSX_Data_Exception;
+use PSX_Data_Message;
+use PSX_Data_ReaderInterface;
+
 /**
  * relation
  *

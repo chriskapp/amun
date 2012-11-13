@@ -22,6 +22,21 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\api\subscription;
+
+use AmunService_Core_User_Activity_Handler;
+use Amun_Exception;
+use Amun_PubSubHubBub_CallbackAbstract;
+use Amun_User;
+use Exception;
+use PSX_Atom;
+use PSX_Base;
+use PSX_Data_Exception;
+use PSX_Rss;
+use PSX_SQL;
+use PSX_Sql_Condition;
+use PSX_Url;
+
 /**
  * callback
  *

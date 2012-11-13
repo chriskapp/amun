@@ -169,12 +169,10 @@ SQL;
 
 	/**
 	 * This method should be called by each handler if an record was inserted, 
-	 * updated or deleted. It notifies all classes in the table 
-	 * core_system_notify about the changes
+	 * updated or deleted. It notifies all listeners of the onRecordChange event
 	 *
 	 * @param integer $type
 	 * @param PSX_Data_RecordInterface $record
-	 * @param integer $mode
 	 * @return void
 	 */
 	public function notify($type, PSX_Data_RecordInterface $record)
@@ -183,6 +181,10 @@ SQL;
 		{
 			throw new Amun_Exception('Invalid notification type');
 		}
+
+		// @todo
+		//$this->event->notifyListener('onRecordChange', array($type, $record));
+
 
 		$sql = <<<SQL
 SELECT

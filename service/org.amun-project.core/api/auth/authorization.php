@@ -22,6 +22,14 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace core\api\auth;
+
+use Amun_Dependency_Default;
+use Amun_Exception;
+use PSX_Filter_Length;
+use PSX_Filter_Xdigit;
+use PSX_ModuleAbstract;
+
 /**
  * authorization
  *

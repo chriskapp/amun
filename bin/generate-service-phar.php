@@ -49,7 +49,7 @@ try
 			}
 		}
 	}
-	else
+	else if($service[0] != '.')
 	{
 		if(in_array($service, $services))
 		{

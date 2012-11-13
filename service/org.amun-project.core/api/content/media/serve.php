@@ -22,6 +22,15 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace core\api\content\media;
+
+use Amun_Module_ApiAbstract;
+use Amun_Sql_Table_Registry;
+use Exception;
+use PSX_Base;
+use PSX_Data_Exception;
+use PSX_Data_Message;
+
 /**
  * serve
  *

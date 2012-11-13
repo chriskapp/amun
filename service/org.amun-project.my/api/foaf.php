@@ -22,6 +22,15 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\api;
+
+use AmunService_Core_User_Friend_Record;
+use Amun_Exception;
+use Amun_Module_ApiAbstract;
+use Amun_Sql_Table_Registry;
+use PSX_Sql_Join;
+use XMLWriter;
+
 /**
  * foaf
  *

@@ -22,6 +22,15 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace phpinfo\api;
+
+use Amun_Module_ApiAbstract;
+use DomDocument;
+use Exception;
+use PSX_Data_Array;
+use PSX_Data_Message;
+use PSX_Data_ResultSet;
+
 /**
  * index
  *

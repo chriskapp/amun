@@ -22,6 +22,19 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\api;
+
+use Amun_Exception;
+use Amun_OpenId_ProviderAbstract;
+use DateTime;
+use Exception;
+use PSX_OpenId_ProviderAbstract;
+use PSX_OpenId_Provider_Data_Association;
+use PSX_OpenId_Provider_Data_ResRequest;
+use PSX_OpenId_Provider_Data_SetupRequest;
+use PSX_Time;
+use PSX_Url;
+
 /**
  * signon
  *

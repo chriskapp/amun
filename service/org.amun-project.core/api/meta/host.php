@@ -22,6 +22,15 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace core\api\meta;
+
+use AmunService_Core_System_Host_Record;
+use Amun_Module_ApiAbstract;
+use Amun_Sql_Table_Registry;
+use Exception;
+use PSX_Data_Message;
+use XMLWriter;
+
 /**
  * host
  *

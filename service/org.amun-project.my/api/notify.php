@@ -22,6 +22,12 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\api;
+
+use Amun_Module_RestAbstract;
+use Amun_Sql_Table_Registry;
+use PSX_Sql_Join;
+
 /**
  * notify
  *

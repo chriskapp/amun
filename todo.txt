@@ -1,26 +1,27 @@
 
 [FEATURES]
 
-[x] fix api insert
-[ ] update webdav service probably with handler so that services can provide 
-    their own content
-[ ] possibility for services to extend the service config.xml
-[ ] possibility for services to extend the meta lrdd api
-[ ] add improved observer system wich replaces the notify table
+[ ] support host meta to return json and xrd / jrd
+[ ] build swagger geenrator for the current api (get api details from docblock
+    comments). Problem to generate the declaration we have to import every api
+    endpoint wich all have the same class name "index" .. namespaces
+[ ] adding oauth scope
+[ ] implement event listener system where services can offer an endpoint where
+    other classes can subscribe to.
+    [ ] update webdav service probably with handler so that services can provide 
+        their own content
+    [ ] possibility for services to extend the service config.xml
+    [ ] possibility for services to extend the meta lrdd api
 [ ] extract functionality from the core service into different services
 [ ] check activity stream and approval system
-[ ] update all services using the new service class for right and api endpoint 
-    issues
-[x] improve installer design and flow
 [ ] improve right system probably with inheritance
-[x] renaming record classes from i.e. Amun_Service_News to 
-    Amun_Service_News_Record to eb able to add later a namespace
 [ ] possiblity to add more meta data to a page (keywords, description)
-[x] Add possibility to upload media in different folders
+    [ ] A option to create a pasword protected page. This should be general so 
+        that you can protect any page with an password ... at this move we can 
+        also add a possibility to add more meta data to a page (i.e. dublincore)
 [ ] Implement reference input field in backend
 [ ] comments wich are added should not force a reload instead they should be
     added directly to the html
-[x] build namespace package system i.e. org.amun.comment
 [ ] update phpdoc for proper API generation
 [ ] build general achievment system where a user based on the karma value (or
     probably other conditions) gets specific achievments on the profile
@@ -34,14 +35,19 @@
     oembed i.e. you can add photo, video. We could use the html filter to get
     all urls and make an Oembed request ... if we find an enpoint we attach
     the meta data to the record
-[ ] A option to create a pasword protected page. This should be general so that
-    you can protect any page with an password ... at this move we can also add
-    a possibility to add more meta data to a page (i.e. dublin core)
 [ ] implement an http proxy for making ajax requests to external domains (same
     origin policy stuff) ... we should put the proxy class into the psx
     framework because its not amun specific and a well written proxy is in
     general needed
 [ ] test ostatus remote subscription interoperability
+[x] fix api insert
+[x] update all services using the new service class for right and api endpoint 
+    issues
+[x] improve installer design and flow
+[x] renaming record classes from i.e. Amun_Service_News to 
+    Amun_Service_News_Record to eb able to add later a namespace
+[x] Add possibility to upload media in different folders
+[x] build namespace package system i.e. org.amun.comment
 
 [SERVICES]
 

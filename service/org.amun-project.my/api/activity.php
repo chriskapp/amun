@@ -22,6 +22,21 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\api;
+
+use Amun_Base;
+use Amun_Module_RestAbstract;
+use Amun_Sql_Table_Registry;
+use Exception;
+use PSX_Data_Array;
+use PSX_Data_Exception;
+use PSX_Data_Message;
+use PSX_Data_WriterInterface;
+use PSX_Data_WriterResult;
+use PSX_Sql;
+use PSX_Sql_Condition;
+use PSX_Sql_Join;
+
 /**
  * activity
  *

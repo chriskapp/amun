@@ -22,6 +22,14 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace sitemap\api;
+
+use Amun_Module_ApiAbstract;
+use DateTime;
+use Exception;
+use PSX_Data_Message;
+use XMLWriter;
+
 /**
  * index
  *

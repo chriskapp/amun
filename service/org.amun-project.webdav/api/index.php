@@ -22,6 +22,17 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace webdav\api;
+
+use AmunService_Core_User_Account_Record;
+use AmunService_Webdav_Page;
+use Amun_Module_DefaultAbstract;
+use Amun_Security;
+use Amun_Sql_Table_Registry;
+use PSX_Url;
+use Sabre_DAV_Server;
+use Sabre_HTTP_BasicAuth;
+
 /**
  * index
  *

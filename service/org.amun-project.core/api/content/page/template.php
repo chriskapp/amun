@@ -22,6 +22,13 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace core\api\content\page;
+
+use Amun_Module_ApiAbstract;
+use Exception;
+use PSX_Data_Message;
+use PSX_Data_ResultSet;
+
 /**
  * template
  *

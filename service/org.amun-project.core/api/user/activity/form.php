@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace core\api\user\activity;
+
+use Amun_Module_FormAbstract;
+
 /**
  * form
  *

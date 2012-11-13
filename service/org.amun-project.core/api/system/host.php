@@ -22,6 +22,14 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace core\api\system;
+
+use Amun_Base;
+use Amun_Module_RestAbstract;
+use DateTime;
+use PSX_Data_WriterInterface;
+use PSX_Data_WriterResult;
+
 /**
  * host
  *
