@@ -63,74 +63,16 @@ class swagger extends Amun_Module_ApiAbstract
 			$version  = Amun_Base::getVersion();
 			$basePath = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api';
 
-			$declaration = new PSX_Swagger_Declaration($version, $basePath, '');
+			$declaration = new PSX_Swagger_Declaration($version, $basePath, null);
+			$serviceName = current($this->uriFragments);
 
-			$result = Amun_Sql_Table_Registry::get('Core_Content_Api')
-				->select(array('priority', 'endpoint'))
-				->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_Content_Service')
-					->select(array('source', 'namespace'), 'service')
-				)
-				->orderBy('id', PSX_Sql::SORT_ASC)
-				->where('id', '>', 5)
-				->getAll();
-
-			foreach($result as $row)
+			if(empty($serviceName))
 			{
-				$endpoint = trim($row['endpoint'], '/');
-				$name     = str_replace('/', '_', $endpoint);
-
-				try
-				{
-					$provider = $this->getDataProvider($name);
-
-					// add api
-					$description = '';
-					$api = new PSX_Swagger_Api($row['endpoint'], $description);
-
-					// get the api class
-					$src   = str_replace($row['serviceNamespace'], $row['serviceSource'] . '/api', $endpoint);
-					$ns    = str_replace('_', '\\', str_replace($row['serviceNamespace'], $row['serviceNamespace'] . '_api', $name));
-					$class = $this->getClass($src, $ns);
-
-					if($class instanceof ReflectionClass)
-					{
-						$models = array();
-
-						// scan for GET, POST, PUT and DELETE methods and add 
-						// operations to the api
-						$this->scanMethods($api, $class, 'GET', $models);
-						$this->scanMethods($api, $class, 'POST', $models);
-						$this->scanMethods($api, $class, 'PUT', $models);
-						$this->scanMethods($api, $class, 'DELETE', $models);
-
-						// add api
-						$declaration->addApi($api);
-
-						// add models
-						$models = array_unique($models);
-
-						if(!empty($models))
-						{
-							foreach($models as $model)
-							{
-								try
-								{
-									$record = new ReflectionClass($model);
-
-									$declaration->addModel($record->newInstance($provider->getTable()));
-								}
-								catch(Exception $e)
-								{
-									var_dump($e->getMessage());exit;
-								}
-							}
-						}
-					}
-				}
-				catch(Exception $e)
-				{
-					var_dump($e->getMessage() . "\n" . $e->getTraceAsString());exit;
-				}
+				$this->buildApiIndex($declaration);
+			}
+			else
+			{
+				$this->buildApiDetails($declaration, $serviceName);
 			}
 
 			$this->setResponse($declaration);
@@ -140,6 +82,92 @@ class swagger extends Amun_Module_ApiAbstract
 			$msg = new PSX_Data_Message($e->getMessage(), false);
 
 			$this->setResponse($msg);
+		}
+	}
+
+	private function buildApiIndex(PSX_Swagger_Declaration $declaration)
+	{
+		$result = Amun_Sql_Table_Registry::get('Core_Content_Service')
+			->select(array('name', 'path'))
+			->orderBy('name', PSX_Sql::SORT_ASC)
+			->getAll();
+
+		foreach($result as $row)
+		{
+			// add api
+			$desc = '-';
+			$api  = new PSX_Swagger_Api('/core/meta/swagger/' . $row['name'], $desc);
+
+			$declaration->addApi($api);
+		}
+	}
+
+	private function buildApiDetails(PSX_Swagger_Declaration $declaration, $serviceName)
+	{
+		$result = Amun_Sql_Table_Registry::get('Core_Content_Api')
+			->select(array('priority', 'endpoint'))
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_Content_Service')
+				->select(array('source', 'name', 'namespace'), 'service')
+			)
+			->orderBy('id', PSX_Sql::SORT_ASC)
+			->where('serviceName', '=', $serviceName)
+			->getAll();
+
+		foreach($result as $row)
+		{
+			$endpoint = trim($row['endpoint'], '/');
+			$name     = str_replace('/', '_', $endpoint);
+
+			try
+			{
+				$provider = $this->getDataProvider($name);
+
+				// add api
+				$desc = '-';
+				$api  = new PSX_Swagger_Api($row['endpoint'], $desc);
+
+				// get the api class
+				$src   = str_replace($row['serviceNamespace'], $row['serviceSource'] . '/api', $endpoint);
+				$ns    = str_replace('_', '\\', str_replace($row['serviceNamespace'], $row['serviceNamespace'] . '_api', $name));
+				$class = $this->getClass($src, $ns);
+
+				if($class instanceof ReflectionClass)
+				{
+					$models = array();
+
+					// scan for GET, POST, PUT and DELETE methods and add 
+					// operations to the api
+					$this->scanMethods($api, $class, 'GET', $models);
+					$this->scanMethods($api, $class, 'POST', $models);
+					$this->scanMethods($api, $class, 'PUT', $models);
+					$this->scanMethods($api, $class, 'DELETE', $models);
+
+					// add api
+					$declaration->addApi($api);
+
+					// add models
+					$models = array_unique($models);
+
+					if(!empty($models))
+					{
+						foreach($models as $model)
+						{
+							try
+							{
+								$record = new ReflectionClass($model);
+
+								$declaration->addModel($record->newInstance($provider->getTable()));
+							}
+							catch(Exception $e)
+							{
+							}
+						}
+					}
+				}
+			}
+			catch(Exception $e)
+			{
+			}
 		}
 	}
 
@@ -183,7 +211,9 @@ class swagger extends Amun_Module_ApiAbstract
 		if($doc->getFirstAnnotation('httpMethod') == $httpMethod)
 		{
 			$summary   = $doc->getFirstAnnotation('summary');
-			$operation = new PSX_Swagger_Operation($httpMethod, $summary);
+			$nickname  = $doc->getFirstAnnotation('nickname');
+			$response  = $doc->getFirstAnnotation('responseClass');
+			$operation = new PSX_Swagger_Operation($httpMethod, $nickname, $response, $summary);
 			$params    = $doc->getAnnotation('parameter');
 			$dataTypes = array();
 
