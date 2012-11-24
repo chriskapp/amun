@@ -175,7 +175,7 @@ class lrdd extends Amun_Module_ApiAbstract
 	private function buildPageXrd(AmunService_Core_Content_Page_Record $page)
 	{
 		// subject
-		$subject = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $page->path . $this->config['amun_page_delimiter'];
+		$subject = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $page->path;
 
 		$this->writer->writeElement('Subject', $subject);
 
@@ -242,27 +242,26 @@ class lrdd extends Amun_Module_ApiAbstract
 				$uri = substr($this->uri, strlen($this->config['psx_url'] . '/' . $this->config['psx_dispatch']));
 				$uri = trim($uri, '/');
 
-				// get path
-				$pos = strpos($uri, $this->config['amun_page_delimiter']);
+				// get page
+				$sql = "SELECT
+							`page`.`id`
+						FROM
+							" . $this->registry['table.core_content_page'] . " `page`
+						INNER JOIN
+							" . $this->registry['table.core_content_service'] . " `service`
+						ON
+							`page`.`serviceId` = `service`.`id`
+						WHERE
+							`page`.`path` LIKE SUBSTRING(?, 1, CHAR_LENGTH(`page`.`path`))
+						ORDER BY
+							CHAR_LENGTH(`page`.`path`) DESC
+						LIMIT 1";
 
-				if($pos !== false)
-				{
-					$path = substr($uri, 0, $pos);
-				}
-				else
-				{
-					throw new PSX_Data_Exception('Page delimiter not found in uri');
-				}
+				$pageId = $this->sql->getField($sql, array($uri));
 
-				// get page record
-				$page = Amun_Sql_Table_Registry::get('Core_Content_Page')
-					->select(array('id', 'globalId', 'title', 'path', 'date'))
-					->where('path', '=', $path)
-					->getRow(PSX_Sql::FETCH_OBJECT);
-
-				if($page instanceof AmunService_Core_Content_Page_Record)
+				if(!empty($pageId))
 				{
-					return $page;
+					return $this->getProvider('Core_Content_Page')->getTable()->getRecord($pageId);
 				}
 				else
 				{

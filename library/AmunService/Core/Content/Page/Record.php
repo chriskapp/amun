@@ -264,7 +264,7 @@ class AmunService_Core_Content_Page_Record extends Amun_Data_RecordAbstract
 
 	public function getUrl()
 	{
-		return $this->_config['psx_url'] . '/' . $this->_config['psx_dispatch'] . $this->path . $this->_config['amun_page_delimiter'];
+		return $this->_config['psx_url'] . '/' . $this->_config['psx_dispatch'] . $this->path;
 	}
 
 	public function export(PSX_Data_WriterResult $result)

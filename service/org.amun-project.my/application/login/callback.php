@@ -37,6 +37,8 @@ class callback extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
+		parent::onLoad();
+
 		// http
 		$this->http = new PSX_Http(new PSX_Http_Handler_Curl());
 

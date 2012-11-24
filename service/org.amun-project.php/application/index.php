@@ -37,6 +37,8 @@ class index extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
+		parent::onLoad();
+
 		if($this->user->hasRight('php_view'))
 		{
 			// load php

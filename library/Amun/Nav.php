@@ -84,8 +84,8 @@ EOD;
 		foreach($result as $row)
 		{
 			$name     = $row['pageTitle'];
-			$href     = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $row['pagePath'] . $this->config['amun_page_delimiter'];
-			$selected = strpos($_SERVER['REQUEST_URI'], $this->config['psx_dispatch'] . $row['pagePath'] . $this->config['amun_page_delimiter']) !== false;
+			$href     = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $row['pagePath'];
+			$selected = strpos($_SERVER['REQUEST_URI'], $this->config['psx_dispatch'] . $row['pagePath']) !== false;
 
 			if(!empty($row['pageRightId']))
 			{

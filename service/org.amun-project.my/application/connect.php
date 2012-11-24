@@ -47,6 +47,8 @@ class connect extends Amun_Module_ApplicationAbstract
 
 	public function onLoad()
 	{
+		parent::onLoad();
+
 		if($this->getProvider()->hasViewRight())
 		{
 			// add path

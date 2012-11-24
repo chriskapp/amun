@@ -36,9 +36,94 @@ abstract class Amun_Module_ApplicationAbstract extends PSX_Module_ViewAbstract
 {
 	protected $_provider = array();
 
+	public function onLoad()
+	{
+		// set xrds location header
+		header('X-XRDS-Location: ' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/meta/xrds');
+
+		if(!empty($this->page->id))
+		{
+			// load extra rights
+			if($this->page->hasRight())
+			{
+				$this->page->loadExtraRights();
+			}
+
+			// load nav
+			if($this->page->hasNav())
+			{
+				$this->nav->load();
+			}
+
+			// load path
+			if($this->page->hasPath())
+			{
+				$this->path->load();
+			}
+
+			// load gadgets
+			if($this->page->hasGadget())
+			{
+				$this->gadget->load($this->page);
+			}
+
+			// set application template path
+			$this->template->setDir($this->config['amun_service_path'] . '/' . $this->page->application . '/template');
+
+			// add default css
+			$this->htmlCss->add('default');
+		}
+		else
+		{
+			throw new Amun_Page_Exception('Invalid page');
+		}
+	}
+
+	public function processResponse($content)
+	{
+		if(empty($content))
+		{
+			if(!($response = $this->template->transform()))
+			{
+				throw new PSX_Exception('Error while transforming template');
+			}
+
+			// set custom template if any
+			$this->template->assign('content', $response);
+			$this->template->setDir(PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir']);
+
+			if(!empty($this->page->template))
+			{
+				$this->template->set($this->page->template);
+			}
+			else
+			{
+				$this->template->set('page.tpl');
+			}
+
+			$response = $this->template->transform();
+
+			// content encoding
+			$acceptEncoding = PSX_Base::getRequestHeader('Accept-Encoding');
+
+			if($this->config['psx_gzip'] === true && strpos($acceptEncoding, 'gzip') !== false)
+			{
+				header('Content-Encoding: gzip');
+
+				$response = gzencode($response, 9);
+			}
+
+			return $response;
+		}
+		else
+		{
+			return $content;
+		}
+	}
+
 	public function getDependencies()
 	{
-		return new Amun_Dependency_Application();
+		return new Amun_Dependency_Application($this->location->getServiceId());
 	}
 
 	protected function getDataProvider($name = null)

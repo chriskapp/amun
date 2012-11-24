@@ -37,6 +37,8 @@ class activate extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
+		parent::onLoad();
+
 		// add path
 		$this->path->add('Register', $this->page->url . '/register');
 		$this->path->add('Activate', $this->page->url . '/register/activate');

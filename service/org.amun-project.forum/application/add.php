@@ -37,6 +37,8 @@ class add extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
+		parent::onLoad();
+
 		if($this->getProvider()->hasAddRight())
 		{
 			// form url

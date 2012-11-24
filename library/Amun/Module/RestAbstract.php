@@ -36,16 +36,19 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 {
 	/**
 	 * @httpMethod GET
-	 * @parameter query startIndex integer
-	 * @parameter query count integer
-	 * @parameter query sortBy integer
-	 * @parameter query sortOrder string
-	 * @parameter query filterBy integer
-	 * @parameter query filterOp integer
-	 * @parameter query filterValue string
-	 * @parameter query updatedSince DateTime
+	 * @path /
+	 * @nickname getRecords
+	 * @parameter [query startIndex integer]
+	 * @parameter [query count integer]
+	 * @parameter [query sortBy integer]
+	 * @parameter [query sortOrder string ascending|descending]
+	 * @parameter [query filterBy integer]
+	 * @parameter [query filterOp integer contains|equals|startsWith|present]
+	 * @parameter [query filterValue string]
+	 * @parameter [query updatedSince DateTime]
+	 * @responseClass PSX_Data_ResultSet
 	 */
-	public function onGet()
+	public function getRecords()
 	{
 		if($this->getProvider()->hasViewRight())
 		{
@@ -55,23 +58,46 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 				$fragments = $this->getUriFragments();
 				$params    = $this->getRequestParams();
 
-				if(isset($fragments[0]) && $fragments[0] == '@supportedFields')
+				if(!empty($params['fields']))
 				{
-					$array = new PSX_Data_Array($select->getSupportedFields());
-
-					$this->setResponse($array);
+					$select->setColumns($params['fields']);
 				}
-				else
-				{
-					if(!empty($params['fields']))
-					{
-						$select->setColumns($params['fields']);
-					}
 
-					$resultSet = $select->getResultSet($params['startIndex'], $params['count'], $params['sortBy'], $params['sortOrder'], $params['filterBy'], $params['filterOp'], $params['filterValue'], $params['updatedSince'], $this->getMode());
+				$resultSet = $select->getResultSet($params['startIndex'], $params['count'], $params['sortBy'], $params['sortOrder'], $params['filterBy'], $params['filterOp'], $params['filterValue'], $params['updatedSince'], $this->getMode());
 
-					$this->setResponse($resultSet);
-				}
+				$this->setResponse($resultSet);
+			}
+			catch(Exception $e)
+			{
+				$msg = new PSX_Data_Message($e->getMessage(), false);
+
+				$this->setResponse($msg);
+			}
+		}
+		else
+		{
+			$msg = new PSX_Data_Message('Access not allowed', false);
+
+			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
+		}
+	}
+
+	/**
+	 * @httpMethod GET
+	 * @path /@supportedFields
+	 * @nickname getSupportedFields
+	 * @responseClass PSX_Data_Array
+	 */
+	public function getSupportedFields()
+	{
+		if($this->getProvider()->hasViewRight())
+		{
+			try
+			{
+				$select = $this->getSelection();
+				$array  = new PSX_Data_Array($select->getSupportedFields());
+
+				$this->setResponse($array);
 			}
 			catch(Exception $e)
 			{
@@ -90,6 +116,8 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 
 	/**
 	 * @httpMethod POST
+	 * @nickname insertRecord
+	 * @responseClass PSX_Data_Message
 	 */
 	public function onPost()
 	{
@@ -126,6 +154,11 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 		}
 	}
 
+	/**
+	 * @httpMethod PUT
+	 * @nickname updateRecord
+	 * @responseClass PSX_Data_Message
+	 */
 	public function onPut()
 	{
 		if($this->getProvider()->hasEditRight())
@@ -167,6 +200,11 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 		}
 	}
 
+	/**
+	 * @httpMethod DELETE
+	 * @nickname deleteRecord
+	 * @responseClass PSX_Data_Message
+	 */
 	public function onDelete()
 	{
 		if($this->getProvider()->hasDeleteRight())

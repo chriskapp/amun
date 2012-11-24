@@ -58,7 +58,8 @@ class Amun_Base extends PSX_Base
 		$this->tableRegistry = Amun_Sql_Table_Registry::initInstance($this->registry);
 
 		// add routes
-		$this->loader->addRoute('/.well-known/host-meta', 'api/meta/host');
+		$this->loader->setLocationFinder(new Amun_Loader_LocationFinder($this->registry));
+		$this->loader->addRoute('/.well-known/host-meta', 'api/core/meta/host');
 	}
 
 	public function setUser($userId)

@@ -45,23 +45,6 @@ use PSX_Sql_Join;
  */
 class index extends Amun_Module_RestAbstract
 {
-	/**
-	 * @summary foo
-	 */
-	public function onGet()
-	{
-		parent::onGet();
-	}
-
-	/**
-	 * @summary foo
-	 * @parameter body record AmunService_Comment_Record
-	 */
-	public function onPost()
-	{
-		parent::onPost();
-	}
-
 	protected function getSelection()
 	{
 		return $this->getTable()

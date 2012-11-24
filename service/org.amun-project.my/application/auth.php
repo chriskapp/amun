@@ -39,6 +39,8 @@ class auth extends Amun_Module_ApplicationAbstract
 
 	public function onLoad()
 	{
+		parent::onLoad();
+
 		// get oauth token
 		$oauthToken = $this->get->oauth_token('string', array(new PSX_Filter_Length(40, 40), new PSX_Filter_Xdigit()));
 

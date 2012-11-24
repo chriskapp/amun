@@ -37,6 +37,8 @@ class register extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
+		parent::onLoad();
+
 		if($this->getProvider()->hasViewRight())
 		{
 			// captcha

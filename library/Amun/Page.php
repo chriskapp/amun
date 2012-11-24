@@ -58,7 +58,7 @@ class Amun_Page
 	public $applicationPath;
 	public $url;
 
-	public function __construct(Amun_Registry $registry, Amun_User $user)
+	public function __construct($pageId, Amun_Registry $registry, Amun_User $user)
 	{
 		$this->config   = $registry->getConfig();
 		$this->sql      = $registry->getSql();
@@ -94,7 +94,7 @@ SELECT
 			WHERE `page`.`id` = ?
 SQL;
 
-		$row = $this->sql->getRow($sql, array($this->getId()));
+		$row = $this->sql->getRow($sql, array($pageId));
 
 		if(!empty($row))
 		{

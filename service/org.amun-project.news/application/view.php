@@ -35,12 +35,22 @@
  */
 class view extends Amun_Module_ApplicationAbstract
 {
-	private $newsId;
+	private $id;
+	private $title;
 
-	public function onLoad()
+	/**
+	 * @httpMethod GET
+	 * @path /{newsId}/{newsTitle}
+	 */
+	public function loadNews()
 	{
 		if($this->getProvider()->hasViewRight())
 		{
+			// get news id
+			$fragments   = $this->getUriFragments();
+			$this->id    = isset($fragments['newsId']) ? intval($fragments['newsId']) : $this->get->id('integer');
+			$this->title = isset($fragments['newsTitle']) ? $fragments['newsTitle'] : null;
+
 			// load news
 			$recordNews = $this->getNews();
 
@@ -52,15 +62,15 @@ class view extends Amun_Module_ApplicationAbstract
 			$this->template->assign('resultComments', $resultComments);
 
 			// add path
-			$this->path->add($recordNews->title, $this->page->url . '/view?id=' . $this->newsId);
+			$this->path->add($recordNews->title, $this->page->url . '/view?id=' . $this->id);
 
 			// options
 			$this->setOptions(array(
-				array('news_edit', 'Edit', $this->page->url . '/edit?id=' . $this->newsId)
+				array('news_edit', 'Edit', $this->page->url . '/edit?id=' . $this->id)
 			));
 
 			// form url
-			$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/comment/form?format=json&method=create&pageId=' . $this->page->id . '&refId=' . $this->newsId;
+			$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/comment/form?format=json&method=create&pageId=' . $this->page->id . '&refId=' . $this->id;
 
 			$this->template->assign('formUrl', $url);
 
@@ -82,10 +92,6 @@ class view extends Amun_Module_ApplicationAbstract
 
 	private function getNews()
 	{
-		// get id
-		$fragments = $this->getUriFragments();
-		$id = isset($fragments[0]) ? intval($fragments[0]) : $this->get->id('integer');
-
 		// query
 		$result = Amun_Sql_Table_Registry::get('News')
 			->select(array('id', 'urlTitle', 'title', 'text', 'date'))
@@ -95,13 +101,18 @@ class view extends Amun_Module_ApplicationAbstract
 			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			)
-			->where('id', '=', $id)
+			->where('id', '=', $this->id)
 			->getRow(PSX_Sql::FETCH_OBJECT);
 
-		$this->newsId = $result->id;
+		if(empty($result))
+		{
+			throw new Amun_Exception('Invalid news id');
+		}
+
+		$this->id = $result->id;
 
 		// redirect to correct url
-		if(!isset($fragments[1]) || $fragments[1] != $result->urlTitle)
+		if(empty($this->title) || $this->title != $result->urlTitle)
 		{
 			PSX_Base::setResponseCode(301);
 			header('Location: ' . $this->page->url . '/view/' . $result->id . '/' . $result->urlTitle);
@@ -118,7 +129,7 @@ class view extends Amun_Module_ApplicationAbstract
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			)
 			->where('pageId', '=', $this->page->id)
-			->where('refId', '=', $this->newsId)
+			->where('refId', '=', $this->id)
 			->orderBy('date', PSX_Sql::SORT_ASC);
 
 

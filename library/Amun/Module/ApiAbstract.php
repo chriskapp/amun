@@ -40,9 +40,9 @@ abstract class Amun_Module_ApiAbstract extends Amun_Oauth
 
 	protected $_provider = array();
 
-	public function __construct(PSX_Base $base, $basePath, array $uriFragments)
+	public function __construct(PSX_Loader_Location $location, PSX_Base $base, $basePath, array $uriFragments)
 	{
-		parent::__construct($base, $basePath, $uriFragments);
+		parent::__construct($location, $base, $basePath, $uriFragments);
 
 		// if the authorization header is set follow the oauth
 		// authentication process else assign the user from the session
@@ -58,9 +58,10 @@ abstract class Amun_Module_ApiAbstract extends Amun_Oauth
 			$this->session->start();
 
 			$this->user = $this->base->setUser(Amun_User::getId($this->session, $this->registry));
-
-			$this->setService();
 		}
+
+		// set service
+		$this->service = new Amun_Service($location->getServiceId(), $this->registry);
 	}
 
 	public function getDependencies()
@@ -76,17 +77,6 @@ abstract class Amun_Module_ApiAbstract extends Amun_Oauth
 
 		$this->user = $this->base->setUser($this->claimedUserId);
 		$this->user->requestId = $this->requestId;
-
-		$this->setService();
-	}
-
-	public function setService()
-	{
-		// set service
-		$parts = explode('/', $this->basePath, 2);
-
-		$this->service  = new Amun_Service($parts[0], $this->registry);
-		$this->basePath = 'api' . $this->service->path;
 	}
 
 	protected function getDataProvider($name)

@@ -37,13 +37,19 @@ abstract class Amun_Module_FormAbstract extends Amun_Module_ApiAbstract
 	protected $method;
 	protected $form;
 
-	public function onGet()
+	/**
+	 * @httpMethod GET
+	 * @path /{method}
+	 * @nickname getForm
+	 * @responseClass Amun_Form
+	 */
+	public function getForm()
 	{
 		if($this->getProvider()->hasViewRight())
 		{
 			try
 			{
-				$this->method = $this->get->method('string');
+				$this->method = $this->getUriFragments('method');
 				$this->form   = $this->getProvider()->getForm();
 
 				if($this->form === null)

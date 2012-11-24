@@ -39,6 +39,8 @@ class view extends Amun_Module_ApplicationAbstract
 
 	public function onLoad()
 	{
+		parent::onLoad();
+
 		if($this->user->hasRight('plugin_view'))
 		{
 			// load plugin

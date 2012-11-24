@@ -35,6 +35,15 @@
  */
 class Amun_Dependency_Application extends Amun_Dependency_Default
 {
+	protected $pageId;
+
+	public function __construct($pageId)
+	{
+		$this->pageId = $pageId;
+
+		parent::__construct();
+	}
+
 	protected function setup()
 	{
 		parent::setup();
@@ -57,7 +66,7 @@ class Amun_Dependency_Application extends Amun_Dependency_Default
 		// page
 		if(!$this->registry->offsetExists('page'))
 		{
-			$page = new Amun_Page($this->registry->offsetGet('registry'), $this->registry->offsetGet('user'));
+			$page = new Amun_Page($this->pageId, $this->registry->offsetGet('registry'), $this->registry->offsetGet('user'));
 			$this->registry->offsetSet('page', $page);
 		}
 

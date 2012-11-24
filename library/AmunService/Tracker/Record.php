@@ -201,12 +201,12 @@ class AmunService_Tracker_Record extends Amun_Data_RecordAbstract
 
 	public function getUrl()
 	{
-		return $this->_config['psx_url'] . '/' . $this->_config['psx_dispatch'] . $this->pagePath . $this->_config['amun_page_delimiter'] . '/view/' . $this->id . '/' . $this->urlTitle;
+		return $this->_config['psx_url'] . '/' . $this->_config['psx_dispatch'] . $this->pagePath . '/view/' . $this->id . '/' . $this->urlTitle;
 	}
 
 	public function getDownloadUrl()
 	{
-		return $this->_config['psx_url'] . '/' . $this->_config['psx_dispatch'] . $this->pagePath . $this->_config['amun_page_delimiter'] . '/download/' . $this->id . '/' . $this->urlTitle;
+		return $this->_config['psx_url'] . '/' . $this->_config['psx_dispatch'] . $this->pagePath . '/download/' . $this->id . '/' . $this->urlTitle;
 	}
 
 	public function export(PSX_Data_WriterResult $result)

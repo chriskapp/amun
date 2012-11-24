@@ -37,6 +37,8 @@ class recover extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
+		parent::onLoad();
+
 		// add path
 		$this->path->add('Login', $this->page->url . '/login');
 		$this->path->add('Recover', $this->page->url . '/login/recover');

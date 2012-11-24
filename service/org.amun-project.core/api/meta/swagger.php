@@ -104,6 +104,8 @@ class swagger extends Amun_Module_ApiAbstract
 
 	private function buildApiDetails(PSX_Swagger_Declaration $declaration, $serviceName)
 	{
+		$declaration->setResourcePath('/core/meta/swagger/' . $serviceName);
+
 		$result = Amun_Sql_Table_Registry::get('Core_Content_Api')
 			->select(array('priority', 'endpoint'))
 			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_Content_Service')
@@ -219,7 +221,19 @@ class swagger extends Amun_Module_ApiAbstract
 
 			foreach($params as $dfn)
 			{
-				$parts    = explode(' ', $dfn);
+				if(substr($dfn, 0, 1) == '[')
+				{
+					$dfn = ltrim($dfn, '[');
+					$dfn = rtrim($dfn, ']');
+
+					$required = false;
+				}
+				else
+				{
+					$required = true;
+				}
+
+				$parts    = explode(' ', $dfn, 4);
 				$type     = isset($parts[0]) ? $parts[0] : null;
 				$name     = isset($parts[1]) ? $parts[1] : null;
 				$dataType = isset($parts[2]) ? $parts[2] : null;
@@ -228,19 +242,19 @@ class swagger extends Amun_Module_ApiAbstract
 				switch(strtolower($type))
 				{
 					case 'body':
-						$parameter = new PSX_Swagger_Parameter_Body($name, $desc, $dataType);
+						$parameter = new PSX_Swagger_Parameter_Body($name, $desc, $dataType, $required);
 						break;
 
 					case 'header':
-						$parameter = new PSX_Swagger_Parameter_Header($name, $desc, $dataType);
+						$parameter = new PSX_Swagger_Parameter_Header($name, $desc, $dataType, $required);
 						break;
 
 					case 'path':
-						$parameter = new PSX_Swagger_Parameter_Path($name, $desc, $dataType);
+						$parameter = new PSX_Swagger_Parameter_Path($name, $desc, $dataType, $required);
 						break;
 
 					case 'query':
-						$parameter = new PSX_Swagger_Parameter_Query($name, $desc, $dataType);
+						$parameter = new PSX_Swagger_Parameter_Query($name, $desc, $dataType, $required);
 						break;
 				}
 

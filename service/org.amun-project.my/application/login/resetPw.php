@@ -37,6 +37,8 @@ class resetPw extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
+		parent::onLoad();
+
 		// add path
 		$this->path->add('Login', $this->page->url . '/login');
 		$this->path->add('Reset Password', $this->page->url . '/login/resetPw');
