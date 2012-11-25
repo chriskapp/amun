@@ -41,6 +41,8 @@ abstract class Amun_Module_FormAbstract extends Amun_Module_ApiAbstract
 	 * @httpMethod GET
 	 * @path /
 	 * @nickname getForm
+	 * @parameter query method string create|update|delete
+	 * @parameter [query id integer]
 	 * @responseClass Amun_Form
 	 */
 	public function getForm()

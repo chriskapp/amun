@@ -124,51 +124,35 @@ class swagger extends Amun_Module_ApiAbstract
 	{
 		$declaration->setResourcePath('/core/meta/swagger/' . $serviceName);
 
-		$result = Amun_Sql_Table_Registry::get('Core_Content_Api')
-			->select(array('priority', 'endpoint'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_Content_Service')
-				->select(array('source', 'name', 'namespace'), 'service')
-			)
+		$result = Amun_Sql_Table_Registry::get('Core_Content_Service')
+			->select(array('source', 'name', 'namespace', 'path'))
 			->orderBy('id', PSX_Sql::SORT_ASC)
-			->where('serviceName', '=', $serviceName)
+			->where('name', '=', $serviceName)
 			->getAll();
 
 		foreach($result as $row)
 		{
-			$endpoint = trim($row['endpoint'], '/');
-			$name     = str_replace('/', '_', $endpoint);
-
 			try
 			{
-				$provider = $this->getDataProvider($name);
-
 				// get the api class
-				$src   = str_replace($row['serviceNamespace'], $row['serviceSource'] . '/api', $endpoint);
-				$ns    = str_replace('_', '\\', str_replace($row['serviceNamespace'], $row['serviceNamespace'] . '_api', $name));
-				$class = $this->getClass($src, $ns);
+				$apiPath = $this->config['amun_service_path'] . '/' . $row['source'] . '/api';
 
-				if($class instanceof ReflectionClass)
+				if(is_dir($apiPath))
 				{
-					$models = array();
+					$models  = array();
+					$classes = $this->findApiClasses($apiPath, $row['namespace'], $row['source'], $row['path']);
 
-
-					$this->scanMethods($declaration, $class, $row['endpoint'], $models);
-
-					// scan for GET, POST, PUT and DELETE methods and add 
-					// operations to the api
-					/*
-					$this->scanMethods($api, $class, 'GET', $models);
-					$this->scanMethods($api, $class, 'POST', $models);
-					$this->scanMethods($api, $class, 'PUT', $models);
-					$this->scanMethods($api, $class, 'DELETE', $models);
-					*/
-
+					foreach($classes as $endpoint => $class)
+					{
+						$this->scanMethods($declaration, $class, $endpoint, $models);
+					}
 
 					// add models
 					$models = array_unique($models);
 
 					if(!empty($models))
 					{
+						/*
 						foreach($models as $model)
 						{
 							try
@@ -181,6 +165,7 @@ class swagger extends Amun_Module_ApiAbstract
 							{
 							}
 						}
+						*/
 					}
 				}
 			}
@@ -190,26 +175,54 @@ class swagger extends Amun_Module_ApiAbstract
 		}
 	}
 
-	private function getClass($src, $ns)
+	private function findApiClasses($path, $ns, $src, $basePath)
 	{
-		$path = strtolower($src);
-		$ns   = str_replace('_', '\\', $ns);
+		$files   = scandir($path);
+		$classes = array();
 
-		$normalFile = $this->config['amun_service_path'] . '/' . $path . '.php';
-		$indexFile  = $this->config['amun_service_path'] . '/' . $path . '/index.php';
-
-		if(is_file($normalFile))
+		foreach($files as $f)
 		{
-			require_once($normalFile);
+			if($f[0] != '.')
+			{
+				$item = $path . '/' . $f;
 
-			return new ReflectionClass($ns);
+				if(is_dir($item))
+				{
+					$classes = array_merge($classes, $this->findApiClasses($item));
+				}
+
+				if(is_file($item))
+				{
+					$file     = substr($item, strlen($this->config['amun_service_path'] . '/' . $src) + 1);
+					$endpoint = $basePath . '/' . substr($file, 4, -4);
+
+					if(substr($endpoint, -5) == 'index')
+					{
+						$endpoint = substr($endpoint, 0, -5);
+					}
+
+					$classes[$endpoint] = $this->getClass($file, $ns, $src);
+				}
+			}
 		}
-		else if(is_file($indexFile))
+
+		return $classes;
+	}
+
+	private function getClass($file, $ns, $src)
+	{				
+		$path  = $this->config['amun_service_path'] . '/' . $src . '/' . strtolower($file);
+		$class = pathinfo($path, PATHINFO_FILENAME);
+		$subNs = str_replace('/', '\\', pathinfo($file, PATHINFO_DIRNAME));
+
+		if(!empty($subNs))
 		{
-			require_once($indexFile);
-
-			return new ReflectionClass($ns . '\\index');
+			$ns.= '\\' . $subNs;
 		}
+
+		require_once($path);
+
+		return new ReflectionClass($ns . '\\' . $class);
 	}
 
 	private function scanMethods(PSX_Swagger_Declaration $declaration, ReflectionClass $class, $endpoint, array &$models)
