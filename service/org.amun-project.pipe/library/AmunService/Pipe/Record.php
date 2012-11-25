@@ -189,7 +189,7 @@ class AmunService_Pipe_Record extends Amun_Data_RecordAbstract
 
 	public function getUrl()
 	{
-		return $this->_config['psx_url'] . '/' . $this->_config['psx_dispatch'] . $this->pagePath . $this->_config['amun_page_delimiter'];
+		return $this->_config['psx_url'] . '/' . $this->_config['psx_dispatch'] . $this->pagePath;
 	}
 }
 

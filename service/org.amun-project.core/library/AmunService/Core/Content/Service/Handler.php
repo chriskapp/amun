@@ -336,10 +336,12 @@ class AmunService_Core_Content_Service_Handler extends Amun_Data_HandlerAbstract
 
 						if($uri instanceof DOMElement)
 						{
+							$endpoint = rtrim($record->path . $uri->nodeValue, '/');
+
 							$this->sql->insert($this->registry['table.core_content_api'], array(
 								'serviceId' => $record->id,
 								'priority'  => 0,
-								'endpoint'  => $record->path . $uri->nodeValue,
+								'endpoint'  => $endpoint,
 							));
 
 							$apiId = $this->sql->getLastInsertId();

@@ -72,7 +72,7 @@ class AmunService_Core_User_Account_Handler extends Amun_Data_HandlerAbstract
 			if(empty($record->hostId))
 			{
 				$record->hostId     = 0;
-				$record->profileUrl = $this->config['psx_url']. '/' . $this->config['psx_dispatch'] . 'profile.htm/' . $record->name;
+				$record->profileUrl = $this->config['psx_url']. '/' . $this->config['psx_dispatch'] . 'profile/' . $record->name;
 			}
 			else
 			{

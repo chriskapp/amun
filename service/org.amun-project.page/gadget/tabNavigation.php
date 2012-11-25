@@ -61,15 +61,15 @@ class tabNavigation extends Amun_Module_GadgetAbstract
 
 		foreach($result as $i => $row)
 		{
-			$selected = strpos($_SERVER['REQUEST_URI'], $row['urlTitle'] . $this->config['amun_page_delimiter']) !== false;
+			$selected = strpos($_SERVER['REQUEST_URI'], $row['urlTitle']) !== false;
 
 			if($selected)
 			{
-				echo '<li class="active"><a href="' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $row['path'] . $this->config['amun_page_delimiter'] . '">' . $row['title'] . '</a></li>' . "\n";
+				echo '<li class="active"><a href="' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $row['path'] . '">' . $row['title'] . '</a></li>' . "\n";
 			}
 			else
 			{
-				echo '<li><a href="' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $row['path'] . $this->config['amun_page_delimiter'] . '">' . $row['title'] . '</a></li>' . "\n";
+				echo '<li><a href="' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $row['path'] . '">' . $row['title'] . '</a></li>' . "\n";
 			}
 		}
 

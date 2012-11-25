@@ -80,7 +80,7 @@ SQL;
 			{
 				$url.= '/' . $row['urlTitle'];
 
-				$this->add($row['title'], $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . ltrim($url, '/') . $this->config['amun_page_delimiter']);
+				$this->add($row['title'], $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . ltrim($url, '/'));
 			}
 		}
 	}

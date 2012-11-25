@@ -118,51 +118,11 @@ SQL;
 			$this->date        = $row['pageDate'];
 
 			$this->application = $row['serviceSource'];
-			$this->url         = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $row['pagePath'] . $this->config['amun_page_delimiter'];
+			$this->url         = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $row['pagePath'];
 		}
 		else
 		{
 			throw new Amun_Exception('Invalid page');
-		}
-	}
-
-	public function getId()
-	{
-		$id = isset($_GET['page_id']) ? intval($_GET['page_id']) : null;
-
-		if(empty($id))
-		{
-			$x   = trim($this->config['psx_module_input'], '/');
-			$pos = strpos($x, $this->config['amun_page_delimiter']);
-
-			if($pos !== false)
-			{
-				$path = substr($x, 0, $pos);
-				$app  = substr($x, $pos + strlen($this->config['amun_page_delimiter']));
-			}
-			else
-			{
-				$path = $this->registry['core.default_page'];
-				$app  = $x;
-			}
-
-			$con = new PSX_Sql_Condition(array('path', '=', $path));
-			$id  = $this->sql->select($this->registry['table.core_content_page'], array('id'), $con, PSX_Sql::SELECT_FIELD);
-
-			if(!empty($id))
-			{
-				$this->applicationPath = $app;
-
-				return $id;
-			}
-			else
-			{
-				throw new Amun_Page_Exception('Invalid page');
-			}
-		}
-		else
-		{
-			return $id;
 		}
 	}
 

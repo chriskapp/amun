@@ -87,38 +87,26 @@ abstract class Amun_Module_ApplicationAbstract extends PSX_Module_ViewAbstract
 			{
 				throw new PSX_Exception('Error while transforming template');
 			}
-
-			// set custom template if any
-			$this->template->assign('content', $response);
-			$this->template->setDir(PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir']);
-
-			if(!empty($this->page->template))
-			{
-				$this->template->set($this->page->template);
-			}
-			else
-			{
-				$this->template->set('page.tpl');
-			}
-
-			$response = $this->template->transform();
-
-			// content encoding
-			$acceptEncoding = PSX_Base::getRequestHeader('Accept-Encoding');
-
-			if($this->config['psx_gzip'] === true && strpos($acceptEncoding, 'gzip') !== false)
-			{
-				header('Content-Encoding: gzip');
-
-				$response = gzencode($response, 9);
-			}
-
-			return $response;
 		}
 		else
 		{
-			return $content;
+			$response = $content;
 		}
+
+		// set custom template if any
+		$this->template->assign('content', $response);
+		$this->template->setDir(PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir']);
+
+		if(!empty($this->page->template))
+		{
+			$this->template->set($this->page->template);
+		}
+		else
+		{
+			$this->template->set('page.tpl');
+		}
+
+		return parent::processResponse(null);
 	}
 
 	public function getDependencies()

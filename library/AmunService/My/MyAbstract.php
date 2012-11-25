@@ -36,6 +36,8 @@ abstract class AmunService_My_MyAbstract extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
+		parent::onLoad();
+
 		if($this->getProvider()->hasViewRight())
 		{
 			// check status of current user

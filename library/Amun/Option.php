@@ -106,7 +106,7 @@ SQL;
 		{
 			if($this->user->hasRightId($row['rightId']))
 			{
-				$href = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $row['path'] . $this->config['amun_page_delimiter'] . $this->substitueVars($objects, $row['href']);
+				$href = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $row['path'] . $this->substitueVars($objects, $row['href']);
 
 				$this->append(array(
 

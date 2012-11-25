@@ -193,7 +193,7 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 
 				if(!empty($path))
 				{
-					$href = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $path . $this->config['amun_page_delimiter'];
+					$href = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $path;
 
 					$data.= '<a href="' . $href . '">&' . $part . '</a>';
 				}
@@ -221,7 +221,7 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 
 		if(!empty($path))
 		{
-			return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $path . $this->config['amun_page_delimiter'];
+			return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $path;
 		}
 
 		return false;

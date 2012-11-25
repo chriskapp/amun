@@ -35,6 +35,8 @@
 abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 {
 	/**
+	 * Returns the resultset
+	 *
 	 * @httpMethod GET
 	 * @path /
 	 * @nickname getRecords
@@ -83,6 +85,8 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 	}
 
 	/**
+	 * Returns all available fields 
+	 *
 	 * @httpMethod GET
 	 * @path /@supportedFields
 	 * @nickname getSupportedFields
@@ -115,11 +119,14 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 	}
 
 	/**
+	 * Insert a new record
+	 *
 	 * @httpMethod POST
+	 * @path /
 	 * @nickname insertRecord
 	 * @responseClass PSX_Data_Message
 	 */
-	public function onPost()
+	public function insertRecord()
 	{
 		if($this->getProvider()->hasAddRight())
 		{
@@ -155,11 +162,14 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 	}
 
 	/**
+	 * Update an existing record
+	 *
 	 * @httpMethod PUT
+	 * @path /
 	 * @nickname updateRecord
 	 * @responseClass PSX_Data_Message
 	 */
-	public function onPut()
+	public function updateRecord()
 	{
 		if($this->getProvider()->hasEditRight())
 		{
@@ -201,11 +211,14 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 	}
 
 	/**
+	 * Delete an existing record
+	 *
 	 * @httpMethod DELETE
+	 * @path /
 	 * @nickname deleteRecord
 	 * @responseClass PSX_Data_Message
 	 */
-	public function onDelete()
+	public function deleteRecord()
 	{
 		if($this->getProvider()->hasDeleteRight())
 		{

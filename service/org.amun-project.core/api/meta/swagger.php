@@ -54,26 +54,44 @@ use ReflectionClass;
  */
 class swagger extends Amun_Module_ApiAbstract
 {
-	public function onLoad()
+	/**
+	 * @httpMethod GET
+	 * @path /
+	 * @nickname getApiIndex
+	 */
+	public function getApiIndex()
 	{
 		try
 		{
-			header('Content-type: application/json');
+			$basePath    = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api';
+			$declaration = new PSX_Swagger_Declaration(Amun_Base::getVersion(), $basePath, null);
 
-			$version  = Amun_Base::getVersion();
-			$basePath = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api';
+			$this->buildApiIndex($declaration);
 
-			$declaration = new PSX_Swagger_Declaration($version, $basePath, null);
-			$serviceName = current($this->uriFragments);
+			$this->setResponse($declaration);
+		}
+		catch(Exception $e)
+		{
+			$msg = new PSX_Data_Message($e->getMessage(), false);
 
-			if(empty($serviceName))
-			{
-				$this->buildApiIndex($declaration);
-			}
-			else
-			{
-				$this->buildApiDetails($declaration, $serviceName);
-			}
+			$this->setResponse($msg);
+		}
+	}
+
+	/**
+	 * @httpMethod GET
+	 * @path /{service}
+	 * @nickname getApiDetails
+	 */
+	public function getApiDetails()
+	{
+		try
+		{
+			$basePath    = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api';
+			$declaration = new PSX_Swagger_Declaration(Amun_Base::getVersion(), $basePath, null);
+			$serviceName = $this->getUriFragments('service');
+
+			$this->buildApiDetails($declaration, $serviceName);
 
 			$this->setResponse($declaration);
 		}
@@ -124,10 +142,6 @@ class swagger extends Amun_Module_ApiAbstract
 			{
 				$provider = $this->getDataProvider($name);
 
-				// add api
-				$desc = '-';
-				$api  = new PSX_Swagger_Api($row['endpoint'], $desc);
-
 				// get the api class
 				$src   = str_replace($row['serviceNamespace'], $row['serviceSource'] . '/api', $endpoint);
 				$ns    = str_replace('_', '\\', str_replace($row['serviceNamespace'], $row['serviceNamespace'] . '_api', $name));
@@ -137,15 +151,18 @@ class swagger extends Amun_Module_ApiAbstract
 				{
 					$models = array();
 
+
+					$this->scanMethods($declaration, $class, $row['endpoint'], $models);
+
 					// scan for GET, POST, PUT and DELETE methods and add 
 					// operations to the api
+					/*
 					$this->scanMethods($api, $class, 'GET', $models);
 					$this->scanMethods($api, $class, 'POST', $models);
 					$this->scanMethods($api, $class, 'PUT', $models);
 					$this->scanMethods($api, $class, 'DELETE', $models);
+					*/
 
-					// add api
-					$declaration->addApi($api);
 
 					// add models
 					$models = array_unique($models);
@@ -195,92 +212,105 @@ class swagger extends Amun_Module_ApiAbstract
 		}
 	}
 
-	private function scanMethods(PSX_Swagger_Api $api, ReflectionClass $class, $httpMethod, array &$models)
+	private function scanMethods(PSX_Swagger_Declaration $declaration, ReflectionClass $class, $endpoint, array &$models)
 	{
-		$methods = $class->getMethods();
+		$methods  = $class->getMethods();
+		$endpoint = trim($endpoint, '/');
 
 		foreach($methods as $method)
 		{
 			if($method->isPublic())
 			{
-				$this->addOperationByComment($api, $this->getAnnotations($class, $method->getName()), $httpMethod, $models);
+				$doc = $this->getAnnotations($class, $method->getName());
+
+				$httpMethod = $doc->getFirstAnnotation('httpMethod');
+				$path       = $doc->getFirstAnnotation('path');
+
+				if(!empty($httpMethod) && !empty($path))
+				{
+					// add api
+					$path = '/' . trim($endpoint . $path, '/');
+					$desc = trim($doc->getText());
+					$api  = new PSX_Swagger_Api($path, $desc);
+
+					$this->addOperationByComment($api, $doc, $httpMethod, $models);
+
+					$declaration->addApi($api);
+				}
 			}
 		}
 	}
 
 	private function addOperationByComment(PSX_Swagger_Api $api, PSX_Util_Annotation_DocBlock $doc, $httpMethod, array &$models)
 	{
-		if($doc->getFirstAnnotation('httpMethod') == $httpMethod)
+		$summary   = $doc->getFirstAnnotation('summary');
+		$nickname  = $doc->getFirstAnnotation('nickname');
+		$response  = $doc->getFirstAnnotation('responseClass');
+		$operation = new PSX_Swagger_Operation($httpMethod, $nickname, $response, $summary);
+		$params    = $doc->getAnnotation('parameter');
+		$dataTypes = array();
+
+		foreach($params as $dfn)
 		{
-			$summary   = $doc->getFirstAnnotation('summary');
-			$nickname  = $doc->getFirstAnnotation('nickname');
-			$response  = $doc->getFirstAnnotation('responseClass');
-			$operation = new PSX_Swagger_Operation($httpMethod, $nickname, $response, $summary);
-			$params    = $doc->getAnnotation('parameter');
-			$dataTypes = array();
-
-			foreach($params as $dfn)
+			if(substr($dfn, 0, 1) == '[')
 			{
-				if(substr($dfn, 0, 1) == '[')
-				{
-					$dfn = ltrim($dfn, '[');
-					$dfn = rtrim($dfn, ']');
+				$dfn = ltrim($dfn, '[');
+				$dfn = rtrim($dfn, ']');
 
-					$required = false;
-				}
-				else
-				{
-					$required = true;
-				}
-
-				$parts    = explode(' ', $dfn, 4);
-				$type     = isset($parts[0]) ? $parts[0] : null;
-				$name     = isset($parts[1]) ? $parts[1] : null;
-				$dataType = isset($parts[2]) ? $parts[2] : null;
-				$desc     = isset($parts[3]) ? $parts[3] : null;
-
-				switch(strtolower($type))
-				{
-					case 'body':
-						$parameter = new PSX_Swagger_Parameter_Body($name, $desc, $dataType, $required);
-						break;
-
-					case 'header':
-						$parameter = new PSX_Swagger_Parameter_Header($name, $desc, $dataType, $required);
-						break;
-
-					case 'path':
-						$parameter = new PSX_Swagger_Parameter_Path($name, $desc, $dataType, $required);
-						break;
-
-					case 'query':
-						$parameter = new PSX_Swagger_Parameter_Query($name, $desc, $dataType, $required);
-						break;
-				}
-
-				if($parameter instanceof PSX_Swagger_ParameterAbstract)
-				{
-					$operation->addParameter($parameter);
-				}
-
-				// if the datatype is not scalar add the model to the api
-				if(!PSX_Swagger_ParameterAbstract::isScalar($dataType))
-				{
-					$dataTypes[] = $dataType;
-				}
+				$required = false;
+			}
+			else
+			{
+				$required = true;
 			}
 
-			$api->addOperation($operation);
+			$parts    = explode(' ', $dfn, 4);
+			$type     = isset($parts[0]) ? $parts[0] : null;
+			$name     = isset($parts[1]) ? $parts[1] : null;
+			$dataType = isset($parts[2]) ? $parts[2] : null;
+			$desc     = isset($parts[3]) ? $parts[3] : null;
 
-
-			$dataTypes = array_unique($dataTypes);
-
-			if(!empty($dataTypes))
+			switch(strtolower($type))
 			{
-				foreach($dataTypes as $dataType)
-				{
-					$models[] = $dataType;
-				}
+				case 'body':
+					$parameter = new PSX_Swagger_Parameter_Body($name, $desc, $dataType, $required);
+					break;
+
+				case 'header':
+					$parameter = new PSX_Swagger_Parameter_Header($name, $desc, $dataType, $required);
+					break;
+
+				case 'path':
+					$parameter = new PSX_Swagger_Parameter_Path($name, $desc, $dataType, $required);
+					break;
+
+				case 'query':
+					$parameter = new PSX_Swagger_Parameter_Query($name, $desc, $dataType, $required);
+					break;
+			}
+
+			if($parameter instanceof PSX_Swagger_ParameterAbstract)
+			{
+				$operation->addParameter($parameter);
+			}
+
+			// if the datatype is not scalar add the model to the api
+			if(!PSX_Swagger_ParameterAbstract::isScalar($dataType))
+			{
+				$dataTypes[] = $dataType;
+			}
+		}
+
+		$api->addOperation($operation);
+
+
+		$dataTypes = array_unique($dataTypes);
+
+		if(!empty($dataTypes))
+		{
+			foreach($dataTypes as $dataType)
+			{
+				$models[] = $dataType;
 			}
 		}
 	}

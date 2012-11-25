@@ -1,8 +1,11 @@
 
 [FEATURES]
 
+[ ] extract functionality from the core service into different services
+    [ ] split core service into different services probably content / system and 
+        user service
 [ ] support host meta to return json and xrd / jrd
-[ ] build swagger geenrator for the current api (get api details from docblock
+[x] build swagger geenrator for the current api (get api details from docblock
     comments). Problem to generate the declaration we have to import every api
     endpoint wich all have the same class name "index" .. namespaces
 [ ] adding oauth scope
@@ -12,7 +15,6 @@
         their own content
     [ ] possibility for services to extend the service config.xml
     [ ] possibility for services to extend the meta lrdd api
-[ ] extract functionality from the core service into different services
 [ ] check activity stream and approval system
 [ ] improve right system probably with inheritance
 [ ] possiblity to add more meta data to a page (keywords, description)

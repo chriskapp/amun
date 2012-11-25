@@ -36,18 +36,6 @@ class workbench extends PSX_Module_ViewAbstract
 	protected $session;
 	protected $user;
 
-	public function __construct(PSX_Base $base, $basePath, array $uriFragments)
-	{
-		parent::__construct($base, $basePath, $uriFragments);
-
-		$this->session = new PSX_Session('amun_' . md5($this->config['psx_url']));
-		$this->session->start();
-
-		$this->user = $base->setUser(Amun_User::getId($this->session, $this->registry));
-
-		$this->template = new PSX_Template($this->config);
-	}
-
 	public function getDependencies()
 	{
 		return new Amun_Dependency_Default();
@@ -55,6 +43,12 @@ class workbench extends PSX_Module_ViewAbstract
 
 	public function onLoad()
 	{
+		$this->session = new PSX_Session('amun_' . md5($this->config['psx_url']));
+		$this->session->start();
+
+		$this->user = $this->base->setUser(Amun_User::getId($this->session, $this->registry));
+
+		$this->template = new PSX_Template($this->config);
 		$this->template->set('system/workbench.tpl');
 	}
 }

@@ -115,8 +115,9 @@ SQL;
 
 			list($service, $id) = explode('_', $name);
 
-			$table = $this->base->getService($this->page['serviceId'])->getTable();
-			$row   = null;
+			$provider = new Amun_DataProvider($this->page['serviceName'], $this->registry, $this->user);
+			$table    = $provider->getTable();
+			$row      = null;
 
 			if($table !== null)
 			{

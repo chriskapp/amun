@@ -39,7 +39,7 @@ abstract class Amun_Module_FormAbstract extends Amun_Module_ApiAbstract
 
 	/**
 	 * @httpMethod GET
-	 * @path /{method}
+	 * @path /
 	 * @nickname getForm
 	 * @responseClass Amun_Form
 	 */
@@ -49,7 +49,7 @@ abstract class Amun_Module_FormAbstract extends Amun_Module_ApiAbstract
 		{
 			try
 			{
-				$this->method = $this->getUriFragments('method');
+				$this->method = $this->get->method('string');
 				$this->form   = $this->getProvider()->getForm();
 
 				if($this->form === null)

@@ -127,7 +127,7 @@ SQL;
 		foreach($result as $row)
 		{
 			$date = new DateTime($row['date']);
-			$url  = empty($row['path']) ? $this->config['psx_url'] : $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $row['path'] . $this->config['amun_page_delimiter'];
+			$url  = empty($row['path']) ? $this->config['psx_url'] : $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $row['path'];
 
 			$this->writer->startElement('url');
 			$this->writer->writeElement('loc', $url);
