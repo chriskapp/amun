@@ -58,6 +58,7 @@ class swagger extends Amun_Module_ApiAbstract
 	 * @httpMethod GET
 	 * @path /
 	 * @nickname getApiIndex
+	 * @responseClass PSX_Swagger_Declaration
 	 */
 	public function getApiIndex()
 	{
@@ -82,6 +83,7 @@ class swagger extends Amun_Module_ApiAbstract
 	 * @httpMethod GET
 	 * @path /{service}
 	 * @nickname getApiDetails
+	 * @responseClass PSX_Swagger_Declaration
 	 */
 	public function getApiDetails()
 	{
@@ -188,7 +190,7 @@ class swagger extends Amun_Module_ApiAbstract
 
 				if(is_dir($item))
 				{
-					$classes = array_merge($classes, $this->findApiClasses($item));
+					$classes = array_merge($classes, $this->findApiClasses($item, $ns, $src, $basePath));
 				}
 
 				if(is_file($item))

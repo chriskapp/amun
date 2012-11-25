@@ -38,6 +38,8 @@ abstract class Amun_Module_FormAbstract extends Amun_Module_ApiAbstract
 	protected $form;
 
 	/**
+	 * Returns an form to create, update or delete an record
+	 *
 	 * @httpMethod GET
 	 * @path /
 	 * @nickname getForm
