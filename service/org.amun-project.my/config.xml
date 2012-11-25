@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="4b55b10e7e3415284b0e8ad245d3603c2f7783e1">
+<service xmlns="http://amun-project.org" signature="6199c02c22ad483897ff06ddac19bd7b2a8afa5c">
   <status>normal</status>
   <name>my</name>
   <path>/my</path>
@@ -76,7 +76,7 @@
         </dir>
         <file name="Credentials.php" md5="4fd7c0d1e8da6dbc3493249c01c3e3b7"/>
         <file name="FriendsAbstract.php" md5="0c482dff649d747702675d750ac1659f"/>
-        <file name="MyAbstract.php" md5="eb8ed0210f7ee27f56e934441c9e75b6"/>
+        <file name="MyAbstract.php" md5="62a4cb6c5a2bfba8db069a4dedde6045"/>
         <dir name="Notify">
           <dir name="Filter">
             <file name="Status.php" md5="c1d8a22f2bb4358007a60eba005bdc35"/>

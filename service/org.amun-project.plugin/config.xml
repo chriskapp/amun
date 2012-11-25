@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="b3c42595389d13c72a3a1ffab1a4afb23193e8c6">
+<service xmlns="http://amun-project.org" signature="a6f3aa4e38810619d2133c71e6eb2656a4461a02">
   <status>normal</status>
   <name>plugin</name>
   <path>/plugin</path>
@@ -60,7 +60,7 @@
           <file name="Record.php" md5="a9f2591098c72110ba9dc199df1c443e"/>
           <file name="Table.php" md5="847856707cd5c9531e4f3ba7b9daaa3a"/>
         </dir>
-        <file name="Record.php" md5="b80ef7569dcd2e3560703e5e7539e532"/>
+        <file name="Record.php" md5="51c687b6367cdd8f7168c60a8a6154bf"/>
         <dir name="Release">
           <file name="Form.php" md5="8742c9487f870d1969d5b929f6fc899b"/>
           <file name="Handler.php" md5="498c0cdfdc4b206c0b80cfbb553b234f"/>

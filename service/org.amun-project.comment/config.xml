@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="35a149c2906fa54d37c8284cbac40ae6e5856d19">
+<service xmlns="http://amun-project.org" signature="c61f1e8689d2341ad6698d48e323da5584407a6e">
   <status>system</status>
   <name>comment</name>
   <path>/comment</path>
@@ -30,7 +30,7 @@
       <dir name="Comment">
         <file name="Form.php" md5="f299b68279d3847fe0a2b448dfacd5a6"/>
         <file name="Handler.php" md5="22d4eb2287cbc10f48f08c577ae3d22c"/>
-        <file name="Record.php" md5="f8892a97659eab5acab6ae4d7e126981"/>
+        <file name="Record.php" md5="d53d2414d35063c8719d095eb798cf6e"/>
         <file name="Stream.php" md5="06881693e1fc69fa19be94c31f1e0ecc"/>
         <file name="Table.php" md5="ca7d4ccb964c322bb647492c01f4e7bb"/>
       </dir>
