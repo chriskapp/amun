@@ -35,10 +35,12 @@
  */
 class add extends Amun_Module_ApplicationAbstract
 {
-	public function onLoad()
+	/**
+	 * @httpMethod GET
+	 * @path /
+	 */
+	public function doAdd()
 	{
-		parent::onLoad();
-
 		if($this->user->hasRight('plugin_add'))
 		{
 			// form url

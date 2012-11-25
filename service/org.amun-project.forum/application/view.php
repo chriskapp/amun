@@ -35,14 +35,22 @@
  */
 class view extends Amun_Module_ApplicationAbstract
 {
-	private $forumId;
+	private $id;
+	private $title;
 
-	public function onLoad()
+	/**
+	 * @httpMethod GET
+	 * @path /{forumId}/{forumTitle}
+	 */
+	public function doView()
 	{
-		parent::onLoad();
-
 		if($this->getProvider()->hasViewRight())
 		{
+			// get forum id
+			$fragments   = $this->getUriFragments();
+			$this->id    = isset($fragments['forumId']) ? intval($fragments['forumId']) : $this->get->id('integer');
+			$this->title = isset($fragments['forumTitle']) ? $fragments['forumTitle'] : null;
+
 			// load forum
 			$recordForum = $this->getForum();
 
@@ -54,35 +62,35 @@ class view extends Amun_Module_ApplicationAbstract
 			$this->template->assign('resultComments', $resultComments);
 
 			// add path
-			$this->path->add($recordForum->title, $this->page->url . '/view?id=' . $this->forumId);
+			$this->path->add($recordForum->title, $this->page->url . '/view?id=' . $this->id);
 
 			// options
 			$options = array();
 
 			if($recordForum->isSticky())
 			{
-				$options[] = array('sticky', 'Unstick', 'javascript:amun.services.forum.setSticky(' . $this->forumId . ',0,\'' . $this->service->getApiEndpoint() . '\',this)');
+				$options[] = array('sticky', 'Unstick', 'javascript:amun.services.forum.setSticky(' . $this->id . ',0,\'' . $this->service->getApiEndpoint() . '\',this)');
 			}
 			else
 			{
-				$options[] = array('sticky', 'Sticky', 'javascript:amun.services.forum.setSticky(' . $this->forumId . ',1,\'' . $this->service->getApiEndpoint() . '\',this)');
+				$options[] = array('sticky', 'Sticky', 'javascript:amun.services.forum.setSticky(' . $this->id . ',1,\'' . $this->service->getApiEndpoint() . '\',this)');
 			}
 
 			if($recordForum->isClosed())
 			{
-				$options[] = array('close', 'Open', 'javascript:amun.services.forum.setClosed(' . $this->forumId . ',0,\'' . $this->service->getApiEndpoint() . '\',this)');
+				$options[] = array('close', 'Open', 'javascript:amun.services.forum.setClosed(' . $this->id . ',0,\'' . $this->service->getApiEndpoint() . '\',this)');
 			}
 			else
 			{
-				$options[] = array('close', 'Close', 'javascript:amun.services.forum.setClosed(' . $this->forumId . ',1,\'' . $this->service->getApiEndpoint() . '\',this)');
+				$options[] = array('close', 'Close', 'javascript:amun.services.forum.setClosed(' . $this->id . ',1,\'' . $this->service->getApiEndpoint() . '\',this)');
 			}
 
-			$options[] = array('forum_edit', 'Edit', $this->page->url . '/edit?id=' . $this->forumId);
+			$options[] = array('forum_edit', 'Edit', $this->page->url . '/edit?id=' . $this->id);
 
 			$this->setOptions($options);
 
 			// form url
-			$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/comment/form?format=json&method=create&pageId=' . $this->page->id . '&refId=' . $this->forumId;
+			$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/comment/form?format=json&method=create&pageId=' . $this->page->id . '&refId=' . $this->id;
 
 			$this->template->assign('formUrl', $url);
 
@@ -104,10 +112,6 @@ class view extends Amun_Module_ApplicationAbstract
 
 	private function getForum()
 	{
-		// get id
-		$fragments = $this->getUriFragments();
-		$id = isset($fragments[0]) ? intval($fragments[0]) : $this->get->id('integer');
-
 		// query
 		$result = Amun_Sql_Table_Registry::get('Forum')
 			->select(array('id', 'sticky', 'closed', 'urlTitle', 'title', 'text', 'date'))
@@ -117,13 +121,18 @@ class view extends Amun_Module_ApplicationAbstract
 			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			)
-			->where('id', '=', $id)
+			->where('id', '=', $this->id)
 			->getRow(PSX_Sql::FETCH_OBJECT);
 
-		$this->forumId = $result->id;
+		if(empty($result))
+		{
+			throw new Amun_Exception('Invalid forum id');
+		}
+
+		$this->id = $result->id;
 
 		// redirect to correct url
-		if(!isset($fragments[1]) || $fragments[1] != $result->urlTitle)
+		if(empty($this->title) || $this->title != $result->urlTitle)
 		{
 			PSX_Base::setResponseCode(301);
 			header('Location: ' . $this->page->url . '/view/' . $result->id . '/' . $result->urlTitle);
@@ -140,7 +149,7 @@ class view extends Amun_Module_ApplicationAbstract
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			)
 			->where('pageId', '=', $this->page->id)
-			->where('refId', '=', $this->forumId)
+			->where('refId', '=', $this->id)
 			->orderBy('date', PSX_Sql::SORT_ASC);
 
 

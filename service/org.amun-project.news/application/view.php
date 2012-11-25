@@ -42,7 +42,7 @@ class view extends Amun_Module_ApplicationAbstract
 	 * @httpMethod GET
 	 * @path /{newsId}/{newsTitle}
 	 */
-	public function loadNews()
+	public function doView()
 	{
 		if($this->getProvider()->hasViewRight())
 		{

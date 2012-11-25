@@ -35,7 +35,11 @@
  */
 class download extends Amun_Module_ApplicationAbstract
 {
-	public function onLoad()
+	/**
+	 * @httpMethod GET
+	 * @path /
+	 */
+	public function doDownload()
 	{
 		parent::onLoad();
 

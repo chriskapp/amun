@@ -83,7 +83,7 @@
 <?php endif; ?>
 
 
-<?php if($user->hasRight('service_tracker_comment_add')): ?>
+<?php if($user->hasRight('tracker_comment_add')): ?>
 
 	<div id="response"></div>
 

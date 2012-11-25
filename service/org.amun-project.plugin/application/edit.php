@@ -35,10 +35,12 @@
  */
 class edit extends Amun_Module_ApplicationAbstract
 {
-	public function onLoad()
+	/**
+	 * @httpMethod GET
+	 * @path /
+	 */
+	public function doEdit()
 	{
-		parent::onLoad();
-
 		if($this->user->hasRight('plugin_edit'))
 		{
 			// form url

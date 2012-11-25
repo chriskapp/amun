@@ -37,10 +37,12 @@ class view extends Amun_Module_ApplicationAbstract
 {
 	private $trackerId;
 
-	public function onLoad()
+	/**
+	 * @httpMethod GET
+	 * @path /
+	 */
+	public function doView()
 	{
-		parent::onLoad();
-
 		if($this->user->hasRight('tracker_view'))
 		{
 			// load tracker

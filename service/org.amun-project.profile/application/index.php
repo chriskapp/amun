@@ -35,10 +35,12 @@
  */
 class index extends Amun_Module_ApplicationAbstract
 {
-	public function onLoad()
+	/**
+	 * @httpMethod GET
+	 * @path /{userName}
+	 */
+	public function doProfile()
 	{
-		parent::onLoad();
-
 		if($this->getProvider()->hasViewRight())
 		{
 			$account = $this->getAccount();
@@ -104,21 +106,21 @@ class index extends Amun_Module_ApplicationAbstract
 	private function getAccount()
 	{
 		// get user id
-		$fragments = $this->getUriFragments();
+		$userName = $this->getUriFragments('userName');
 
-		if(count($fragments) > 0)
+		if(!empty($userName))
 		{
-			$col = 'name';
-			$val = end($fragments);
-
-			if(strpos($val, ':') !== false)
+			if(strpos($userName, ':') !== false)
 			{
-				$col = 'globalId';
+				$column = 'globalId';
 			}
-			else if(intval($val) > 0)
+			else if(intval($userName) > 0)
 			{
-				$col = 'id';
-				$val = intval($val);
+				$column = 'id';
+			}
+			else
+			{
+				$column = 'name';
 			}
 		}
 		else
@@ -135,7 +137,7 @@ class index extends Amun_Module_ApplicationAbstract
 			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_System_Country')
 				->select(array('title'), 'country')
 			)
-			->where($col, '=', $val)
+			->where($column, '=', $userName)
 			->getRow(PSX_Sql::FETCH_OBJECT);
 	}
 

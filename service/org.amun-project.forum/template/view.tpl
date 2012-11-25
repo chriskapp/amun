@@ -61,7 +61,7 @@
 	<?php endif; ?>
 
 	<?php if(!$recordForum->isClosed()): ?>
-		<?php if($user->hasRight('service_forum_comment_add')): ?>
+		<?php if($user->hasRight('forum_comment_add')): ?>
 			<div id="response"></div>
 			<div id="form"></div>
 

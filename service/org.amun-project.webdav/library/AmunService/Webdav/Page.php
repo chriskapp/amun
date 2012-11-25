@@ -161,7 +161,7 @@ SQL;
 
 		foreach($result as $row)
 		{
-			if($this->user->hasRight('service_' . $row['serviceName'] . '_view'))
+			if($this->user->hasRight($row['serviceName'] . '_view'))
 			{
 				$children[] = new AmunService_Webdav_Page($row['id']);
 			}

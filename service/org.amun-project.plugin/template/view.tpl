@@ -95,7 +95,7 @@
 	</div>
 	<?php endif; ?>
 
-	<?php if($user->hasRight('service_plugin_comment_add')): ?>
+	<?php if($user->hasRight('plugin_comment_add')): ?>
 		<div id="response"></div>
 		<div id="form"></div>
 

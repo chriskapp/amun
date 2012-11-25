@@ -35,10 +35,12 @@
  */
 class index extends Amun_Module_ApplicationAbstract
 {
-	public function onLoad()
+	/**
+	 * @httpMethod GET
+	 * @path /
+	 */
+	public function doIndex()
 	{
-		parent::onLoad();
-
 		if($this->getProvider()->hasViewRight())
 		{
 			// load forum
