@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="7fc9802b1b3e78a25f657749c1770a51c2088dec">
+<service xmlns="http://amun-project.org" signature="707468aa233264f576f7ea24e801c096f3f80ab9">
   <status>normal</status>
   <name>core</name>
   <path>/core</path>
@@ -516,7 +516,7 @@
               <file name="Timezone.php" md5="4706646f7507c2f11a4abd128d8b7e37"/>
             </dir>
             <file name="Form.php" md5="6f20fd358f7a50f4aa042f1314bcb983"/>
-            <file name="Handler.php" md5="7baeb5a40704847f873da6f551027474"/>
+            <file name="Handler.php" md5="0cf236041a17ca34663ff0d4b99ee9b1"/>
             <file name="Record.php" md5="12cf83f761b27942287a8026510a3bf2"/>
             <file name="Table.php" md5="5638a051c8515529110ee33ed0923bc4"/>
           </dir>
