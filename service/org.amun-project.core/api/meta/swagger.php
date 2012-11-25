@@ -30,7 +30,6 @@ use Amun_Sql_Table_Registry;
 use Exception;
 use PSX_Data_Message;
 use PSX_Sql;
-use PSX_Sql_Join;
 use PSX_Swagger_Api;
 use PSX_Swagger_Declaration;
 use PSX_Swagger_Operation;

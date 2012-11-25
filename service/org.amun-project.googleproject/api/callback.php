@@ -25,7 +25,7 @@
 namespace googleproject\api;
 
 use AmunService_Googleproject_Commit_Handler;
-use Amun_Module_DefaultAbstract;
+use Amun_Module_ApiAbstract;
 use Amun_Sql_Table_Registry;
 use Amun_User;
 use Exception;
@@ -49,7 +49,7 @@ use PSX_Sql_Condition;
  * @subpackage service_googleproject
  * @version    $Revision: 875 $
  */
-class callback extends Amun_Module_DefaultAbstract
+class callback extends Amun_Module_ApiAbstract
 {
 	public function onGet()
 	{
