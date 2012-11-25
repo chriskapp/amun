@@ -97,7 +97,7 @@ class AmunService_Core_User_Account_Handler extends Amun_Data_HandlerAbstract
 
 				if(!empty($record->email))
 				{
-					$record->thumbnailUrl = 'http://www.gravatar.com/avatar/' . md5($record->email) . '.jpg?d=' . urlencode($default) . '&s=48';
+					$record->thumbnailUrl = 'http://www.gravatar.com/avatar/' . md5(strtolower(trim($record->email))) . '?d=' . urlencode($default) . '&s=48';
 				}
 				else
 				{
