@@ -50,9 +50,9 @@ class install extends PSX_Module_ViewAbstract
 	protected $registry;
 	protected $user;
 
-	public function __construct(PSX_Base $base, $basePath, array $uriFragments)
+	public function __construct(PSX_Loader_Location $location, PSX_Base $base, $basePath, array $uriFragments)
 	{
-		parent::__construct($base, $basePath, $uriFragments);
+		parent::__construct($location, $base, $basePath, $uriFragments);
 
 		$this->validate = new PSX_Validate();
 		$this->get      = new PSX_Input_Get($this->validate);
@@ -100,7 +100,11 @@ class install extends PSX_Module_ViewAbstract
 		}
 	}
 
-	public function __index()
+	/**
+	 * @httpMethod GET
+	 * @path /
+	 */
+	public function showInstall()
 	{
 		$this->template->assign('administratorName', $this->session->administratorName);
 		$this->template->assign('administratorPw', $this->session->administratorPw);
@@ -113,6 +117,10 @@ class install extends PSX_Module_ViewAbstract
 		$this->template->set('system/install.tpl');
 	}
 
+	/**
+	 * @httpMethod POST
+	 * @path /setupCheckRequirements
+	 */
 	public function setupCheckRequirements()
 	{
 		try
@@ -169,6 +177,10 @@ class install extends PSX_Module_ViewAbstract
 		}
 	}
 
+	/**
+	 * @httpMethod POST
+	 * @path /setupCreateTables
+	 */
 	public function setupCreateTables()
 	{
 		$q = array();
@@ -676,6 +688,10 @@ SQL;
 		}
 	}
 
+	/**
+	 * @httpMethod POST
+	 * @path /setupInsertData
+	 */
 	public function setupInsertData()
 	{
 		try
@@ -994,6 +1010,10 @@ SQL;
 		}
 	}
 
+	/**
+	 * @httpMethod POST
+	 * @path /setupInsertRegistry
+	 */
 	public function setupInsertRegistry()
 	{
 		try
@@ -1105,6 +1125,10 @@ SQL;
 		}
 	}
 
+	/**
+	 * @httpMethod POST
+	 * @path /setupInsertGroup
+	 */
 	public function setupInsertGroup()
 	{
 		try
@@ -1138,6 +1162,10 @@ SQL;
 		}
 	}
 
+	/**
+	 * @httpMethod POST
+	 * @path /setupInsertAdmin
+	 */
 	public function setupInsertAdmin()
 	{
 		try
@@ -1184,6 +1212,10 @@ SQL;
 		}
 	}
 
+	/**
+	 * @httpMethod POST
+	 * @path /setupInsertApi
+	 */
 	public function setupInsertApi()
 	{
 		try
@@ -1251,6 +1283,10 @@ SQL;
 		}
 	}
 
+	/**
+	 * @httpMethod POST
+	 * @path /setupInstallService
+	 */
 	public function setupInstallService()
 	{
 		try
@@ -1322,6 +1358,10 @@ SQL;
 		}
 	}
 
+	/**
+	 * @httpMethod POST
+	 * @path /setupInstallSample
+	 */
 	public function setupInstallSample()
 	{
 		try
@@ -1506,11 +1546,24 @@ SQL;
 			{
 				$handler = new AmunService_Page_Handler($this->user);
 
-				// home
+				// root
 				$content = <<<TEXT
 <h1>It works!</h1>
 <p>This is the default web page for this server.</p>
 <p>The web server software is running but no content has been added, yet.</p>
+TEXT;
+
+				$record = Amun_Sql_Table_Registry::get('Page')->getRecord();
+				$record->setPageId(1);
+				$record->setContent($content);
+
+				$handler->create($record);
+
+
+				// home
+				$content = <<<TEXT
+<h1>Lorem ipsum dolor sit amet</h1>
+<p>consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
 TEXT;
 
 				$record = Amun_Sql_Table_Registry::get('Page')->getRecord();
