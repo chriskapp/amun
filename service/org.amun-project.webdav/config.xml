@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="c1bd55eb4c86a88836120f6208bfd96ac2bbd9f3">
-  <status>normal</status>
+<service xmlns="http://amun-project.org" signature="d488a00e4f08ae3c9deadb2ff9be2add2ff2d3dd">
+  <status>system</status>
   <name>webdav</name>
   <path>/webdav</path>
   <namespace>webdav</namespace>

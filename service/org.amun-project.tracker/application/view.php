@@ -63,7 +63,7 @@ class view extends Amun_Module_ApplicationAbstract
 
 			// options
 			$options = new Amun_Option(__CLASS__, $this->registry, $this->user, $this->page);
-			$options->add('service_tracker_edit', 'Edit', $this->page->url . '/edit?id=' . $this->trackerId);
+			$options->add('tracker_edit', 'Edit', $this->page->url . '/edit?id=' . $this->trackerId);
 			$options->load(array($this->page, $recordTracker));
 
 			$this->template->assign('options', $options);

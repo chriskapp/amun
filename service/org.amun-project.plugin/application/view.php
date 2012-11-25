@@ -35,16 +35,22 @@
  */
 class view extends Amun_Module_ApplicationAbstract
 {
-	private $pluginId;
+	private $id;
+	private $title;
 
 	/**
 	 * @httpMethod GET
-	 * @path /
+	 * @path /{pluginId}/{pluginTitle}
 	 */
 	public function doView()
 	{
 		if($this->user->hasRight('plugin_view'))
 		{
+			// get news id
+			$fragments   = $this->getUriFragments();
+			$this->id    = isset($fragments['pluginId']) ? intval($fragments['pluginId']) : $this->get->id('integer');
+			$this->title = isset($fragments['pluginTitle']) ? $fragments['pluginTitle'] : null;
+
 			// load plugin
 			$recordPlugin = $this->getPlugin();
 
@@ -70,20 +76,20 @@ class view extends Amun_Module_ApplicationAbstract
 
 
 			// add path
-			$this->path->add($recordPlugin->title, $this->page->url . '/view?id=' . $this->pluginId);
+			$this->path->add($recordPlugin->title, $this->page->url . '/view?id=' . $this->id);
 
 
 			// options
 			$options = new Amun_Option(__CLASS__, $this->registry, $this->user, $this->page);
-			$options->add('service_plugin_release_add', 'Add Release', $this->page->url . '/release/add?id=' . $this->pluginId);
-			$options->add('service_plugin_edit', 'Edit', $this->page->url . '/edit?id=' . $this->pluginId);
+			$options->add('plugin_release_add', 'Add Release', $this->page->url . '/release/add?id=' . $this->id);
+			$options->add('plugin_edit', 'Edit', $this->page->url . '/edit?id=' . $this->id);
 			$options->load(array($this->page, $recordPlugin));
 
 			$this->template->assign('options', $options);
 
 
 			// form url
-			$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/comment/form?format=json&method=create&pageId=' . $this->page->id . '&refId=' . $this->pluginId;
+			$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/comment/form?format=json&method=create&pageId=' . $this->page->id . '&refId=' . $this->id;
 
 			$this->template->assign('formUrl', $url);
 
@@ -106,10 +112,6 @@ class view extends Amun_Module_ApplicationAbstract
 
 	private function getPlugin()
 	{
-		// get id
-		$fragments = $this->getUriFragments();
-		$id = isset($fragments[0]) ? intval($fragments[0]) : $this->get->id('integer');
-
 		// query
 		$result = Amun_Sql_Table_Registry::get('Plugin')
 			->select(array('id', 'urlTitle', 'title', 'description', 'date'))
@@ -119,13 +121,18 @@ class view extends Amun_Module_ApplicationAbstract
 			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			)
-			->where('id', '=', $id)
+			->where('id', '=', $this->id)
 			->getRow(PSX_Sql::FETCH_OBJECT);
 
-		$this->pluginId = $result->id;
+		if(empty($result))
+		{
+			throw new Amun_Exception('Invalid news id');
+		}
+
+		$this->id = $result->id;
 
 		// redirect to correct url
-		if(!isset($fragments[1]) || $fragments[1] != $result->urlTitle)
+		if(empty($this->title) || $this->title != $result->urlTitle)
 		{
 			PSX_Base::setResponseCode(301);
 			header('Location: ' . $this->page->url . '/view/' . $result->id . '/' . $result->urlTitle);
@@ -141,7 +148,7 @@ class view extends Amun_Module_ApplicationAbstract
 			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			)
-			->where('pluginId', '=', $this->pluginId)
+			->where('pluginId', '=', $this->id)
 			->getAll();
 
 		return $result;
@@ -154,7 +161,7 @@ class view extends Amun_Module_ApplicationAbstract
 			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			)
-			->where('pluginId', '=', $this->pluginId)
+			->where('pluginId', '=', $this->id)
 			->orderBy('date', PSX_Sql::SORT_DESC)
 			->limit(1)
 			->getRow(PSX_Sql::FETCH_OBJECT);
@@ -170,7 +177,7 @@ class view extends Amun_Module_ApplicationAbstract
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			)
 			->where('pageId', '=', $this->page->id)
-			->where('refId', '=', $this->pluginId)
+			->where('refId', '=', $this->id)
 			->orderBy('date', PSX_Sql::SORT_ASC);
 
 

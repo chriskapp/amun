@@ -1,28 +1,22 @@
 
-
 <?php if(count($options) > 0): ?>
-
-<div class="amun_html_options">
-
-	<ul>
-		<?php foreach($options as $option): ?>
-		<li><a href="<?php echo $option['href']; ?>"><?php echo $option['name']; ?></a></li>
-		<?php endforeach; ?>
-	</ul>
-
-</div>
-
+	<div class="amun-options">
+		<ul class="nav nav-tabs">
+			<?php foreach($options as $option): ?>
+			<li><a href="<?php echo $option['href']; ?>"><?php echo $option['name']; ?></a></li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
 <?php endif; ?>
 
-
-<div class="amun_service_googleproject">
+<div class="amun-service-googleproject">
 
 	<?php if(!empty($recordProject)): ?>
 
 		<?php if($resultCommit->totalResults > 0): ?>
 
 			<?php foreach($resultCommit->entry as $record): ?>
-			<div class="amun_service_googleproject_entry" id="commit-<?php echo $record->id; ?>">
+			<div class="amun-service-googleproject-entry" id="commit-<?php echo $record->id; ?>">
 				<h2>
 					<a href="<?php echo 'http://code.google.com/p/' . $recordProject->name . '/source/detail?r=' . $record->revision; ?>"><?php echo $record->message; ?></a>
 				</h2>
@@ -37,11 +31,11 @@
 
 			<?php if($pagingCommits->getPages() > 1): ?>
 			<hr />
-			<div class="psx_html_paging">
+			<div class="pagination pagination-centered">
 				<ul>
 					<li><a href="<?php echo $pagingCommits->getFirstUrl(); ?>">First</a></li>
 					<li><a href="<?php echo $pagingCommits->getPrevUrl(); ?>">Previous</a></li>
-					<li><?php echo $pagingCommits->getPage(); ?> of <?php echo $pagingCommits->getPages(); ?></li>
+					<li><span><?php echo $pagingCommits->getPage(); ?> of <?php echo $pagingCommits->getPages(); ?></span></li>
 					<li><a href="<?php echo $pagingCommits->getNextUrl(); ?>">Next</a></li>
 					<li><a href="<?php echo $pagingCommits->getLastUrl(); ?>">Last</a></li>
 				</ul>
@@ -61,7 +55,3 @@
 	<?php endif; ?>
 
 </div>
-
-
-
-

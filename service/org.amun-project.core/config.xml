@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="707468aa233264f576f7ea24e801c096f3f80ab9">
-  <status>normal</status>
+<service xmlns="http://amun-project.org" signature="d294d38e9e80c5e626632fa3406b7f42de77e0ba">
+  <status>system</status>
   <name>core</name>
   <path>/core</path>
   <namespace>core</namespace>

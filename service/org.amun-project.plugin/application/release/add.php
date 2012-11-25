@@ -73,8 +73,6 @@ class add extends Amun_Module_ApplicationAbstract
 amun.services.plugin.loadForm("form", "{$url}");
 </script>
 
-<p><span class="small">As Href please provide a direct link to the service .tar file.</span></p>
-
 HTML;
 		}
 		else

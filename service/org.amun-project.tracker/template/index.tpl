@@ -1,21 +1,15 @@
 
-
 <?php if(count($options) > 0): ?>
-
-<div class="amun_html_options">
-
-	<ul>
-		<?php foreach($options as $option): ?>
-		<li><a href="<?php echo $option['href']; ?>"><?php echo $option['name']; ?></a></li>
-		<?php endforeach; ?>
-	</ul>
-
-</div>
-
+	<div class="amun-options">
+		<ul class="nav nav-tabs">
+			<?php foreach($options as $option): ?>
+			<li><a href="<?php echo $option['href']; ?>"><?php echo $option['name']; ?></a></li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
 <?php endif; ?>
 
-
-<div class="amun_service_tracker">
+<div class="amun-service-tracker">
 
 	<table>
 	<colgroup>
@@ -31,7 +25,7 @@
 		<th>Date</th>
 	</tr>
 	<?php foreach($resultTracker->entry as $record): ?>
-	<tr class="amun_service_tracker_entry" id="thread-<?php echo $record->id; ?>">
+	<tr class="amun-service-tracker-entry" id="thread-<?php echo $record->id; ?>">
 		<td>
 			<h2><a href="<?php echo $record->getUrl(); ?>"><?php echo $record->title; ?></a></h2>
 			<span class="small">
@@ -48,11 +42,11 @@
 
 	<?php if($pagingTracker->getPages() > 1): ?>
 	<hr />
-	<div class="psx_html_paging">
+	<div class="pagination pagination-centered">
 		<ul>
 			<li><a href="<?php echo $pagingTracker->getFirstUrl(); ?>">First</a></li>
 			<li><a href="<?php echo $pagingTracker->getPrevUrl(); ?>">Previous</a></li>
-			<li><?php echo $pagingTracker->getPage(); ?> of <?php echo $pagingTracker->getPages(); ?></li>
+			<li><span><?php echo $pagingTracker->getPage(); ?> of <?php echo $pagingTracker->getPages(); ?></span></li>
 			<li><a href="<?php echo $pagingTracker->getNextUrl(); ?>">Next</a></li>
 			<li><a href="<?php echo $pagingTracker->getLastUrl(); ?>">Last</a></li>
 		</ul>

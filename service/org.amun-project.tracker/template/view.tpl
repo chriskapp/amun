@@ -1,19 +1,13 @@
 
-
 <?php if(count($options) > 0): ?>
-
-<div class="amun_html_options">
-
-	<ul>
-		<?php foreach($options as $option): ?>
-		<li><a href="<?php echo $option['href']; ?>"><?php echo $option['name']; ?></a></li>
-		<?php endforeach; ?>
-	</ul>
-
-</div>
-
+	<div class="amun-options">
+		<ul class="nav nav-tabs">
+			<?php foreach($options as $option): ?>
+			<li><a href="<?php echo $option['href']; ?>"><?php echo $option['name']; ?></a></li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
 <?php endif; ?>
-
 
 <div class="amun_service_tracker">
 
