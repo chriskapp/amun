@@ -39,6 +39,7 @@ class Amun_Base extends PSX_Base
 	protected $sql;
 	protected $registry;
 	protected $tableRegistry;
+	protected $event;
 	protected $user;
 
 	public function setup()
@@ -56,6 +57,9 @@ class Amun_Base extends PSX_Base
 
 		// init table registry
 		$this->tableRegistry = Amun_Sql_Table_Registry::initInstance($this->registry);
+
+		// init event
+		$this->event = Amun_Event::initInstance($this->registry);
 
 		// add routes
 		$this->loader->setLocationFinder(new Amun_Loader_LocationFinder($this->registry));
@@ -80,6 +84,11 @@ class Amun_Base extends PSX_Base
 	public function getTableRegistry()
 	{
 		return $this->tableRegistry;
+	}
+
+	public function getEvent()
+	{
+		return $this->event;
 	}
 
 	public function getUser()
