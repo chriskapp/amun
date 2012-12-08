@@ -39,8 +39,8 @@ use Amun_Module_FormAbstract;
  */
 class form extends Amun_Module_FormAbstract
 {
-	protected function getProvider()
+	protected function getProvider($name = null)
 	{
-		return $this->getDataProvider('My_Notify');
+		return $this->getProvider($name === null ? 'My_Notify' : $name);
 	}
 }

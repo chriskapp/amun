@@ -31,7 +31,7 @@ Ext.define('Amun.content.page.Grid', {
             autoLoad: true,
             proxy: {
                 type: 'ajax',
-                url: url + 'api/core/content/page/tree?format=json'
+                url: url + 'api/content/page/tree?format=json'
             },
             reader: {
                 type: 'json',

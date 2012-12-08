@@ -22,7 +22,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace core\api\user\group;
+namespace user\api\group;
 
 use Amun_Module_RestAbstract;
 use Amun_Sql_Table_Registry;

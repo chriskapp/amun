@@ -36,6 +36,7 @@ class install extends PSX_Module_ViewAbstract
 	protected $services = array(
 		'org.amun-project.log',
 		'org.amun-project.xrds',
+		'org.amun-project.hostmeta',
 		'org.amun-project.lrdd',
 		'org.amun-project.user',
 		'org.amun-project.core',
@@ -44,7 +45,6 @@ class install extends PSX_Module_ViewAbstract
 		'org.amun-project.openid',
 		'org.amun-project.country',
 		'org.amun-project.mail',
-		'org.amun-project.hostmeta',
 		'org.amun-project.swagger',
 		'org.amun-project.sitemap',
 		'org.amun-project.phpinfo',
@@ -209,7 +209,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_event_listener']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `eventId` int(10) NOT NULL,
   `priority` int(10) NOT NULL,
-  `class` varchar(32) NOT NULL,
+  `class` varchar(64) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8
 SQL;

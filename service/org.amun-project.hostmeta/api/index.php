@@ -24,7 +24,7 @@
 
 namespace hostmeta\api;
 
-use AmunService_System_Host_Record;
+use AmunService_Core_Host_Record;
 use Amun_Module_ApiAbstract;
 use Amun_Sql_Table_Registry;
 use Exception;
@@ -44,7 +44,15 @@ class index extends Amun_Module_ApiAbstract
 {
 	private $writer;
 
-	public function onLoad()
+	/**
+	 * Returns hostmeta informations
+	 *
+	 * @httpMethod GET
+	 * @path /
+	 * @nickname getHostmeta
+	 * @responseClass PSX_Data_ResultSet
+	 */
+	public function getHostmeta()
 	{
 		try
 		{
@@ -82,40 +90,9 @@ class index extends Amun_Module_ApiAbstract
 			$this->writer->text($this->registry['core.default_timezone']->getName());
 			$this->writer->endElement();
 
-			/*
-			$this->event->notifyListener('hostmeta.list', array($this->writer));
-			*/
 
-			// hub
-			if(!empty($this->config['amun_hub']))
-			{
-				$this->writer->startElement('Link');
-				$this->writer->writeAttribute('rel', 'hub');
-				$this->writer->writeAttribute('href', $this->config['amun_hub']);
-				$this->writer->endElement();
-			}
+			$this->event->notifyListener('hostmeta.request', array($this->writer));
 
-			// lrdd
-			$this->writer->startElement('Link');
-			$this->writer->writeAttribute('rel', 'lrdd');
-			$this->writer->writeAttribute('type', 'application/xrd+xml');
-			$this->writer->writeAttribute('template', $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/lrdd?uri={uri}');
-			$this->writer->endElement();
-
-			// connected hosts
-			$result = Amun_Sql_Table_Registry::get('Core_Host')
-				->select(array('name', 'url'))
-				->where('status', '=', AmunService_Core_Host_Record::NORMAL)
-				->getAll();
-
-			foreach($result as $row)
-			{
-				$this->writer->startElement('Link');
-				$this->writer->writeAttribute('rel', 'http://ns.amun-project.org/2011/host');
-				$this->writer->writeAttribute('href', $row['url']);
-				$this->writer->writeElement('Title', $row['name']);
-				$this->writer->endElement();
-			}
 
 			$this->writer->endElement();
 			$this->writer->endDocument();

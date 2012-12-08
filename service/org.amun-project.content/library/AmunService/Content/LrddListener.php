@@ -94,7 +94,7 @@ class AmunService_Content_LrddListener extends Amun_Module_ListenerAbstract
 
 			if(!empty($pageId))
 			{
-				return $this->getProvider('Content_Page')->getTable()->getRecord($pageId);
+				return Amun_Sql_Table_Registry::get('Content_Page')->getRecord($pageId);
 			}
 		}
 	}

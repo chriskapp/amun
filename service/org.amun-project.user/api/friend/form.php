@@ -22,7 +22,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace core\api\user\friend;
+namespace user\api\friend;
 
 use Amun_Module_FormAbstract;
 

@@ -22,7 +22,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace core\api\user;
+namespace user\api;
 
 use AmunService_User_Friend_Record;
 use Amun_Base;

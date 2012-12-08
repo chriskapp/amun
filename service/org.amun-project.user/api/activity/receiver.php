@@ -22,7 +22,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace core\api\user\activity;
+namespace user\api\activity;
 
 use Amun_Module_RestAbstract;
 use Amun_Sql_Table_Registry;

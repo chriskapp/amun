@@ -24,19 +24,10 @@
 
 namespace lrdd\api;
 
-use AmunService_Content_Page_Record;
-use AmunService_User_Account_Record;
 use Amun_Module_ApiAbstract;
-use Amun_Sql_Table_Registry;
-use DateTime;
 use Exception;
-use PSX_Data_Exception;
 use PSX_Data_Message;
-use PSX_Filter_Email;
 use PSX_Filter_Length;
-use PSX_Filter_Url;
-use PSX_Filter_Urldecode;
-use PSX_Sql;
 use XMLWriter;
 
 /**

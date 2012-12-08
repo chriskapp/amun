@@ -22,7 +22,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace core\api\system\approval\record;
+namespace core\api\approval\record;
 
 use Amun_Module_FormAbstract;
 

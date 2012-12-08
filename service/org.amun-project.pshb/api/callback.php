@@ -24,8 +24,8 @@
 
 namespace pshb\api;
 
-use AmunService_User_Activity_Handler;
 use AmunService_Pshb_Subscription_Record;
+use AmunService_User_Activity_Handler;
 use Amun_Dependency_Default;
 use Amun_Exception;
 use Amun_User;

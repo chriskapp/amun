@@ -22,7 +22,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace core\api\content\page;
+namespace content\api\page;
 
 use Amun_Module_ApiAbstract;
 use Exception;

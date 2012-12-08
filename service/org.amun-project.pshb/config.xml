@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="0e7278d4acc25c8afb09e499099ba7a893f77623">
+<service xmlns="http://amun-project.org" signature="f4ea1e9cbb68be9e2cc013ed49e33e73c70417df">
   <status>system</status>
   <name>pshb</name>
   <description>PubSubHubBub notifier wich sends a new content notification request to an hub</description>
@@ -14,7 +14,8 @@
     <param name="hub" value="http://pubsubhubbub.appspot.com"/>
   </registry>
   <event>
-    <listener name="core.record_change" class="AmunService_Pshb_Listener"/>
+    <listener name="core.record_change" class="AmunService_Pshb_RecordListener"/>
+    <listener name="hostmeta.request" class="AmunService_Pshb_HostmetaListener"/>
   </event>
   <registry>
     <table name="pshb_subscription"/>
@@ -22,7 +23,14 @@
   <library>
     <dir name="AmunService">
       <dir name="Pshb">
-        <file name="Listener.php" md5="1cea3589f7d626db00175956157a08b3"/>
+        <file name="HostmetaListener.php" md5="1350db3d939459e199ca99d3011dbbe6"/>
+        <file name="RecordListener.php" md5="948c8bd7e6da9539f2e774c8b527ebb7"/>
+        <dir name="Subscription">
+          <file name="Form.php" md5="2d6f505718e34ca74b1881a3ea484dad"/>
+          <file name="Handler.php" md5="4f60cdce395296e4f84c50af2bb693ec"/>
+          <file name="Record.php" md5="4e362d7bf2d4137c12dbda52cc707830"/>
+          <file name="Table.php" md5="70054338b89d914158001b18b4560650"/>
+        </dir>
       </dir>
     </dir>
   </library>

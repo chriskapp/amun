@@ -26,7 +26,6 @@
 $config = array(
 
 	// amun
-	'amun_hub'                => false, #'http://pubsubhubbub.appspot.com',
 	'amun_captcha'            => 'default',
 	'amun_table_registry'     => 'core_registry',
 	'amun_table_prefix'       => 'amun_',

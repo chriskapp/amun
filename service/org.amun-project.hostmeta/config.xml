@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="bc93a0568a60b0658b9cc13d2cae09d54aee02a9">
+<service xmlns="http://amun-project.org" signature="cac28f1cf97c24061fcb59b85912db87d84caf7a">
   <status>system</status>
   <name>hostmeta</name>
   <description>Provides an Host-Meta endpoint</description>
@@ -19,4 +19,7 @@
   <permissions>
     <perm name="view" description="Host-Meta View"/>
   </permissions>
+  <event>
+    <publisher name="hostmeta.request" description="Notifies if a hostmeta request occurs"/>
+  </event>
 </service>
