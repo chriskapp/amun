@@ -132,9 +132,6 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 			// parse registry
 			$this->parseRegistry($record);
 
-			// insert permissions
-			$this->parsePermissions($record);
-
 			// execute queries
 			$this->parseDatabase($record);
 
@@ -328,11 +325,11 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 		{
 			PSX_Log::info('Create events');
 
-			try
-			{
-				$events = $event->childNodes;
+			$events = $event->childNodes;
 
-				for($i = 0; $i < $events->length; $i++)
+			for($i = 0; $i < $events->length; $i++)
+			{
+				try
 				{
 					$event = $events->item($i);
 
@@ -351,7 +348,7 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 						{
 							$interface = empty($interface) ? null : $interface;
 
-							$this->sql->insert($this->registry['table.core_system_event'], array(
+							$this->sql->insert($this->registry['table.core_event'], array(
 								'name'        => $name,
 								'interface'   => $interface,
 								'description' => $description,
@@ -379,11 +376,11 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 						if(!empty($name))
 						{
 							$con     = new PSX_Sql_Condition(array('name', '=', $name));
-							$eventId = $this->sql->select($this->registry['table.core_system_event'], array('id'), $con, PSX_Sql::SELECT_FIELD);
+							$eventId = $this->sql->select($this->registry['table.core_event'], array('id'), $con, PSX_Sql::SELECT_FIELD);
 
 							if(!empty($eventId))
 							{
-								$this->sql->insert($this->registry['table.core_system_event_listener'], array(
+								$this->sql->insert($this->registry['table.core_event_listener'], array(
 									'eventId'  => $eventId,
 									'priority' => $priority,
 									'class'    => $class->getName(),
@@ -402,10 +399,10 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 						}
 					}
 				}
-			}
-			catch(Exception $e)
-			{
-				PSX_Log::error($e->getMessage());
+				catch(Exception $e)
+				{
+					PSX_Log::error($e->getMessage());
+				}
 			}
 		}
 	}
@@ -418,11 +415,11 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 		{
 			PSX_Log::info('Create registry entries');
 
-			try
-			{
-				$params = $registry->childNodes;
+			$params = $registry->childNodes;
 
-				for($i = 0; $i < $params->length; $i++)
+			for($i = 0; $i < $params->length; $i++)
+			{
+				try
 				{
 					$param = $params->item($i);
 
@@ -487,62 +484,14 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 						PSX_Log::info('> Created registry entry "' . $name . '" = "' . $value . '"');
 					}
 				}
-
-				// reload registry
-				$this->registry->load();
-			}
-			catch(Exception $e)
-			{
-				PSX_Log::error($e->getMessage());
-			}
-		}
-	}
-
-	private function parsePermissions(AmunService_Core_Service_Record $record)
-	{
-		$permissions = $this->serviceConfig->getElementsByTagName('permissions')->item(0);
-
-		if($permissions !== null)
-		{
-			PSX_Log::info('Create permissions');
-
-			try
-			{
-				$namespace = strtolower($record->namespace);
-				$perms     = $permissions->childNodes;
-
-				for($i = 0; $i < $perms->length; $i++)
+				catch(Exception $e)
 				{
-					$perm = $perms->item($i);
-
-					if(!($perm instanceof DOMElement))
-					{
-						continue;
-					}
-
-					if($perm->nodeName == 'perm')
-					{
-						$name = $perm->getAttribute('name');
-						$desc = $perm->getAttribute('description');
-
-						if(!empty($name) && !empty($desc))
-						{
-							$name = $namespace . '_' . $name;
-
-							$this->sql->insert($this->registry['table.user_right'], array(
-								'name'        => $name,
-								'description' => $desc,
-							));
-
-							PSX_Log::info('> Created permission "' . $name . '"');
-						}
-					}
+					PSX_Log::error($e->getMessage());
 				}
 			}
-			catch(Exception $e)
-			{
-				PSX_Log::error($e->getMessage());
-			}
+
+			// reload registry
+			$this->registry->load();
 		}
 	}
 

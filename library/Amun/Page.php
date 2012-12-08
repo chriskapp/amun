@@ -87,7 +87,7 @@ SELECT
 
 	FROM {$this->registry['table.content_page']} `page`
 
-		INNER JOIN {$this->registry['table.content_service']} `service`
+		INNER JOIN {$this->registry['table.core_service']} `service`
 
 		ON `page`.`serviceId` = `service`.`id`
 

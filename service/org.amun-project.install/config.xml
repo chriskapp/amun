@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="334b615823c6894165992017252df3d3667e6743">
+<service xmlns="http://amun-project.org" signature="fbd3d536eebc66d65bf9f6827599b4f1e4a5e6a1">
   <status>system</status>
   <name>install</name>
   <path>/install</path>
@@ -12,6 +12,7 @@
   <required>
     <service>org.amun-project.log</service>
     <service>org.amun-project.xrds</service>
+    <service>org.amun-project.user</service>
     <service>org.amun-project.oauth</service>
     <service>org.amun-project.media</service>
     <service>org.amun-project.openid</service>
@@ -23,6 +24,5 @@
     <service>org.amun-project.sitemap</service>
     <service>org.amun-project.phpinfo</service>
     <service>org.amun-project.content</service>
-    <service>org.amun-project.user</service>
   </required>
 </service>

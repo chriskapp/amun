@@ -64,7 +64,9 @@ class AmunService_Mail_Record extends Amun_Data_RecordAbstract
 
 	public function setFrom($from)
 	{
-		$from = $this->_validate->apply($from, 'string', array(new PSX_Filter_Length(3, 64), new PSX_Filter_Email()), 'from', 'From');
+		// replace hostname
+		$from = str_replace('%host%', $this->_base->getHost(), $from);
+		$from = $this->_validate->apply($from, 'string', array(new PSX_Filter_Length(3, 64)), 'from', 'From');
 
 		if(!$this->_validate->hasError())
 		{

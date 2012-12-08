@@ -57,10 +57,10 @@ class AmunService_Mail_Listener extends Amun_Module_ListenerAbstract
 
 					if($template->nodeName == 'template')
 					{
-						$name    = $template->getElementsByTagName('name');
-						$from    = $template->getElementsByTagName('from');
-						$subject = $template->getElementsByTagName('subject');
-						$values  = $template->getElementsByTagName('values');
+						$name    = $template->getAttribute('name');
+						$from    = $template->getAttribute('from');
+						$subject = $template->getAttribute('subject');
+						$values  = $template->getAttribute('values');
 						$text    = $template->getElementsByTagName('text')->item(0);
 						$html    = $template->getElementsByTagName('html')->item(0);
 
@@ -71,8 +71,8 @@ class AmunService_Mail_Listener extends Amun_Module_ListenerAbstract
 							$record->setFrom($from);
 							$record->setSubject($subject);
 							$record->setValues($values);
-							$record->setText($text);
-							$record->setHtml($html);
+							$record->setText($text->nodeValue);
+							$record->setHtml($html->nodeValue);
 
 							$handler = new AmunService_Mail_Handler($this->user);
 							$handler->create($record);

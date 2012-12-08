@@ -58,11 +58,18 @@ try
 	{
 		foreach($services as $service)
 		{
-			if(is_dir($path . '/' . $service) && $service[0] != '.')
+			try
 			{
-				echo 'Update: ' . $service . "\n";
+				if(is_dir($path . '/' . $service) && $service[0] != '.')
+				{
+					echo 'Update ' . $service . "\n";
 
-				updateService($service);
+					updateService($service);
+				}
+			}
+			catch(InvalidPathException $e)
+			{
+				echo 'S ' . $e->getMessage() . "\n";
 			}
 		}
 	}
@@ -117,7 +124,7 @@ function copyFiles($src, $dest, DomNode $el)
 {
 	if(!is_dir($src))
 	{
-		throw new RuntimeException('Invalid source path ' . $src);
+		throw new InvalidPathException($src . ' not found');
 	}
 
 	if(!is_dir($dest))
@@ -179,3 +186,8 @@ function exceptionErrorHandler($errno, $errstr, $errfile, $errline)
 	throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
 }
 
+
+// exceptions
+class InvalidPathException extends Exception
+{
+}

@@ -79,9 +79,11 @@ SQL;
 				$neededValues = explode(';', $row['values']);
 			}
 
-			if(count(array_diff(array_keys($values), $neededValues)) > 0)
+			$missingValues = array_diff($neededValues, array_keys($values));
+
+			if(count($missingValues) > 0)
 			{
-				throw new Amun_Mail_Exception('Missing values in ' . $name);
+				throw new Amun_Mail_Exception('Missing values "' . implode(', ', $missingValues) . '"" in ' . $name);
 			}
 
 			// send mail

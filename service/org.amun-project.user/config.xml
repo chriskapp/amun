@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="7f83a2bc3891f8b281fb2379d2f8c643ce373768">
+<service xmlns="http://amun-project.org" signature="832d883fdbf70d4eb63f77b232966a0d40d08ac9">
   <status>system</status>
   <name>user</name>
   <path>/user</path>
@@ -103,6 +103,9 @@
     <table name="user_group_right"/>
     <table name="user_right"/>
   </registry>
+  <event>
+    <listener name="core.service_install" class="AmunService_User_Listener"/>
+  </event>
   <library>
     <dir name="AmunService">
       <dir name="User">

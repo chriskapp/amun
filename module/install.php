@@ -159,22 +159,25 @@ class install extends PSX_Module_ViewAbstract
 		try
 		{
 			$q[] = <<<SQL
-CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_service']}` (
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_approval']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `status` int(10) NOT NULL,
-  `source` varchar(128) NOT NULL,
-  `name` varchar(32) NOT NULL,
-  `path` varchar(256) NOT NULL,
-  `namespace` varchar(64) NOT NULL,
-  `type` varchar(256) NOT NULL,
-  `link` varchar(256) NOT NULL,
-  `author` varchar(512) NOT NULL,
-  `license` varchar(256) NOT NULL,
-  `version` varchar(16) NOT NULL,
+  `table` varchar(64) NOT NULL,
+  `field` varchar(32) NOT NULL DEFAULT '',
+  `value` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8
+SQL;
+
+			$q[] = <<<SQL
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_approval_record']}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `userId` int(10) NOT NULL,
+  `type` enum('INSERT','UPDATE','DELETE') NOT NULL,
+  `table` varchar(64) NOT NULL,
+  `record` text NOT NULL,
   `date` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8
 SQL;
 
 			$q[] = <<<SQL
@@ -183,7 +186,8 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_event']}` (
   `name` varchar(64) NOT NULL,
   `interface` varchar(64) DEFAULT NULL,
   `description` varchar(256) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8
 SQL;
 
@@ -207,6 +211,42 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_registry']}` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8
+SQL;
+
+			$q[] = <<<SQL
+CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_service']}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `status` int(10) NOT NULL,
+  `source` varchar(128) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `path` varchar(256) NOT NULL,
+  `namespace` varchar(64) NOT NULL,
+  `type` varchar(256) NOT NULL,
+  `link` varchar(256) NOT NULL,
+  `author` varchar(512) NOT NULL,
+  `license` varchar(256) NOT NULL,
+  `version` varchar(16) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+SQL;
+
+			$q[] = <<<SQL
+INSERT INTO `{$this->registry['table.core_registry']}` (`name`, `type`, `class`, `value`) VALUES
+('table.core_approval', 'STRING', NULL, '{$this->registry['table.core_approval']}'),
+('table.core_approval_record', 'STRING', NULL, '{$this->registry['table.core_approval_record']}'),
+('table.core_event', 'STRING', NULL, '{$this->registry['table.core_event']}'),
+('table.core_event_listener', 'STRING', NULL, '{$this->registry['table.core_event_listener']}'),
+('table.core_registry', 'STRING', NULL, '{$this->registry['table.core_registry']}'),
+('table.core_service', 'STRING', NULL, '{$this->registry['table.core_service']}'),
+('core.default_timezone', 'STRING', 'DateTimeZone', 'UTC');
+SQL;
+
+			$q[] = <<<SQL
+INSERT INTO `{$this->registry['table.core_event']}` (`name`, `interface`, `description`) VALUES
+('core.service_install', NULL, 'Notifies if a service gets installed'),
+('core.record_change', NULL, 'Notifies if a record has changed');
 SQL;
 
 			foreach($q as $query)
@@ -235,8 +275,17 @@ SQL;
 	 */
 	public function setupInsertData()
 	{
+		$q = array();
+
 		try
 		{
+			// nothing todo here at the moment ...
+
+			foreach($q as $query)
+			{
+				$this->sql->query($query);
+			}
+
 			echo PSX_Json::encode(array('success' => true));
 		}
 		catch(Exception $e)
@@ -295,20 +344,6 @@ SQL;
 				if(count($errors) > 0)
 				{
 					throw new Amun_Exception('The following errors occured while installing the services: ' . "\n" . implode("\n", $errors) . "\n" . '--');
-				}
-
-
-				// set rights
-				$rights = $this->sql->getCol('SELECT id FROM ' . $this->registry['table.user_right']);
-
-				foreach($rights as $rightId)
-				{
-					$this->sql->insert($this->registry['table.user_group_right'], array(
-
-						'groupId' => 1,
-						'rightId' => $rightId,
-
-					));
 				}
 			}
 
@@ -403,6 +438,21 @@ SQL;
 					'date'  => $date->format(PSX_DateTime::SQL),
 
 				));
+
+				$groupId = $this->sql->getLastInsertId();
+
+				// set rights
+				$rights = $this->sql->getCol('SELECT id FROM ' . $this->registry['table.user_right']);
+
+				foreach($rights as $rightId)
+				{
+					$this->sql->insert($this->registry['table.user_group_right'], array(
+
+						'groupId' => $groupId,
+						'rightId' => $rightId,
+
+					));
+				}
 			}
 
 			echo PSX_Json::encode(array('success' => true));
@@ -890,11 +940,13 @@ class Amun_Registry_NoDb extends Amun_Registry
 
 		$this->exchangeArray(array(
 
-			'table.core_service'        => $this->config['amun_table_prefix'] . 'core_service',
-			'table.core_registry'       => $this->config['amun_table_prefix'] . 'core_registry',
-			'table.core_event'          => $this->config['amun_table_prefix'] . 'core_event',
-			'table.core_event_listener' => $this->config['amun_table_prefix'] . 'core_event_listener',
-			'core.default_timezone'     => new DateTimeZone('UTC'),
+			'table.core_approval'        => $this->config['amun_table_prefix'] . 'core_approval',
+			'table.core_approval_record' => $this->config['amun_table_prefix'] . 'core_approval_record',
+			'table.core_event'           => $this->config['amun_table_prefix'] . 'core_event',
+			'table.core_event_listener'  => $this->config['amun_table_prefix'] . 'core_event_listener',
+			'table.core_registry'        => $this->config['amun_table_prefix'] . 'core_registry',
+			'table.core_service'         => $this->config['amun_table_prefix'] . 'core_service',
+			'core.default_timezone'      => new DateTimeZone('UTC'),
 
 		));
 	}

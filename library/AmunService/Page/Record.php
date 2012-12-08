@@ -68,7 +68,7 @@ class AmunService_Page_Record extends Amun_Data_RecordAbstract
 
 	public function setContent($content)
 	{
-		$content = $this->_validate->apply($content, 'string', array(new PSX_Filter_Length(3, 65536), new Amun_Filter_Html($this->_config, $this->_base->getUser())), 'content', 'Content');
+		$content = $this->_validate->apply($content, 'string', array(new PSX_Filter_Length(3, 65536), new Amun_Filter_Html($this->_config, $this->_user)), 'content', 'Content');
 
 		if(!$this->_validate->hasError())
 		{
