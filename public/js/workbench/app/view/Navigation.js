@@ -60,13 +60,6 @@ Ext.define('Workbench.view.Navigation', {
             });
         }
 
-        if (Amun.xrds.Manager.findServiceUri('http://ns.amun-project.org/2011/amun/content/service')) {
-            children.push({
-                title: 'Services',
-                type: 'http://ns.amun-project.org/2011/amun/content/service'
-            });
-        }
-
         nav.push({
             title: 'Content',
             store: Ext.create('Ext.data.Store', {
@@ -110,17 +103,10 @@ Ext.define('Workbench.view.Navigation', {
         // system
         children = [];
 
-        if (Amun.xrds.Manager.findServiceUri('http://ns.amun-project.org/2011/amun/system/log')) {
+        if (Amun.xrds.Manager.findServiceUri('http://ns.amun-project.org/2011/amun/content/service')) {
             children.push({
-                title: 'Log',
-                type: 'http://ns.amun-project.org/2011/amun/system/log'
-            });
-        }
-
-        if (Amun.xrds.Manager.findServiceUri('http://ns.amun-project.org/2011/amun/system/mail')) {
-            children.push({
-                title: 'Mail',
-                type: 'http://ns.amun-project.org/2011/amun/system/mail'
+                title: 'Services',
+                type: 'http://ns.amun-project.org/2011/amun/content/service'
             });
         }
 
@@ -131,6 +117,13 @@ Ext.define('Workbench.view.Navigation', {
             });
         }
 
+        if (Amun.xrds.Manager.findServiceUri('http://ns.amun-project.org/2011/amun/system/mail')) {
+            children.push({
+                title: 'Mail',
+                type: 'http://ns.amun-project.org/2011/amun/system/mail'
+            });
+        }
+
         if (Amun.xrds.Manager.findServiceUri('http://ns.amun-project.org/2011/amun/system/api')) {
             children.push({
                 title: 'API',
@@ -138,10 +131,10 @@ Ext.define('Workbench.view.Navigation', {
             });
         }
 
-        if (Amun.xrds.Manager.findServiceUri('http://ns.amun-project.org/2011/amun/system/host')) {
+        if (Amun.xrds.Manager.findServiceUri('http://ns.amun-project.org/2011/amun/system/country')) {
             children.push({
-                title: 'Host',
-                type: 'http://ns.amun-project.org/2011/amun/system/host'
+                title: 'Countries',
+                type: 'http://ns.amun-project.org/2011/amun/system/country'
             });
         }
 
