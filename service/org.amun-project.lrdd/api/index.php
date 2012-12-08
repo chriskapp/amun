@@ -68,8 +68,6 @@ class index extends Amun_Module_ApiAbstract
 		{
 			header('Content-type: application/xml');
 
-			$record = $this->getUriRecord();
-
 			$this->writer = new XMLWriter();
 			$this->writer->openURI('php://output');
 			$this->writer->setIndent(true);

@@ -41,7 +41,7 @@ class AmunService_User_LrddListener extends Amun_Module_ListenerAbstract
 		if($account instanceof AmunService_User_Account_Record)
 		{
 			// subject
-			$writer->writeElement('Subject', $this->uri);
+			$writer->writeElement('Subject', $uri);
 
 			// alias
 			$writer->writeElement('Alias', $account->profileUrl);
