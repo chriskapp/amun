@@ -79,7 +79,7 @@ class index extends Amun_Module_ApplicationAbstract
 	{
 		return Amun_Sql_Table_Registry::get('Googleproject')
 			->select(array('id', 'name', 'repositoryPath', 'lastCommitDate', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
 				->select(array('name', 'profileUrl'), 'author')
 			)
 			->where('pageId', '=', $this->page->id)
@@ -92,7 +92,7 @@ class index extends Amun_Module_ApplicationAbstract
 			->select(array('id', 'revision', 'url', 'message', 'commitDate', 'date'))
 			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Googleproject_Author')
 				->select(array('name'), 'user')
-				->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
+				->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
 					->select(array('name', 'profileUrl'), 'author')
 				)
 			)

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="a6f3aa4e38810619d2133c71e6eb2656a4461a02">
+<service xmlns="http://amun-project.org" signature="e1cf54a171ace94ad67b8bde9f6c4b5e721cd7d0">
   <status>normal</status>
   <name>plugin</name>
+  <description>Service to list plugins. Each plugin can be maintained by multiple users. News versions can be added by maintainer</description>
   <path>/plugin</path>
   <namespace>plugin</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/plugin</type>
@@ -57,17 +58,17 @@
         <dir name="Maintainer">
           <file name="Form.php" md5="07e59888263b5a15c7974ca521c12ab9"/>
           <file name="Handler.php" md5="211ff4dff86b1054b521fd28c9d9b45a"/>
-          <file name="Record.php" md5="a9f2591098c72110ba9dc199df1c443e"/>
-          <file name="Table.php" md5="847856707cd5c9531e4f3ba7b9daaa3a"/>
+          <file name="Record.php" md5="6797fd5e7716aa197f5fa45bc6ff3921"/>
+          <file name="Table.php" md5="d61eee09d029830bfb28c8fd17e1bafd"/>
         </dir>
-        <file name="Record.php" md5="51c687b6367cdd8f7168c60a8a6154bf"/>
+        <file name="Record.php" md5="02de43b6d8d2aa83ca9ae6020d0eb030"/>
         <dir name="Release">
           <file name="Form.php" md5="8742c9487f870d1969d5b929f6fc899b"/>
           <file name="Handler.php" md5="498c0cdfdc4b206c0b80cfbb553b234f"/>
-          <file name="Record.php" md5="c7038a853057ae60e35f617e523be6c5"/>
-          <file name="Table.php" md5="db284691303b340cbfa397819b76c827"/>
+          <file name="Record.php" md5="77ff77e67980ff4d46fa0589109e101a"/>
+          <file name="Table.php" md5="c6f117cbf64e2149fdfcd3e9533aeaea"/>
         </dir>
-        <file name="Table.php" md5="6dbbf085d114b8f964e84a370b1ce78e"/>
+        <file name="Table.php" md5="34876d6ffd98c101b312af59c85bac0f"/>
       </dir>
     </dir>
   </library>
@@ -106,10 +107,10 @@
   `date` DATETIME NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[INSERT INTO `{table.core_content_service_option}` (`serviceId`, `name`) VALUES
+    <query><![CDATA[INSERT INTO `{table.core_service_option}` (`serviceId`, `name`) VALUES
 ({service.id}, 'index'),
 ({service.id}, 'view');]]></query>
-    <query><![CDATA[INSERT INTO `{table.core_user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
+    <query><![CDATA[INSERT INTO `{table.user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
 ('INSERT', 'add', 'amun_service_plugin_release', 'view?id={record.id}', '<p><a href="{user.profileUrl}">{user.name}</a> has released version {record.version} ({record.status})</p>');]]></query>
   </database>
 </service>

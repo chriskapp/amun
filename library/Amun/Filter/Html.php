@@ -45,16 +45,16 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 
 		switch($this->user->status)
 		{
-			case AmunService_Core_User_Account_Record::ADMINISTRATOR:
+			case AmunService_User_Account_Record::ADMINISTRATOR:
 				$this->collection = new Amun_Html_Filter_Collection_FullTrusted();
 				break;
 
-			case AmunService_Core_User_Account_Record::NORMAL:
-			case AmunService_Core_User_Account_Record::REMOTE:
+			case AmunService_User_Account_Record::NORMAL:
+			case AmunService_User_Account_Record::REMOTE:
 				$this->collection = new Amun_Html_Filter_Collection_NormalTrusted();
 				break;
 
-			case AmunService_Core_User_Account_Record::ANONYMOUS:
+			case AmunService_User_Account_Record::ANONYMOUS:
 			default:
 				$this->collection = new Amun_Html_Filter_Collection_Untrusted();
 				break;
@@ -152,7 +152,7 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 				$con = new PSX_Sql_Condition();
 				$con->add('name', '=', $part);
 
-				$profileUrl = Amun_Sql_Table_Registry::get('Core_User_Account')->getField('profileUrl', $con);
+				$profileUrl = Amun_Sql_Table_Registry::get('User_Account')->getField('profileUrl', $con);
 
 				if(!empty($profileUrl))
 				{
@@ -189,7 +189,7 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 				$con = new PSX_Sql_Condition();
 				$con->add('urlTitle', '=', $part);
 
-				$path = Amun_Sql_Table_Registry::get('Core_Content_Page')->getField('path', $con);
+				$path = Amun_Sql_Table_Registry::get('Content_Page')->getField('path', $con);
 
 				if(!empty($path))
 				{
@@ -217,7 +217,7 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 		$con = new PSX_Sql_Condition();
 		$con->add('path', '=', $href);
 
-		$path = Amun_Sql_Table_Registry::get('Core_Content_Page')->getField('path', $con);
+		$path = Amun_Sql_Table_Registry::get('Content_Page')->getField('path', $con);
 
 		if(!empty($path))
 		{
@@ -237,11 +237,11 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 		$con = new PSX_Sql_Condition();
 		$con->add('path', '=', $href);
 
-		$globalId = Amun_Sql_Table_Registry::get('Core_Content_Media')->getField('globalId', $con);
+		$globalId = Amun_Sql_Table_Registry::get('Media')->getField('globalId', $con);
 
 		if(!empty($globalId))
 		{
-			return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/media/serve/' . $globalId;
+			return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/media/serve/' . $globalId;
 		}
 
 		return false;

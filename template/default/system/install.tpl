@@ -253,6 +253,7 @@
 	addStep('setupCheckRequirements', 'Check requirements ...');
 	addStep('setupCreateTables', 'Create tables ...');
 	addStep('setupInsertData', 'Insert data ...');
+	addStep('setupInstallService', 'Install services ...');
 	addStep('setupInsertRegistry', 'Insert registry ...', function(){
 		return {
 			title: $('#settingsTitle').val(),
@@ -268,7 +269,6 @@
 		};
 	});
 	addStep('setupInsertApi', 'Insert api ...');
-	addStep('setupInstallService', 'Install services ...');
 	addStep('setupInstallSample', 'Install samples ...');
 	</script>
 </head>

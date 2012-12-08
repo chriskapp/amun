@@ -41,12 +41,11 @@ class Amun_Event
 	private $registry;
 	private $user;
 
-	public function __construct(Amun_Registry $registry, Amun_User $user)
+	public function __construct(Amun_Registry $registry)
 	{
 		$this->config   = $registry->getConfig();
 		$this->sql      = $registry->getSql();
 		$this->registry = $registry;
-		$this->user     = $user;
 	}
 
 	/**
@@ -59,11 +58,12 @@ class Amun_Event
 		$sql = <<<SQL
 SELECT
 
+	`event`.`interface`,
 	`listener`.`class`
 
-	FROM {$this->registry['table.core_system_event_listener']} `listener`
+	FROM {$this->registry['table.core_event_listener']} `listener`
 
-		INNER JOIN {$this->registry['table.core_system_event']} `event`
+		INNER JOIN {$this->registry['table.core_event']} `event`
 
 		ON `listener`.`eventId` = `event`.`id`
 
@@ -72,16 +72,26 @@ SELECT
 			ORDER BY `listener`.`priority` DESC
 SQL;
 
-		$result   = $this->sql->getCol($sql, array($name));
+		$result   = $this->sql->getAll($sql, array($name));
 		$listener = array();
 
-		foreach($result as $class)
+		foreach($result as $row)
 		{
 			try
 			{
-				$class = new ReflectionClass($class);
+				$class = new ReflectionClass($row['class']);
 
-				$listener[] = $class;
+				if(!empty($row['interface']))
+				{
+					if($class->implementsInterface($row['interface']))
+					{
+						$listener[] = new ReflectionClass($row['class']);
+					}
+				}
+				else
+				{
+					$listener[] = new ReflectionClass($row['class']);
+				}
 			}
 			catch(ReflectionException $e)
 			{
@@ -111,10 +121,11 @@ SQL;
 			{
 				$method = $listener->getMethod('notify');
 				$obj    = $listener->newInstance();
+				$resp   = $method->invokeArgs($obj, $args);
 
-				if($method->getNumberOfParameters() == count($args))
+				if($resp === false)
 				{
-					$method->invokeArgs($obj, $args);
+					break;
 				}
 			}
 			catch(ReflectionException $e)

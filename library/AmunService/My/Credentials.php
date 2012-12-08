@@ -32,7 +32,7 @@
  * @package    Amun_Service_My
  * @version    $Revision: 635 $
  */
-class AmunService_My_Credentials extends AmunService_Core_User_Account_Record
+class AmunService_My_Credentials extends AmunService_User_Account_Record
 {
 	protected $_user;
 

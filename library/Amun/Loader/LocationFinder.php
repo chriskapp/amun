@@ -80,7 +80,7 @@ class Amun_Loader_LocationFinder extends PSX_Loader_LocationFinder_FileSystem
 					`path`,
 					`namespace`
 				FROM
-					" . $this->registry['table.core_content_service'] . "
+					" . $this->registry['table.core_service'] . "
 				WHERE
 					`path` LIKE SUBSTRING(?, 1, CHAR_LENGTH(`path`))
 				LIMIT 1";
@@ -136,9 +136,9 @@ class Amun_Loader_LocationFinder extends PSX_Loader_LocationFinder_FileSystem
 					`page`.`path`,
 					`service`.`source`
 				FROM
-					" . $this->registry['table.core_content_page'] . " `page`
+					" . $this->registry['table.content_page'] . " `page`
 				INNER JOIN
-					" . $this->registry['table.core_content_service'] . " `service`
+					" . $this->registry['table.core_service'] . " `service`
 				ON
 					`page`.`serviceId` = `service`.`id`
 				WHERE

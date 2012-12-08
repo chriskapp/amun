@@ -63,12 +63,12 @@
 		</div>
 
 		<?php foreach($activities as $activity): ?>
-		<div class="row amun-service-my-activity-entry <?php if($activity->receiverStatus == AmunService_Core_User_Activity_Receiver_Record::HIDDEN): ?>amun-service-my-activity-entry-hidden<?php endif; ?>" id="activity-<?php echo $activity->id; ?>">
+		<div class="row amun-service-my-activity-entry <?php if($activity->receiverStatus == AmunService_User_Activity_Receiver_Record::HIDDEN): ?>amun-service-my-activity-entry-hidden<?php endif; ?>" id="activity-<?php echo $activity->id; ?>">
 			<div class="pull-left amun-service-my-activity-entry-avatar">
 				<img src="<?php echo $activity->authorThumbnailUrl; ?>" alt="avatar" />
 			</div>
 			<div class="pull-left amun-service-my-activity-entry-content">
-				<?php if($activity->receiverStatus == AmunService_Core_User_Activity_Receiver_Record::VISIBLE): ?>
+				<?php if($activity->receiverStatus == AmunService_User_Activity_Receiver_Record::VISIBLE): ?>
 					<div class="pull-right"><a class="btn" href="#" onclick="amun.services.my.setActivityStatus(<?php echo $activity->receiverId . ',\'' . $receiverUrl . '\',this'; ?>);return false;" data-status="2" title="Hides the activity on your public profile">Hide</a></div>
 				<?php else: ?>
 					<div class="pull-right"><a class="btn" href="#" onclick="amun.services.my.setActivityStatus(<?php echo $activity->receiverId . ',\'' . $receiverUrl . '\',this'; ?>);return false;" data-status="1" title="Shows the activity on your public profile">Show</a></div>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="d53b9b3a0cd5cc14e59634f1d7db48acb1a9907c">
+<service xmlns="http://amun-project.org" signature="fab04c32f5fb99b2103addcc329becd5c65da0e5">
   <status>normal</status>
   <name>php</name>
+  <description>Service to embed PHP code in a page. Because of security it is only possible to edit the page from the backend</description>
   <path>/php</path>
   <namespace>php</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/php</type>
@@ -30,8 +31,8 @@
       <dir name="Php">
         <file name="Form.php" md5="2f7cd326a2fcef6aacf340944361ecba"/>
         <file name="Handler.php" md5="68b778c5eef9c3ed8e14fea57cd85d01"/>
-        <file name="Record.php" md5="e16602b3427348eb9c8ae41467448857"/>
-        <file name="Table.php" md5="51bbe0c1bc821ee2a9b53016b70713e9"/>
+        <file name="Record.php" md5="34c40df4e9297265d1726be1690d250c"/>
+        <file name="Table.php" md5="17e81ab32a0b7e6fa81060907e6ae361"/>
       </dir>
     </dir>
   </library>
@@ -46,7 +47,7 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[INSERT INTO `{table.core_content_service_option}` (`serviceId`, `name`) VALUES
+    <query><![CDATA[INSERT INTO `{table.content_service_option}` (`serviceId`, `name`) VALUES
 ({service.id}, 'index');]]></query>
   </database>
 </service>

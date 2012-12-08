@@ -24,7 +24,7 @@
 
 namespace webdav\api;
 
-use AmunService_Core_User_Account_Record;
+use AmunService_User_Account_Record;
 use AmunService_Webdav_Page;
 use Amun_Module_DefaultAbstract;
 use Amun_Security;
@@ -56,7 +56,7 @@ class index extends Amun_Module_DefaultAbstract
 
 		if(!empty($pw))
 		{
-			$row = Amun_Sql_Table_Registry::get('Core_User_Account')
+			$row = Amun_Sql_Table_Registry::get('User_Account')
 				->select(array('id', 'status', 'pw'))
 				->where('identity', '=', $identity)
 				->getRow();
@@ -93,8 +93,8 @@ class index extends Amun_Module_DefaultAbstract
 	{
 		switch($status)
 		{
-			case AmunService_Core_User_Account_Record::NORMAL:
-			case AmunService_Core_User_Account_Record::ADMINISTRATOR:
+			case AmunService_User_Account_Record::NORMAL:
+			case AmunService_User_Account_Record::ADMINISTRATOR:
 				return true;
 				break;
 		}

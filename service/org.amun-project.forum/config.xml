@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="6523465b79f7d4809aba850ef75be28bddc290da">
+<service xmlns="http://amun-project.org" signature="275727598f6ae42833ddefdd1b25614bda59c563">
   <status>normal</status>
   <name>forum</name>
+  <description>Implementation of an simple forum system. It is possible to create threads and set the status to sticky or closed</description>
   <path>/forum</path>
   <namespace>forum</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/forum</type>
@@ -36,8 +37,8 @@
       <dir name="Forum">
         <file name="Form.php" md5="6cf277ac6e1ce532a2a15701e470cbc7"/>
         <file name="Handler.php" md5="2c065b86144916789555e7b377cdb8a5"/>
-        <file name="Record.php" md5="1e31d2f32b92cecafa6bf2ae0b027ccb"/>
-        <file name="Table.php" md5="36d49ed41fd1e49520c021fb885a0fc2"/>
+        <file name="Record.php" md5="68d1e418ca310d53965bf77654aab529"/>
+        <file name="Table.php" md5="b6f08a46b7c4ec50ec792a46dfc1a508"/>
       </dir>
     </dir>
   </library>
@@ -56,14 +57,10 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[INSERT INTO `{table.core_content_service_option}` (`serviceId`, `name`) VALUES
+    <query><![CDATA[INSERT INTO `{table.core_service_option}` (`serviceId`, `name`) VALUES
 ({service.id}, 'index'),
 ({service.id}, 'view');]]></query>
-    <query><![CDATA[INSERT INTO `{table.core_user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
+    <query><![CDATA[INSERT INTO `{table.user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
 ('INSERT', 'add', 'amun_service_forum', 'view?id={record.id}', '<p><a href="{user.profileUrl}">{user.name}</a> has created a <a href="{object.url}">thread</a></p><blockquote>{record.text}</blockquote>');]]></query>
-    <if hasService="my">
-      <query><![CDATA[INSERT INTO `{table.my_notify_service}` (`table`, `title`) VALUES
-('{config.table_prefix}forum', 'Forum');]]></query>
-    </if>
   </database>
 </service>

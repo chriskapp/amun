@@ -44,27 +44,65 @@ use PSX_Data_ResultSet;
  */
 class index extends Amun_Module_ApiAbstract
 {
-	public function onGet()
+	/**
+	 * Returns the phpinfo() result
+	 *
+	 * @httpMethod GET
+	 * @path /
+	 * @nickname getPhpInfo
+	 * @parameter [query startIndex integer]
+	 * @parameter [query count integer]
+	 * @parameter [query sortBy integer]
+	 * @parameter [query sortOrder string ascending|descending]
+	 * @parameter [query filterBy integer]
+	 * @parameter [query filterOp integer contains|equals|startsWith|present]
+	 * @parameter [query filterValue string]
+	 * @parameter [query updatedSince DateTime]
+	 * @responseClass PSX_Data_ResultSet
+	 */
+	public function getPhpInfo()
 	{
 		if($this->getProvider()->hasViewRight())
 		{
 			try
 			{
-				$fragments = $this->getUriFragments();
 				$params    = $this->getRequestParams();
+				$resultSet = $this->getPhpInfoResult($params['fields'], $params['startIndex'], $params['count'], $params['sortBy'], $params['sortOrder'], $params['filterBy'], $params['filterOp'], $params['filterValue'], $params['updatedSince']);
 
-				if(isset($fragments[0]) && $fragments[0] == '@supportedFields')
-				{
-					$array = new PSX_Data_Array($this->getSupportedFields());
+				$this->setResponse($resultSet);
+			}
+			catch(Exception $e)
+			{
+				$msg = new PSX_Data_Message($e->getMessage(), false);
 
-					$this->setResponse($array);
-				}
-				else
-				{
-					$resultSet = $this->getPhpInfoResult($params['fields'], $params['startIndex'], $params['count'], $params['sortBy'], $params['sortOrder'], $params['filterBy'], $params['filterOp'], $params['filterValue'], $params['updatedSince']);
+				$this->setResponse($msg);
+			}
+		}
+		else
+		{
+			$msg = new PSX_Data_Message('Access not allowed', false);
 
-					$this->setResponse($resultSet);
-				}
+			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
+		}
+	}
+
+	/**
+	 * Returns all available fields 
+	 *
+	 * @httpMethod GET
+	 * @path /@supportedFields
+	 * @nickname getSupportedFields
+	 * @responseClass PSX_Data_Array
+	 */
+	public function getSupportedFields()
+	{
+		if($this->getProvider()->hasViewRight())
+		{
+			try
+			{
+				$array = new PSX_Data_Array(array('group', 'key', 'value'));
+
+				$this->setResponse($array);
 			}
 			catch(Exception $e)
 			{
@@ -211,10 +249,5 @@ class index extends Amun_Module_ApiAbstract
 		ob_end_clean();
 
 		return $html;
-	}
-
-	private function getSupportedFields()
-	{
-		return array('group', 'key', 'value');
 	}
 }

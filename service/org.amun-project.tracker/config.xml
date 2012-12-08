@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="14187041c9c70ac772477777ef87e404e7e7b003">
+<service xmlns="http://amun-project.org" signature="0dc5eec6eb3dcdedbfd53ba63d9f2343f78287f5">
   <status>normal</status>
   <name>tracker</name>
+  <description>An torrent tracker to list and download torrents</description>
   <path>/tracker</path>
   <namespace>tracker</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/tracker</type>
@@ -41,10 +42,10 @@
         <file name="Form.php" md5="43467ad1d8e528808137dbddf22eb781"/>
         <file name="Handler.php" md5="68590bf2162cc9c7cd1b35c3749d20cf"/>
         <dir name="Peer">
-          <file name="Table.php" md5="0434c8695fae7ff9966d8f15cb20ee65"/>
+          <file name="Table.php" md5="8309be219440f27057ea97dcff453264"/>
         </dir>
-        <file name="Record.php" md5="eae35b13c31bdc49b21027930d3c2f07"/>
-        <file name="Table.php" md5="73d45d8bcfee826c857aa21065aa22a2"/>
+        <file name="Record.php" md5="a6d36087acc32e788cda604a6393e75a"/>
+        <file name="Table.php" md5="89fb3d24f35fc3552fa66cf839c304b6"/>
       </dir>
     </dir>
   </library>

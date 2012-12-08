@@ -33,14 +33,14 @@ if(empty($userId) || empty($path))
 	echo <<<USAGE
 NAME
 	import-media.php - imports all files from an specific directory into the
-	content media table
+	media table
 
 SYNOPSIS
 	import-media.php [USER_ID] [PATH] [RIGHT_ID]
 
 DESCRIPTION
-	This script can be used to import recursively an folder into the content
-	media table. The user id parameter represents the user on wich behalf the
+	This script can be used to import recursively an folder into the media 
+	table. The user id parameter represents the user on wich behalf the
 	media files gets imported. Optional if set assigns all media entries to the
 	given right id.
 USAGE;
@@ -55,7 +55,7 @@ else
 		PSX_Log::getLogger()->setLevel(PSX_Log::INFO);
 		PSX_Log::getLogger()->addHandler(new PSX_Log_Handler_Print());
 
-		$handler = new Amun_Content_Media_Handler($base->getUser());
+		$handler = new Media_Handler($base->getUser());
 		$handler->import($path, $rightId);
 
 		echo 'Import successful';

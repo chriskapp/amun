@@ -67,7 +67,7 @@ class Amun_Ext_Provider_Css implements Amun_Ext_ProviderInterface
 
 	private function getContentServices()
 	{
-		$result = Amun_Sql_Table_Registry::get('Core_Content_Service')->getAll(array('name', 'source'));
+		$result = Amun_Sql_Table_Registry::get('Core_Service')->getAll(array('name', 'source'));
 
 		foreach($result as $row)
 		{

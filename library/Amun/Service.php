@@ -38,8 +38,6 @@ class Amun_Service
 	private $sql;
 	private $registry;
 
-	private $_factory;
-
 	public $id;
 	public $status;
 	public $source;
@@ -59,7 +57,7 @@ class Amun_Service
 		$this->sql      = $registry->getSql();
 		$this->registry = $registry;
 
-		$status = AmunService_Core_Content_Service_Record::NORMAL;
+		$status = AmunService_Core_Service_Record::NORMAL;
 		$sql    = <<<SQL
 SELECT
 
@@ -73,7 +71,7 @@ SELECT
 	service.version   AS `serviceVersion`,
 	service.date      AS `serviceDate`
 
-	FROM {$this->registry['table.core_content_service']} `service`
+	FROM {$this->registry['table.core_service']} `service`
 
 		WHERE `service`.`id` = ?
 SQL;

@@ -51,7 +51,7 @@ class activityChart extends Amun_Module_GadgetAbstract
 		$act = array();
 
 
-		$result = Amun_Sql_Table_Registry::get('Core_User_Activity')
+		$result = Amun_Sql_Table_Registry::get('User_Activity')
 			->select(array('date'))
 			->where('date', '>=', $past->format(PSX_Time::SQL))
 			->orderBy('date', PSX_Sql::SORT_ASC)

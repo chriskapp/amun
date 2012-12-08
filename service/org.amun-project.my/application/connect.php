@@ -100,18 +100,18 @@ class connect extends Amun_Module_ApplicationAbstract
 			$this->assoc = $this->getAssociation();
 
 			// check whether access is already allowed or denied
-			$status = (integer) Amun_Sql_Table_Registry::get('Core_System_Connect')
+			$status = (integer) Amun_Sql_Table_Registry::get('Openid')
 				->select(array('status'))
 				->where('userId', '=', $this->user->id)
 				->where('assocId', '=', $this->assoc['id'])
 				->getField();
 
-			if($status === AmunService_Core_System_Connect_Record::APPROVED)
+			if($status === AmunService_Openid_Record::APPROVED)
 			{
 				$this->allowAccess();
 			}
 
-			if($status === AmunService_Core_System_Connect_Record::DENIED)
+			if($status === AmunService_Openid_Record::DENIED)
 			{
 				$this->denyAccess();
 			}
@@ -196,10 +196,10 @@ class connect extends Amun_Module_ApplicationAbstract
 
 		if(isset($_POST['remember']) && $_POST['remember'] === '1')
 		{
-			$data['status'] = AmunService_Core_System_Connect_Record::APPROVED;
+			$data['status'] = AmunService_Openid_Record::APPROVED;
 		}
 
-		Amun_Sql_Table_Registry::get('Core_System_Connect')->replace($data);
+		Amun_Sql_Table_Registry::get('Openid')->replace($data);
 
 		// redirect to rp
 		$redirect->redirect($this->assoc['secret'], $this->assoc['assocType']);
@@ -215,7 +215,7 @@ class connect extends Amun_Module_ApplicationAbstract
 		{
 			$con = new PSX_Sql_Condition(array('id', '=', $this->oauth['requestId']));
 
-			$this->sql->delete($this->registry['table.core_system_api_request'], $con);
+			$this->sql->delete($this->registry['table.oauth_request'], $con);
 		}
 
 		// insert or update connect
@@ -235,10 +235,10 @@ class connect extends Amun_Module_ApplicationAbstract
 
 		if(isset($_POST['remember']) && $_POST['remember'] === '1')
 		{
-			$data['status'] = AmunService_Core_System_Connect_Record::DENIED;
+			$data['status'] = AmunService_Openid_Record::DENIED;
 		}
 
-		Amun_Sql_Table_Registry::get('Core_System_Connect')->replace($data);
+		Amun_Sql_Table_Registry::get('Openid')->replace($data);
 
 		// cancel request
 		$this->returnTo->addParam('openid.ns', PSX_OpenId_ProviderAbstract::NS);
@@ -252,7 +252,7 @@ class connect extends Amun_Module_ApplicationAbstract
 	{
 		if(!empty($this->assocHandle))
 		{
-			$row = Amun_Sql_Table_Registry::get('Core_System_Connect_Assoc')
+			$row = Amun_Sql_Table_Registry::get('Openid_Assoc')
 				->select(array('id', 'assocHandle', 'assocType', 'sessionType', 'secret', 'expires', 'date'))
 				->where('assocHandle', '=', $this->assocHandle)
 				->getRow();
@@ -315,7 +315,7 @@ class connect extends Amun_Module_ApplicationAbstract
 	{
 		$consumerKey = isset($this->oauth['consumer']) ? $this->oauth['consumer'] : null;
 
-		$row = Amun_Sql_Table_Registry::get('Core_System_Api')
+		$row = Amun_Sql_Table_Registry::get('Openid')
 			->select(array('id', 'consumerKey'))
 			->where('consumerKey', '=', $consumerKey)
 			->getRow();
@@ -326,11 +326,11 @@ class connect extends Amun_Module_ApplicationAbstract
 			$verifier = Amun_Security::generateToken(32);
 			$date     = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-			$this->sql->insert($this->registry['table.core_system_api_request'], array(
+			$this->sql->insert($this->registry['table.oauth_request'], array(
 
 				'apiId'       => $row['id'],
 				'userId'      => $this->user->id,
-				'status'      => AmunService_Core_System_Api_Record::APPROVED,
+				'status'      => AmunService_Oauth_Record::APPROVED,
 				'ip'          => $_SERVER['REMOTE_ADDR'],
 				'nonce'       => Amun_Security::generateToken(16),
 				'callback'    => 'oob',
@@ -344,7 +344,7 @@ class connect extends Amun_Module_ApplicationAbstract
 			));
 
 			// insert access
-			$this->sql->replace($this->registry['table.core_system_api_access'], array(
+			$this->sql->replace($this->registry['table.oauth_access'], array(
 
 				'apiId'   => $row['id'],
 				'userId'  => $this->user->id,

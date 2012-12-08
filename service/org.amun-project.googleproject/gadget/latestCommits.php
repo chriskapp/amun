@@ -52,7 +52,7 @@ class latestCommits extends Amun_Module_GadgetAbstract
 			->select(array('id', 'revision', 'url', 'message', 'commitDate', 'date'))
 			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Googleproject_Author')
 				->select(array('name'), 'user')
-				->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
+				->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
 					->select(array('name', 'profileUrl'), 'author')
 				)
 			)

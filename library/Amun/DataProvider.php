@@ -56,16 +56,16 @@
 class Amun_DataProvider
 {
 	protected $name;
-	protected $config;
-	protected $registry;
-	protected $user;
+	protected $ct;
 
-	public function __construct($name, Amun_Registry $registry, Amun_User $user)
+	protected $_table;
+	protected $_handler;
+	protected $_form;
+
+	public function __construct($name, PSX_DependencyAbstract $ct)
 	{
-		$this->name     = $name;
-		$this->config   = $registry->getConfig();
-		$this->registry = $registry;
-		$this->user     = $user;
+		$this->name   = $name;
+		$this->ct     = $ct;
 	}
 
 	public function getName()
@@ -75,39 +75,81 @@ class Amun_DataProvider
 
 	public function getTable()
 	{
-		return Amun_Sql_Table_Registry::get($this->getName());
+		if($this->_table !== null)
+		{
+			return $this->_table;
+		}
+
+		$tableName = $this->ct->getRegistry()->getTableName($this->getName());
+
+		if($tableName !== false)
+		{
+			$class = self::getClass($tableName, 'Table');
+
+			if($class !== null && $class->isSubclassOf('Amun_Sql_TableInterface'))
+			{
+				return $this->_table = $class->newInstance($this->ct->getRegistry());
+			}
+			else
+			{
+				throw new Amun_Exception('Table "' . $tableName . '" does not exist');
+			}
+		}
+		else
+		{
+			throw new Amun_Exception('Table "' . $this->getName() . '" does not exist');
+		}
 	}
 
 	public function getHandler()
 	{
+		if($this->_handler !== null)
+		{
+			return $this->_handler;
+		}
+
 		$class = self::getClass($this->getName(), 'Handler');
 
 		if($class !== null && $class->isSubclassOf('Amun_Data_HandlerAbstract'))
 		{
-			return $class->newInstance($this->user);
+			return $this->_handler = $class->newInstance($this->ct->getUser());
+		}
+		else
+		{
+			throw new Amun_Exception('Handler "' . $this->getName() . '" does not exist');
 		}
 	}
 
 	public function getForm()
 	{
+		if($this->_form !== null)
+		{
+			return $this->_form;
+		}
+
 		$class = self::getClass($this->getName(), 'Form');
 
 		if($class !== null && $class->isSubclassOf('Amun_Data_FormAbstract'))
 		{
-			return $class->newInstance($this->getApiEndpoint());
+			return $this->_form = $class->newInstance($this->getApiEndpoint());
+		}
+		else
+		{
+			throw new Amun_Exception('Form "' . $this->getName() . '" does not exist');
 		}
 	}
 
 	public function getApiEndpoint()
 	{
-		$path = strtolower(str_replace('_', '/', $this->name));
+		$config = $this->ct->getConfig();
+		$path   = strtolower(str_replace('_', '/', $this->name));
 
-		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/' . $path;
+		return $config['psx_url'] . '/' . $config['psx_dispatch'] . 'api/' . $path;
 	}
 
 	public function hasRight($rightName)
 	{
-		return $this->user->hasRight($this->getRightName($rightName));
+		return $this->ct->getUser()->hasRight($this->getRightName($rightName));
 	}
 
 	public function hasViewRight()

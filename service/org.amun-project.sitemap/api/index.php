@@ -45,7 +45,15 @@ class index extends Amun_Module_ApiAbstract
 {
 	private $writer;
 
-	public function onGet()
+	/**
+	 * Returns all pages as XML sitemap format
+	 *
+	 * @httpMethod GET
+	 * @path /
+	 * @nickname getSitemap
+	 * @responseClass PSX_Data_ResultSet
+	 */
+	public function getSitemap()
 	{
 		if($this->getProvider()->hasViewRight())
 		{
@@ -117,7 +125,7 @@ SELECT
 	`page`.`urlTitle`,
 	`page`.`date`
 
-	FROM {$this->registry['table.core_content_page']} `page`
+	FROM {$this->registry['table.content_page']} `page`
 
 		ORDER BY `page`.`sort` ASC
 SQL;

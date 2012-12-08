@@ -38,23 +38,26 @@ abstract class Amun_Data_RecordAbstract extends PSX_Data_Record_TableAbstract
 	const UPDATE = 0x2;
 	const DELETE = 0x3;
 
-	protected $_table;
 	protected $_base;
 	protected $_config;
 	protected $_sql;
 	protected $_registry;
 	protected $_validate;
+	protected $_table;
 
 	public $captcha;
 
 	public function __construct(Amun_Sql_TableInterface $table)
 	{
+		$ct = Amun_DataFactory::getContainer();
+
+		$this->_base     = $ct->getBase();
+		$this->_config   = $ct->getConfig();
+		$this->_sql      = $ct->getSql();
+		$this->_registry = $ct->getRegistry();
+		$this->_validate = $ct->getValidate();
+		$this->_user     = $ct->getUser();
 		$this->_table    = $table;
-		$this->_base     = Amun_Base::getInstance();
-		$this->_config   = $this->_base->getConfig();
-		$this->_sql      = $this->_base->getSql();
-		$this->_registry = $this->_base->getRegistry();
-		$this->_validate = new PSX_Validate();
 	}
 
 	public function setCaptcha($captcha)

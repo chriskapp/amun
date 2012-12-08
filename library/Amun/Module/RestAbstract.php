@@ -269,16 +269,6 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 		return $this->getHandler()->isOwner($record);
 	}
 
-	protected function getTable()
-	{
-		return $this->getProvider()->getTable();
-	}
-
-	protected function getHandler()
-	{
-		return $this->getProvider()->getHandler();
-	}
-
 	protected function handleCaptcha(Amun_Data_RecordAbstract $record)
 	{
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())

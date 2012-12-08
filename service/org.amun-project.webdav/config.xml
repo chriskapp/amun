@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="d488a00e4f08ae3c9deadb2ff9be2add2ff2d3dd">
+<service xmlns="http://amun-project.org" signature="8047aec729c8195e00fe6aae437dffe717991c02">
   <status>system</status>
   <name>webdav</name>
+  <description>Service wich offers an webdav API. Every service can provide a custom DAV node wich represents the page</description>
   <path>/webdav</path>
   <namespace>webdav</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/webdav</type>
@@ -21,8 +22,8 @@
   <library>
     <dir name="AmunService">
       <dir name="Webdav">
-        <file name="File.php" md5="23c03cdc9cf9d3450a538dd6ad8887e6"/>
-        <file name="Page.php" md5="94a94be457a5925ceb7073a5ff7116b9"/>
+        <file name="File.php" md5="21685ab43b896f728f0e2dc83e0ab1c1"/>
+        <file name="Page.php" md5="c6fd2241e7dea6bb7f5334d2b6259496"/>
       </dir>
     </dir>
   </library>

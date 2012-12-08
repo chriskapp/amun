@@ -29,14 +29,18 @@
  * @license    http://www.gnu.org/licenses/gpl.html GPLv3
  * @link       http://amun.phpsx.org
  * @category   Amun
- * @package    Amun_Captcha
+ * @package    Amun_Module
  * @version    $Revision: 696 $
  */
 abstract class Amun_Module_DefaultAbstract extends PSX_ModuleAbstract
 {
 	public function getDependencies()
 	{
-		return new Amun_Dependency_Default();
+		$ct = new Amun_Dependency_Default($this->base->getConfig());
+
+		Amun_DataFactory::setContainer($ct);
+
+		return $ct;
 	}
 }
 

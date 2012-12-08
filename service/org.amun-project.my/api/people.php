@@ -24,17 +24,15 @@
 
 namespace my\api;
 
-use AmunService_Core_User_Friend_Record;
+use AmunService_User_Friend_Record;
 use Amun_Base;
 use Amun_Module_RestAbstract;
 use Amun_Sql_Table_Registry;
 use DateTime;
 use Exception;
-use PSX_Data_Array;
 use PSX_Data_Message;
 use PSX_Data_WriterInterface;
 use PSX_Data_WriterResult;
-use PSX_Sql;
 use PSX_Sql_Join;
 
 /**
@@ -50,63 +48,44 @@ use PSX_Sql_Join;
  */
 class people extends Amun_Module_RestAbstract
 {
-	public function onGet()
+	/**
+	 * Returns informations about the current loggedin user
+	 *
+	 * @httpMethod GET
+	 * @path /{userId}
+	 * @nickname getPeople
+	 * @responseClass PSX_Data_ResultSet
+	 */
+	public function getPeople()
 	{
 		if($this->getProvider()->hasViewRight())
 		{
 			try
 			{
-				$table = Amun_Sql_Table_Registry::get('Core_User_Friend')
-					->select(array('id', 'status', 'date'))
-					->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
-						->select(array('id', 'globalId', 'name', 'profileUrl'), 'author'),
-						'n:1',
-						'userId'
-					)
-					->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
-						->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated'), 'friend'),
-						'n:1',
-						'friendId'
-					)
-					->where('status', '=', AmunService_Core_User_Friend_Record::NORMAL);
-
+				$select    = $this->getSelection();
 				$fragments = $this->getUriFragments();
 				$params    = $this->getRequestParams();
+				$userId    = $this->getUriFragments('userId');
 
-				// get user id
-				$userId = 0;
-
-				if(isset($fragments[0]))
+				if(!empty($userId))
 				{
-					$userId = $fragments[0] == '@me' ? $this->user->id : intval($fragments[0]);
+					$userId = $userId == '@me' ? $this->user->id : intval($userId);
 				}
 				else
 				{
 					$userId = $this->user->id;
 				}
 
-				if(isset($fragments[0]) && $fragments[0] == '@supportedFields')
+				$select->where('userId', '=', $userId);
+
+				if(!empty($params['fields']))
 				{
-					$array = new PSX_Data_Array($servlet->getSupportedFields());
-
-					$this->setResponse($array);
+					$select->setColumns($params['fields']);
 				}
-				else
-				{
-					if($userId > 0)
-					{
-						$table->where('userId', '=', $userId);
-					}
 
-					if(!empty($params['fields']))
-					{
-						$table->setColumns($params['fields']);
-					}
+				$resultSet = $select->getResultSet($params['startIndex'], $params['count'], $params['sortBy'], $params['sortOrder'], $params['filterBy'], $params['filterOp'], $params['filterValue'], $params['updatedSince'], $this->getMode(), 'AmunService_My_People', array($select->getTable()));
 
-					$resultSet = $table->getResultSet($params['startIndex'], $params['count'], $params['sortBy'], $params['sortOrder'], $params['filterBy'], $params['filterOp'], $params['filterValue'], $params['updatedSince'], PSX_Sql::FETCH_OBJECT, 'AmunService_My_People', array($table->getTable()));
-
-					$this->setResponse($resultSet);
-				}
+				$this->setResponse($resultSet);
 			}
 			catch(Exception $e)
 			{
@@ -121,6 +100,23 @@ class people extends Amun_Module_RestAbstract
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}
+	}
+
+	protected function getSelection()
+	{
+		return Amun_Sql_Table_Registry::get('User_Friend')
+			->select(array('id', 'status', 'date'))
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+				->select(array('id', 'globalId', 'name', 'profileUrl'), 'author'),
+				'n:1',
+				'userId'
+			)
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated'), 'friend'),
+				'n:1',
+				'friendId'
+			)
+			->where('status', '=', AmunService_User_Friend_Record::NORMAL);
 	}
 
 	public function onPost()
@@ -150,17 +146,14 @@ class people extends Amun_Module_RestAbstract
 		{
 			case PSX_Data_WriterInterface::ATOM:
 
-				$updated = $this->sql->getField('SELECT `date` FROM ' . $this->registry['table.core_user_friend'] . ' ORDER BY `date` DESC LIMIT 1');
+				$updated = $this->sql->getField('SELECT `date` FROM ' . $this->registry['table.user_friend'] . ' ORDER BY `date` DESC LIMIT 1');
 
 				$title   = 'Friend';
 				$id      = 'urn:uuid:' . $this->base->getUUID('user:friend');
 				$updated = new DateTime($updated, $this->registry['core.default_timezone']);
 
-
 				$writer = $writer->getWriter();
-
 				$writer->setConfig($title, $id, $updated);
-
 				$writer->setGenerator('amun ' . Amun_Base::getVersion());
 
 				if(!empty($this->config['amun_hub']))

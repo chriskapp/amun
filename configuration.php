@@ -45,7 +45,7 @@ $config = array(
 	'psx_gzip'                => false,
 	'psx_debug'               => true,
 
-	'psx_module_default'      => 'dispatch',
+	'psx_module_default'      => '',
 	'psx_module_input'        => isset($_GET['x']) ? $_GET['x'] : (isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : (isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : '')),
 	'psx_module_input_length' => 256,
 

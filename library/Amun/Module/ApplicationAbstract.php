@@ -29,17 +29,29 @@
  * @license    http://www.gnu.org/licenses/gpl.html GPLv3
  * @link       http://amun.phpsx.org
  * @category   Amun
- * @package    Amun_Captcha
+ * @package    Amun_Module
  * @version    $Revision: 712 $
  */
 abstract class Amun_Module_ApplicationAbstract extends PSX_Module_ViewAbstract
 {
-	protected $_provider = array();
+	public function __construct(PSX_Loader_Location $location, PSX_Base $base, $basePath, array $uriFragments)
+	{
+		parent::__construct($location, $base, $basePath, $uriFragments);
+
+		// assign default objects
+		$container  = new Amun_Dependency_Default($this->base->getConfig());
+		$parameters = $container->getParameters();
+
+		foreach($parameters as $k => $obj)
+		{
+			$this->$k = $obj;
+		}
+	}
 
 	public function onLoad()
 	{
 		// set xrds location header
-		header('X-XRDS-Location: ' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/meta/xrds');
+		header('X-XRDS-Location: ' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/xrds');
 
 		if(!empty($this->page->id))
 		{
@@ -111,22 +123,30 @@ abstract class Amun_Module_ApplicationAbstract extends PSX_Module_ViewAbstract
 
 	public function getDependencies()
 	{
-		return new Amun_Dependency_Application($this->location->getServiceId());
+		$ct = new Amun_Dependency_Application($this->base->getConfig(), array(
+			'application.pageId' => $this->location->getServiceId()
+		));
+
+		Amun_DataFactory::setContainer($ct);
+
+		return $ct;
 	}
 
-	protected function getDataProvider($name = null)
+	protected function getProvider($name = null)
 	{
-		if(!isset($this->_provider[$name]))
-		{
-			$this->_provider[$name] = new Amun_DataProvider($name, $this->registry, $this->user);
-		}
+		$name = $name === null ? $this->service->namespace : $name;
 
-		return $this->_provider[$name];
+		return Amun_DataFactory::getProvider($name);
 	}
 
-	protected function getProvider()
+	protected function getTable($name = null)
 	{
-		return $this->getDataProvider($this->service->namespace);
+		return $this->getProvider($name)->getTable();
+	}
+
+	protected function getHandler($name = null)
+	{
+		return $this->getProvider($name)->getHandler();
 	}
 
 	/**

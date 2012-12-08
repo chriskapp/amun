@@ -28,13 +28,11 @@ use Amun_Base;
 use Amun_Module_RestAbstract;
 use Amun_Sql_Table_Registry;
 use Exception;
-use PSX_Data_Array;
 use PSX_Data_Exception;
 use PSX_Data_Message;
 use PSX_Data_WriterInterface;
 use PSX_Data_WriterResult;
 use PSX_Sql;
-use PSX_Sql_Condition;
 use PSX_Sql_Join;
 
 /**
@@ -50,63 +48,46 @@ use PSX_Sql_Join;
  */
 class activity extends Amun_Module_RestAbstract
 {
-	private $userId;
+	protected $userId;
 
-	public function onGet()
+	/**
+	 * Returns informations about the current loggedin user
+	 *
+	 * @httpMethod GET
+	 * @path /{userId}
+	 * @nickname getActivity
+	 * @responseClass PSX_Data_ResultSet
+	 */
+	public function getActivity()
 	{
 		if($this->getProvider()->hasViewRight())
 		{
 			try
 			{
-				$table = Amun_Sql_Table_Registry::get('Core_User_Activity')
-					->select(array('id', 'globalId', 'parentId', 'userId', 'refId', 'table', 'verb', 'summary', 'date'))
-					->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
-						->select(array('globalId', 'name', 'profileUrl', 'thumbnailUrl'), 'author')
-					)
-					->where('scope', '=', 0);
-
+				$select    = $this->getSelection();
 				$fragments = $this->getUriFragments();
 				$params    = $this->getRequestParams();
+				$userId    = $this->getUriFragments('userId');
 
-				// get user id
-				if(isset($fragments[0]) && $fragments[0] != '@me')
+				if(!empty($userId))
 				{
-					if(!is_numeric($fragments[0]))
-					{
-						$con    = new PSX_Sql_Condition(array('name', '=', $fragments[0]));
-						$userId = $this->sql->select($this->registry['table.core_user_account'], array('id'), $con, PSX_Sql::SELECT_FIELD);
-
-						$this->userId = $userId;
-					}
-					else
-					{
-						$this->userId = (integer) $fragments[0];
-					}
+					$this->userId = $userId == '@me' ? $this->user->id : intval($userId);
 				}
 				else
 				{
 					$this->userId = $this->user->id;
 				}
 
-				if(isset($fragments[0]) && $fragments[0] == '@supportedFields')
+				$select->where('userId', '=', $this->userId);
+
+				if(!empty($params['fields']))
 				{
-					$array = new PSX_Data_Array($table->getSupportedFields());
-
-					$this->setResponse($array);
+					$select->setColumns($params['fields']);
 				}
-				else
-				{
-					$table->where('userId', '=', $this->userId);
 
-					if(!empty($params['fields']))
-					{
-						$table->setColumns($params['fields']);
-					}
+				$resultSet = $select->getResultSet($params['startIndex'], $params['count'], $params['sortBy'], $params['sortOrder'], $params['filterBy'], $params['filterOp'], $params['filterValue'], $params['updatedSince'], $this->getMode(), 'AmunService_My_Activity', array($select->getTable()));
 
-					$resultSet = $table->getResultSet($params['startIndex'], $params['count'], $params['sortBy'], $params['sortOrder'], $params['filterBy'], $params['filterOp'], $params['filterValue'], $params['updatedSince'], PSX_Sql::FETCH_OBJECT, 'AmunService_My_Activity', array($table->getTable()));
-
-					$this->setResponse($resultSet);
-				}
+				$this->setResponse($resultSet);
 			}
 			catch(Exception $e)
 			{
@@ -121,6 +102,16 @@ class activity extends Amun_Module_RestAbstract
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}
+	}
+
+	protected function getSelection()
+	{
+		return Amun_Sql_Table_Registry::get('User_Activity')
+			->select(array('id', 'globalId', 'parentId', 'userId', 'refId', 'table', 'verb', 'summary', 'date'))
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+				->select(array('globalId', 'name', 'profileUrl', 'thumbnailUrl'), 'author')
+			)
+			->where('scope', '=', 0);
 	}
 
 	public function onPost()
@@ -150,25 +141,19 @@ class activity extends Amun_Module_RestAbstract
 		{
 			case PSX_Data_WriterInterface::ATOM:
 
-				$account = Amun_Sql_Table_Registry::get('Core_User_Account')
+				$account = Amun_Sql_Table_Registry::get('User_Account')
 					->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated'))
 					->where('id', '=', $this->userId)
 					->getRow(PSX_Sql::FETCH_OBJECT);
 
-				if($account instanceof AmunService_Core_User_Account_Record)
+				if($account instanceof AmunService_User_Account_Record)
 				{
 					$writer = $writer->getWriter();
-
 					$writer->setConfig($account->name . ' activities', 'urn:uuid:' . $account->globalId, $account->getUpdated());
-
 					$writer->setGenerator('amun ' . Amun_Base::getVersion());
-
 					$writer->addAuthor($account->name, $account->profileUrl);
-
 					$writer->addLink($account->profileUrl, 'alternate', 'text/html');
-
 					$writer->addLink($account->thumbnailUrl, 'avatar');
-
 					$writer->setLogo($account->thumbnailUrl);
 
 					if(!empty($this->config['amun_hub']))

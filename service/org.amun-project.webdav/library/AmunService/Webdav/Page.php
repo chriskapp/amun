@@ -32,7 +32,7 @@
  * @package    Amun_Service_Webdav
  * @version    $Revision: 787 $
  */
-class AmunService_Webdav_Page extends Sabre_DAV_Collection
+class AmunService_Webdav_Page extends AmunService_Webdav_CollectionAbstract
 {
 	protected $base;
 	protected $config;
@@ -42,13 +42,11 @@ class AmunService_Webdav_Page extends Sabre_DAV_Collection
 
 	protected $page;
 
+	private $children;
+
 	public function __construct($id)
 	{
-		$this->base     = Amun_Base::getInstance();
-		$this->config   = $this->base->getConfig();
-		$this->sql      = $this->base->getSql();
-		$this->registry = $this->base->getRegistry();
-		$this->user     = $this->base->getUser();
+		parent::__construct();
 
 		$sql = <<<SQL
 SELECT
@@ -60,9 +58,9 @@ SELECT
 	`service`.`id`    AS `serviceId`,
 	`service`.`name`  AS `serviceName`
 
-	FROM {$this->registry['table.core_content_page']} `page`
+	FROM {$this->registry['table.content_page']} `page`
 
-		INNER JOIN {$this->registry['table.core_content_service']} `service`
+		INNER JOIN {$this->registry['table.core_service']} `service`
 
 		ON `page`.`serviceId` = `service`.`id`
 
@@ -92,109 +90,71 @@ SQL;
 		return strtotime($this->page['date']);
 	}
 
-	public function getChild($name)
-	{
-		$pos = strpos($name, '.');
-
-		if($pos === false)
-		{
-			$row = $this->sql->getRow('SELECT id FROM ' . $this->registry['table.core_content_page'] . ' WHERE urlTitle = ?', array($name));
-
-			if(!empty($row))
-			{
-				return new AmunService_Webdav_Page($row['id']);
-			}
-			else
-			{
-				throw new Sabre_DAV_Exception_FileNotFound('Page doesnt exist');
-			}
-		}
-		else
-		{
-			$name = substr($name, 0, $pos);
-
-			list($service, $id) = explode('_', $name);
-
-			$provider = new Amun_DataProvider($this->page['serviceName'], $this->registry, $this->user);
-			$table    = $provider->getTable();
-			$row      = null;
-
-			if($table !== null)
-			{
-				$row = $table->select(array('*'))
-					->where('id', '=', $id)
-					->getRow(PSX_Sql::FETCH_OBJECT);
-			}
-
-			if($row instanceof PSX_Data_RecordInterface)
-			{
-				return new AmunService_Webdav_File($this->page['serviceName'], $row);
-			}
-			else
-			{
-				throw new Sabre_DAV_Exception_FileNotFound('Record doesnt exist');
-			}
-		}
-	}
-
 	public function getChildren()
 	{
-		$children = array();
+		if($this->children === null)
+		{
+			$this->children = array();
 
-		// load page nodes
-		$sql = <<<SQL
+			// load page nodes
+			$sql = <<<SQL
 SELECT
 
-	`page`.`id`      AS `id`,
-	`service`.`name` AS `serviceName`
+	`page`.`id`           AS `id`,
+	`service`.`name`      AS `serviceName`
+	`service`.`namespace` AS `serviceNamespace`
 
-	FROM {$this->registry['table.core_content_page']} `page`
+	FROM {$this->registry['table.content_page']} `page`
 
-		INNER JOIN {$this->registry['table.core_content_service']} `service`
+		INNER JOIN {$this->registry['table.core_service']} `service`
 
 		ON `page`.`serviceId` = `service`.`id`
 
 			WHERE parentId = ?
 SQL;
 
-		$result = $this->sql->getAll($sql, array($this->page['id']));
-
-		foreach($result as $row)
-		{
-			if($this->user->hasRight('service_' . $row['serviceName'] . '_view'))
-			{
-				$children[] = new AmunService_Webdav_Page($row['id']);
-			}
-		}
-
-		// load record nodes
-		$name = 'service_' . $this->page['serviceName'];
-
-		if(isset($this->registry['table.' . $name]))
-		{
-			$table  = Amun_Sql_Table_Registry::get($name);
-			$result = $table->select(array('*'))
-				->where('pageId', '=', $this->page['id'])
-				->orderBy('date', PSX_Sql::SORT_DESC)
-				->limit(0, 16)
-				->getAll(PSX_Sql::FETCH_OBJECT);
+			$result = $this->sql->getAll($sql, array($this->page['id']));
 
 			foreach($result as $row)
 			{
-				$children[] = new AmunService_Webdav_File($this->page['serviceName'], $row);
+				if($this->user->hasRight('service_' . $row['serviceName'] . '_view'))
+				{
+					$this->children[] = new AmunService_Webdav_Page($row['id']);
+				}
+			}
+
+			// load service nodes
+			$class = 'AmunService_' . $this->page['serviceNamespace'] . '_Node';
+
+			if(class_exists($class))
+			{
+				$node = new $class();
+
+				if($node instanceof AmunService_Webdav_NodeAbstract)
+				{
+					$children = $node->getChildren($row['id']);
+
+					if(is_array($children))
+					{
+						foreach($children as $child)
+						{
+							$this->children[] = $child;
+						}
+					}
+				}
 			}
 		}
 
-		return $children;
+		return $this->children;
 	}
 
-	public function childExists($name)
+	public function childExists($urlTitle)
 	{
 		$con = new PSX_Sql_Condition();
 		$con->add('parentId', '=', $this->page['id']);
-		$con->add('urlTitle', '=', $name);
+		$con->add('urlTitle', '=', $urlTitle);
 
-		return $this->sql->count($this->registry['table.core_content_page'], $con) > 0;
+		return $this->sql->count($this->registry['table.content_page'], $con) > 0;
 	}
 }
 

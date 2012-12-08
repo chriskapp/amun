@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="659084f0d3b43995eef353d6b070ecd1268e71dd">
+<service xmlns="http://amun-project.org" signature="71bf1fcc065e27032dd5302a31e33c7c701d704d">
   <status>normal</status>
   <name>news</name>
+  <description>Implementation of an News system. It is possible to post news and users can comment each entry</description>
   <path>/news</path>
   <namespace>news</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/news</type>
@@ -34,9 +35,9 @@
       <dir name="News">
         <file name="Form.php" md5="beb71027e9e37d46b3664a0363962e8c"/>
         <file name="Handler.php" md5="1228f87507befcf0107c6ad03650ff94"/>
-        <file name="Record.php" md5="94e0c571cb9e11a39adf6b31b6857a2d"/>
-        <file name="Stream.php" md5="2a54254f695893ab2d0105fbeb4e911c"/>
-        <file name="Table.php" md5="ba76a7f1d6626912da7bf2070699122f"/>
+        <file name="Record.php" md5="ed12c6c4e522e5b017f5b5287b5e261d"/>
+        <file name="Stream.php" md5="11e5006370e52ada4513555b6e09aae5"/>
+        <file name="Table.php" md5="a03c8141e67c6a772eeda63ddebbef30"/>
       </dir>
     </dir>
   </library>
@@ -53,14 +54,10 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[INSERT INTO `{table.core_content_service_option}` (`serviceId`, `name`) VALUES
+    <query><![CDATA[INSERT INTO `{table.core_service_option}` (`serviceId`, `name`) VALUES
 ({service.id}, 'index'),
 ({service.id}, 'view');]]></query>
-    <query><![CDATA[INSERT INTO `{table.core_user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
+    <query><![CDATA[INSERT INTO `{table.user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
 ('INSERT', 'add', 'amun_service_news', 'view?id={record.id}', '<p><a href="{user.profileUrl}">{user.name}</a> has created a <a href="{object.url}">news</a></p><blockquote>{record.text}</blockquote>');]]></query>
-    <if hasService="my">
-      <query><![CDATA[INSERT INTO `{table.core_service_my_notify_service}` (`table`, `title`) VALUES
-('amun_service_news', 'News');]]></query>
-    </if>
   </database>
 </service>

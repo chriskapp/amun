@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="c61f1e8689d2341ad6698d48e323da5584407a6e">
+<service xmlns="http://amun-project.org" signature="9d4dc1940547f45f872d842954f259e045222ec1">
   <status>system</status>
   <name>comment</name>
+  <description>General comment system wich can be used to store a comment refering to an id</description>
   <path>/comment</path>
   <namespace>comment</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/comment</type>
@@ -28,11 +29,11 @@
   <library>
     <dir name="AmunService">
       <dir name="Comment">
-        <file name="Form.php" md5="f299b68279d3847fe0a2b448dfacd5a6"/>
+        <file name="Form.php" md5="806659481d1651d28c6bf749e19c15d3"/>
         <file name="Handler.php" md5="22d4eb2287cbc10f48f08c577ae3d22c"/>
-        <file name="Record.php" md5="d53d2414d35063c8719d095eb798cf6e"/>
-        <file name="Stream.php" md5="06881693e1fc69fa19be94c31f1e0ecc"/>
-        <file name="Table.php" md5="ca7d4ccb964c322bb647492c01f4e7bb"/>
+        <file name="Record.php" md5="6c41d0acdbe7f78e601f360c05b49258"/>
+        <file name="Stream.php" md5="b73efe84c087881cd8e1f0f939500383"/>
+        <file name="Table.php" md5="27a5983142eccfa85b9afdb4851133a5"/>
       </dir>
     </dir>
   </library>
@@ -48,11 +49,7 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[INSERT INTO `{table.core_user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
+    <query><![CDATA[INSERT INTO `{table.user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
 ('INSERT', 'add', 'amun_service_comment', 'view?id={record.refId}#comment-{record.id}', '<p><a href="{user.profileUrl}">{user.name}</a> has created an <a href="{object.url}">comment</a></p><blockquote>{record.text}</blockquote>');]]></query>
-    <if hasService="my">
-      <query><![CDATA[INSERT INTO `{table.my_notify_service}` (`table`, `title`) VALUES
-('{config.table_prefix}comment', 'Comments');]]></query>
-    </if>
   </database>
 </service>

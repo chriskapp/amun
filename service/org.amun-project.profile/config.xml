@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="c748aa5f67aeae831f98b26d9e820d8a98b8b16a">
+<service xmlns="http://amun-project.org" signature="7c5364334780cbc3e108e94304e6c5a673ec64fc">
   <status>normal</status>
   <name>profile</name>
+  <description>Displays the activities of an user and the option to add the user as friend</description>
   <path>/profile</path>
   <namespace>profile</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/profile</type>

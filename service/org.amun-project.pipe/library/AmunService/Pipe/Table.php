@@ -38,9 +38,9 @@ class AmunService_Pipe_Table extends Amun_Sql_TableAbstract
 	{
 		return array(
 
-			'pageId'  => $this->registry['table.core_content_page'],
-			'userId'  => $this->registry['table.core_user_account'],
-			'mediaId' => $this->registry['table.core_content_media'],
+			'pageId'  => $this->registry['table.content_page'],
+			'userId'  => $this->registry['table.user_account'],
+			'mediaId' => $this->registry['table.media'],
 
 		);
 	}

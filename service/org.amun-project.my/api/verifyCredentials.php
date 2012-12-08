@@ -43,11 +43,19 @@ use PSX_Sql;
  */
 class verifyCredentials extends Amun_Module_ApiAbstract
 {
-	public function onLoad()
+	/**
+	 * Returns informations about the current loggedin user
+	 *
+	 * @httpMethod GET
+	 * @path /
+	 * @nickname getCredentials
+	 * @responseClass AmunService_My_Credentials
+	 */
+	public function getCredentials()
 	{
 		try
 		{
-			$select = Amun_Sql_Table_Registry::get('Core_User_Account')
+			$select = Amun_Sql_Table_Registry::get('User_Account')
 				->select(array('id', 'groupId', 'status', 'name', 'gender', 'profileUrl', 'thumbnailUrl', 'timezone', 'updated', 'date'))
 				->where('id', '=', $this->user->id);
 

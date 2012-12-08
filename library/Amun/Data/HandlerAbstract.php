@@ -34,23 +34,27 @@
  */
 abstract class Amun_Data_HandlerAbstract implements PSX_Data_HandlerInterface
 {
-	protected $table;
 	protected $base;
 	protected $config;
 	protected $sql;
 	protected $registry;
+	protected $event;
+	protected $table;
 	protected $user;
 
 	protected $ignoreApprovement = false;
 
-	public function __construct(Amun_User $user)
+	public function __construct(Amun_User $user = null)
 	{
+		$ct = Amun_DataFactory::getContainer();
+
+		$this->base     = $ct->getBase();
+		$this->config   = $ct->getConfig();
+		$this->sql      = $ct->getSql();
+		$this->registry = $ct->getRegistry();
+		$this->event    = $ct->getEvent();
 		$this->table    = $this->getTableInstance();
-		$this->base     = Amun_Base::getInstance();
-		$this->config   = $this->base->getConfig();
-		$this->sql      = $this->base->getSql();
-		$this->registry = $this->base->getRegistry();
-		$this->user     = $user;
+		$this->user     = $user === null ? $ct->getUser() : $user;
 	}
 
 	public function getTable()
@@ -99,7 +103,7 @@ SELECT
 	approval.field AS `approvalField`,
 	approval.value AS `approvalValue`
 
-	FROM {$this->registry['table.core_system_approval']} `approval`
+	FROM {$this->registry['table.core_approval']} `approval`
 
 		WHERE `approval`.`table` LIKE "{$this->table->getName()}"
 SQL;
@@ -134,13 +138,13 @@ SQL;
 	 */
 	public function approveRecord($type, PSX_Data_RecordInterface $record)
 	{
-		$type = AmunService_Core_System_Approval_Record::getType($type);
+		$type = AmunService_Core_Approval_Record::getType($type);
 
 		if($type !== false)
 		{
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-			$this->sql->insert($this->registry['table.core_system_approval_record'], array(
+			$this->sql->insert($this->registry['table.core_approval_record'], array(
 
 				'userId' => $this->user->id,
 				'type'   => $type,
@@ -169,7 +173,8 @@ SQL;
 
 	/**
 	 * This method should be called by each handler if an record was inserted, 
-	 * updated or deleted. It notifies all listeners of the onRecordChange event
+	 * updated or deleted. It notifies all listeners of the core.record_change 
+	 * event
 	 *
 	 * @param integer $type
 	 * @param PSX_Data_RecordInterface $record
@@ -182,30 +187,7 @@ SQL;
 			throw new Amun_Exception('Invalid notification type');
 		}
 
-		// @todo
-		//$this->event->notifyListener('onRecordChange', array($type, $record));
-
-
-		$sql = <<<SQL
-SELECT
-
-	`notify`.`class`
-
-	FROM {$this->registry['table.core_system_notify']} `notify`
-
-		WHERE "{$this->table->getName()}" REGEXP `notify`.`table`
-
-		ORDER BY `notify`.`priority` DESC
-SQL;
-
-		$result = $this->sql->getAll($sql);
-
-		foreach($result as $row)
-		{
-			$class  = $row['class'];
-			$notify = new $class($this->table, $this->user);
-			$notify->notify($type, $record);
-		}
+		$this->event->notifyListener('core.record_change', array($type, $this->table, $record));
 	}
 
 	/**

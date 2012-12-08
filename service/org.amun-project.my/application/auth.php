@@ -70,7 +70,7 @@ class auth extends Amun_Module_ApplicationAbstract
 				if(!empty($oauthToken))
 				{
 					// check token
-					$row = Amun_Sql_Table_Registry::get('Core_System_Api_Request')
+					$row = Amun_Sql_Table_Registry::get('Oauth_Request')
 						->select(array('apiId', 'callback', 'token', 'expire', 'date'))
 						->where('token', '=', $oauthToken)
 						->getRow();
@@ -91,7 +91,7 @@ class auth extends Amun_Module_ApplicationAbstract
 						{
 							$con = new PSX_Sql_Condition(array('token', '=', $oauthToken));
 
-							Amun_Sql_Table_Registry::get('Core_System_Api_Request')->delete($con);
+							Amun_Sql_Table_Registry::get('Oauth_Request')->delete($con);
 
 							throw new Amun_Exception('The token is expired');
 						}
@@ -121,7 +121,7 @@ class auth extends Amun_Module_ApplicationAbstract
 					}
 
 					// request consumer informations
-					$row = Amun_Sql_Table_Registry::get('Core_System_Api')
+					$row = Amun_Sql_Table_Registry::get('Oauth')
 						->select(array('url', 'title', 'description'))
 						->where('id', '=', $this->apiId)
 						->getRow();
@@ -137,7 +137,7 @@ class auth extends Amun_Module_ApplicationAbstract
 					}
 
 					// check whether access is already allowed
-					$allowed = Amun_Sql_Table_Registry::get('Core_System_Api_Access')
+					$allowed = Amun_Sql_Table_Registry::get('Oauth_Access')
 						->select(array('allowed'))
 						->where('apiId', '=', $this->apiId)
 						->where('userId', '=', $this->user->id)
@@ -175,14 +175,14 @@ class auth extends Amun_Module_ApplicationAbstract
 
 		if($token !== false)
 		{
-			$row = Amun_Sql_Table_Registry::get('Core_System_Api_Request')
+			$row = Amun_Sql_Table_Registry::get('Oauth_Request')
 				->select(array('status', 'token', 'callback'))
 				->where('token', '=', $token)
 				->getRow();
 
 			if(!empty($row))
 			{
-				if($row['status'] == AmunService_Core_System_Api_Record::TEMPORARY)
+				if($row['status'] == AmunService_Oauth_Record::TEMPORARY)
 				{
 					if(isset($_POST['allow']))
 					{
@@ -218,7 +218,7 @@ class auth extends Amun_Module_ApplicationAbstract
 		// insert or update access
 		$now = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-		$this->sql->replace($this->registry['table.core_system_api_access'], array(
+		$this->sql->replace($this->registry['table.oauth_access'], array(
 
 			'apiId'   => $this->apiId,
 			'userId'  => $this->user->id,
@@ -230,10 +230,10 @@ class auth extends Amun_Module_ApplicationAbstract
 		// approve token
 		$con = new PSX_Sql_Condition(array('token', '=', $token));
 
-		$this->sql->update($this->registry['table.core_system_api_request'], array(
+		$this->sql->update($this->registry['table.oauth_request'], array(
 
 			'userId'   => $this->user->id,
-			'status'   => AmunService_Core_System_Api_Record::APPROVED,
+			'status'   => AmunService_Oauth_Record::APPROVED,
 			'verifier' => $verifier,
 
 		), $con);
@@ -261,7 +261,7 @@ class auth extends Amun_Module_ApplicationAbstract
 		// insert access
 		$now = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-		$this->sql->replace($this->registry['table.core_system_api_access'], array(
+		$this->sql->replace($this->registry['table.oauth_access'], array(
 
 			'apiId'   => $this->apiId,
 			'userId'  => $this->user->id,
@@ -273,7 +273,7 @@ class auth extends Amun_Module_ApplicationAbstract
 		// delete token
 		$con = new PSX_Sql_Condition(array('token', '=', $token));
 
-		$this->sql->delete($this->registry['table.core_system_api_request'], $con);
+		$this->sql->delete($this->registry['table.oauth_request'], $con);
 
 		// redirect if callback available
 		if($callback != 'oob')

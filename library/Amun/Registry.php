@@ -139,6 +139,27 @@ class Amun_Registry extends ArrayObject
 		$this->exchangeArray($this->container = array());
 	}
 
+	public function getServices()
+	{
+		$serviceIds = $this->sql->getCol("SELECT id FROM " . $this->offsetGet('table.core_service'));
+		$result     = array();
+
+		foreach($serviceIds as $serviceId)
+		{
+			$result[] = new Amun_Service($serviceId, $this->registry);
+		}
+
+		return $result;
+	}
+
+	public function hasService($source)
+	{
+		$con   = new PSX_Sql_Condition(array('source', '=', $source));
+		$count = $this->sql->count($this->offsetGet('table.core_service'), $con);
+
+		return $count > 0;
+	}
+
 	public static function get($key)
 	{
 		return self::getInstance()->offsetGet($key);

@@ -55,9 +55,9 @@ class login extends Amun_Module_ApplicationAbstract
 
 			// load supported provider
 			$defaultProvider = array_map('trim', explode(',', $this->registry['my.openid_provider']));
-			$hostProvider    = Amun_Sql_Table_Registry::get('Core_System_Host')
+			$hostProvider    = Amun_Sql_Table_Registry::get('Core_Host')
 				->select(array('name'))
-				->where('status', '=', AmunService_Core_System_Host_Record::NORMAL)
+				->where('status', '=', AmunService_Core_Host_Record::NORMAL)
 				->getCol();
 
 			$provider = array_merge($defaultProvider, $hostProvider);
@@ -101,8 +101,8 @@ class login extends Amun_Module_ApplicationAbstract
 		}
 
 		$redirect = $this->getRedirect($this->post);
-		$identity = $this->post->identity('string', array(new AmunService_Core_User_Account_Filter_Identity()));
-		$pw       = $this->post->pw('string', array(new AmunService_Core_User_Account_Filter_Pw()));
+		$identity = $this->post->identity('string', array(new AmunService_User_Account_Filter_Identity()));
+		$pw       = $this->post->pw('string', array(new AmunService_User_Account_Filter_Pw()));
 		$captcha  = $this->post->captcha('integer');
 
 		try
@@ -129,7 +129,7 @@ class login extends Amun_Module_ApplicationAbstract
 
 				if(!empty($pw))
 				{
-					$row = Amun_Sql_Table_Registry::get('Core_User_Account')
+					$row = Amun_Sql_Table_Registry::get('User_Account')
 						->select(array('id', 'status', 'pw'))
 						->where('identity', '=', $identity)
 						->getRow();
@@ -248,7 +248,7 @@ class login extends Amun_Module_ApplicationAbstract
 
 		// create an openid object
 		$http   = new PSX_Http(new PSX_Http_Handler_Curl());
-		$store  = new PSX_OpenId_Store_Sql($this->sql, $this->registry['table.core_system_assoc']);
+		$store  = new PSX_OpenId_Store_Sql($this->sql, $this->registry['table.core_assoc']);
 		$openid = new PSX_OpenId($http, $this->config['psx_url'], $store);
 
 		// check whether identity is an url if not it is an email
@@ -294,10 +294,10 @@ class login extends Amun_Module_ApplicationAbstract
 				default:
 					// check whether the provider belongs to an connected website. If
 					// yes we also try to get an token and tokenSecret for the user
-					$host = Amun_Sql_Table_Registry::get('Core_System_Host')
+					$host = Amun_Sql_Table_Registry::get('Core_Host')
 						->select(array('id', 'consumerKey', 'url', 'template'))
 						->where('name', '=', $provider)
-						->where('status', '=', AmunService_Core_System_Host_Record::NORMAL)
+						->where('status', '=', AmunService_Core_Host_Record::NORMAL)
 						->getRow();
 
 					if(!empty($host))
@@ -333,7 +333,7 @@ class login extends Amun_Module_ApplicationAbstract
 						// supports the oauth extension request an token
 						$identity = sha1(Amun_Security::getSalt() . PSX_OpenId::normalizeIdentifier($profileUrl));
 						$con      = new PSX_Sql_Condition(array('identity', '=', $identity));
-						$userId   = Amun_Sql_Table_Registry::get('Core_User_Account')->getField('id', $con);
+						$userId   = Amun_Sql_Table_Registry::get('User_Account')->getField('id', $con);
 						$oauth    = false;
 
 						if(!empty($userId))
@@ -342,7 +342,7 @@ class login extends Amun_Module_ApplicationAbstract
 							$con->add('hostId', '=', $host['id']);
 							$con->add('userId', '=', $userId);
 
-							$requestId = Amun_Sql_Table_Registry::get('Core_System_Host_Request')->getField('id', $con);
+							$requestId = Amun_Sql_Table_Registry::get('Core_Host_Request')->getField('id', $con);
 
 							if(empty($requestId))
 							{
@@ -384,20 +384,20 @@ class login extends Amun_Module_ApplicationAbstract
 	{
 		switch($status)
 		{
-			case AmunService_Core_User_Account_Record::NORMAL:
-			case AmunService_Core_User_Account_Record::ADMINISTRATOR:
+			case AmunService_User_Account_Record::NORMAL:
+			case AmunService_User_Account_Record::ADMINISTRATOR:
 				return true;
 				break;
 
-			case AmunService_Core_User_Account_Record::NOT_ACTIVATED:
+			case AmunService_User_Account_Record::NOT_ACTIVATED:
 				return 'Account is not activated';
 				break;
 
-			case AmunService_Core_User_Account_Record::BANNED:
+			case AmunService_User_Account_Record::BANNED:
 				return 'Account is banned';
 				break;
 
-			case AmunService_Core_User_Account_Record::RECOVER:
+			case AmunService_User_Account_Record::RECOVER:
 				return 'Account is under recovery';
 				break;
 

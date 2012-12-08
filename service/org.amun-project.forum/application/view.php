@@ -115,10 +115,10 @@ class view extends Amun_Module_ApplicationAbstract
 		// query
 		$result = Amun_Sql_Table_Registry::get('Forum')
 			->select(array('id', 'sticky', 'closed', 'urlTitle', 'title', 'text', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_Content_Page')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Content_Page')
 				->select(array('path'), 'page')
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			)
 			->where('id', '=', $this->id)
@@ -145,7 +145,7 @@ class view extends Amun_Module_ApplicationAbstract
 	{
 		$table = Amun_Sql_Table_Registry::get('Comment')
 			->select(array('id', 'text', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			)
 			->where('pageId', '=', $this->page->id)

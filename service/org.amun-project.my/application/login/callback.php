@@ -43,7 +43,7 @@ class callback extends Amun_Module_ApplicationAbstract
 		$this->http = new PSX_Http(new PSX_Http_Handler_Curl());
 
 		// initialize openid
-		$store  = new PSX_OpenId_Store_Sql($this->sql, $this->registry['table.core_system_assoc']);
+		$store  = new PSX_OpenId_Store_Sql($this->sql, $this->registry['table.core_assoc']);
 		$openid = new PSX_OpenId($this->http, $this->config['psx_url'], $store);
 
 		if($openid->verify() === true)
@@ -57,7 +57,7 @@ class callback extends Amun_Module_ApplicationAbstract
 				$hostId   = $this->session->openid_register_user_host_id;
 				$globalId = $this->session->openid_register_user_global_id;
 				$con      = new PSX_Sql_Condition(array('identity', '=', sha1(Amun_Security::getSalt() . $openid->getIdentifier())));
-				$userId   = Amun_Sql_Table_Registry::get('Core_User_Account')->getField('id', $con);
+				$userId   = Amun_Sql_Table_Registry::get('User_Account')->getField('id', $con);
 
 				if(empty($userId))
 				{
@@ -91,18 +91,18 @@ class callback extends Amun_Module_ApplicationAbstract
 						$con = new PSX_Sql_Condition();
 						$con->add('globalId', '=', $globalId);
 
-						$userId = Amun_Sql_Table_Registry::get('Core_User_Account')->getField('id', $con);
+						$userId = Amun_Sql_Table_Registry::get('User_Account')->getField('id', $con);
 					}
 
 					// create user account
 					if(empty($userId))
 					{
-						$handler = new AmunService_Core_User_Account_Handler($this->user);
+						$handler = new AmunService_User_Account_Handler($this->user);
 
-						$account = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord();
+						$account = Amun_Sql_Table_Registry::get('User_Account')->getRecord();
 						$account->setGroupId($this->registry['core.default_user_group']);
 						$account->setHostId($hostId);
-						$account->setStatus($hostId > 0 ? AmunService_Core_User_Account_Record::REMOTE : AmunService_Core_User_Account_Record::NORMAL);
+						$account->setStatus($hostId > 0 ? AmunService_User_Account_Record::REMOTE : AmunService_User_Account_Record::NORMAL);
 						$account->setIdentity($identity);
 						$account->setName($name);
 						$account->setPw(Amun_Security::generatePw());
@@ -147,7 +147,7 @@ class callback extends Amun_Module_ApplicationAbstract
 					{
 						$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-						$this->sql->insert($this->registry['table.core_system_host_request'], array(
+						$this->sql->insert($this->registry['table.core_host_request'], array(
 
 							'hostId'      => $hostId,
 							'userId'      => $userId,
@@ -295,10 +295,10 @@ class callback extends Amun_Module_ApplicationAbstract
 
 		if($hostId > 0 && !empty($token) && !empty($verifier))
 		{
-			$row = Amun_Sql_Table_Registry::get('Core_System_Host')
+			$row = Amun_Sql_Table_Registry::get('Core_Host')
 				->select(array('consumerKey', 'consumerSecret', 'url'))
 				->where('id', '=', $hostId)
-				->where('status', '=', AmunService_Core_System_Host_Record::NORMAL)
+				->where('status', '=', AmunService_Core_Host_Record::NORMAL)
 				->getRow();
 
 			if(!empty($row))

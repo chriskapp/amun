@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="6199c02c22ad483897ff06ddac19bd7b2a8afa5c">
+<service xmlns="http://amun-project.org" signature="8deba3de52675f7f01d0188038d06ed5a0aeb352">
   <status>normal</status>
   <name>my</name>
   <path>/my</path>
@@ -54,15 +54,82 @@
     <table name="my_contact"/>
     <table name="my_notify"/>
     <table name="my_notify_service"/>
-    <table name="my_subscription"/>
     <param name="registration_enabled" value="1" type="BOOLEAN"/>
     <param name="max_group_count" value="12" type="INTEGER"/>
     <param name="openid_provider" value="googlemail.com, gmail.com, yahoo.com, aol.com, aim.com" type="STRING"/>
   </registry>
+  <mail>
+    <template name="MY_REGISTRATION" from="noreply@%host%" subject="Account activation" values="account.name;account.identity;host.name;register.link;register.date">
+      <text><![CDATA[
+Hello {account.name},
+
+you have successful registered at {host.name}. Your identity is
+"{account.identity}". In order to activate your account please visit the
+following activation link:
+
+{register.link}
+]]></text>
+      <html><![CDATA[
+Hello {account.name},
+
+you have successful registered at {host.name}. Your identity is
+"{account.identity}". In order to activate your account please visit the
+following activation link:
+
+{register.link}
+]]></html>
+    </template>
+    <template name="MY_RECOVER" from="noreply@%host%" subject="Account recover" values="account.name;host.name;recover.ip;recover.link;recover.date">
+      <text><![CDATA[
+Hello {account.name},
+
+{recover.ip} wants to recover your password. In order to get a new password 
+visit the following link. We will create a new password for you and send it to 
+this email address. Ignore this email if you have not requested a new password.
+
+{recover.link}
+]]></text>
+      <html><![CDATA[
+Hello {account.name},
+
+{recover.ip} wants to recover your password. In order to get a new password 
+visit the following link. We will create a new password for you and send it to 
+this email address. Ignore this email if you have not requested a new password.
+
+{recover.link}
+]]></html>
+    </template>
+    <template name="MY_RECOVER_SUCCESS" from="noreply@%host%" subject="Account recover success" values="account.name;account.pw;host.name;recover.link;recover.date">
+      <text><![CDATA[
+Hello {account.name},
+
+you have successful recovered your password. It is highly recommended to change
+the password after a recovery process because the password was maybe transmitted
+over an insecure channel.
+
+New password: {account.pw}
+
+You can login with the new password at:
+{recover.link}
+]]></text>
+      <html><![CDATA[
+Hello {account.name},
+
+you have successful recovered your password. It is highly recommended to change
+the password after a recovery process because the password was maybe transmitted
+over an insecure channel.
+
+New password: {account.pw}
+
+You can login with the new password at:
+{recover.link}
+]]></html>
+    </template>
+  </mail>
   <library>
     <dir name="AmunService">
       <dir name="My">
-        <file name="Activity.php" md5="9a05ae7e7bb0460b4b8e0430662baf7a"/>
+        <file name="Activity.php" md5="fcdaf4d8865559aab9af9d500cd04fe0"/>
         <file name="Attempt.php" md5="c048b6355c9ad868f5539fea8c5252b4"/>
         <dir name="Contact">
           <dir name="Filter">
@@ -71,31 +138,31 @@
           </dir>
           <file name="Form.php" md5="db4f94f20201ccf40158f42da104271c"/>
           <file name="Handler.php" md5="b320707cffcf94c10a2c30f77c5a8be6"/>
-          <file name="Record.php" md5="7d7b649c055c2d8f1cbd505bc63cea78"/>
-          <file name="Table.php" md5="7590dca94b2cbc7fc6fae48bf024c17d"/>
+          <file name="Record.php" md5="92f1e7c2e5a5f3c338279e3b9f95b186"/>
+          <file name="Table.php" md5="bd8cbfe3c2ee13f438a3861750694693"/>
         </dir>
-        <file name="Credentials.php" md5="4fd7c0d1e8da6dbc3493249c01c3e3b7"/>
-        <file name="FriendsAbstract.php" md5="0c482dff649d747702675d750ac1659f"/>
+        <file name="Credentials.php" md5="0bc4483f16e95fb42207db2808632963"/>
+        <file name="FriendsAbstract.php" md5="3e9596e37665bea40e4de5273d917950"/>
         <file name="MyAbstract.php" md5="62a4cb6c5a2bfba8db069a4dedde6045"/>
         <dir name="Notify">
           <dir name="Filter">
             <file name="Status.php" md5="c1d8a22f2bb4358007a60eba005bdc35"/>
           </dir>
-          <file name="Form.php" md5="4c059278e60bf06c9230306eabaff3b6"/>
+          <file name="Form.php" md5="4c5d420849419de3a27984a8150e4cf4"/>
           <file name="Handler.php" md5="7d9f201b56351d8c9eef955510032c6d"/>
-          <file name="Record.php" md5="cf25c899d1ab8d03edd87ed62a16b13a"/>
+          <file name="Record.php" md5="9388efa7f577573609fa36c97833fe01"/>
           <dir name="Service">
             <file name="Table.php" md5="9348f19db93206037a9da93117737956"/>
           </dir>
-          <file name="Table.php" md5="b004c60d50cf0b34ef8173bb5bfba865"/>
+          <file name="Table.php" md5="ed08cd13aec0a344f727d641cc6bc637"/>
         </dir>
-        <file name="People.php" md5="42888caf619e506e062dff946bb605f5"/>
+        <file name="People.php" md5="66b7444bc643ff6d3df6c157c2355471"/>
         <file name="SettingsAbstract.php" md5="fb509d4551e7016f9a6c2e8075014f06"/>
         <dir name="Subscription">
           <file name="Form.php" md5="5a2d503a35e5ce2fd3b0c0d34950c7e3"/>
           <file name="Handler.php" md5="a5e604a26644f01665604a206d728ebf"/>
-          <file name="Record.php" md5="939b575e9e504cb3b5d69c6b31dcdbaf"/>
-          <file name="Table.php" md5="79863a917740480c444d8a32ba0aedcf"/>
+          <file name="Record.php" md5="14673e4ea9e791e79ef4436bfbc5e995"/>
+          <file name="Table.php" md5="8dc94f9266d9ca020148dc0311774628"/>
         </dir>
       </dir>
     </dir>
@@ -134,69 +201,9 @@
   `title` VARCHAR(64) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.my_subscription}` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `userId` INT(10) NOT NULL,
-  `status` INT(10) NOT NULL,
-  `hub` VARCHAR(256) NOT NULL,
-  `topic` VARCHAR(256) NOT NULL,
-  `leaseSeconds` INT(10),
-  `secret` VARCHAR(40),
-  `verifyToken` VARCHAR(32),
-  `date` DATETIME NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[INSERT INTO `{table.core_content_service_option}` (`serviceId`, `name`) VALUES
+    <query><![CDATA[INSERT INTO `{table.core_service_option}` (`serviceId`, `name`) VALUES
 ({service.id}, 'index'),
 ({service.id}, 'friends'),
 ({service.id}, 'settings');]]></query>
-    <query><![CDATA[INSERT INTO `{table.core_system_mail}` (`name`, `from`, `subject`, `text`, `html`, `values`) VALUES
-('SERVICE_MY_REGISTRATION', 'noreply@{config.host}', 'Account activation', 'Hello {account.name},
-
-you have successful registered at {host.name}. Your identity is
-"{account.identity}". In order to activate your account please visit the
-following activation link:
-
-{register.link}', 'Hello {account.name},
-
-you have successful registered at {host.name}. Your identity is
-"{account.identity}". In order to activate your account please visit the
-following activation link:
-
-{register.link}', 'account.name;account.identity;host.name;register.link;register.date'),
-('SERVICE_MY_RECOVER', 'noreply@{config.host}', 'Account recover', 'Hello {account.name},
-
-{recover.ip} wants to recover your password. In order to get a new
-password visit the following link. We will create a new password for you
-and send it to this email address. Ignore this email if you have not requested
-a new password.
-
-{recover.link}', 'Hello {account.name},
-
-{recover.ip} wants to recover your password. In order to get a new
-password visit the following link. We will create a new password for you
-and send it to this email address. Ignore this email if you have not requested
-a new password.
-
-{recover.link}', 'account.name;host.name;recover.ip;recover.link;recover.date'),
-('SERVICE_MY_RECOVER_SUCCESS', 'noreply@{config.host}', 'Account recover success', 'Hello {account.name},
-
-you have successful recovered your password. It is highly recommended to change
-the password after a recovery process because the password was maybe transmitted
-over an insecure channel.
-
-New password: {account.pw}
-
-You can login with the new password at:
-{recover.link}', 'Hello {account.name},
-
-you have successful recovered your password. It is highly recommended to change
-the password after a recovery process because the password was maybe transmitted
-over an insecure channel.
-
-New password: {account.pw}
-
-You can login with the new password at:
-{recover.link}', 'account.name;account.pw;host.name;recover.link;recover.date');]]></query>
   </database>
 </service>

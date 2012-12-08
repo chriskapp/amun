@@ -35,64 +35,80 @@
  */
 class Amun_Dependency_Gadget extends Amun_Dependency_Default
 {
-	protected function setup()
+	public function setup()
 	{
 		parent::setup();
 
-		// session
-		if(!$this->registry->offsetExists('session'))
-		{
-			$session = new PSX_Session('amun_' . md5($this->config['psx_url']));
-			$session->start();
-			$this->registry->offsetSet('session', $session);
-		}
-
-		// user
-		if(!$this->registry->offsetExists('user'))
-		{
-			$userId = Amun_User::getId($this->registry->offsetGet('session'), $this->registry->offsetGet('registry'));
-			$this->registry->offsetSet('user', $this->base->setUser($userId));
-		}
-
-		// page
-		if(!$this->registry->offsetExists('page'))
-		{
-			$page = new Amun_Page($this->registry->offsetGet('registry'), $this->registry->offsetGet('user'));
-			$this->registry->offsetSet('page', $page);
-		}
-
-		// html js
-		if(!$this->registry->offsetExists('htmlJs'))
-		{
-			$htmlJs = new Amun_Html_Js($this->config);
-			$this->registry->offsetSet('htmlJs', $htmlJs);
-		}
-
-		// html css
-		if(!$this->registry->offsetExists('htmlCss'))
-		{
-			$htmlCss = new Amun_Html_Css($this->config);
-			$this->registry->offsetSet('htmlCss', $htmlCss);
-		}
-
-		// html content
-		if(!$this->registry->offsetExists('htmlContent'))
-		{
-			$htmlContent = new Amun_Html_Content();
-			$this->registry->offsetSet('htmlContent', $htmlContent);
-		}
+		$this->getSession();
+		$this->getUser();
+		$this->getPage();
+		$this->getHtmlJs();
+		$this->getHtmlCss();
+		$this->getHtmlContent();
 	}
 
-	public function getParameters()
+	public function getSession()
 	{
-		return array_merge(parent::getParameters(), array(
-			'session' => $this->registry->offsetGet('session'),
-			'user' => $this->registry->offsetGet('user'),
-			'page' => $this->registry->offsetGet('page'),
-			'htmlJs' => $this->registry->offsetGet('htmlJs'),
-			'htmlCss' => $this->registry->offsetGet('htmlCss'),
-			'htmlContent' => $this->registry->offsetGet('htmlContent'),
-		));
+		if($this->has('session'))
+		{
+			return $this->get('session');
+		}
+
+		$session = new PSX_Session('amun_' . md5($this->config['psx_url']));
+		$session->start();
+
+		return $this->set('session', $session);
+	}
+
+	public function getUser()
+	{
+		if($this->has('user'))
+		{
+			return $this->get('user');
+		}
+
+		$userId = Amun_User::getId($this->getSession(), $this->getRegistry());
+
+		return $this->set('user', new Amun_User($userId, $this->getRegistry()));
+	}
+
+	public function getPage()
+	{
+		if($this->has('page'))
+		{
+			return $this->get('page');
+		}
+
+		return $this->set('page', new Amun_Page($this->pageId, $this->getRegistry(), $this->getUser()));
+	}
+
+	public function getHtmlJs()
+	{
+		if($this->has('htmlJs'))
+		{
+			return $this->get('htmlJs');
+		}
+
+		return $this->set('htmlJs', new Amun_Html_Js($this->config));
+	}
+
+	public function getHtmlCss()
+	{
+		if($this->has('htmlCss'))
+		{
+			return $this->get('htmlCss');
+		}
+
+		return $this->set('htmlCss', new Amun_Html_Css($this->config));
+	}
+
+	public function getHtmlContent()
+	{
+		if($this->has('htmlContent'))
+		{
+			return $this->get('htmlContent');
+		}
+
+		return $this->set('htmlContent', new Amun_Html_Content());
 	}
 }
-

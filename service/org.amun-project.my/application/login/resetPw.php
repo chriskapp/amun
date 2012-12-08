@@ -57,13 +57,13 @@ class resetPw extends Amun_Module_ApplicationAbstract
 
 			if($token !== false)
 			{
-				$account = Amun_Sql_Table_Registry::get('Core_User_Account')
+				$account = Amun_Sql_Table_Registry::get('User_Account')
 					->select(array('id', 'name', 'ip', 'email', 'date'))
 					->where('token', '=', $token)
-					->where('status', '=', AmunService_Core_User_Account_Record::RECOVER)
+					->where('status', '=', AmunService_User_Account_Record::RECOVER)
 					->getRow(PSX_Sql::FETCH_OBJECT);
 
-				if($account instanceof AmunService_Core_User_Account_Record)
+				if($account instanceof AmunService_User_Account_Record)
 				{
 					if(!empty($account->email))
 					{
@@ -72,10 +72,10 @@ class resetPw extends Amun_Module_ApplicationAbstract
 							$pw   = Amun_Security::generatePw();
 							$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-							$account->setStatus(AmunService_Core_User_Account_Record::NORMAL);
+							$account->setStatus(AmunService_User_Account_Record::NORMAL);
 							$account->setPw($pw);
 
-							$handler = new AmunService_Core_User_Account_Handler($this->user);
+							$handler = new AmunService_User_Account_Handler($this->user);
 							$handler->update($account);
 
 							// send mail

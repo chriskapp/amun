@@ -63,20 +63,20 @@ class pending extends AmunService_My_FriendsAbstract
 
 	public function getRequests()
 	{
-		$select = Amun_Sql_Table_Registry::get('Core_User_Friend')
+		$select = Amun_Sql_Table_Registry::get('User_Friend')
 			->select(array('id', 'status', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
 				->select(array('id', 'name', 'profileUrl', 'thumbnailUrl'), 'author'),
 				'n:1',
 				'userId'
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
 				->select(array('id', 'name', 'profileUrl', 'thumbnailUrl'), 'friend'),
 				'n:1',
 				'friendId'
 			)
 			->where('userId', '=', $this->user->id)
-			->where('status', '=', AmunService_Core_User_Friend_Record::REQUEST);
+			->where('status', '=', AmunService_User_Friend_Record::REQUEST);
 
 
 		// get data

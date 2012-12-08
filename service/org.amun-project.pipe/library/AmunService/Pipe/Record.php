@@ -55,7 +55,7 @@ class AmunService_Pipe_Record extends Amun_Data_RecordAbstract
 
 	public function setPageId($pageId)
 	{
-		$pageId = $this->_validate->apply($pageId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_Content_Page'))), 'pageId', 'Page Id');
+		$pageId = $this->_validate->apply($pageId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Content_Page'))), 'pageId', 'Page Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -69,7 +69,7 @@ class AmunService_Pipe_Record extends Amun_Data_RecordAbstract
 
 	public function setMediaId($mediaId)
 	{
-		$mediaId = $this->_validate->apply($mediaId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_Content_Media'))), 'mediaId', 'Media Id');
+		$mediaId = $this->_validate->apply($mediaId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Media'))), 'mediaId', 'Media Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -88,7 +88,7 @@ class AmunService_Pipe_Record extends Amun_Data_RecordAbstract
 
 	public function getContent()
 	{
-		$path = $this->_registry['core.media_path'] . '/' . $this->mediaPath;
+		$path = $this->_registry['media.path'] . '/' . $this->mediaPath;
 		$ext  = pathinfo($path, PATHINFO_EXTENSION);
 
 		if(!PSX_File::exists($path))
@@ -151,7 +151,7 @@ class AmunService_Pipe_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_page === null)
 		{
-			$this->_page = Amun_Sql_Table_Registry::get('Core_Content_Page')->getRecord($this->pageId);
+			$this->_page = Amun_Sql_Table_Registry::get('Content_Page')->getRecord($this->pageId);
 		}
 
 		return $this->_page;
@@ -161,7 +161,7 @@ class AmunService_Pipe_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_user === null)
 		{
-			$this->_user = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord($this->userId);
+			$this->_user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;
@@ -171,7 +171,7 @@ class AmunService_Pipe_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_media === null)
 		{
-			$this->_media = Amun_Sql_Table_Registry::get('Core_Content_Media')->getRecord($this->mediaId);
+			$this->_media = Amun_Sql_Table_Registry::get('Media')->getRecord($this->mediaId);
 		}
 
 		return $this->_media;

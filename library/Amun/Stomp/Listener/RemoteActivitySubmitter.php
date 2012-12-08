@@ -62,10 +62,10 @@ class Amun_Stomp_Listener_RemoteActivitySubmitter extends Amun_Stomp_ListenerAbs
 		$body = $this->getMessage($data['id']);
 
 		// send request
-		$receivers = Amun_Sql_Table_Registry::get('Core_User_Activity_Receiver')
+		$receivers = Amun_Sql_Table_Registry::get('User_Activity_Receiver')
 			->select(array('status', 'activityId', 'userId'))
 			->where('activityId', '=', $data['id'])
-			->where('status', '=', AmunService_Core_User_Activity_Receiver::VISIBLE)
+			->where('status', '=', AmunService_User_Activity_Receiver::VISIBLE)
 			->getAll(PSX_Sql::FETCH_OBJECT);
 
 		foreach($receivers as $receiver)
@@ -74,7 +74,7 @@ class Amun_Stomp_Listener_RemoteActivitySubmitter extends Amun_Stomp_ListenerAbs
 			$account = $receiver->getUser();
 			$host    = $account->getHost();
 
-			if($account->status != AmunService_Core_User_Account::REMOTE)
+			if($account->status != AmunService_User_Account::REMOTE)
 			{
 				continue;
 			}
@@ -142,7 +142,7 @@ class Amun_Stomp_Listener_RemoteActivitySubmitter extends Amun_Stomp_ListenerAbs
 	{
 		// get remote activities for remote host
 		$entries  = array();
-		$activity = Amun_Sql_Table_Registry::get('Core_User_Activity')->getRecord($activityId);
+		$activity = Amun_Sql_Table_Registry::get('User_Activity')->getRecord($activityId);
 		$account  = $activity->getUser();
 
 

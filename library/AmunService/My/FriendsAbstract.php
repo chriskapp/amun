@@ -41,18 +41,18 @@ abstract class AmunService_My_FriendsAbstract extends AmunService_My_MyAbstract
 		// friend request count
 		$con = new PSX_Sql_Condition();
 		$con->add('friendId', '=', $this->user->id);
-		$con->add('status', '=', AmunService_Core_User_Friend_Record::REQUEST);
+		$con->add('status', '=', AmunService_User_Friend_Record::REQUEST);
 
-		$requestCount = $this->sql->count($this->registry['table.core_user_friend'], $con);
+		$requestCount = $this->sql->count($this->registry['table.user_friend'], $con);
 
 		$this->template->assign('requestCount', $requestCount);
 
 		// pending count
 		$con = new PSX_Sql_Condition();
 		$con->add('userId', '=', $this->user->id);
-		$con->add('status', '=', AmunService_Core_User_Friend_Record::REQUEST);
+		$con->add('status', '=', AmunService_User_Friend_Record::REQUEST);
 
-		$pendingCount = $this->sql->count($this->registry['table.core_user_friend'], $con);
+		$pendingCount = $this->sql->count($this->registry['table.user_friend'], $con);
 
 		$this->template->assign('pendingCount', $pendingCount);
 
@@ -83,7 +83,7 @@ abstract class AmunService_My_FriendsAbstract extends AmunService_My_MyAbstract
 
 	private function getGroups()
 	{
-		return Amun_Sql_Table_Registry::get('Core_User_Friend_Group')
+		return Amun_Sql_Table_Registry::get('User_Friend_Group')
 			->select(array('id', 'title', 'date'))
 			->where('userId', '=', $this->user->id)
 			->getAll();

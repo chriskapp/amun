@@ -63,7 +63,7 @@ class group extends AmunService_My_FriendsAbstract
 
 	public function getGroups()
 	{
-		$select = Amun_Sql_Table_Registry::get('Core_User_Friend_Group')
+		$select = Amun_Sql_Table_Registry::get('User_Friend_Group')
 			->select(array('id', 'title', 'date'))
 			->where('userId', '=', $this->user->id);
 

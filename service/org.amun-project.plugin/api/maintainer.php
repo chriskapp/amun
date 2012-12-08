@@ -45,7 +45,7 @@ class maintainer extends Amun_Module_RestAbstract
 	{
 		return $this->getTable()
 			->select(array('id', 'pluginId', 'userId'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
 				->select(array('name', 'profileUrl'), 'author')
 			)
 			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Plugin')

@@ -38,7 +38,7 @@ class AmunService_My_Subscription_Table extends Amun_Sql_TableAbstract
 	{
 		return array(
 
-			'userId' => $this->registry['table.core_user_account'],
+			'userId' => $this->registry['table.user_account'],
 
 		);
 	}

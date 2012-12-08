@@ -81,10 +81,10 @@ class index extends Amun_Module_ApplicationAbstract
 	{
 		return Amun_Sql_Table_Registry::get('Pipe')
 			->select(array('id', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_Content_Media')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Media')
 				->select(array('rightId', 'name', 'path', 'mimeType'), 'media')
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
 				->select(array('name', 'profileUrl'), 'author')
 			)
 			->where('pageId', '=', $this->page->id)

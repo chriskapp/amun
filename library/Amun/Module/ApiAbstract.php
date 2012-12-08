@@ -34,15 +34,22 @@
  */
 abstract class Amun_Module_ApiAbstract extends Amun_Oauth
 {
-	protected $session;
-	protected $user;
-	protected $service;
-
-	protected $_provider = array();
+	protected $sessionName;
+	protected $sessionId;
+	protected $userId;
 
 	public function __construct(PSX_Loader_Location $location, PSX_Base $base, $basePath, array $uriFragments)
 	{
 		parent::__construct($location, $base, $basePath, $uriFragments);
+
+		// assign default objects
+		$container  = new Amun_Dependency_Default($this->base->getConfig());
+		$parameters = $container->getParameters();
+
+		foreach($parameters as $k => $obj)
+		{
+			$this->$k = $obj;
+		}
 
 		// if the authorization header is set follow the oauth
 		// authentication process else assign the user from the session
@@ -52,46 +59,44 @@ abstract class Amun_Module_ApiAbstract extends Amun_Oauth
 		{
 			$this->doAuthentication();
 		}
-		else
-		{
-			$this->session = new PSX_Session('amun_' . md5($this->config['psx_url']));
-			$this->session->start();
-
-			$this->user = $this->base->setUser(Amun_User::getId($this->session, $this->registry));
-		}
-
-		// set service
-		$this->service = new Amun_Service($location->getServiceId(), $this->registry);
 	}
 
 	public function getDependencies()
 	{
-		return new Amun_Dependency_Default();
+		$ct = new Amun_Dependency_Api($this->base->getConfig(), array(
+			'session.name'   => $this->sessionName,
+			'session.userId' => $this->userId,
+			'session.id'     => $this->requestToken,
+			'api.serviceId'  => $this->location->getServiceId(),
+			'api.requestId'  => $this->requestId,
+		));
+
+		Amun_DataFactory::setContainer($ct);
+
+		return $ct;
 	}
 
 	public function onAuthenticated()
 	{
-		$this->session = new PSX_Session('amun_api_' . md5($this->config['psx_url']));
-		$this->session->setId($this->requestToken);
-		$this->session->start();
-
-		$this->user = $this->base->setUser($this->claimedUserId);
-		$this->user->requestId = $this->requestId;
+		$this->sessionName = 'amun_api_' . md5($this->config['psx_url']);
+		$this->userId      = $this->claimedUserId;
 	}
 
-	protected function getDataProvider($name)
+	protected function getProvider($name = null)
 	{
-		if(!isset($this->_provider[$name]))
-		{
-			$this->_provider[$name] = new Amun_DataProvider($name, $this->registry, $this->user);
-		}
+		$name = $name === null ? $this->service->namespace : $name;
 
-		return $this->_provider[$name];
+		return Amun_DataFactory::getProvider($name);
 	}
 
-	protected function getProvider()
+	protected function getTable($name = null)
 	{
-		return $this->getDataProvider($this->service->namespace);
+		return $this->getProvider($name)->getTable();
+	}
+
+	protected function getHandler($name = null)
+	{
+		return $this->getProvider($name)->getHandler();
 	}
 }
 

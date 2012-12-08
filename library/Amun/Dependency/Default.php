@@ -35,60 +35,102 @@
  */
 class Amun_Dependency_Default extends PSX_DependencyAbstract
 {
-	protected function setup()
+	public function setup()
 	{
 		parent::setup();
 
-		// sql
-		if(!$this->registry->offsetExists('sql'))
-		{
-			$this->registry->offsetSet('sql', $this->base->getSql());
-		}
-
-		// registry
-		if(!$this->registry->offsetExists('registry'))
-		{
-			$this->registry->offsetSet('registry', $this->base->getRegistry());
-		}
-
-		// table registry
-		if(!$this->registry->offsetExists('tableRegistry'))
-		{
-			$this->registry->offsetSet('tableRegistry', $this->base->getTableRegistry());
-		}
-
-		// validate
-		if(!$this->registry->offsetExists('validate'))
-		{
-			$validate = new PSX_Validate();
-			$this->registry->offsetSet('validate', $validate);
-		}
-
-		// get
-		if(!$this->registry->offsetExists('get'))
-		{
-			$get = new PSX_Input_Get($this->registry->offsetGet('validate'));
-			$this->registry->offsetSet('get', $get);
-		}
-
-		// post
-		if(!$this->registry->offsetExists('post'))
-		{
-			$post = new PSX_Input_Post($this->registry->offsetGet('validate'));
-			$this->registry->offsetSet('post', $post);
-		}
+		$this->getSql();
+		$this->getRegistry();
+		$this->getValidate();
+		$this->getGet();
+		$this->getPost();
 	}
 
-	public function getParameters()
+	public function getBase()
 	{
-		return array_merge(parent::getParameters(), array(
-			'sql' => $this->registry->offsetGet('sql'),
-			'registry' => $this->registry->offsetGet('registry'),
-			'tableRegistry' => $this->registry->offsetGet('tableRegistry'),
-			'validate' => $this->registry->offsetGet('validate'),
-			'get' => $this->registry->offsetGet('get'),
-			'post' => $this->registry->offsetGet('post'),
-		));
+		if($this->has('base'))
+		{
+			return $this->get('base');
+		}
+
+		return $this->set('base', new Amun_Base($this->config));
+	}
+
+	public function getLoader()
+	{
+		if($this->has('loader'))
+		{
+			return $this->get('loader');
+		}
+
+		$loader = new PSX_Loader($this->getBase());
+		$loader->setLocationFinder(new Amun_Loader_LocationFinder($this->getRegistry()));
+		$loader->addRoute('/.well-known/host-meta', 'api/hostmeta');
+
+		return $this->set('loader', $loader);
+	}
+
+	public function getSql()
+	{
+		if($this->has('sql'))
+		{
+			return $this->get('sql');
+		}
+
+		return $this->set('sql', new PSX_Sql($this->config['psx_sql_host'],
+			$this->config['psx_sql_user'],
+			$this->config['psx_sql_pw'],
+			$this->config['psx_sql_db'])
+		);
+	}
+
+	public function getRegistry()
+	{
+		if($this->has('registry'))
+		{
+			return $this->get('registry');
+		}
+
+		return $this->set('registry', Amun_Registry::initInstance($this->getConfig(), $this->getSql()));
+	}
+
+	public function getEvent()
+	{
+		if($this->has('event'))
+		{
+			return $this->get('event');
+		}
+
+		return $this->set('event', Amun_Event::initInstance($this->getRegistry()));
+	}
+
+	public function getValidate()
+	{
+		if($this->has('validate'))
+		{
+			return $this->get('validate');
+		}
+
+		return $this->set('validate', new PSX_Validate());
+	}
+
+	public function getGet()
+	{
+		if($this->has('get'))
+		{
+			return $this->get('get');
+		}
+
+		return $this->set('get', new PSX_Input_Get($this->getValidate()));
+	}
+
+	public function getPost()
+	{
+		if($this->has('post'))
+		{
+			return $this->get('post');
+		}
+
+		return $this->set('post', new PSX_Input_Post($this->getValidate()));
 	}
 }
-

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="3fe493d25d3c10f9826286cfcd23f6dbf02da3ac">
+<service xmlns="http://amun-project.org" signature="8461ab40a88bdeb76475544ce0446f2a47fcccc6">
   <status>system</status>
   <name>sitemap</name>
+  <description>Adds an API to generate a sitemap (sitemaps.org) wich can be used by search engines</description>
   <path>/sitemap</path>
   <namespace>sitemap</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/sitemap</type>

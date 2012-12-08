@@ -96,16 +96,16 @@ class register extends Amun_Module_ApplicationAbstract
 				}
 
 				// create account record
-				$account = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord();
+				$account = Amun_Sql_Table_Registry::get('User_Account')->getRecord();
 				$account->setGroupId($this->registry['core.default_user_group']);
-				$account->setStatus(AmunService_Core_User_Account_Record::NOT_ACTIVATED);
+				$account->setStatus(AmunService_User_Account_Record::NOT_ACTIVATED);
 				$account->setIdentity($identity);
 				$account->setName($name);
 				$account->setPw($pw);
 				$account->setLongitude($longitude);
 				$account->setLatitude($latitude);
 
-				$handler = new AmunService_Core_User_Account_Handler($this->user);
+				$handler = new AmunService_User_Account_Handler($this->user);
 
 				$account = $handler->create($account);
 

@@ -32,7 +32,7 @@
  * @package    Amun_Service_My
  * @version    $Revision: 635 $
  */
-class AmunService_My_People extends AmunService_Core_User_Friend_Record
+class AmunService_My_People extends AmunService_User_Friend_Record
 {
 	public function getName()
 	{

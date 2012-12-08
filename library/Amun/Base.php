@@ -36,85 +36,16 @@ class Amun_Base extends PSX_Base
 {
 	const VERSION = '0.4 beta';
 
-	protected $sql;
-	protected $registry;
-	protected $tableRegistry;
-	protected $event;
 	protected $user;
 
-	public function setup()
+	public function setUser(Amun_User $user)
 	{
-		parent::setup();
-
-		// sql
-		$this->sql = new PSX_Sql($this->config['psx_sql_host'],
-			$this->config['psx_sql_user'],
-			$this->config['psx_sql_pw'],
-			$this->config['psx_sql_db']);
-
-		// init registry
-		$this->registry = Amun_Registry::initInstance($this->config, $this->sql);
-
-		// init table registry
-		$this->tableRegistry = Amun_Sql_Table_Registry::initInstance($this->registry);
-
-		// init event
-		$this->event = Amun_Event::initInstance($this->registry);
-
-		// add routes
-		$this->loader->setLocationFinder(new Amun_Loader_LocationFinder($this->registry));
-		$this->loader->addRoute('/.well-known/host-meta', 'api/core/meta/host');
-	}
-
-	public function setUser($userId)
-	{
-		return $this->user = new Amun_User($userId, $this->registry);
-	}
-
-	public function getSql()
-	{
-		return $this->sql;
-	}
-
-	public function getRegistry()
-	{
-		return $this->registry;
-	}
-
-	public function getTableRegistry()
-	{
-		return $this->tableRegistry;
-	}
-
-	public function getEvent()
-	{
-		return $this->event;
+		$this->user = $user;
 	}
 
 	public function getUser()
 	{
 		return $this->user;
-	}
-
-	public function getServices()
-	{
-		$serviceIds = $this->sql->getCol("SELECT id FROM " . $this->registry['table.core_content_service']);
-		$result     = array();
-
-		foreach($serviceIds as $serviceId)
-		{
-			$result[] = new Amun_Service($serviceId, $this->registry);
-		}
-
-		return $result;
-	}
-
-	public function hasService($source)
-	{
-		$con   = new PSX_Sql_Condition(array('source', '=', $source));
-		$count = $this->sql->count($this->registry['table.core_content_service'], $con);
-
-		return $count > 0;
 	}
 
 	public static function getVersion()

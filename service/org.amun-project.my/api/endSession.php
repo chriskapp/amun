@@ -41,7 +41,15 @@ use PSX_Data_Message;
  */
 class endSession extends Amun_Module_ApiAbstract
 {
-	public function onLoad()
+	/**
+	 * Logs the user out from the system
+	 *
+	 * @httpMethod GET
+	 * @path /
+	 * @nickname doEndSession
+	 * @responseClass PSX_Data_Message
+	 */
+	public function doEndSession()
 	{
 		try
 		{

@@ -55,7 +55,7 @@ class Amun_Nav extends ArrayObject
 
 	public function load()
 	{
-		$status = AmunService_Core_Content_Page_Record::NORMAL;
+		$status = AmunService_Content_Page_Record::NORMAL;
 		$sql    = <<<EOD
 SELECT
 
@@ -66,9 +66,9 @@ SELECT
 	page.urlTitle    AS `pageUrlTitle`,
 	service.name     AS `serviceName`
 
-	FROM {$this->registry['table.core_content_page']} `page`
+	FROM {$this->registry['table.content_page']} `page`
 
-		INNER JOIN {$this->registry['table.core_content_service']} `service`
+		INNER JOIN {$this->registry['table.core_service']} `service`
 
 		ON page.serviceId = service.id
 

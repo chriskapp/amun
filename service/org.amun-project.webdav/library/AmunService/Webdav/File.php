@@ -23,16 +23,16 @@
  */
 
 /**
- * Amun_Service_Webdav_File
+ * AmunService_Webdav_FileAbstract
  *
  * @author     Christoph Kappestein <k42b3.x@gmail.com>
  * @license    http://www.gnu.org/licenses/gpl.html GPLv3
  * @link       http://amun.phpsx.org
  * @category   Amun
- * @package    Amun_Service_Webdav
+ * @package    AmunService_Webdav
  * @version    $Revision: 635 $
  */
-class AmunService_Webdav_File extends Sabre_DAV_File
+class AmunService_Webdav_File extends AmunService_Webdav_FileAbstract
 {
 	protected $service;
 	protected $record;
@@ -49,7 +49,7 @@ class AmunService_Webdav_File extends Sabre_DAV_File
 
 	public function getName()
 	{
-		return $this->service . '_' . $this->record->id . '.xml';
+		return $this->service . '-' . $this->record->id . '.xml';
 	}
 
 	public function getLastModified()

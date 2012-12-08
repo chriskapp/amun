@@ -39,8 +39,6 @@ use PSX_Time;
 use PSX_Util_Bencoding;
 
 /**
- * announce
- *
  * Torrent announce endpoint. Here an example request from the transmission
  * torrent client
  * <code>

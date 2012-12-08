@@ -32,68 +32,11 @@
  * @package    Amun_Sql
  * @version    $Revision: 802 $
  */
-class Amun_Sql_Table_Registry extends ArrayObject
+class Amun_Sql_Table_Registry
 {
-	protected static $_instance;
-
-	protected $container = array();
-	protected $registry;
-
-	public function __construct(Amun_Registry $registry)
-	{
-		parent::__construct($this->container, parent::ARRAY_AS_PROPS);
-
-		$this->registry = $registry;
-	}
-
-	public function offsetGet($offset)
-	{
-		$offset = strtolower($offset);
-
-		if(!parent::offsetExists($offset))
-		{
-			$tableName = $this->registry->getTableName($offset);
-
-			if($tableName !== false)
-			{
-				$class = Amun_DataProvider::getClass($tableName, 'Table');
-
-				if($class instanceof ReflectionClass)
-				{
-					parent::offsetSet($offset, $class->newInstance($this->registry));
-				}
-				else
-				{
-					throw new Amun_Exception('Table "' . $tableName . '" does not exist');
-				}
-			}
-			else
-			{
-				throw new Amun_Exception('Invalid table "' . $offset . '"');
-			}
-		}
-
-		return parent::offsetGet($offset);
-	}
-
-	public static function initInstance(Amun_Registry $registry)
-	{
-		return self::$_instance = new self($registry);
-	}
-
-	public static function getInstance()
-	{
-		return self::$_instance;
-	}
-
 	public static function get($key)
 	{
-		return self::getInstance()->offsetGet($key);
-	}
-
-	public static function set($key, $value)
-	{
-		self::getInstance()->offsetSet($key, $value);
+		return Amun_DataFactory::getProvider($key)->getTable();
 	}
 }
 

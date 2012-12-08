@@ -63,9 +63,9 @@ class connection extends AmunService_My_SettingsAbstract
 
 	public function getConnections()
 	{
-		$select = Amun_Sql_Table_Registry::get('Core_System_Connect_Access')
+		$select = Amun_Sql_Table_Registry::get('Openid_Access')
 			->select(array('id', 'returnTo', 'allowed', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
 				->select(array('id', 'name'), 'author')
 			)
 			->where('userId', '=', $this->user->id);

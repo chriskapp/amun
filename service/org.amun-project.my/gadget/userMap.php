@@ -48,9 +48,9 @@ SELECT
 	`country`.`code`,
 	COUNT(`country`.`id`) AS `count`
 
-	FROM {$this->registry['table.core_user_account']} `account`
+	FROM {$this->registry['table.user_account']} `account`
 
-		INNER JOIN {$this->registry['table.core_system_country']} `country`
+		INNER JOIN {$this->registry['table.country']} `country`
 
 			ON `account`.`countryId` = `country`.`id`
 

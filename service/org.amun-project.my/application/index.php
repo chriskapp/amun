@@ -45,7 +45,7 @@ class index extends AmunService_My_MyAbstract
 		$this->template->assign('account', $account);
 
 		// check whether remote profile
-		if($account->status == AmunService_Core_User_Account_Record::REMOTE)
+		if($account->status == AmunService_User_Account_Record::REMOTE)
 		{
 			header('HTTP/1.1 301 Moved Permanently');
 			header('Location: ' . $account->profileUrl);
@@ -80,12 +80,12 @@ class index extends AmunService_My_MyAbstract
 
 	private function getAccount()
 	{
-		return Amun_Sql_Table_Registry::get('Core_User_Account')
+		return Amun_Sql_Table_Registry::get('User_Account')
 			->select(array('id', 'status', 'name', 'gender', 'timezone', 'updated', 'date', 'profileUrl', 'thumbnailUrl'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Group')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Group')
 				->select(array('title'), 'group')
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_System_Country')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Country')
 				->select(array('title'), 'country')
 			)
 			->where('id', '=', $this->user->id)
@@ -94,13 +94,13 @@ class index extends AmunService_My_MyAbstract
 
 	private function getActivities()
 	{
-		$select = Amun_Sql_Table_Registry::get('Core_User_Activity')
+		$select = Amun_Sql_Table_Registry::get('User_Activity')
 			->select(array('id', 'parentId', 'status', 'verb', 'summary', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Activity_Receiver')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Activity_Receiver')
 				->select(array('id', 'status', 'activityId', 'userId', 'date'), 'receiver'),
 				'1:n'
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			)
 			->where('receiverUserId', '=', $this->user->id)
@@ -124,7 +124,7 @@ class index extends AmunService_My_MyAbstract
 
 	private function getGroups()
 	{
-		return Amun_Sql_Table_Registry::get('Core_User_Friend_Group')
+		return Amun_Sql_Table_Registry::get('User_Friend_Group')
 			->select(array('id', 'title', 'date'))
 			->where('userId', '=', $this->user->id)
 			->getAll();

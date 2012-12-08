@@ -109,7 +109,7 @@ class AmunService_My_Contact extends Amun_Data_RecordAbstract
 	{
 		if($this->_user === null)
 		{
-			$this->_user = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord($this->userId);
+			$this->_user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;

@@ -38,7 +38,7 @@ class AmunService_My_Notify_Table extends Amun_Sql_TableAbstract
 	{
 		return array(
 
-			'userId'    => $this->registry['table.core_user_account'],
+			'userId'    => $this->registry['table.user_account'],
 			'serviceId' => $this->registry['table.my_notify_service'],
 			'contactId' => $this->registry['table.my_contact'],
 

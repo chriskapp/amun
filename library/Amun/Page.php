@@ -66,7 +66,7 @@ class Amun_Page
 		$this->user     = $user;
 
 
-		$status = AmunService_Core_Content_Page_Record::NORMAL;
+		$status = AmunService_Content_Page_Record::NORMAL;
 		$sql    = <<<SQL
 SELECT
 
@@ -85,9 +85,9 @@ SELECT
 	page.date        AS `pageDate`,
 	service.source   AS `serviceSource`
 
-	FROM {$this->registry['table.core_content_page']} `page`
+	FROM {$this->registry['table.content_page']} `page`
 
-		INNER JOIN {$this->registry['table.core_content_service']} `service`
+		INNER JOIN {$this->registry['table.content_service']} `service`
 
 		ON `page`.`serviceId` = `service`.`id`
 
@@ -126,6 +126,11 @@ SQL;
 		}
 	}
 
+	public function getServiceId()
+	{
+		return $this->serviceId;
+	}
+
 	public function loadExtraRights()
 	{
 		$sql = <<<SQL
@@ -134,7 +139,7 @@ SELECT
 	`pageRight`.`groupId`,
 	`pageRight`.`newGroupId`
 
-	FROM {$this->registry['table.core_content_page_right']} `pageRight`
+	FROM {$this->registry['table.content_page_right']} `pageRight`
 
 		WHERE `pageRight`.`pageId` = {$this->id}
 
@@ -153,22 +158,22 @@ SQL;
 
 	public function hasRight()
 	{
-		return $this->load & AmunService_Core_Content_Page_Record::RIGHT;
+		return $this->load & AmunService_Content_Page_Record::RIGHT;
 	}
 
 	public function hasNav()
 	{
-		return $this->load & AmunService_Core_Content_Page_Record::NAV;
+		return $this->load & AmunService_Content_Page_Record::NAV;
 	}
 
 	public function hasPath()
 	{
-		return $this->load & AmunService_Core_Content_Page_Record::PATH;
+		return $this->load & AmunService_Content_Page_Record::PATH;
 	}
 
 	public function hasGadget()
 	{
-		return $this->load & AmunService_Core_Content_Page_Record::GADGET;
+		return $this->load & AmunService_Content_Page_Record::GADGET;
 	}
 
 	public static function getUrl(Amun_Registry $registry, $pageId)
@@ -179,7 +184,7 @@ SELECT
 
 	page.path
 
-	FROM {$registry['table.core_content_page']} `page`
+	FROM {$registry['table.content_page']} `page`
 
 		WHERE `page`.`id` = {$id}
 SQL;

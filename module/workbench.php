@@ -33,21 +33,13 @@
  */
 class workbench extends PSX_Module_ViewAbstract
 {
-	protected $session;
-	protected $user;
-
 	public function getDependencies()
 	{
-		return new Amun_Dependency_Default();
+		return new Amun_Dependency_Session($this->base->getConfig());
 	}
 
 	public function onLoad()
 	{
-		$this->session = new PSX_Session('amun_' . md5($this->config['psx_url']));
-		$this->session->start();
-
-		$this->user = $this->base->setUser(Amun_User::getId($this->session, $this->registry));
-
 		$this->template = new PSX_Template($this->config);
 		$this->template->set('system/workbench.tpl');
 	}

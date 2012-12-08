@@ -63,12 +63,12 @@ class application extends AmunService_My_SettingsAbstract
 
 	public function getApplications()
 	{
-		$select = Amun_Sql_Table_Registry::get('Core_System_Api_Access')
+		$select = Amun_Sql_Table_Registry::get('Oauth_Access')
 			->select(array('id', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_System_Api')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Oauth')
 				->select(array('id', 'url', 'title', 'description'), 'api')
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
 				->select(array('id', 'name'), 'author')
 			)
 			->where('authorId', '=', $this->user->id)

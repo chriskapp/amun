@@ -40,7 +40,7 @@ abstract class Amun_Sql_TableAbstract extends PSX_Sql_TableAbstract implements A
 	{
 		$this->registry = $registry;
 
-		parent::__construct($registry->getSql());
+		parent::__construct($this->registry->getSql());
 	}
 
 	public function getRegistry()

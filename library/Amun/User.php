@@ -62,7 +62,7 @@ class Amun_User
 		$this->registry = $registry;
 
 
-		$status = AmunService_Core_User_Account_Record::BANNED;
+		$status = AmunService_User_Account_Record::BANNED;
 		$sql    = <<<EOD
 SELECT
 
@@ -79,9 +79,9 @@ SELECT
 	account.date       AS `accountDate`,
 	group.title        AS `groupTitle`
 
-	FROM {$this->registry['table.core_user_account']} `account`
+	FROM {$this->registry['table.user_account']} `account`
 
-		INNER JOIN {$this->registry['table.core_user_group']} `group`
+		INNER JOIN {$this->registry['table.user_group']} `group`
 
 		ON `account`.`groupId` = `group`.`id`
 
@@ -113,7 +113,7 @@ EOD;
 			$now = new DateTime('NOW', $this->registry['core.default_timezone']);
 			$con = new PSX_Sql_Condition(array('id', '=', $this->id));
 
-			$this->sql->update($this->registry['table.core_user_account'], array(
+			$this->sql->update($this->registry['table.user_account'], array(
 
 				'lastSeen' => $now->format(PSX_DateTime::SQL),
 
@@ -128,6 +128,21 @@ EOD;
 		}
 	}
 
+	public function getConfig()
+	{
+		return $this->config;
+	}
+
+	public function getSql()
+	{
+		return $this->sql;
+	}
+
+	public function getRegistry()
+	{
+		return $this->registry;
+	}
+
 	public function setRights($groupId)
 	{
 		$this->rights = array();
@@ -139,9 +154,9 @@ SELECT
 	`right`.`id`,
 	`right`.`name`
 
-	FROM {$this->registry['table.core_user_group_right']} `groupRight`
+	FROM {$this->registry['table.user_group_right']} `groupRight`
 
-		INNER JOIN {$this->registry['table.core_user_right']} `right`
+		INNER JOIN {$this->registry['table.user_right']} `right`
 
 		ON `right`.`id` = `groupRight`.`rightId`
 
@@ -168,12 +183,12 @@ SQL;
 
 	public function isAdministrator()
 	{
-		return $this->status == AmunService_Core_User_Account_Record::ADMINISTRATOR;
+		return $this->status == AmunService_User_Account_Record::ADMINISTRATOR;
 	}
 
 	public function isRemote()
 	{
-		return $this->status == AmunService_Core_User_Account_Record::REMOTE;
+		return $this->status == AmunService_User_Account_Record::REMOTE;
 	}
 
 	public function isAnonymous()
@@ -183,8 +198,8 @@ SQL;
 
 	/**
 	 * This method tries to figure out whether a user tries to abuse the system.
-	 * Every user can insert, update or delete "security.input_limit" records
-	 * in the last "security.input_interval" minutes without entering an captcha
+	 * Every user can insert, update or delete "core.input_limit" records
+	 * in the last "core.input_interval" minutes without entering an captcha
 	 * After this the user has to solve an captcha
 	 *
 	 * @return boolean
@@ -197,18 +212,18 @@ SQL;
 		}
 
 		$now = new DateTime('NOW', $this->registry['core.default_timezone']);
-		$now->sub(new DateInterval($this->registry['security.input_interval']));
+		$now->sub(new DateInterval($this->registry['core.input_interval']));
 
 		$con = new PSX_Sql_Condition();
 		$con->add('userId', '=', $this->id);
 		$con->add('date', '>=', $now->format(PSX_DateTime::SQL));
 
-		$count = $this->sql->count($this->registry['table.core_system_log'], $con);
+		$count = $this->sql->count($this->registry['table.log'], $con);
 
-		if($count > $this->registry['security.input_limit'])
+		if($count > $this->registry['core.input_limit'])
 		{
 			$expire       = time() - $now->getTimestamp();
-			$percentage   = ceil(($count * 100) / ($this->registry['security.input_limit'] * 2));
+			$percentage   = ceil(($count * 100) / ($this->registry['core.input_limit'] * 2));
 			$expire       = $expire - ($expire * ($percentage / 100));
 
 			$lastVerified = isset($_SESSION['captcha_verified']) ? $_SESSION['captcha_verified'] : 0;
@@ -255,7 +270,7 @@ SQL;
 			$con = new PSX_Sql_Condition();
 			$con->add('id', '=', $record->userId);
 
-			$value = $this->sql->select($this->registry['table.core_user_account'], array('groupId'), $con, PSX_Sql::SELECT_FIELD);
+			$value = $this->sql->select($this->registry['table.user_account'], array('groupId'), $con, PSX_Sql::SELECT_FIELD);
 
 			return $value == $this->groupId;
 		}
@@ -298,17 +313,17 @@ SQL;
 
 	public function getAccount()
 	{
-		return Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord($this->id);
+		return Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->id);
 	}
 
-	public function hasFriend(AmunService_Core_User_Account_Record $account)
+	public function hasFriend(AmunService_User_Account_Record $account)
 	{
 		$con = new PSX_Sql_Condition();
 		$con->add('userId', '=', $this->id);
 		$con->add('friendId', '=', $account->id);
-		$con->add('status', '=', AmunService_Core_User_Friend_Record::NORMAL);
+		$con->add('status', '=', AmunService_User_Friend_Record::NORMAL);
 
-		$count = $this->sql->count($this->registry['table.core_user_friend'], $con);
+		$count = $this->sql->count($this->registry['table.user_friend'], $con);
 
 		return $count > 0;
 	}

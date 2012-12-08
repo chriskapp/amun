@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="db12cb2dd060056e75e7618ea99304ef6bf70a9a">
+<service xmlns="http://amun-project.org" signature="19d4ff518198f63d436ced4922ffda9a8fffa038">
   <status>system</status>
   <name>phpinfo</name>
+  <description>Service to offer PHP informations via an API</description>
   <path>/phpinfo</path>
   <namespace>phpinfo</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/phpinfo</type>

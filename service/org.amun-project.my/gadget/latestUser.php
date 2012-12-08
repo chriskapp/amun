@@ -47,7 +47,7 @@ class latestUser extends Amun_Module_GadgetAbstract
 		$this->htmlCss->add('my');
 
 		// get latest user
-		$result = Amun_Sql_Table_Registry::get('Core_User_Account')
+		$result = Amun_Sql_Table_Registry::get('User_Account')
 			->select(array('id', 'name', 'thumbnailUrl', 'profileUrl', 'date'))
 			->orderBy('date', PSX_Sql::SORT_DESC)
 			->limit($count)

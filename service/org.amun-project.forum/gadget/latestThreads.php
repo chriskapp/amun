@@ -52,10 +52,10 @@ class latestThreads extends Amun_Module_GadgetAbstract
 		// get latest thread
 		$select = Amun_Sql_Table_Registry::get('Forum')
 			->select(array('id', 'urlTitle', 'title', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
 				->select(array('id', 'name', 'profileUrl'), 'author')
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_Content_Page')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Content_Page')
 				->select(array('path'), 'page')
 			);
 

@@ -44,10 +44,10 @@ class navigation extends Amun_Module_GadgetAbstract
 		$pageId = $args->get('pageId', $this->page->id);
 
 
-		$result = Amun_Sql_Table_Registry::get('Core_Content_Page')
+		$result = Amun_Sql_Table_Registry::get('Content_Page')
 			->select(array('id', 'urlTitle', 'title', 'path'))
 			->where('parentId', '=', $pageId)
-			->where('status', '=', AmunService_Core_Content_Page_Record::NORMAL)
+			->where('status', '=', AmunService_Content_Page_Record::NORMAL)
 			->orderBy('sort', PSX_Sql::SORT_ASC)
 			->getAll();
 

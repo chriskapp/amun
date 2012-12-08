@@ -63,23 +63,20 @@ class friends extends AmunService_My_FriendsAbstract
 
 	private function getFriends()
 	{
-		PSX_Log::getLogger()->setLevel(PSX_Log::ALL);
-		PSX_Log::getLogger()->setHandler(new PSX_Log_Handler_File(PSX_PATH_CACHE . '/log.txt'));
-
-		$select = Amun_Sql_Table_Registry::get('Core_User_Friend')
+		$select = Amun_Sql_Table_Registry::get('User_Friend')
 			->select(array('id', 'status', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
 				->select(array('id', 'name'), 'author'),
 				'n:1',
 				'userId'
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_User_Account')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
 				->select(array('id', 'name', 'profileUrl', 'thumbnailUrl'), 'friend'),
 				'n:1',
 				'friendId'
 			)
 			->where('authorId', '=', $this->user->id)
-			->where('status', '=', AmunService_Core_User_Friend_Record::NORMAL);
+			->where('status', '=', AmunService_User_Friend_Record::NORMAL);
 
 		// search
 		$search = $this->post->search('string');

@@ -55,9 +55,9 @@ class security extends AmunService_My_SettingsAbstract
 	{
 		try
 		{
-			$currentPw = $this->post->current_password('string', array(new AmunService_Core_User_Account_Filter_Pw(), new Amun_Filter_Salt()), 'Current password');
-			$newPw     = $this->post->new_password('string', array(new AmunService_Core_User_Account_Filter_Pw()), 'New password');
-			$verifyPw  = $this->post->verify_password('string', array(new AmunService_Core_User_Account_Filter_Pw()), 'Verify password');
+			$currentPw = $this->post->current_password('string', array(new AmunService_User_Account_Filter_Pw(), new Amun_Filter_Salt()), 'Current password');
+			$newPw     = $this->post->new_password('string', array(new AmunService_User_Account_Filter_Pw()), 'New password');
+			$verifyPw  = $this->post->verify_password('string', array(new AmunService_User_Account_Filter_Pw()), 'Verify password');
 
 			if(!$this->validate->hasError())
 			{
@@ -66,13 +66,13 @@ class security extends AmunService_My_SettingsAbstract
 					throw new Amun_Exception('Passwords doesnt match');
 				}
 
-				$user = Amun_Sql_Table_Registry::get('Core_User_Account')->getRecord($this->user->id);
+				$user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->user->id);
 
 				if(strcmp($currentPw, $user->pw) === 0)
 				{
 					$user->setPw($newPw);
 
-					$handler = new AmunService_Core_User_Account_Handler($this->user);
+					$handler = new AmunService_User_Account_Handler($this->user);
 					$handler->update($user);
 
 					$this->template->assign('success', true);

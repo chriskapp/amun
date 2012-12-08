@@ -42,7 +42,7 @@ class Amun_Security
 	 */
 	public static function getSalt()
 	{
-		$config = Amun_Base::getInstance()->getConfig();
+		$config = Amun_Registry::getInstance()->getConfig();
 		$salt   = isset($config['amun_salt']) ? $config['amun_salt'] : '4ec656bfdee95a3596e31c3d36e49dda';
 
 		return $salt;
@@ -50,24 +50,24 @@ class Amun_Security
 
 	public static function getPwAlphaCount()
 	{
-		$registry = Amun_Base::getInstance()->getRegistry();
-		$count    = isset($registry['security.pw_alpha']) ? $registry['security.pw_alpha'] : 4;
+		$registry = Amun_Registry::getInstance();
+		$count    = isset($registry['core.pw_alpha']) ? $registry['core.pw_alpha'] : 4;
 
 		return $count;
 	}
 
 	public static function getPwNumericCount()
 	{
-		$registry = Amun_Base::getInstance()->getRegistry();
-		$count    = isset($registry['security.pw_numeric']) ? $registry['security.pw_numeric'] : 2;
+		$registry = Amun_Registry::getInstance();
+		$count    = isset($registry['core.pw_numeric']) ? $registry['core.pw_numeric'] : 2;
 
 		return $count;
 	}
 
 	public static function getPwSpecialCount()
 	{
-		$registry = Amun_Base::getInstance()->getRegistry();
-		$count    = isset($registry['security.pw_special']) ? $registry['security.pw_special'] : 0;
+		$registry = Amun_Registry::getInstance();
+		$count    = isset($registry['core.pw_special']) ? $registry['core.pw_special'] : 0;
 
 		return $count;
 	}

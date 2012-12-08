@@ -29,7 +29,7 @@
  * @license    http://www.gnu.org/licenses/gpl.html GPLv3
  * @link       http://amun.phpsx.org
  * @category   Amun
- * @package    Amun_Gadget
+ * @package    Amun_Module
  * @version    $Revision: 813 $
  */
 abstract class Amun_Module_GadgetAbstract
@@ -37,8 +37,10 @@ abstract class Amun_Module_GadgetAbstract
 	public function __construct()
 	{
 		// assign dependencies
-		$dependencies = new Amun_Dependency_Gadget();
-		$args         = $dependencies->getParameters();
+		$ct = new Amun_Dependency_Gadget(Amun_Registry::getInstance()->getConfig());
+		$ct->setup();
+
+		$args = $ct->getParameters();
 
 		foreach($args as $k => $obj)
 		{
