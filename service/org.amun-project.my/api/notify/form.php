@@ -41,6 +41,6 @@ class form extends Amun_Module_FormAbstract
 {
 	protected function getProvider($name = null)
 	{
-		return $this->getProvider($name === null ? 'My_Notify' : $name);
+		return parent::getProvider($name === null ? 'My_Notify' : $name);
 	}
 }

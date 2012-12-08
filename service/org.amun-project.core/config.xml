@@ -41,22 +41,26 @@
     <perm name="add" description="Core add"/>
     <perm name="edit" description="Core edit"/>
     <perm name="delete" description="Core delete"/>
-    <perm name="approval_view" description="System Approval view"/>
-    <perm name="approval_add" description="System Approval add"/>
-    <perm name="approval_edit" description="System Approval edit"/>
-    <perm name="approval_delete" description="System Approval delete"/>
-    <perm name="approval_record_view" description="System Approval Record view"/>
-    <perm name="approval_record_add" description="System Approval Record add"/>
-    <perm name="approval_record_edit" description="System Approval Record edit"/>
-    <perm name="approval_record_delete" description="System Approval Record delete"/>
-    <perm name="host_view" description="System Host view"/>
-    <perm name="host_add" description="System Host add"/>
-    <perm name="host_edit" description="System Host edit"/>
-    <perm name="host_delete" description="System Host delete"/>
-    <perm name="registry_view" description="System Registry view"/>
-    <perm name="registry_add" description="System Registry add"/>
-    <perm name="registry_edit" description="System Registry edit"/>
-    <perm name="registry_delete" description="System Registry delete"/>
+    <perm name="service_view" description="Core Service view"/>
+    <perm name="service_add" description="Core Service add"/>
+    <perm name="service_edit" description="Core Service edit"/>
+    <perm name="service_delete" description="Core Service delete"/>
+    <perm name="approval_view" description="Core Approval view"/>
+    <perm name="approval_add" description="Core Approval add"/>
+    <perm name="approval_edit" description="Core Approval edit"/>
+    <perm name="approval_delete" description="Core Approval delete"/>
+    <perm name="approval_record_view" description="Core Approval Record view"/>
+    <perm name="approval_record_add" description="Core Approval Record add"/>
+    <perm name="approval_record_edit" description="Core Approval Record edit"/>
+    <perm name="approval_record_delete" description="Core Approval Record delete"/>
+    <perm name="host_view" description="Core Host view"/>
+    <perm name="host_add" description="Core Host add"/>
+    <perm name="host_edit" description="Core Host edit"/>
+    <perm name="host_delete" description="Core Host delete"/>
+    <perm name="registry_view" description="Core Registry view"/>
+    <perm name="registry_add" description="Core Registry add"/>
+    <perm name="registry_edit" description="Core Registry edit"/>
+    <perm name="registry_delete" description="Core Registry delete"/>
   </permissions>
   <registry>
     <table name="core_service"/>

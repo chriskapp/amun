@@ -112,7 +112,7 @@ class serve extends Amun_Module_ApiAbstract
 				else
 				{
 					// relative path
-					$path = $this->registry['core.media_path'] . '/' . $row['path'];
+					$path = $this->registry['media.path'] . '/' . $row['path'];
 				}
 
 				if(!is_file($path))

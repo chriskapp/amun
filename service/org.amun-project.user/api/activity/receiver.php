@@ -58,7 +58,7 @@ class receiver extends Amun_Module_RestAbstract
 
 	protected function getProvider($name = null)
 	{
-		return $this->getProvider($name === null ? 'User_Activity_Receiver' : $name);
+		return parent::getProvider($name === null ? 'User_Activity_Receiver' : $name);
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)

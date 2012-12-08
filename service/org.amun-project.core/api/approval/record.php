@@ -56,7 +56,7 @@ class record extends Amun_Module_RestAbstract
 
 	protected function getProvider($name = null)
 	{
-		return $this->getProvider($name === null ? 'Core_Approval_Record' : $name);
+		return parent::getProvider($name === null ? 'Core_Approval_Record' : $name);
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)

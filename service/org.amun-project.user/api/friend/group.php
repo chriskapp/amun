@@ -50,7 +50,7 @@ class group extends Amun_Module_RestAbstract
 
 	protected function getProvider($name = null)
 	{
-		return $this->getProvider($name === null ? 'User_Friend_Group' : $name);
+		return parent::getProvider($name === null ? 'User_Friend_Group' : $name);
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)

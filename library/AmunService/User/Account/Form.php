@@ -218,13 +218,6 @@ class AmunService_User_Account_Form extends Amun_Data_FormAbstract
 			$panel->add($groupId);
 
 
-			$hostId = new Amun_Form_Element_Select('hostId', 'Host', $record->hostId);
-			$hostId->setOptions($this->getHost());
-			$hostId->setDisabled(true);
-
-			$panel->add($hostId);
-
-
 			$status = new Amun_Form_Element_Select('status', 'Status', $record->status);
 			$status->setOptions($this->getStatus());
 			$status->setDisabled(true);

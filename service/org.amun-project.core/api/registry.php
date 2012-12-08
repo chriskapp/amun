@@ -65,7 +65,7 @@ class registry extends Amun_Module_RestAbstract
 
 	protected function getProvider($name = null)
 	{
-		return $this->getProvider($name === null ? 'Core_Registry' : $name);
+		return parent::getProvider($name === null ? 'Core_Registry' : $name);
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)

@@ -42,7 +42,7 @@ class AmunService_Media_Form extends Amun_Data_FormAbstract
 		$panel = new Amun_Form_Element_Panel('media', 'Media');
 
 
-		$rightId = new Amun_Form_Element_Select('rightId', 'Right ID', 5); # content_media_view right
+		$rightId = new Amun_Form_Element_Select('rightId', 'Right ID', 69); # media_view right
 		$rightId->setOptions($this->getRight());
 
 		$panel->add($rightId);
@@ -208,7 +208,7 @@ class AmunService_Media_Form extends Amun_Data_FormAbstract
 
 		if($path === null)
 		{
-			$path = $this->registry['core.media_path'];
+			$path = $this->registry['media.path'];
 
 			array_push($folder, array(
 
@@ -226,7 +226,7 @@ class AmunService_Media_Form extends Amun_Data_FormAbstract
 
 			if($file[0] != '.' && is_dir($item))
 			{
-				$value = substr($item, strlen($this->registry['core.media_path']) + 1);
+				$value = substr($item, strlen($this->registry['media.path']) + 1);
 
 				array_push($folder, array(
 

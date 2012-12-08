@@ -41,7 +41,7 @@ class form extends Amun_Module_FormAbstract
 {
 	protected function getProvider($name = null)
 	{
-		return $this->getProvider($name === null ? 'Core_Registry' : $name);
+		return parent::getProvider($name === null ? 'Core_Registry' : $name);
 	}
 }
 
