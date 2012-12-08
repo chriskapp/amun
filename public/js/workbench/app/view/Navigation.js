@@ -131,13 +131,6 @@ Ext.define('Workbench.view.Navigation', {
             });
         }
 
-        if (Amun.xrds.Manager.findServiceUri('http://ns.amun-project.org/2011/amun/system/country')) {
-            children.push({
-                title: 'Countries',
-                type: 'http://ns.amun-project.org/2011/amun/system/country'
-            });
-        }
-
         nav.push({
             title: 'System',
             store: Ext.create('Ext.data.Store', {
