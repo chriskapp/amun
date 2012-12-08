@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="832d883fdbf70d4eb63f77b232966a0d40d08ac9">
+<service xmlns="http://amun-project.org" signature="aba315fb6c80e1b664877d0495b9d0088a13f442">
   <status>system</status>
   <name>user</name>
   <path>/user</path>
@@ -104,11 +104,14 @@
     <table name="user_right"/>
   </registry>
   <event>
-    <listener name="core.service_install" class="AmunService_User_Listener"/>
+    <listener name="core.service_install" class="AmunService_User_ConfigListener"/>
+    <listener name="lrdd.resource_discovery" class="AmunService_User_LrddListener"/>
   </event>
   <library>
     <dir name="AmunService">
       <dir name="User">
+        <file name="ConfigListener.php" md5="880fb161bb85fd162075ba3bcd255e87"/>
+        <file name="LrddListener.php" md5="b87b00b843d8845910f4fc546b5d10a3"/>
         <dir name="Account">
           <dir name="Filter">
             <file name="Email.php" md5="8ef2fe0e0c4dc795ac601492c4b321b2"/>

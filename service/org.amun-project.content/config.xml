@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="ef3d29ff70c0e15efec408ed3311befd98af14bc">
+<service xmlns="http://amun-project.org" signature="f12ecc4e3f222da799bcccc464830cb49b02cd75">
   <status>system</status>
   <name>content</name>
   <path>/content</path>
@@ -64,9 +64,13 @@
     <table name="content_page_option"/>
     <table name="content_page_right"/>
   </registry>
+  <event>
+    <listener name="lrdd.resource_discovery" class="AmunService_Content_LrddListener"/>
+  </event>
   <library>
     <dir name="AmunService">
       <dir name="Content">
+        <file name="LrddListener.php" md5="f93e2ee9ea8f7e88333b93811c1e0e33"/>
         <dir name="Gadget">
           <dir name="Filter">
             <file name="Path.php" md5="ccd7a842e5478e59c90989af1270bb22"/>

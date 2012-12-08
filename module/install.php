@@ -34,12 +34,25 @@
 class install extends PSX_Module_ViewAbstract
 {
 	protected $services = array(
-		'org.amun-project.install', 
-		'org.amun-project.core', 
-		'org.amun-project.my', 
-		'org.amun-project.profile', 
-		'org.amun-project.page', 
-		'org.amun-project.comment', 
+		'org.amun-project.log',
+		'org.amun-project.xrds',
+		'org.amun-project.lrdd',
+		'org.amun-project.user',
+		'org.amun-project.core',
+		'org.amun-project.oauth',
+		'org.amun-project.media',
+		'org.amun-project.openid',
+		'org.amun-project.country',
+		'org.amun-project.mail',
+		'org.amun-project.hostmeta',
+		'org.amun-project.swagger',
+		'org.amun-project.sitemap',
+		'org.amun-project.phpinfo',
+		'org.amun-project.content',
+		'org.amun-project.my',
+		'org.amun-project.profile',
+		'org.amun-project.page',
+		'org.amun-project.comment',
 		'org.amun-project.news',
 	);
 
@@ -344,6 +357,36 @@ SQL;
 				if(count($errors) > 0)
 				{
 					throw new Amun_Exception('The following errors occured while installing the services: ' . "\n" . implode("\n", $errors) . "\n" . '--');
+				}
+
+
+				// the follwoing rights can not installed through the config xml
+				// because the user service is installed after wich handles the 
+				// permissions
+				$count = $this->sql->count($this->registry['table.user_right']);
+
+				if($count == 0)
+				{
+					$this->sql->insert($this->registry['table.user_right'], array(
+
+						'name'        => 'log_view',
+						'description' => 'Log view',
+
+					));
+
+					$this->sql->insert($this->registry['table.user_right'], array(
+
+						'name'        => 'xrds_view',
+						'description' => 'Xrds view',
+
+					));
+
+					$this->sql->insert($this->registry['table.user_right'], array(
+
+						'name'        => 'lrdd_view',
+						'description' => 'Lrdd view',
+
+					));
 				}
 			}
 
