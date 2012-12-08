@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="81f460fc4bbee8c69108894c841bf2dba7630d57">
+  <status>system</status>
+  <name>oauth</name>
+  <description>Provides an Oauth 1.0 endpoint implementation where applications can register to access the API</description>
+  <path>/oauth</path>
+  <namespace>oauth</namespace>
+  <type>http://ns.amun-project.org/2011/amun/service/oauth</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <api>
+    <service>
+      <type>http://oauth.net/core/1.0/endpoint/request</type>
+      <type>http://ns.amun-project.org/2011/amun/auth/request</type>
+      <uri>/endpoint/request</uri>
+    </service>
+    <service>
+      <type>http://oauth.net/core/1.0/endpoint/authorize</type>
+      <type>http://ns.amun-project.org/2011/amun/auth/authorization</type>
+      <uri>/endpoint/authorization</uri>
+    </service>
+    <service>
+      <type>http://oauth.net/core/1.0/endpoint/access</type>
+      <type>http://ns.amun-project.org/2011/amun/auth/access</type>
+      <uri>/endpoint/access</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/system/api</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/system/api/access</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/access</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/system/api/request</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/request</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Oauth API view"/>
+    <perm name="add" description="Oauth API add"/>
+    <perm name="edit" description="Oauth API edit"/>
+    <perm name="delete" description="Oauth API delete"/>
+    <perm name="access_view" description="Oauth API Access view"/>
+    <perm name="access_add" description="Oauth API Access add"/>
+    <perm name="access_edit" description="Oauth API Access edit"/>
+    <perm name="access_delete" description="Oauth API Access delete"/>
+    <perm name="request_view" description="Oauth API Request view"/>
+    <perm name="request_add" description="Oauth API Request add"/>
+    <perm name="request_edit" description="Oauth API Request edit"/>
+    <perm name="request_delete" description="Oauth API Request delete"/>
+  </permissions>
+  <registry>
+    <table name="oauth"/>
+    <table name="oauth_access"/>
+    <table name="oauth_request"/>
+  </registry>
+  <library>
+    <dir name="AmunService">
+      <dir name="Oauth">
+        <dir name="Access">
+          <file name="Form.php" md5="9a4e5f00e614f465ab926a0c0bc55f39"/>
+          <file name="Handler.php" md5="28d837aa7ae5e61d1ce1d9d6c2287e01"/>
+          <file name="Record.php" md5="0e9f16f3bd9dbd1a8748d048425fdc15"/>
+          <file name="Table.php" md5="c2e7e0d4055c150d4e07cd96b0f578e2"/>
+        </dir>
+        <dir name="Filter">
+          <file name="Callback.php" md5="d06a9779a72b288ec3fb8c189a231982"/>
+          <file name="Status.php" md5="4c1fd2b1bc71e8cff28e09190a7a745d"/>
+        </dir>
+        <file name="Form.php" md5="7c75c01864e7b46db0915558d18deff1"/>
+        <file name="Handler.php" md5="ebb64cba70f5bf808a4cdfbf790596ad"/>
+        <file name="Record.php" md5="ba9150f0510d65bc5e600a30ed525dbf"/>
+        <dir name="Request">
+          <file name="Form.php" md5="4ab67bcd7ed8d297a7ac4b1cf79cde83"/>
+          <file name="Handler.php" md5="4da288b2f7937de181b894f53729c53e"/>
+          <file name="Record.php" md5="6f22da54ef7225c1ab190081b650e03a"/>
+          <file name="Table.php" md5="99145a15e68088ea1df57487e1a0d30b"/>
+        </dir>
+        <file name="Table.php" md5="d628fe433a120e5d08a65bc57ba6d504"/>
+      </dir>
+    </dir>
+  </library>
+  <database>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.oauth}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `status` int(10) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `email` varchar(64) NOT NULL,
+  `url` varchar(256) NOT NULL,
+  `title` varchar(64) NOT NULL,
+  `description` longtext NOT NULL,
+  `consumerKey` varchar(40) NOT NULL,
+  `consumerSecret` varchar(40) NOT NULL,
+  `callback` varchar(256) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `consumerKey` (`consumerKey`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.oauth_access}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `apiId` int(10) NOT NULL,
+  `userId` int(10) NOT NULL,
+  `allowed` tinyint(1) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `apiUserId` (`apiId`,`userId`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.oauth_request}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `apiId` int(10) NOT NULL,
+  `userId` int(10) NOT NULL,
+  `status` int(10) NOT NULL,
+  `ip` varchar(32) NOT NULL,
+  `nonce` varchar(16) NOT NULL,
+  `callback` varchar(256) NOT NULL,
+  `token` varchar(40) NOT NULL,
+  `tokenSecret` varchar(40) NOT NULL,
+  `verifier` varchar(32) NOT NULL,
+  `timestamp` varchar(25) NOT NULL,
+  `expire` varchar(25) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `token` (`token`)
+) ENGINE=MyISAM  DEFAULT CHARSET=ascii;]]></query>
+  </database>
+</service>

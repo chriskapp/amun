@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="e89140baef2148c95078753846ff0ab5e69c0558">
+  <status>system</status>
+  <name>mail</name>
+  <description>A service to manage mail templates wich can be used by other services</description>
+  <path>/mail</path>
+  <namespace>mail</namespace>
+  <type>http://ns.amun-project.org/2011/amun/service/mail</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/system/mail</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Mail View"/>
+  </permissions>
+  <registry>
+    <table name="mail"/>
+  </registry>
+  <event>
+    <listener name="core.service_install" class="AmunService_Mail_Listener"/>
+  </event>
+  <library>
+    <dir name="Amun">
+      <dir name="Mail">
+        <file name="SenderInterface.php" md5="61d5c17a876e6e722298da7110fb4f32"/>
+      </dir>
+    </dir>
+    <dir name="AmunService">
+      <dir name="Mail">
+        <file name="Form.php" md5="d49b61ea751e0e4eacc3aa82710ab01c"/>
+        <file name="Handler.php" md5="497c13ad59eb8074c8c55e8d3e33f962"/>
+        <file name="Listener.php" md5="6165fed184d5d6b7dec7f3bd207390af"/>
+        <file name="Record.php" md5="7dd07a560b2d4d0d01cfa2f6f35f3d07"/>
+        <file name="Sender.php" md5="c73ce3549fafc4a69d1b3f9860f20f50"/>
+        <file name="Table.php" md5="8b9821d672abb22a5e72b81cc8ed2295"/>
+      </dir>
+    </dir>
+    <dir name="Zend">
+      <file name="Exception.php" md5="496025ea0e253c9d0b75a0fbf8f355b2"/>
+      <dir name="Mail">
+        <file name="Exception.php" md5="c919ec2627b24350edd7ad8c0a1ab50e"/>
+        <dir name="Message">
+          <file name="File.php" md5="45c4e3c40269e9105cacafdc54591d54"/>
+          <file name="Interface.php" md5="af4c8ae1d3d254c93e5a0b54f70e399c"/>
+        </dir>
+        <file name="Message.php" md5="61f8fa0e780cfaaf9c1b1d441db2d061"/>
+        <dir name="Part">
+          <file name="File.php" md5="92f9255434cdd382ead81bb5271d4a4b"/>
+          <file name="Interface.php" md5="b153b7dd982d2e9f23b48e2f379d4f4c"/>
+        </dir>
+        <file name="Part.php" md5="83d5cab897af6641e5cd083b5c48d5cd"/>
+        <dir name="Protocol">
+          <file name="Abstract.php" md5="90982c14e180fb1d9d48ffa08bc7cea3"/>
+          <file name="Exception.php" md5="e7d1b91c825530c452cf1ae2cd4b7e96"/>
+          <file name="Imap.php" md5="390607e16032e5efc992c0f0cd58359a"/>
+          <file name="Pop3.php" md5="efeff3bbd8e9a20aa29a4ed085a2484a"/>
+          <dir name="Smtp">
+            <dir name="Auth">
+              <file name="Crammd5.php" md5="78ec81a76229400054bc8e1a72973543"/>
+              <file name="Login.php" md5="db550c04ce8f996e76ef130ab728873d"/>
+              <file name="Plain.php" md5="c5c6772d6c1cfbd35d6d65d280345fec"/>
+            </dir>
+          </dir>
+          <file name="Smtp.php" md5="c00acfa1d91be4d45347b7c528d6254c"/>
+        </dir>
+        <dir name="Storage">
+          <file name="Abstract.php" md5="4d13b659872d2d2d7b3a8e82b401e0e9"/>
+          <file name="Exception.php" md5="e9f5de07ad8e06cdb0180b1ece24dd96"/>
+          <dir name="Folder">
+            <file name="Interface.php" md5="c42d375159c8c7e2f52336ae21898815"/>
+            <file name="Maildir.php" md5="e058ad5d3b2097f45808702b90cacc97"/>
+            <file name="Mbox.php" md5="039c4264c936dec2f432893a959e2bbc"/>
+          </dir>
+          <file name="Folder.php" md5="29eaa7d50d24e33d7e6523b5a4c3f780"/>
+          <file name="Imap.php" md5="34bed69abe6b8c01e2e6fad303112483"/>
+          <file name="Maildir.php" md5="1af672f57ad4386ca250e820dba30943"/>
+          <file name="Mbox.php" md5="4a221a5987da252eddeff11c0720b7a9"/>
+          <file name="Pop3.php" md5="11a2109d3d93e1d402aef4fc43270129"/>
+          <dir name="Writable">
+            <file name="Interface.php" md5="a9a8ec8103b5db53d20ad23f31ffe63b"/>
+            <file name="Maildir.php" md5="6f9c8779fccc498de933eefe832e6319"/>
+          </dir>
+        </dir>
+        <file name="Storage.php" md5="f6dfb86357dd6c45e9ff8a4c71ed9a3e"/>
+        <dir name="Transport">
+          <file name="Abstract.php" md5="f6b2c1d2d385b1e03a0d55257553bd3f"/>
+          <file name="Exception.php" md5="a3a47574bd3ed8222c36542c280cb502"/>
+          <file name="File.php" md5="69a30a4f731073c2c9cb5572383cd52b"/>
+          <file name="Sendmail.php" md5="a5156fcb68f059f9125a4d04268eb003"/>
+          <file name="Smtp.php" md5="31eb38b7827b1d52fa47d3981d137d86"/>
+        </dir>
+      </dir>
+      <file name="Mail.php" md5="5a5326e74e44feba08ccc589423e9d5c"/>
+      <dir name="Mime">
+        <file name="Decode.php" md5="8f5e29919c4cc8a424fbb34264a6428e"/>
+        <file name="Exception.php" md5="38b2929457173348edfa36275d52bee5"/>
+        <file name="Message.php" md5="f28eaa629d89f59b9eb7a7941d22fbb5"/>
+        <file name="Part.php" md5="2ed34dd2ebba18cf3f34add091c906fc"/>
+      </dir>
+      <file name="Mime.php" md5="0059c7eef064f1225af33d1ddc0e8cef"/>
+    </dir>
+  </library>
+  <database>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.mail}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) NOT NULL,
+  `from` varchar(64) NOT NULL,
+  `subject` varchar(256) NOT NULL,
+  `text` text NOT NULL,
+  `html` text NOT NULL,
+  `values` varchar(512) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `NAME` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8]]></query>
+  </database>
+</service>

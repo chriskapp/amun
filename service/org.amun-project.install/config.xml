@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="334b615823c6894165992017252df3d3667e6743">
+  <status>system</status>
+  <name>install</name>
+  <path>/install</path>
+  <namespace>install</namespace>
+  <type>http://ns.amun-project.org/2011/amun/install</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <required>
+    <service>org.amun-project.log</service>
+    <service>org.amun-project.xrds</service>
+    <service>org.amun-project.oauth</service>
+    <service>org.amun-project.media</service>
+    <service>org.amun-project.openid</service>
+    <service>org.amun-project.country</service>
+    <service>org.amun-project.mail</service>
+    <service>org.amun-project.hostmeta</service>
+    <service>org.amun-project.lrdd</service>
+    <service>org.amun-project.swagger</service>
+    <service>org.amun-project.sitemap</service>
+    <service>org.amun-project.phpinfo</service>
+    <service>org.amun-project.content</service>
+    <service>org.amun-project.user</service>
+  </required>
+</service>

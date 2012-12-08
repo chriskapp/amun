@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="ef3d29ff70c0e15efec408ed3311befd98af14bc">
+  <status>system</status>
+  <name>content</name>
+  <path>/content</path>
+  <namespace>content</namespace>
+  <type>http://ns.amun-project.org/2011/amun/content</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/content/gadget</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/gadget</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/content/page</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/page</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/content/page/gadget</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/page/gadget</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/content/page/option</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/page/option</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Core view"/>
+    <perm name="add" description="Core add"/>
+    <perm name="edit" description="Core edit"/>
+    <perm name="delete" description="Core delete"/>
+    <perm name="gadget_view" description="Content Gadget view"/>
+    <perm name="gadget_add" description="Content Gadget add"/>
+    <perm name="gadget_edit" description="Content Gadget edit"/>
+    <perm name="gadget_delete" description="Content Gadget delete"/>
+    <perm name="page_view" description="Content Page view"/>
+    <perm name="page_add" description="Content Page add"/>
+    <perm name="page_edit" description="Content Page edit"/>
+    <perm name="page_delete" description="Content Page delete"/>
+    <perm name="page_gadget_view" description="Content Page Gadget view"/>
+    <perm name="page_gadget_add" description="Content Page Gadget add"/>
+    <perm name="page_gadget_edit" description="Content Page Gadget edit"/>
+    <perm name="page_gadget_delete" description="Content Page Gadget delete"/>
+    <perm name="page_option_view" description="Content Page Option view"/>
+    <perm name="page_option_add" description="Content Page Option add"/>
+    <perm name="page_option_edit" description="Content Page Option edit"/>
+    <perm name="page_option_delete" description="Content Page Option delete"/>
+    <perm name="page_right_view" description="Content Page Right view"/>
+    <perm name="page_right_add" description="Content Page Right add"/>
+    <perm name="page_right_edit" description="Content Page Right edit"/>
+    <perm name="page_right_delete" description="Content Page Right delete"/>
+  </permissions>
+  <registry>
+    <table name="content_gadget"/>
+    <table name="content_page"/>
+    <table name="content_page_gadget"/>
+    <table name="content_page_option"/>
+    <table name="content_page_right"/>
+  </registry>
+  <library>
+    <dir name="AmunService">
+      <dir name="Content">
+        <dir name="Gadget">
+          <dir name="Filter">
+            <file name="Path.php" md5="ccd7a842e5478e59c90989af1270bb22"/>
+          </dir>
+          <file name="Form.php" md5="3d27803d20e686335bffb5a71246b38f"/>
+          <file name="Handler.php" md5="e3245da8f97ee1d15f529d4074faf80b"/>
+          <file name="Record.php" md5="cca47ba4df4d5298adb6b8f379b53245"/>
+          <file name="Table.php" md5="3a161d773991ef65d32e30c2961ac10b"/>
+        </dir>
+        <dir name="Page">
+          <dir name="Filter">
+            <file name="Load.php" md5="ea6b225cd948c5913070165c6c929be3"/>
+            <file name="ParentId.php" md5="b471277a30e62b4a0b4fb354c7b396de"/>
+            <file name="Status.php" md5="c8ce2b1e9152126465b3e95101772fbb"/>
+            <file name="Template.php" md5="66ab20f07cd831271bcac5baf1e6fc39"/>
+            <file name="TitleExists.php" md5="f43e19aa03050e5c81edc606eeab4cf4"/>
+          </dir>
+          <file name="Form.php" md5="2d26a6f9392718d1198ce29c60922b9b"/>
+          <dir name="Gadget">
+            <file name="Form.php" md5="b039b8f1ef74713d8c8cf26e739feb6f"/>
+            <file name="Handler.php" md5="24ebdb5035b5d66244398affc0df7e50"/>
+            <file name="Record.php" md5="4b16ca9f9e36b6eb2cca75f205668435"/>
+            <file name="Table.php" md5="b4060f7622e3ea5b3c001eedcff5a390"/>
+          </dir>
+          <file name="Handler.php" md5="857d15429639f97aaab263f368520e37"/>
+          <dir name="Option">
+            <file name="Form.php" md5="556653a7bebf7d8f5cd9d73a22f810b6"/>
+            <file name="Handler.php" md5="17cddbeb81d272a3f4b67ddd0e4e5c3b"/>
+            <file name="Record.php" md5="502cf761ed10d419729967ea0d6020cc"/>
+            <file name="Table.php" md5="578e3fc36a2bed7eda244c2515284b35"/>
+          </dir>
+          <file name="Record.php" md5="f8d7408b8e267e5a7de47c3bc95116e9"/>
+          <dir name="Right">
+            <file name="Form.php" md5="87cbb6ebb25c19f173ac5734678ee994"/>
+            <file name="Handler.php" md5="3a20bd9ae7fbd596dfca39c519a15b62"/>
+            <file name="Record.php" md5="79252c7d296a0e92fb97af5fec475f8c"/>
+            <file name="Table.php" md5="c2360bee7cabe282fe260f077ff16463"/>
+          </dir>
+          <file name="Table.php" md5="5c02461e0fefd7b64e8fbfba5ca93d91"/>
+        </dir>
+      </dir>
+    </dir>
+  </library>
+  <database>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.content_gadget}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `globalId` varchar(36) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `title` varchar(32) NOT NULL,
+  `path` varchar(256) NOT NULL,
+  `param` text,
+  `cache` tinyint(1) NOT NULL,
+  `expire` varchar(25) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `globalId` (`globalId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.content_page}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `parentId` int(10) NOT NULL,
+  `globalId` varchar(36) NOT NULL,
+  `serviceId` int(10) NOT NULL,
+  `rightId` int(10) NOT NULL,
+  `status` int(10) NOT NULL,
+  `load` int(10) NOT NULL DEFAULT '3',
+  `sort` int(10) NOT NULL DEFAULT '0',
+  `path` varchar(256) NOT NULL,
+  `urlTitle` varchar(32) NOT NULL,
+  `title` varchar(32) NOT NULL,
+  `template` text NOT NULL,
+  `cache` tinyint(1) NOT NULL,
+  `expire` varchar(25) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `globalId` (`globalId`),
+  UNIQUE KEY `path` (`path`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.content_page_gadget}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `pageId` int(10) NOT NULL,
+  `gadgetId` int(10) NOT NULL,
+  `sort` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `pageGadgetId` (`pageId`,`gadgetId`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.content_page_option}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `optionId` int(10) NOT NULL,
+  `rightId` int(10) NOT NULL,
+  `srcPageId` int(10) NOT NULL,
+  `destPageId` int(10) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `href` varchar(512) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.content_page_right}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `pageId` int(10) NOT NULL,
+  `groupId` int(10) NOT NULL,
+  `newGroupId` int(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `pageGroupId` (`pageId`,`groupId`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
+  </database>
+</service>

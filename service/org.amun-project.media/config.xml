@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="0908626da38f0cbb866d065e0309c3818ab4a0d4">
+  <status>normal</status>
+  <name>media</name>
+  <description>Offers a general way to upload and access arbitrary media files</description>
+  <path>/media</path>
+  <namespace>media</namespace>
+  <type>http://ns.amun-project.org/2011/amun/service/media</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/content/media</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Media View"/>
+    <perm name="add" description="Media Add"/>
+    <perm name="edit" description="Media Edit"/>
+    <perm name="delete" description="Media Delete"/>
+  </permissions>
+  <registry>
+    <table name="media"/>
+    <param name="upload_size" value="4194304" type="INTEGER"/>
+    <param name="path" value="../cache" type="STRING"/>
+  </registry>
+  <library>
+    <dir name="AmunService">
+      <dir name="Media">
+        <dir name="Filter">
+          <file name="Folder.php" md5="89acf3cceb755aca2f549266b55284fc"/>
+        </dir>
+        <file name="Form.php" md5="e35c9e4a915d2aac33d2a0b6b65bd0ea"/>
+        <file name="Handler.php" md5="89fc1518d8dc73902acc84788b0bc0ee"/>
+        <file name="Record.php" md5="f762cd60b48d68b4f4a4b9d5258fcebc"/>
+        <file name="Table.php" md5="12fd8af4cbdd55aeb6bd6e4786d4eb4a"/>
+      </dir>
+    </dir>
+  </library>
+  <database>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.media}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `globalId` varchar(36) NOT NULL,
+  `rightId` int(10) DEFAULT NULL,
+  `name` varchar(128) NOT NULL,
+  `path` varchar(320) NOT NULL,
+  `type` enum('application','audio','text','image','video') NOT NULL,
+  `size` int(10) NOT NULL,
+  `mimeType` varchar(64) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `globalId` (`globalId`),
+  UNIQUE KEY `path` (`path`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+  </database>
+</service>

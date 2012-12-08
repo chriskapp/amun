@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="e2a2686eb7fdf488cca8879c4d089f7860d3b8b0">
+  <status>system</status>
+  <name>log</name>
+  <description>Service wich logs every record insert, update or delete. All logs entries can be accessed trough the API</description>
+  <path>/log</path>
+  <namespace>log</namespace>
+  <type>http://ns.amun-project.org/2011/amun/service/log</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/system/log</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Log view"/>
+  </permissions>
+  <registry>
+    <table name="log"/>
+  </registry>
+  <event>
+    <listener name="core.record_change" class="AmunService_Log_Listener"/>
+  </event>
+  <library>
+    <dir name="AmunService">
+      <dir name="Log">
+        <file name="Form.php" md5="2b9daa5ef0825c8628de3237e674429a"/>
+        <file name="Handler.php" md5="ff999234c345caf3c6ff4fb1ad758d94"/>
+        <file name="Listener.php" md5="b8442ac87395d28eb44931b787b68554"/>
+        <file name="Record.php" md5="786ef92b08bb994659ae93bf66c6c93b"/>
+        <file name="Table.php" md5="5d7ea15b3a541014ee9075e697a512b9"/>
+      </dir>
+    </dir>
+  </library>
+  <database>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.log}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `userId` int(10) NOT NULL,
+  `refId` int(10) NOT NULL,
+  `type` enum('INSERT','UPDATE','DELETE') NOT NULL,
+  `table` varchar(64) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii]]></query>
+  </database>
+</service>

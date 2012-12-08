@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="2fa917d051169bdab7b6e92043941fc0fa066f65">
+  <status>system</status>
+  <name>openid</name>
+  <description>Provides an OpenID provider implementation</description>
+  <path>/openid</path>
+  <namespace>openid</namespace>
+  <type>http://ns.amun-project.org/2011/amun/service/openid</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/system/connect</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/system/connect/access</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/access</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/system/connect/assoc</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/assoc</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="OpenId View"/>
+  </permissions>
+  <registry>
+    <table name="openid"/>
+    <table name="openid_access"/>
+    <table name="openid_assoc"/>
+  </registry>
+  <library>
+    <dir name="AmunService">
+      <dir name="Openid">
+        <dir name="Access">
+          <file name="Form.php" md5="904c79c801c3e5ec66122a1c30f7eccb"/>
+          <file name="Handler.php" md5="811058476fedb7992061baf6ff0faf65"/>
+          <file name="Record.php" md5="f75a9e64e9e4310b165e3dc6d0793b2c"/>
+          <file name="Table.php" md5="515d82d172d05fce26a19934e04a944a"/>
+        </dir>
+        <dir name="Assoc">
+          <file name="Table.php" md5="da5d88115094ee852a97b049249519c1"/>
+        </dir>
+        <dir name="Filter">
+          <file name="Status.php" md5="9a1cbbc4f8d44815cd6de3b96bb4e23e"/>
+        </dir>
+        <file name="Form.php" md5="03eac4529e316e1ae89a3d131d118317"/>
+        <file name="Handler.php" md5="eeb9c0f678dfaf9a2e5c209a0c43169d"/>
+        <file name="Record.php" md5="effa496490112b40cef337fb4e2c938e"/>
+        <file name="Table.php" md5="0a48798be1050a25a8dab1ca24dc197b"/>
+      </dir>
+    </dir>
+  </library>
+  <database>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.openid}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `userId` int(10) NOT NULL,
+  `assocId` int(10) NOT NULL,
+  `status` int(10) NOT NULL DEFAULT '1',
+  `claimedId` varchar(256) NOT NULL,
+  `identity` varchar(256) NOT NULL,
+  `returnTo` varchar(256) NOT NULL,
+  `responseNonce` varchar(32) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_assoc_id` (`userId`,`assocId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.openid_access}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `userId` int(10) NOT NULL,
+  `returnTo` varchar(256) NOT NULL,
+  `allowed` tinyint(1) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `userId_returnTo` (`userId`,`returnTo`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.openid_assoc}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `assocHandle` varchar(256) NOT NULL,
+  `assocType` enum('HMAC-SHA1','HMAC-SHA256') NOT NULL,
+  `sessionType` enum('DH-SHA1','DH-SHA256'),
+  `secret` varchar(256) NOT NULL,
+  `expires` varchar(25) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `assocHandle` (`assocHandle`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
+  </database>
+</service>

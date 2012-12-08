@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="266ab73e8ea42573ed977ca64f19ff78f28e47c3">
+  <status>system</status>
+  <name>xrds</name>
+  <description>Provides an xrds endpoint to discover all APIs</description>
+  <path>/xrds</path>
+  <namespace>xrds</namespace>
+  <type>http://ns.amun-project.org/2011/amun/service/xrds</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/xrds</type>
+      <uri>/</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="XRDS View"/>
+  </permissions>
+  <registry>
+    <table name="xrds"/>
+    <table name="xrds_type"/>
+  </registry>
+  <event>
+    <listener name="core.service_install" class="AmunService_Xrds_Listener"/>
+  </event>
+  <library>
+    <dir name="AmunService">
+      <dir name="Xrds">
+        <file name="Listener.php" md5="385202b9a6329b02b4be21b4eb7bb472"/>
+      </dir>
+    </dir>
+  </library>
+  <database>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.xrds}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `serviceId` int(10) NOT NULL,
+  `priority` int(10) NOT NULL DEFAULT '0',
+  `endpoint` varchar(256) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `endpoint` (`endpoint`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.xrds_type}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `apiId` int(10) NOT NULL,
+  `type` varchar(512) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `apiId_type` (`apiId`,`type`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
+  </database>
+</service>

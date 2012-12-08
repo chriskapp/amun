@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="0e7278d4acc25c8afb09e499099ba7a893f77623">
+  <status>system</status>
+  <name>pshb</name>
+  <description>PubSubHubBub notifier wich sends a new content notification request to an hub</description>
+  <path>/pshb</path>
+  <namespace>pshb</namespace>
+  <type>http://ns.amun-project.org/2011/amun/service/pshb</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <registry>
+    <param name="hub" value="http://pubsubhubbub.appspot.com"/>
+  </registry>
+  <event>
+    <listener name="core.record_change" class="AmunService_Pshb_Listener"/>
+  </event>
+  <registry>
+    <table name="pshb_subscription"/>
+  </registry>
+  <library>
+    <dir name="AmunService">
+      <dir name="Pshb">
+        <file name="Listener.php" md5="1cea3589f7d626db00175956157a08b3"/>
+      </dir>
+    </dir>
+  </library>
+  <database>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.pshb_subscription}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `userId` INT(10) NOT NULL,
+  `status` INT(10) NOT NULL,
+  `hub` VARCHAR(256) NOT NULL,
+  `topic` VARCHAR(256) NOT NULL,
+  `leaseSeconds` INT(10),
+  `secret` VARCHAR(40),
+  `verifyToken` VARCHAR(32),
+  `date` DATETIME NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+  </database>
+</service>

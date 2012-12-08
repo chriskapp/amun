@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="fc60232fbfd57df094aa1030af2d7510363b624a">
+  <status>system</status>
+  <name>lrdd</name>
+  <description>Provides an LRDD endpoint to discover details about a page or person</description>
+  <path>/lrdd</path>
+  <namespace>lrdd</namespace>
+  <type>http://ns.amun-project.org/2011/amun/service/lrdd</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/lrdd</type>
+      <uri>/</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Lrdd View"/>
+  </permissions>
+  <event>
+    <publisher name="lrdd.resource_discovery" description="Notifies if an lrdd lookup occurs"/>
+  </event>
+</service>

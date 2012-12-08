@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="7f83a2bc3891f8b281fb2379d2f8c643ce373768">
+  <status>system</status>
+  <name>user</name>
+  <path>/user</path>
+  <namespace>user</namespace>
+  <type>http://ns.amun-project.org/2011/amun/user</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/user/account</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/account</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/user/activity</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/activity</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2012/amun/user/activity/message/1.0</type>
+      <uri>/activity/message</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/user/friend</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/friend</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/user/friend/relation/1.0</type>
+      <uri>/friend/relation</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/user/friend/group</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/friend/group</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/user/group</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/group</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/user/group/right</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/group/right</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/user/right</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/right</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Core view"/>
+    <perm name="add" description="Core add"/>
+    <perm name="edit" description="Core edit"/>
+    <perm name="delete" description="Core delete"/>
+    <perm name="account_view" description="User Account view"/>
+    <perm name="account_add" description="User Account add"/>
+    <perm name="account_edit" description="User Account edit"/>
+    <perm name="account_delete" description="User Account delete"/>
+    <perm name="activity_view" description="User Activity view"/>
+    <perm name="activity_add" description="User Activity add"/>
+    <perm name="activity_edit" description="User Activity edit"/>
+    <perm name="activity_delete" description="User Activity delete"/>
+    <perm name="activity_receiver_view" description="User Activity Receiver view"/>
+    <perm name="activity_receiver_add" description="User Activity Receiver add"/>
+    <perm name="activity_receiver_edit" description="User Activity Receiver edit"/>
+    <perm name="activity_receiver_delete" description="User Activity Receiver delete"/>
+    <perm name="friend_view" description="User Friend view"/>
+    <perm name="friend_add" description="User Friend add"/>
+    <perm name="friend_edit" description="User Friend edit"/>
+    <perm name="friend_delete" description="User Friend delete"/>
+    <perm name="friend_group_view" description="User Friend Group view"/>
+    <perm name="friend_group_add" description="User Friend Group add"/>
+    <perm name="friend_group_edit" description="User Friend Group edit"/>
+    <perm name="friend_group_delete" description="User Friend Group delete"/>
+    <perm name="group_view" description="User Group view"/>
+    <perm name="group_add" description="User Group add"/>
+    <perm name="group_edit" description="User Group edit"/>
+    <perm name="group_delete" description="User Group delete"/>
+    <perm name="group_right_view" description="User Group Right view"/>
+    <perm name="group_right_add" description="User Group Right add"/>
+    <perm name="group_right_edit" description="User Group Right edit"/>
+    <perm name="group_right_delete" description="User Group Right delete"/>
+    <perm name="right_view" description="User Right view"/>
+    <perm name="right_add" description="User Right add"/>
+    <perm name="right_edit" description="User Right edit"/>
+    <perm name="right_delete" description="User Right delete"/>
+  </permissions>
+  <registry>
+    <table name="user_account"/>
+    <table name="user_activity"/>
+    <table name="user_activity_receiver"/>
+    <table name="user_activity_template"/>
+    <table name="user_friend"/>
+    <table name="user_friend_group"/>
+    <table name="user_group"/>
+    <table name="user_group_right"/>
+    <table name="user_right"/>
+  </registry>
+  <library>
+    <dir name="AmunService">
+      <dir name="User">
+        <dir name="Account">
+          <dir name="Filter">
+            <file name="Email.php" md5="8ef2fe0e0c4dc795ac601492c4b321b2"/>
+            <file name="Gender.php" md5="88f4582bd95a586d18bd9a3909b7163c"/>
+            <file name="Identity.php" md5="155ebf35277dbeb2f4bb00a396e7c8d6"/>
+            <file name="Name.php" md5="b9ee323193ed01223a349db1f51a1a9e"/>
+            <file name="Pw.php" md5="9bb0395b7c5040abd7bb896a29fed85a"/>
+            <file name="Status.php" md5="8d1275e8598cee98e7fc73bf48c335d8"/>
+            <file name="Timezone.php" md5="a50a3717cbd028423375905c5550054c"/>
+          </dir>
+          <file name="Form.php" md5="0248a50d276bf0c6e76a6b0d45d0a779"/>
+          <file name="Handler.php" md5="616d0738051d171dd72da133ac5b3508"/>
+          <file name="Record.php" md5="aeddc7174ed3f91de84be8f8c327dff3"/>
+          <file name="Table.php" md5="18e0242719da3071f4b91402f7ed469f"/>
+        </dir>
+        <dir name="Activity">
+          <dir name="Filter">
+            <file name="Verb.php" md5="2e5171d0fd03a79701d91a12754ac2b5"/>
+          </dir>
+          <file name="Form.php" md5="825070b12615041b9c6f6dd990caf770"/>
+          <file name="Handler.php" md5="f253c696c7180fc04967756fe607f516"/>
+          <dir name="Receiver">
+            <dir name="Filter">
+              <file name="Status.php" md5="c3b085b1ddd8b860b4aa693fafe62354"/>
+            </dir>
+            <file name="Handler.php" md5="919cdabb2d0dffb2018afcf420884f83"/>
+            <file name="Record.php" md5="bd3a15a93c9e7d931bd7e157a75659cc"/>
+            <file name="Table.php" md5="442503505dd34e623db4dda63b607e2e"/>
+          </dir>
+          <file name="Record.php" md5="05a65e75c8663ceeaca642d2ccd70a8e"/>
+          <file name="Stream.php" md5="25415401a258e77423fbe2c7a69ef99d"/>
+          <file name="StreamAbstract.php" md5="626674b74c3b72413344a1b4514fbfe1"/>
+          <file name="Table.php" md5="1f6b37a646b9a7d2cc3babea9745f469"/>
+        </dir>
+        <dir name="Friend">
+          <dir name="Filter">
+            <file name="Status.php" md5="f247cf38e5b265562ae5336eb306efe6"/>
+          </dir>
+          <file name="Form.php" md5="d5bde8d0bbef8c353f15390b98401c31"/>
+          <dir name="Group">
+            <file name="Form.php" md5="4cf00c2d56644522b8d1a5319bc3794d"/>
+            <file name="Handler.php" md5="674decb08165390d040b9162930ab28b"/>
+            <file name="Record.php" md5="825036e1a629aad93b098f94af5ab1fa"/>
+            <file name="Table.php" md5="498e8ef9d0f1211d69026f4311593d0a"/>
+          </dir>
+          <file name="Handler.php" md5="0ded16c51a433c3be8213b7e0c739e55"/>
+          <file name="Record.php" md5="e55f69dca9490f43b4cc3d6e9ee79398"/>
+          <file name="Relation.php" md5="32f93ea27831bb96c179bd0720347481"/>
+          <file name="Table.php" md5="dae14713ada3abd41da831d21573d68c"/>
+        </dir>
+        <dir name="Group">
+          <file name="Form.php" md5="6a5e5f962bc9dd3f3c21e474a8e49a5f"/>
+          <file name="Handler.php" md5="3e66fead52c27f08f1e96341cc831b99"/>
+          <file name="Record.php" md5="6d781989d4f468f54becf9282ff3b1c8"/>
+          <dir name="Right">
+            <file name="Form.php" md5="31d6d76b66e71b19834098c1c13cad47"/>
+            <file name="Handler.php" md5="f6aa0a9bcb8cd1939daaf96b52529a6f"/>
+            <file name="Record.php" md5="ab2cf67fc09b7c36ef0a6272740459e3"/>
+            <file name="Table.php" md5="3878b6588b0e7a12f3a29cde8a8acce0"/>
+          </dir>
+          <file name="Table.php" md5="21be1210da05f9b8138238a8698eb15b"/>
+        </dir>
+        <dir name="Right">
+          <file name="Form.php" md5="9c2e30d28d8d052253bb1a355cfa57df"/>
+          <file name="Handler.php" md5="6d513abd14dc212ee7480c63609db066"/>
+          <file name="Record.php" md5="0623662a49b02673e5881f3bdc418d64"/>
+          <file name="Table.php" md5="ff386b3c896038ba343d6e6f80075273"/>
+        </dir>
+      </dir>
+    </dir>
+  </library>
+  <database>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.user_account}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `globalId` varchar(36) NOT NULL,
+  `groupId` int(10) NOT NULL,
+  `hostId` int(10) NOT NULL DEFAULT '0',
+  `countryId` int(10) NOT NULL,
+  `status` int(10) NOT NULL,
+  `identity` varchar(40) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `pw` varchar(40) NOT NULL,
+  `email` varchar(64) DEFAULT NULL,
+  `token` varchar(40) NOT NULL,
+  `ip` varchar(40) NOT NULL,
+  `gender` enum('male','female','undisclosed') NOT NULL DEFAULT 'undisclosed',
+  `profileUrl` varchar(256) NOT NULL,
+  `thumbnailUrl` varchar(256) DEFAULT NULL,
+  `longitude` double NOT NULL DEFAULT '0',
+  `latitude` double NOT NULL DEFAULT '0',
+  `timezone` varchar(32) NOT NULL DEFAULT 'UTC',
+  `lastSeen` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `identity` (`identity`),
+  UNIQUE KEY `token` (`token`),
+  UNIQUE KEY `hostIdName` (`hostId`,`name`),
+  UNIQUE KEY `globalId` (`globalId`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.user_activity}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `globalId` varchar(36) NOT NULL,
+  `parentId` int(10) NOT NULL DEFAULT '0',
+  `userId` int(10) NOT NULL,
+  `refId` int(10) NOT NULL DEFAULT '0',
+  `table` varchar(32) DEFAULT NULL,
+  `scope` int(10) NOT NULL DEFAULT '0',
+  `verb` enum('post','add','cancel','checkin','delete','favorite','follow','give','ignore','invite','join','leave','like','make-friend','play','receive','remove','remove-friend','request-friend','rsvp-maybe','rsvp-no','rsvp-yes','save','share','stop-following','tag','unfavorite','unlike','unsave','update') NOT NULL,
+  `summary` text NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `globalId` (`globalId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.user_activity_receiver}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `status` int(10) NOT NULL DEFAULT '1',
+  `activityId` int(10) NOT NULL,
+  `userId` int(10) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.user_activity_template}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `type` enum('INSERT','UPDATE','DELETE') NOT NULL,
+  `verb` enum('post','add','cancel','checkin','delete','favorite','follow','give','ignore','invite','join','leave','like','make-friend','play','receive','remove','remove-friend','request-friend','rsvp-maybe','rsvp-no','rsvp-yes','save','share','stop-following','tag','unfavorite','unlike','unsave','update') NOT NULL,
+  `table` varchar(64) NOT NULL,
+  `path` varchar(256) NOT NULL,
+  `summary` text NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `type_table` (`type`,`table`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.user_friend}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `status` int(10) NOT NULL,
+  `groupId` int(10) NOT NULL DEFAULT '0',
+  `userId` int(10) NOT NULL,
+  `friendId` int(10) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `userFriendId` (`userId`,`friendId`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.user_friend_group}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `userId` int(10) NOT NULL,
+  `title` varchar(64) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.user_group}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `title` varchar(32) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.user_group_right}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `groupId` int(10) NOT NULL,
+  `rightId` int(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `groupRightId` (`groupId`,`rightId`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.user_right}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) NOT NULL,
+  `description` varchar(128) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii]]></query>
+  </database>
+</service>
