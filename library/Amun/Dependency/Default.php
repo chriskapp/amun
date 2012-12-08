@@ -41,6 +41,7 @@ class Amun_Dependency_Default extends PSX_DependencyAbstract
 
 		$this->getSql();
 		$this->getRegistry();
+		$this->getEvent();
 		$this->getValidate();
 		$this->getGet();
 		$this->getPost();
