@@ -44,7 +44,7 @@ class recover extends Amun_Module_ApplicationAbstract
 		$this->path->add('Recover', $this->page->url . '/login/recover');
 
 		// captcha
-		$captcha = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/system/captcha';
+		$captcha = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha';
 
 		$this->template->assign('captcha', $captcha);
 
@@ -108,7 +108,7 @@ class recover extends Amun_Module_ApplicationAbstract
 						);
 
 						$mail = new Amun_Mail($this->registry);
-						$mail->send('SERVICE_MY_RECOVER', $account->email, $values);
+						$mail->send('MY_RECOVER', $account->email, $values);
 
 
 						$this->template->assign('success', true);

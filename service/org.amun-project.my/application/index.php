@@ -63,8 +63,8 @@ class index extends AmunService_My_MyAbstract
 		$this->template->assign('groups', $groups);
 
 		// form url
-		$activityUrl = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/user/activity';
-		$receiverUrl = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/user/activity/receiver';
+		$activityUrl = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/activity';
+		$receiverUrl = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/activity/receiver';
 
 		$this->template->assign('activityUrl', $activityUrl);
 		$this->template->assign('receiverUrl', $receiverUrl);

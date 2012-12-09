@@ -49,7 +49,7 @@ class application extends AmunService_My_SettingsAbstract
 		$this->template->assign('applications', $applications);
 
 		// form url
-		$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/system/api/access';
+		$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/oauth/access';
 
 		$this->template->assign('accessUrl', $url);
 

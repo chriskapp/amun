@@ -70,7 +70,7 @@ class login extends Amun_Module_ApplicationAbstract
 
 			if($this->stage == AmunService_My_Attempt::TRYING)
 			{
-				$captcha = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/system/captcha';
+				$captcha = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha';
 
 				$this->template->assign('captcha', $captcha);
 			}

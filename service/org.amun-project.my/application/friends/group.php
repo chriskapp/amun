@@ -49,7 +49,7 @@ class group extends AmunService_My_FriendsAbstract
 		$this->template->assign('groups', $groups);
 
 		// form url
-		$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/user/friend/group';
+		$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/friend/group';
 
 		$this->template->assign('groupUrl', $url);
 

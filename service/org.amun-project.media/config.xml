@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <service xmlns="http://amun-project.org" signature="0908626da38f0cbb866d065e0309c3818ab4a0d4">
-  <status>normal</status>
+  <status>system</status>
   <name>media</name>
   <description>Offers a general way to upload and access arbitrary media files</description>
   <path>/media</path>

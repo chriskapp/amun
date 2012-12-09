@@ -42,7 +42,7 @@ class register extends Amun_Module_ApplicationAbstract
 		if($this->getProvider()->hasViewRight())
 		{
 			// captcha
-			$captcha = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/system/captcha';
+			$captcha = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha';
 
 			$this->template->assign('captcha', $captcha);
 

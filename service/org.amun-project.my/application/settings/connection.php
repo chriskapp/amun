@@ -49,7 +49,7 @@ class connection extends AmunService_My_SettingsAbstract
 		$this->template->assign('connections', $connections);
 
 		// form url
-		$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/system/connect/access';
+		$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/openid/access';
 
 		$this->template->assign('accessUrl', $url);
 

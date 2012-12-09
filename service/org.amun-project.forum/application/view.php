@@ -66,26 +66,25 @@ class view extends Amun_Module_ApplicationAbstract
 
 			// options
 			$options = array();
+			$options[] = array('forum_edit', 'Edit', $this->page->url . '/edit?id=' . $this->id);
 
 			if($recordForum->isSticky())
 			{
-				$options[] = array('sticky', 'Unstick', 'javascript:amun.services.forum.setSticky(' . $this->id . ',0,\'' . $this->service->getApiEndpoint() . '\',this)');
+				$options[] = array('forum_sticky', 'Unstick', 'javascript:amun.services.forum.setSticky(' . $this->id . ',0,\'' . $this->service->getApiEndpoint() . '\',this)');
 			}
 			else
 			{
-				$options[] = array('sticky', 'Sticky', 'javascript:amun.services.forum.setSticky(' . $this->id . ',1,\'' . $this->service->getApiEndpoint() . '\',this)');
+				$options[] = array('forum_sticky', 'Sticky', 'javascript:amun.services.forum.setSticky(' . $this->id . ',1,\'' . $this->service->getApiEndpoint() . '\',this)');
 			}
 
 			if($recordForum->isClosed())
 			{
-				$options[] = array('close', 'Open', 'javascript:amun.services.forum.setClosed(' . $this->id . ',0,\'' . $this->service->getApiEndpoint() . '\',this)');
+				$options[] = array('forum_close', 'Open', 'javascript:amun.services.forum.setClosed(' . $this->id . ',0,\'' . $this->service->getApiEndpoint() . '\',this)');
 			}
 			else
 			{
-				$options[] = array('close', 'Close', 'javascript:amun.services.forum.setClosed(' . $this->id . ',1,\'' . $this->service->getApiEndpoint() . '\',this)');
+				$options[] = array('forum_close', 'Close', 'javascript:amun.services.forum.setClosed(' . $this->id . ',1,\'' . $this->service->getApiEndpoint() . '\',this)');
 			}
-
-			$options[] = array('forum_edit', 'Edit', $this->page->url . '/edit?id=' . $this->id);
 
 			$this->setOptions($options);
 
