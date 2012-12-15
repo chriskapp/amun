@@ -187,7 +187,7 @@ SQL;
 			throw new Amun_Exception('Invalid notification type');
 		}
 
-		$this->event->notifyListener('core.record_change', array($type, $this->table, $record));
+		$this->event->notifyListener('core.record_change', array($type, $this->table, $record), $this->user);
 	}
 
 	/**

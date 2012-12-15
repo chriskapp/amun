@@ -105,13 +105,15 @@ SQL;
 	/**
 	 * Notifies all listeners of an specific event and passes the $args array
 	 * to the notify method. The method is only called if it has the same 
-	 * parameter count as the $args array
+	 * parameter count as the $args array. Optional as third argument the user
+	 * under wich the actions should be made
 	 *
 	 * @param $name
 	 * @param array $args
+	 * @param Amun_User $user
 	 * @return void
 	 */
-	public function notifyListener($name, array $args)
+	public function notifyListener($name, array $args, $user = null)
 	{
 		$listeners = $this->getListener($name);
 
@@ -120,7 +122,7 @@ SQL;
 			try
 			{
 				$method = $listener->getMethod('notify');
-				$obj    = $listener->newInstance();
+				$obj    = $listener->newInstance($user);
 				$resp   = $method->invokeArgs($obj, $args);
 
 				if($resp === false)

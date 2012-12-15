@@ -34,17 +34,15 @@
  */
 abstract class Amun_Module_ListenerAbstract
 {
-	public function __construct()
+	public function __construct(Amun_User $user = null)
 	{
-		// assign dependencies
-		$ct = new Amun_Dependency_Listener(Amun_Registry::getInstance()->getConfig());
-		$ct->setup();
+		$ct = Amun_DataFactory::getContainer();
 
-		$args = $ct->getParameters();
-
-		foreach($args as $k => $obj)
-		{
-			$this->$k = $obj;
-		}
+		$this->base     = $ct->getBase();
+		$this->config   = $ct->getConfig();
+		$this->sql      = $ct->getSql();
+		$this->registry = $ct->getRegistry();
+		$this->event    = $ct->getEvent();
+		$this->user     = $user !== null ? $user : $ct->getUser();
 	}
 }

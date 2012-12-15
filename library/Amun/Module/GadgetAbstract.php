@@ -36,10 +36,7 @@ abstract class Amun_Module_GadgetAbstract
 {
 	public function __construct()
 	{
-		// assign dependencies
-		$ct = new Amun_Dependency_Gadget(Amun_Registry::getInstance()->getConfig());
-		$ct->setup();
-
+		$ct   = Amun_DataFactory::getContainer();
 		$args = $ct->getParameters();
 
 		foreach($args as $k => $obj)
