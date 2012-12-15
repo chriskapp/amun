@@ -38,6 +38,21 @@ class Amun_Oauth extends PSX_Oauth_ProviderAbstract
 	protected $requestId;
 	protected $requestToken;
 
+	protected $config;
+	protected $sql;
+	protected $registry;
+
+	public function __construct(PSX_Loader_Location $location, PSX_Base $base, $basePath, array $uriFragments)
+	{
+		parent::__construct($location, $base, $basePath, $uriFragments);
+
+		$container = new Amun_Dependency_Default($this->base->getConfig());
+
+		$this->config   = $container->getConfig();
+		$this->sql      = $container->getSql();
+		$this->registry = $container->getRegistry();
+	}
+
 	public function doAuthentication()
 	{
 		try
@@ -110,7 +125,6 @@ SQL;
 			}
 
 			$this->claimedUserId = $request['requestUserId'];
-
 
 			return new PSX_Oauth_Provider_Data_Consumer($row['apiConsumerKey'], $row['apiConsumerSecret'], $request['requestToken'], $request['requestTokenSecret']);
 		}

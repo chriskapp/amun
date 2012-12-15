@@ -1,9 +1,10 @@
 
 [FEATURES]
 
+[x] fix captcha url
 [ ] Oauth endpoint send invalid request method header on GET at request/access
 [x] fix getId() from records
-[ ] fix form reference src endpoints
+[x] fix form reference src endpoints
 [ ] fix tests
 [x] extract functionality from the core service into different services
     [x] split core service into different services probably content / system and 
@@ -12,15 +13,15 @@
 [x] build swagger geenrator for the current api (get api details from docblock
     comments). Problem to generate the declaration we have to import every api
     endpoint wich all have the same class name "index" .. namespaces
-[ ] test oauth authorization
+[x] test oauth authorization
 [x] test openid authentication
 [ ] adding oauth scope
-[ ] implement event listener system where services can offer an endpoint where
+[x] implement event listener system where services can offer an endpoint where
     other classes can subscribe to.
     [ ] update webdav service probably with handler so that services can provide 
         their own content
-    [ ] possibility for services to extend the service config.xml
-    [ ] possibility for services to extend the meta lrdd api
+    [x] possibility for services to extend the service config.xml
+    [x] possibility for services to extend the meta lrdd api
 [ ] check activity stream and approval system
 [ ] improve right system probably with inheritance
 [ ] possiblity to add more meta data to a page (keywords, description)

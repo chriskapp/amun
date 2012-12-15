@@ -42,15 +42,6 @@ abstract class Amun_Module_ApiAbstract extends Amun_Oauth
 	{
 		parent::__construct($location, $base, $basePath, $uriFragments);
 
-		// assign default objects
-		$container  = new Amun_Dependency_Default($this->base->getConfig());
-		$parameters = $container->getParameters();
-
-		foreach($parameters as $k => $obj)
-		{
-			$this->$k = $obj;
-		}
-
 		// if the authorization header is set follow the oauth
 		// authentication process else assign the user from the session
 		$authorization = PSX_Base::getRequestHeader('Authorization');
