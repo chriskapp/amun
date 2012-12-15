@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="7d78cf02495bf127c22ad9663ae82bf0a0c53ef7">
+<service xmlns="http://amun-project.org" signature="3c690eba41a5ff4cbab7156e1570ff205e9d9efb">
   <status>system</status>
   <name>country</name>
   <description>Service wich provides a table of countries</description>
@@ -26,7 +26,7 @@
   <library>
     <dir name="AmunService">
       <dir name="Country">
-        <file name="Form.php" md5="003fb9eae1bc02442c490349c2f96793"/>
+        <file name="Form.php" md5="be83036dd409705d5718754b7fabc373"/>
         <file name="Handler.php" md5="b5c0f828276d0662cbc5008d018db300"/>
         <file name="Record.php" md5="07e5c8174fedc8d6590bdf5abfcfcbac"/>
         <file name="Table.php" md5="87a73a5d2ee876dc6e1ed0308f6ea5be"/>

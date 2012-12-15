@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="5a5f90faaf5bdb28d3d56b7395d1e9125314ed80">
+<service xmlns="http://amun-project.org" signature="7439720d9a376c1fd6259140d3f564f713527ce6">
   <status>normal</status>
   <name>my</name>
   <path>/my</path>
@@ -136,7 +136,7 @@ You can login with the new password at:
             <file name="Status.php" md5="db0b471606bdd0150da3915a4214dc45"/>
             <file name="Type.php" md5="023f206afeb8289d6c6d0079abb6dc39"/>
           </dir>
-          <file name="Form.php" md5="db4f94f20201ccf40158f42da104271c"/>
+          <file name="Form.php" md5="c7b174ca7394a1a3adc53030207dda82"/>
           <file name="Handler.php" md5="b320707cffcf94c10a2c30f77c5a8be6"/>
           <file name="Record.php" md5="9949d2117c419126399535fc34a80280"/>
           <file name="Table.php" md5="bd8cbfe3c2ee13f438a3861750694693"/>
@@ -148,7 +148,7 @@ You can login with the new password at:
           <dir name="Filter">
             <file name="Status.php" md5="c1d8a22f2bb4358007a60eba005bdc35"/>
           </dir>
-          <file name="Form.php" md5="4c5d420849419de3a27984a8150e4cf4"/>
+          <file name="Form.php" md5="7a6d66de6a7959e098dd041352b7e18a"/>
           <file name="Handler.php" md5="7d9f201b56351d8c9eef955510032c6d"/>
           <file name="Record.php" md5="bc76e3e7051d455eff0514608008f3f2"/>
           <dir name="Service">
@@ -159,7 +159,7 @@ You can login with the new password at:
         <file name="People.php" md5="66b7444bc643ff6d3df6c157c2355471"/>
         <file name="SettingsAbstract.php" md5="fb509d4551e7016f9a6c2e8075014f06"/>
         <dir name="Subscription">
-          <file name="Form.php" md5="5a2d503a35e5ce2fd3b0c0d34950c7e3"/>
+          <file name="Form.php" md5="e2b11ec4f06e801ab6994bcbeb8a25be"/>
           <file name="Handler.php" md5="a5e604a26644f01665604a206d728ebf"/>
           <file name="Record.php" md5="031be3989f7af489ef3986c77ecee500"/>
           <file name="Table.php" md5="8dc94f9266d9ca020148dc0311774628"/>

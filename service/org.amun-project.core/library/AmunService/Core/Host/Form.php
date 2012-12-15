@@ -75,7 +75,7 @@ class AmunService_Core_Host_Form extends Amun_Data_FormAbstract
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
 			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
-			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/system/captcha');
+			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
 		}
@@ -137,7 +137,7 @@ class AmunService_Core_Host_Form extends Amun_Data_FormAbstract
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
 			$captcha = new amun_form_element_captcha('captcha', 'Captcha');
-			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/system/captcha');
+			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
 		}
@@ -204,7 +204,7 @@ class AmunService_Core_Host_Form extends Amun_Data_FormAbstract
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
 			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
-			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/system/captcha');
+			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
 		}
