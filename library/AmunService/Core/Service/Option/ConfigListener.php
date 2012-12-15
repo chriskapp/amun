@@ -57,7 +57,7 @@ class AmunService_Core_Service_Option_ConfigListener extends Amun_Module_Listene
 
 					if($option->nodeName == 'option')
 					{
-						$name = $template->getAttribute('name');
+						$name = $option->getAttribute('name');
 
 						if(!empty($name))
 						{
