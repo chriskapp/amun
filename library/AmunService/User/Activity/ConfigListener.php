@@ -61,7 +61,7 @@ class AmunService_User_Activity_ConfigListener extends Amun_Module_ListenerAbstr
 						$verb    = $template->getAttribute('verb');
 						$table   = $template->getAttribute('table');
 						$path    = $template->getAttribute('path');
-						$summary = $template->getElementsByTagName('summary')->item(0);
+						$summary = $template->nodeValue;
 
 						if(isset($this->registry['table.' . $table]))
 						{
@@ -72,17 +72,14 @@ class AmunService_User_Activity_ConfigListener extends Amun_Module_ListenerAbstr
 							throw new PSX_Exception('Invalid table ' . $table);
 						}
 
-						if(!empty($type) && !empty($verb) && !empty($table) && $summary instanceof DOMElement)
+						if(!empty($type) && !empty($verb) && !empty($table) && !empty($summary))
 						{
-
-							
-
 							$this->sql->insert($this->registry['table.user_activity_template'], array(
 								'type'    => $type,
 								'verb'    => $verb,
 								'table'   => $table,
 								'path'    => $path,
-								'summary' => $summary->nodeValue,
+								'summary' => $summary,
 							));
 
 							PSX_Log::info('> Created user activity template');
