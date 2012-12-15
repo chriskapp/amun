@@ -194,7 +194,7 @@ SQL;
 		if(!empty($row))
 		{
 			$config = $registry->getConfig();
-			$url    = $config['psx_url'] . '/' . $config['psx_dispatch'] . $row['path'] . $config['amun_page_delimiter'];
+			$url    = $config['psx_url'] . '/' . $config['psx_dispatch'] . $row['path'];
 		}
 		else
 		{
