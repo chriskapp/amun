@@ -97,6 +97,7 @@ class callback extends Amun_Module_ApiAbstract
 							}
 							catch(Exception $e)
 							{
+								echo $e->getMessage();
 								// import fails we go the next commit and
 								// ignore the error
 							}

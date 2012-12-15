@@ -38,7 +38,7 @@ class AmunService_Googleproject_Handler extends Amun_Data_HandlerAbstract
 	{
 		if($record->hasFields('name', 'secret'))
 		{
-			$record->globalId = $this->base->getUUID('googleproject:' . $record->pageId . ':' . uniqid());
+			$record->globalId = $this->base->getUUID('googleproject:' . uniqid());
 			$record->userId   = $this->user->id;
 
 

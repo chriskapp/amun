@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: author.php 875 2012-09-30 13:51:45Z k42b3.x@googlemail.com $
+ *  $Id: form.php 875 2012-09-30 13:51:45Z k42b3.x@googlemail.com $
  *
  * amun
  * A social content managment system based on the psx framework. For
@@ -22,52 +22,25 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace googleproject\api;
+namespace googleproject\api\author;
 
-use Amun_Module_RestAbstract;
-use Amun_Sql_Table_Registry;
-use PSX_Data_Exception;
-use PSX_Data_WriterInterface;
-use PSX_Data_WriterResult;
-use PSX_Sql_Join;
+use Amun_Module_FormAbstract;
 
 /**
- * author
+ * form
  *
  * @author     Christoph Kappestein <k42b3.x@gmail.com>
  * @license    http://www.gnu.org/licenses/gpl.html GPLv3
  * @link       http://amun.phpsx.org
  * @category   module
- * @package    admin
- * @subpackage service_googleproject
+ * @package    api
+ * @subpackage service_my
  * @version    $Revision: 875 $
  */
-class author extends Amun_Module_RestAbstract
+class form extends Amun_Module_FormAbstract
 {
-	protected function getSelection()
-	{
-		return $this->getTable()
-			->select(array('id', 'userId', 'name', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
-				->select(array('globalId', 'name', 'profileUrl'), 'author')
-			);
-	}
-
 	protected function getProvider($name = null)
 	{
 		return parent::getProvider($name === null ? 'Googleproject_Author' : $name);
 	}
-
-	protected function setWriterConfig(PSX_Data_WriterResult $writer)
-	{
-		switch($writer->getType())
-		{
-			case PSX_Data_WriterInterface::ATOM:
-
-				throw new PSX_Data_Exception('Atom not supported');
-
-				break;
-		}
-	}
 }
-

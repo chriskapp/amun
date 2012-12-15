@@ -70,7 +70,7 @@ class AmunService_Googleproject_Commit_Record extends Amun_Data_RecordAbstract
 	public function setAuthor($author)
 	{
 		$con      = new PSX_Sql_Condition(array('name', '=', $author));
-		$authorId = $this->_sql->select($this->_registry['table.service_googleproject_author'], array('id'), $con, PSX_Sql::SELECT_FIELD);
+		$authorId = $this->_sql->select($this->_registry['table.googleproject_author'], array('id'), $con, PSX_Sql::SELECT_FIELD);
 
 		if(!empty($authorId))
 		{

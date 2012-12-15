@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="daad74dec438fbdb6fa0b683f6c3402ba445f638">
+<service xmlns="http://amun-project.org" signature="00917972d1bf89bbc3116b396d8255baffeb9339">
   <status>system</status>
   <name>googleproject</name>
   <description>Gateway to receive googleproject commits</description>
@@ -57,12 +57,12 @@
         </dir>
         <dir name="Commit">
           <file name="Handler.php" md5="9c77a5f4350cc626b59a0c36d1eb89c3"/>
-          <file name="Record.php" md5="db6435904ff90fa162bd1db672c7db00"/>
+          <file name="Record.php" md5="620b2a6f0cd7a49ecf54eeab0b36b5a7"/>
           <file name="Table.php" md5="977b872f08c201e365b21c9987eae7a4"/>
         </dir>
-        <file name="CommitListener.php" md5="215bfb2d90924401011609de29f22489"/>
+        <file name="CommitListener.php" md5="8921652e76c1ea6bf895d8589a2082cd"/>
         <file name="Form.php" md5="627092cd8d183e7453b72271bf79b677"/>
-        <file name="Handler.php" md5="be64d6bebc0b58b263f09a65a9121c6a"/>
+        <file name="Handler.php" md5="ec95cccc377beb842fc9a9bf7ac1198f"/>
         <file name="Record.php" md5="100156ee9bd2312f4f071ed3d0f0cf14"/>
         <file name="Table.php" md5="388185156285cfbce4c0d7bfa36bdae3"/>
       </dir>

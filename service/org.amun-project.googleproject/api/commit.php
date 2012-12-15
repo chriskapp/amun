@@ -55,9 +55,9 @@ class commit extends Amun_Module_RestAbstract
 			);
 	}
 
-	protected function getProvider()
+	protected function getProvider($name = null)
 	{
-		return $this->getDataProvider('Googleproject_Commit');
+		return parent::getProvider($name === null ? 'Googleproject_Commit' : $name);
 	}
 
 	public function onPost()
