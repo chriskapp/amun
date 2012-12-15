@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="e1cf54a171ace94ad67b8bde9f6c4b5e721cd7d0">
+<service xmlns="http://amun-project.org" signature="6029a9033153faaa5f875947decf5ed4b8351d2a">
   <status>normal</status>
   <name>plugin</name>
   <description>Service to list plugins. Each plugin can be maintained by multiple users. News versions can be added by maintainer</description>
@@ -30,6 +30,11 @@
       <uri>/release</uri>
     </service>
   </api>
+  <activity>
+    <template type="INSERT" verb="add" table="plugin_release" path="view?id={record.id}"><![CDATA[
+<p><a href="{user.profileUrl}">{user.name}</a> has released version {record.version} ({record.status})</p>
+]]></template>
+  </activity>
   <permissions>
     <perm name="view" description="Service Plugin View"/>
     <perm name="add" description="Service Plugin Add"/>
@@ -45,6 +50,10 @@
     <perm name="release_edit" description="Service Plugin Release Edit"/>
     <perm name="release_delete" description="Service Plugin Release Delete"/>
   </permissions>
+  <navigation>
+    <option name="index"/>
+    <option name="view"/>
+  </navigation>
   <registry>
     <table name="plugin"/>
     <table name="plugin_maintainer"/>
@@ -107,10 +116,5 @@
   `date` DATETIME NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[INSERT INTO `{table.core_service_option}` (`serviceId`, `name`) VALUES
-({service.id}, 'index'),
-({service.id}, 'view');]]></query>
-    <query><![CDATA[INSERT INTO `{table.user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
-('INSERT', 'add', 'amun_service_plugin_release', 'view?id={record.id}', '<p><a href="{user.profileUrl}">{user.name}</a> has released version {record.version} ({record.status})</p>');]]></query>
   </database>
 </service>

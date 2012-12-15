@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="7c5364334780cbc3e108e94304e6c5a673ec64fc">
+<service xmlns="http://amun-project.org" signature="7c9562418395202dcc57e64a4e44dffe0ef9dbb5">
   <status>normal</status>
   <name>profile</name>
   <description>Displays the activities of an user and the option to add the user as friend</description>
@@ -13,8 +13,7 @@
   <permissions>
     <perm name="view" description="Service Profile View"/>
   </permissions>
-  <database>
-    <query><![CDATA[INSERT INTO `{table.amun_content_service_option}` (`serviceId`, `name`) VALUES
-({service.id}, 'index');]]></query>
-  </database>
+  <navigation>
+    <option name="index"/>
+  </navigation>
 </service>

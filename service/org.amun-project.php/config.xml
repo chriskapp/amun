@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="7e3d9c5929f201458ad1197059257ed6ac1c4565">
+<service xmlns="http://amun-project.org" signature="bda7b506ac309c4855acebfb55999221f9889f7a">
   <status>normal</status>
   <name>php</name>
   <description>Service to embed PHP code in a page. Because of security it is only possible to edit the page from the backend</description>
@@ -23,6 +23,9 @@
     <perm name="edit" description="Service Php Edit"/>
     <perm name="delete" description="Service Php Delete"/>
   </permissions>
+  <navigation>
+    <option name="index"/>
+  </navigation>
   <registry>
     <table name="php"/>
   </registry>
@@ -47,7 +50,5 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[INSERT INTO `{table.content_service_option}` (`serviceId`, `name`) VALUES
-({service.id}, 'index');]]></query>
   </database>
 </service>

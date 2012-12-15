@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="62fb1a547520db99c49f7526ef80308d07626d2d">
+<service xmlns="http://amun-project.org" signature="f4fb07e53fb65d1ee8573c520569dc4870cd2219">
   <status>system</status>
   <name>comment</name>
   <description>General comment system wich can be used to store a comment refering to an id</description>
@@ -17,6 +17,11 @@
       <uri>/</uri>
     </service>
   </api>
+  <activity>
+    <template type="INSERT" verb="add" table="comment" path="view?id={record.refId}#comment-{record.id}"><![CDATA[
+<p><a href="{user.profileUrl}">{user.name}</a> has created an <a href="{object.url}">comment</a></p><blockquote>{record.text}</blockquote>
+]]></template>
+  </activity>
   <permissions>
     <perm name="view" description="Service Comment View"/>
     <perm name="add" description="Service Comment Add"/>
@@ -49,7 +54,5 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[INSERT INTO `{table.user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
-('INSERT', 'add', 'amun_service_comment', 'view?id={record.refId}#comment-{record.id}', '<p><a href="{user.profileUrl}">{user.name}</a> has created an <a href="{object.url}">comment</a></p><blockquote>{record.text}</blockquote>');]]></query>
   </database>
 </service>

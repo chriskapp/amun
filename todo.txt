@@ -1,6 +1,7 @@
 
 [FEATURES]
 
+[ ] check activity stream generation / design 
 [x] fix captcha url
 [ ] Oauth endpoint send invalid request method header on GET at request/access
 [x] fix getId() from records

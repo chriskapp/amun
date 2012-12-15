@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="be8d1bad1eabed237358ea51d29414c14a70925f">
+<service xmlns="http://amun-project.org" signature="871a0d619d4f8b6a9d1357a2689d4f601f037620">
   <status>normal</status>
   <name>page</name>
   <description>Basic service to make a page wich can be edited</description>
@@ -23,6 +23,9 @@
     <perm name="edit" description="Service Page Edit"/>
     <perm name="delete" description="Service Page Delete"/>
   </permissions>
+  <navigation>
+    <option name="index"/>
+  </navigation>
   <registry>
     <table name="page"/>
   </registry>
@@ -47,7 +50,5 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[INSERT INTO `{table.content_service_option}` (`serviceId`, `name`) VALUES
-({service.id}, 'index');]]></query>
   </database>
 </service>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="7439720d9a376c1fd6259140d3f564f713527ce6">
+<service xmlns="http://amun-project.org" signature="83c22c11838bece2a16546b2deb7519b1073fee3">
   <status>normal</status>
   <name>my</name>
   <path>/my</path>
@@ -49,6 +49,11 @@
     <perm name="subscription_edit" description="Service My Subscription Edit"/>
     <perm name="subscription_delete" description="Service My Subscription Delete"/>
   </permissions>
+  <navigation>
+    <option name="index"/>
+    <option name="friends"/>
+    <option name="settings"/>
+  </navigation>
   <registry>
     <table name="my_attempt"/>
     <table name="my_contact"/>
@@ -201,9 +206,5 @@ You can login with the new password at:
   `title` VARCHAR(64) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[INSERT INTO `{table.core_service_option}` (`serviceId`, `name`) VALUES
-({service.id}, 'index'),
-({service.id}, 'friends'),
-({service.id}, 'settings');]]></query>
   </database>
 </service>

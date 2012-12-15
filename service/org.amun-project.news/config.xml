@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="f472f5b065ea81f4369bb8dcdd3500449685b16d">
+<service xmlns="http://amun-project.org" signature="55c055d398c3df8373eee2f553a47a3a6001c818">
   <status>normal</status>
   <name>news</name>
   <description>Implementation of an News system. It is possible to post news and users can comment each entry</description>
@@ -20,6 +20,11 @@
       <uri>/</uri>
     </service>
   </api>
+  <activity>
+    <template type="INSERT" verb="add" table="news" path="view?id={record.id}"><![CDATA[
+<p><a href="{user.profileUrl}">{user.name}</a> has created a <a href="{object.url}">news</a></p><blockquote>{record.text}</blockquote>
+]]></template>
+  </activity>
   <permissions>
     <perm name="view" description="Service News View"/>
     <perm name="add" description="Service News Add"/>
@@ -27,6 +32,10 @@
     <perm name="delete" description="Service News Delete"/>
     <perm name="comment_add" description="Service News Comment Add"/>
   </permissions>
+  <navigation>
+    <option name="index"/>
+    <option name="view"/>
+  </navigation>
   <registry>
     <table name="news"/>
   </registry>
@@ -54,10 +63,5 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[INSERT INTO `{table.core_service_option}` (`serviceId`, `name`) VALUES
-({service.id}, 'index'),
-({service.id}, 'view');]]></query>
-    <query><![CDATA[INSERT INTO `{table.user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
-('INSERT', 'add', 'amun_service_news', 'view?id={record.id}', '<p><a href="{user.profileUrl}">{user.name}</a> has created a <a href="{object.url}">news</a></p><blockquote>{record.text}</blockquote>');]]></query>
   </database>
 </service>

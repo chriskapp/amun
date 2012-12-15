@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="0fd3a0da8ff48454a06c742af64a923b179beae1">
+<service xmlns="http://amun-project.org" signature="2355ba63ecaa874761292634a25ef98bfc136cc6">
   <status>normal</status>
   <name>pipe</name>
   <description>Service wich redirects the content of an file to a page</description>
@@ -23,6 +23,9 @@
     <perm name="edit" description="Service Pipe Edit"/>
     <perm name="delete" description="Service Pipe Delete"/>
   </permissions>
+  <navigation>
+    <option name="index"/>
+  </navigation>
   <registry>
     <table name="pipe"/>
   </registry>
@@ -47,7 +50,5 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[INSERT INTO `{table.core_service_option}` (`serviceId`, `name`) VALUES
-({service.id}, 'index');]]></query>
   </database>
 </service>

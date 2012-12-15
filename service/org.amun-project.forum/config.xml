@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="6fe691093773380274fff93ee9f489bdbd44013d">
+<service xmlns="http://amun-project.org" signature="c2369de16acd3927ebcc65e512e35738f756253e">
   <status>normal</status>
   <name>forum</name>
   <description>Implementation of an simple forum system. It is possible to create threads and set the status to sticky or closed</description>
@@ -20,6 +20,11 @@
       <uri>/</uri>
     </service>
   </api>
+  <activity>
+    <template type="INSERT" verb="add" table="forum" path="view?id={record.id}"><![CDATA[
+<p><a href="{user.profileUrl}">{user.name}</a> has created a <a href="{object.url}">thread</a></p><blockquote>{record.text}</blockquote>
+]]></template>
+  </activity>
   <permissions>
     <perm name="view" description="Service Forum View"/>
     <perm name="add" description="Service Forum Add"/>
@@ -29,6 +34,10 @@
     <perm name="close" description="Service Forum Close"/>
     <perm name="comment_add" description="Service Forum Comment Add"/>
   </permissions>
+  <navigation>
+    <option name="index"/>
+    <option name="view"/>
+  </navigation>
   <registry>
     <table name="forum"/>
   </registry>
@@ -57,10 +66,5 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[INSERT INTO `{table.core_service_option}` (`serviceId`, `name`) VALUES
-({service.id}, 'index'),
-({service.id}, 'view');]]></query>
-    <query><![CDATA[INSERT INTO `{table.user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
-('INSERT', 'add', 'amun_service_forum', 'view?id={record.id}', '<p><a href="{user.profileUrl}">{user.name}</a> has created a <a href="{object.url}">thread</a></p><blockquote>{record.text}</blockquote>');]]></query>
   </database>
 </service>

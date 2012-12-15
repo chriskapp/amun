@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="30669891a4542e0d53d66e9860ce021afb2e139d">
+<service xmlns="http://amun-project.org" signature="9f285d69de35b7c173b6e5e27b6faa93de6d3b79">
   <status>system</status>
   <name>core</name>
   <path>/core</path>
@@ -90,6 +90,7 @@
   <event>
     <publisher name="core.service_install" description="Notifies if a service gets installed"/>
     <publisher name="core.record_change" description="Notifies if a record has changed"/>
+    <listener name="core.service_install" class="AmunService_Core_Service_Option_ConfigListener"/>
   </event>
   <library>
     <dir name="AmunService">
