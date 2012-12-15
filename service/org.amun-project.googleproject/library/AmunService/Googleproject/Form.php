@@ -34,30 +34,12 @@
  */
 class AmunService_Googleproject_Form extends Amun_Data_FormAbstract
 {
-	public function create($pageId = 0)
+	public function create()
 	{
 		$form = new Amun_Form('POST', $this->url);
 
 
 		$panel = new Amun_Form_Element_Panel('googleproject', 'GoogleProject');
-
-
-		if(empty($pageId))
-		{
-			$pageId = new Amun_Form_Element_Reference('pageId', 'Page ID');
-			$pageId->setValueField('id');
-			$pageId->setLabelField('title');
-			$pageId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/page');
-
-			$panel->add($pageId);
-		}
-		else
-		{
-			$pageId = new Amun_Form_Element_Input('pageId', 'Page ID', $pageId);
-			$pageId->setType('hidden');
-
-			$panel->add($pageId);
-		}
 
 
 		$name = new Amun_Form_Element_Input('name', 'Name');

@@ -36,9 +36,9 @@ class AmunService_Googleproject_Handler extends Amun_Data_HandlerAbstract
 {
 	public function create(PSX_Data_RecordInterface $record)
 	{
-		if($record->hasFields('pageId', 'name', 'secret'))
+		if($record->hasFields('name', 'secret'))
 		{
-			$record->globalId = $this->base->getUUID('service:googleproject:' . $record->pageId . ':' . uniqid());
+			$record->globalId = $this->base->getUUID('googleproject:' . $record->pageId . ':' . uniqid());
 			$record->userId   = $this->user->id;
 
 

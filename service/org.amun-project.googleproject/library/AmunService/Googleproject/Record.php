@@ -34,7 +34,6 @@
  */
 class AmunService_Googleproject_Record extends Amun_Data_RecordAbstract
 {
-	protected $_page;
 	protected $_user;
 	protected $_date;
 
@@ -45,20 +44,6 @@ class AmunService_Googleproject_Record extends Amun_Data_RecordAbstract
 		if(!$this->_validate->hasError())
 		{
 			$this->id = $id;
-		}
-		else
-		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
-		}
-	}
-
-	public function setPageId($pageId)
-	{
-		$pageId = $this->_validate->apply($pageId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Content_Page'))), 'pageId', 'Page Id');
-
-		if(!$this->_validate->hasError())
-		{
-			$this->pageId = $pageId;
 		}
 		else
 		{
@@ -92,16 +77,6 @@ class AmunService_Googleproject_Record extends Amun_Data_RecordAbstract
 		{
 			throw new PSX_Data_Exception($this->_validate->getLastError());
 		}
-	}
-
-	public function getPage()
-	{
-		if($this->_page === null)
-		{
-			$this->_page = Amun_Sql_Table_Registry::get('Content_Page')->getRecord($this->pageId);
-		}
-
-		return $this->_page;
 	}
 
 	public function getUser()

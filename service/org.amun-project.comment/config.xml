@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="f4fb07e53fb65d1ee8573c520569dc4870cd2219">
+<service xmlns="http://amun-project.org" signature="f196a00932a98ffd8a6950798ec1502f35076b41">
   <status>system</status>
   <name>comment</name>
-  <description>General comment system wich can be used to store a comment refering to an id</description>
+  <description>General comment system wich can be used to store comments refering to an id</description>
   <path>/comment</path>
   <namespace>comment</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/comment</type>

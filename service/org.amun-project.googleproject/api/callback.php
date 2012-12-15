@@ -91,10 +91,7 @@ class callback extends Amun_Module_ApiAbstract
 								$record = Amun_Sql_Table_Registry::get('Googleproject_Commit')->getRecord();
 								$record->import($result);
 
-								$user = new Amun_User($record->getAuthor()->userId, $this->registry);
-
-								$handler = new AmunService_Googleproject_Commit_Handler($user);
-								$handler->create($record);
+								$this->event->notifyListener('googleproject.commit', array($record));
 
 								$count++;
 							}

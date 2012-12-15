@@ -38,7 +38,6 @@ class AmunService_Googleproject_Table extends Amun_Sql_TableAbstract
 	{
 		return array(
 
-			'pageId' => $this->registry['table.content_page'],
 			'userId' => $this->registry['table.user_account'],
 
 		);
@@ -55,7 +54,6 @@ class AmunService_Googleproject_Table extends Amun_Sql_TableAbstract
 
 			'id' => self::TYPE_INT | 10 | self::PRIMARY_KEY,
 			'globalId' => self::TYPE_VARCHAR | 36,
-			'pageId' => self::TYPE_INT | 10,
 			'userId' => self::TYPE_INT | 10,
 			'name' => self::TYPE_VARCHAR | 32,
 			'secret' => self::TYPE_VARCHAR | 128,

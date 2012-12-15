@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="8585e7de488d4814b5c3ceba38a9042f46f0a5ac">
-  <status>normal</status>
+<service xmlns="http://amun-project.org" signature="daad74dec438fbdb6fa0b683f6c3402ba445f638">
+  <status>system</status>
   <name>googleproject</name>
+  <description>Gateway to receive googleproject commits</description>
   <path>/googleproject</path>
   <namespace>googleproject</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/googleproject</type>
@@ -21,6 +22,11 @@
       <uri>/author</uri>
     </service>
   </api>
+  <activity>
+    <template type="INSERT" verb="add" table="googleproject_commit" path=""><![CDATA[
+<p><a href="{user.profileUrl}">{user.name}</a> has commited <a href="{record.url}">r{record.revision}</a></p><blockquote>{record.message}</blockquote>
+]]></template>
+  </activity>
   <permissions>
     <perm name="view" description="Service Googleproject View"/>
     <perm name="add" description="Service Googleproject Add"/>
@@ -36,24 +42,29 @@
     <table name="googleproject_commit"/>
     <table name="googleproject_author"/>
   </registry>
+  <event>
+    <publisher name="googleproject.commit" description="Notifies if a commit was made"/>
+    <listener name="googleproject.commit" class="AmunService_Googleproject_CommitListener"/>
+  </event>
   <library>
     <dir name="AmunService">
       <dir name="Googleproject">
         <dir name="Author">
-          <file name="Form.php" md5="09c1f2a31321c75db78242bb1f17983a"/>
+          <file name="Form.php" md5="75ad7594b6ad2e2435c46a81f3c8a309"/>
           <file name="Handler.php" md5="8f677a3e47a57e315483f2ef2a420bb2"/>
           <file name="Record.php" md5="202d831a983f8a38f0e6de6735ecf178"/>
           <file name="Table.php" md5="d5d8e26dc1f599838b974dd2c1b8b840"/>
         </dir>
         <dir name="Commit">
-          <file name="Handler.php" md5="e01caff72ffb621051680b2aeffe1180"/>
+          <file name="Handler.php" md5="9c77a5f4350cc626b59a0c36d1eb89c3"/>
           <file name="Record.php" md5="db6435904ff90fa162bd1db672c7db00"/>
           <file name="Table.php" md5="977b872f08c201e365b21c9987eae7a4"/>
         </dir>
-        <file name="Form.php" md5="2d3c7eb5f74679d17f94750268b4bc35"/>
-        <file name="Handler.php" md5="f7e0d4ea9a82775ae21d3375947565e1"/>
-        <file name="Record.php" md5="4c35a23adeaf12a42108c28e528744ac"/>
-        <file name="Table.php" md5="0aa9856c65af1b08b9e69bf78615a3fe"/>
+        <file name="CommitListener.php" md5="215bfb2d90924401011609de29f22489"/>
+        <file name="Form.php" md5="627092cd8d183e7453b72271bf79b677"/>
+        <file name="Handler.php" md5="be64d6bebc0b58b263f09a65a9121c6a"/>
+        <file name="Record.php" md5="100156ee9bd2312f4f071ed3d0f0cf14"/>
+        <file name="Table.php" md5="388185156285cfbce4c0d7bfa36bdae3"/>
       </dir>
     </dir>
   </library>
@@ -61,7 +72,6 @@
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.googleproject}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,
   `globalId` VARCHAR(36) NOT NULL,
-  `pageId` INT(10) NOT NULL,
   `userId` INT(10) NOT NULL,
   `name` VARCHAR(32) NOT NULL,
   `secret` VARCHAR(128) NOT NULL,
@@ -89,10 +99,5 @@
   `date` DATETIME,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[INSERT INTO `{table.core_service_option}` (`serviceId`, `name`) VALUES
-({service.id}, 'index'),
-({service.id}, 'view');]]></query>
-    <query><![CDATA[INSERT INTO `{table.user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
-('INSERT', 'add', '{config.table_prefix}googleproject_commit', '', '<p><a href="{user.profileUrl}">{user.name}</a> has commited <a href="{record.url}">r{record.revision}</a></p><blockquote>{record.message}</blockquote>');]]></query>
   </database>
 </service>

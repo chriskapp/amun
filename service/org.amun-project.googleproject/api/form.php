@@ -39,8 +39,4 @@ use Amun_Module_FormAbstract;
  */
 class form extends Amun_Module_FormAbstract
 {
-	protected function getCreateForm()
-	{
-		return $this->form->create($this->get->pageId('integer'));
-	}
 }

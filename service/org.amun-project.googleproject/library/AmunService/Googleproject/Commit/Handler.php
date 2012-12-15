@@ -38,7 +38,7 @@ class AmunService_Googleproject_Commit_Handler extends Amun_Data_HandlerAbstract
 	{
 		if($record->hasFields('projectId', 'authorId', 'revision', 'url', 'message'))
 		{
-			$record->globalId = $this->base->getUUID('service:googleproject:' . $record->projectId . ':' . uniqid());
+			$record->globalId = $this->base->getUUID('googleproject:' . $record->projectId . ':' . uniqid());
 
 
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
