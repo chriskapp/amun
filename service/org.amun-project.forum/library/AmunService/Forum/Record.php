@@ -147,7 +147,7 @@ class AmunService_Forum_Record extends Amun_Data_RecordAbstract
 
 	public function getId()
 	{
-		return $this->_base->getUrn('service', 'forum', $this->id);
+		return $this->_base->getUrn('forum', $this->id);
 	}
 
 	public function getPage()

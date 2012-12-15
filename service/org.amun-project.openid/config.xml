@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="2fa917d051169bdab7b6e92043941fc0fa066f65">
+<service xmlns="http://amun-project.org" signature="daa31e49008216a4c4a8c0392583b4fd866d7dfa">
   <status>system</status>
   <name>openid</name>
   <description>Provides an OpenID provider implementation</description>
@@ -41,7 +41,7 @@
         <dir name="Access">
           <file name="Form.php" md5="904c79c801c3e5ec66122a1c30f7eccb"/>
           <file name="Handler.php" md5="811058476fedb7992061baf6ff0faf65"/>
-          <file name="Record.php" md5="f75a9e64e9e4310b165e3dc6d0793b2c"/>
+          <file name="Record.php" md5="885467d6d1d9460c9a6aa8e8c492f786"/>
           <file name="Table.php" md5="515d82d172d05fce26a19934e04a944a"/>
         </dir>
         <dir name="Assoc">
@@ -52,7 +52,7 @@
         </dir>
         <file name="Form.php" md5="03eac4529e316e1ae89a3d131d118317"/>
         <file name="Handler.php" md5="eeb9c0f678dfaf9a2e5c209a0c43169d"/>
-        <file name="Record.php" md5="effa496490112b40cef337fb4e2c938e"/>
+        <file name="Record.php" md5="8db4145c6fb1d0d253fb12227b7b9729"/>
         <file name="Table.php" md5="0a48798be1050a25a8dab1ca24dc197b"/>
       </dir>
     </dir>

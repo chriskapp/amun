@@ -100,7 +100,7 @@ class AmunService_My_Notify extends Amun_Data_RecordAbstract
 
 	public function getId()
 	{
-		return $this->_base->getUrn('service', 'my', 'contact', $this->id);
+		return $this->_base->getUrn('my', 'notify', $this->id);
 	}
 
 	public function getUser()

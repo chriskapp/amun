@@ -82,7 +82,7 @@ class AmunService_Redirect_Record extends Amun_Data_RecordAbstract
 
 	public function getId()
 	{
-		return $this->_base->getUrn('service', 'redirect', $this->id);
+		return $this->_base->getUrn('redirect', $this->id);
 	}
 
 	public function getPage()

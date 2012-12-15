@@ -91,7 +91,7 @@ class AmunService_Core_Approval_Record_Record extends Amun_Data_RecordAbstract
 
 	public function getId()
 	{
-		return $this->_base->getUrn('system', 'approval', 'record', $this->id);
+		return $this->_base->getUrn('core', 'approval', 'record', $this->id);
 	}
 
 	public function getUser()

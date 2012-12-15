@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="ad165ba3c0f08e1c22332144bcaa0d87c7640170">
+<service xmlns="http://amun-project.org" signature="7e22d11f2c93b9226d8e3769f508eac5a0af0e44">
   <status>system</status>
   <name>media</name>
   <description>Offers a general way to upload and access arbitrary media files</description>
@@ -36,7 +36,7 @@
         </dir>
         <file name="Form.php" md5="fa55918f878959dc9d640728740e7e7a"/>
         <file name="Handler.php" md5="89fc1518d8dc73902acc84788b0bc0ee"/>
-        <file name="Record.php" md5="f762cd60b48d68b4f4a4b9d5258fcebc"/>
+        <file name="Record.php" md5="e08fd8b798d4ea9a492d9aae267acc8c"/>
         <file name="Table.php" md5="12fd8af4cbdd55aeb6bd6e4786d4eb4a"/>
       </dir>
     </dir>

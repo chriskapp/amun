@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="460e6c4386797ac93730cef91cd07fe0708e7792">
+<service xmlns="http://amun-project.org" signature="eeb983d55460959444d7434ec80760e18ca74d24">
   <status>system</status>
   <name>log</name>
   <description>Service wich logs every record insert, update or delete. All logs entries can be accessed trough the API</description>
@@ -32,7 +32,7 @@
         <file name="Form.php" md5="2b9daa5ef0825c8628de3237e674429a"/>
         <file name="Handler.php" md5="ff999234c345caf3c6ff4fb1ad758d94"/>
         <file name="RecordListener.php" md5="a652333baa5fa9958604c903899fb3c6"/>
-        <file name="Record.php" md5="786ef92b08bb994659ae93bf66c6c93b"/>
+        <file name="Record.php" md5="759d44cc13094aaf2a0bf9889c431225"/>
         <file name="Table.php" md5="5d7ea15b3a541014ee9075e697a512b9"/>
       </dir>
     </dir>

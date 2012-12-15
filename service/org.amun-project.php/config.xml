@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="fab04c32f5fb99b2103addcc329becd5c65da0e5">
+<service xmlns="http://amun-project.org" signature="940653baac099dcafc54c62e32d1a02e440e107b">
   <status>normal</status>
   <name>php</name>
   <description>Service to embed PHP code in a page. Because of security it is only possible to edit the page from the backend</description>
@@ -31,7 +31,7 @@
       <dir name="Php">
         <file name="Form.php" md5="2f7cd326a2fcef6aacf340944361ecba"/>
         <file name="Handler.php" md5="68b778c5eef9c3ed8e14fea57cd85d01"/>
-        <file name="Record.php" md5="34c40df4e9297265d1726be1690d250c"/>
+        <file name="Record.php" md5="0aaa9d114bcf28304f32e04274d2a521"/>
         <file name="Table.php" md5="17e81ab32a0b7e6fa81060907e6ae361"/>
       </dir>
     </dir>

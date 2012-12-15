@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="81f460fc4bbee8c69108894c841bf2dba7630d57">
+<service xmlns="http://amun-project.org" signature="7d6e20fca2cd9d563afa2aa31ea44dafbc814400">
   <status>system</status>
   <name>oauth</name>
   <description>Provides an Oauth 1.0 endpoint implementation where applications can register to access the API</description>
@@ -67,7 +67,7 @@
         <dir name="Access">
           <file name="Form.php" md5="9a4e5f00e614f465ab926a0c0bc55f39"/>
           <file name="Handler.php" md5="28d837aa7ae5e61d1ce1d9d6c2287e01"/>
-          <file name="Record.php" md5="0e9f16f3bd9dbd1a8748d048425fdc15"/>
+          <file name="Record.php" md5="006b39e11ebb86ef3761c6d09aab59d0"/>
           <file name="Table.php" md5="c2e7e0d4055c150d4e07cd96b0f578e2"/>
         </dir>
         <dir name="Filter">
@@ -76,11 +76,11 @@
         </dir>
         <file name="Form.php" md5="7c75c01864e7b46db0915558d18deff1"/>
         <file name="Handler.php" md5="ebb64cba70f5bf808a4cdfbf790596ad"/>
-        <file name="Record.php" md5="ba9150f0510d65bc5e600a30ed525dbf"/>
+        <file name="Record.php" md5="52ba76bc8a1f7353a19cb862542b7572"/>
         <dir name="Request">
           <file name="Form.php" md5="4ab67bcd7ed8d297a7ac4b1cf79cde83"/>
           <file name="Handler.php" md5="4da288b2f7937de181b894f53729c53e"/>
-          <file name="Record.php" md5="6f22da54ef7225c1ab190081b650e03a"/>
+          <file name="Record.php" md5="3efb1a455d8d5a26f0d75452f5df4ed4"/>
           <file name="Table.php" md5="99145a15e68088ea1df57487e1a0d30b"/>
         </dir>
         <file name="Table.php" md5="d628fe433a120e5d08a65bc57ba6d504"/>

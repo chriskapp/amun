@@ -59,7 +59,7 @@ class AmunService_Openid_Access_Record extends Amun_Data_RecordAbstract
 
 	public function getId()
 	{
-		return $this->_base->getUrn('system', 'connect', 'access', $this->id);
+		return $this->_base->getUrn('openid', 'access', $this->id);
 	}
 
 	public function getUser()

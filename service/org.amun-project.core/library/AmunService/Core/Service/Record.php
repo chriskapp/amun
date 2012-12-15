@@ -168,7 +168,7 @@ class AmunService_Core_Service_Record extends Amun_Data_RecordAbstract
 
 	public function getId()
 	{
-		return $this->_base->getUrn('content', 'service', $this->id);
+		return $this->_base->getUrn('core', 'service', $this->id);
 	}
 
 	public function getDate()

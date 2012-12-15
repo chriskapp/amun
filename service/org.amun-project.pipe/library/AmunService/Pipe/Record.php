@@ -83,7 +83,7 @@ class AmunService_Pipe_Record extends Amun_Data_RecordAbstract
 
 	public function getId()
 	{
-		return $this->_base->getUrn('service', 'media', $this->id);
+		return $this->_base->getUrn('pipe', $this->id);
 	}
 
 	public function getContent()

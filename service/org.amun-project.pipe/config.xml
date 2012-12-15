@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="0dd950ee10fbb8f0720db6fa15ad8be0b4c05066">
+<service xmlns="http://amun-project.org" signature="cae925edc241293bea7d4090e9d68e65d8c02ac5">
   <status>normal</status>
   <name>pipe</name>
   <description>Service wich redirects the content of an file to a page</description>
@@ -31,7 +31,7 @@
       <dir name="Pipe">
         <file name="Form.php" md5="03f6bda7ebe93f88d6afe5971e43ec36"/>
         <file name="Handler.php" md5="df9737342f99235bfeeb14ed9f469e93"/>
-        <file name="Record.php" md5="99732f3fc8eb0962b7512264d8cebfe1"/>
+        <file name="Record.php" md5="8265dfb61195f62ee1f5502ab5622c57"/>
         <file name="Table.php" md5="eee18b77594b1726fc85edf969ba1850"/>
       </dir>
     </dir>

@@ -102,7 +102,7 @@ class AmunService_Core_Registry_Record extends Amun_Data_RecordAbstract
 
 	public function getId()
 	{
-		return $this->_base->getUrn('system', 'vars', $this->id);
+		return $this->_base->getUrn('core', 'registry', $this->id);
 	}
 
 	public static function getType($status = false)

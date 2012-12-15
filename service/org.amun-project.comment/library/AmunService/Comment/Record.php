@@ -107,7 +107,7 @@ class AmunService_Comment_Record extends Amun_Data_RecordAbstract
 
 	public function getId()
 	{
-		return $this->_base->getUrn('service', 'comment', $this->id);
+		return $this->_base->getUrn('comment', $this->id);
 	}
 
 	public function getPage()

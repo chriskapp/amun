@@ -100,7 +100,7 @@ class AmunService_Media_Record extends Amun_Data_RecordAbstract
 
 	public function getId()
 	{
-		return $this->_base->getUrn('content', 'media', $this->id);
+		return $this->_base->getUrn('media', $this->id);
 	}
 
 	public function getDate()
