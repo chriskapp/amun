@@ -45,41 +45,38 @@ class AmunService_User_Activity_RecordListener extends Amun_Module_ListenerAbstr
 
 			case $record instanceof AmunService_User_Account_Record:
 
-				$this->handleUserAccount($type, $record);
+				$this->handleUserAccount($type, $table, $record);
 				break;
 
 			case $record instanceof AmunService_User_Friend_Record:
 
-				$this->handleUserFriend($type, $record);
+				$this->handleUserFriend($type, $table, $record);
 				break;
 
 			default:
 
-				$this->handleDefault($type, $record);
+				$this->handleDefault($type, $table, $record);
 				break;
 		}
 	}
 
-	private function handleUserAccount($type, PSX_Data_RecordInterface $record)
+	private function handleUserAccount($type, Amun_Sql_TableInterface $table, PSX_Data_RecordInterface $record)
 	{
 		if($type == Amun_Data_RecordAbstract::INSERT)
 		{
-			// template
-			$template = $this->applyTemplate($type, $record);
-
 			// insert activity
 			$activity          = Amun_Sql_Table_Registry::get('User_Activity')->getRecord();
 			$activity->refId   = $record->id;
-			$activity->table   = $this->table->getName();
-			$activity->verb    = $template['verb'];
-			$activity->summary = $template['summary'];
+			$activity->table   = $table->getName();
+			$activity->verb    = 'join';
+			$activity->summary = $record->name . ' has created an account';
 
 			$handler = new AmunService_User_Activity_Handler(new Amun_User($record->id, $this->registry));
 			$handler->create($activity);
 		}
 	}
 
-	private function handleUserFriend($type, PSX_Data_RecordInterface $record)
+	private function handleUserFriend($type, Amun_Sql_TableInterface $table, PSX_Data_RecordInterface $record)
 	{
 		if($type == Amun_Data_RecordAbstract::INSERT)
 		{
@@ -87,14 +84,13 @@ class AmunService_User_Activity_RecordListener extends Amun_Module_ListenerAbstr
 
 			if($record->status == AmunService_User_Friend_Record::REQUEST)
 			{
-
 			}
 			else if($record->status == AmunService_User_Friend_Record::NORMAL)
 			{
 				// insert activity for user who has accepted the friend request
 				$activity          = Amun_Sql_Table_Registry::get('User_Activity')->getRecord();
 				$activity->refId   = $record->id;
-				$activity->table   = $this->table->getName();
+				$activity->table   = $table->getName();
 				$activity->verb    = 'make-friend';
 				$activity->summary = '<a href="' . $record->getUser()->profileUrl . '">' . $record->getUser()->name . '</a> and <a href="' . $record->getFriend()->profileUrl . '">' . $record->getFriend()->name . '</a> are now friends';
 
@@ -104,7 +100,7 @@ class AmunService_User_Activity_RecordListener extends Amun_Module_ListenerAbstr
 				// insert activity for user who has requested the friendship
 				$activity          = Amun_Sql_Table_Registry::get('User_Activity')->getRecord();
 				$activity->refId   = $record->id;
-				$activity->table   = $this->table->getName();
+				$activity->table   = $table->getName();
 				$activity->verb    = 'make-friend';
 				$activity->summary = '<a href="' . $record->getFriend()->profileUrl . '">' . $record->getFriend()->name . '</a> and <a href="' . $record->getUser()->profileUrl . '">' . $record->getUser()->name . '</a> are now friends';
 
@@ -114,26 +110,7 @@ class AmunService_User_Activity_RecordListener extends Amun_Module_ListenerAbstr
 		}
 	}
 
-	private function handleDefault($type, PSX_Data_RecordInterface $record)
-	{
-		// template
-		$template = $this->getTemplate($type, $record);
-
-		if($template !== false)
-		{
-			// insert activity
-			$activity          = Amun_Sql_Table_Registry::get('User_Activity')->getRecord();
-			$activity->refId   = $record->id;
-			$activity->table   = $this->table->getName();
-			$activity->verb    = $template['verb'];
-			$activity->summary = $template['summary'];
-
-			$handler = new AmunService_User_Activity_Handler($this->user);
-			$handler->create($activity);
-		}
-	}
-
-	private function getTemplate($type, PSX_Data_RecordInterface $record)
+	private function handleDefault($type, Amun_Sql_TableInterface $table, PSX_Data_RecordInterface $record)
 	{
 		// get template message
 		$sql = <<<SQL
@@ -150,18 +127,22 @@ SELECT
 		AND `template`.`type` = ?
 SQL;
 
-		$row = $this->sql->getRow($sql, array($this->table->getName(), Amun_Data_RecordAbstract::getType($type)));
+		$row = $this->sql->getRow($sql, array($table->getName(), Amun_Data_RecordAbstract::getType($type)));
 
 		if(!empty($row))
 		{
 			$objectUrl = $this->getObjectUrl($record, $this->substituteVars($record, $row['path']));
 
-			$template = array();
-			$template['verb']    = $row['verb'];
-			$template['summary'] = $this->substituteVars($record, $row['summary'], $objectUrl);
-		}
+			// insert activity
+			$activity          = Amun_Sql_Table_Registry::get('User_Activity')->getRecord();
+			$activity->refId   = $record->id;
+			$activity->table   = $table->getName();
+			$activity->verb    = $row['verb'];
+			$activity->summary = $template['summary'];
 
-		return false;
+			$handler = new AmunService_User_Activity_Handler($this->user);
+			$handler->create($activity);
+		}
 	}
 
 	private function substituteVars(PSX_Data_RecordInterface $record, $content, $url = null)

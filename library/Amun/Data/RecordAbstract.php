@@ -75,6 +75,11 @@ abstract class Amun_Data_RecordAbstract extends PSX_Data_Record_TableAbstract
 		return $fields;
 	}
 
+	public function _getTable()
+	{
+		return $this->_table;
+	}
+
 	public static function getType($status = false)
 	{
 		$s = array(
