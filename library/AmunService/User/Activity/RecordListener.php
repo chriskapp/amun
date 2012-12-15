@@ -138,7 +138,7 @@ SQL;
 			$activity->refId   = $record->id;
 			$activity->table   = $table->getName();
 			$activity->verb    = $row['verb'];
-			$activity->summary = $template['summary'];
+			$activity->summary = $this->substituteVars($record, $row['summary'], $objectUrl);
 
 			$handler = new AmunService_User_Activity_Handler($this->user);
 			$handler->create($activity);
@@ -156,11 +156,16 @@ SQL;
 		// user fields
 		if(strpos($content, '{user.') !== false)
 		{
-			$fields = array('id', 'name', 'profileUrl', 'thumbnailUrl', 'lastSeen', 'date');
+			$fields = array('id', 'name', 'profileUrl', 'lastSeen', 'date');
 
 			foreach($fields as $v)
 			{
-				$content = str_replace('{user.' . $v . '}', $this->user->$v, $content);
+				$key = '{user.' . $v . '}';
+
+				if(strpos($content, $key) !== false)
+				{
+					$content = str_replace($key, $this->user->$v, $content);
+				}
 			}
 		}
 
@@ -171,10 +176,15 @@ SQL;
 
 			foreach($fields as $k => $v)
 			{
-				$v = strip_tags($v);
-				$v = strlen($v) > 256 ? substr($v, 0, 253) . '...' : $v;
+				$key = '{record.' . $k . '}';
 
-				$content = str_replace('{record.' . $k . '}', $v, $content);
+				if(strpos($content, $key) !== false)
+				{
+					$v = strip_tags($v);
+					$v = strlen($v) > 256 ? substr($v, 0, 253) . '...' : $v;
+
+					$content = str_replace($key, $v, $content);
+				}
 			}
 		}
 
