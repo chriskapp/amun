@@ -33,7 +33,7 @@ use PSX_OpenId_ProviderAbstract;
 use PSX_OpenId_Provider_Data_Association;
 use PSX_OpenId_Provider_Data_ResRequest;
 use PSX_OpenId_Provider_Data_SetupRequest;
-use PSX_Time;
+use PSX_DateTime;
 use PSX_Url;
 
 /**
@@ -114,7 +114,7 @@ SQL;
 				'sessionType' => $assoc->getSessionType(),
 				'secret'      => $assoc->getSecret(),
 				'expires'     => self::EXPIRE,
-				'date'        => $date->format(PSX_Time::SQL),
+				'date'        => $date->format(PSX_DateTime::SQL),
 
 			));
 
@@ -190,7 +190,7 @@ SQL;
 					'sessionType' => 'DH-SHA1',
 					'secret'      => $secret,
 					'expires'     => self::EXPIRE,
-					'date'        => $date->format(PSX_Time::SQL),
+					'date'        => $date->format(PSX_DateTime::SQL),
 
 				));
 

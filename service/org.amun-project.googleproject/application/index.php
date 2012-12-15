@@ -116,8 +116,8 @@ class index extends Amun_Module_ApplicationAbstract
 			{
 				$date = new DateTime($year . '-' . ($month < 10 ? '0' : '') . $month . '-01', $this->registry['core.default_timezone']);
 
-				$select->where('date', '>=', $date->format(PSX_Time::SQL));
-				$select->where('date', '<', $date->add(new DateInterval('P1M'))->format(PSX_Time::SQL));
+				$select->where('date', '>=', $date->format(PSX_DateTime::SQL));
+				$select->where('date', '<', $date->add(new DateInterval('P1M'))->format(PSX_DateTime::SQL));
 			}
 		}
 

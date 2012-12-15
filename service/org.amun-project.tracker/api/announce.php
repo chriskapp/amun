@@ -35,7 +35,7 @@ use PSX_Filter_Ip;
 use PSX_Filter_Length;
 use PSX_Sql;
 use PSX_Sql_Condition;
-use PSX_Time;
+use PSX_DateTime;
 use PSX_Util_Bencoding;
 
 /**
@@ -128,7 +128,7 @@ class announce extends Amun_Module_DefaultAbstract
 				'event'      => strtoupper($event),
 				'status'     => $left == 0 ? 'SEEDER' : 'LEECHER',
 				'client'     => isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'Unknown',
-				'date'       => $date->format(PSX_Time::SQL),
+				'date'       => $date->format(PSX_DateTime::SQL),
 
 			);
 
@@ -273,7 +273,7 @@ class announce extends Amun_Module_DefaultAbstract
 
 		$con = new PSX_Sql_Condition();
 		$con->add('infoHash', '=', $infoHash);
-		$con->add('date', '<', $date->format(PSX_Time::SQL));
+		$con->add('date', '<', $date->format(PSX_DateTime::SQL));
 
 		Amun_Sql_Table_Registry::get('Tracker_Peer')->delete($con);
 	}

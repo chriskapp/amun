@@ -1,17 +1,19 @@
 
 [FEATURES]
 
-[ ] fix getId() from records
+[ ] Oauth endpoint send invalid request method header on GET at request/access
+[x] fix getId() from records
 [ ] fix form reference src endpoints
 [ ] fix tests
-[ ] extract functionality from the core service into different services
-    [ ] split core service into different services probably content / system and 
+[x] extract functionality from the core service into different services
+    [x] split core service into different services probably content / system and 
         user service
 [ ] support host meta to return json and xrd / jrd
 [x] build swagger geenrator for the current api (get api details from docblock
     comments). Problem to generate the declaration we have to import every api
     endpoint wich all have the same class name "index" .. namespaces
-[ ] test oauth authentication
+[ ] test oauth authorization
+[x] test openid authentication
 [ ] adding oauth scope
 [ ] implement event listener system where services can offer an endpoint where
     other classes can subscribe to.

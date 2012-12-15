@@ -62,7 +62,7 @@ class authorization extends PSX_ModuleAbstract
 		if(!$this->validate->hasError())
 		{
 			// redirect to the auth page
-			header('Location: ' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'my.htm/auth?oauth_token=' . $oauthToken);
+			header('Location: ' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'my/auth?oauth_token=' . $oauthToken);
 
 			exit;
 		}

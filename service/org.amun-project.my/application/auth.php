@@ -51,7 +51,7 @@ class auth extends Amun_Module_ApplicationAbstract
 
 		// check whether user is logged in if not redirect them to
 		// the login form
-		if(!$this->session->has('amun_id'))
+		if($this->user->isAnonymous())
 		{
 			$self = $this->page->url . '/auth?oauth_token=' . $oauthToken;
 
@@ -223,7 +223,7 @@ class auth extends Amun_Module_ApplicationAbstract
 			'apiId'   => $this->apiId,
 			'userId'  => $this->user->id,
 			'allowed' => 1,
-			'date'    => $now->format(PSX_Time::SQL),
+			'date'    => $now->format(PSX_DateTime::SQL),
 
 		));
 
@@ -266,7 +266,7 @@ class auth extends Amun_Module_ApplicationAbstract
 			'apiId'   => $this->apiId,
 			'userId'  => $this->user->id,
 			'allowed' => 0,
-			'date'    => $now->format(PSX_Time::SQL),
+			'date'    => $now->format(PSX_DateTime::SQL),
 
 		));
 

@@ -190,7 +190,7 @@ class connect extends Amun_Module_ApplicationAbstract
 			'identity'      => $this->identity,
 			'returnTo'      => (string) $this->returnTo,
 			'responseNonce' => $nonce,
-			'date'          => $now->format(PSX_Time::SQL),
+			'date'          => $now->format(PSX_DateTime::SQL),
 
 		);
 
@@ -229,7 +229,7 @@ class connect extends Amun_Module_ApplicationAbstract
 			'identity'      => $this->identity,
 			'returnTo'      => (string) $this->returnTo,
 			'responseNonce' => $nonce,
-			'date'          => $now->format(PSX_Time::SQL),
+			'date'          => $now->format(PSX_DateTime::SQL),
 
 		);
 
@@ -339,7 +339,7 @@ class connect extends Amun_Module_ApplicationAbstract
 				'verifier'    => $verifier,
 				'timestamp'   => time(),
 				'expire'      => 'PT30M',
-				'date'        => $date->format(PSX_Time::SQL),
+				'date'        => $date->format(PSX_DateTime::SQL),
 
 			));
 
@@ -349,7 +349,7 @@ class connect extends Amun_Module_ApplicationAbstract
 				'apiId'   => $row['id'],
 				'userId'  => $this->user->id,
 				'allowed' => 1,
-				'date'    => $date->format(PSX_Time::SQL),
+				'date'    => $date->format(PSX_DateTime::SQL),
 
 			));
 

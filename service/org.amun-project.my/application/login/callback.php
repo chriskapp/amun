@@ -155,7 +155,7 @@ class callback extends Amun_Module_ApplicationAbstract
 							'token'       => $resp->getToken(),
 							'tokenSecret' => $resp->getTokenSecret(),
 							'expire'      => 'P6M',
-							'date'        => $date->format(PSX_Time::SQL),
+							'date'        => $date->format(PSX_DateTime::SQL),
 
 						));
 					}
