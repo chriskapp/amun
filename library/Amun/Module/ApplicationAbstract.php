@@ -159,7 +159,7 @@ abstract class Amun_Module_ApplicationAbstract extends PSX_Module_ViewAbstract
 	 */
 	protected function setOptions(array $data)
 	{
-		$options = new Amun_Option(__CLASS__, $this->registry, $this->user, $this->page);
+		$options = new Amun_Option($this->location->getClass()->getName(), $this->registry, $this->user, $this->page);
 
 		foreach($data as $row)
 		{
