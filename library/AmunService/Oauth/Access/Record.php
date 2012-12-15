@@ -73,7 +73,7 @@ class AmunService_Oauth_Access_Record extends Amun_Data_RecordAbstract
 
 	public function getId()
 	{
-		return $this->_base->getUrn('system', 'api', 'access', $this->id);
+		return $this->_base->getUrn('oauth', 'access', $this->id);
 	}
 
 	public function getApi()

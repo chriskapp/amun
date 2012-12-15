@@ -93,7 +93,7 @@ class AmunService_My_Subscription_Record extends Amun_Data_RecordAbstract
 
 	public function getId()
 	{
-		return $this->_base->getUrn('service', 'my', 'subscription', $this->id);
+		return $this->_base->getUrn('my', 'subscription', $this->id);
 	}
 
 	public function getUser()

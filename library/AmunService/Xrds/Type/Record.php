@@ -71,7 +71,7 @@ class AmunService_Xrds_Type_Record extends Amun_Data_RecordAbstract
 
 	public function getId()
 	{
-		return $this->_base->getUrn('content', 'api', 'type', $this->id);
+		return $this->_base->getUrn('xrds', 'type', $this->id);
 	}
 
 	public function getApi()

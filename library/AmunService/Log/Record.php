@@ -86,7 +86,7 @@ class AmunService_Log_Record extends Amun_Data_RecordAbstract
 
 	public function getId()
 	{
-		return $this->_base->getUrn('system', 'log', $this->id);
+		return $this->_base->getUrn('log', $this->id);
 	}
 
 	public function getUser()

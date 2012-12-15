@@ -102,7 +102,7 @@ class AmunService_My_Contact extends Amun_Data_RecordAbstract
 
 	public function getId()
 	{
-		return $this->_base->getUrn('service', 'my', 'contact', $this->id);
+		return $this->_base->getUrn('my', 'contact', $this->id);
 	}
 
 	public function getUser()

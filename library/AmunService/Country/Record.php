@@ -111,7 +111,7 @@ class AmunService_Country_Record extends Amun_Data_RecordAbstract
 
 	public function getId()
 	{
-		return $this->_base->getUrn('system', 'country', $this->id);
+		return $this->_base->getUrn('country', $this->id);
 	}
 }
 

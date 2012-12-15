@@ -110,7 +110,7 @@ class AmunService_Core_Host_Request_Record extends Amun_Data_RecordAbstract
 
 	public function getId()
 	{
-		return $this->_base->getUrn('system', 'api', 'request', $this->id);
+		return $this->_base->getUrn('core', 'host', 'request', $this->id);
 	}
 
 	public function getHost()
