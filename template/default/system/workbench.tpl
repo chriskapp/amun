@@ -9,7 +9,7 @@
 	var url = '<?php echo $url; ?>';
 	</script>
 	<script type="text/javascript" src="http://cdn.sencha.io/ext-4.1.0-gpl/ext-all.js"></script>
-	<script type="text/javascript" src="<?php echo $url; ?>ext?mode=Amun_Html_Js&services=ace"></script>
+	<script type="text/javascript" src="<?php echo $url; ?>api/asset/js?services=ace"></script>
 	<script type="text/javascript" src="<?php echo $base; ?>/js/workbench/app.js"></script>
 </head>
 <body>

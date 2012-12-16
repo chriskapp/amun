@@ -38,7 +38,7 @@ class AmunService_Tracker_Handler extends Amun_Data_HandlerAbstract
 	{
 		if($record->hasFields('pageId', 'urlTitle', 'title', 'name', 'length', 'infoHash', 'torrent'))
 		{
-			$record->globalId = $this->base->getUUID('tracker:' . $record->pageId . ':' . uniqid());
+			$record->globalId = $this->base->getUUID('service:tracker:' . $record->pageId . ':' . uniqid());
 			$record->userId   = $this->user->id;
 
 			// move torrent file

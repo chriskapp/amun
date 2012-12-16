@@ -38,7 +38,7 @@ class AmunService_Redirect_Handler extends Amun_Data_HandlerAbstract
 	{
 		if($record->hasFields('pageId', 'href'))
 		{
-			$record->globalId = $this->base->getUUID('redirect:' . $record->pageId . ':' . uniqid());
+			$record->globalId = $this->base->getUUID('service:redirect:' . $record->pageId . ':' . uniqid());
 			$record->userId   = $this->user->id;
 
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);

@@ -64,8 +64,8 @@ Ext.define('Amun.Grid', {
                     text: result[i],
                     dataIndex: result[i]
                 });
-                searchColumns.push(k);
-                fields+= k + ',';
+                searchColumns.push(result[i]);
+                fields+= result[i] + ',';
             }
         }
 

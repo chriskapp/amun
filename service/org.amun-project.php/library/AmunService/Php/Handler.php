@@ -38,7 +38,7 @@ class AmunService_Php_Handler extends Amun_Data_HandlerAbstract
 	{
 		if($record->hasFields('pageId', 'content'))
 		{
-			$record->globalId = $this->base->getUUID('php:' . $record->pageId . ':' . uniqid());
+			$record->globalId = $this->base->getUUID('service:php:' . $record->pageId . ':' . uniqid());
 			$record->userId   = $this->user->id;
 
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);

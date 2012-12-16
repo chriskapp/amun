@@ -38,7 +38,7 @@ class AmunService_Plugin_Release_Handler extends Amun_Data_HandlerAbstract
 	{
 		if($record->hasFields('pluginId', 'status', 'version', 'href'))
 		{
-			$record->globalId = $this->base->getUUID('plugin:release:' . $record->pluginId . ':' . uniqid());
+			$record->globalId = $this->base->getUUID('service:plugin:release:' . $record->pluginId . ':' . uniqid());
 			$record->userId   = $this->user->id;
 
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
