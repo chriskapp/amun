@@ -46,7 +46,7 @@ class AmunService_File_Table extends Amun_Sql_TableAbstract
 
 	public function getName()
 	{
-		return $this->registry['table.page'];
+		return $this->registry['table.file'];
 	}
 
 	public function getColumns()
