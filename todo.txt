@@ -3,34 +3,19 @@
 
 [ ] Move GadgetAbstract / ListenerAbstract from Module to Data folder
 [ ] check activity stream generation / design 
-[x] fix captcha url
+    [ ] check activity stream
+[ ] approval system
+[ ] Improve backend to new service structure
 [ ] Oauth endpoint send invalid request method header on GET at request/access
-[x] fix getId() from records
-[x] fix form reference src endpoints
+    [ ] adding oauth scope
 [ ] fix tests
-[x] extract functionality from the core service into different services
-    [x] split core service into different services probably content / system and 
-        user service
 [ ] support host meta to return json and xrd / jrd
-[x] build swagger geenrator for the current api (get api details from docblock
-    comments). Problem to generate the declaration we have to import every api
-    endpoint wich all have the same class name "index" .. namespaces
-[x] test oauth authorization
-[x] test openid authentication
-[ ] adding oauth scope
-[x] implement event listener system where services can offer an endpoint where
-    other classes can subscribe to.
-    [ ] update webdav service probably with handler so that services can provide 
-        their own content
-    [x] possibility for services to extend the service config.xml
-    [x] possibility for services to extend the meta lrdd api
-[ ] check activity stream and approval system
 [ ] improve right system probably with inheritance
+[ ] Implement reference input field in backend
 [ ] possiblity to add more meta data to a page (keywords, description)
     [ ] A option to create a pasword protected page. This should be general so 
         that you can protect any page with an password ... at this move we can 
         also add a possibility to add more meta data to a page (i.e. dublincore)
-[ ] Implement reference input field in backend
 [ ] comments wich are added should not force a reload instead they should be
     added directly to the html
 [ ] update phpdoc for proper API generation
@@ -51,6 +36,23 @@
     framework because its not amun specific and a well written proxy is in
     general needed
 [ ] test ostatus remote subscription interoperability
+[x] fix captcha url
+[x] fix getId() from records
+[x] fix form reference src endpoints
+[x] extract functionality from the core service into different services
+    [x] split core service into different services probably content / system and 
+        user service
+[x] build swagger geenrator for the current api (get api details from docblock
+    comments). Problem to generate the declaration we have to import every api
+    endpoint wich all have the same class name "index" .. namespaces
+[x] test oauth authorization
+[x] test openid authentication
+[x] implement event listener system where services can offer an endpoint where
+    other classes can subscribe to.
+    [ ] update webdav service probably with handler so that services can provide 
+        their own content
+    [x] possibility for services to extend the service config.xml
+    [x] possibility for services to extend the meta lrdd api
 [x] fix api insert
 [x] update all services using the new service class for right and api endpoint 
     issues

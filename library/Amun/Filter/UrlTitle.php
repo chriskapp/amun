@@ -47,7 +47,7 @@ class Amun_Filter_UrlTitle extends PSX_FilterAbstract
 
 		$numeric = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
 		$alpha   = array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
-		$mask    = array('-', '_');
+		$mask    = array('-', '_', '.');
 		$allowed = array_merge($numeric, $alpha, $mask);
 
 		for($i = 0; $i < $len; $i++)
