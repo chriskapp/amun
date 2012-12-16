@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="6029a9033153faaa5f875947decf5ed4b8351d2a">
+<service xmlns="http://amun-project.org" signature="caa2f659da398fecf663e77c9eb8ce779074f3c2">
   <status>normal</status>
   <name>plugin</name>
   <description>Service to list plugins. Each plugin can be maintained by multiple users. News versions can be added by maintainer</description>
@@ -63,7 +63,7 @@
     <dir name="AmunService">
       <dir name="Plugin">
         <file name="Form.php" md5="724dcc0825aaf0f6232f9490cfaafdef"/>
-        <file name="Handler.php" md5="23efcf738845ac0666d8f3236d95439a"/>
+        <file name="Handler.php" md5="fea9e10b329b19de94464788cfe35c6b"/>
         <dir name="Maintainer">
           <file name="Form.php" md5="07e59888263b5a15c7974ca521c12ab9"/>
           <file name="Handler.php" md5="211ff4dff86b1054b521fd28c9d9b45a"/>
@@ -73,7 +73,7 @@
         <file name="Record.php" md5="02de43b6d8d2aa83ca9ae6020d0eb030"/>
         <dir name="Release">
           <file name="Form.php" md5="8742c9487f870d1969d5b929f6fc899b"/>
-          <file name="Handler.php" md5="498c0cdfdc4b206c0b80cfbb553b234f"/>
+          <file name="Handler.php" md5="9497f30862262b6c040701c326af5575"/>
           <file name="Record.php" md5="77ff77e67980ff4d46fa0589109e101a"/>
           <file name="Table.php" md5="c6f117cbf64e2149fdfcd3e9533aeaea"/>
         </dir>

@@ -58,7 +58,6 @@ class Amun_Loader_LocationFinder extends PSX_Loader_LocationFinder_FileSystem
 				return $this->resolveApi($parts[1]);
 				break;
 
-			case 'ext':
 			case 'install':
 			case 'workbench':
 				$this->path = PSX_PATH_MODULE;

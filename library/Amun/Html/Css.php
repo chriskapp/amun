@@ -32,10 +32,12 @@
  * @package    Amun_Html
  * @version    $Revision: 635 $
  */
-class Amun_Html_Css extends Amun_Ext_HtmlAbstract
+class Amun_Html_Css extends Amun_Html_ServiceAbstract
 {
 	public function getTag()
 	{
-		return '<link rel="stylesheet" href="%s" type="text/css" media="screen, projection" />';
+		$href = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/asset/css?services=%s';
+
+		return '<link rel="stylesheet" href="' . $href . '" type="text/css" media="screen, projection" />';
 	}
 }

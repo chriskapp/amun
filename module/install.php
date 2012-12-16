@@ -40,6 +40,7 @@ class install extends PSX_Module_ViewAbstract
 		'org.amun-project.lrdd',
 		'org.amun-project.user',
 		'org.amun-project.core',
+		'org.amun-project.asset',
 		'org.amun-project.oauth',
 		'org.amun-project.media',
 		'org.amun-project.openid',

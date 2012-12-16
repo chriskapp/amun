@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="c2369de16acd3927ebcc65e512e35738f756253e">
+<service xmlns="http://amun-project.org" signature="8dad393d1657532e7e57816106b4759fefb09d78">
   <status>normal</status>
   <name>forum</name>
   <description>Implementation of an simple forum system. It is possible to create threads and set the status to sticky or closed</description>
@@ -45,7 +45,7 @@
     <dir name="AmunService">
       <dir name="Forum">
         <file name="Form.php" md5="e6e7d6c681ce72fb7e5e9004c0be58a7"/>
-        <file name="Handler.php" md5="f1ef0885bb0eade583ad1947052d97be"/>
+        <file name="Handler.php" md5="54fb5f5b44b3c24adb201a817174d85c"/>
         <file name="Record.php" md5="0e75aba31d0f760d3f724ed74aaa9e4d"/>
         <file name="Table.php" md5="b6f08a46b7c4ec50ec792a46dfc1a508"/>
       </dir>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="f196a00932a98ffd8a6950798ec1502f35076b41">
+<service xmlns="http://amun-project.org" signature="2bad5f42f55b52eaefe14657a55e1af5b196c1ee">
   <status>system</status>
   <name>comment</name>
   <description>General comment system wich can be used to store comments refering to an id</description>
@@ -35,7 +35,7 @@
     <dir name="AmunService">
       <dir name="Comment">
         <file name="Form.php" md5="7641e65611953ce14439e8343e6fe9ca"/>
-        <file name="Handler.php" md5="22d4eb2287cbc10f48f08c577ae3d22c"/>
+        <file name="Handler.php" md5="1835463bd55ead9d0126afb61331a4b3"/>
         <file name="Record.php" md5="b8021e7d7961c78f4a92954de137c516"/>
         <file name="Stream.php" md5="b73efe84c087881cd8e1f0f939500383"/>
         <file name="Table.php" md5="27a5983142eccfa85b9afdb4851133a5"/>

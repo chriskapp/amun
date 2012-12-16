@@ -32,11 +32,13 @@
  * @package    Amun_Html
  * @version    $Revision: 635 $
  */
-class Amun_Html_Js extends Amun_Ext_HtmlAbstract
+class Amun_Html_Js extends Amun_Html_ServiceAbstract
 {
 	public function getTag()
 	{
-		return '<script type="text/javascript" src="%s"></script>';
+		$src = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/asset/js?services=%s';
+
+		return '<script type="text/javascript" src="' . $src . '"></script>';
 	}
 }
 
