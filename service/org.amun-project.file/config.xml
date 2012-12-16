@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="dd5037b60402e098f16389e212228e59af4c2f6d">
+  <status>normal</status>
+  <name>file</name>
+  <description>Basic service to make a page wich can be edited</description>
+  <path>/file</path>
+  <namespace>file</namespace>
+  <type>http://ns.amun-project.org/2011/amun/service/file</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/file</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Service Page View"/>
+    <perm name="add" description="Service Page Add"/>
+    <perm name="edit" description="Service Page Edit"/>
+    <perm name="delete" description="Service Page Delete"/>
+  </permissions>
+  <registry>
+    <table name="file"/>
+  </registry>
+  <library>
+    <dir name="AmunService">
+      <dir name="File">
+        <file name="Form.php" md5="d230978b2cf419ba900a8a3df7e1bddd"/>
+        <file name="Handler.php" md5="504f14f97e80b73d6eb089952db0b65d"/>
+        <file name="Record.php" md5="edcd2cde7ccebaa190f394f5ba4246ae"/>
+        <file name="Table.php" md5="a9c3531f426b83420ec3fdc86bf87b0a"/>
+      </dir>
+    </dir>
+  </library>
+  <database>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.file}` (
+  `id` INT(10) NOT NULL AUTO_INCREMENT,
+  `globalId` VARCHAR(36) NOT NULL,
+  `pageId` INT(10) NOT NULL,
+  `userId` INT(10) NOT NULL,
+  `contentType` VARCHAR(128) NOT NULL,
+  `content` LONGTEXT NOT NULL,
+  `date` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `globalId` (`globalId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+  </database>
+</service>
