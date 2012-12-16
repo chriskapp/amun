@@ -68,7 +68,7 @@ class record extends Amun_Module_RestAbstract
 				$updated = $this->sql->getField('SELECT `date` FROM ' . $this->registry['table.core_approval_record'] . ' ORDER BY `date` DESC LIMIT 1');
 
 				$title   = 'Record';
-				$id      = 'urn:uuid:' . $this->base->getUUID('system:approval:record');
+				$id      = 'urn:uuid:' . $this->base->getUUID('core:approval:record');
 				$updated = new DateTime($updated, $this->registry['core.default_timezone']);
 
 

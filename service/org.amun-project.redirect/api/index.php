@@ -66,7 +66,7 @@ class index extends Amun_Module_RestAbstract
 				$updated = $this->sql->getField('SELECT `date` FROM ' . $this->registry['table.redirect'] . ' ORDER BY `date` DESC LIMIT 1');
 
 				$title   = 'Redirect';
-				$id      = 'urn:uuid:' . $this->base->getUUID('service:redirect');
+				$id      = 'urn:uuid:' . $this->base->getUUID('redirect');
 				$updated = new DateTime($updated, $this->registry['core.default_timezone']);
 
 

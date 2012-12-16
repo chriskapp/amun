@@ -1,6 +1,7 @@
 
 [FEATURES]
 
+[ ] test page gadget system
 [ ] Move GadgetAbstract / ListenerAbstract from Module to Data folder
 [ ] check activity stream generation / design 
     [ ] check activity stream

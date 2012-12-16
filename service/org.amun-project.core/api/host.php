@@ -69,7 +69,7 @@ class host extends Amun_Module_RestAbstract
 				$updated = $this->sql->getField('SELECT `date` FROM ' . $this->registry['table.core_host'] . ' ORDER BY `date` DESC LIMIT 1');
 
 				$title   = 'Host';
-				$id      = 'urn:uuid:' . $this->base->getUUID('system:host');
+				$id      = 'urn:uuid:' . $this->base->getUUID('core:host');
 				$updated = new DateTime($updated, $this->registry['core.default_timezone']);
 
 

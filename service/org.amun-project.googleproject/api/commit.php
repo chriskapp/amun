@@ -90,7 +90,7 @@ class commit extends Amun_Module_RestAbstract
 				$updated = $this->sql->getField('SELECT `date` FROM ' . $this->registry['table.googleproject_commit'] . ' ORDER BY `date` DESC LIMIT 1');
 
 				$title   = 'Commit';
-				$id      = 'urn:uuid:' . $this->base->getUUID('service:googleproject:commit');
+				$id      = 'urn:uuid:' . $this->base->getUUID('googleproject:commit');
 				$updated = new DateTime($updated, $this->registry['core.default_timezone']);
 
 

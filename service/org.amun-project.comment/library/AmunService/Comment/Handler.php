@@ -38,7 +38,7 @@ class AmunService_Comment_Handler extends Amun_Data_HandlerAbstract
 	{
 		if($record->hasFields('pageId', 'refId', 'text'))
 		{
-			$record->globalId = $this->base->getUUID('service:comment:' . $record->pageId . ':' . uniqid());
+			$record->globalId = $this->base->getUUID('comment:' . $record->pageId . ':' . uniqid());
 			$record->userId   = $this->user->id;
 
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);

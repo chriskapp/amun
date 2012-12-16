@@ -38,7 +38,7 @@ class AmunService_Plugin_Handler extends Amun_Data_HandlerAbstract
 	{
 		if($record->hasFields('pageId', 'urlTitle', 'title', 'description'))
 		{
-			$record->globalId = $this->base->getUUID('service:plugin:' . $record->pageId . ':' . uniqid());
+			$record->globalId = $this->base->getUUID('plugin:' . $record->pageId . ':' . uniqid());
 			$record->userId   = $this->user->id;
 			$record->status   = AmunService_Plugin_Record::NOT_APPROVED;
 

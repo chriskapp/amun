@@ -34,20 +34,6 @@
  */
 abstract class Amun_Module_ApplicationAbstract extends PSX_Module_ViewAbstract
 {
-	public function __construct(PSX_Loader_Location $location, PSX_Base $base, $basePath, array $uriFragments)
-	{
-		parent::__construct($location, $base, $basePath, $uriFragments);
-
-		// assign default objects
-		$container  = new Amun_Dependency_Default($this->base->getConfig());
-		$parameters = $container->getParameters();
-
-		foreach($parameters as $k => $obj)
-		{
-			$this->$k = $obj;
-		}
-	}
-
 	public function onLoad()
 	{
 		// set xrds location header

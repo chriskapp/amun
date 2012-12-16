@@ -64,7 +64,7 @@ class index extends Amun_Module_RestAbstract
 				$updated = $this->sql->getField('SELECT `date` FROM ' . $this->registry['table.oauth'] . ' ORDER BY `date` DESC LIMIT 1');
 
 				$title   = 'API';
-				$id      = 'urn:uuid:' . $this->base->getUUID('system:api');
+				$id      = 'urn:uuid:' . $this->base->getUUID('oauth');
 				$updated = new DateTime($updated, $this->registry['core.default_timezone']);
 
 

@@ -62,7 +62,7 @@ class index extends Amun_Module_RestAbstract
 				$updated = $this->sql->getField('SELECT `date` FROM ' . $this->registry['table.comment'] . ' ORDER BY `date` DESC LIMIT 1');
 
 				$title   = 'Comment';
-				$id      = 'urn:uuid:' . $this->base->getUUID('service:comment');
+				$id      = 'urn:uuid:' . $this->base->getUUID('comment');
 				$updated = new DateTime($updated, $this->registry['core.default_timezone']);
 
 

@@ -40,7 +40,7 @@ class AmunService_Media_Handler extends Amun_Data_HandlerAbstract
 	{
 		if($record->hasFields('name', 'mimeType', 'size', 'path'))
 		{
-			$record->globalId = $this->base->getUUID('content:media:' . $record->path . ':' . uniqid());
+			$record->globalId = $this->base->getUUID('media:' . $record->path . ':' . uniqid());
 
 			if($record->path instanceof PSX_Upload_File)
 			{

@@ -66,7 +66,7 @@ class index extends Amun_Module_RestAbstract
 				$updated = $this->sql->getField('SELECT `date` FROM ' . $this->registry['table.plugin'] . ' ORDER BY `date` DESC LIMIT 1');
 
 				$title   = 'Plugin';
-				$id      = 'urn:uuid:' . $this->base->getUUID('service:plugin');
+				$id      = 'urn:uuid:' . $this->base->getUUID('plugin');
 				$updated = new DateTime($updated, $this->registry['core.default_timezone']);
 
 
