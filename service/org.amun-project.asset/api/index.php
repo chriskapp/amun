@@ -47,6 +47,9 @@ class index extends Amun_Module_ApiAbstract
 	/**
 	 * @httpMethod GET
 	 * @path /js
+	 * @nickname getJs
+	 * @parameter query services string
+	 * @responseClass string
 	 */
 	public function getJs()
 	{
@@ -59,6 +62,9 @@ class index extends Amun_Module_ApiAbstract
 	/**
 	 * @httpMethod GET
 	 * @path /css
+	 * @nickname getCss
+	 * @parameter query services string
+	 * @responseClass string
 	 */
 	public function getCss()
 	{
