@@ -49,7 +49,7 @@ class right extends Amun_Module_RestAbstract
 		return $this->getTable()
 			->select(array('id'))
 			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Group')
-				->select(array('name'), 'group')
+				->select(array('title'), 'group')
 			)
 			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Right')
 				->select(array('name'), 'right')
