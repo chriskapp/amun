@@ -62,6 +62,9 @@ class Amun_Filter_UrlTitle extends PSX_FilterAbstract
 			}
 		}
 
+		// the url title must not have dots at the start or end of the string
+		$str = trim($str, '.');
+
 		return !empty($str) ? $str : false;
 	}
 }
