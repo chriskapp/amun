@@ -44,9 +44,8 @@ class archive extends Amun_Module_GadgetAbstract
 	{
 		$pageId = $args->get('pageId', 0);
 
-
+		// add css
 		$this->htmlCss->add('news');
-
 
 		$con = '';
 

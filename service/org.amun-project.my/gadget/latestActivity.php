@@ -87,7 +87,7 @@ class latestActivity extends Amun_Module_GadgetAbstract
 				$ago = 'on ' . $date->format($this->registry['core.format_datetime']);
 			}
 
-			echo '<li><img src="' . $row['authorThumbnailUrl'] . '" /><p>' . $row['summary'] . '</p><p class="muted">' . $ago . '</p></li>';
+			echo '<li>' . $row['summary'] . '<p class="muted">' . $ago . '</p></li>';
 		}
 
 		echo '</ul>';

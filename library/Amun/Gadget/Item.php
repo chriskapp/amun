@@ -66,8 +66,9 @@ class Amun_Gadget_Item
 
 	public function parseContent($service)
 	{
-		$key   = 'gadget-' . $this->id;
-		$cache = new PSX_Cache($key, $this->expire);
+		$key    = 'gadget-' . $this->id;
+		$expire = (integer) $this->expire;
+		$cache  = new PSX_Cache($key, $expire);
 
 		if($this->cache == 0 || ($content = $cache->load()) === false)
 		{

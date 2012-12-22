@@ -63,7 +63,7 @@ class latestUser extends Amun_Module_GadgetAbstract
 
 		foreach($result as $row)
 		{
-			echo '<li title="' . $row->name . '"><a href="' . $row->profileUrl . '"><img src="' . $row->thumbnailUrl . '" /></a></li>';
+			echo '<li title="' . $row->name . '"><a href="' . $row->profileUrl . '"><img src="' . $row->thumbnailUrl . '" width="48" height="48" /></a></li>';
 		}
 
 		echo '</ul>';

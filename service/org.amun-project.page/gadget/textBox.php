@@ -43,6 +43,9 @@ class textBox extends Amun_Module_GadgetAbstract
 	{
 		$content = $args->get('content', null);
 
+		// add css
+		$this->htmlCss->add('page');
+
 		if(!empty($content))
 		{
 			echo '<p>' . $content . '</p>';

@@ -39,6 +39,9 @@ class userMap extends Amun_Module_GadgetAbstract
 	 */
 	public function onLoad(Amun_Gadget_Args $args)
 	{
+		// add css
+		$this->htmlCss->add('my');
+
 		$chld = array();
 		$chd  = array();
 		$sql  = <<<SQL

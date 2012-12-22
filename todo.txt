@@ -1,7 +1,7 @@
 
 [FEATURES]
 
-[ ] Improve backend to new service structure
+[x] Improve backend to new service structure
 [ ] remove my notify and contact .. since its not used and we would need a 
     message queue .. this service should come in another service
 [ ] test page gadget system

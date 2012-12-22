@@ -43,6 +43,8 @@ class tabNavigation extends Amun_Module_GadgetAbstract
 	{
 		$pageId = $args->get('pageId', $this->page->id);
 
+		// add css
+		$this->htmlCss->add('page');
 
 		$result = Amun_Sql_Table_Registry::get('Content_Page')
 			->select(array('id', 'urlTitle', 'title', 'path'))
@@ -57,11 +59,13 @@ class tabNavigation extends Amun_Module_GadgetAbstract
 
 	private function display(array $result)
 	{
+		$path = trim($this->config['psx_module_input'], '/');
+
 		echo '<ul class="nav nav-tabs">';
 
 		foreach($result as $i => $row)
 		{
-			$selected = strpos($_SERVER['REQUEST_URI'], $row['urlTitle']) !== false;
+			$selected = substr($path, 0, strlen($row['path'])) == $row['path'];
 
 			if($selected)
 			{

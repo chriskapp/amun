@@ -105,6 +105,7 @@ img#amun-service-my-register-form-captcha
 
 div.amun-gadget-latestuser
 {
+	margin:2px;
 }
 
 div.amun-gadget-latestuser ul
@@ -122,7 +123,7 @@ div.amun-gadget-latestuser li
 
 div.amun-gadget-latestactivity
 {
-
+	margin:2px;
 }
 
 div.amun-gadget-latestactivity ul
@@ -162,12 +163,13 @@ div.amun-gadget-activitychart img
 
 div.amun-gadget-usermap
 {
+	margin:2px;
 	text-align:center;
 }
 
 div.amun-gadget-usermap img
 {
-	margin:6px;
+	margin:0 auto;
 }
 
 
