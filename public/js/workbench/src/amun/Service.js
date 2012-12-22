@@ -21,7 +21,7 @@ Ext.define('Amun.Service', {
     hasTypeStartsWith: function(type){
         for (var i = 0; i < this.types.length; i++) {
             if (this.types[i].substr(0, type.length) == type) {
-                return true;
+                return this.types[i];
             }
         }
         return false;

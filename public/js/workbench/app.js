@@ -31,35 +31,10 @@ Ext.Loader.setConfig({
 Ext.require('Amun.Form');
 Ext.require('Amun.Grid');
 
-// content
-Ext.require('Amun.content.gadget.Grid');
-Ext.require('Amun.content.media.Grid');
-Ext.require('Amun.content.page.Form');
-Ext.require('Amun.content.page.Grid');
-Ext.require('Amun.content.service.Grid');
-
-// user
-Ext.require('Amun.user.account.Grid');
-Ext.require('Amun.user.group.Form');
-Ext.require('Amun.user.group.Grid');
-Ext.require('Amun.user.right.Grid');
-
-// system
-Ext.require('Amun.system.api.Grid');
-Ext.require('Amun.system.host.Grid');
-Ext.require('Amun.system.log.Grid');
-Ext.require('Amun.system.mail.Grid');
-Ext.require('Amun.system.registry.Grid');
-
-// service
-Ext.require('Amun.service.comment.Grid');
-Ext.require('Amun.service.forum.Grid');
-Ext.require('Amun.service.news.Grid');
-Ext.require('Amun.service.page.Grid');
-Ext.require('Amun.service.php.Grid');
-Ext.require('Amun.service.phpinfo.Grid');
-Ext.require('Amun.service.pipe.Grid');
-Ext.require('Amun.service.plugin.Grid');
+Ext.require('Amun.service.content.page.Form');
+Ext.require('Amun.service.content.page.Grid');
+Ext.require('Amun.service.user.group.Form');
+Ext.require('Amun.service.user.group.Grid');
 
 // start application
 Ext.application({

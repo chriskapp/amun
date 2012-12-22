@@ -26,6 +26,7 @@ namespace comment\api;
 
 use Amun_Base;
 use Amun_Module_RestAbstract;
+use Amun_Sql_Table_Registry;
 use DateTime;
 use PSX_Data_WriterInterface;
 use PSX_Data_WriterResult;
@@ -47,9 +48,12 @@ class index extends Amun_Module_RestAbstract
 	protected function getSelection()
 	{
 		return $this->getTable()
-			->select(array('id', 'globalId', 'userId', 'title', 'text', 'date'))
+			->select(array('id', 'globalId', 'pageId', 'userId', 'refId', 'text', 'date'))
 			->join(PSX_Sql_Join::INNER, $this->getTable('User_Account')
 				->select(array('name', 'profileUrl'), 'author')
+			)
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Content_Page')
+				->select(array('path'), 'page')
 			);
 	}
 
