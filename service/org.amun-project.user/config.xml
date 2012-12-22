@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="c6cae7f12770ab2676d76c8bbefd652a530dafe4">
+<service xmlns="http://amun-project.org" signature="79118750a2aefcc6a528f49439d673aee7e90f4e">
   <status>system</status>
   <name>user</name>
   <path>/user</path>
   <namespace>user</namespace>
-  <type>http://ns.amun-project.org/2011/amun/user</type>
+  <type>http://ns.amun-project.org/2011/amun/service/user</type>
   <link>http://amun.phpsx.org</link>
   <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
   <license>GPLv3</license>
   <version>0.0.1</version>
   <api>
     <service>
-      <type>http://ns.amun-project.org/2011/amun/user/account</type>
+      <type>http://ns.amun-project.org/2011/amun/service/user/account</type>
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/account</uri>
     </service>
     <service>
-      <type>http://ns.amun-project.org/2011/amun/user/activity</type>
+      <type>http://ns.amun-project.org/2011/amun/service/user/activity</type>
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/activity</uri>
     </service>
@@ -25,7 +25,7 @@
       <uri>/activity/message</uri>
     </service>
     <service>
-      <type>http://ns.amun-project.org/2011/amun/user/friend</type>
+      <type>http://ns.amun-project.org/2011/amun/service/user/friend</type>
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/friend</uri>
     </service>
@@ -34,22 +34,22 @@
       <uri>/friend/relation</uri>
     </service>
     <service>
-      <type>http://ns.amun-project.org/2011/amun/user/friend/group</type>
+      <type>http://ns.amun-project.org/2011/amun/service/user/friend/group</type>
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/friend/group</uri>
     </service>
     <service>
-      <type>http://ns.amun-project.org/2011/amun/user/group</type>
+      <type>http://ns.amun-project.org/2011/amun/service/user/group</type>
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/group</uri>
     </service>
     <service>
-      <type>http://ns.amun-project.org/2011/amun/user/group/right</type>
+      <type>http://ns.amun-project.org/2011/amun/service/user/group/right</type>
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/group/right</uri>
     </service>
     <service>
-      <type>http://ns.amun-project.org/2011/amun/user/right</type>
+      <type>http://ns.amun-project.org/2011/amun/service/user/right</type>
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/right</uri>
     </service>

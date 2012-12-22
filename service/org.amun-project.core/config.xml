@@ -1,37 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="9de973c6b79fd7a0746b1a00378da76d7593d0d4">
+<service xmlns="http://amun-project.org" signature="07fa6a3f1c917748fc5f5a4035859d0552cf6a08">
   <status>system</status>
   <name>core</name>
   <path>/core</path>
   <namespace>core</namespace>
-  <type>http://ns.amun-project.org/2011/amun/core</type>
+  <type>http://ns.amun-project.org/2011/amun/service/core</type>
   <link>http://amun.phpsx.org</link>
   <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
   <license>GPLv3</license>
   <version>0.0.1</version>
   <api>
     <service>
-      <type>http://ns.amun-project.org/2011/amun/content/service</type>
+      <type>http://ns.amun-project.org/2011/amun/service/core/service</type>
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/service</uri>
     </service>
     <service>
-      <type>http://ns.amun-project.org/2011/amun/system/approval</type>
+      <type>http://ns.amun-project.org/2011/amun/service/core/service/navigation</type>
+      <uri>/service/navigation</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/core/approval</type>
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/approval</uri>
     </service>
     <service>
-      <type>http://ns.amun-project.org/2011/amun/system/approval/record</type>
+      <type>http://ns.amun-project.org/2011/amun/service/core/approval/record</type>
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/approval/record</uri>
     </service>
     <service>
-      <type>http://ns.amun-project.org/2011/amun/system/host</type>
+      <type>http://ns.amun-project.org/2011/amun/service/core/host</type>
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/host</uri>
     </service>
     <service>
-      <type>http://ns.amun-project.org/2011/amun/system/registry</type>
+      <type>http://ns.amun-project.org/2011/amun/service/core/registry</type>
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/registry</uri>
     </service>
@@ -142,7 +146,7 @@
             <file name="Link.php" md5="77bc4db8518027786076539ec05a77dc"/>
             <file name="Status.php" md5="074e8e97ef7b03be25ce3731f8099614"/>
           </dir>
-          <file name="Form.php" md5="cfb4ddb4e2a29d6578f52efcf4ddcfb2"/>
+          <file name="Form.php" md5="703b5d0a7cb5b62c78974a08a07bddc3"/>
           <file name="Handler.php" md5="2936328edcfea91d90efd1d77e78288a"/>
           <dir name="Option">
             <file name="ConfigListener.php" md5="14bb199f9fb33f58b683c7cb272fb640"/>

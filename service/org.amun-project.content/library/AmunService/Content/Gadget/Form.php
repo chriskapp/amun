@@ -245,13 +245,13 @@ class AmunService_Content_Gadget_Form extends Amun_Data_FormAbstract
 
 		foreach($result as $row)
 		{
-			$this->scanDir($gadget, $row['name'], $this->config['amun_service_path'] . '/' . $row['source'] . '/gadget');
+			$this->scanDir($gadget, $row['name'], $row['source'], $this->config['amun_service_path'] . '/' . $row['source'] . '/gadget');
 		}
 
 		return $gadget;
 	}
 
-	private function scanDir(&$gadget, $name, $path)
+	private function scanDir(&$gadget, $name, $source, $path)
 	{
 		if(!is_dir($path))
 		{
@@ -272,7 +272,7 @@ class AmunService_Content_Gadget_Form extends Amun_Data_FormAbstract
 					$gadget[] = array(
 
 						'label' => ucfirst($name) . ' -> ' . $d,
-						'value' => $name . '/gadget/' . $d,
+						'value' => $source . '/gadget/' . $d,
 
 					);
 				}

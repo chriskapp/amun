@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="eeb983d55460959444d7434ec80760e18ca74d24">
+<service xmlns="http://amun-project.org" signature="1eab741730fd4e114fd9bde254d71ad6f9760beb">
   <status>system</status>
   <name>log</name>
   <description>Service wich logs every record insert, update or delete. All logs entries can be accessed trough the API</description>
@@ -12,7 +12,7 @@
   <version>0.0.1</version>
   <api>
     <service>
-      <type>http://ns.amun-project.org/2011/amun/system/log</type>
+      <type>http://ns.amun-project.org/2011/amun/service/log</type>
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/</uri>
     </service>

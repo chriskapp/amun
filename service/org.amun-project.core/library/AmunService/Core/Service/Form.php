@@ -70,7 +70,7 @@ class AmunService_Core_Service_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Content_Service')->getRecord($id);
+		$record = Amun_Sql_Table_Registry::get('Core_Service')->getRecord($id);
 
 
 		$form = new Amun_Form('DELETE', $this->url);

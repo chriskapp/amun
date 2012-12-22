@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="2c78961abf4afa2f280c186f62dc4919b0b5f3bc">
+<service xmlns="http://amun-project.org" signature="ed6369009496a4ee57c6e48fff889d7f89004e37">
   <status>system</status>
   <name>openid</name>
   <description>Provides an OpenID provider implementation</description>
@@ -12,17 +12,17 @@
   <version>0.0.1</version>
   <api>
     <service>
-      <type>http://ns.amun-project.org/2011/amun/system/connect</type>
+      <type>http://ns.amun-project.org/2011/amun/service/openid</type>
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/</uri>
     </service>
     <service>
-      <type>http://ns.amun-project.org/2011/amun/system/connect/access</type>
+      <type>http://ns.amun-project.org/2011/amun/service/openid/access</type>
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/access</uri>
     </service>
     <service>
-      <type>http://ns.amun-project.org/2011/amun/system/connect/assoc</type>
+      <type>http://ns.amun-project.org/2011/amun/service/openid/assoc</type>
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/assoc</uri>
     </service>

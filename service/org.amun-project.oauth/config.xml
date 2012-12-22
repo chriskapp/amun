@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="18c7081e3523a898a752a312b9daab2a386f9bd8">
+<service xmlns="http://amun-project.org" signature="8503f415ee3f260d5cb4919fcd7e1f572a131cd5">
   <status>system</status>
   <name>oauth</name>
   <description>Provides an Oauth 1.0 endpoint implementation where applications can register to access the API</description>
@@ -13,31 +13,28 @@
   <api>
     <service>
       <type>http://oauth.net/core/1.0/endpoint/request</type>
-      <type>http://ns.amun-project.org/2011/amun/auth/request</type>
       <uri>/endpoint/request</uri>
     </service>
     <service>
       <type>http://oauth.net/core/1.0/endpoint/authorize</type>
-      <type>http://ns.amun-project.org/2011/amun/auth/authorization</type>
       <uri>/endpoint/authorization</uri>
     </service>
     <service>
       <type>http://oauth.net/core/1.0/endpoint/access</type>
-      <type>http://ns.amun-project.org/2011/amun/auth/access</type>
       <uri>/endpoint/access</uri>
     </service>
     <service>
-      <type>http://ns.amun-project.org/2011/amun/system/api</type>
+      <type>http://ns.amun-project.org/2011/amun/service/oauth</type>
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/</uri>
     </service>
     <service>
-      <type>http://ns.amun-project.org/2011/amun/system/api/access</type>
+      <type>http://ns.amun-project.org/2011/amun/service/oauth/access</type>
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/access</uri>
     </service>
     <service>
-      <type>http://ns.amun-project.org/2011/amun/system/api/request</type>
+      <type>http://ns.amun-project.org/2011/amun/service/oauth/request</type>
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/request</uri>
     </service>

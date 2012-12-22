@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="6bf68b59f3de996582e2cee2b38adc7dc31bda68">
+<service xmlns="http://amun-project.org" signature="d5f9a1044f5b3a33eee27a445c012a7520923fa3">
   <status>system</status>
   <name>mail</name>
   <description>A service to manage mail templates wich can be used by other services</description>
@@ -12,7 +12,7 @@
   <version>0.0.1</version>
   <api>
     <service>
-      <type>http://ns.amun-project.org/2011/amun/system/mail</type>
+      <type>http://ns.amun-project.org/2011/amun/service/mail</type>
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/</uri>
     </service>

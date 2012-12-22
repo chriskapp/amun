@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="ffff5344ed951c6197e051778dcd84d898145ded">
+<service xmlns="http://amun-project.org" signature="00482fe271ec91c294642744e90368287d23d864">
   <status>system</status>
   <name>content</name>
   <path>/content</path>
   <namespace>content</namespace>
-  <type>http://ns.amun-project.org/2011/amun/content</type>
+  <type>http://ns.amun-project.org/2011/amun/service/content</type>
   <link>http://amun.phpsx.org</link>
   <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
   <license>GPLv3</license>
   <version>0.0.1</version>
   <api>
     <service>
-      <type>http://ns.amun-project.org/2011/amun/content/gadget</type>
+      <type>http://ns.amun-project.org/2011/amun/service/content/gadget</type>
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/gadget</uri>
     </service>
     <service>
-      <type>http://ns.amun-project.org/2011/amun/content/page</type>
+      <type>http://ns.amun-project.org/2011/amun/service/content/page</type>
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/page</uri>
     </service>
     <service>
-      <type>http://ns.amun-project.org/2011/amun/content/page/gadget</type>
+      <type>http://ns.amun-project.org/2011/amun/service/content/page/gadget</type>
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/page/gadget</uri>
     </service>
     <service>
-      <type>http://ns.amun-project.org/2011/amun/content/page/option</type>
+      <type>http://ns.amun-project.org/2011/amun/service/content/page/option</type>
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/page/option</uri>
     </service>
@@ -75,7 +75,7 @@
           <dir name="Filter">
             <file name="Path.php" md5="ccd7a842e5478e59c90989af1270bb22"/>
           </dir>
-          <file name="Form.php" md5="fdac3517ba05252c2d6df66ae91abf9d"/>
+          <file name="Form.php" md5="e2a04626544f6f2d882c37862a4753ab"/>
           <file name="Handler.php" md5="e3245da8f97ee1d15f529d4074faf80b"/>
           <file name="Record.php" md5="cca47ba4df4d5298adb6b8f379b53245"/>
           <file name="Table.php" md5="3a161d773991ef65d32e30c2961ac10b"/>

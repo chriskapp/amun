@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="3c690eba41a5ff4cbab7156e1570ff205e9d9efb">
+<service xmlns="http://amun-project.org" signature="98d5bcf709cf331c6ee3c2ee4e35db201368395a">
   <status>system</status>
   <name>country</name>
   <description>Service wich provides a table of countries</description>
@@ -12,7 +12,7 @@
   <version>0.0.1</version>
   <api>
     <service>
-      <type>http://ns.amun-project.org/2011/amun/system/country</type>
+      <type>http://ns.amun-project.org/2011/amun/service/country</type>
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/</uri>
     </service>
