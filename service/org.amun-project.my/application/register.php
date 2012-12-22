@@ -125,7 +125,7 @@ class register extends Amun_Module_ApplicationAbstract
 					);
 
 					$mail = new Amun_Mail($this->registry);
-					$mail->send('SERVICE_MY_REGISTRATION', $identity, $values);
+					$mail->send('MY_REGISTRATION', $identity, $values);
 
 					$this->template->assign('success', true);
 				}

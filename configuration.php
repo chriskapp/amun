@@ -32,11 +32,6 @@ $config = array(
 	'amun_service_path'       => '../service',
 	'amun_salt'               => '4ec656bfdee95a3596e31c3d36e49dda',
 
-	'amun_stomp_destination'  => '/queue/amun',
-	'amun_stomp_broker'       => 'tcp://localhost:61613',
-	'amun_stomp_user'         => 'admin',
-	'amun_stomp_pw'           => 'password',
-
 	// psx
 	'psx_url'                 => 'http://127.0.0.1/projects/amun/public',
 	'psx_dispatch'            => 'index.php/',

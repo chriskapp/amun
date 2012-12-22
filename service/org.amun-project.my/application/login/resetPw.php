@@ -90,7 +90,7 @@ class resetPw extends Amun_Module_ApplicationAbstract
 							);
 
 							$mail = new Amun_Mail($this->registry);
-							$mail->send('SERVICE_MY_RECOVER_SUCCESS', $account->email, $values);
+							$mail->send('MY_RECOVER_SUCCESS', $account->email, $values);
 
 							$this->template->assign('success', true);
 						}

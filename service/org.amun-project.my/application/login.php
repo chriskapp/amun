@@ -169,7 +169,7 @@ class login extends Amun_Module_ApplicationAbstract
 							// if none assign captcha
 							if($this->stage == AmunService_My_Attempt::NONE)
 							{
-								$captcha = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/system/captcha';
+								$captcha = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha';
 
 								$this->template->assign('captcha', $captcha);
 							}

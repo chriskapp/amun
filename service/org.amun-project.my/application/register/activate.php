@@ -79,7 +79,7 @@ class activate extends Amun_Module_ApplicationAbstract
 						{
 							$account->setStatus(AmunService_User_Account_Record::NORMAL);
 
-							$handler = new Amun_User_Account_Handler($this->user);
+							$handler = new AmunService_User_Account_Handler($this->user);
 							$handler->update($account);
 
 
