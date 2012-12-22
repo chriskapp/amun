@@ -13,6 +13,12 @@
 	</div>
 </header>
 
+<div class="amun-nav">
+	<div class="container">
+		<?php include($location . '/inc/nav.tpl'); ?>
+	</div>
+</div>
+
 <div class="amun-body">
 	<div class="container"><?php echo $content; ?></div>
 </div>
