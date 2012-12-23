@@ -32,7 +32,7 @@
  * @package    Amun_Content_Service
  * @version    $Revision: 635 $
  */
-class AmunService_Core_Service_Option extends Amun_Data_RecordAbstract
+class AmunService_Core_Service_Option_Record extends Amun_Data_RecordAbstract
 {
 	public function setId($id)
 	{
