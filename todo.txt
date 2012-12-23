@@ -1,6 +1,7 @@
 
 [FEATURES]
 
+[ ] implement content page sort api to reorder pages
 [ ] use psx annotation parse for gadget params
 [ ] remove my notify and contact from my service .. since its not used and we 
     would need a message queue .. this service should come in another service
