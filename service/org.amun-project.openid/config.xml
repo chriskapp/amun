@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="ed6369009496a4ee57c6e48fff889d7f89004e37">
+<service xmlns="http://amun-project.org" signature="59b10c9b347714929d4e15a53c72e9092ddd6cd0">
   <status>system</status>
   <name>openid</name>
   <description>Provides an OpenID provider implementation</description>
@@ -29,6 +29,13 @@
   </api>
   <permissions>
     <perm name="view" description="OpenId View"/>
+    <perm name="add" description="OpenId add"/>
+    <perm name="edit" description="OpenId edit"/>
+    <perm name="delete" description="OpenId delete"/>
+    <perm name="access_view" description="OpenId Access view"/>
+    <perm name="access_add" description="OpenId Access add"/>
+    <perm name="access_edit" description="OpenId Access edit"/>
+    <perm name="access_delete" description="OpenId Access delete"/>
   </permissions>
   <registry>
     <table name="openid"/>

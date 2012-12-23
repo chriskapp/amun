@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="8503f415ee3f260d5cb4919fcd7e1f572a131cd5">
+<service xmlns="http://amun-project.org" signature="239b1a06da09b3e0cef0cb878c84ac0d81f47514">
   <status>system</status>
   <name>oauth</name>
   <description>Provides an Oauth 1.0 endpoint implementation where applications can register to access the API</description>
@@ -40,18 +40,18 @@
     </service>
   </api>
   <permissions>
-    <perm name="view" description="Oauth API view"/>
-    <perm name="add" description="Oauth API add"/>
-    <perm name="edit" description="Oauth API edit"/>
-    <perm name="delete" description="Oauth API delete"/>
-    <perm name="access_view" description="Oauth API Access view"/>
-    <perm name="access_add" description="Oauth API Access add"/>
-    <perm name="access_edit" description="Oauth API Access edit"/>
-    <perm name="access_delete" description="Oauth API Access delete"/>
-    <perm name="request_view" description="Oauth API Request view"/>
-    <perm name="request_add" description="Oauth API Request add"/>
-    <perm name="request_edit" description="Oauth API Request edit"/>
-    <perm name="request_delete" description="Oauth API Request delete"/>
+    <perm name="view" description="Oauth view"/>
+    <perm name="add" description="Oauth add"/>
+    <perm name="edit" description="Oauth edit"/>
+    <perm name="delete" description="Oauth delete"/>
+    <perm name="access_view" description="Oauth Access view"/>
+    <perm name="access_add" description="Oauth Access add"/>
+    <perm name="access_edit" description="Oauth Access edit"/>
+    <perm name="access_delete" description="Oauth Access delete"/>
+    <perm name="request_view" description="Oauth Request view"/>
+    <perm name="request_add" description="Oauth Request add"/>
+    <perm name="request_edit" description="Oauth Request edit"/>
+    <perm name="request_delete" description="Oauth Request delete"/>
   </permissions>
   <registry>
     <table name="oauth"/>
