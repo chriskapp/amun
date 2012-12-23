@@ -32,7 +32,7 @@
  * @package    Amun_Content_Service
  * @version    $Revision: 635 $
  */
-class AmunService_Core_Option_Table extends Amun_Sql_TableAbstract
+class AmunService_Core_Service_Option_Table extends Amun_Sql_TableAbstract
 {
 	public function getConnections()
 	{
