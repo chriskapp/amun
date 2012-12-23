@@ -152,7 +152,7 @@ class AmunService_Core_Approval_Record_Form extends Amun_Data_FormAbstract
 	private function getType()
 	{
 		$types  = array();
-		$result = AmunService_Core_Approval_Record_Record::getType();
+		$result = AmunService_Core_Approval_Record::getType();
 
 		foreach($result as $k => $v)
 		{

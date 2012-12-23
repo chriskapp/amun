@@ -11,7 +11,7 @@
 [ ] approval system
 [ ] Oauth endpoint send invalid request method header on GET at request/access
     [ ] adding oauth scope
-[ ] fix tests
+[x] fix tests
 [ ] support host meta to return json and xrd / jrd
 [ ] improve right system probably with inheritance
 [ ] Implement reference input field in backend
