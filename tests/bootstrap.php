@@ -25,26 +25,20 @@
 require_once('library/PSX/Config.php');
 require_once('library/PSX/Bootstrap.php');
 
-$config = new PSX_Config('configuration.php');
-$config['amun_service_path'] = 'service';
-$config['psx_path_cache']    = 'cache';
-$config['psx_path_library']  = 'library';
-$config['psx_path_module']   = 'module';
-$config['psx_path_template'] = 'template';
+doBootstrap();
 
-doBootstrap($config);
-
-function doBootstrap(PSX_Config $config)
+function doBootstrap()
 {
-	$bootstrap = new PSX_Bootstrap($config);
-	$bootstrap->addIncludePath('tests');
+	$container = getContainer();
+	$config    = $container->getConfig();
+	$sql       = $container->getSql();
+	$registry  = $container->getRegistry();
 
-	$base = Amun_Base::initInstance($config);
+	// set container
+	Amun_DataFactory::setContainer($container);
 
 	// set user
-	$userId = $base->getSql()->getField('SELECT id FROM ' . Amun_Registry::get('table.user_account') . ' WHERE status = ' . Amun_User_Account::ADMINISTRATOR . ' ORDER BY id ASC LIMIT 1');
-
-	$base->setUser($userId);
+	$userId = $sql->getField('SELECT id FROM ' . $registry['table.user_account'] . ' WHERE status = ' . AmunService_User_Account_Record::ADMINISTRATOR . ' ORDER BY id ASC LIMIT 1');
 
 	// get API credentials
 	$consumerKey    = '';
@@ -53,14 +47,14 @@ function doBootstrap(PSX_Config $config)
 	$tokenSecret    = '';
 	$hasCredentials = false;
 
-	$api = $base->getSql()->getRow('SELECT id, consumerKey, consumerSecret FROM ' . Amun_Registry::get('table.system_api') . ' ORDER BY id ASC LIMIT 1');
+	$api = $sql->getRow('SELECT id, consumerKey, consumerSecret FROM ' . $registry['table.oauth'] . ' ORDER BY id ASC LIMIT 1');
 
 	if(!empty($api))
 	{
 		$consumerKey    = $api['consumerKey'];
 		$consumerSecret = $api['consumerSecret'];
 
-		$req = $base->getSql()->getRow('SELECT token, tokenSecret FROM ' . Amun_Registry::get('table.system_api_request') . ' WHERE apiId = ' . $api['id'] . ' AND status = ' . Amun_System_Api::ACCESS. ' LIMIT 1');
+		$req = $sql->getRow('SELECT token, tokenSecret FROM ' . $registry['table.oauth_request'] . ' WHERE apiId = ' . $api['id'] . ' AND status = ' . AmunService_Oauth_Record::ACCESS. ' LIMIT 1');
 
 		if(!empty($req))
 		{
@@ -78,3 +72,29 @@ function doBootstrap(PSX_Config $config)
 	define('HAS_CREDENTIALS', $hasCredentials);
 }
 
+function getContainer()
+{
+	static $container;
+
+	if($container === null)
+	{
+		$config = new PSX_Config('configuration.php');
+		$config['amun_service_path'] = 'service';
+		$config['psx_path_cache']    = 'cache';
+		$config['psx_path_library']  = 'library';
+		$config['psx_path_module']   = 'module';
+		$config['psx_path_template'] = 'template';
+
+		// bootstrap
+		$bootstrap = new PSX_Bootstrap($config);
+		$bootstrap->addIncludePath('tests');
+
+		$container = new Amun_Dependency_Session($config, array(
+			'session.userId' => 1,
+		));
+
+		echo 'Execute tests as user: ' . $container->getUser()->name . '' . PHP_EOL;
+	}
+
+	return $container;
+}

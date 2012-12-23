@@ -51,11 +51,11 @@ class Amun_Api_Content_PageTest extends Amun_Api_RestTest
 
 	public function testPost()
 	{
-		$record = new Amun_Content_Page($this->table);
+		$record = new AmunService_Content_Page_Record($this->table);
 		$record->setParentId(1);
 		$record->setServiceId(3);
 		$record->setRightId(0);
-		$record->setStatus(Amun_Content_Page::HIDDEN);
+		$record->setStatus(AmunService_Content_Page_Record::HIDDEN);
 		$record->setLoad(15);
 		$record->setTitle('bar');
 		$record->setTemplate('page.tpl');
@@ -79,10 +79,10 @@ class Amun_Api_Content_PageTest extends Amun_Api_RestTest
 
 	public function testMinimalPost()
 	{
-		$record = new Amun_Content_Page($this->table);
+		$record = new AmunService_Content_Page_Record($this->table);
 		$record->setParentId(1);
 		$record->setServiceId(3);
-		$record->setStatus(Amun_Content_Page::HIDDEN);
+		$record->setStatus(AmunService_Content_Page_Record::HIDDEN);
 		$record->setTitle('bar');
 
 		$this->assertPositiveResponse($this->post($record));
@@ -108,7 +108,7 @@ class Amun_Api_Content_PageTest extends Amun_Api_RestTest
 	public function testPut()
 	{
 		$globalId = PSX_Util_Uuid::nameBased(uniqid());
-		$status   = Amun_Content_Service::NORMAL;
+		$status   = AmunService_Core_Service_Record::NORMAL;
 		$date     = date(PSX_DateTime::SQL);
 
 		$this->table->insert(array(
@@ -131,7 +131,7 @@ class Amun_Api_Content_PageTest extends Amun_Api_RestTest
 
 		$id = $this->sql->getLastInsertId();
 
-		$record = new Amun_Content_Page($this->table);
+		$record = new AmunService_Content_Page_Record($this->table);
 		$record->setId($id);
 		$record->setTitle('foo');
 		$record->setTemplate('page.tpl');
@@ -161,7 +161,7 @@ class Amun_Api_Content_PageTest extends Amun_Api_RestTest
 	public function testDelete()
 	{
 		$globalId = PSX_Util_Uuid::nameBased(uniqid());
-		$status   = Amun_Content_Service::NORMAL;
+		$status   = AmunService_Core_Service_Record::NORMAL;
 		$date     = date(PSX_DateTime::SQL);
 
 		$this->table->insert(array(
@@ -184,7 +184,7 @@ class Amun_Api_Content_PageTest extends Amun_Api_RestTest
 
 		$id = $this->sql->getLastInsertId();
 
-		$record = new Amun_Content_Gadget($this->table);
+		$record = new AmunService_Content_Page_Record($this->table);
 		$record->setId($id);
 
 		$this->assertPositiveResponse($this->delete($record));

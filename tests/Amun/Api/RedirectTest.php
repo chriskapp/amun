@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: GadgetTest.php 742 2012-06-25 20:47:21Z k42b3.x@googlemail.com $
+ *  $Id: RedirectTest.php 743 2012-06-26 19:31:26Z k42b3.x@googlemail.com $
  *
  * amun
  * A social content managment system based on the psx framework. For
@@ -23,49 +23,37 @@
  */
 
 /**
- * Amun_Api_Content_Page_GadgetTest
+ * Amun_Api_Service_RedirectTest
  *
  * @author     Christoph Kappestein <k42b3.x@gmail.com>
  * @license    http://www.gnu.org/licenses/gpl.html GPLv3
  * @link       http://amun.phpsx.org
  * @category   tests
- * @version    $Revision: 742 $
+ * @version    $Revision: 743 $
  * @backupStaticAttributes disabled
  */
-class Amun_Api_Content_Page_GadgetTest extends Amun_Api_RestTest
+class Amun_Api_RedirectTest extends Amun_Api_RestTest
 {
-	private $pageId;
-	private $gadgetId;
-
 	protected function setUp()
 	{
-		parent::setUp();
-
-		// check whether we have an page
-		$this->pageId = $this->sql->getField('SELECT id FROM ' . $this->registry['table.content_page'] . ' ORDER BY id ASC LIMIT 1');
-
-		if(empty($this->pageId))
+		if(!$this->hasService('org.amun-project.redirect'))
 		{
-			$this->markTestSkipped('No page available');
+			$this->markTestSkipped('Service redirect not installed');
 		}
-
-		// check whether we have an gadget
-		$this->gadgetId = $this->sql->getField('SELECT id FROM ' . $this->registry['table.content_gadget'] . ' ORDER BY id ASC LIMIT 1');
-
-		if(empty($this->gadgetId))
+		else
 		{
-			$this->markTestSkipped('No gadget available');
+			parent::setUp();
 		}
 	}
 
 	public function getEndpoint()
 	{
-		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/page/gadget';
+		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/redirect';
 	}
 
 	public function getTable()
 	{
-		return Amun_Sql_Table_Registry::get('Content_Page_Gadget');
+		return Amun_Sql_Table_Registry::get('Redirect');
 	}
 
 	public function testGet()
@@ -75,9 +63,9 @@ class Amun_Api_Content_Page_GadgetTest extends Amun_Api_RestTest
 
 	public function testPost()
 	{
-		$record = new AmunService_Content_Page_Gadget_Record($this->table);
-		$record->setPageId($this->pageId);
-		$record->setGadgetId($this->gadgetId);
+		$record = $this->getTable()->getRecord();
+		$record->setPageId(1);
+		$record->setHref('http://google.de');
 
 		$this->assertPositiveResponse($this->post($record));
 
@@ -86,7 +74,9 @@ class Amun_Api_Content_Page_GadgetTest extends Amun_Api_RestTest
 		$this->table->delete(new PSX_Sql_Condition(array('id', '=', $row['id'])));
 
 		unset($row['id']);
-		unset($row['sort']);
+		unset($row['globalId']);
+		unset($row['userId']);
+		unset($row['date']);
 
 		$this->assertEquals($row, $record->getData());
 	}

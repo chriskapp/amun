@@ -51,7 +51,7 @@ class Amun_Api_Content_Page_RightTest extends Amun_Api_RestTest
 
 	public function testPost()
 	{
-		$record = new Amun_Content_Page_Right($this->table);
+		$record = new AmunService_Content_Page_Right_Record($this->table);
 		$record->setPageId(1);
 		$record->setGroupId(1);
 		$record->setNewGroupId(2);

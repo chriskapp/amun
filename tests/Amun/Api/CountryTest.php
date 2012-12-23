@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: GadgetTest.php 742 2012-06-25 20:47:21Z k42b3.x@googlemail.com $
+ *  $Id: CountryTest.php 637 2012-05-01 19:58:47Z k42b3.x@googlemail.com $
  *
  * amun
  * A social content managment system based on the psx framework. For
@@ -23,49 +23,25 @@
  */
 
 /**
- * Amun_Api_Content_Page_GadgetTest
+ * Amun_Api_System_CountryTest
  *
  * @author     Christoph Kappestein <k42b3.x@gmail.com>
  * @license    http://www.gnu.org/licenses/gpl.html GPLv3
  * @link       http://amun.phpsx.org
  * @category   tests
- * @version    $Revision: 742 $
+ * @version    $Revision: 637 $
  * @backupStaticAttributes disabled
  */
-class Amun_Api_Content_Page_GadgetTest extends Amun_Api_RestTest
+class Amun_Api_CountryTest extends Amun_Api_RestTest
 {
-	private $pageId;
-	private $gadgetId;
-
-	protected function setUp()
-	{
-		parent::setUp();
-
-		// check whether we have an page
-		$this->pageId = $this->sql->getField('SELECT id FROM ' . $this->registry['table.content_page'] . ' ORDER BY id ASC LIMIT 1');
-
-		if(empty($this->pageId))
-		{
-			$this->markTestSkipped('No page available');
-		}
-
-		// check whether we have an gadget
-		$this->gadgetId = $this->sql->getField('SELECT id FROM ' . $this->registry['table.content_gadget'] . ' ORDER BY id ASC LIMIT 1');
-
-		if(empty($this->gadgetId))
-		{
-			$this->markTestSkipped('No gadget available');
-		}
-	}
-
 	public function getEndpoint()
 	{
-		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/page/gadget';
+		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/country';
 	}
 
 	public function getTable()
 	{
-		return Amun_Sql_Table_Registry::get('Content_Page_Gadget');
+		return Amun_Sql_Table_Registry::get('Country');
 	}
 
 	public function testGet()
@@ -75,9 +51,12 @@ class Amun_Api_Content_Page_GadgetTest extends Amun_Api_RestTest
 
 	public function testPost()
 	{
-		$record = new AmunService_Content_Page_Gadget_Record($this->table);
-		$record->setPageId($this->pageId);
-		$record->setGadgetId($this->gadgetId);
+		$record = new AmunService_Country_Record($this->table);
+
+		$record->setTitle('foobar');
+		$record->setCode('FB');
+		$record->setLongitude(10.4);
+		$record->setLatitude(-80.5);
 
 		$this->assertPositiveResponse($this->post($record));
 
@@ -86,7 +65,6 @@ class Amun_Api_Content_Page_GadgetTest extends Amun_Api_RestTest
 		$this->table->delete(new PSX_Sql_Condition(array('id', '=', $row['id'])));
 
 		unset($row['id']);
-		unset($row['sort']);
 
 		$this->assertEquals($row, $record->getData());
 	}

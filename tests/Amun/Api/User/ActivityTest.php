@@ -68,7 +68,7 @@ class Amun_Api_User_ActivityTest extends Amun_Api_RestTest
 
 	public function testPost()
 	{
-		$record = new Amun_User_Activity($this->table);
+		$record = new AmunService_User_Activity_Record($this->table);
 
 		$record->setSummary('bar');
 

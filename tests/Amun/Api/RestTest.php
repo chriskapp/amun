@@ -35,20 +35,22 @@
 abstract class Amun_Api_RestTest extends PHPUnit_Framework_TestCase
 {
 	protected $config;
+	protected $sql;
+	protected $registry;
 	protected $http;
 	protected $oauth;
-	protected $sql;
 
 	protected function setUp()
 	{
 		// check whether we have API credentials
 		if(HAS_CREDENTIALS)
 		{
-			$this->config = Amun_Base::getInstance()->getConfig();
-			$this->http   = new PSX_Http(new PSX_Http_Handler_Curl());
-			$this->oauth  = new PSX_Oauth($this->http);
-			$this->sql    = Amun_Base::getInstance()->getSql();
-			$this->table  = $this->getTable();
+			$this->config   = getContainer()->getConfig();
+			$this->sql      = getContainer()->getSql();
+			$this->registry = getContainer()->getRegistry();
+			$this->http     = new PSX_Http(new PSX_Http_Handler_Curl());
+			$this->oauth    = new PSX_Oauth($this->http);
+			$this->table    = $this->getTable();
 		}
 		else
 		{
@@ -160,6 +162,11 @@ abstract class Amun_Api_RestTest extends PHPUnit_Framework_TestCase
 	protected function getLastInsertedRecord()
 	{
 		return $this->table->getRow(array_keys($this->table->getColumns()), null, $this->table->getPrimaryKey(), PSX_Sql::SORT_DESC);
+	}
+
+	protected function hasService($serviceName)
+	{
+		return getContainer()->getRegistry()->hasService($serviceName);
 	}
 
 	/**

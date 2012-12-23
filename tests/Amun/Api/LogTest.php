@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: OptionTest.php 637 2012-05-01 19:58:47Z k42b3.x@googlemail.com $
+ *  $Id: LogTest.php 637 2012-05-01 19:58:47Z k42b3.x@googlemail.com $
  *
  * amun
  * A social content managment system based on the psx framework. For
@@ -23,7 +23,7 @@
  */
 
 /**
- * Amun_Api_Content_Page_OptionTest
+ * Amun_Api_System_LogTest
  *
  * @author     Christoph Kappestein <k42b3.x@gmail.com>
  * @license    http://www.gnu.org/licenses/gpl.html GPLv3
@@ -32,42 +32,21 @@
  * @version    $Revision: 637 $
  * @backupStaticAttributes disabled
  */
-class Amun_Api_Content_Page_OptionTest extends Amun_Api_RestTest
+class Amun_Api_LogTest extends Amun_Api_RestTest
 {
 	public function getEndpoint()
 	{
-		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/page/option';
+		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/log';
 	}
 
 	public function getTable()
 	{
-		return Amun_Sql_Table_Registry::get('Content_Page_Option');
+		return Amun_Sql_Table_Registry::get('Log');
 	}
 
 	public function testGet()
 	{
 		$this->assertResultSetResponse($this->get());
-	}
-
-	public function testPost()
-	{
-		$record = new AmunService_Content_Page_Option_Record($this->table);
-		$record->setOptionId(1);
-		$record->setRightId(1);
-		$record->setSrcPageId(1);
-		$record->setDestPageId(2);
-		$record->setName('test');
-
-		$this->assertPositiveResponse($this->post($record));
-
-		$row = $this->getLastInsertedRecord();
-
-		$this->table->delete(new PSX_Sql_Condition(array('id', '=', $row['id'])));
-
-		unset($row['id']);
-		unset($row['href']);
-
-		$this->assertEquals($row, $record->getData());
 	}
 }
 

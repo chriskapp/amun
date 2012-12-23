@@ -51,10 +51,10 @@ class Amun_Api_Content_GadgetTest extends Amun_Api_RestTest
 
 	public function testPost()
 	{
-		$record = new Amun_Content_Gadget($this->table);
+		$record = new AmunService_Content_Gadget_Record($this->table);
 		$record->setName('foo');
 		$record->setTitle('bar');
-		$record->setPath('page/gadget/textBox.php');
+		$record->setPath('org.amun-project.page/gadget/textBox.php');
 		$record->setCache(1);
 		$record->setExpire('PT1H');
 
@@ -75,10 +75,10 @@ class Amun_Api_Content_GadgetTest extends Amun_Api_RestTest
 
 	public function testMinimalPost()
 	{
-		$record = new Amun_Content_Gadget($this->table);
+		$record = new AmunService_Content_Gadget_Record($this->table);
 		$record->setName('bar');
 		$record->setTitle('foo');
-		$record->setPath('news/gadget/latestNews.php');
+		$record->setPath('org.amun-project.news/gadget/latestNews.php');
 
 		$this->assertPositiveResponse($this->post($record));
 
@@ -99,7 +99,7 @@ class Amun_Api_Content_GadgetTest extends Amun_Api_RestTest
 
 	public function testWrongPathPost()
 	{
-		$record = new Amun_Content_Gadget($this->table);
+		$record = new AmunService_Content_Gadget_Record($this->table);
 		$record->title = 'blub';
 		$record->path = 'test.php';
 
@@ -117,14 +117,14 @@ class Amun_Api_Content_GadgetTest extends Amun_Api_RestTest
 			'globalId' => $globalId,
 			'userId'   => $userId,
 			'title'    => 'foobar',
-			'path'     => 'news/gadget/latestNews.php',
+			'path'     => 'org.amun-project.news/gadget/latestNews.php',
 			'date'     => $date,
 
 		));
 
 		$id = $this->sql->getLastInsertId();
 
-		$record = new Amun_Content_Gadget($this->table);
+		$record = new AmunService_Content_Gadget_Record($this->table);
 		$record->setId($id);
 		$record->setName('foo');
 		$record->setTitle('bar');
@@ -133,7 +133,7 @@ class Amun_Api_Content_GadgetTest extends Amun_Api_RestTest
 
 		$record->globalId = $globalId;
 		$record->userId   = $userId;
-		$record->path     = 'news/gadget/latestNews.php';
+		$record->path     = 'org.amun-project.news/gadget/latestNews.php';
 		$record->param    = '';
 		$record->cache    = 0;
 		$record->expire   = '';
@@ -158,7 +158,7 @@ class Amun_Api_Content_GadgetTest extends Amun_Api_RestTest
 			'userId'   => $userId,
 			'name'     => 'foo',
 			'title'    => 'foobar',
-			'path'     => 'news/gadget/latestNews.php',
+			'path'     => 'org.amun-project.news/gadget/latestNews.php',
 			'cache'    => '0',
 			'expire'   => '',
 			'date'     => $date,
@@ -167,7 +167,7 @@ class Amun_Api_Content_GadgetTest extends Amun_Api_RestTest
 
 		$id = $this->sql->getLastInsertId();
 
-		$record = new Amun_Content_Gadget($this->table);
+		$record = new AmunService_Content_Gadget_Record($this->table);
 		$record->setId($id);
 
 		$this->assertPositiveResponse($this->delete($record));

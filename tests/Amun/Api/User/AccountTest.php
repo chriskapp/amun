@@ -51,10 +51,10 @@ class Amun_Api_User_AccountTest extends Amun_Api_RestTest
 
 	public function testPost()
 	{
-		$record = new Amun_User_Account($this->table);
+		$record = new AmunService_User_Account_Record($this->table);
 
 		$record->setGroupId(1);
-		$record->setStatus(Amun_User_Account::NORMAL);
+		$record->setStatus(AmunService_User_Account_Record::NORMAL);
 		$record->identity = 'foo@bar.com';
 		$record->setName('foo');
 		$record->pw = 'test123';
