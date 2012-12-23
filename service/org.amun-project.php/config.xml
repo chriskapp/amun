@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="bda7b506ac309c4855acebfb55999221f9889f7a">
+<service xmlns="http://amun-project.org" signature="bf5257ebcfa0d2b9c8e87a230c5c84c16002715d">
   <status>normal</status>
   <name>php</name>
   <description>Service to embed PHP code in a page. Because of security it is only possible to edit the page from the backend</description>
@@ -18,10 +18,10 @@
     </service>
   </api>
   <permissions>
-    <perm name="view" description="Service Php View"/>
-    <perm name="add" description="Service Php Add"/>
-    <perm name="edit" description="Service Php Edit"/>
-    <perm name="delete" description="Service Php Delete"/>
+    <perm name="view" description="Php View"/>
+    <perm name="add" description="Php Add"/>
+    <perm name="edit" description="Php Edit"/>
+    <perm name="delete" description="Php Delete"/>
   </permissions>
   <navigation>
     <option name="index"/>

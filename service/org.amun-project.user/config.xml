@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="79118750a2aefcc6a528f49439d673aee7e90f4e">
+<service xmlns="http://amun-project.org" signature="9ba2c13f53f926650b932353bfa9022c8d6a944e">
   <status>system</status>
   <name>user</name>
   <path>/user</path>
@@ -55,10 +55,10 @@
     </service>
   </api>
   <permissions>
-    <perm name="view" description="Core view"/>
-    <perm name="add" description="Core add"/>
-    <perm name="edit" description="Core edit"/>
-    <perm name="delete" description="Core delete"/>
+    <perm name="view" description="User view"/>
+    <perm name="add" description="User add"/>
+    <perm name="edit" description="User edit"/>
+    <perm name="delete" description="User delete"/>
     <perm name="account_view" description="User Account view"/>
     <perm name="account_add" description="User Account add"/>
     <perm name="account_edit" description="User Account edit"/>

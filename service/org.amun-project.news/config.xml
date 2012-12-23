@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="a3728d775df46d012ddecd68c6aadde1cc01b6dc">
+<service xmlns="http://amun-project.org" signature="3534ce1652bd47b7e57f8d2e954db25a3dceae2f">
   <status>normal</status>
   <name>news</name>
   <description>Implementation of an News system. It is possible to post news and users can comment each entry</description>
@@ -26,11 +26,11 @@
 ]]></template>
   </activity>
   <permissions>
-    <perm name="view" description="Service News View"/>
-    <perm name="add" description="Service News Add"/>
-    <perm name="edit" description="Service News Edit"/>
-    <perm name="delete" description="Service News Delete"/>
-    <perm name="comment_add" description="Service News Comment Add"/>
+    <perm name="view" description="News View"/>
+    <perm name="add" description="News Add"/>
+    <perm name="edit" description="News Edit"/>
+    <perm name="delete" description="News Delete"/>
+    <perm name="comment_add" description="News Comment Add"/>
   </permissions>
   <navigation>
     <option name="index"/>

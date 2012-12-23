@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="f196a00932a98ffd8a6950798ec1502f35076b41">
+<service xmlns="http://amun-project.org" signature="a11ded30e65118be29cd19876d301643703572fe">
   <status>system</status>
   <name>comment</name>
   <description>General comment system wich can be used to store comments refering to an id</description>
@@ -23,10 +23,10 @@
 ]]></template>
   </activity>
   <permissions>
-    <perm name="view" description="Service Comment View"/>
-    <perm name="add" description="Service Comment Add"/>
-    <perm name="edit" description="Service Comment Edit"/>
-    <perm name="delete" description="Service Comment Delete"/>
+    <perm name="view" description="Comment View"/>
+    <perm name="add" description="Comment Add"/>
+    <perm name="edit" description="Comment Edit"/>
+    <perm name="delete" description="Comment Delete"/>
   </permissions>
   <registry>
     <table name="comment"/>

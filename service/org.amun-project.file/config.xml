@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="3a4cf8468133ebca4e529c761d38c9e5275c0f2f">
+<service xmlns="http://amun-project.org" signature="70239f4e18a7111caf22480f1e07a239efc8ce40">
   <status>normal</status>
   <name>file</name>
   <description>Basic service to make a page wich can be edited</description>
@@ -18,10 +18,10 @@
     </service>
   </api>
   <permissions>
-    <perm name="view" description="Service File View"/>
-    <perm name="add" description="Service File Add"/>
-    <perm name="edit" description="Service File Edit"/>
-    <perm name="delete" description="Service File Delete"/>
+    <perm name="view" description="File View"/>
+    <perm name="add" description="File Add"/>
+    <perm name="edit" description="File Edit"/>
+    <perm name="delete" description="File Delete"/>
   </permissions>
   <registry>
     <table name="file"/>

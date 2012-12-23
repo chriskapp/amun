@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="98d5bcf709cf331c6ee3c2ee4e35db201368395a">
+<service xmlns="http://amun-project.org" signature="e3a94fc6829d74864917784ec3872ee40ee3d044">
   <status>system</status>
   <name>country</name>
   <description>Service wich provides a table of countries</description>
@@ -18,7 +18,10 @@
     </service>
   </api>
   <permissions>
-    <perm name="view" description="Country view"/>
+    <perm name="view" description="Country View"/>
+    <perm name="add" description="Country Add"/>
+    <perm name="edit" description="Country Edit"/>
+    <perm name="delete" description="Country Delete"/>
   </permissions>
   <registry>
     <table name="country"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="83c22c11838bece2a16546b2deb7519b1073fee3">
+<service xmlns="http://amun-project.org" signature="3ce7fbc659ccafdfb98f137a36ecb0fc8dd5acfc">
   <status>normal</status>
   <name>my</name>
   <path>/my</path>
@@ -32,22 +32,22 @@
     </service>
   </api>
   <permissions>
-    <perm name="view" description="Service My View"/>
-    <perm name="friends_view" description="Service My Friends View"/>
-    <perm name="activities_view" description="Service My Activites View"/>
-    <perm name="settings_view" description="Service My Settings View"/>
-    <perm name="contact_view" description="Service My Contact View"/>
-    <perm name="contact_add" description="Service My Contact Add"/>
-    <perm name="contact_edit" description="Service My Contact Edit"/>
-    <perm name="contact_delete" description="Service My Contact Delete"/>
-    <perm name="notify_view" description="Service My Notify View"/>
-    <perm name="notify_add" description="Service My Notify Add"/>
-    <perm name="notify_edit" description="Service My Notify Edit"/>
-    <perm name="notify_delete" description="Service My Notify Delete"/>
-    <perm name="subscription_view" description="Service My Subscription View"/>
-    <perm name="subscription_add" description="Service My Subscription Add"/>
-    <perm name="subscription_edit" description="Service My Subscription Edit"/>
-    <perm name="subscription_delete" description="Service My Subscription Delete"/>
+    <perm name="view" description="My View"/>
+    <perm name="friends_view" description="My Friends View"/>
+    <perm name="activities_view" description="My Activites View"/>
+    <perm name="settings_view" description="My Settings View"/>
+    <perm name="contact_view" description="My Contact View"/>
+    <perm name="contact_add" description="My Contact Add"/>
+    <perm name="contact_edit" description="My Contact Edit"/>
+    <perm name="contact_delete" description="My Contact Delete"/>
+    <perm name="notify_view" description="My Notify View"/>
+    <perm name="notify_add" description="My Notify Add"/>
+    <perm name="notify_edit" description="My Notify Edit"/>
+    <perm name="notify_delete" description="My Notify Delete"/>
+    <perm name="subscription_view" description="My Subscription View"/>
+    <perm name="subscription_add" description="My Subscription Add"/>
+    <perm name="subscription_edit" description="My Subscription Edit"/>
+    <perm name="subscription_delete" description="My Subscription Delete"/>
   </permissions>
   <navigation>
     <option name="index"/>

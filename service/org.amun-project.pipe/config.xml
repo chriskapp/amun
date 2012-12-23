@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="2355ba63ecaa874761292634a25ef98bfc136cc6">
+<service xmlns="http://amun-project.org" signature="ebf6d10c9f7e51dfa6a0c1a6bd4171ee5f2b6bf7">
   <status>normal</status>
   <name>pipe</name>
   <description>Service wich redirects the content of an file to a page</description>
@@ -18,10 +18,10 @@
     </service>
   </api>
   <permissions>
-    <perm name="view" description="Service Pipe View"/>
-    <perm name="add" description="Service Pipe Add"/>
-    <perm name="edit" description="Service Pipe Edit"/>
-    <perm name="delete" description="Service Pipe Delete"/>
+    <perm name="view" description="Pipe View"/>
+    <perm name="add" description="Pipe Add"/>
+    <perm name="edit" description="Pipe Edit"/>
+    <perm name="delete" description="Pipe Delete"/>
   </permissions>
   <navigation>
     <option name="index"/>

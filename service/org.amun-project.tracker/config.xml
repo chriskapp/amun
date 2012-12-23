@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="0dc5eec6eb3dcdedbfd53ba63d9f2343f78287f5">
+<service xmlns="http://amun-project.org" signature="4689596df7d940cd885f2ef6f9e5032b6bd74a2a">
   <status>normal</status>
   <name>tracker</name>
   <description>An torrent tracker to list and download torrents</description>
@@ -25,11 +25,11 @@
     </service>
   </api>
   <permissions>
-    <perm name="view" description="Service Tracker View"/>
-    <perm name="add" description="Service Tracker Add"/>
-    <perm name="edit" description="Service Tracker Edit"/>
-    <perm name="delete" description="Service Tracker Delete"/>
-    <perm name="comment_add" description="Service Tracker Comment Add"/>
+    <perm name="view" description="Tracker View"/>
+    <perm name="add" description="Tracker Add"/>
+    <perm name="edit" description="Tracker Edit"/>
+    <perm name="delete" description="Tracker Delete"/>
+    <perm name="comment_add" description="Tracker Comment Add"/>
   </permissions>
   <registry>
     <table name="tracker"/>

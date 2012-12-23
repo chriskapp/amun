@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="c2369de16acd3927ebcc65e512e35738f756253e">
+<service xmlns="http://amun-project.org" signature="2be8e1599401ec68d8686a90fb080df451e842cf">
   <status>normal</status>
   <name>forum</name>
   <description>Implementation of an simple forum system. It is possible to create threads and set the status to sticky or closed</description>
@@ -26,13 +26,13 @@
 ]]></template>
   </activity>
   <permissions>
-    <perm name="view" description="Service Forum View"/>
-    <perm name="add" description="Service Forum Add"/>
-    <perm name="edit" description="Service Forum Edit"/>
-    <perm name="delete" description="Service Forum Delete"/>
-    <perm name="sticky" description="Service Forum Sticky"/>
-    <perm name="close" description="Service Forum Close"/>
-    <perm name="comment_add" description="Service Forum Comment Add"/>
+    <perm name="view" description="Forum View"/>
+    <perm name="add" description="Forum Add"/>
+    <perm name="edit" description="Forum Edit"/>
+    <perm name="delete" description="Forum Delete"/>
+    <perm name="sticky" description="Forum Sticky"/>
+    <perm name="close" description="Forum Close"/>
+    <perm name="comment_add" description="Forum Comment Add"/>
   </permissions>
   <navigation>
     <option name="index"/>

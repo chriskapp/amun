@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="8047aec729c8195e00fe6aae437dffe717991c02">
+<service xmlns="http://amun-project.org" signature="f33cf554b3bc0806327ecdc08d3262a1bcff2c03">
   <status>system</status>
   <name>webdav</name>
   <description>Service wich offers an webdav API. Every service can provide a custom DAV node wich represents the page</description>
@@ -17,7 +17,7 @@
     </service>
   </api>
   <permissions>
-    <perm name="view" description="Service Webdav View"/>
+    <perm name="view" description="Webdav View"/>
   </permissions>
   <library>
     <dir name="AmunService">

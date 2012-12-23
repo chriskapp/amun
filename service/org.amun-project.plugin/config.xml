@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="6029a9033153faaa5f875947decf5ed4b8351d2a">
+<service xmlns="http://amun-project.org" signature="05cfb573f160f7ab2c0e736a6370abcc20b1ac0a">
   <status>normal</status>
   <name>plugin</name>
   <description>Service to list plugins. Each plugin can be maintained by multiple users. News versions can be added by maintainer</description>
@@ -36,19 +36,19 @@
 ]]></template>
   </activity>
   <permissions>
-    <perm name="view" description="Service Plugin View"/>
-    <perm name="add" description="Service Plugin Add"/>
-    <perm name="edit" description="Service Plugin Edit"/>
-    <perm name="delete" description="Service Plugin Delete"/>
-    <perm name="comment_add" description="Service Plugin Comment Add"/>
-    <perm name="maintainer_view" description="Service Plugin Maintainer View"/>
-    <perm name="maintainer_add" description="Service Plugin Maintainer Add"/>
-    <perm name="maintainer_edit" description="Service Plugin Maintainer Edit"/>
-    <perm name="maintainer_delete" description="Service Plugin Maintainer Delete"/>
-    <perm name="release_view" description="Service Plugin Release View"/>
-    <perm name="release_add" description="Service Plugin Release Add"/>
-    <perm name="release_edit" description="Service Plugin Release Edit"/>
-    <perm name="release_delete" description="Service Plugin Release Delete"/>
+    <perm name="view" description="Plugin View"/>
+    <perm name="add" description="Plugin Add"/>
+    <perm name="edit" description="Plugin Edit"/>
+    <perm name="delete" description="Plugin Delete"/>
+    <perm name="comment_add" description="Plugin Comment Add"/>
+    <perm name="maintainer_view" description="Plugin Maintainer View"/>
+    <perm name="maintainer_add" description="Plugin Maintainer Add"/>
+    <perm name="maintainer_edit" description="Plugin Maintainer Edit"/>
+    <perm name="maintainer_delete" description="Plugin Maintainer Delete"/>
+    <perm name="release_view" description="Plugin Release View"/>
+    <perm name="release_add" description="Plugin Release Add"/>
+    <perm name="release_edit" description="Plugin Release Edit"/>
+    <perm name="release_delete" description="Plugin Release Delete"/>
   </permissions>
   <navigation>
     <option name="index"/>

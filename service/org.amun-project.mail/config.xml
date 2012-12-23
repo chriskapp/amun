@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="d5f9a1044f5b3a33eee27a445c012a7520923fa3">
+<service xmlns="http://amun-project.org" signature="7b43661fbd0188a6c2b7cd403d9cfc6ab14d38ac">
   <status>system</status>
   <name>mail</name>
   <description>A service to manage mail templates wich can be used by other services</description>
@@ -19,6 +19,9 @@
   </api>
   <permissions>
     <perm name="view" description="Mail View"/>
+    <perm name="add" description="Mail Add"/>
+    <perm name="edit" description="Mail Edit"/>
+    <perm name="delete" description="Mail Delete"/>
   </permissions>
   <registry>
     <table name="mail"/>

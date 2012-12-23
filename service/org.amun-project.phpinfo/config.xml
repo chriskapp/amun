@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="19d4ff518198f63d436ced4922ffda9a8fffa038">
+<service xmlns="http://amun-project.org" signature="4fd7d56ca163a84252d4232c243544531509e20d">
   <status>system</status>
   <name>phpinfo</name>
   <description>Service to offer PHP informations via an API</description>
@@ -17,6 +17,6 @@
     </service>
   </api>
   <permissions>
-    <perm name="view" description="Service Phpinfo View"/>
+    <perm name="view" description="Phpinfo View"/>
   </permissions>
 </service>

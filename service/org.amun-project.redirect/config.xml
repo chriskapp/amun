@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="78cb10a1c76beb04698c97a46203e7863ed5234d">
+<service xmlns="http://amun-project.org" signature="6bd8ff59e0ad6991212e9ce241a422c0afbe357f">
   <status>normal</status>
   <name>redirect</name>
   <description>Redirets the user to an given url</description>
@@ -18,10 +18,10 @@
     </service>
   </api>
   <permissions>
-    <perm name="view" description="Service Redirect View"/>
-    <perm name="add" description="Service Redirect Add"/>
-    <perm name="edit" description="Service Redirect Edit"/>
-    <perm name="delete" description="Service Redirect Delete"/>
+    <perm name="view" description="Redirect View"/>
+    <perm name="add" description="Redirect Add"/>
+    <perm name="edit" description="Redirect Edit"/>
+    <perm name="delete" description="Redirect Delete"/>
   </permissions>
   <registry>
     <table name="redirect"/>
