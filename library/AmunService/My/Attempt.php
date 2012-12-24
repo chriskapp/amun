@@ -71,7 +71,7 @@ class AmunService_My_Attempt
 		{
 			return self::NONE;
 		}
-		else if($count > 0 && $count <= 8)
+		else if($count > 0 && $count <= $this->registry['my.max_wrong_login'])
 		{
 			return self::TRYING;
 		}
