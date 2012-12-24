@@ -60,7 +60,7 @@ Ext.define('Workbench.controller.Navigation', {
             type: 'http://ns.amun-project.org/2011/amun/service/core/service'
         },{
             title: 'Registry',
-            type: 'http://ns.amun-project.org/2011/amun/service/registry'
+            type: 'http://ns.amun-project.org/2011/amun/service/core/registry'
         },{
             title: 'Mail',
             type: 'http://ns.amun-project.org/2011/amun/service/mail'
