@@ -64,15 +64,28 @@ catch(Exception $e)
 		PSX_Base::setResponseCode(200);
 		header('Content-type: text/html');
 
+		// get title
+		$title = $container->getRegistry()->offsetGet('core.title');
+
 		$response = <<<HTML
 <html>
 <head>
 	<title>Exception</title>
+	<link href="{$config['psx_url']}/css/bootstrap.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="{$config['psx_url']}/{$config['psx_dispatch']}api/asset/css?services=default" type="text/css" media="screen, projection" />
 </head>
 <body>
-	<h1>Internal Server Error</h1>
-	<p>{$message}</p>
-	<p><pre>{$trace}</pre></p>
+	<header class="amun-header">
+		<div class="container">
+			<h1><a href="{$config['psx_url']}">{$title}</a></h1>
+		</div>
+	</header>
+	<div class="amun-body">
+		<div class="container">
+			<p>{$message}</p>
+			<p><pre class="prettyprint">{$trace}</pre></p>
+		</div>
+	</div>
 </body>
 </html>
 HTML;
