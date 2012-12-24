@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="f8f71059e754c476725999ed23884d0b785d8d04">
+<service xmlns="http://amun-project.org" signature="8666b6381fe96acedcb7a90b073e8466d5704cf7">
   <status>system</status>
   <name>xrds</name>
   <description>Provides an xrds endpoint to discover all APIs</description>
@@ -29,7 +29,7 @@
   <library>
     <dir name="AmunService">
       <dir name="Xrds">
-        <file name="ConfigListener.php" md5="efe9554aa7d7d6a01bc6be0a80436f80"/>
+        <file name="ConfigListener.php" md5="ac6fa22e77613a727971720e36a7f9d5"/>
         <file name="Record.php" md5="66258939fc2fa52a9284481c8c082941"/>
         <file name="Table.php" md5="6ab793d627800e2b061e1583543eaab1"/>
         <dir name="Type">

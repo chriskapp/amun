@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="8325a8fef77ceb8c8f124b246bb1722b4f47e70b">
+<service xmlns="http://amun-project.org" signature="5a255589251a448601815686e01e2040ec4ee4b6">
   <status>normal</status>
   <name>my</name>
   <path>/my</path>
@@ -135,7 +135,7 @@ You can login with the new password at:
   <library>
     <dir name="AmunService">
       <dir name="My">
-        <file name="Activity.php" md5="fcdaf4d8865559aab9af9d500cd04fe0"/>
+        <file name="Activity.php" md5="4613177f13f6880ccc2cfe56626da9b4"/>
         <file name="Attempt.php" md5="b769155ac6cbe8844a947e7f142707e7"/>
         <dir name="Contact">
           <dir name="Filter">

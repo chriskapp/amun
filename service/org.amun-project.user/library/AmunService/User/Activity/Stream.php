@@ -32,15 +32,15 @@
  * @package    Amun_User_Activity
  * @version    $Revision: 635 $
  */
-class AmunService_User_Activity_Stream extends AmunService_User_Activity_StreamAbstract
+class AmunService_User_Activity_Stream extends Amun_Data_StreamAbstract
 {
-	public function getObject()
+	public function getObject($id)
 	{
 		$row = $this->table->select(array('globalId', 'userId', 'summary', 'date'))
 			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
 				->select(array('globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'author')
 			)
-			->where('id', '=', $this->refId)
+			->where('id', '=', $id)
 			->getRow();
 
 		if(!empty($row))

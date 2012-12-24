@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="5582bf0ad8d9bd15a87c833fd8dcbca49638b69c">
+<service xmlns="http://amun-project.org" signature="f0db1e4b2fefb8db40a6a44ddcdd3484543e2f2e">
   <status>system</status>
   <name>content</name>
   <path>/content</path>
@@ -70,7 +70,7 @@
   <library>
     <dir name="AmunService">
       <dir name="Content">
-        <file name="LrddListener.php" md5="1f26d840fac157e39b4dcc9cf2ae6867"/>
+        <file name="LrddListener.php" md5="588a52666370c70e1e19900c0b2d36ee"/>
         <dir name="Gadget">
           <dir name="Filter">
             <file name="Path.php" md5="ccd7a842e5478e59c90989af1270bb22"/>

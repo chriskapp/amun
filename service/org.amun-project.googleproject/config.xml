@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="328ecb0242af963c7937c2b1117fe24ffb10ac04">
+<service xmlns="http://amun-project.org" signature="6d0767a9a887d9d9e84e8a5490835c544684c72b">
   <status>system</status>
   <name>googleproject</name>
   <description>Gateway to receive googleproject commits</description>
@@ -60,7 +60,7 @@
           <file name="Record.php" md5="620b2a6f0cd7a49ecf54eeab0b36b5a7"/>
           <file name="Table.php" md5="977b872f08c201e365b21c9987eae7a4"/>
         </dir>
-        <file name="CommitListener.php" md5="8921652e76c1ea6bf895d8589a2082cd"/>
+        <file name="CommitListener.php" md5="856f9f68346273092c3b11f206a09220"/>
         <file name="Form.php" md5="627092cd8d183e7453b72271bf79b677"/>
         <file name="Handler.php" md5="ec95cccc377beb842fc9a9bf7ac1198f"/>
         <file name="Record.php" md5="100156ee9bd2312f4f071ed3d0f0cf14"/>

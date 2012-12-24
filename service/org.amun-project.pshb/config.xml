@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="f4ea1e9cbb68be9e2cc013ed49e33e73c70417df">
+<service xmlns="http://amun-project.org" signature="0421e17afb98583ef4a8cd221b1d5be1df58bbee">
   <status>system</status>
   <name>pshb</name>
   <description>PubSubHubBub notifier wich sends a new content notification request to an hub</description>
@@ -23,8 +23,8 @@
   <library>
     <dir name="AmunService">
       <dir name="Pshb">
-        <file name="HostmetaListener.php" md5="1350db3d939459e199ca99d3011dbbe6"/>
-        <file name="RecordListener.php" md5="948c8bd7e6da9539f2e774c8b527ebb7"/>
+        <file name="HostmetaListener.php" md5="02cdf34368aeadd4d80e6857b13f0ab4"/>
+        <file name="RecordListener.php" md5="e0a2daaac560063ac16a5722916c16a1"/>
         <dir name="Subscription">
           <file name="Form.php" md5="2d6f505718e34ca74b1881a3ea484dad"/>
           <file name="Handler.php" md5="4f60cdce395296e4f84c50af2bb693ec"/>
