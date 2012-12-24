@@ -151,24 +151,20 @@ class AmunService_User_Activity_Record extends Amun_Data_RecordAbstract
 
 	public function getObject()
 	{
-		$table = Amun_Sql_Table_Registry::get($this->table);
-
-		if($table instanceof AmunService_User_Activity_Table)
+		if(empty($this->table))
 		{
-			$stream = new AmunService_User_Activity_Stream($table, $this->id);
+			$stream = new AmunService_User_Activity_Stream($this->_table);
 
-			return $stream->getObject();
+			return $stream->getObject($this->id);
 		}
 		else if($this->refId > 0)
 		{
-			$class = $table->getDefaultRecordClass() . '_Stream';
-			$file  = PSX_PATH_LIBRARY . '/' . str_replace('_', '/', $class) . '.php';
+			$class  = $this->_registry->getClassNameFromTable($this->table);
+			$stream = Amun_DataFactory::getProvider($class)->getStream();
 
-			if(is_file($file) && class_exists($class))
+			if($stream instanceof Amun_Data_StreamAbstract)
 			{
-				$stream = new $class($table, $this->refId);
-
-				return $stream->getObject();
+				return $stream->getObject($this->refId);
 			}
 		}
 

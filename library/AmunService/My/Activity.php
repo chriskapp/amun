@@ -66,7 +66,6 @@ class AmunService_My_Activity extends AmunService_User_Activity_Record
 				$entry->setUpdated($this->getDate());
 				$entry->setPublished($this->getDate());
 				$entry->addAuthor($this->authorName, $this->authorProfileUrl);
-				$entry->setContent($this->summary, 'html');
 
 				if($this->parentId > 0)
 				{
@@ -79,6 +78,8 @@ class AmunService_My_Activity extends AmunService_User_Activity_Record
 					$writer->writeAttribute('ref', 'urn:uuid:' . $parent['globalId']);
 					$writer->endElement();
 				}
+
+				$entry->setContent($this->summary, 'html');
 
 				return $entry;
 

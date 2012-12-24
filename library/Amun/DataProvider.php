@@ -61,6 +61,7 @@ class Amun_DataProvider
 	protected $_table;
 	protected $_handler;
 	protected $_form;
+	protected $_stream;
 
 	public function __construct($name, PSX_DependencyAbstract $ct)
 	{
@@ -136,6 +137,21 @@ class Amun_DataProvider
 		else
 		{
 			throw new Amun_Exception('Form "' . $this->getName() . '" does not exist');
+		}
+	}
+
+	public function getStream()
+	{
+		if($this->_stream !== null)
+		{
+			return $this->_stream;
+		}
+
+		$class = self::getClass($this->getName(), 'Stream');
+
+		if($class !== null && $class->isSubclassOf('Amun_Data_StreamAbstract'))
+		{
+			return $this->_stream = $class->newInstance($this->getTable());
 		}
 	}
 

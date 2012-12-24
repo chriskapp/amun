@@ -86,7 +86,7 @@ class activity extends Amun_Module_RestAbstract
 					$select->setColumns($params['fields']);
 				}
 
-				$resultSet = $select->getResultSet($params['startIndex'], $params['count'], $params['sortBy'], $params['sortOrder'], $params['filterBy'], $params['filterOp'], $params['filterValue'], $params['updatedSince'], $this->getMode(), 'AmunService_My_Activity', array($select->getTable()));
+				$resultSet = $select->getResultSet($params['startIndex'], $params['count'], $params['sortBy'], $params['sortOrder'], $params['filterBy'], $params['filterOp'], $params['filterValue'], $params['updatedSince'], PSX_Sql::FETCH_OBJECT, 'AmunService_My_Activity', array($select->getTable()));
 
 				$this->setResponse($resultSet);
 			}
