@@ -32,7 +32,7 @@
  * @package    AmunService_Xrds
  * @version    $Revision: 635 $
  */
-class AmunService_User_LrddListener extends Amun_Module_ListenerAbstract
+class AmunService_User_LrddListener extends Amun_Data_ListenerAbstract
 {
 	public function notify(XMLWriter $writer, $uri)
 	{

@@ -32,7 +32,7 @@
  * @package    gadget
  * @version    $Revision: 875 $
  */
-class textBox extends Amun_Module_GadgetAbstract
+class textBox extends Amun_Data_GadgetAbstract
 {
 	/**
 	 * onLoad

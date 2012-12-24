@@ -32,7 +32,7 @@
  * @package    Amun_Log
  * @version    $Revision: 635 $
  */
-class AmunService_Googleproject_CommitListener extends Amun_Module_ListenerAbstract
+class AmunService_Googleproject_CommitListener extends Amun_Data_ListenerAbstract
 {
 	public function notify(AmunService_Googleproject_Commit_Record $record)
 	{

@@ -32,7 +32,7 @@
  * @package    AmunService_Xrds
  * @version    $Revision: 635 $
  */
-class AmunService_Core_Service_Option_ConfigListener extends Amun_Module_ListenerAbstract
+class AmunService_Core_Service_Option_ConfigListener extends Amun_Data_ListenerAbstract
 {
 	public function notify(AmunService_Core_Service_Record $record, DOMDocument $config)
 	{

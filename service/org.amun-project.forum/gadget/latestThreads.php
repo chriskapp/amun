@@ -33,7 +33,7 @@
  * @subpackage forum
  * @version    $Revision: 845 $
  */
-class latestThreads extends Amun_Module_GadgetAbstract
+class latestThreads extends Amun_Data_GadgetAbstract
 {
 	/**
 	 * onLoad

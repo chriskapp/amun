@@ -33,7 +33,7 @@
  * @subpackage news
  * @version    $Revision: 744 $
  */
-class archive extends Amun_Module_GadgetAbstract
+class archive extends Amun_Data_GadgetAbstract
 {
 	/**
 	 * onLoad

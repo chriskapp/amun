@@ -32,7 +32,7 @@
  * @package    gadget
  * @version    $Revision: 875 $
  */
-class latestActivity extends Amun_Module_GadgetAbstract
+class latestActivity extends Amun_Data_GadgetAbstract
 {
 	/**
 	 * onLoad

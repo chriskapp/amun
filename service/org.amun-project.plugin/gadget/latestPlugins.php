@@ -33,7 +33,7 @@
  * @subpackage plugin
  * @version    $Revision: 744 $
  */
-class latestPlugins extends Amun_Module_GadgetAbstract
+class latestPlugins extends Amun_Data_GadgetAbstract
 {
 	/**
 	 * onLoad

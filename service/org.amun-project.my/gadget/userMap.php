@@ -32,7 +32,7 @@
  * @package    gadget
  * @version    $Revision: 875 $
  */
-class userMap extends Amun_Module_GadgetAbstract
+class userMap extends Amun_Data_GadgetAbstract
 {
 	/**
 	 * onLoad

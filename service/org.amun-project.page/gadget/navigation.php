@@ -32,7 +32,7 @@
  * @package    gadget
  * @version    $Revision: 875 $
  */
-class navigation extends Amun_Module_GadgetAbstract
+class navigation extends Amun_Data_GadgetAbstract
 {
 	/**
 	 * onLoad

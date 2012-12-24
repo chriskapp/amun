@@ -32,7 +32,7 @@
  * @package    Amun_Log
  * @version    $Revision: 635 $
  */
-class AmunService_Log_RecordListener extends Amun_Module_ListenerAbstract
+class AmunService_Log_RecordListener extends Amun_Data_ListenerAbstract
 {
 	public function notify($type, Amun_Sql_TableInterface $table, PSX_Data_RecordInterface $record)
 	{
