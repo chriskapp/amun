@@ -60,41 +60,35 @@ SQL;
 
 			if(!empty($data) && is_array($data))
 			{
-				$className    = $this->registry->getClassNameFromTable($row['recordTable']);
-				$classHandler = $className . '_Handler';
+				$class   = $this->registry->getClassNameFromTable($row['recordTable']);
+				$handler = Amun_DataFactory::getProvider($class)->getHandler();
 
-				if($className !== false && class_exists($classHandler))
+				if($handler instanceof Amun_Data_HandlerAbstract)
 				{
-					$handler = new $classHandler($this->user);
 					$handler->setIgnoreApprovement(true);
 
-
-					$object = Amun_Sql_Table_Registry::get($className)->getRecord();
+					$object = $handler->getTable()->getRecord();
 
 					foreach($data as $k => $v)
 					{
 						$object->$k = $v;
 					}
 
-
-					switch($record->type)
+					switch($row['recordType'])
 					{
 						case 'INSERT':
 
 							$handler->create($object);
-
 							break;
 
 						case 'UPDATE':
 
 							$handler->update($object);
-
 							break;
 
 						case 'DELETE':
 
 							$handler->delete($object);
-
 							break;
 
 						default:
@@ -108,10 +102,8 @@ SQL;
 				}
 			}
 
-
 			// delete the record
 			$this->delete($record);
-
 
 			return $record;
 		}

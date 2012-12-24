@@ -90,9 +90,9 @@ class index extends Amun_Module_ApplicationAbstract
 			$this->htmlCss->add('profile');
 			$this->htmlJs->add('amun');
 			$this->htmlJs->add('profile');
-			$this->htmlContent->add(Amun_Html_Content::META, PSX_Data_Writer_Atom::link('Activity', $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/my/activity/' . $account->name . '?format=atom'));
-			$this->htmlContent->add(Amun_Html_Content::META, '<link rel="alternate" type="application/stream+json" href="' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/my/activity/' . $account->name . '?format=json" />');
-			$this->htmlContent->add(Amun_Html_Content::META, '<link rel="meta" type="application/rdf+xml" title="FOAF" href="' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/service/my/foaf/' . $account->name . '" />');
+			$this->htmlContent->add(Amun_Html_Content::META, PSX_Data_Writer_Atom::link('Activity', $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/activity/' . $account->id . '?format=atom'));
+			$this->htmlContent->add(Amun_Html_Content::META, '<link rel="alternate" type="application/stream+json" href="' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/activity/' . $account->id . '?format=json" />');
+			$this->htmlContent->add(Amun_Html_Content::META, '<link rel="meta" type="application/rdf+xml" title="FOAF" href="' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/foaf/' . $account->name . '" />');
 			$this->htmlContent->add(Amun_Html_Content::META, '<link rel="profile" type="html/text" href="' . $account->profileUrl . '" />');
 
 			$this->template->set(__CLASS__ . '.tpl');

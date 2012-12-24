@@ -34,10 +34,6 @@
  */
 class AmunService_Core_Approval_Record_Record extends Amun_Data_RecordAbstract
 {
-	const INSERT = 0x1;
-	const UPDATE = 0x2;
-	const DELETE = 0x3;
-
 	protected $_user;
 	protected $_record;
 	protected $_date;
@@ -170,35 +166,6 @@ class AmunService_Core_Approval_Record_Record extends Amun_Data_RecordAbstract
 				throw new PSX_Data_Exception('Writer is not supported');
 
 				break;
-		}
-	}
-
-	public static function getType($status = false)
-	{
-		$s = array(
-
-			self::INSERT => 'INSERT',
-			self::UPDATE => 'UPDATE',
-			self::DELETE => 'DELETE',
-
-		);
-
-		if($status !== false)
-		{
-			$status = intval($status);
-
-			if(array_key_exists($status, $s))
-			{
-				return $s[$status];
-			}
-			else
-			{
-				return false;
-			}
-		}
-		else
-		{
-			return $s;
 		}
 	}
 }

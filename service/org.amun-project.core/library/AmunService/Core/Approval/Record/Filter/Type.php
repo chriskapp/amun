@@ -36,7 +36,7 @@ class AmunService_Core_Approval_Record_Filter_Type extends PSX_FilterAbstract
 {
 	public function apply($value)
 	{
-		return in_array($value, AmunService_Core_Approval_Record_Record::getType());
+		return in_array($value, AmunService_Core_Approval_Record::getType());
 	}
 
 	public function getErrorMsg()

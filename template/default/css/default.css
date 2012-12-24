@@ -14,7 +14,7 @@ header.amun-header
 	background-image:-o-linear-gradient(top, #8FC33A, #739B2E);
 	background-image:-ms-linear-gradient(top, #8FC33A, #739B2E);
 	background-image:linear-gradient(top, #8FC33A, #739B2E);
-	border-bottom:1px solid #999;
+	border-bottom:1px solid #444;
 }
 
 header.amun-header h1

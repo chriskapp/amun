@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="3ce7fbc659ccafdfb98f137a36ecb0fc8dd5acfc">
+<service xmlns="http://amun-project.org" signature="8325a8fef77ceb8c8f124b246bb1722b4f47e70b">
   <status>normal</status>
   <name>my</name>
   <path>/my</path>
@@ -61,6 +61,7 @@
     <table name="my_notify_service"/>
     <param name="registration_enabled" value="1" type="BOOLEAN"/>
     <param name="max_group_count" value="12" type="INTEGER"/>
+    <param name="max_wrong_login" value="8" type="INTEGER"/>
     <param name="openid_provider" value="googlemail.com, gmail.com, yahoo.com, aol.com, aim.com" type="STRING"/>
   </registry>
   <mail>
@@ -135,7 +136,7 @@ You can login with the new password at:
     <dir name="AmunService">
       <dir name="My">
         <file name="Activity.php" md5="fcdaf4d8865559aab9af9d500cd04fe0"/>
-        <file name="Attempt.php" md5="c048b6355c9ad868f5539fea8c5252b4"/>
+        <file name="Attempt.php" md5="b769155ac6cbe8844a947e7f142707e7"/>
         <dir name="Contact">
           <dir name="Filter">
             <file name="Status.php" md5="db0b471606bdd0150da3915a4214dc45"/>

@@ -34,6 +34,10 @@
  */
 class AmunService_Core_Approval_Record extends Amun_Data_RecordAbstract
 {
+	const INSERT = 0x1;
+	const UPDATE = 0x2;
+	const DELETE = 0x3;
+
 	public function setId($id)
 	{
 		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
@@ -84,6 +88,35 @@ class AmunService_Core_Approval_Record extends Amun_Data_RecordAbstract
 	public function getId()
 	{
 		return $this->_base->getUrn('core', 'approval', $this->id);
+	}
+
+	public static function getType($status = false)
+	{
+		$s = array(
+
+			self::INSERT => 'INSERT',
+			self::UPDATE => 'UPDATE',
+			self::DELETE => 'DELETE',
+
+		);
+
+		if($status !== false)
+		{
+			$status = intval($status);
+
+			if(array_key_exists($status, $s))
+			{
+				return $s[$status];
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return $s;
+		}
 	}
 }
 

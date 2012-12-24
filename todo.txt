@@ -8,10 +8,8 @@
 [ ] Move GadgetAbstract / ListenerAbstract from Module to Data folder
 [ ] check activity stream generation / design 
     [ ] check activity stream
-[ ] approval system
 [ ] Oauth endpoint send invalid request method header on GET at request/access
     [ ] adding oauth scope
-[x] fix tests
 [ ] support host meta to return json and xrd / jrd
 [ ] improve right system probably with inheritance
 [ ] Implement reference input field in backend
@@ -40,6 +38,8 @@
     framework because its not amun specific and a well written proxy is in
     general needed
 [ ] test ostatus remote subscription interoperability
+[x] approval system
+[x] fix tests
 [x] Improve backend to new service structure
 [x] test page gadget system
 [x] fix captcha url
