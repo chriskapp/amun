@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="4da99e63acac563a33113766710210e8f0c9d815">
+<service xmlns="http://amun-project.org" signature="dda51df6e094e9663d19f727a7e5dbd4c5e36dea">
   <status>system</status>
   <name>user</name>
   <path>/user</path>
@@ -126,6 +126,7 @@
           <file name="Form.php" md5="ae8265bc2a16af81b39044e0e563d6d1"/>
           <file name="Handler.php" md5="616d0738051d171dd72da133ac5b3508"/>
           <file name="Record.php" md5="aeddc7174ed3f91de84be8f8c327dff3"/>
+          <file name="Stream.php" md5="db6e5d74c668e34e7788b4cd80d6f0af"/>
           <file name="Table.php" md5="18e0242719da3071f4b91402f7ed469f"/>
         </dir>
         <dir name="Activity">
