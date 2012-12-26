@@ -48,7 +48,7 @@ class friends extends AmunService_My_FriendsAbstract
 		$this->template->assign('friends', $friends);
 
 		// form url
-		$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/user/friend';
+		$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/friend';
 
 		$this->template->assign('friendUrl', $url);
 

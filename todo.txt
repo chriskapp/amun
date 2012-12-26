@@ -1,13 +1,12 @@
 
 [FEATURES]
 
+[ ] add mobile template
+[ ] implement user friend stream class
 [ ] implement content page sort api to reorder pages
 [ ] use psx annotation parse for gadget params
 [ ] remove my notify and contact from my service .. since its not used and we 
     would need a message queue .. this service should come in another service
-[x] Move GadgetAbstract / ListenerAbstract from Module to Data folder
-[x] check activity stream generation / design 
-    [x] check activity stream
 [ ] Oauth endpoint send invalid request method header on GET at request/access
     [ ] adding oauth scope
 [ ] support host meta to return json and xrd / jrd
@@ -38,6 +37,9 @@
     framework because its not amun specific and a well written proxy is in
     general needed
 [ ] test ostatus remote subscription interoperability
+[x] Move GadgetAbstract / ListenerAbstract from Module to Data folder
+[x] check activity stream generation / design 
+    [x] check activity stream
 [x] approval system
 [x] fix tests
 [x] Improve backend to new service structure

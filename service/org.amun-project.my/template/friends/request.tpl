@@ -57,7 +57,7 @@
 		<?php endforeach; ?>
 		<?php else: ?>
 		<tr>
-			<td>No friendship requests available</td>
+			<td colspan="4">No friendship requests available</td>
 		</tr>
 		<?php endif; ?>
 		</tbody>

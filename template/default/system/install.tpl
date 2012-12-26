@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title id="title">Amun (<?php echo Amun_Base::getVersion(); ?>) installation</title>
-	<link href="<?php echo $base; ?>/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="<?php echo $base; ?>/css/bootstrap.css" rel="stylesheet" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $base; ?>/css/install.css" />
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 	<script type="text/javascript">

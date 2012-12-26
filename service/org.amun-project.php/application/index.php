@@ -51,7 +51,7 @@ class index extends Amun_Module_ApplicationAbstract
 
 			// options
 			$options = new Amun_Option(__CLASS__, $this->registry, $this->user, $this->page);
-			$options->add('service_php_edit', 'Edit', $this->page->url . '/edit' . (!empty($recordPhp) ? '?id=' . $recordPhp->id : ''));
+			$options->add('php_edit', 'Edit', $this->page->url . '/edit' . (!empty($recordPhp) ? '?id=' . $recordPhp->id : ''));
 			$options->load(array($this->page));
 
 			$this->template->assign('options', $options);

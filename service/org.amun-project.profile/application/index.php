@@ -78,7 +78,7 @@ class index extends Amun_Module_ApplicationAbstract
 
 			if(!$this->user->isAnonymous() && !$this->user->hasFriend($account))
 			{
-				$options->add('service_profile_view', 'Add as friend', 'javascript:amun.services.profile.friendshipRequest(' . $this->user->id . ', ' . $account->id . ', \'' . $url . '\', this)');
+				$options->add('profile_view', 'Add as friend', 'javascript:amun.services.profile.friendshipRequest(' . $this->user->id . ', ' . $account->id . ', \'' . $url . '\', this)');
 			}
 
 			$options->load(array($this->page, $account));
@@ -143,20 +143,19 @@ class index extends Amun_Module_ApplicationAbstract
 
 	private function getActivities(AmunService_User_Account_Record $account)
 	{
-		$select = Amun_Sql_Table_Registry::get('User_Activity')
-			->select(array('id', 'userId', 'status', 'scope', 'verb', 'summary', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Activity_Receiver')
-				->select(array('id', 'status', 'activityId', 'userId', 'date'), 'receiver'),
-				'1:n'
+		$select = Amun_Sql_Table_Registry::get('User_Activity_Receiver')
+			->select(array('id', 'status', 'activityId', 'userId', 'date'))
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Activity')
+				->select(array('id', 'userId', 'status', 'scope', 'verb', 'summary', 'date'), 'activity')
+				->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+					->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
+				)
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
-				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
-			)
-			->where('parentId', '=', 0)
 			->where('userId', '=', $account->id)
-			->where('scope', '=', 0)
-			->where('receiverUserId', '=', $account->id)
-			->where('receiverStatus', '=', AmunService_User_Activity_Receiver_Record::VISIBLE)
+			->where('status', '=', AmunService_User_Activity_Receiver_Record::VISIBLE)
+			->where('activityParentId', '=', 0)
+			->where('activityScope', '=', 0)
+			->where('activityUserId', '=', $account->id)
 			->orderBy('date', PSX_Sql::SORT_DESC);
 
 
