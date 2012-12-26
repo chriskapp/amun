@@ -55,9 +55,10 @@ class AmunService_Asset_Provider_Css implements AmunService_Asset_ProviderInterf
 		$services = array();
 
 		$services['default'] = array(
-
+			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/css/bootstrap/bootstrap.css',
+			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/css/bootstrap/bootstrap-responsive.css',
+			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/css/prettify/prettify.css',
 			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/css/default.css',
-
 		);
 
 		$services = array_merge($services, $this->getContentServices());
@@ -72,9 +73,7 @@ class AmunService_Asset_Provider_Css implements AmunService_Asset_ProviderInterf
 		foreach($result as $row)
 		{
 			$services[$row['name']] = array(
-
 				$this->config['amun_service_path'] . '/' . $row['source'] . '/template/default.css',
-
 			);
 		}
 

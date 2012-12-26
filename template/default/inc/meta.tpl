@@ -3,7 +3,7 @@
 <meta charset="UTF-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta http-equiv="X-XRDS-Location" content="<?php echo $url; ?>api/meta/xrds" />
-<link href="<?php echo $base; ?>/css/bootstrap.min.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <?php echo $htmlCss->toString() . "\n"; ?>
 <?php echo $htmlJs->toString() . "\n"; ?>
 <?php echo $htmlContent->get(Amun_Html_Content::META); ?>

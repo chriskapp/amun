@@ -38,6 +38,6 @@ class Amun_Html_Css extends Amun_Html_ServiceAbstract
 	{
 		$href = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/asset/css?services=%s';
 
-		return '<link rel="stylesheet" href="' . $href . '" type="text/css" media="screen, projection" />';
+		return '<link rel="stylesheet" href="' . $href . '" type="text/css" />';
 	}
 }
