@@ -98,6 +98,7 @@ class AmunService_User_Activity_RecordListener extends Amun_Data_ListenerAbstrac
 				$handler->create($activity);
 
 				// insert activity for user who has requested the friendship
+				/*
 				$activity          = Amun_Sql_Table_Registry::get('User_Activity')->getRecord();
 				$activity->refId   = $record->id;
 				$activity->table   = $table->getName();
@@ -106,6 +107,7 @@ class AmunService_User_Activity_RecordListener extends Amun_Data_ListenerAbstrac
 
 				$handler = new AmunService_User_Activity_Handler(new Amun_User($record->getFriend()->id, $this->registry));
 				$handler->create($activity);
+				*/
 			}
 		}
 	}
