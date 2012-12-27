@@ -91,7 +91,38 @@ amun.services.forum = {
 
 			client.onSuccess(function(msg){
 
-				location.reload();
+				// clear textfield
+				for(var ref in amun.store.editors)
+				{
+					amun.store.editors[ref].getSession().getDocument().setValue('');
+				}
+
+				// append new post
+				var url = $('#' + this.getContainerId()).attr('action');
+				var params = '?count=1&fields=id,text,date,authorThumbnailUrl,authorProfileUrl,authorName&sortBy=id&sortOrder=descending&filterBy=userId&filterOp=equals&filterValue=' + user.id + '&format=json';
+
+				$.get(url + params, function(data){
+
+					var entry = data.entry[0];
+					var html = '';
+
+					date = amun.util.getSqlToDate(entry.date);
+
+					html+= '<div class="amun-service-comment-entry" id="comment-' + entry.id + '" style="display:none;">';
+					html+= '	<img class="pull-left" src="' + entry.authorThumbnailUrl + '" alt="avatar" />';
+					html+= '	<p class="muted">';
+					html+= '	by';
+					html+= '	<a href="' + entry.authorProfileUrl + '" rel="author">' + entry.authorName + '</a>';
+					html+= '	on';
+					html+= '	<time datetime="' + date.toGMTString() + '">' + date.toGMTString() + '</time>';
+					html+= '	</p>';
+					html+= '	<div class="amun-service-comment-text">' + entry.text + '</div>';
+					html+= '</div>';
+
+					$('.amun-service-comment').append(html);
+					$('#comment-' + entry.id).fadeIn();
+
+				});
 
 			});
 

@@ -74,13 +74,13 @@ amun.services.my = {
 
 			if(bgUrl != false)
 			{
-				$('#form-identity').css('background-image', 'url(' + bgUrl + ')');
-				$('#form-identity').css('background-position', '82% 70%');
-				$('#form-identity').css('background-repeat', 'no-repeat');
+				$('#identity').css('background-image', 'url(' + bgUrl + ')');
+				$('#identity').css('background-position', '95% 50%');
+				$('#identity').css('background-repeat', 'no-repeat');
 			}
 			else
 			{
-				$('#form-identity').css('background-image', 'none');
+				$('#identity').css('background-image', 'none');
 			}
 
 		}
@@ -185,7 +185,7 @@ amun.services.my = {
 
 	},
 
-	loadSubmitActivity: function(id, userId){
+	loadSubmitActivity: function(id){
 
 		var client = new amun.client(id);
 
@@ -208,7 +208,7 @@ amun.services.my = {
 
 			// append new post
 			var url = $('#' + this.getContainerId()).attr('action');
-			var params = '?count=1&sortBy=id&sortOrder=descending&filterBy=userId&filterOp=equals&filterValue=' + userId + '&format=json';
+			var params = '?count=1&fields=id,summary,date,authorThumbnailUrl,authorProfileUrl,authorName&sortBy=id&sortOrder=descending&filterBy=userId&filterOp=equals&filterValue=' + user.id + '&format=json';
 
 			$.get(url + params, function(data){
 
@@ -220,18 +220,13 @@ amun.services.my = {
 				if(id == 'activity-form-0')
 				{
 					html+= '<div class="row amun-service-my-activity-entry" id="activity-' + entry.id + '" style="display:none;">';
-					html+= '<div class="pull-left amun-service-my-activity-entry-avatar">';
-					html+= '	<img src="' + entry.authorThumbnailUrl + '" alt="avatar" />';
-					html+= '</div>';
-					html+= '<div class="pull-left amun-service-my-activity-entry-content">';
+					html+= '	<img class="pull-left" src="' + entry.authorThumbnailUrl + '" alt="avatar" />';
 					html+= '	<h4><a href="' + entry.authorProfileUrl + '">' + entry.authorName + '</a></h4>';
 					html+= '	<div class="amun-service-my-activity-summary">' + entry.summary + '</div>';
 					html+= '	<p class="muted">';
 					html+= '	created on';
 					html+= '	<time datetime="' + date.toGMTString() + '">' + date.toGMTString() + '</time>';
 					html+= '	</p>';
-					html+= '</div>';
-					html+= '<div class="clearfix"></div>';
 					html+= '</div>';
 
 					$('#activity').after(html);
@@ -240,18 +235,13 @@ amun.services.my = {
 				else
 				{
 					html+= '<div class="amun-service-my-activity-entry" id="activity-' + entry.id + '" style="display:none;">';
-					html+= '<div class="pull-left amun-service-my-activity-entry-avatar">';
-					html+= '	<img src="' + entry.authorThumbnailUrl + '" alt="avatar" />';
-					html+= '</div>';
-					html+= '<div class="pull-left amun-service-my-activity-entry-content" style="width:680px;">';
+					html+= '	<img class="pull-left" src="' + entry.authorThumbnailUrl + '" alt="avatar" />';
 					html+= '	<h4><a href="' + entry.authorProfileUrl + '">' + entry.authorName + '</a></h4>';
 					html+= '	<div class="amun-service-my-activity-summary">' + entry.summary + '</div>';
 					html+= '	<p class="muted">';
 					html+= '		created on';
 					html+= '		<time datetime="' + date.toGMTString() + '">' + date.toGMTString() + '</time>';
 					html+= '	</p>';
-					html+= '</div>';
-					html+= '<div class="clearfix"></div>';
 					html+= '</div>';
 
 					$('#' + id.replace(/form/, 'comments')).append(html);

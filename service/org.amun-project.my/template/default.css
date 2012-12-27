@@ -27,39 +27,44 @@ div.amun-service-my-activity-entry h4
 	margin:0px
 }
 
+div.amun-service-my-activity-entry img
+{
+	margin-right:6px;
+	margin-bottom:6px;
+}
+
 div.amun-service-my-activity-entry-hidden
 {
 	opacity:0.6;
 }
 
-div.amun-service-my-activity-entry-avatar
+div.amun-service-my-activity-summary
 {
-	width:48px;
-	padding-right:4px;
+	padding-left:54px;
 }
 
-div.amun-service-my-activity-entry-content
+div.amun-service-my-activity-entry-comments
 {
-	width:742px;
-	padding-left:4px;
-	border-left:1px solid #eee;
+	padding-left:54px;
 }
 
 .amun-service-my-activity-entry p.muted
 {
 	margin:0px;
 	font-size:0.8em;
+	margin-left:54px;
 }
 
 div.amun-service-my-activity-entry-reply
 {
 	display:none;
+	padding-left:54px;
 }
 
 div.amun-service-my-activity-entry-reply textarea
 {
 	margin-top:14px;
-	width:728px;
+	width:96%;
 	height:24px;
 }
 

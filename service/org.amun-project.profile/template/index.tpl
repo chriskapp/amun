@@ -11,8 +11,8 @@
 
 <div class="row vcard amun-service-profile">
 
-	<div class="span2">
-		<img src="<?php echo $account->thumbnailUrl; ?>" />
+	<div class="span2 vcard hidden-phone">
+		<img class="photo" src="<?php echo $account->thumbnailUrl; ?>" />
 		<dl>
 			<dt>Name</dt>
 			<dd><a href="<?php echo $account->profileUrl; ?>" rel="me" class="nickname url uid"><?php echo $account->name; ?></a></dd>
@@ -41,24 +41,18 @@
 	</div>
 
 	<div class="span10 amun-service-profile-activity">
-
 		<?php foreach($activities as $activity): ?>
 		<div class="row amun-service-profile-activity-entry" id="activity-<?php echo $activity->activityId; ?>">
-			<div class="pull-left amun-service-profile-activity-entry-avatar">
-				<img src="<?php echo $activity->authorThumbnailUrl; ?>" alt="avatar" />
-			</div>
-			<div class="pull-left amun-service-profile-activity-entry-content">
-				<h4><a href="<?php echo $activity->authorProfileUrl; ?>"><?php echo $activity->authorName; ?></a></h4>
-				<div class="amun-service-profile-activity-summary"><?php echo $activity->activitySummary; ?></div>
-				<p class="muted">
-					created on
-					<time datetime="<?php echo $activity->getDate()->format(DateTime::ATOM); ?>"><?php echo $activity->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></time>
-				</p>
-			</div>
+			<img class="pull-left" src="<?php echo $activity->authorThumbnailUrl; ?>" alt="avatar" />
+			<h4><a href="<?php echo $activity->authorProfileUrl; ?>"><?php echo $activity->authorName; ?></a></h4>
+			<div class="amun-service-profile-activity-summary"><?php echo $activity->activitySummary; ?></div>
+			<p class="muted">
+				created on
+				<time datetime="<?php echo $activity->getDate()->format(DateTime::ATOM); ?>"><?php echo $activity->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></time>
+			</p>
 		</div>
 		<div class="clearfix"></div>
 		<?php endforeach; ?>
-
 	</div>
 
 	<?php if($pagingActivities->getPages() > 1): ?>

@@ -24,27 +24,22 @@
 	</div>
 	<hr />
 
-	<?php if($resultComments->totalResults > 0): ?>
 	<div class="amun-service-comment">
+	<?php if($resultComments->totalResults > 0): ?>
 		<?php foreach($resultComments->entry as $record): ?>
 		<div class="amun-service-comment-entry" id="comment-<?php echo $record->id; ?>">
-			<div class="pull-left amun-service-comment-avatar">
-				<img src="<?php echo $record->authorThumbnailUrl; ?>" alt="avatar" />
-			</div>
-			<div class="pull-left amun-service-comment-content">
-				<p class="muted">
-					by
-					<a href="<?php echo $record->authorProfileUrl; ?>" rel="author"><?php echo $record->authorName; ?></a>
-					on
-					<time datetime="<?php echo $record->getDate()->format(DateTime::ATOM); ?>"><?php echo $record->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></time>
-				</span>
-				<div class="amun-service-comment-text"><?php echo $record->text; ?></div>
-			</div>
+			<img class="pull-left" src="<?php echo $record->authorThumbnailUrl; ?>" alt="avatar" />
+			<p class="muted">
+				by
+				<a href="<?php echo $record->authorProfileUrl; ?>" rel="author"><?php echo $record->authorName; ?></a>
+				on
+				<time datetime="<?php echo $record->getDate()->format(DateTime::ATOM); ?>"><?php echo $record->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></time>
+			</p>
+			<div class="amun-service-comment-text"><?php echo $record->text; ?></div>
 		</div>
-		<div class="clearfix"></div>
 		<?php endforeach; ?>
-	</div>
 	<?php endif; ?>
+	</div>
 
 	<?php if($pagingComments->getPages() > 1): ?>
 	<hr />

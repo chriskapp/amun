@@ -6,11 +6,11 @@
 
 	<div class="span8 amun-service-my-login-description">
 
-		<h3>Sign in to personalize your experience.</h3>
+		<h3>Sign in to personalize your experience</h3>
 
-		<p>To sign in enter as identity your <strong>Email</strong> address and password or your <strong>OpenID</strong> url.<br />
+		<p>To sign in enter as identity your <strong>Email</strong> address and password or your <strong>OpenID</strong>.<br />
 		<b><?php echo $registry['core.title']; ?></b> supports OpenID if you enter as identity an Google, Yahoo
-		or AOL email address you dont need an password because the provider are supporting <a href="http://openid.net/">OpenID</a>.</p>
+		or AOL email address you dont need an password because these providers are supporting <a href="http://openid.net/">OpenID</a>.</p>
 
 		<hr />
 
@@ -19,6 +19,8 @@
 
 	</div>
 	<div class="span4 amun-service-my-login-form">
+
+		<h3>Login</h3>
 
 		<?php if(isset($error)): ?>
 
@@ -42,7 +44,7 @@
 		<?php if(isset($captcha)): ?>
 		<p>
 			<label for="captcha">Captcha:</label>
-			<img src="<?php echo $captcha; ?>" alt="Captcha" id="amun-service-my-register-form-captcha" />
+			<img src="<?php echo $captcha; ?>" alt="Captcha" id="amun-service-my-register-form-captcha" /><br />
 			<input type="text" name="captcha" id="captcha" value="" maxlength="64" />
 		</p>
 		<?php endif; ?>

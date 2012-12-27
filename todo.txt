@@ -1,7 +1,7 @@
 
 [FEATURES]
 
-[ ] add mobile template
+[x] improve service template design (responsive)
 [ ] implement user friend stream class
 [ ] implement content page sort api to reorder pages
 [ ] use psx annotation parse for gadget params
@@ -17,7 +17,7 @@
         that you can protect any page with an password ... at this move we can 
         also add a possibility to add more meta data to a page (i.e. dublincore)
     [ ] Save page as "draft" so that its not published directly
-[ ] comments wich are added should not force a reload instead they should be
+[x] comments wich are added should not force a reload instead they should be
     added directly to the html
 [ ] update phpdoc for proper API generation
 [ ] build general achievment system where a user based on the karma value (or

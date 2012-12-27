@@ -34,6 +34,8 @@
 
 	<div class="span4 amun-service-my-register-form">
 
+		<h3>Register</h3>
+
 		<?php if(isset($success) && $success === true): ?>
 
 			<div class="alert alert-success">You have successful registered. We have send you an activation email to the provided address. Please activate your account in the next 24 hours.</div>
@@ -71,7 +73,7 @@
 
 			<p>
 				<label for="captcha">Captcha:</label>
-				<img src="<?php echo $captcha; ?>" alt="Captcha" id="amun-service-my-register-form-captcha" />
+				<img src="<?php echo $captcha; ?>" alt="Captcha" id="amun-service-my-register-form-captcha" /><br />
 				<input type="text" name="captcha" id="captcha" value="" maxlength="64" required="required" <?php echo !$registry['my.registration_enabled'] ? 'disabled="disabled"' : ''; ?> />
 			</p>
 

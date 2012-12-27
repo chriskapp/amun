@@ -27,26 +27,21 @@ div.amun-service-profile-activity-entry h4
 	margin:0px
 }
 
-div.amun-service-profile-activity-entry-hidden
+div.amun-service-profile-activity-entry img
 {
-	opacity:0.6;
+	margin-right:6px;
+	margin-bottom:6px;
 }
 
-div.amun-service-profile-activity-entry-avatar
+div.amun-service-profile-activity-summary
 {
-	width:48px;
-	padding-right:4px;
+	padding-left:54px;
 }
 
-div.amun-service-profile-activity-entry-content
-{
-	width:742px;
-	padding-left:4px;
-	border-left:1px solid #eee;
-}
 
 .amun-service-profile-activity-entry p.muted
 {
 	margin:0px;
 	font-size:0.8em;
+	margin-left:54px;
 }

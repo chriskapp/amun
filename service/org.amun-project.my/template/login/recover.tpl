@@ -6,6 +6,7 @@
 	<div class="span8">
 
 		<h3>Recover by Email</h3>
+
 		<p>If you have provided an email address to your account you can recover
 		your password by providing your Identity and Email address. We will
 		send you an email with a link where you can reset your password.</p>
@@ -13,6 +14,8 @@
 	</div>
 
 	<div class="span4">
+
+		<h3>Recover</h3>
 
 		<?php if(isset($error)): ?>
 
@@ -30,7 +33,7 @@
 
 		<p>
 			<label for="captcha">Captcha:</label>
-			<img src="<?php echo $captcha; ?>" alt="Captcha" id="amun-service-my-register-form-captcha" />
+			<img src="<?php echo $captcha; ?>" alt="Captcha" id="amun-service-my-register-form-captcha" /><br />
 			<input type="text" name="captcha" id="captcha" value="" maxlength="64" required="required" />
 		</p>
 
