@@ -55,39 +55,29 @@ class AmunService_Asset_Provider_Js implements AmunService_Asset_ProviderInterfa
 		$services = array();
 
 		$services['jquery'] = array(
-
 			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/js/jquery/jquery.js',
-
 		);
 
 		$services['ace'] = array(
-
 			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/js/ace/ace.js',
 			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/js/ace/theme-eclipse.js',
 			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/js/ace/mode-html.js',
 			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/js/ace/mode-markdown.js',
 			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/js/ace/mode-php.js',
-
 		);
 
 		$services['prettify'] = array(
-
 			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/js/prettify/prettify.js',
-
 		);
 
 		$services['bootstrap'] = array(
-
 			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/js/jquery/jquery.js',
 			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/js/bootstrap/bootstrap.js',
-
 		);
 
 		$services['amun'] = array(
-
 			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/js/jquery/jquery.js',
 			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/js/amun/amun.js',
-
 		);
 
 		$services = array_merge($services, $this->getContentServices());

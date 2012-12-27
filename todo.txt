@@ -1,7 +1,6 @@
 
 [FEATURES]
 
-[x] improve service template design (responsive)
 [ ] implement user friend stream class
 [ ] implement content page sort api to reorder pages
 [ ] use psx annotation parse for gadget params
@@ -17,8 +16,6 @@
         that you can protect any page with an password ... at this move we can 
         also add a possibility to add more meta data to a page (i.e. dublincore)
     [ ] Save page as "draft" so that its not published directly
-[x] comments wich are added should not force a reload instead they should be
-    added directly to the html
 [ ] update phpdoc for proper API generation
 [ ] build general achievment system where a user based on the karma value (or
     probably other conditions) gets specific achievments on the profile
@@ -37,6 +34,9 @@
     framework because its not amun specific and a well written proxy is in
     general needed
 [ ] test ostatus remote subscription interoperability
+[x] improve service template design (responsive)
+[x] comments wich are added should not force a reload instead they should be
+    added directly to the html
 [x] Move GadgetAbstract / ListenerAbstract from Module to Data folder
 [x] check activity stream generation / design 
     [x] check activity stream
