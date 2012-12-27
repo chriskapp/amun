@@ -41,6 +41,7 @@ class Amun_User
 	public $status;
 	public $name;
 	public $profileUrl;
+	public $thumbnailUrl;
 	public $timezone;
 	public $updated;
 	public $date;
@@ -66,18 +67,19 @@ class Amun_User
 		$sql    = <<<EOD
 SELECT
 
-	account.id         AS `accountId`,
-	account.groupId    AS `accountGroupId`,
-	account.hostId     AS `accountHostId`,
-	account.countryId  AS `accountCountryId`,
-	account.status     AS `accountStatus`,
-	account.name       AS `accountName`,
-	account.email      AS `accountEmail`,
-	account.profileUrl AS `accountProfileUrl`,
-	account.timezone   AS `accountTimezone`,
-	account.updated    AS `accountUpdated`,
-	account.date       AS `accountDate`,
-	group.title        AS `groupTitle`
+	account.id           AS `accountId`,
+	account.groupId      AS `accountGroupId`,
+	account.hostId       AS `accountHostId`,
+	account.countryId    AS `accountCountryId`,
+	account.status       AS `accountStatus`,
+	account.name         AS `accountName`,
+	account.email        AS `accountEmail`,
+	account.profileUrl   AS `accountProfileUrl`,
+	account.thumbnailUrl AS `accountThumbnailUrl`,
+	account.timezone     AS `accountTimezone`,
+	account.updated      AS `accountUpdated`,
+	account.date         AS `accountDate`,
+	group.title          AS `groupTitle`
 
 	FROM {$this->registry['table.user_account']} `account`
 
@@ -94,17 +96,18 @@ EOD;
 
 		if(!empty($row))
 		{
-			$this->id         = $row['accountId'];
-			$this->groupId    = $row['accountGroupId'];
-			$this->hostId     = $row['accountHostId'];
-			$this->group      = $row['groupTitle'];
-			$this->countryId  = $row['accountCountryId'];
-			$this->status     = $row['accountStatus'];
-			$this->name       = $row['accountName'];
-			$this->email      = $row['accountEmail'];
-			$this->profileUrl = $row['accountProfileUrl'];
-			$this->updated    = $row['accountUpdated'];
-			$this->date       = $row['accountDate'];
+			$this->id           = $row['accountId'];
+			$this->groupId      = $row['accountGroupId'];
+			$this->hostId       = $row['accountHostId'];
+			$this->group        = $row['groupTitle'];
+			$this->countryId    = $row['accountCountryId'];
+			$this->status       = $row['accountStatus'];
+			$this->name         = $row['accountName'];
+			$this->email        = $row['accountEmail'];
+			$this->profileUrl   = $row['accountProfileUrl'];
+			$this->thumbnailUrl = $row['accountThumbnailUrl'];
+			$this->updated      = $row['accountUpdated'];
+			$this->date         = $row['accountDate'];
 
 			// set timezone
 			$this->setTimezone($row['accountTimezone']);
