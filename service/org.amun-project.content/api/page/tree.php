@@ -89,7 +89,7 @@ SELECT
 
 	FROM {$this->registry['table.content_page']} `page`
 
-		ORDER BY CHAR_LENGTH(`page`.`path`), `page`.`sort` ASC
+		ORDER BY `depth`, `page`.`sort` ASC
 SQL;
 
 		$result = $this->sql->getAll($sql);
@@ -182,8 +182,6 @@ SQL;
 
 				);
 			}
-
-
 		}
 	}
 
