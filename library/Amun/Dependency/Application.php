@@ -52,7 +52,7 @@ class Amun_Dependency_Application extends Amun_Dependency_Session
 		$this->getService();
 		$this->getNav();
 		$this->getPath();
-		$this->getGadget();
+		$this->getGadgetContainer();
 		$this->getHtmlJs();
 		$this->getHtmlCss();
 		$this->getHtmlContent();
@@ -99,14 +99,14 @@ class Amun_Dependency_Application extends Amun_Dependency_Session
 		return $this->set('path', new Amun_Path($this->getRegistry(), $this->getPage()));
 	}
 
-	public function getGadget()
+	public function getGadgetContainer()
 	{
-		if($this->has('gadget'))
+		if($this->has('gadgetContainer'))
 		{
-			return $this->get('gadget');
+			return $this->get('gadgetContainer');
 		}
 
-		return $this->set('gadget', new Amun_Gadget($this->getRegistry()));
+		return $this->set('gadgetContainer', new Amun_Gadget_Container($this->getRegistry()));
 	}
 
 	public function getHtmlJs()
@@ -155,7 +155,7 @@ class Amun_Dependency_Application extends Amun_Dependency_Session
 		$template->assign('page', $this->getPage());
 		$template->assign('nav', $this->getNav());
 		$template->assign('path', $this->getPath());
-		$template->assign('gadget', $this->getGadget());
+		$template->assign('gadget', $this->getGadgetContainer());
 		$template->assign('htmlJs', $this->getHtmlJs());
 		$template->assign('htmlCss', $this->getHtmlCss());
 		$template->assign('htmlContent', $this->getHtmlContent());

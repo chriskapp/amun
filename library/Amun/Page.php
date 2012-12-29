@@ -34,11 +34,6 @@
  */
 class Amun_Page
 {
-	private $config;
-	private $sql;
-	private $registry;
-	private $user;
-
 	public $id;
 	public $parentId;
 	public $serviceId;
@@ -57,6 +52,11 @@ class Amun_Page
 
 	public $applicationPath;
 	public $url;
+
+	private $config;
+	private $sql;
+	private $registry;
+	private $user;
 
 	public function __construct($pageId, Amun_Registry $registry, Amun_User $user)
 	{

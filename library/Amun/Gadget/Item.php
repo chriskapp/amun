@@ -35,18 +35,20 @@
 class Amun_Gadget_Item
 {
 	public $id;
+	public $name;
 	public $title;
 	public $path;
 	public $cache;
 	public $expire;
-	public $param;
 
 	private $config;
+	private $loader;
 	private $body;
 
-	public function __construct(PSX_Config $config)
+	public function __construct(PSX_Config $config, PSX_Loader $loader)
 	{
 		$this->config = $config;
+		$this->loader = $loader;
 	}
 
 	public function getTitle()
@@ -64,7 +66,31 @@ class Amun_Gadget_Item
 		$this->body = $body;
 	}
 
-	public function parseContent($service)
+	public function buildContent()
+	{
+		switch($this->type)
+		{
+			case 'iframe':
+				$content = $this->getIframeContent();
+				break;
+
+			case 'ajax':
+				$content = $this->getAjaxContent();
+				break;
+
+			default:
+			case 'inline':
+				$content = $this->getInlineContent();
+				break;
+		}
+
+		$class   = pathinfo($this->path, PATHINFO_FILENAME);
+		$content = '<div class="amun-gadget-' . strtolower($class) . '">' . $content . '</div>';
+
+		$this->setBody($content);
+	}
+
+	public function getInlineContent()
 	{
 		$key    = 'gadget-' . $this->id;
 		$expire = (integer) $this->expire;
@@ -72,7 +98,7 @@ class Amun_Gadget_Item
 
 		if($this->cache == 0 || ($content = $cache->load()) === false)
 		{
-			$content = $this->executeContent($service);
+			$content = $this->executeContent();
 
 			// if caching is enabled write the cache
 			if($this->cache == 1)
@@ -81,31 +107,33 @@ class Amun_Gadget_Item
 			}
 		}
 
-		$this->setBody($content);
+		return $content;
 	}
 
-	private function executeContent($service)
+	public function getIframeContent()
 	{
-		$class = pathinfo($this->path, PATHINFO_FILENAME);
-		$args  = Amun_Gadget_Args::parse($this->param);
+		$content = '<iframe src="' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'gadget/' . $this->name . '" id="gadget-' . $this->id . '" style="width:100%"></iframe>';
 
+		return $content;
+	}
+
+	public function getAjaxContent()
+	{
+		$content = '<div id="gadget-' . $this->id . '"></div>';
+		$content.= '<script type="text/javascript">amun.gadget.load("' . $this->name . '", "gadget-' . $this->id . '");</script>';
+
+		return $content;
+	}
+
+	private function executeContent()
+	{
 		ob_start();
 
 		try
 		{
-			include_once($this->config['amun_service_path'] . '/' . $this->path);
+			$this->loader->load('/gadget/' . $this->name);
 
-			if(class_exists($class, false))
-			{
-				$obj = new $class();
-				$obj->onLoad($args);
-
-				$content = ob_get_contents();
-			}
-			else
-			{
-				throw new Amun_Gadget_Exception('Could not find class ' . $class . ' in ' . $this->path);
-			}
+			$content = ob_get_contents();
 		}
 		catch(Exception $e)
 		{
@@ -119,7 +147,7 @@ class Amun_Gadget_Item
 
 		ob_end_clean();
 
-		return '<div class="amun-gadget-' . strtolower($class) . '">' . $content . '</div>';
+		return $content;
 	}
 
 	private function getCache($token, $expire)

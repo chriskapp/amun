@@ -62,7 +62,7 @@ abstract class Amun_Module_ApplicationAbstract extends PSX_Module_ViewAbstract
 			// load gadgets
 			if($this->page->hasGadget())
 			{
-				$this->gadget->load($this->page);
+				$this->gadgetContainer->load($this->loader, $this->page, $this->htmlCss);
 			}
 
 			// set application template path
@@ -70,6 +70,7 @@ abstract class Amun_Module_ApplicationAbstract extends PSX_Module_ViewAbstract
 
 			// add default css
 			$this->htmlCss->add('default');
+			$this->htmlJs->add('amun');
 		}
 		else
 		{

@@ -33,82 +33,43 @@
  * @package    Amun_Dependency
  * @version    $Revision: 818 $
  */
-class Amun_Dependency_Gadget extends Amun_Dependency_Default
+class Amun_Dependency_Gadget extends Amun_Dependency_Session
 {
+	protected $gadgetId;
+
+	public function __construct(PSX_Config $config, array $params)
+	{
+		$this->gadgetId = isset($params['gadget.id']) ? $params['gadget.id'] : null;;
+
+		parent::__construct($config, $params);
+	}
+
 	public function setup()
 	{
 		parent::setup();
 
-		$this->getSession();
-		$this->getUser();
-		$this->getPage();
-		$this->getHtmlJs();
-		$this->getHtmlCss();
-		$this->getHtmlContent();
+		$this->getGadget();
+		$this->getArgs();
+		$this->getService();
 	}
 
-	public function getSession()
+	public function getGadget()
 	{
-		if($this->has('session'))
-		{
-			return $this->get('session');
-		}
-
-		$session = new PSX_Session('amun_' . md5($this->config['psx_url']));
-		$session->start();
-
-		return $this->set('session', $session);
+		return $this->set('gadget', new Amun_Gadget($this->gadgetId, $this->getRegistry(), $this->getUser()));
 	}
 
-	public function getUser()
+	public function getArgs()
 	{
-		if($this->has('user'))
-		{
-			return $this->get('user');
-		}
-
-		$userId = Amun_User::getId($this->getSession(), $this->getRegistry());
-
-		return $this->set('user', new Amun_User($userId, $this->getRegistry()));
+		return $this->set('args', $this->getGadget()->getArgs());		
 	}
 
-	public function getPage()
+	public function getService()
 	{
-		if($this->has('page'))
+		if($this->has('service'))
 		{
-			return $this->get('page');
+			return $this->get('service');
 		}
 
-		return $this->set('page', new Amun_Page($this->pageId, $this->getRegistry(), $this->getUser()));
-	}
-
-	public function getHtmlJs()
-	{
-		if($this->has('htmlJs'))
-		{
-			return $this->get('htmlJs');
-		}
-
-		return $this->set('htmlJs', new Amun_Html_Js($this->config));
-	}
-
-	public function getHtmlCss()
-	{
-		if($this->has('htmlCss'))
-		{
-			return $this->get('htmlCss');
-		}
-
-		return $this->set('htmlCss', new Amun_Html_Css($this->config));
-	}
-
-	public function getHtmlContent()
-	{
-		if($this->has('htmlContent'))
-		{
-			return $this->get('htmlContent');
-		}
-
-		return $this->set('htmlContent', new Amun_Html_Content());
+		return $this->set('service', new Amun_Service($this->getGadget()->getServiceId(), $this->getRegistry()));
 	}
 }

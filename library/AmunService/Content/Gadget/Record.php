@@ -39,6 +39,10 @@ class AmunService_Content_Gadget_Record extends Amun_Data_RecordAbstract
 	const FLOAT   = 0x3;
 	const BOOLEAN = 0x4;
 
+	const INLINE = 'inline';
+	const IFRAME = 'iframe';
+	const AJAX   = 'ajax';
+
 	protected $_expire;
 	protected $_date;
 
@@ -56,9 +60,37 @@ class AmunService_Content_Gadget_Record extends Amun_Data_RecordAbstract
 		}
 	}
 
+	public function setRightId($rightId)
+	{
+		$rightId = $this->_validate->apply($rightId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('User_Right'), true)), 'rightId', 'Right Id');
+
+		if(!$this->_validate->hasError())
+		{
+			$this->rightId = $rightId;
+		}
+		else
+		{
+			throw new PSX_Data_Exception($this->_validate->getLastError());
+		}
+	}
+
+	public function setType($type)
+	{
+		$type = $this->_validate->apply($type, 'string', array(new PSX_Filter_KeyExists(self::getType())), 'type', 'Type');
+
+		if(!$this->_validate->hasError())
+		{
+			$this->type = $type;
+		}
+		else
+		{
+			throw new PSX_Data_Exception($this->_validate->getLastError());
+		}
+	}
+
 	public function setName($name)
 	{
-		$name = $this->_validate->apply($name, 'string', array(new PSX_Filter_Length(2, 32)), 'name', 'Name');
+		$name = $this->_validate->apply($name, 'string', array(new PSX_Filter_Length(3, 64), new AmunService_Core_Registry_Filter_Name()), 'name', 'Name');
 
 		if(!$this->_validate->hasError())
 		{
@@ -86,31 +118,55 @@ class AmunService_Content_Gadget_Record extends Amun_Data_RecordAbstract
 
 	public function setPath($path)
 	{
-		$path = $this->_validate->apply($path, 'string', array(new AmunService_Content_Gadget_Filter_Path($this->_config, $this->_sql)), 'path', 'Path');
+		$parts = explode(':', $path);
 
-		if(!$this->_validate->hasError())
+		if(count($parts) == 2)
 		{
-			$this->path = $path;
+			list($serviceId, $file) = $parts;
+
+			$con      = new PSX_Sql_Condition(array('id', '=', $serviceId));
+			$service  = Amun_Sql_Table_Registry::get('Core_Service')->getRow(array('id', 'source', 'namespace'), $con);
+
+			if(!empty($service))
+			{
+				$fullPath = $this->_config['amun_service_path'] . '/' . $service['source'] . '/gadget/' . $file;
+
+				if(strpos($file, '..') === false && is_file($fullPath))
+				{
+					$this->serviceId = $service['id'];
+					$this->namespace = $service['namespace'];
+					$this->path      = $file;
+					$this->file      = $fullPath;
+				}
+				else
+				{
+					throw new PSX_Data_Exception('Invalid gadget path');
+				}
+			}
+			else
+			{
+				throw new PSX_Data_Exception('Invalid service');
+			}
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new PSX_Data_Exception('Invalid path format must be [serviceId]:[gadgetFile]');
 		}
 	}
 
 	public function setParam($param)
 	{
-		if(empty($this->path))
+		if(empty($this->file))
 		{
 			throw new PSX_Data_Exception('No path specified');
 		}
 
-		$data   = array();
-		$class  = pathinfo($this->path, PATHINFO_FILENAME);
+		$data  = array();
+		$class = '\\' . $this->namespace . '\\gadget\\' . pathinfo($this->path, PATHINFO_FILENAME);
 
 		if(!class_exists($class, false))
 		{
-			include_once($this->_config['amun_service_path'] . '/' . $this->path);
+			include_once($this->file);
 		}
 
 		$values = self::parseParamString($param);
@@ -123,27 +179,22 @@ class AmunService_Content_Gadget_Record extends Amun_Data_RecordAbstract
 				switch($type)
 				{
 					case self::STRING:
-
 						$value = (string) $values[$name];
 						break;
 
 					case self::INTEGER:
-
 						$value = (integer) $values[$name];
 						break;
 
 					case self::FLOAT:
-
 						$value = (float) $values[$name];
 						break;
 
 					case self::BOOLEAN:
-
 						$value = (boolean) $values[$name];
 						break;
 
 					default:
-
 						throw new PSX_Data_Exception('Invalid type');
 						break;
 				}
@@ -180,6 +231,11 @@ class AmunService_Content_Gadget_Record extends Amun_Data_RecordAbstract
 	public function getId()
 	{
 		return $this->_base->getUrn('content', 'gadget', $this->id);
+	}
+
+	public function getPath()
+	{
+		return $this->serviceId . ':' . $this->path;
 	}
 
 	public function getExpire()
@@ -223,61 +279,38 @@ class AmunService_Content_Gadget_Record extends Amun_Data_RecordAbstract
 		return $params;
 	}
 
-	public static function parseAnnotations($class)
+	public static function parseAnnotations($className)
 	{
-		$ref     = new ReflectionClass($class);
-		$methods = $ref->getMethods();
+		$class   = new ReflectionClass($className);
+		$method  = $class->getMethod('onLoad');
+		$comment = $method->getDocComment();
 
-		foreach($methods as $m)
+		if(!empty($comment))
 		{
-			if($m->getName() == 'onLoad')
+			$doc = PSX_Util_Annotation::parse($comment);
+
+			$params = $doc->getAnnotation('param');
+			$result = array();
+
+			foreach($params as $param)
 			{
-				$docComment = $m->getDocComment();
+				$parts = explode(' ', $param);
+				$name  = isset($parts[0]) ? $parts[0] : null;
+				$type  = isset($parts[1]) ? $parts[1] : null;
+				$type  = self::getDataType($type);
 
-				break;
+				if(ctype_alnum($name) && $type !== null)
+				{
+					$result[$name] = $type;
+				}
 			}
-		}
 
-		if(!empty($docComment))
-		{
-			return self::parseDocComment($docComment);
+			return $result;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Could not found doc comment in class');
+			throw new PSX_Data_Exception('Empty doc comment');
 		}
-	}
-
-	public static function parseDocComment($docComment)
-	{
-		$lines  = explode("\n", $docComment);
-		$params = array();
-
-		foreach($lines as $line)
-		{
-			$pos = strpos($line, '@');
-
-			if($pos !== false)
-			{
-				$line = substr($line, $pos + 1);
-				$tps  = strpos($line, '(');
-				$tpe  = strpos($line, ')');
-
-				if($tps !== false && $tpe !== false && $tpe > $tps)
-				{
-					$name = trim(substr($line, 0, $tps));
-					$type = trim(substr($line, $tps + 1, $tpe - $tps - 1));
-					$type = self::getDataType($type);
-
-					if(ctype_alnum($name) && $type !== null)
-					{
-						$params[$name] = $type;
-					}
-				}
-			}
-		}
-
-		return $params;
 	}
 
 	public static function getDataType($type)
@@ -286,30 +319,54 @@ class AmunService_Content_Gadget_Record extends Amun_Data_RecordAbstract
 		{
 			case 'str':
 			case 'string':
-
 				return self::STRING;
 				break;
 
 			case 'int':
 			case 'integer':
-
 				return self::INTEGER;
 				break;
 
 			case 'double':
 			case 'float':
-
 				return self::FLOAT;
 				break;
 
 			case 'bool':
 			case 'boolean':
-
 				return self::BOOLEAN;
 				break;
 		}
 
 		return null;
+	}
+
+	public static function getType($status = false)
+	{
+		$s = array(
+
+			self::INLINE => 'Inline',
+			self::AJAX   => 'Ajax',
+
+		);
+
+		if($status !== false)
+		{
+			$status = intval($status);
+
+			if(array_key_exists($status, $s))
+			{
+				return $s[$status];
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return $s;
+		}
 	}
 }
 

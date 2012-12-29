@@ -51,11 +51,16 @@ class Amun_Loader_LocationFinder extends PSX_Loader_LocationFinder_FileSystem
 	{
 		$parts = explode('/', trim($pathInfo, '/'), 2);
 		$type  = isset($parts[0]) ? $parts[0] : null;
+		$path  = isset($parts[1]) ? $parts[1] : null;
 
 		switch($parts[0])
 		{
 			case 'api':
-				return $this->resolveApi($parts[1]);
+				return $this->resolveApi($path);
+				break;
+
+			case 'gadget':
+				return $this->resolveGadget($path);
 				break;
 
 			case 'install':
@@ -124,6 +129,59 @@ class Amun_Loader_LocationFinder extends PSX_Loader_LocationFinder_FileSystem
 		else
 		{
 			throw new PSX_Exception('Service not found', 404);
+		}
+	}
+
+	protected function resolveGadget($pathInfo)
+	{
+		// get gadget
+		$sql = "SELECT
+					`gadget`.`id`,
+					`gadget`.`path` AS `gadgetPath`,
+					`service`.`source`,
+					`service`.`path`,
+					`service`.`namespace`
+				FROM
+					" . $this->registry['table.content_gadget'] . " `gadget`
+				INNER JOIN
+					" . $this->registry['table.core_service'] . " `service`
+				ON
+					`gadget`.`serviceId` = `service`.`id`
+				WHERE
+					`gadget`.`name` LIKE ?
+				LIMIT 1";
+
+		$gadget = $this->sql->getRow($sql, array($pathInfo));
+
+		if(!empty($gadget))
+		{
+			$path = $gadget['source'] . '/gadget/' . $gadget['gadgetPath'];
+			$file = $this->config['amun_service_path'] . '/' . $path;
+
+			if(is_file($file))
+			{
+				$class = pathinfo($path, PATHINFO_FILENAME);
+				$path  = pathinfo($path, PATHINFO_DIRNAME);
+
+				// include class
+				require_once($file);
+
+				// create class
+				$namespace = $this->getApiNamespace($path, $gadget['source'], $gadget['namespace']);
+
+				$class = new ReflectionClass($namespace . '\\' . $class);
+
+				// return location
+				return new Amun_Loader_Location(md5(uniqid()), null, $class, $gadget['id']);
+			}
+			else
+			{
+				throw new PSX_Exception('Gadget file not found', 500);
+			}
+		}
+		else
+		{
+			throw new PSX_Exception('Gadget not found', 404);
 		}
 	}
 

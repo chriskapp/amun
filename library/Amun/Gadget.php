@@ -32,102 +32,110 @@
  * @package    Amun_Gadget
  * @version    $Revision: 834 $
  */
-class Amun_Gadget extends ArrayObject
+class Amun_Gadget
 {
+	public $id;
+	public $serviceId;
+	public $type;
+	public $name;
+	public $title;
+	public $path;
+	public $cache;
+	public $expire;
+	public $param;
+
+	public $applicationPath;
+
 	private $config;
 	private $sql;
 	private $registry;
+	private $user;
+	private $body;
 
-	private $gadgets = array();
-
-	public function __construct(Amun_Registry $registry)
+	public function __construct($gadgetId, Amun_Registry $registry, Amun_User $user)
 	{
 		$this->config   = $registry->getConfig();
 		$this->sql      = $registry->getSql();
 		$this->registry = $registry;
-	}
+		$this->user     = $user;
 
-	public function hasNext()
-	{
-		return $this->getIterator()->valid();
-	}
-
-	/**
-	 * Returns the content next gadget and removes it from the list
-	 *
-	 * @return string
-	 */
-	public function get()
-	{
-		$iterator = $this->getIterator();
-
-		if($iterator->valid())
-		{
-			$body = $iterator->current()->getBody();
-
-			//$iterator->next();
-
-			$this->offsetUnset($iterator->key());
-
-			return $body;
-		}
-
-		return '';
-	}
-
-	/**
-	 * Loads all gadgets for the page
-	 *
-	 * @return void
-	 */
-	public function load(Amun_Page $page)
-	{
-		$this->exchangeArray($this->gadgets = array());
 
 		$sql = <<<SQL
 SELECT
 
-	`pageGadget`.`gadgetId` AS `id`,
-	`gadget`.`title`,
-	`gadget`.`path`,
-	`gadget`.`cache`,
-	`gadget`.`expire`,
-	`gadget`.`param`
+	gadget.id          AS `gadgetId`,
+	gadget.serviceId   AS `gadgetServiceId`,
+	gadget.rightId     AS `gadgetRightId`,
+	gadget.type        AS `gadgetType`,
+	gadget.name        AS `gadgetName`,
+	gadget.title       AS `gadgetTitle`,
+	gadget.path        AS `gadgetPath`,
+	gadget.param       AS `gadgetParam`,
+	gadget.cache       AS `gadgetCache`,
+	gadget.expire      AS `gadgetExpire`,
+	gadget.date        AS `gadgetDate`,
+	service.source     AS `serviceSource`
 
-	FROM {$this->registry['table.content_page_gadget']} `pageGadget`
+	FROM {$this->registry['table.content_gadget']} `gadget`
 
-		INNER JOIN {$this->registry['table.content_gadget']} `gadget`
+		INNER JOIN {$this->registry['table.core_service']} `service`
 
-		ON `pageGadget`.`gadgetId` = `gadget`.`id`
+		ON `gadget`.`serviceId` = `service`.`id`
 
-			WHERE `pageGadget`.`pageId` = ?
-
-			ORDER BY `pageGadget`.`sort` ASC
+			WHERE `gadget`.`id` = ?
 SQL;
 
-		$result = $this->sql->getAll($sql, array($page->id), PSX_Sql::FETCH_OBJECT, 'Amun_Gadget_Item', array($this->config));
+		$row = $this->sql->getRow($sql, array($gadgetId));
 
-		foreach($result as $gadget)
+		if(!empty($row))
 		{
-			// execute gadget
-			try
+			if(!empty($row['gadgetRightId']) && !$this->user->hasRightId($row['gadgetRightId']))
 			{
-				$gadget->parseContent($page->application);
-			}
-			catch(Exception $e)
-			{
-				$msg = $e->getMessage();
-
-				if($this->config['psx_debug'] === true)
-				{
-					$msg.= "\n\n" . $e->getTraceAsString();
-				}
-
-				$gadget->setBody($msg);
+				throw new Amun_Exception('Access not allowed');
 			}
 
-			$this->append($gadget);
+			$this->id          = $row['gadgetId'];
+			$this->serviceId   = $row['gadgetServiceId'];
+			$this->type        = $row['gadgetType'];
+			$this->name        = $row['gadgetName'];
+			$this->title       = $row['gadgetTitle'];
+			$this->path        = $row['gadgetPath'];
+			$this->param       = $row['gadgetParam'];
+			$this->cache       = $row['gadgetCache'];
+			$this->expire      = $row['gadgetExpire'];
+			$this->date        = $row['gadgetDate'];
+
+			$this->application = $row['serviceSource'];
 		}
+		else
+		{
+			throw new Amun_Exception('Invalid gadget');
+		}
+	}
+
+	public function getServiceId()
+	{
+		return $this->serviceId;
+	}
+
+	public function getName()
+	{
+		return $this->name;
+	}
+
+	public function getTitle()
+	{
+		return $this->title;
+	}
+
+	/**
+	 * Returns the settings for the gadget
+	 *
+	 * @return Amun_Gadget_Args
+	 */
+	public function getArgs()
+	{
+		return Amun_Gadget_Args::parse($this->param);
 	}
 }
 

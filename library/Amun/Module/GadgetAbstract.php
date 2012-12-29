@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Table.php 801 2012-07-08 21:17:10Z k42b3.x@googlemail.com $
+ *  $Id: GadgetAbstract.php 813 2012-07-11 18:18:45Z k42b3.x@googlemail.com $
  *
  * amun
  * A social content managment system based on the psx framework. For
@@ -23,45 +23,43 @@
  */
 
 /**
- * AmunService_Core_Content_Gadget_Table
+ * Amun_Module_GadgetAbstract
  *
  * @author     Christoph Kappestein <k42b3.x@gmail.com>
  * @license    http://www.gnu.org/licenses/gpl.html GPLv3
  * @link       http://amun.phpsx.org
- * @category   AmunService
- * @package    AmunService_Content_Gadget
- * @version    $Revision: 801 $
+ * @category   Amun
+ * @package    Amun_Module
+ * @version    $Revision: 813 $
  */
-class AmunService_Content_Gadget_Table extends Amun_Sql_TableAbstract
+abstract class Amun_Module_GadgetAbstract extends PSX_Module_ViewAbstract
 {
-	public function getConnections()
+	public function getDependencies()
 	{
-		return array();
+		$ct = new Amun_Dependency_Gadget($this->base->getConfig(), array(
+			'gadget.id' => $this->location->getServiceId()
+		));
+
+		Amun_DataFactory::setContainer($ct);
+
+		return $ct;
 	}
 
-	public function getName()
+	protected function getProvider($name = null)
 	{
-		return $this->registry['table.content_gadget'];
+		$name = $name === null ? $this->service->namespace : $name;
+
+		return Amun_DataFactory::getProvider($name);
 	}
 
-	public function getColumns()
+	protected function getTable($name = null)
 	{
-		return array(
+		return $this->getProvider($name)->getTable();
+	}
 
-			'id' => self::TYPE_INT | 10 | self::PRIMARY_KEY,
-			'globalId' => self::TYPE_VARCHAR | 36,
-			'serviceId' => self::TYPE_INT | 10,
-			'rightId' => self::TYPE_INT | 10,
-			'type' => self::TYPE_ENUM,
-			'name' => self::TYPE_VARCHAR | 64,
-			'title' => self::TYPE_VARCHAR | 32,
-			'path' => self::TYPE_VARCHAR | 256,
-			'param' => self::TYPE_TEXT,
-			'cache' => self::TYPE_TINYINT | 1,
-			'expire' => self::TYPE_VARCHAR | 25,
-			'date' => self::TYPE_DATETIME,
-
-		);
+	protected function getHandler($name = null)
+	{
+		return $this->getProvider($name)->getHandler();
 	}
 }
 
