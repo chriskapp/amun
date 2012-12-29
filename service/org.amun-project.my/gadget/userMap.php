@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\gadget;
+
+use Amun_Module_GadgetAbstract;
+
 /**
  * userMap
  *
@@ -32,16 +36,13 @@
  * @package    gadget
  * @version    $Revision: 875 $
  */
-class userMap extends Amun_Data_GadgetAbstract
+class userMap extends Amun_Module_GadgetAbstract
 {
 	/**
 	 * onLoad
 	 */
-	public function onLoad(Amun_Gadget_Args $args)
+	public function onLoad()
 	{
-		// add css
-		$this->htmlCss->add('my');
-
 		$chld = array();
 		$chd  = array();
 		$sql  = <<<SQL

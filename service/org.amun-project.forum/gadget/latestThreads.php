@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace forum\gadget;
+
+use Amun_Module_GadgetAbstract;
+
 /**
  * latestThreads
  *
@@ -33,18 +37,18 @@
  * @subpackage forum
  * @version    $Revision: 845 $
  */
-class latestThreads extends Amun_Data_GadgetAbstract
+class latestThreads extends Amun_Module_GadgetAbstract
 {
 	/**
 	 * onLoad
 	 *
-	 * @pageId(integer)
-	 * @count(integer)
+	 * @param pageId integer
+	 * @param count integer
 	 */
-	public function onLoad(Amun_Gadget_Args $args)
+	public function onLoad()
 	{
-		$pageId = $args->get('pageId', 0);
-		$count  = $args->get('count', 8);
+		$pageId = $this->args->get('pageId', 0);
+		$count  = $this->args->get('count', 8);
 
 		// add css
 		$this->htmlCss->add('forum');

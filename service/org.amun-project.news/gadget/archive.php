@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace news\gadget;
+
+use Amun_Module_GadgetAbstract;
+
 /**
  * archive
  *
@@ -33,20 +37,18 @@
  * @subpackage news
  * @version    $Revision: 744 $
  */
-class archive extends Amun_Data_GadgetAbstract
+class archive extends Amun_Module_GadgetAbstract
 {
 	/**
 	 * onLoad
 	 *
-	 * @pageId(integer)
+	 * @param pageId integer
 	 */
-	public function onLoad(Amun_Gadget_Args $args)
+	public function onLoad()
 	{
-		$pageId = $args->get('pageId', 0);
+		$pageId = $this->args->get('pageId', 0);
 
-		// add css
-		$this->htmlCss->add('news');
-
+		// get news archive
 		$con = '';
 
 		if(!empty($pageId))
@@ -78,7 +80,6 @@ SELECT
 SQL;
 
 		$result = $this->sql->getAll($sql);
-
 
 		$this->display($result);
 	}

@@ -5,11 +5,17 @@
 <meta http-equiv="X-XRDS-Location" content="<?php echo $url; ?>api/meta/xrds" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script type="text/javascript">
-var user = {
+var amun = {};
+amun.user = {
 	id: <?php echo $user->id; ?>,
 	name: '<?php echo $user->name; ?>',
 	thumbnailUrl: '<?php echo $user->thumbnailUrl; ?>',
 	profileUrl: '<?php echo $user->profileUrl; ?>'
+};
+
+amun.config = {
+	url: '<?php echo $url; ?>',
+	basePath: '<?php echo $base; ?>'
 };
 </script>
 <?php echo $htmlCss->toString() . "\n"; ?>

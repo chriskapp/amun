@@ -118,7 +118,10 @@
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.content_gadget}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `globalId` varchar(36) NOT NULL,
-  `name` varchar(32) NOT NULL,
+  `serviceId` int(10) NOT NULL,
+  `rightId` int(10) NOT NULL,
+  `type` enum('inline','iframe','ajax') NOT NULL DEFAULT 'inline',
+  `name` varchar(64) NOT NULL,
   `title` varchar(32) NOT NULL,
   `path` varchar(256) NOT NULL,
   `param` text,

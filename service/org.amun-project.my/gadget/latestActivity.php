@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\gadget;
+
+use Amun_Module_GadgetAbstract;
+
 /**
  * latestActivity
  *
@@ -32,16 +36,16 @@
  * @package    gadget
  * @version    $Revision: 875 $
  */
-class latestActivity extends Amun_Data_GadgetAbstract
+class latestActivity extends Amun_Module_GadgetAbstract
 {
 	/**
 	 * onLoad
 	 *
-	 * @count(integer)
+	 * @param count integer
 	 */
-	public function onLoad(Amun_Gadget_Args $args)
+	public function onLoad()
 	{
-		$count = $args->get('count', 8);
+		$count = $this->args->get('count', 8);
 
 		// add css
 		$this->htmlCss->add('my');

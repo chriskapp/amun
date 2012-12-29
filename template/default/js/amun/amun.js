@@ -32,7 +32,7 @@
  */
 (function(win){
 
-	var amun = {};
+	var amun = win.amun || {};
 
 	amun.services = {};
 	amun.store = {};
@@ -683,6 +683,24 @@
 			}
 
 		});
+
+	}
+
+	/**
+	 * Handle gadgets
+	 */
+	amun.gadget = {
+
+		load: function(name, cId){
+
+			$('#' + cId).html('<p style="text-align:center;padding:12px;"><img src="' + amun.config.basePath + '/img/loader.gif" /></p>');
+			$.get(amun.config.url + 'gadget/' + name, function(resp){
+
+				$('#' + cId).html(resp);
+
+			});
+
+		}
 
 	}
 

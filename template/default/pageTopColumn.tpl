@@ -23,9 +23,11 @@
 	<div class="container">
 		<div class="row">
 			<div class="span12">
+				<?php if($gadget->valid()): ?>
 				<div class="amun-gadget">
-					<?php echo $gadget->get(); ?>
+					<?php echo $gadget->get()->getBody(); ?>
 				</div>
+				<?php endif; ?>
 			</div>
 			<div class="span12">
 				<?php echo $content; ?>

@@ -208,7 +208,7 @@ amun.services.my = {
 
 			// append new post
 			var url = $('#' + this.getContainerId()).attr('action');
-			var params = '?count=1&fields=id,summary,date,authorThumbnailUrl,authorProfileUrl,authorName&sortBy=id&sortOrder=descending&filterBy=userId&filterOp=equals&filterValue=' + user.id + '&format=json';
+			var params = '?count=1&fields=id,summary,date,authorThumbnailUrl,authorProfileUrl,authorName&sortBy=id&sortOrder=descending&filterBy=userId&filterOp=equals&filterValue=' + amun.user.id + '&format=json';
 
 			$.get(url + params, function(data){
 

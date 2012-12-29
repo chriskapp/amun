@@ -87,12 +87,22 @@ catch(Exception $e)
 
 function organize($path)
 {
+	// api
 	$api = $path . '/api';
 
 	if(is_dir($api))
 	{
 		echo 'Organize import: ' . $api . "\n";
 		organizeImports($api);
+	}
+
+	// gadgets
+	$app = $path . '/gadget';
+
+	if(is_dir($app))
+	{
+		echo 'Organize import: ' . $app . "\n";
+		organizeImports($app);
 	}
 
 	/*
@@ -269,7 +279,7 @@ function getUsedClasses($file)
 		{
 			//$classes[] = $tokens[$i][1];
 		}
-		// type hinting class in method
+		// type hinting class in method or catch exceptions
 		else if($tokens[$i - 2][0] == T_STRING && $tokens[$i - 1][0] == T_WHITESPACE && $tokens[$i][0] == T_VARIABLE)
 		{
 			$classes[] = $tokens[$i - 2][1];
@@ -301,13 +311,10 @@ function getUsedClasses($file)
 			}
 		}
 		// instance of
-		/*
-		else if($tokens[$i - 2][0] == T_IMPLEMENTS && $tokens[$i - 1][0] == T_WHITESPACE && $tokens[$i][0] == T_STRING)
+		else if($tokens[$i - 2][0] == T_INSTANCEOF && $tokens[$i - 1][0] == T_WHITESPACE && $tokens[$i][0] == T_STRING)
 		{
 			$classes[] = $tokens[$i][1];
 		}
-		*/
-		// catch exception
 	}
 
 	$classes = array_unique($classes);

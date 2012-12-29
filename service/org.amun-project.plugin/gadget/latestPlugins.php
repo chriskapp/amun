@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace plugin\gadget;
+
+use Amun_Module_GadgetAbstract;
+
 /**
  * latestPlugins
  *
@@ -33,18 +37,18 @@
  * @subpackage plugin
  * @version    $Revision: 744 $
  */
-class latestPlugins extends Amun_Data_GadgetAbstract
+class latestPlugins extends Amun_Module_GadgetAbstract
 {
 	/**
 	 * onLoad
 	 *
-	 * @pageId(integer)
-	 * @count(integer)
+	 * @param pageId integer
+	 * @param count integer
 	 */
-	public function onLoad(Amun_Gadget_Args $args)
+	public function onLoad()
 	{
-		$pageId = $args->get('pageId', 0);
-		$count  = $args->get('count', 8);
+		$pageId = $this->args->get('pageId', 0);
+		$count  = $this->args->get('count', 8);
 
 
 		$this->htmlCss->add('news');

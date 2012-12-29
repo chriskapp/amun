@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\gadget;
+
+use Amun_Module_GadgetAbstract;
+
 /**
  * activityChart
  *
@@ -32,16 +36,16 @@
  * @package    gadget
  * @version    $Revision: 875 $
  */
-class activityChart extends Amun_Data_GadgetAbstract
+class activityChart extends Amun_Module_GadgetAbstract
 {
 	/**
 	 * onLoad
 	 *
-	 * @hours(integer)
+	 * @param hours integer
 	 */
-	public function onLoad(Amun_Gadget_Args $args)
+	public function onLoad()
 	{
-		$hours = $args->get('count', 12);
+		$hours = $this->args->get('count', 12);
 
 		// add css
 		$this->htmlCss->add('my');

@@ -28,27 +28,30 @@
 		</div>
 		<div class="row">
 			<div class="span3">
-				<?php if($gadget->hasNext()): ?>
+				<?php if($gadget->valid()): ?>
 				<div class="amun-gadget">
-					<h2><?php echo $gadget->getTitle(); ?></h2>
-					<?php echo $gadget->get(); ?>
+					<h2><?php echo $gadget->get()->getTitle(); ?></h2>
+					<?php echo $gadget->get()->getBody(); ?>
 				</div>
+				<?php $gadget->next(); ?>
 				<?php endif; ?>
 			</div>
 			<div class="span3">
-				<?php if($gadget->hasNext()): ?>
+				<?php if($gadget->valid()): ?>
 				<div class="amun-gadget">
-					<h2><?php echo $gadget->getTitle(); ?></h2>
-					<?php echo $gadget->get(); ?>
+					<h2><?php echo $gadget->get()->getTitle(); ?></h2>
+					<?php echo $gadget->get()->getBody(); ?>
 				</div>
+				<?php $gadget->next(); ?>
 				<?php endif; ?>
 			</div>
 			<div class="span3">
-				<?php if($gadget->hasNext()): ?>
+				<?php if($gadget->valid()): ?>
 				<div class="amun-gadget">
-					<h2><?php echo $gadget->getTitle(); ?></h2>
-					<?php echo $gadget->get(); ?>
+					<h2><?php echo $gadget->get()->getTitle(); ?></h2>
+					<?php echo $gadget->get()->getBody(); ?>
 				</div>
+				<?php $gadget->next(); ?>
 				<?php endif; ?>
 			</div>
 		</div>

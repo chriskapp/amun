@@ -22,6 +22,14 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace news\gadget;
+
+use Amun_Module_GadgetAbstract;
+use Amun_Sql_Table_Registry;
+use DateTime;
+use PSX_Sql;
+use PSX_Sql_Join;
+
 /**
  * latestNews
  *
@@ -33,21 +41,18 @@
  * @subpackage news
  * @version    $Revision: 845 $
  */
-class latestNews extends Amun_Data_GadgetAbstract
+class latestNews extends Amun_Module_GadgetAbstract
 {
 	/**
 	 * onLoad
 	 *
-	 * @pageId(integer)
-	 * @count(integer)
+	 * @param pageId integer
+	 * @param count integer
 	 */
-	public function onLoad(Amun_Gadget_Args $args)
+	public function onLoad()
 	{
-		$pageId = $args->get('pageId', 0);
-		$count  = $args->get('count', 8);
-
-		// add css
-		$this->htmlCss->add('news');
+		$pageId = $this->args->get('pageId', 0);
+		$count  = $this->args->get('count', 8);
 
 		// get latest news
 		$select = Amun_Sql_Table_Registry::get('News')
@@ -67,7 +72,6 @@ class latestNews extends Amun_Data_GadgetAbstract
 		$result = $select->orderBy('date', PSX_Sql::SORT_DESC)
 			->limit($count)
 			->getAll(PSX_Sql::FETCH_OBJECT);
-
 
 		$this->display($result);
 	}
