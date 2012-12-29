@@ -40,6 +40,7 @@ class Amun_Gadget_Container extends ArrayObject
 	private $user;
 
 	private $gadgets = array();
+	private $iterator;
 
 	public function __construct(Amun_Registry $registry, Amun_User $user)
 	{
@@ -51,7 +52,7 @@ class Amun_Gadget_Container extends ArrayObject
 
 	public function valid()
 	{
-		return $this->getIterator()->valid();
+		return $this->iterator->valid();
 	}
 
 	/**
@@ -75,13 +76,13 @@ class Amun_Gadget_Container extends ArrayObject
 		}
 		else
 		{
-			return $this->getIterator()->current();
+			return $this->iterator->current();
 		}
 	}
 
 	public function next()
 	{
-		$this->getIterator()->next();
+		$this->iterator->next();
 	}
 
 	/**
@@ -99,7 +100,7 @@ class Amun_Gadget_Container extends ArrayObject
 		$sql = <<<SQL
 SELECT
 
-	`gadget`.`id`,
+	`pageGadget`.`id`,
 	`gadget`.`rightId`,
 	`gadget`.`type`,
 	`gadget`.`name`,
@@ -154,6 +155,9 @@ SQL;
 				$this->append($gadget);
 			}
 		}
+
+		$this->iterator = $this->getIterator();
+		$this->iterator->rewind();
 	}
 }
 

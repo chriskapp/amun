@@ -27,7 +27,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="span3">
+			<div class="span4">
 				<?php if($gadget->valid()): ?>
 				<div class="amun-gadget">
 					<h2><?php echo $gadget->get()->getTitle(); ?></h2>
@@ -36,7 +36,7 @@
 				<?php $gadget->next(); ?>
 				<?php endif; ?>
 			</div>
-			<div class="span3">
+			<div class="span4">
 				<?php if($gadget->valid()): ?>
 				<div class="amun-gadget">
 					<h2><?php echo $gadget->get()->getTitle(); ?></h2>
@@ -45,7 +45,7 @@
 				<?php $gadget->next(); ?>
 				<?php endif; ?>
 			</div>
-			<div class="span3">
+			<div class="span4">
 				<?php if($gadget->valid()): ?>
 				<div class="amun-gadget">
 					<h2><?php echo $gadget->get()->getTitle(); ?></h2>
