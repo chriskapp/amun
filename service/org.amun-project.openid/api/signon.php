@@ -29,11 +29,11 @@ use Amun_Dependency_Session;
 use Amun_Exception;
 use DateTime;
 use Exception;
+use PSX_DateTime;
 use PSX_OpenId_ProviderAbstract;
 use PSX_OpenId_Provider_Data_Association;
 use PSX_OpenId_Provider_Data_ResRequest;
 use PSX_OpenId_Provider_Data_SetupRequest;
-use PSX_DateTime;
 use PSX_Url;
 
 /**

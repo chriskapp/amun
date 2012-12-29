@@ -25,6 +25,10 @@
 namespace my\gadget;
 
 use Amun_Module_GadgetAbstract;
+use Amun_Sql_Table_Registry;
+use DateTime;
+use PSX_Sql;
+use PSX_Sql_Join;
 
 /**
  * latestActivity

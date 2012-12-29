@@ -24,9 +24,9 @@
 
 namespace content\gadget;
 
+use AmunService_Content_Page_Record;
 use Amun_Module_GadgetAbstract;
 use Amun_Sql_Table_Registry;
-use AmunService_Content_Page_Record;
 use PSX_Sql;
 
 /**

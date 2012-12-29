@@ -50,7 +50,10 @@ class AmunService_Content_Gadget_Table extends Amun_Sql_TableAbstract
 
 			'id' => self::TYPE_INT | 10 | self::PRIMARY_KEY,
 			'globalId' => self::TYPE_VARCHAR | 36,
-			'name' => self::TYPE_VARCHAR | 32,
+			'serviceId' => self::TYPE_INT | 10,
+			'rightId' => self::TYPE_INT | 10,
+			'type' => self::TYPE_ENUM,
+			'name' => self::TYPE_VARCHAR | 64,
 			'title' => self::TYPE_VARCHAR | 32,
 			'path' => self::TYPE_VARCHAR | 256,
 			'param' => self::TYPE_TEXT,

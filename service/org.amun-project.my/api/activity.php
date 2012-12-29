@@ -24,10 +24,10 @@
 
 namespace my\api;
 
+use AmunService_User_Account_Record;
 use Amun_Base;
 use Amun_Module_RestAbstract;
 use Amun_Sql_Table_Registry;
-use AmunService_User_Account_Record;
 use Exception;
 use PSX_Data_Exception;
 use PSX_Data_Message;

@@ -25,6 +25,11 @@
 namespace my\gadget;
 
 use Amun_Module_GadgetAbstract;
+use Amun_Sql_Table_Registry;
+use DateInterval;
+use DateTime;
+use PSX_DateTime;
+use PSX_Sql;
 
 /**
  * activityChart

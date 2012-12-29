@@ -25,6 +25,8 @@
 namespace my\gadget;
 
 use Amun_Module_GadgetAbstract;
+use Amun_Sql_Table_Registry;
+use PSX_Sql;
 
 /**
  * latestUser

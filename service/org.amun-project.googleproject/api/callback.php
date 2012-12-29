@@ -24,10 +24,8 @@
 
 namespace googleproject\api;
 
-use AmunService_Googleproject_Commit_Handler;
 use Amun_Module_ApiAbstract;
 use Amun_Sql_Table_Registry;
-use Amun_User;
 use Exception;
 use PSX_Base;
 use PSX_Data_Exception;

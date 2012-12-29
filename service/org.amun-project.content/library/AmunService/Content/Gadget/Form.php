@@ -55,9 +55,21 @@ class AmunService_Content_Gadget_Form extends Amun_Data_FormAbstract
 
 
 		$path = new Amun_Form_Element_Select('path', 'Path');
-		$path->setOptions($this->listGadget());
+		$path->setOptions($this->getGadget());
 
 		$panel->add($path);
+
+
+		$type = new Amun_Form_Element_Select('type', 'Type', 'ajax');
+		$type->setOptions($this->getType());
+
+		$panel->add($type);
+
+
+		$right = new Amun_Form_Element_Select('rightId', 'Right');
+		$right->setOptions($this->getRights());
+
+		$panel->add($right);
 
 
 		$cache = new Amun_Form_Element_Input('cache', 'Cache');
@@ -122,10 +134,22 @@ class AmunService_Content_Gadget_Form extends Amun_Data_FormAbstract
 		$panel->add($title);
 
 
-		$path = new Amun_Form_Element_Select('path', 'Path', $record->path);
-		$path->setOptions($this->listGadget());
+		$path = new Amun_Form_Element_Select('path', 'Path', $record->getPath());
+		$path->setOptions($this->getGadget());
 
 		$panel->add($path);
+
+
+		$type = new Amun_Form_Element_Select('type', 'Type', $record->type);
+		$type->setOptions($this->getType());
+
+		$panel->add($type);
+
+
+		$right = new Amun_Form_Element_Select('rightId', 'Right', $record->rightId);
+		$right->setOptions($this->getRights());
+
+		$panel->add($right);
 
 
 		$cache = new Amun_Form_Element_Input('cache', 'Cache', $record->cache);
@@ -192,11 +216,23 @@ class AmunService_Content_Gadget_Form extends Amun_Data_FormAbstract
 		$panel->add($title);
 
 
-		$path = new Amun_Form_Element_Select('path', 'Path', $record->path);
-		$path->setOptions($this->listGadget());
+		$path = new Amun_Form_Element_Select('path', 'Path', $record->getPath());
+		$path->setOptions($this->getGadget());
 		$path->setDisabled(true);
 
 		$panel->add($path);
+
+
+		$type = new Amun_Form_Element_Select('type', 'Type', $record->type);
+		$type->setOptions($this->getType());
+
+		$panel->add($type);
+
+
+		$right = new Amun_Form_Element_Select('rightId', 'Right', $record->rightId);
+		$right->setOptions($this->getRights());
+
+		$panel->add($right);
 
 
 		$cache = new Amun_Form_Element_Input('cache', 'Cache', $record->cache);
@@ -235,23 +271,67 @@ class AmunService_Content_Gadget_Form extends Amun_Data_FormAbstract
 		return $form;
 	}
 
-	private function listGadget()
+	private function getType()
+	{
+		$type   = array();
+		$result = AmunService_Content_Gadget_Record::getType();
+
+		foreach($result as $k => $v)
+		{
+			array_push($type, array(
+
+				'label' => $v,
+				'value' => $k,
+
+			));
+		}
+
+		return $type;
+	}
+
+	private function getGadget()
 	{
 		$path   = PSX_PATH_MODULE . '/gadget';
 		$gadget = array();
 
 		// service gadgets
-		$result = $this->sql->getAll('SELECT id, source, name FROM ' . $this->registry['table.core_service'] . ' WHERE status = ? ORDER BY name ASC', array(AmunService_Core_Service_Record::NORMAL));
+		$result = $this->sql->getAll('SELECT id, source, name FROM ' . $this->registry['table.core_service'] . ' ORDER BY name ASC');
 
 		foreach($result as $row)
 		{
-			$this->scanDir($gadget, $row['name'], $row['source'], $this->config['amun_service_path'] . '/' . $row['source'] . '/gadget');
+			$this->scanDir($gadget, $row['name'], $row['id'], $this->config['amun_service_path'] . '/' . $row['source'] . '/gadget');
 		}
 
 		return $gadget;
 	}
 
-	private function scanDir(&$gadget, $name, $source, $path)
+	private function getRights()
+	{
+		$rights = array();
+
+		array_push($rights, array(
+
+			'label' => '-',
+			'value' => 0,
+
+		));
+
+		$result = $this->sql->getAll('SELECT id, description FROM ' . $this->registry['table.user_right'] . ' ORDER BY name ASC');
+
+		foreach($result as $row)
+		{
+			array_push($rights, array(
+
+				'label' => $row['description'],
+				'value' => $row['id'],
+
+			));
+		}
+
+		return $rights;
+	}
+
+	private function scanDir(&$gadget, $name, $id, $path)
 	{
 		if(!is_dir($path))
 		{
@@ -272,7 +352,7 @@ class AmunService_Content_Gadget_Form extends Amun_Data_FormAbstract
 					$gadget[] = array(
 
 						'label' => ucfirst($name) . ' -> ' . $d,
-						'value' => $source . '/gadget/' . $d,
+						'value' => $id . ':' . $d,
 
 					);
 				}

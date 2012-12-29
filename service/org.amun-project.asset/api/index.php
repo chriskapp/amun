@@ -24,11 +24,11 @@
 
 namespace asset\api;
 
-use Amun_Module_ApiAbstract;
+use AmunService_Asset_Manager;
+use AmunService_Asset_ProviderInterface;
 use AmunService_Asset_Provider_Css;
 use AmunService_Asset_Provider_Js;
-use AmunService_Asset_ProviderInterface;
-use AmunService_Asset_Manager;
+use Amun_Module_ApiAbstract;
 use PSX_Base;
 
 /**

@@ -25,12 +25,12 @@
 namespace core\api\service;
 
 use Amun_Module_ApiAbstract;
-use Exception;
 use Amun_Sql_Table_Registry;
-use PSX_Sql;
-use PSX_Sql_Join;
+use Exception;
 use PSX_Data_Message;
 use PSX_Data_Record;
+use PSX_Sql;
+use PSX_Sql_Join;
 
 /**
  * tree
