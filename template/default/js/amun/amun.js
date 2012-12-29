@@ -694,10 +694,24 @@
 		load: function(name, cId){
 
 			$('#' + cId).html('<p style="text-align:center;padding:12px;"><img src="' + amun.config.basePath + '/img/loader.gif" /></p>');
-			$.get(amun.config.url + 'gadget/' + name, function(resp){
 
-				$('#' + cId).html(resp);
-
+			$.ajax({
+				type: 'GET',
+				url: amun.config.url + 'gadget/' + name,
+				statusCode: {
+					401: function(){
+						$('#' + cId).parent().parent().fadeOut();
+					},
+					500: function(){
+						$('#' + cId).parent().parent().fadeOut();
+					}
+				},
+				success: function(resp){
+					$('#' + cId).html(resp);
+				},
+				error: function(){
+					$('#' + cId).parent().parent().fadeOut();
+				}
 			});
 
 		}

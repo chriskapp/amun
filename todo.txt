@@ -3,7 +3,6 @@
 
 [ ] implement user friend stream class
 [ ] implement content page sort api to reorder pages
-[ ] use psx annotation parse for gadget params
 [ ] remove my notify and contact from my service .. since its not used and we 
     would need a message queue .. this service should come in another service
 [ ] Oauth endpoint send invalid request method header on GET at request/access
@@ -34,6 +33,8 @@
     framework because its not amun specific and a well written proxy is in
     general needed
 [ ] test ostatus remote subscription interoperability
+[x] use psx annotation parse for gadget params
+[x] improved gadget system
 [x] improve service template design (responsive)
 [x] comments wich are added should not force a reload instead they should be
     added directly to the html

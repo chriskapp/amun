@@ -106,7 +106,7 @@ class Amun_Dependency_Application extends Amun_Dependency_Session
 			return $this->get('gadgetContainer');
 		}
 
-		return $this->set('gadgetContainer', new Amun_Gadget_Container($this->getRegistry()));
+		return $this->set('gadgetContainer', new Amun_Gadget_Container($this->getRegistry(), $this->getUser()));
 	}
 
 	public function getHtmlJs()

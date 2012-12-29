@@ -100,7 +100,7 @@ SQL;
 		{
 			if(!empty($row['pageRightId']) && !$this->user->hasRightId($row['pageRightId']))
 			{
-				throw new Amun_Exception('Access not allowed');
+				throw new Amun_Exception('Access not allowed', 401);
 			}
 
 			$this->id          = $row['pageId'];

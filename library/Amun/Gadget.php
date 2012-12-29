@@ -91,7 +91,7 @@ SQL;
 		{
 			if(!empty($row['gadgetRightId']) && !$this->user->hasRightId($row['gadgetRightId']))
 			{
-				throw new Amun_Exception('Access not allowed');
+				throw new Amun_Exception('Access not allowed', 401);
 			}
 
 			$this->id          = $row['gadgetId'];

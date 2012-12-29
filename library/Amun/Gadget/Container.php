@@ -37,14 +37,16 @@ class Amun_Gadget_Container extends ArrayObject
 	private $config;
 	private $sql;
 	private $registry;
+	private $user;
 
 	private $gadgets = array();
 
-	public function __construct(Amun_Registry $registry)
+	public function __construct(Amun_Registry $registry, Amun_User $user)
 	{
 		$this->config   = $registry->getConfig();
 		$this->sql      = $registry->getSql();
 		$this->registry = $registry;
+		$this->user     = $user;
 	}
 
 	public function valid()
@@ -98,6 +100,7 @@ class Amun_Gadget_Container extends ArrayObject
 SELECT
 
 	`gadget`.`id`,
+	`gadget`.`rightId`,
 	`gadget`.`type`,
 	`gadget`.`name`,
 	`gadget`.`title`,
@@ -128,9 +131,14 @@ SQL;
 			// execute gadget
 			try
 			{
-				$htmlCss->add($gadget->serviceName);
+				if(empty($gadget->rightId) || $this->user->hasRightId($gadget->rightId))
+				{
+					$htmlCss->add($gadget->serviceName);
 
-				$gadget->buildContent();
+					$gadget->buildContent();
+
+					$this->append($gadget);
+				}
 			}
 			catch(Exception $e)
 			{
@@ -142,9 +150,9 @@ SQL;
 				}
 
 				$gadget->setBody($msg);
-			}
 
-			$this->append($gadget);
+				$this->append($gadget);
+			}
 		}
 	}
 }
