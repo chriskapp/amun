@@ -1001,6 +1001,7 @@ class Amun_User_NoDb extends Amun_User
 	public $id      = 1;
 	public $groupId = 1;
 	public $name    = 'System';
+	public $status  = AmunService_User_Account_Record::ADMINISTRATOR;
 
 	public function __construct(Amun_Registry $registry)
 	{
