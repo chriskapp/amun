@@ -93,7 +93,7 @@ class AmunService_Comment_Record extends Amun_Data_RecordAbstract
 	public function setText($text)
 	{
 		$text = PSX_Util_Markdown::decode($text);
-		$text = $this->_validate->apply($text, 'string', array(new PSX_Filter_Length(3, 2048), new Amun_Filter_Html($this->_config, $this->_user)), 'text', 'Text');
+		$text = $this->_validate->apply($text, 'string', array(new PSX_Filter_Length(3, 2048), new Amun_Filter_Html($this->_config, $this->_user, true)), 'text', 'Text');
 
 		if(!$this->_validate->hasError())
 		{

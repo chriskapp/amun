@@ -96,7 +96,7 @@ class AmunService_User_Activity_Record extends Amun_Data_RecordAbstract
 	public function setSummary($summary)
 	{
 		$summary = PSX_Util_Markdown::decode($summary);
-		$summary = $this->_validate->apply($summary, 'string', array(new PSX_Filter_Length(3, 4096), new Amun_Filter_Html($this->_config, $this->_user)), 'summary', 'Summary');
+		$summary = $this->_validate->apply($summary, 'string', array(new PSX_Filter_Length(3, 4096), new Amun_Filter_Html($this->_config, $this->_user, true)), 'summary', 'Summary');
 
 		if(!$this->_validate->hasError())
 		{
