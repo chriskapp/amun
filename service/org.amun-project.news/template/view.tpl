@@ -28,7 +28,7 @@
 	<?php if($resultComments->totalResults > 0): ?>
 		<?php foreach($resultComments->entry as $record): ?>
 		<div class="amun-service-comment-entry" id="comment-<?php echo $record->id; ?>">
-			<img class="pull-left" src="<?php echo $record->authorThumbnailUrl; ?>" alt="avatar" />
+			<img class="pull-left" src="<?php echo $record->authorThumbnailUrl; ?>" alt="avatar" width="48" height="48" />
 			<p class="muted">
 				by
 				<a href="<?php echo $record->authorProfileUrl; ?>" rel="author"><?php echo $record->authorName; ?></a>

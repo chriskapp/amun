@@ -109,7 +109,7 @@ amun.services.forum = {
 					date = amun.util.getSqlToDate(entry.date);
 
 					html+= '<div class="amun-service-comment-entry" id="comment-' + entry.id + '" style="display:none;">';
-					html+= '	<img class="pull-left" src="' + entry.authorThumbnailUrl + '" alt="avatar" />';
+					html+= '	<img class="pull-left" src="' + entry.authorThumbnailUrl + '" alt="avatar" width="48" height="48" />';
 					html+= '	<p class="muted">';
 					html+= '	by';
 					html+= '	<a href="' + entry.authorProfileUrl + '" rel="author">' + entry.authorName + '</a>';

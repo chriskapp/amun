@@ -69,7 +69,7 @@
 			<?php else: ?>
 				<div class="pull-right"><a class="btn" href="#" onclick="amun.services.my.setActivityStatus(<?php echo $activity->receiverId . ',\'' . $receiverUrl . '\',this'; ?>);return false;" data-status="1" title="Shows the activity on your public profile">Show</a></div>
 			<?php endif; ?>
-			<img class="pull-left" src="<?php echo $activity->authorThumbnailUrl; ?>" alt="avatar" />
+			<img class="pull-left" src="<?php echo $activity->authorThumbnailUrl; ?>" alt="avatar" width="48" height="48" />
 			<h4><a href="<?php echo $activity->authorProfileUrl; ?>"><?php echo $activity->authorName; ?></a></h4>
 			<div class="amun-service-my-activity-summary"><?php echo $activity->summary; ?></div>
 			<?php $comments = $activity->getComments(); ?>
@@ -81,7 +81,7 @@
 				<div class="amun-service-my-activity-entry-comments" id="activity-comments-<?php echo $activity->id; ?>">
 					<?php foreach($activity->getComments() as $comment): ?>
 					<div class="amun-service-my-activity-entry" id="activity-<?php echo $comment->id; ?>">
-						<img class="pull-left" src="<?php echo $comment->authorThumbnailUrl; ?>" alt="avatar" />
+						<img class="pull-left" src="<?php echo $comment->authorThumbnailUrl; ?>" alt="avatar" width="48" height="48" />
 						<h4><a href="<?php echo $comment->authorProfileUrl; ?>"><?php echo $comment->authorName; ?></a></h4>
 						<div class="amun-service-my-activity-summary"><?php echo $comment->summary; ?></div>
 						<p class="muted">

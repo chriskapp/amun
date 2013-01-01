@@ -220,7 +220,7 @@ amun.services.my = {
 				if(id == 'activity-form-0')
 				{
 					html+= '<div class="row amun-service-my-activity-entry" id="activity-' + entry.id + '" style="display:none;">';
-					html+= '	<img class="pull-left" src="' + entry.authorThumbnailUrl + '" alt="avatar" />';
+					html+= '	<img class="pull-left" src="' + entry.authorThumbnailUrl + '" alt="avatar" width="48" height="48" />';
 					html+= '	<h4><a href="' + entry.authorProfileUrl + '">' + entry.authorName + '</a></h4>';
 					html+= '	<div class="amun-service-my-activity-summary">' + entry.summary + '</div>';
 					html+= '	<p class="muted">';
@@ -235,7 +235,7 @@ amun.services.my = {
 				else
 				{
 					html+= '<div class="amun-service-my-activity-entry" id="activity-' + entry.id + '" style="display:none;">';
-					html+= '	<img class="pull-left" src="' + entry.authorThumbnailUrl + '" alt="avatar" />';
+					html+= '	<img class="pull-left" src="' + entry.authorThumbnailUrl + '" alt="avatar" width="48" height="48" />';
 					html+= '	<h4><a href="' + entry.authorProfileUrl + '">' + entry.authorName + '</a></h4>';
 					html+= '	<div class="amun-service-my-activity-summary">' + entry.summary + '</div>';
 					html+= '	<p class="muted">';
