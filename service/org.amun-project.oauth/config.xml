@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="239b1a06da09b3e0cef0cb878c84ac0d81f47514">
+<service xmlns="http://amun-project.org" signature="1a61948b8af3d84eda4c7cffea6a572092f35776">
   <status>system</status>
   <name>oauth</name>
   <description>Provides an Oauth 1.0 endpoint implementation where applications can register to access the API</description>
@@ -52,19 +52,29 @@
     <perm name="request_add" description="Oauth Request add"/>
     <perm name="request_edit" description="Oauth Request edit"/>
     <perm name="request_delete" description="Oauth Request delete"/>
+    <perm name="access_right_view" description="Oauth Access Right view"/>
+    <perm name="access_right_add" description="Oauth Access Right add"/>
+    <perm name="access_right_edit" description="Oauth Access Right edit"/>
+    <perm name="access_right_delete" description="Oauth Access Right delete"/>
   </permissions>
   <registry>
     <table name="oauth"/>
     <table name="oauth_access"/>
+    <table name="oauth_access_right"/>
     <table name="oauth_request"/>
   </registry>
   <library>
     <dir name="AmunService">
       <dir name="Oauth">
         <dir name="Access">
+          <dir name="Right">
+            <file name="Handler.php" md5="e04b9cdcc0bbdce57983027a48c20bf4"/>
+            <file name="Record.php" md5="e29edaa249a5d80887840fece3ae1138"/>
+            <file name="Table.php" md5="f4264589902f6d0f114ba439cfc0cb75"/>
+          </dir>
           <file name="Form.php" md5="14b6ec4356dc0d0f4b5004c048e04548"/>
-          <file name="Handler.php" md5="28d837aa7ae5e61d1ce1d9d6c2287e01"/>
-          <file name="Record.php" md5="006b39e11ebb86ef3761c6d09aab59d0"/>
+          <file name="Handler.php" md5="5db3070aca159317d6bf26e0f054b180"/>
+          <file name="Record.php" md5="77ef41ece706330171102ebb4a512196"/>
           <file name="Table.php" md5="c2e7e0d4055c150d4e07cd96b0f578e2"/>
         </dir>
         <dir name="Filter">
@@ -108,6 +118,12 @@
   `date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `apiUserId` (`apiId`,`userId`)
+) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.oauth_access_right}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `accessId` int(10) NOT NULL,
+  `rightId` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.oauth_request}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,

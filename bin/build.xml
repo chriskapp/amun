@@ -50,6 +50,7 @@
 			<fileset dir="${library}">
 				<include name="PSX/**" />
 				<include name="Amun/**" />
+				<include name="AmunService/**" />
 				<include name="Zend/**" />
 			</fileset>
 		</copy>

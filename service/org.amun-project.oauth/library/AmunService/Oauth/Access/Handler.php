@@ -53,6 +53,11 @@ class AmunService_Oauth_Access_Handler extends Amun_Data_HandlerAbstract
 			$this->table->delete($con);
 
 
+			$con = new PSX_Sql_Condition(array('accessId', '=', $record->id));
+
+			Amun_Sql_Table_Registry::get('Oauth_Access_Right')->delete($con);
+
+
 			$this->notify(Amun_Data_RecordAbstract::DELETE, $record);
 
 

@@ -1,21 +1,25 @@
 
 [FEATURES]
 
-[ ] implement user friend stream class
 [ ] implement content page sort api to reorder pages
 [ ] remove my notify and contact from my service .. since its not used and we 
     would need a message queue .. this service should come in another service
 [ ] Oauth endpoint send invalid request method header on GET at request/access
     [ ] adding oauth scope
-[ ] support host meta to return json and xrd / jrd
-[ ] improve right system probably with inheritance
-[ ] Implement reference input field in backend
 [ ] possiblity to add more meta data to a page (keywords, description)
     [ ] A option to create a pasword protected page. This should be general so 
         that you can protect any page with an password ... at this move we can 
         also add a possibility to add more meta data to a page (i.e. dublincore)
     [ ] Save page as "draft" so that its not published directly
-[ ] update phpdoc for proper API generation
+[ ] improve right system probably with inheritance
+    [ ] set fitting default rights for normal and anonymous user group
+[ ] Implement reference input field in backend
+[ ] implement user friend stream class
+[ ] support host meta to return json and xrd / jrd
+[ ] a general way to embed content like images videos etc to an page using
+    oembed i.e. you can add photo, video. We could use the html filter to get
+    all urls and make an Oembed request ... if we find an enpoint we attach
+    the meta data to the record
 [ ] build general achievment system where a user based on the karma value (or
     probably other conditions) gets specific achievments on the profile
 [ ] my service add possibility to delete (invalidate) an account
@@ -24,15 +28,12 @@
 [ ] if someone has subscribed via PSHB to a topic and we receive these messages
     we have to create a remote user for the author of the topic if the user id
     doesnt exist.
-[ ] a general way to embed content like images videos etc to an page using
-    oembed i.e. you can add photo, video. We could use the html filter to get
-    all urls and make an Oembed request ... if we find an enpoint we attach
-    the meta data to the record
 [ ] implement an http proxy for making ajax requests to external domains (same
     origin policy stuff) ... we should put the proxy class into the psx
     framework because its not amun specific and a well written proxy is in
     general needed
 [ ] test ostatus remote subscription interoperability
+[x] update phpdoc for proper API generation
 [x] use psx annotation parse for gadget params
 [x] improved gadget system
 [x] improve service template design (responsive)

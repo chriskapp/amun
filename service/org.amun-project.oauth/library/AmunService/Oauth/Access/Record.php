@@ -37,6 +37,7 @@ class AmunService_Oauth_Access_Record extends Amun_Data_RecordAbstract
 	protected $_api;
 	protected $_user;
 	protected $_date;
+	protected $_rights;
 
 	public function setId($id)
 	{
@@ -104,6 +105,18 @@ class AmunService_Oauth_Access_Record extends Amun_Data_RecordAbstract
 		}
 
 		return $this->_date;
+	}
+
+	public function getRights()
+	{
+		if($this->_rights === null)
+		{
+			$con = new PSX_Sql_Condition(array('accessId', '=', $this->id));
+
+			$this->_rights = Amun_Sql_Table_Registry::get('Oauth_Access_Right')->getCol('rightId', $con);
+		}
+
+		return $this->_rights;
 	}
 }
 
