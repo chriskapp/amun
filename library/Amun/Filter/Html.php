@@ -38,6 +38,11 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 	private $user;
 	private $collection;
 
+	private $http;
+	private $oembed;
+	private $oembedHosts;
+	private $oembedMedia;
+
 	public function __construct(PSX_Config $config, Amun_User $user)
 	{
 		$this->config = $config;
@@ -59,15 +64,67 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 				$this->collection = new Amun_Html_Filter_Collection_Untrusted();
 				break;
 		}
+
+		$this->http   = new PSX_Http();
+		$this->oembed = new PSX_Oembed($this->http);
+
+		// whitelist of available oembed endpoints
+		$this->oembedHosts = array(
+			'youtube.com'     => 'http://www.youtube.com/oembed', 
+			'youtu.be'        => 'http://www.youtube.com/oembed', 
+			'blip.tv'         => 'http://blip.tv/oembed/', 
+			'vimeo.com'       => 'http://vimeo.com/api/oembed.json', 
+			'dailymotion.com' => 'http://www.dailymotion.com/services/oembed', 
+			'flickr.com'      => 'http://www.flickr.com/services/oembed/', 
+			'smugmug.com'     => 'http://api.smugmug.com/services/oembed/', 
+			'hulu.com'        => 'http://www.hulu.com/api/oembed.json',
+			'viddler.com'     => 'http://lab.viddler.com/services/oembed/',
+			'qik.com'         => 'http://qik.com/api/oembed.json',
+			'revision3.com'   => 'http://revision3.com/api/oembed/',
+			'photobucket.com' => 'http://photobucket.com/oembed',
+			'scribd.com'      => 'http://www.scribd.com/services/oembed',
+			'wordpress.tv'    => 'http://wordpress.tv/oembed/',
+			'funnyordie.com'  => 'http://www.funnyordie.com/oembed',
+			'twitter.com'     => 'http://api.twitter.com/1/statuses/oembed.json',
+		);
 	}
 
 	public function apply($value)
 	{
+		$this->oembedMedia = array();
+
 		$filter = new PSX_Html_Filter($value, $this->collection);
 		$filter->addElementListener($this);
 		$filter->addTextListener($this);
 
-		return $filter->filter();
+		$html = $filter->filter();
+
+		// add discovered oembed content if any
+		if(!empty($this->oembedMedia))
+		{
+			$html.= "\n\n" . '<hr />';
+			$html.= '<ul>';
+
+			foreach($this->oembedMedia as $type)
+			{
+				if($type instanceof PSX_Oembed_Type_Photo)
+				{
+					$html.= '<li><img src="' . $type->url . '" /></li>';
+				}
+				else if($type instanceof PSX_Oembed_Type_Rich)
+				{
+					$html.= '<li>' . $type->html . '</li>';
+				}
+				else if($type instanceof PSX_Oembed_Type_Video)
+				{
+					$html.= '<li>' . $type->html . '</li>';
+				}
+			}
+
+			$html.= '</ul>';
+		}
+
+		return $html;
 	}
 
 	public function getErrorMsg()
@@ -127,6 +184,7 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 	{
 		$this->replaceProfileUrl($text);
 		$this->replacePage($text);
+		$this->replaceUrl($text);
 
 		return $text;
 	}
@@ -205,6 +263,62 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 		}
 
 		$text->data = $data;
+	}
+
+	private function replaceUrl(PSX_Html_Lexer_Token_Text $text)
+	{
+		if(strpos($text->data, 'http://') === false && strpos($text->data, 'https://') === false)
+		{
+			return false;
+		}
+
+		$parts = preg_split('/(https?:\/\/\S*)/S', $text->data, -1, PREG_SPLIT_DELIM_CAPTURE);
+		$data  = '';
+
+		foreach($parts as $i => $part)
+		{
+			if($i % 2 == 0)
+			{
+				$data.= $part;
+			}
+			else
+			{
+				try
+				{
+					$url = new PSX_Url($part);
+
+					foreach($this->oembedHosts as $host => $endpoint)
+					{
+						if(strpos($url->getHost(), $host) !== false)
+						{
+							try
+							{
+								$api = new PSX_Url($endpoint);
+								$api->addParam('url', $part);
+
+								$type = $this->oembed->request($api);
+
+								$this->oembedMedia[] = $type;
+								break;
+							}
+							catch(Exception $e)
+							{
+								// oembed discovery failed
+							}
+						}
+					}
+
+					$data.= '<a href="' . $part . '">' . $part . '</a>';
+				}
+				catch(Exception $e)
+				{
+					$data.= $part;
+				}
+			}
+		}
+
+		$text->data = $data;
+
 	}
 
 	private function getPage($href)

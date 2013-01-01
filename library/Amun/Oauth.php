@@ -37,6 +37,7 @@ class Amun_Oauth extends PSX_Oauth_ProviderAbstract
 	protected $claimedUserId;
 	protected $requestId;
 	protected $requestToken;
+	protected $accessId;
 
 	protected $config;
 	protected $sql;
@@ -173,6 +174,7 @@ SQL;
 			$sql = <<<SQL
 SELECT
 
+	access.id      AS `accessId`,
 	access.allowed AS `accessAllowed`
 
 	FROM {$this->registry['table.oauth_access']} `access`
@@ -182,10 +184,12 @@ SELECT
 		AND access.userId = ?
 SQL;
 
-			$allowed = $this->sql->getField($sql, array($row['requestApiId'], $row['requestUserId']));
+			$access = $this->sql->getRow($sql, array($row['requestApiId'], $row['requestUserId']));
 
-			if($allowed === '1')
+			if($access['accessAllowed'] === '1')
 			{
+				$this->accessId = $access['accessId'];
+
 				return $row;
 			}
 			else

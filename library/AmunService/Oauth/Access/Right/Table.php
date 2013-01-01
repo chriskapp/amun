@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Handler.php 635 2012-05-01 19:46:37Z k42b3.x@googlemail.com $
+ *  $Id: Table.php 635 2012-05-01 19:46:37Z k42b3.x@googlemail.com $
  *
  * amun
  * A social content managment system based on the psx framework. For
@@ -23,7 +23,7 @@
  */
 
 /**
- * AmunService_Oauth_Access_Handler
+ * AmunService_Oauth_Access_Table
  *
  * @author     Christoph Kappestein <k42b3.x@gmail.com>
  * @license    http://www.gnu.org/licenses/gpl.html GPLv3
@@ -32,41 +32,31 @@
  * @package    Amun_Oauth
  * @version    $Revision: 635 $
  */
-class AmunService_Oauth_Access_Handler extends Amun_Data_HandlerAbstract
+class AmunService_Oauth_Access_Right_Table extends Amun_Sql_TableAbstract
 {
-	public function create(PSX_Data_RecordInterface $record)
+	public function getConnections()
 	{
-		throw new PSX_Data_Exception('Access can not created');
+		return array(
+
+			'accessId' => $this->registry['table.oauth_access'],
+			'rightId' => $this->registry['table.user_right'],
+
+		);
 	}
 
-	public function update(PSX_Data_RecordInterface $record)
+	public function getName()
 	{
-		throw new PSX_Data_Exception('Access can not updated');
+		return $this->registry['table.oauth_access_right'];
 	}
 
-	public function delete(PSX_Data_RecordInterface $record)
+	public function getColumns()
 	{
-		if($record->hasFields('id'))
-		{
-			$con = new PSX_Sql_Condition(array('id', '=', $record->id));
+		return array(
 
-			$this->table->delete($con);
-
-
-			$con = new PSX_Sql_Condition(array('accessId', '=', $record->id));
-
-			Amun_Sql_Table_Registry::get('Oauth_Access_Right')->delete($con);
-
-
-			$this->notify(Amun_Data_RecordAbstract::DELETE, $record);
-
-
-			return $record;
-		}
-		else
-		{
-			throw new PSX_Data_Exception('Missing field in record');
-		}
+			'id' => self::TYPE_INT | 10 | self::PRIMARY_KEY,
+			'accessId' => self::TYPE_INT | 10,
+			'rightId' => self::TYPE_INT | 10,
+		);
 	}
 }
 

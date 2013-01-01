@@ -103,6 +103,30 @@ div.amun-service-my-register-form
 
 }
 
+div.amun-service-my-app-rights
+{
+	display:none;
+}
+
+div.amun-service-my-app-rights ul
+{
+	margin:0px;
+	padding:0px;
+	list-style-type:none;
+}
+
+div.amun-service-my-app-rights li
+{
+	float:left;
+	width:220px;
+}
+
+div.amun-service-my-app-rights hr
+{
+	display:block;
+	clear:both;
+}
+
 img#amun-service-my-register-form-captcha
 {
 	margin:4px 0px;

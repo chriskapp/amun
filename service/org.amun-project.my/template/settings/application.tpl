@@ -30,7 +30,7 @@
 		<colgroup>
 			<col width="*" />
 			<col width="180" />
-			<col width="70" />
+			<col width="180" />
 		</colgroup>
 		<thead>
 		<tr>
@@ -43,9 +43,9 @@
 		<?php if(count($applications) > 0): ?>
 		<?php foreach($applications as $application): ?>
 		<tr>
-			<td><?php echo $application->apiTitle; ?></td>
+			<td><a href="application/settings?appId=<?php echo $application->id; ?>"><?php echo $application->apiTitle; ?></a></td>
 			<td><?php echo $application->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></td>
-			<td><input type="button" onclick="amun.services.my.applicationsRevokeAccess(<?php echo $application->id . ',\'' . $accessUrl . '\''; ?>, this)" value="Revoke" /></td>
+			<td><input class="btn" type="button" onclick="amun.services.my.applicationsRevokeAccess(<?php echo $application->id . ',\'' . $accessUrl . '\''; ?>, this)" value="Revoke" /></td>
 		</tr>
 		<?php endforeach; ?>
 		<?php else: ?>

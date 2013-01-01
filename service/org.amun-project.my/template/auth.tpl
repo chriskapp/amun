@@ -37,11 +37,28 @@
 
 	<hr />
 
-	<h5><?php echo $consumerTitle; ?></h5>
+	<h3><?php echo $consumerTitle; ?></h3>
 
 	<div class="box"><?php echo $consumerDescription; ?></div>
 
 	<hr />
+
+	<h4><a href="#" onclick="$('.amun-service-my-app-rights').slideToggle();">Rights (+)</a></h4>
+
+	<div class="amun-service-my-app-rights">
+		<ul>
+			<?php foreach($userRights as $right): ?>
+				<li>
+					<label for="right-<?php echo $right['rightId']; ?>" class="checkbox inline">
+					<input checked="checked" type="checkbox" name="right-<?php echo $right['rightId']; ?>" id="right-<?php echo $right['rightId']; ?>" value="1" /> <?php echo $right['rightDescription']; ?>
+					</label>
+				</li>
+			<?php endforeach; ?>
+		</ul>
+		<hr />
+	</div>
+
+	<br />
 
 	<p>
 		<input class="btn btn-primary" type="submit" name="allow" value="Allow" />

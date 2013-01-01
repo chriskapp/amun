@@ -46,21 +46,20 @@ class Amun_User
 	public $updated;
 	public $date;
 	public $group;
-	public $rights = array();
 
-	// optional the assigned request id
-	// if logged in via oauth
-	public $requestId;
+	private $rights = array();
 
 	protected $config;
 	protected $sql;
 	protected $registry;
+	protected $accessId;
 
-	public function __construct($id, Amun_Registry $registry)
+	public function __construct($id, Amun_Registry $registry, $accessId = null)
 	{
 		$this->config   = $registry->getConfig();
 		$this->sql      = $registry->getSql();
 		$this->registry = $registry;
+		$this->accessId = (integer) $accessId;
 
 
 		$status = AmunService_User_Account_Record::BANNED;
@@ -123,7 +122,14 @@ EOD;
 			), $con);
 
 			// set user rights
-			$this->setRights($this->groupId);
+			if(empty($this->accessId))
+			{
+				$this->setRights($this->groupId);
+			}
+			else
+			{
+				$this->setApplicationRights($this->accessId);
+			}
 		}
 		else
 		{
@@ -164,6 +170,42 @@ SELECT
 		ON `right`.`id` = `groupRight`.`rightId`
 
 			WHERE `groupRight`.`groupId` = {$groupId}
+SQL;
+
+		$result = $this->sql->getAll($sql);
+
+		foreach($result as $row)
+		{
+			$this->rights[$row['id']] = $row['name'];
+		}
+	}
+
+	public function setApplicationRights($accessId)
+	{
+		$this->rights = array();
+
+		$accessId = intval($accessId);
+		$sql      = <<<SQL
+SELECT
+
+	`right`.`id`,
+	`right`.`name`
+
+	FROM {$this->registry['table.oauth_access_right']} `accessRight`
+
+		INNER JOIN {$this->registry['table.oauth_access']} `access`
+
+		ON `access`.`id` = `accessRight`.`accessId`
+
+			INNER JOIN {$this->registry['table.user_right']} `right`
+
+			ON `right`.`id` = `accessRight`.`rightId`
+
+				WHERE `accessRight`.`accessId` = {$accessId}
+
+				AND `access`.`userId` = {$this->id}
+
+					AND `access`.`allowed` = 1
 SQL;
 
 		$result = $this->sql->getAll($sql);

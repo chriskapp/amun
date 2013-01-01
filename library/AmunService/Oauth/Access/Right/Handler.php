@@ -32,16 +32,31 @@
  * @package    Amun_Oauth
  * @version    $Revision: 635 $
  */
-class AmunService_Oauth_Access_Handler extends Amun_Data_HandlerAbstract
+class AmunService_Oauth_Access_Right_Handler extends Amun_Data_HandlerAbstract
 {
 	public function create(PSX_Data_RecordInterface $record)
 	{
-		throw new PSX_Data_Exception('Access can not created');
+		if($record->hasFields('accessId', 'rightId'))
+		{
+			$this->table->insert($record->getData());
+
+
+			$record->id = $this->sql->getLastInsertId();
+
+			$this->notify(Amun_Data_RecordAbstract::INSERT, $record);
+
+
+			return $record;
+		}
+		else
+		{
+			throw new PSX_Data_Exception('Missing field in record');
+		}
 	}
 
 	public function update(PSX_Data_RecordInterface $record)
 	{
-		throw new PSX_Data_Exception('Access can not updated');
+		throw new PSX_Data_Exception('Right can not updated');
 	}
 
 	public function delete(PSX_Data_RecordInterface $record)
@@ -51,11 +66,6 @@ class AmunService_Oauth_Access_Handler extends Amun_Data_HandlerAbstract
 			$con = new PSX_Sql_Condition(array('id', '=', $record->id));
 
 			$this->table->delete($con);
-
-
-			$con = new PSX_Sql_Condition(array('accessId', '=', $record->id));
-
-			Amun_Sql_Table_Registry::get('Oauth_Access_Right')->delete($con);
 
 
 			$this->notify(Amun_Data_RecordAbstract::DELETE, $record);

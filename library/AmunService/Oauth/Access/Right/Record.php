@@ -32,12 +32,10 @@
  * @package    Amun_Oauth
  * @version    $Revision: 683 $
  */
-class AmunService_Oauth_Access_Record extends Amun_Data_RecordAbstract
+class AmunService_Oauth_Access_Right_Record extends Amun_Data_RecordAbstract
 {
-	protected $_api;
-	protected $_user;
-	protected $_date;
-	protected $_rights;
+	protected $_access;
+	protected $_right;
 
 	public function setId($id)
 	{
@@ -53,13 +51,13 @@ class AmunService_Oauth_Access_Record extends Amun_Data_RecordAbstract
 		}
 	}
 
-	public function setApiId($apiId)
+	public function setAccessId($accessId)
 	{
-		$apiId = $this->_validate->apply($apiId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Oauth'))), 'apiId', 'Api Id');
+		$accessId = $this->_validate->apply($accessId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Oauth_Access'))), 'accessId', 'Access Id');
 
 		if(!$this->_validate->hasError())
 		{
-			$this->apiId = $apiId;
+			$this->accessId = $accessId;
 		}
 		else
 		{
@@ -67,56 +65,38 @@ class AmunService_Oauth_Access_Record extends Amun_Data_RecordAbstract
 		}
 	}
 
-	public function setAllowed($allowed)
+	public function setRightId($rightId)
 	{
-		$this->allowed = $allowed ? 1 : 0;
-	}
+		$rightId = $this->_validate->apply($rightId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('User_Right'))), 'rightId', 'Right Id');
 
-	public function getId()
-	{
-		return $this->_base->getUrn('oauth', 'access', $this->id);
-	}
-
-	public function getApi()
-	{
-		if($this->_api === null)
+		if(!$this->_validate->hasError())
 		{
-			$this->_api = Amun_Sql_Table_Registry::get('Oauth')->getRecord($this->apiId);
+			$this->rightId = $rightId;
+		}
+		else
+		{
+			throw new PSX_Data_Exception($this->_validate->getLastError());
+		}
+	}
+
+	public function getAccess()
+	{
+		if($this->_access === null)
+		{
+			$this->_access = Amun_Sql_Table_Registry::get('Oauth_Access')->getRecord($this->accessId);
 		}
 
-		return $this->_api;
+		return $this->_access;
 	}
 
-	public function getUser()
+	public function getRight()
 	{
-		if($this->_user === null)
+		if($this->_right === null)
 		{
-			$this->_user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->userId);
+			$this->_right = Amun_Sql_Table_Registry::get('User_Right')->getRecord($this->rightId);
 		}
 
-		return $this->_user;
-	}
-
-	public function getDate()
-	{
-		if($this->_date === null)
-		{
-			$this->_date = new DateTime($this->date, $this->_registry['core.default_timezone']);
-		}
-
-		return $this->_date;
-	}
-
-	public function getRights()
-	{
-		if($this->_rights === null)
-		{
-			$con = new PSX_Sql_Condition(array('accessId', '=', $this->id));
-
-			$this->_rights = Amun_Sql_Table_Registry::get('Oauth_Access_Right')->getCol('rightId', $con);
-		}
-
-		return $this->_rights;
+		return $this->_right;
 	}
 }
 

@@ -36,10 +36,14 @@
 class Amun_Dependency_Api extends Amun_Dependency_Session
 {
 	protected $serviceId;
+	protected $requestId;
+	protected $accessId;
 
 	public function __construct(PSX_Config $config, array $params)
 	{
 		$this->serviceId = isset($params['api.serviceId']) ? $params['api.serviceId'] : null;
+		$this->requestId = isset($params['api.requestId']) ? $params['api.requestId'] : null;
+		$this->accessId  = isset($params['api.accessId'])  ? $params['api.accessId'] : null;
 
 		parent::__construct($config, $params);
 	}
@@ -49,6 +53,21 @@ class Amun_Dependency_Api extends Amun_Dependency_Session
 		parent::setup();
 
 		$this->getService();
+	}
+
+	public function getUser()
+	{
+		if($this->has('user'))
+		{
+			return $this->get('user');
+		}
+
+		if($this->userId === null)
+		{
+			$this->userId = Amun_User::getId($this->getSession(), $this->getRegistry());
+		}
+
+		return $this->set('user', new Amun_User($this->userId, $this->getRegistry(), $this->accessId));
 	}
 
 	public function getService()

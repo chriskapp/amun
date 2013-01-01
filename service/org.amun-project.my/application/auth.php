@@ -36,6 +36,7 @@
 class auth extends Amun_Module_ApplicationAbstract
 {
 	private $apiId;
+	private $userRights;
 
 	public function onLoad()
 	{
@@ -95,6 +96,17 @@ class auth extends Amun_Module_ApplicationAbstract
 
 							throw new Amun_Exception('The token is expired');
 						}
+
+						// load user rights
+						$this->userRights = Amun_Sql_Table_Registry::get('User_Group_Right')
+							->select(array('rightId'))
+							->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Right')
+								->select(array('name', 'description'), 'right')
+							)
+							->where('groupId', '=', $this->user->groupId)
+							->getAll();
+
+						$this->template->assign('userRights', $this->userRights);
 
 						// assign token and callback for later use
 						$token    = $row['token'];
@@ -227,6 +239,11 @@ class auth extends Amun_Module_ApplicationAbstract
 
 		));
 
+		$accessId = $this->sql->getLastInsertId();
+
+		// insert rights
+		$this->insertAppRights($accessId);
+
 		// approve token
 		$con = new PSX_Sql_Condition(array('token', '=', $token));
 
@@ -291,6 +308,50 @@ class auth extends Amun_Module_ApplicationAbstract
 		{
 			header('Location: ' . $this->config['psx_url']);
 			exit;
+		}
+	}
+
+	/**
+	 * Inserts the rights for the app. We write here an custom query instead of
+	 * calling ->insert() because it is much faster
+	 *
+	 * @return void
+	 */
+	private function insertAppRights($accessId)
+	{
+		// delete any existing rights
+		$con = new PSX_Sql_Condition(array('accessId', '=', $accessId));
+
+		$this->sql->delete($this->registry['table.oauth_access_right'], $con);
+
+		// insert rigts
+		$rights = array();
+
+		foreach($this->userRights as $right)
+		{
+			$key = 'right-' . $right['rightId'];
+			$set = isset($_POST[$key]) ? (boolean) $_POST[$key] : false;
+
+			if($set)
+			{
+				$accessId = (integer) $accessId;
+				$rightId  = (integer) $right['rightId'];
+
+				$rights[] = '(' . $accessId . ',' . $rightId . ')';
+			}
+		}
+
+		if(!empty($rights))
+		{
+			$sql = implode(',', $rights);
+			$sql = <<<SQL
+INSERT INTO 
+	{$this->registry['table.oauth_access_right']} (accessId, rightId)
+VALUES
+	{$sql}
+SQL;
+
+			$this->sql->query($sql);
 		}
 	}
 }

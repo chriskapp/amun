@@ -60,6 +60,7 @@ abstract class Amun_Module_ApiAbstract extends Amun_Oauth
 			'session.id'     => $this->requestToken,
 			'api.serviceId'  => $this->location->getServiceId(),
 			'api.requestId'  => $this->requestId,
+			'api.accessId'   => $this->accessId,
 		));
 
 		Amun_DataFactory::setContainer($ct);
