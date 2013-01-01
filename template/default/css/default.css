@@ -180,3 +180,37 @@ h2
 {
 	margin-bottom:2px;
 }
+
+.amun-oembed-media
+{
+}
+
+.amun-oembed-media ul
+{
+	list-style-type:none;
+	margin:0px;
+	padding:0px;
+}
+
+.amun-oembed-media li
+{
+	float:left;
+}
+
+.amun-oembed-media li > div
+{
+	width:240px;
+	height:180px;
+	padding:4px;
+	margin-right:4px;
+	margin-bottom:4px;
+	overflow:hidden;
+	background-color:#eee;
+}
+
+.amun-oembed-media hr
+{
+	display:block;
+	clear:both;
+}
+

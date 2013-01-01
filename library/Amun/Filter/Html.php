@@ -36,6 +36,7 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 {
 	private $config;
 	private $user;
+	private $discover;
 	private $collection;
 
 	private $http;
@@ -43,7 +44,7 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 	private $oembedHosts;
 	private $oembedMedia;
 
-	public function __construct(PSX_Config $config, Amun_User $user)
+	public function __construct(PSX_Config $config, Amun_User $user, $discoverOembed = false)
 	{
 		$this->config = $config;
 		$this->user   = $user;
@@ -52,16 +53,19 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 		{
 			case AmunService_User_Account_Record::ADMINISTRATOR:
 				$this->collection = new Amun_Html_Filter_Collection_FullTrusted();
+				$this->discover   = $discoverOembed;
 				break;
 
 			case AmunService_User_Account_Record::NORMAL:
 			case AmunService_User_Account_Record::REMOTE:
 				$this->collection = new Amun_Html_Filter_Collection_NormalTrusted();
+				$this->discover   = $discoverOembed;
 				break;
 
 			case AmunService_User_Account_Record::ANONYMOUS:
 			default:
 				$this->collection = new Amun_Html_Filter_Collection_Untrusted();
+				$this->discover   = false;
 				break;
 		}
 
@@ -100,28 +104,31 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 		$html = $filter->filter();
 
 		// add discovered oembed content if any
-		if(!empty($this->oembedMedia))
+		if(!empty($this->oembedMedia) && strpos($html, 'class="amun-oembed-media"') === false)
 		{
-			$html.= "\n\n" . '<hr />';
+			$html.= "\n\n";
+			$html.= '<div class="amun-oembed-media">';
 			$html.= '<ul>';
 
 			foreach($this->oembedMedia as $type)
 			{
 				if($type instanceof PSX_Oembed_Type_Photo)
 				{
-					$html.= '<li><img src="' . $type->url . '" /></li>';
+					$html.= '<li><div><img src="' . $type->url . '" /></div></li>';
 				}
 				else if($type instanceof PSX_Oembed_Type_Rich)
 				{
-					$html.= '<li>' . $type->html . '</li>';
+					$html.= '<li><div>' . $type->html . '</div></li>';
 				}
 				else if($type instanceof PSX_Oembed_Type_Video)
 				{
-					$html.= '<li>' . $type->html . '</li>';
+					$html.= '<li><div>' . $type->html . '</div></li>';
 				}
 			}
 
 			$html.= '</ul>';
+			$html.= '<hr />';
+			$html.= '</div>';
 		}
 
 		return $html;
@@ -272,6 +279,14 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 			return false;
 		}
 
+		// if parent element of the text is an link dont replace links
+		$isHref = false;
+
+		if($text->parentNode instanceof PSX_Html_Lexer_Token_Element && strtolower($text->parentNode->name) == 'a')
+		{
+			$isHref = true;
+		}
+
 		$parts = preg_split('/(https?:\/\/\S*)/S', $text->data, -1, PREG_SPLIT_DELIM_CAPTURE);
 		$data  = '';
 
@@ -287,28 +302,40 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 				{
 					$url = new PSX_Url($part);
 
-					foreach($this->oembedHosts as $host => $endpoint)
+					if($this->discover)
 					{
-						if(strpos($url->getHost(), $host) !== false)
+						foreach($this->oembedHosts as $host => $endpoint)
 						{
-							try
+							if(strpos($url->getHost(), $host) !== false)
 							{
-								$api = new PSX_Url($endpoint);
-								$api->addParam('url', $part);
+								try
+								{
+									$api = new PSX_Url($endpoint);
+									$api->addParam('url', $part);
+									$api->addParam('maxwidth', 240);
+									$api->addParam('maxheight', 180);
 
-								$type = $this->oembed->request($api);
+									$type = $this->oembed->request($api);
 
-								$this->oembedMedia[] = $type;
-								break;
-							}
-							catch(Exception $e)
-							{
-								// oembed discovery failed
+									$this->oembedMedia[] = $type;
+									break;
+								}
+								catch(Exception $e)
+								{
+									// oembed discovery failed
+								}
 							}
 						}
 					}
 
-					$data.= '<a href="' . $part . '">' . $part . '</a>';
+					if(!$isHref)
+					{
+						$data.= '<a href="' . $part . '">' . $part . '</a>';
+					}
+					else
+					{
+						$data.= $part;
+					}
 				}
 				catch(Exception $e)
 				{
@@ -318,7 +345,6 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 		}
 
 		$text->data = $data;
-
 	}
 
 	private function getPage($href)
