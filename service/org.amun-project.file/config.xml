@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="e90e3730941b43f172d9dd5b09acbd2cdd886eff">
+<service xmlns="http://amun-project.org" signature="42364162f41cb9171f44f99c225aab4f00fb0f52">
   <status>normal</status>
   <name>file</name>
-  <description>Basic service to make a page wich can be edited</description>
+  <description>Service to make a raw page wich can be edited. It is possible to define the content type and content of each page</description>
   <path>/file</path>
   <namespace>file</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/file</type>

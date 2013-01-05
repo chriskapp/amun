@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="a71bc0b4bd0d39831c8a4a640595625847b44f3a">
+<service xmlns="http://amun-project.org" signature="4901832d46ef5190e64858b5fabade09908fa844">
   <status>normal</status>
   <name>redirect</name>
-  <description>Redirets the user to an given url</description>
+  <description>Redirects the user to an given url</description>
   <path>/redirect</path>
   <namespace>redirect</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/redirect</type>

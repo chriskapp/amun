@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="5a255589251a448601815686e01e2040ec4ee4b6">
+<service xmlns="http://amun-project.org" signature="c8a8124c315757e82dd6402eb1e7714672217dff">
   <status>normal</status>
   <name>my</name>
+  <description>Service wich offers a login and social activities for a user</description>
   <path>/my</path>
   <namespace>my</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/my</type>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="33b5bfb82a90a2e8159f2c48f6084b915941bcaf">
+<service xmlns="http://amun-project.org" signature="c569b37ffe059fab9ca9749f7b1a6857b56ce7ec">
   <status>system</status>
   <name>core</name>
+  <description>Contains the core functionalities of amun</description>
   <path>/core</path>
   <namespace>core</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/core</type>

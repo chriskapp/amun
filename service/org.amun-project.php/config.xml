@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="b0839586e69e76b2774f1d3d6e8f3b66b968acf0">
+<service xmlns="http://amun-project.org" signature="cda6ca0278cc330ee0b043abe40323b9b964ab9b">
   <status>normal</status>
   <name>php</name>
-  <description>Service to embed PHP code in a page. Because of security it is only possible to edit the page from the backend</description>
+  <description>Service to embed PHP code in a page</description>
   <path>/php</path>
   <namespace>php</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/php</type>

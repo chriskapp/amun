@@ -88,7 +88,7 @@
 		<zip destfile="${bin}/amun_${version}.zip" basedir="${build}" />
 	</target>
 
-	<target name="build-all" depends="build-doc,build-release" />
+	<target name="build-all" depends="clean,build-release" />
 
 	<target name="clean" depends="get-version">
 		<delete dir="${build}" />

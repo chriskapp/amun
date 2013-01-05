@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="22ff3391a355bf95de9d85a85ded10dedb071755">
+<service xmlns="http://amun-project.org" signature="2f04e68b37def9d12f9c2ab21354b11a62b6fb5e">
   <status>system</status>
   <name>content</name>
+  <description>Basic service wich handles pages and gadgets</description>
   <path>/content</path>
   <namespace>content</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/content</type>

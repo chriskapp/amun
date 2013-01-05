@@ -36,6 +36,7 @@ Ext.require('Amun.service.content.page.Form');
 Ext.require('Amun.service.content.page.Grid');
 Ext.require('Amun.service.user.group.Form');
 Ext.require('Amun.service.user.group.Grid');
+Ext.require('Amun.service.explorer.Grid');
 
 // start application
 Ext.application({

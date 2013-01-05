@@ -29,7 +29,7 @@ Ext.define('Workbench.controller.Content', {
     },
 
     onPanelRendered: function(){
-        this.loadGrid('http://ns.amun-project.org/2011/amun/service/content/page');
+        this.loadGrid('http://ns.amun-project.org/2011/amun/service/explorer');
     },
 
     getSelectedService: function(){

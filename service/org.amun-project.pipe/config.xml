@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="01f8ab480662cc8c271fc5ae2e37393628086f2c">
+<service xmlns="http://amun-project.org" signature="7fe5141109bb885f116a0154367b86768542230a">
   <status>normal</status>
   <name>pipe</name>
-  <description>Service wich redirects the content of an file to a page</description>
+  <description>Service wich redirects the content of an media item to an page</description>
   <path>/pipe</path>
   <namespace>pipe</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/pipe</type>

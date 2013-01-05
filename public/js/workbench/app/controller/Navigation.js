@@ -70,6 +70,9 @@ Ext.define('Workbench.controller.Navigation', {
         },{
             title: 'Country',
             type: 'http://ns.amun-project.org/2011/amun/service/country'
+        },{
+            title: 'Explorer',
+            type: 'http://ns.amun-project.org/2011/amun/service/explorer'
         }]);
 
         // services

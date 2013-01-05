@@ -3,8 +3,8 @@
 
 [ ] implement content page sort api to reorder pages
 [ ] remove my notify and contact from my service .. since its not used and we 
-    would need a message queue .. this service should come in another service
-[ ] Oauth endpoint send invalid request method header on GET at request/access
+    would need a message queue .. this function should come in another service
+[ ] oauth endpoint send invalid request method header on GET at request/access
     [ ] adding oauth scope
 [ ] possiblity to add more meta data to a page (keywords, description)
     [ ] A option to create a pasword protected page. This should be general so 
@@ -16,10 +16,6 @@
 [ ] Implement reference input field in backend
 [ ] implement user friend stream class
 [ ] support host meta to return json and xrd / jrd
-[ ] a general way to embed content like images videos etc to an page using
-    oembed i.e. you can add photo, video. We could use the html filter to get
-    all urls and make an Oembed request ... if we find an enpoint we attach
-    the meta data to the record
 [ ] build general achievment system where a user based on the karma value (or
     probably other conditions) gets specific achievments on the profile
 [ ] my service add possibility to delete (invalidate) an account
@@ -27,12 +23,16 @@
     he made in an XML or maybe HTML format
 [ ] if someone has subscribed via PSHB to a topic and we receive these messages
     we have to create a remote user for the author of the topic if the user id
-    doesnt exist.
+    doesnt exist. (should be done in the PSHB service)
 [ ] implement an http proxy for making ajax requests to external domains (same
     origin policy stuff) ... we should put the proxy class into the psx
     framework because its not amun specific and a well written proxy is in
     general needed
 [ ] test ostatus remote subscription interoperability
+[x] a general way to embed content like images videos etc to an page using
+    oembed i.e. you can add photo, video. We could use the html filter to get
+    all urls and make an Oembed request ... if we find an enpoint we attach
+    the meta data to the record
 [x] update phpdoc for proper API generation
 [x] use psx annotation parse for gadget params
 [x] improved gadget system

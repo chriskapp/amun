@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="1bb545259c443509b64ea5e01e3b9005a574d04e">
+<service xmlns="http://amun-project.org" signature="57244808506a1ea481f0af3f9cd634b0acfe9eba">
   <status>system</status>
   <name>user</name>
+  <description>Basic service wich handles user groups and rights</description>
   <path>/user</path>
   <namespace>user</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/user</type>

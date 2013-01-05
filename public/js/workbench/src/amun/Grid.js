@@ -9,6 +9,10 @@ Ext.define('Amun.Grid', {
     columnConfig: false,
     windowCache: {},
 
+    columns: null,
+    searchColumns: null,
+    store: null,
+
     initComponent: function(){
         var me = this;
         me.addEvents('reload');
@@ -41,36 +45,36 @@ Ext.define('Amun.Grid', {
         });
 
         // columns
-        var columns = [];
-        var searchColumns = [];
+        this.columns = [];
+        this.searchColumns = [];
         var fields = '';
 
         // check whether we have an config
         var config = this.getColumnConfig();
         if (typeof config == 'object') {
             for (var k in config) {
-                columns.push({
+                this.columns.push({
                     text: k,
                     width: config[k],
                     dataIndex: k
                 });
-                searchColumns.push(k);
+                this.searchColumns.push(k);
                 fields+= k + ',';
             }
         } else {
             // we have no config select all available fields
             for (var i = 0; i < result.length; i++) {
-                columns.push({
+                this.columns.push({
                     text: result[i],
                     dataIndex: result[i]
                 });
-                searchColumns.push(result[i]);
+                this.searchColumns.push(result[i]);
                 fields+= result[i] + ',';
             }
         }
 
         // create store
-        var store = Ext.create('Ext.data.Store', {
+        this.store = Ext.create('Ext.data.Store', {
             model: modelNs,
             autoLoad: true,
             remoteSort: true,
@@ -98,8 +102,8 @@ Ext.define('Amun.Grid', {
 
         // build grid
         return {
-            store: store,
-            columns: columns,
+            store: this.store,
+            columns: this.columns,
             border: false,
             cls: 'wb-content-grid',
             selModel: {
@@ -108,59 +112,12 @@ Ext.define('Amun.Grid', {
                     selectionchange: this.onSelect
                 }
             },
-            tbar: [{
-                text: 'Add Record',
-                iconCls: 'wb-icon-add',
-                cls: 'wb-content-add',
+            listeners: {
                 scope: this,
-                handler: this.onAddClick
-            },{
-                text: 'Edit Record',
-                iconCls: 'wb-icon-edit',
-                cls: 'wb-content-edit',
-                disabled: true,
-                scope: this,
-                handler: this.onEditClick
-            },{
-                text: 'Delete Record',
-                iconCls: 'wb-icon-delete',
-                cls: 'wb-content-delete',
-                disabled: true,
-                scope: this,
-                handler: this.onDeleteClick
-            },'->',{
-                xtype: 'combobox',
-                cls: 'wb-content-search-filterBy',
-                width: 100,
-                store: searchColumns,
-                value: searchColumns.slice(0),
-                editable: false
-            },{
-                xtype: 'combobox',
-                cls: 'wb-content-search-filterOp',
-                width: 85,
-                store: ['contains', 'equals', 'startsWith', 'present'],
-                value: 'contains',
-                editable: false
-            },{
-                xtype: 'textfield',
-                cls: 'wb-content-search-filterValue',
-                listeners: {
-                    scope: this,
-                    specialkey: this.onSearchEnter
-                }
-            },{
-                text: 'Search',
-                iconCls: 'wb-icon-search',
-                scope: this,
-                handler: this.onSearchClick
-            }],
-            bbar: Ext.create('Ext.PagingToolbar', {
-                store: store,
-                displayInfo: true,
-                displayMsg: 'Displaying record {0} - {1} of {2}',
-                emptyMsg: 'No records to display',
-            })
+                celldblclick: this.onDblClick
+            },
+            tbar: this.getTbar(),
+            bbar: this.getBbar()
         };
     },
 
@@ -297,6 +254,65 @@ Ext.define('Amun.Grid', {
         return this.selectedRecordId;
     },
 
+    getTbar: function(){
+        return [{
+            text: 'Add Record',
+            iconCls: 'wb-icon-add',
+            cls: 'wb-content-add',
+            scope: this,
+            handler: this.onAddClick
+        },{
+            text: 'Edit Record',
+            iconCls: 'wb-icon-edit',
+            cls: 'wb-content-edit',
+            disabled: true,
+            scope: this,
+            handler: this.onEditClick
+        },{
+            text: 'Delete Record',
+            iconCls: 'wb-icon-delete',
+            cls: 'wb-content-delete',
+            disabled: true,
+            scope: this,
+            handler: this.onDeleteClick
+        },'->',{
+            xtype: 'combobox',
+            cls: 'wb-content-search-filterBy',
+            width: 100,
+            store: this.searchColumns,
+            value: this.searchColumns.slice(0),
+            editable: false
+        },{
+            xtype: 'combobox',
+            cls: 'wb-content-search-filterOp',
+            width: 85,
+            store: ['contains', 'equals', 'startsWith', 'present'],
+            value: 'contains',
+            editable: false
+        },{
+            xtype: 'textfield',
+            cls: 'wb-content-search-filterValue',
+            listeners: {
+                scope: this,
+                specialkey: this.onSearchEnter
+            }
+        },{
+            text: 'Search',
+            iconCls: 'wb-icon-search',
+            scope: this,
+            handler: this.onSearchClick
+        }];
+    },
+
+    getBbar: function(){
+        return Ext.create('Ext.PagingToolbar', {
+            store: this.store,
+            displayInfo: true,
+            displayMsg: 'Displaying record {0} - {1} of {2}',
+            emptyMsg: 'No records to display',
+        });
+    },
+
     onSelect: function(el){
         if (this.getSelectionModel().hasSelection()) {
             var rec = this.getSelectionModel().getSelection()[0];
@@ -311,6 +327,9 @@ Ext.define('Amun.Grid', {
 
             this.selectedRecordId = null;
         }
+    },
+
+    onDblClick: function(el){
     },
 
     onAddClick: function(el, e, eOpts){
