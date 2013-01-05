@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="8a8c413ff73580937dd3933cd3f0faa195144882">
+  <status>system</status>
+  <name>explorer</name>
+  <description>Provides an endpoint to browse and edit files</description>
+  <path>/explorer</path>
+  <namespace>explorer</namespace>
+  <type>http://ns.amun-project.org/2011/amun/service/explorer</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/explorer</type>
+      <uri>/</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Explorer View"/>
+    <perm name="add" description="Explorer Add"/>
+    <perm name="edit" description="Explorer Edit"/>
+    <perm name="delete" description="Explorer Delete"/>
+  </permissions>
+  <library>
+    <dir name="AmunService">
+      <dir name="Explorer">
+        <file name="Form.php" md5="6af575d069ac83cd4294343107026ffa"/>
+        <file name="Handler.php" md5="7fc07adca70e4ca7f7c3397407818310"/>
+        <file name="Record.php" md5="6308659cca11546038ef5b36e0e54bdc"/>
+      </dir>
+    </dir>
+  </library>
+</service>
