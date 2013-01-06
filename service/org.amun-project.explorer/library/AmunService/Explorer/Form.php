@@ -42,20 +42,10 @@ class AmunService_Explorer_Form extends Amun_Data_FormAbstract
 		$panel = new Amun_Form_Element_Panel('file', 'File');
 
 
-		if(empty($path))
-		{
-			$path = new Amun_Form_Element_Input('path', 'Path', $path);
-			$path->setType('text');
+		$path = new Amun_Form_Element_Input('path', 'Path', $path);
+		$path->setType('text');
 
-			$panel->add($path);
-		}
-		else
-		{
-			$path = new Amun_Form_Element_Input('path', 'Path', $path);
-			$path->setType('hidden');
-
-			$panel->add($path);
-		}
+		$panel->add($path);
 
 
 		$content = new Amun_Form_Element_Textarea('content', 'Content');
@@ -80,6 +70,11 @@ class AmunService_Explorer_Form extends Amun_Data_FormAbstract
 
 	public function update($path)
 	{
+		if(!is_file($path))
+		{
+			throw new Amun_Exception('Invalid file');
+		}
+
 		$record = file_get_contents($path);
 
 
@@ -117,6 +112,11 @@ class AmunService_Explorer_Form extends Amun_Data_FormAbstract
 
 	public function delete($path)
 	{
+		if(!is_file($path))
+		{
+			throw new Amun_Exception('Invalid file');
+		}
+
 		$record = file_get_contents($path);
 
 

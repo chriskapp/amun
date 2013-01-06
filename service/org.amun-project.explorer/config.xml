@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="8a8c413ff73580937dd3933cd3f0faa195144882">
+<service xmlns="http://amun-project.org" signature="5741d759476e3a3fa2030e35a757615becd5407c">
   <status>system</status>
   <name>explorer</name>
   <description>Provides an endpoint to browse and edit files</description>
@@ -22,12 +22,18 @@
     <perm name="edit" description="Explorer Edit"/>
     <perm name="delete" description="Explorer Delete"/>
   </permissions>
+  <registry>
+    <param name="path" value="." type="STRING"/>
+  </registry>
   <library>
     <dir name="AmunService">
       <dir name="Explorer">
-        <file name="Form.php" md5="6af575d069ac83cd4294343107026ffa"/>
-        <file name="Handler.php" md5="7fc07adca70e4ca7f7c3397407818310"/>
-        <file name="Record.php" md5="6308659cca11546038ef5b36e0e54bdc"/>
+        <dir name="Filter">
+          <file name="Path.php" md5="460624b4f94885707881a6cccce84568"/>
+        </dir>
+        <file name="Form.php" md5="b65ced4cb3e6d623a2f8fc3fcbf51614"/>
+        <file name="Handler.php" md5="3e3454d31e4a6516468f32592b3d3d52"/>
+        <file name="Record.php" md5="02e7786bcebce46e1ec1be6c61632344"/>
       </dir>
     </dir>
   </library>

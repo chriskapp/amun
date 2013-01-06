@@ -24,6 +24,8 @@
 
 namespace explorer\api;
 
+use AmunService_Explorer_Handler;
+use AmunService_Explorer_Record;
 use Amun_Module_ApiAbstract;
 use Exception;
 use PSX_Data_Array;
@@ -239,7 +241,7 @@ class index extends Amun_Module_ApiAbstract
 
 		$path   = $this->get->path('string');
 		$path   = empty($path) ? '' : $path;
-		$path   = '../' . $path;
+		$path   = $this->registry['explorer.path'] . '/' . $path;
 		$files  = scandir($path);
 		$result = array();
 
@@ -386,6 +388,11 @@ class index extends Amun_Module_ApiAbstract
 		$info.= (($perms & 0x0001) ? (($perms & 0x0200) ? 't' : 'x' ) : (($perms & 0x0200) ? 'T' : '-'));
 
 		return $info;
+	}
+
+	protected function getHandler($name = null)
+	{
+		return new AmunService_Explorer_Handler();
 	}
 }
 

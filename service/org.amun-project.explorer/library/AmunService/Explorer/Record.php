@@ -34,6 +34,28 @@
  */
 class AmunService_Explorer_Record extends PSX_Data_RecordAbstract
 {
+	public $path;
+	public $content;
+
+	protected $_base;
+	protected $_config;
+	protected $_sql;
+	protected $_registry;
+	protected $_validate;
+	protected $_user;
+
+	public function __construct()
+	{
+		$ct = Amun_DataFactory::getContainer();
+
+		$this->_base     = $ct->getBase();
+		$this->_config   = $ct->getConfig();
+		$this->_sql      = $ct->getSql();
+		$this->_registry = $ct->getRegistry();
+		$this->_validate = $ct->getValidate();
+		$this->_user     = $ct->getUser();
+	}
+
 	public function getName()
 	{
 		return 'file';
@@ -41,12 +63,15 @@ class AmunService_Explorer_Record extends PSX_Data_RecordAbstract
 
 	public function getFields()
 	{
-		return array('path', 'content');
+		return array(
+			'path'    => $this->path, 
+			'content' => $this->content,
+		);
 	}
 
 	public function setPath($path)
 	{
-		$path = $this->_validate->apply($path, 'string', array(), 'path', 'Path');
+		$path = $this->_validate->apply($path, 'string', array(new AmunService_Explorer_Filter_Path($this->_registry)), 'path', 'Path');
 
 		if(!$this->_validate->hasError())
 		{
@@ -71,6 +96,14 @@ class AmunService_Explorer_Record extends PSX_Data_RecordAbstract
 			throw new PSX_Data_Exception($this->_validate->getLastError());
 		}
 	}
+
+	public function getPath()
+	{
+		return $this->path;
+	}
+
+	public function getContent()
+	{
+		return $this->content;
+	}
 }
-
-

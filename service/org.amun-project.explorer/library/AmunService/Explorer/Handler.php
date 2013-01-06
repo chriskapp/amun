@@ -32,7 +32,7 @@
  * @package    Amun_Service_Page
  * @version    $Revision: 880 $
  */
-class AmunService_Explorer_Handler extends Amun_Data_HandlerAbstract
+class AmunService_Explorer_Handler implements PSX_Data_HandlerInterface
 {
 	public function create(PSX_Data_RecordInterface $record)
 	{
@@ -45,9 +45,6 @@ class AmunService_Explorer_Handler extends Amun_Data_HandlerAbstract
 
 
 			file_put_contents($record->getPath(), $record->getContent());
-
-
-			$this->notify(Amun_Data_RecordAbstract::INSERT, $record);
 
 
 			return $record;
@@ -69,9 +66,6 @@ class AmunService_Explorer_Handler extends Amun_Data_HandlerAbstract
 
 
 			file_put_contents($record->getPath(), $record->getContent());
-
-
-			$this->notify(Amun_Data_RecordAbstract::UPDATE, $record);
 
 
 			return $record;
