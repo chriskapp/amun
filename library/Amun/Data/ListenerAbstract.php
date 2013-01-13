@@ -34,6 +34,13 @@
  */
 abstract class Amun_Data_ListenerAbstract
 {
+	protected $base;
+	protected $config;
+	protected $sql;
+	protected $registry;
+	protected $event;
+	protected $user;
+
 	public function __construct(Amun_User $user = null)
 	{
 		$ct = Amun_DataFactory::getContainer();
