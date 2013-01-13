@@ -85,7 +85,7 @@ class login extends Amun_Module_ApplicationAbstract
 
 	public function onPost()
 	{
-		if($this->post->register('string'))
+		if($this->post->register('string', array(), null, null, false))
 		{
 			header('Location: ' . $this->page->url . '/register');
 			exit;
@@ -101,6 +101,11 @@ class login extends Amun_Module_ApplicationAbstract
 			if(empty($identity))
 			{
 				throw new Amun_Exception('Invalid identity');
+			}
+
+			if(empty($pw))
+			{
+				throw new Amun_Exception('Invalid password');
 			}
 
 			// check captcha if needed
@@ -174,7 +179,7 @@ class login extends Amun_Module_ApplicationAbstract
 	 */
 	private function getRedirect(PSX_Input $input)
 	{
-		$redirect = $input->redirect('string', array(new PSX_Filter_Urldecode(), new PSX_Filter_Length(8, 1024), new PSX_Filter_Url()));
+		$redirect = $input->redirect('string', array(new PSX_Filter_Urldecode(), new PSX_Filter_Length(8, 1024), new PSX_Filter_Url()), 'redirect', 'Redirect', false);
 		$base     = $this->config['psx_url'];
 
 		if(!empty($redirect) && strcasecmp(substr($redirect, 0, strlen($base)), $base) == 0)
