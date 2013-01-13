@@ -1,6 +1,7 @@
 
 [FEATURES]
 
+[ ] add twitter and github login support
 [ ] implement content page sort api to reorder pages
 [ ] remove my notify and contact from my service .. since its not used and we 
     would need a message queue .. this function should come in another service

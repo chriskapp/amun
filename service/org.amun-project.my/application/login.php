@@ -50,11 +50,6 @@ class login extends Amun_Module_ApplicationAbstract
 			// add path
 			$this->path->add('Login', $this->page->url . '/login');
 
-			// load supported provider
-			$provider = array_map('json_encode', array_map('trim', explode(',', $this->registry['my.openid_provider'])));
-
-			$this->template->assign('provider', $provider);
-
 			// check login attempts
 			$this->attempt = new AmunService_My_Attempt($this->registry);
 			$this->stage   = $this->attempt->getStage();
@@ -117,7 +112,8 @@ class login extends Amun_Module_ApplicationAbstract
 				}
 			}
 
-			$handles = array('system', 'google', 'yahoo', 'openid');
+			// load handles
+			$handles = array_map('trim', explode(',', $this->registry['my.login_provider']));
 
 			foreach($handles as $handler)
 			{

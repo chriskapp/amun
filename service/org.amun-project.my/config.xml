@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="c8a8124c315757e82dd6402eb1e7714672217dff">
+<service xmlns="http://amun-project.org" signature="09c56dbb4d16230b4688400e7030db68161c4b58">
   <status>normal</status>
   <name>my</name>
   <description>Service wich offers a login and social activities for a user</description>
@@ -37,18 +37,6 @@
     <perm name="friends_view" description="My Friends View"/>
     <perm name="activities_view" description="My Activites View"/>
     <perm name="settings_view" description="My Settings View"/>
-    <perm name="contact_view" description="My Contact View"/>
-    <perm name="contact_add" description="My Contact Add"/>
-    <perm name="contact_edit" description="My Contact Edit"/>
-    <perm name="contact_delete" description="My Contact Delete"/>
-    <perm name="notify_view" description="My Notify View"/>
-    <perm name="notify_add" description="My Notify Add"/>
-    <perm name="notify_edit" description="My Notify Edit"/>
-    <perm name="notify_delete" description="My Notify Delete"/>
-    <perm name="subscription_view" description="My Subscription View"/>
-    <perm name="subscription_add" description="My Subscription Add"/>
-    <perm name="subscription_edit" description="My Subscription Edit"/>
-    <perm name="subscription_delete" description="My Subscription Delete"/>
   </permissions>
   <navigation>
     <option name="index"/>
@@ -57,13 +45,10 @@
   </navigation>
   <registry>
     <table name="my_attempt"/>
-    <table name="my_contact"/>
-    <table name="my_notify"/>
-    <table name="my_notify_service"/>
     <param name="registration_enabled" value="1" type="BOOLEAN"/>
     <param name="max_group_count" value="12" type="INTEGER"/>
     <param name="max_wrong_login" value="8" type="INTEGER"/>
-    <param name="openid_provider" value="googlemail.com, gmail.com, yahoo.com, aol.com, aim.com" type="STRING"/>
+    <param name="login_provider" value="google, yahoo, openid, system" type="STRING"/>
   </registry>
   <mail>
     <template name="MY_REGISTRATION" from="noreply@%host%" subject="Account activation" values="account.name;account.identity;host.name;register.link;register.date">
@@ -138,39 +123,29 @@ You can login with the new password at:
       <dir name="My">
         <file name="Activity.php" md5="4613177f13f6880ccc2cfe56626da9b4"/>
         <file name="Attempt.php" md5="b769155ac6cbe8844a947e7f142707e7"/>
-        <dir name="Contact">
-          <dir name="Filter">
-            <file name="Status.php" md5="db0b471606bdd0150da3915a4214dc45"/>
-            <file name="Type.php" md5="023f206afeb8289d6c6d0079abb6dc39"/>
-          </dir>
-          <file name="Form.php" md5="c7b174ca7394a1a3adc53030207dda82"/>
-          <file name="Handler.php" md5="b320707cffcf94c10a2c30f77c5a8be6"/>
-          <file name="Record.php" md5="9949d2117c419126399535fc34a80280"/>
-          <file name="Table.php" md5="bd8cbfe3c2ee13f438a3861750694693"/>
-        </dir>
         <file name="Credentials.php" md5="0bc4483f16e95fb42207db2808632963"/>
         <file name="FriendsAbstract.php" md5="3e9596e37665bea40e4de5273d917950"/>
-        <file name="MyAbstract.php" md5="2a5adae2b611d100683c8ffb572f0e48"/>
-        <dir name="Notify">
-          <dir name="Filter">
-            <file name="Status.php" md5="c1d8a22f2bb4358007a60eba005bdc35"/>
-          </dir>
-          <file name="Form.php" md5="7a6d66de6a7959e098dd041352b7e18a"/>
-          <file name="Handler.php" md5="7d9f201b56351d8c9eef955510032c6d"/>
-          <file name="Record.php" md5="bc76e3e7051d455eff0514608008f3f2"/>
-          <dir name="Service">
-            <file name="Table.php" md5="9348f19db93206037a9da93117737956"/>
-          </dir>
-          <file name="Table.php" md5="ed08cd13aec0a344f727d641cc6bc637"/>
+        <dir name="Login">
+          <file name="InvalidPasswordException.php" md5="688e079e0e13f2ab8961f909f64f667b"/>
         </dir>
+        <dir name="LoginHandler">
+          <file name="CallbackInterface.php" md5="1cf1c8df5fe801a97d161e1c3cd6b692"/>
+          <file name="Facebook.php" md5="e36ef017e852b162b23049ed0f9a923b"/>
+          <file name="Github.php" md5="7e220a353a4ca616da5090ff583767f6"/>
+          <file name="Google.php" md5="7dfc772e320ed7b0babfd1d610be4b6e"/>
+          <file name="Ldap.php" md5="67bbc2b26a977b336ffa8821f0549022"/>
+          <file name="Openid.php" md5="aad7a4289ad08592d29476b3199317b6"/>
+          <file name="Remote.php" md5="29630e7679f445d8657b5a9118240c7d"/>
+          <file name="System.php" md5="ff02a5c35db47f5c41b0887853be6ad1"/>
+          <file name="Twitter.php" md5="49e8e21d858fb2e4f0f19159059cf787"/>
+          <file name="Webfinger.php" md5="3c90e3ced8a1d52dfe64d83e7bb5a545"/>
+          <file name="Yahoo.php" md5="60b431bbb63515a943677976b7117b6a"/>
+        </dir>
+        <file name="LoginHandlerAbstract.php" md5="01a7fd5d53cd36227ecc12aeeee119db"/>
+        <file name="LoginHandlerFactory.php" md5="0f794e1ca7e558a112a6c4fe3ee07a2f"/>
+        <file name="MyAbstract.php" md5="2a5adae2b611d100683c8ffb572f0e48"/>
         <file name="People.php" md5="66b7444bc643ff6d3df6c157c2355471"/>
         <file name="SettingsAbstract.php" md5="fb509d4551e7016f9a6c2e8075014f06"/>
-        <dir name="Subscription">
-          <file name="Form.php" md5="e2b11ec4f06e801ab6994bcbeb8a25be"/>
-          <file name="Handler.php" md5="a5e604a26644f01665604a206d728ebf"/>
-          <file name="Record.php" md5="031be3989f7af489ef3986c77ecee500"/>
-          <file name="Table.php" md5="8dc94f9266d9ca020148dc0311774628"/>
-        </dir>
       </dir>
     </dir>
   </library>
@@ -182,31 +157,6 @@ You can login with the new password at:
   `date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ip` (`ip`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.my_contact}` (
-  `id` INT(10) NOT NULL AUTO_INCREMENT,
-  `userId` INT(10) NOT NULL,
-  `status` INT(10) NOT NULL,
-  `type` ENUM('EMAIL','XMPP') NOT NULL,
-  `value` VARCHAR(64) NOT NULL,
-  `date` DATETIME NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.my_notify}` (
-  `id` INT(10) NOT NULL AUTO_INCREMENT,
-  `userId` INT(10) NOT NULL,
-  `serviceId` INT(10) NOT NULL,
-  `contactId` INT(10) NOT NULL,
-  `status` INT(10) NOT NULL,
-  `date` DATETIME NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `serviceContactId` (`serviceId`,`contactId`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.my_notify_service}` (
-  `id` INT(10) NOT NULL AUTO_INCREMENT,
-  `table` VARCHAR(32) NOT NULL,
-  `title` VARCHAR(64) NOT NULL,
-  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
   </database>
 </service>

@@ -42,7 +42,7 @@ class AmunService_User_Account_Filter_Identity extends PSX_FilterAbstract
 			return false;
 		}
 
-		// if we have an url without http prefix add it
+		/*
 		if(strpos($value, '@') === false && strpos($value, '.') !== false)
 		{
 			if(substr($value, 0, 7) != 'http://' && substr($value, 0, 8) != 'https://')
@@ -53,8 +53,9 @@ class AmunService_User_Account_Filter_Identity extends PSX_FilterAbstract
 
 		$email = filter_var($value, FILTER_VALIDATE_EMAIL) === false ? false : true;
 		$url   = filter_var($value, FILTER_VALIDATE_URL)   === false ? false : true;
+		*/
 
-		return $email || $url;
+		return true;
 	}
 
 	public function getErrorMsg()

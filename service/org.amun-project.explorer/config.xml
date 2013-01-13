@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="5741d759476e3a3fa2030e35a757615becd5407c">
+<service xmlns="http://amun-project.org" signature="1ab510807874e9ba5bf3befb39adfe72ad111336">
   <status>system</status>
   <name>explorer</name>
-  <description>Provides an endpoint to browse and edit files</description>
+  <description>Provides an API to browse, create, edit and delete files on the server</description>
   <path>/explorer</path>
   <namespace>explorer</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/explorer</type>

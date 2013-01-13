@@ -1,4 +1,6 @@
 library/PSX
+library/Sabre
+library/Zend
 template/default/js/ace
 template/default/js/bootstrap
 template/default/js/jquery
