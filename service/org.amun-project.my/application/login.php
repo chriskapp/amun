@@ -117,7 +117,7 @@ class login extends Amun_Module_ApplicationAbstract
 				}
 			}
 
-			$handles = array('ldap');//, 'system', 'github', 'twitter', 'google', 'yahoo', 'openid');
+			$handles = array('system', 'google', 'yahoo', 'openid');
 
 			foreach($handles as $handler)
 			{
