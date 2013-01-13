@@ -35,9 +35,6 @@
  */
 class login extends Amun_Module_ApplicationAbstract
 {
-	private $host = null;
-	private $isRegistered = false;
-
 	private $attempt;
 	private $stage;
 
@@ -54,13 +51,7 @@ class login extends Amun_Module_ApplicationAbstract
 			$this->path->add('Login', $this->page->url . '/login');
 
 			// load supported provider
-			$defaultProvider = array_map('trim', explode(',', $this->registry['my.openid_provider']));
-			$hostProvider    = Amun_Sql_Table_Registry::get('Core_Host')
-				->select(array('name'))
-				->where('status', '=', AmunService_Core_Host_Record::NORMAL)
-				->getCol();
-
-			$provider = array_merge($defaultProvider, $hostProvider);
+			$provider = array_map('json_encode', array_map('trim', explode(',', $this->registry['my.openid_provider'])));
 
 			$this->template->assign('provider', $provider);
 
@@ -112,298 +103,65 @@ class login extends Amun_Module_ApplicationAbstract
 				throw new Amun_Exception('Invalid identity');
 			}
 
-			if(($openid = $this->isOpenidProvider($identity)) === false)
+			// check captcha if needed
+			if($this->stage == AmunService_My_Attempt::TRYING)
 			{
-				// check captcha if needed
-				if($this->stage == AmunService_My_Attempt::TRYING)
+				if(!Amun_Captcha::factory($this->config['amun_captcha'])->verify($captcha))
 				{
-					if(!Amun_Captcha::factory($this->config['amun_captcha'])->verify($captcha))
-					{
-						throw new PSX_Data_Exception('Invalid captcha');
-					}
-				}
-
-				// we have given an email address if a password is set we check
-				// whether the user exists
-				$identity = sha1(Amun_Security::getSalt() . $identity);
-
-				if(!empty($pw))
-				{
-					$row = Amun_Sql_Table_Registry::get('User_Account')
-						->select(array('id', 'status', 'pw'))
-						->where('identity', '=', $identity)
-						->getRow();
-
-					if(!empty($row))
-					{
-						if($row['pw'] == sha1(Amun_Security::getSalt() . $pw))
-						{
-							if(($error = $this->isValidStatus($row['status'])) === true)
-							{
-								// set user id
-								$this->session->set('amun_id', $row['id']);
-								$this->session->set('amun_t', time());
-
-								// clear attempts
-								if($this->stage != AmunService_My_Attempt::NONE)
-								{
-									$this->attempt->clear();
-								}
-
-								// redirect
-								$url = $redirect === false ? $this->config['psx_url'] : $redirect;
-
-								header('Location: ' . $url);
-								exit;
-							}
-							else
-							{
-								throw new Amun_Exception($error);
-							}
-						}
-						else
-						{
-							// increase login attempt
-							$this->attempt->increase();
-
-							// if none assign captcha
-							if($this->stage == AmunService_My_Attempt::NONE)
-							{
-								$captcha = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha';
-
-								$this->template->assign('captcha', $captcha);
-							}
-						}
-					}
-				}
-
-				throw new Amun_Exception('Invalid credentials');
-			}
-			else
-			{
-				$identity = $openid->getIdentifier();
-
-				if(!empty($identity))
-				{
-					// here we can add addition extensions despite what
-					// informations we need from the user
-					$sreg = new PSX_OpenId_Extension_Sreg(array('fullname', 'nickname', 'gender', 'timezone'));
-
-					if($openid->hasExtension($sreg->getNs()))
-					{
-						$openid->add($sreg);
-					}
-					else
-					{
-						$ax = new PSX_OpenId_Extension_Ax(array(
-
-							'fullname'  => 'http://axschema.org/namePerson',
-							'firstname' => 'http://axschema.org/namePerson/first',
-							'lastname'  => 'http://axschema.org/namePerson/last',
-							'gender'    => 'http://axschema.org/person/gender',
-							'timezone'  => 'http://axschema.org/pref/timezone',
-
-						));
-
-						if($openid->hasExtension($ax->getNs()))
-						{
-							$openid->add($ax);
-						}
-					}
-
-					// redirect
-					$openid->redirect();
-				}
-				else
-				{
-					throw new Amun_Exception('Invalid identity');
+					throw new PSX_Data_Exception('Invalid captcha');
 				}
 			}
+
+			$handles = array('ldap');//, 'system', 'github', 'twitter', 'google', 'yahoo', 'openid');
+
+			foreach($handles as $handler)
+			{
+				$handler = AmunService_My_LoginHandlerFactory::factory($handler);
+
+				if($handler instanceof AmunService_My_LoginHandlerAbstract && $handler->isValid($identity))
+				{
+					$handler->setPageUrl($this->page->url);
+
+					try
+					{
+						if($handler->handle($identity, $pw) === true)
+						{
+							// clear attempts
+							if($this->stage != AmunService_My_Attempt::NONE)
+							{
+								$this->attempt->clear();
+							}
+
+							// redirect
+							$url = $redirect === false ? $this->config['psx_url'] : $redirect;
+
+							header('Location: ' . $url);
+							exit;
+
+							break;
+						}
+					}
+					catch(AmunService_My_Login_InvalidPasswordException $e)
+					{
+						// increase login attempt
+						$this->attempt->increase();
+
+						// if none assign captcha
+						if($this->stage == AmunService_My_Attempt::NONE)
+						{
+							$captcha = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha';
+
+							$this->template->assign('captcha', $captcha);
+						}
+					}
+				}
+			}
+
+			throw new Exception('Authentication failed');
 		}
 		catch(Exception $e)
 		{
 			$this->template->assign('error', $e->getMessage());
-		}
-	}
-
-	/**
-	 * If $identity is an url we assume that this is an openid url and try to
-	 * discover the provider. If $identity is an email address we look first at
-	 * the provider and check whether it is also an OpenID provider in any other
-	 * case we return false
-	 *
-	 * @param string $identity
-	 * @return false|PSX_OpenId_ProviderInterface
-	 */
-	private function isOpenidProvider($identity)
-	{
-		// add http prefix if its not an email
-		if(strpos($identity, '@') === false && substr($identity, 0, 7) != 'http://' && substr($identity, 0, 8) != 'https://')
-		{
-			$identity = 'http://' . $identity;
-		}
-
-		// build callback
-		$callback = $this->page->url . '/login/callback';
-
-		// create an openid object
-		$http   = new PSX_Http(new PSX_Http_Handler_Curl());
-		$store  = new PSX_OpenId_Store_Sql($this->sql, $this->registry['table.core_assoc']);
-		$openid = new PSX_OpenId($http, $this->config['psx_url'], $store);
-
-		// check whether identity is an url if not it is an email
-		$filter = new PSX_Filter_Url();
-
-		if($filter->apply($identity) !== false)
-		{
-			$openid->initialize($identity, $callback);
-
-			return $openid;
-		}
-		else
-		{
-			$pos      = strpos($identity, '@');
-			$provider = substr($identity, $pos + 1);
-
-			// we check whether the email provider is an known openid porivder
-			switch($provider)
-			{
-				case 'googlemail.com':
-				case 'gmail.com':
-					$openid = new PSX_OpenId_Op_Google($http, $this->config['psx_url'], $store);
-					$openid->initialize($identity, $callback);
-
-					return $openid;
-					break;
-
-				case 'yahoo.com':
-					$openid = new PSX_OpenId_Op_Yahoo($http, $this->config['psx_url'], $store);
-					$openid->initialize($identity, $callback);
-
-					return $openid;
-					break;
-
-				case 'aol.com':
-				case 'aim.com':
-					$openid = new PSX_OpenId_Op_Aol($http, $this->config['psx_url'], $store);
-					$openid->initialize($identity, $callback);
-
-					return $openid;
-					break;
-
-				default:
-					// check whether the provider belongs to an connected website. If
-					// yes we also try to get an token and tokenSecret for the user
-					$host = Amun_Sql_Table_Registry::get('Core_Host')
-						->select(array('id', 'consumerKey', 'url', 'template'))
-						->where('name', '=', $provider)
-						->where('status', '=', AmunService_Core_Host_Record::NORMAL)
-						->getRow();
-
-					if(!empty($host))
-					{
-						// make webfinger request
-						$http       = new PSX_Http(new PSX_Http_Handler_Curl());
-						$webfinger  = new PSX_Webfinger($http);
-
-						$acct = 'acct:' . $identity;
-						$xrd  = $webfinger->getLrdd($acct, $host['template']);
-
-						// check subject
-						if(strcmp($xrd->getSubject(), $acct) !== 0)
-						{
-							throw new Amun_Exception('Invalid subject');
-						}
-
-						// get profile url
-						$profileUrl = $xrd->getLinkHref('profile');
-
-						if(empty($profileUrl))
-						{
-							throw new Amun_Exception('Could not find profile');
-						}
-
-						// get global id
-						$globalId = $xrd->getPropertyValue('http://ns.amun-project.org/2011/meta/id');
-
-						// initalize openid
-						$openid->initialize($profileUrl, $callback);
-
-						// if the provider is connected with the website and
-						// supports the oauth extension request an token
-						$identity = sha1(Amun_Security::getSalt() . PSX_OpenId::normalizeIdentifier($profileUrl));
-						$con      = new PSX_Sql_Condition(array('identity', '=', $identity));
-						$userId   = Amun_Sql_Table_Registry::get('User_Account')->getField('id', $con);
-						$oauth    = false;
-
-						if(!empty($userId))
-						{
-							$con = new PSX_Sql_Condition();
-							$con->add('hostId', '=', $host['id']);
-							$con->add('userId', '=', $userId);
-
-							$requestId = Amun_Sql_Table_Registry::get('Core_Host_Request')->getField('id', $con);
-
-							if(empty($requestId))
-							{
-								$oauth = true;
-							}
-						}
-						else
-						{
-							$oauth = true;
-						}
-
-						if($oauth)
-						{
-							$oauth = new PSX_OpenId_Extension_Oauth($host['consumerKey']);
-
-							if($openid->hasExtension($oauth->getNs()))
-							{
-								$this->session->set('openid_register_user_host_id', $host['id']);
-								$this->session->set('openid_register_user_global_id', $globalId);
-
-								$openid->add($oauth);
-							}
-						}
-
-						return $openid;
-					}
-
-					break;
-			}
-
-			// @todo we could make an webfinger request to get more informations
-			// about the user ...
-		}
-
-		return false;
-	}
-
-	private function isValidStatus($status)
-	{
-		switch($status)
-		{
-			case AmunService_User_Account_Record::NORMAL:
-			case AmunService_User_Account_Record::ADMINISTRATOR:
-				return true;
-				break;
-
-			case AmunService_User_Account_Record::NOT_ACTIVATED:
-				return 'Account is not activated';
-				break;
-
-			case AmunService_User_Account_Record::BANNED:
-				return 'Account is banned';
-				break;
-
-			case AmunService_User_Account_Record::RECOVER:
-				return 'Account is under recovery';
-				break;
-
-			default:
-				return 'Unknown status';
-				break;
 		}
 	}
 
