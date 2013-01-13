@@ -45,6 +45,7 @@ class AmunService_My_LoginHandlerFactory
 
 		switch($handler)
 		{
+			case 'facebook':
 			case 'github':
 			case 'google':
 			case 'ldap':

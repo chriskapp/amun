@@ -23,7 +23,10 @@
  */
 
 /**
- * AmunService_My_LoginHandler_Ldap
+ * Handles authentication against an LDAP server. The handler was tested with
+ * the OpenDS (http://opends.java.net/) server. If you have problems with other 
+ * LDAP implementations please contact us to increase the interoperability of 
+ * the handler 
  *
  * @author     Christoph Kappestein <k42b3.x@gmail.com>
  * @license    http://www.gnu.org/licenses/gpl.html GPLv3
@@ -35,14 +38,16 @@
 class AmunService_My_LoginHandler_Ldap extends AmunService_My_LoginHandlerAbstract
 {
 	const LDAP_HOST = 'localhost';
-	const USER_DN   = 'cn=Foo';
-	const USER_PW   = '009900';
-	const SALT      = '';
+	const USER_DN   = ''; // user i.e. cn=Foo
+	const USER_PW   = ''; // password
+	const SALT_SIZE = 8;
 
 	protected $res;
 
 	public function __construct()
 	{
+		parent::__construct();
+
 		$this->res = ldap_connect(self::LDAP_HOST);
 
 		if(!$this->res)
@@ -52,7 +57,7 @@ class AmunService_My_LoginHandler_Ldap extends AmunService_My_LoginHandlerAbstra
 
 		if(!ldap_bind($this->res, self::USER_DN, self::USER_PW))
 		{
-			throw new Amun_Exception('Could not bind LDAP');
+			throw new Amun_Exception('Could not bind Ldap');
 		}
 	}
 
@@ -63,8 +68,6 @@ class AmunService_My_LoginHandler_Ldap extends AmunService_My_LoginHandlerAbstra
 
 	public function handle($identity, $password)
 	{
-		// user.106 / pw=test
-
 		$result  = ldap_search($this->res, '', 'uid=' . $identity);
 		$entries = ldap_get_entries($this->res, $result);
 		$count   = isset($entries['count']) ? $entries['count'] : 0;
@@ -92,37 +95,7 @@ class AmunService_My_LoginHandler_Ldap extends AmunService_My_LoginHandlerAbstra
 				throw new Amun_Exception('User password not set');
 			}
 
-			$pos  = strpos($pw, '}');
-			$type = substr($pw, 1, $pos - 1);
-
-			switch(strtoupper($type))
-			{
-				case 'SSHA':
-					$password = '{SSHA}' . base64_encode(sha1($password . self::SALT, true));
-					break;
-
-				case 'SHA':
-					$password = '{SHA}' . base64_encode(sha1($password, true));
-					break;
-
-				case 'CRYPT':
-					$password = '{CRYPT}' . crypt($password, self::SALT);
-					break;
-
-				case 'SMD5':
-					$password = '{SMD5}' . base64_encode(md5($password . self::SALT, true));
-					break;
-
-				case 'MD5':
-					$password = '{MD5}' . base64_encode(md5($password, true));
-					break;
-
-				default:
-					throw new Amun_Exception('LDAP invalid hash method');
-					break;
-			}
-
-			if(strcasecmp($password, $pw) === 0)
+			if($this->comparePassword($pw, $password) === true)
 			{
 				$identity = $mail;
 				$con      = new PSX_Sql_Condition(array('identity', '=', sha1(Amun_Security::getSalt() . $identity)));
@@ -176,5 +149,55 @@ class AmunService_My_LoginHandler_Ldap extends AmunService_My_LoginHandlerAbstra
 				throw new AmunService_My_Login_InvalidPasswordException('Invalid password');
 			}
 		}
+	}
+
+	/**
+	 * Compares the password from an attribute userPasssword with the given 
+	 * password. Returns true if the password are equal. The ldap password 
+	 * looks like: {SSHA}Gkau0n8WLjvQUOPVPET2xJo/2YlVHC1YaSk6FQ==
+	 *
+	 * @param string $ldapPassword
+	 * @param string $password
+	 * @return boolean
+	 */
+	protected function comparePassword($ldapPassword, $password)
+	{
+		$pos  = strpos($ldapPassword, '}');
+		$type = substr($ldapPassword, 1, $pos - 1);
+		$pw   = substr($ldapPassword, $pos + 1);
+		$pw   = base64_decode($pw);
+		$algo = 'md5';
+		$salt = false;
+
+		switch(strtoupper($type))
+		{
+			case 'SSHA':
+				$salt = true;
+
+			case 'SHA':
+				$algo = 'sha1';
+				break;
+
+			case 'SMD5':
+				$salt = true;
+
+			case 'MD5':
+				$algo = 'md5';
+				break;
+		}
+
+		if($salt === true)
+		{
+			$salt = substr($pw, self::SALT_SIZE * -1);
+			$pw   = substr($pw, 0, self::SALT_SIZE * -1);
+
+			return strcasecmp(base64_encode($pw), base64_encode(hash($algo, $password . $salt, true))) === 0;
+		}
+		else
+		{
+			return strcasecmp(base64_encode($pw), base64_encode(hash($algo, $password, true))) === 0;
+		}
+
+		return false;
 	}
 }

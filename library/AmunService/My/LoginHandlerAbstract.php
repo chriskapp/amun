@@ -34,6 +34,14 @@
  */
 abstract class AmunService_My_LoginHandlerAbstract
 {
+	protected $base;
+	protected $config;
+	protected $sql;
+	protected $session;
+	protected $registry;
+	protected $event;
+	protected $user;
+
 	protected $pageUrl;
 
 	public function __construct()
