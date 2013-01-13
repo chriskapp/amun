@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="57244808506a1ea481f0af3f9cd634b0acfe9eba">
+<service xmlns="http://amun-project.org" signature="86109942b4c0838dc2e860d34f05f4aa593cf89f">
   <status>system</status>
   <name>user</name>
   <description>Basic service wich handles user groups and rights</description>
@@ -118,7 +118,7 @@
           <dir name="Filter">
             <file name="Email.php" md5="8ef2fe0e0c4dc795ac601492c4b321b2"/>
             <file name="Gender.php" md5="88f4582bd95a586d18bd9a3909b7163c"/>
-            <file name="Identity.php" md5="155ebf35277dbeb2f4bb00a396e7c8d6"/>
+            <file name="Identity.php" md5="59a04a849ab0bc9be014e74a9dd9eca3"/>
             <file name="Name.php" md5="b9ee323193ed01223a349db1f51a1a9e"/>
             <file name="Pw.php" md5="9bb0395b7c5040abd7bb896a29fed85a"/>
             <file name="Status.php" md5="8d1275e8598cee98e7fc73bf48c335d8"/>
