@@ -59,6 +59,11 @@ class AmunService_My_LoginHandler_Twitter extends AmunService_My_LoginHandlerAbs
 		return filter_var($identity, FILTER_VALIDATE_EMAIL) !== false && strpos($identity, '@twitter.com') !== false;
 	}
 
+	public function hasPassword()
+	{
+		return false;
+	}
+
 	public function handle($identity, $password)
 	{
 		// build callback

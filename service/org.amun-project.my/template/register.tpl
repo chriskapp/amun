@@ -93,8 +93,6 @@
 
 
 <script type="text/javascript">
-var psx_url = "<?php echo $url; ?>";
-
 $(document).ready(function(){
 
 	// get location if available

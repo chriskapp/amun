@@ -53,7 +53,17 @@ class AmunService_My_LoginHandler_OpenId extends AmunService_My_LoginHandlerAbst
 			$identity = 'http://' . $identity;
 		}
 
+		if(strpos($identity, '.') === false)
+		{
+			return false;
+		}
+
 		return filter_var($identity, FILTER_VALIDATE_URL) !== false;
+	}
+
+	public function hasPassword()
+	{
+		return false;
 	}
 
 	public function handle($identity, $password)

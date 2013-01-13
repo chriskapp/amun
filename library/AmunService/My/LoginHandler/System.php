@@ -39,6 +39,11 @@ class AmunService_My_LoginHandler_System extends AmunService_My_LoginHandlerAbst
 		return true;
 	}
 
+	public function hasPassword()
+	{
+		return true;
+	}
+
 	public function handle($identity, $password)
 	{
 		// we have given an email address if a password is set we check

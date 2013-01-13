@@ -66,6 +66,11 @@ class AmunService_My_LoginHandler_Ldap extends AmunService_My_LoginHandlerAbstra
 		return true;
 	}
 
+	public function hasPassword()
+	{
+		return true;
+	}
+
 	public function handle($identity, $password)
 	{
 		$result  = ldap_search($this->res, '', 'uid=' . $identity);

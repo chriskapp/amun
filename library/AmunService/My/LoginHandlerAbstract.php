@@ -132,6 +132,13 @@ abstract class AmunService_My_LoginHandlerAbstract
 	abstract public function isValid($identity);
 
 	/**
+	 * Indicates whether the handler need an password to authenticate the user
+	 *
+	 * @return boolean
+	 */
+	abstract public function hasPassword();
+
+	/**
 	 * Returns whether the $identity and $password are valid
 	 *
 	 * @param string $identity

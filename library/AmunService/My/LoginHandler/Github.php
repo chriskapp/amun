@@ -54,7 +54,14 @@ class AmunService_My_LoginHandler_Github extends AmunService_My_LoginHandlerAbst
 
 	public function isValid($identity)
 	{
+		// not complete tested
+		return false;
 		return filter_var($identity, FILTER_VALIDATE_EMAIL) !== false && strpos($identity, '@github.com') !== false;
+	}
+
+	public function hasPassword()
+	{
+		return false;
 	}
 
 	public function handle($identity, $password)

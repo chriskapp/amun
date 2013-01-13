@@ -54,7 +54,14 @@ class AmunService_My_LoginHandler_Facebook extends AmunService_My_LoginHandlerAb
 
 	public function isValid($identity)
 	{
+		// not complete tested
+		return false;
 		return filter_var($identity, FILTER_VALIDATE_EMAIL) !== false && strpos($identity, '@facebook.com') !== false;
+	}
+
+	public function hasPassword()
+	{
+		return false;
 	}
 
 	public function handle($identity, $password)

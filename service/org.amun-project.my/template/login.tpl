@@ -66,13 +66,6 @@
 </div>
 
 <script type="text/javascript">
-var psx_base = "<?php echo $base; ?>";
-<?php if(!empty($provider)): ?>
-var amun_provider = ["<?php echo implode('","', $provider); ?>"];
-<?php else: ?>
-var amun_provider = [];
-<?php endif; ?>
-
 $(document).ready(function(){
 
 	$('#identity').change(amun.services.my.loginDetection);

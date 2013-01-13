@@ -25,56 +25,13 @@ amun.services.my = {
 
 	loginDetection: function(){
 
-		this.isUri = function(value){
+		$.get(amun.config.url + 'api/my/determineLoginHandler?identity=' + $('#identity').val(), function(resp){
 
-			return (value.indexOf('@') == -1 && value.indexOf('.') != -1) || (value.substring(0, 7) == 'http://' || value.substring(0, 8) == 'https://');
+			resp = JSON.parse(resp);
 
-		}
-
-		this.isProvider = function(value){
-
-			for(var i = 0; i < amun_provider.length; i++)
+			if(resp.icon)
 			{
-				if(((pos = value.indexOf('@')) != -1) && value.indexOf('.') != -1 && value.substr(pos + 1) == amun_provider[i])
-				{
-					return true;
-				}
-			}
-
-			return false;
-
-		}
-
-		this.isEmail = function(value){
-
-			return value.indexOf('@') != -1 && value.indexOf('.') != -1;
-
-		}
-
-		this.isValidInput = function(value){
-
-			if(value.length < 3 || value.length > 256)
-			{
-				return false;
-			}
-
-			for(var i = 0; i < value.length; i++)
-			{
-				if(value.charCodeAt(i) == 0x20)
-				{
-					return false;
-				}
-			}
-
-			return true;
-
-		}
-
-		this.setImage = function(bgUrl){
-
-			if(bgUrl != false)
-			{
-				$('#identity').css('background-image', 'url(' + bgUrl + ')');
+				$('#identity').css('background-image', 'url(' + resp.icon + ')');
 				$('#identity').css('background-position', '95% 50%');
 				$('#identity').css('background-repeat', 'no-repeat');
 			}
@@ -83,63 +40,22 @@ amun.services.my = {
 				$('#identity').css('background-image', 'none');
 			}
 
-		}
+			if(resp.needPassword == '0')
+			{
+				$('#pw').css('background-color', '#eee');
+				$('#pw').val('');
 
-		this.disableFields = function(bgUrl){
+				if($('#pw').is(':focus'))
+				{
+					$('#login').focus();
+				}
+			}
+			else
+			{
+				$('#pw').css('background-color', '#fff');
+			}
 
-			$('#pw').val('');
-			$('#pw').attr('disabled', 'disabled');
-			$('#pw').css('background-color', '#d4d0c8');
-
-			$('#login').focus();
-
-			this.setImage(bgUrl);
-
-		}
-
-		this.enableFields = function(bgUrl){
-
-			$('#pw').val('');
-			$('#pw').removeAttr('disabled');
-			$('#pw').css('background-color', '#ffffff');
-
-			$('#pw').focus();
-
-			this.setImage(bgUrl);
-
-		}
-
-		this.reset = function(){
-
-			this.enableFields(false);
-
-			$('#identity').val('');
-			$('#identity').focus();
-
-		}
-
-		var value = $('#identity').val();
-
-		if(!this.isValidInput(value))
-		{
-			this.enableFields(psx_base + '/img/icons/login/exclamation.png');
-		}
-		else if(this.isUri(value))
-		{
-			this.disableFields(psx_base + '/img/icons/login/openid.png');
-		}
-		else if(this.isProvider(value))
-		{
-			this.disableFields(psx_base + '/img/icons/login/openid.png');
-		}
-		else if(this.isEmail(value))
-		{
-			this.enableFields(psx_base + '/img/icons/login/email.png');
-		}
-		else
-		{
-			this.enableFields(false);
-		}
+		});
 
 	},
 
