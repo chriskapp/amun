@@ -98,11 +98,6 @@ class login extends Amun_Module_ApplicationAbstract
 				throw new Amun_Exception('Invalid identity');
 			}
 
-			if(empty($pw))
-			{
-				throw new Amun_Exception('Invalid password');
-			}
-
 			// check captcha if needed
 			if($this->stage == AmunService_My_Attempt::TRYING)
 			{
@@ -122,6 +117,11 @@ class login extends Amun_Module_ApplicationAbstract
 				if($handler instanceof AmunService_My_LoginHandlerAbstract && $handler->isValid($identity))
 				{
 					$handler->setPageUrl($this->page->url);
+
+					if($handler->hasPassword() && empty($pw))
+					{
+						throw new Amun_Exception('Invalid password');
+					}
 
 					try
 					{
