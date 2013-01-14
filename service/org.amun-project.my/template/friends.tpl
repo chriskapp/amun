@@ -54,7 +54,7 @@
 		<?php foreach($friends as $friend): ?>
 		<tr>
 			<td><input type="checkbox" name="friend_<?php echo $friend->id; ?>" id="friend_<?php echo $friend->id; ?>" value="<?php echo $friend->id; ?>" onchange="amun.services.my.friendsDisableButtons()" /></td>
-			<td><label for="friend_<?php echo $friend->id; ?>"><img src="<?php echo $friend->friendThumbnailUrl; ?>" /></label></td>
+			<td><label for="friend_<?php echo $friend->id; ?>"><img src="<?php echo $friend->friendThumbnailUrl; ?>" width="48" height="48" /></label></td>
 			<td><h4><a href="<?php echo $friend->friendProfileUrl; ?>"><?php echo $friend->friendName; ?></a></h4></td>
 			<td><?php echo $friend->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></td>
 			<?php if($friend->friendId == $user->id): ?>
