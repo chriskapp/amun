@@ -37,7 +37,7 @@ Ext.define('Amun.Application', {
 
     onAuthentication: function(user){
         this.user = user;
-        if (user.loggedIn == true) {
+        if (user.loggedIn == true && user.status == 'Administrator') {
             // start application
             var viewport = Ext.create('Ext.container.Viewport', {
                 layout: 'border',
