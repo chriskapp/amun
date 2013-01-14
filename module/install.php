@@ -247,7 +247,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_service']}` (
 SQL;
 
 			$q[] = <<<SQL
-INSERT INTO `{$this->registry['table.core_registry']}` (`name`, `type`, `class`, `value`) VALUES
+INSERT IGNORE INTO `{$this->registry['table.core_registry']}` (`name`, `type`, `class`, `value`) VALUES
 ('table.core_approval', 'STRING', NULL, '{$this->registry['table.core_approval']}'),
 ('table.core_approval_record', 'STRING', NULL, '{$this->registry['table.core_approval_record']}'),
 ('table.core_event', 'STRING', NULL, '{$this->registry['table.core_event']}'),
@@ -258,7 +258,7 @@ INSERT INTO `{$this->registry['table.core_registry']}` (`name`, `type`, `class`,
 SQL;
 
 			$q[] = <<<SQL
-INSERT INTO `{$this->registry['table.core_event']}` (`name`, `interface`, `description`) VALUES
+INSERT IGNORE INTO `{$this->registry['table.core_event']}` (`name`, `interface`, `description`) VALUES
 ('core.service_install', NULL, 'Notifies if a service gets installed'),
 ('core.record_change', NULL, 'Notifies if a record has changed');
 SQL;
@@ -659,27 +659,33 @@ SQL;
 
 				$handler->create($group);
 
-				$allowedRights = array(
+				$this->setRights(2, array(
+					'user_view',
 					'user_account_view',
 					'user_account_edit',
 					'user_activity_view',
 					'user_activity_add',
+					'user_friend_view',
 					'user_friend_add',
 					'user_friend_delete',
+					'user_friend_group_view',
 					'user_friend_group_add',
 					'user_friend_group_delete',
-				);
-				$rights = $this->sql->getCol('SELECT id FROM ' . $this->registry['table.user_right'] . ' WHERE (name LIKE "%_view" AND name NOT LIKE "core_%") OR name IN("' . implode('","', $allowedRights) . '")');
-
-				foreach($rights as $rightId)
-				{
-					$this->sql->insert($this->registry['table.user_group_right'], array(
-
-						'groupId' => 2,
-						'rightId' => $rightId,
-
-					));
-				}
+					'media_view',
+					'swagger_view',
+					'sitemap_view',
+					'content_view',
+					'my_view',
+					'my_friends_view',
+					'my_activities_view',
+					'my_settings_view',
+					'profile_view',
+					'page_view',
+					'comment_view',
+					'comment_add',
+					'news_view',
+					'news_comment_add',
+				));
 
 
 				// anonymous group
@@ -688,17 +694,18 @@ SQL;
 
 				$handler->create($group);
 
-				$rights = $this->sql->getCol('SELECT id FROM ' . $this->registry['table.user_right'] . ' WHERE name LIKE "%_view" AND name NOT LIKE "core_%"');
-
-				foreach($rights as $rightId)
-				{
-					$this->sql->insert($this->registry['table.user_group_right'], array(
-
-						'groupId' => 3,
-						'rightId' => $rightId,
-
-					));
-				}
+				$this->setRights(3, array(
+					'user_view',
+					'media_view',
+					'swagger_view',
+					'sitemap_view',
+					'content_view',
+					'my_view',
+					'profile_view',
+					'page_view',
+					'comment_view',
+					'news_view',
+				));
 			}
 
 
@@ -967,6 +974,43 @@ TEXT;
 			}
 
 			echo PSX_Json::encode(array('success' => false, 'msg' => $e->getMessage() . $debug));
+		}
+	}
+
+	private function setRights($groupId, array $rights)
+	{
+		$groupId = (integer) $groupId;
+
+		if(!empty($groupId) && !empty($rights))
+		{
+			// remove existing rights
+			$this->sql->query('DELETE FROM ' . $this->registry['table.user_group_right'] . ' WHERE `groupId` = ' . $groupId);
+
+			// get rights
+			$rights = implode(',', array_map(array($this->sql, 'quote'), $rights));
+			$sql    = 'SELECT `id` FROM ' . $this->registry['table.user_right'] . ' WHERE `name` IN (' . $rights . ')';
+			$result = $this->sql->getAll($sql);
+
+			if(!empty($result))
+			{
+				// insert rights
+				$sql = 'INSERT INTO ' . $this->registry['table.user_group_right'] . ' (`groupId`, `rightId`) VALUES ';
+				$len = count($result);
+
+				foreach($result as $i => $row)
+				{
+					$sql.= '(' . $groupId . ', ' . $row['id'] . ')';
+
+					if($i < $len - 1)
+					{
+						$sql.= ',';
+					}
+
+					$sql.= "\n";
+				}
+
+				$this->sql->query($sql);
+			}
 		}
 	}
 }
