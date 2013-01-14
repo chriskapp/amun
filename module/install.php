@@ -839,12 +839,32 @@ TEXT;
 
 				// help
 				$content = <<<TEXT
+<h3>Mentions</h3>
+
+<h4>Users</h4>
+<p>If you want mention a user you can use the @ tag wich automatically creates an hyperlink to the users profile.</p>
+<pre>
+Hi @{$this->user->name} how are you?
+</pre>
+
+<h4>Pages</h4>
+<p>If you want link to a specific page you can use the &amp; tag wich automatically creates an hyperlink to the specific page.</p>
+<pre>
+look at the &home page
+</pre>
+
+<h4>Hyperlinks</h4>
+<p>Urls are automatically converted into hyperlinks. If your url points to an video or image Amun tries in some cases to discover informations about the media item and appends a preview to your post.</p>
+<pre>
+look at this video http://www.youtube.com/watch?v=4EL67mjv1nM ;D
+</pre>
+
 <h3>Formatting content</h3>
-<p>Amun uses a subset of the <a href="http://wikipedia.org/wiki/Markdown">markdown</a> syntax to provide an easy way to format content. Please use the following formatting rules in your content so that readers can enjoy reading your content. Note the markdown syntax is only to simplify creating content without writing html if you prefer you can also write plain html. If the content contains any html block level element the content will not treated as markdown to prevent double encoding. The following examples shows how you can use the syntax:</p>
+<p>Amun uses a subset of the <a href="http://wikipedia.org/wiki/Markdown">markdown</a> syntax to provide an easy way to format content. Please use the following formatting rules in your content so that readers can enjoy reading your content. Note the markdown syntax is only to simplify creating content without writing html if you prefer you can also write plain html.</p>
 
 <h4>Paragraphs</h4>
 <p>Here an example how text will be converted into paragraphs. Note if you have two trailing spaces at a line a <span class="kwd">&lt;br /&gt;</span> tag will be inserted.</p>
-<pre class="prettyprint">
+<pre>
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr
 
 sed diam nonumy eirmod tempor invidunt ut labore et.
@@ -862,7 +882,7 @@ sed diam voluptua
 
 <h4>Code</h4>
 <p>Indent four spaces or one tab to create an escaped <span class="kwd">&lt;pre&gt;</span> block. The text will be wrapped in tags, and displayed in a monospaced font. The first four spaces will be stripped off, but all other whitespace will be preserved. Markdown and HTML is ignored within a code block</p>
-<pre class="prettyprint">
+<pre>
 <span style="background-color:#ccc">    </span>public static void main(String args[])
 <span style="background-color:#ccc">    </span>{
 <span style="background-color:#ccc">    </span>    System.out.println("Hello World !!!");
@@ -880,10 +900,10 @@ public static void main(String args[])
 
 <h4>Quotes</h4>
 <p>Add a &gt; to the beginning of any line to create a <span class="kwd">&lt;blockquote&gt;</span>.</p>
-<pre class="prettyprint">
-> Lorem ipsum dolor sit amet
-> consetetur sadipscing elitr
-> sed diam nonumy eirmod
+<pre>
+&gt; Lorem ipsum dolor sit amet
+&gt; consetetur sadipscing elitr
+&gt; sed diam nonumy eirmod
 
 tempor invidunt ut labore
 </pre>
@@ -897,7 +917,7 @@ tempor invidunt ut labore
 
 <h4>Lists</h4>
 <p>A bulleted <span class="kwd">&lt;ul&gt;</span> list:</p>
-<pre class="prettyprint">
+<pre>
 * Lorem ipsum dolor sit amet
 * consetetur sadipscing elitr
 * sed diam nonumy eirmod
@@ -912,6 +932,10 @@ tempor invidunt ut labore
 	<span class="kwd">&lt;li&gt;</span>tempor invidunt ut labore<span class="kwd">&lt;/li&gt;</span>
 <span class="kwd">&lt;/ul&gt;</span>
 </pre>
+
+<h3>Restrictions</h3>
+<p>Note all the formating capabilities depends on the html tags wich are allowed for your user group. Website administrators can insert any kind of html tags where anonymous user can use only a small subset inorder to prevent misuse.</p>
+
 TEXT;
 
 				$record = Amun_Sql_Table_Registry::get('Page')->getRecord();
