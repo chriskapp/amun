@@ -46,7 +46,7 @@
 		<?php if(count($requests)): ?>
 		<?php foreach($requests as $request): ?>
 		<tr>
-			<td><img src="<?php echo $request->authorThumbnailUrl; ?>" /></td>
+			<td><img src="<?php echo $request->authorThumbnailUrl; ?>" width="48" height="48" /></td>
 			<td><h4><a href="<?php echo $request->authorProfileUrl; ?>"><?php echo $request->authorName; ?></a></h4></td>
 			<td><?php echo $request->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></td>
 			<td>

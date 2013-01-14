@@ -46,7 +46,7 @@
 		<?php if(count($requests) > 0): ?>
 		<?php foreach($requests as $request): ?>
 		<tr>
-			<td><img src="<?php echo $request->friendThumbnailUrl; ?>" /></td>
+			<td><img src="<?php echo $request->friendThumbnailUrl; ?>" width="48" height="48" /></td>
 			<td><h4><a href="<?php echo $request->friendProfileUrl; ?>"><?php echo $request->friendName; ?></a></h4></td>
 			<td><?php echo $request->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></td>
 			<td>
