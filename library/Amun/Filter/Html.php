@@ -189,9 +189,9 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 
 	public function onText(PSX_Html_Lexer_Token_Text $text)
 	{
+		$this->replaceUrl($text);
 		$this->replaceProfileUrl($text);
 		$this->replacePage($text);
-		$this->replaceUrl($text);
 
 		return $text;
 	}
