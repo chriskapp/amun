@@ -45,9 +45,12 @@ class Amun_Page
 	public $urlTitle;
 	public $title;
 	public $template;
+	public $description;
+	public $keywords;
 	public $cache;
 	public $expire;
 	public $module;
+	public $publishDate;
 	public $date;
 
 	public $applicationPath;
@@ -80,8 +83,11 @@ SELECT
 	page.urlTitle    AS `pageUrlTitle`,
 	page.title       AS `pageTitle`,
 	page.template    AS `pageTemplate`,
+	page.description AS `pageDescription`,
+	page.keywords    AS `pageKeywords`,
 	page.cache       AS `pageCache`,
 	page.expire      AS `pageExpire`,
+	page.publishDate AS `pagePublishDate`,
 	page.date        AS `pageDate`,
 	service.source   AS `serviceSource`
 
@@ -113,8 +119,11 @@ SQL;
 			$this->urlTitle    = $row['pageUrlTitle'];
 			$this->title       = $row['pageTitle'];
 			$this->template    = $row['pageTemplate'];
+			$this->description = $row['pageDescription'];
+			$this->keywords    = $row['pageKeywords'];
 			$this->cache       = $row['pageCache'];
 			$this->expire      = $row['pageExpire'];
+			$this->publishDate = $row['pagePublishDate'];
 			$this->date        = $row['pageDate'];
 
 			$this->application = $row['serviceSource'];
@@ -129,36 +138,6 @@ SQL;
 	public function getServiceId()
 	{
 		return $this->serviceId;
-	}
-
-	public function loadExtraRights()
-	{
-		$sql = <<<SQL
-SELECT
-
-	`pageRight`.`groupId`,
-	`pageRight`.`newGroupId`
-
-	FROM {$this->registry['table.content_page_right']} `pageRight`
-
-		WHERE `pageRight`.`pageId` = {$this->id}
-
-SQL;
-
-		$rights = $this->sql->getAll($sql);
-
-		foreach($rights as $row)
-		{
-			if($row['groupId'] == $this->user->groupId)
-			{
-				$this->user->setRights($row['newGroupId']);
-			}
-		}
-	}
-
-	public function hasRight()
-	{
-		return $this->load & AmunService_Content_Page_Record::RIGHT;
 	}
 
 	public function hasNav()

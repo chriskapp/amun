@@ -41,12 +41,6 @@ abstract class Amun_Module_ApplicationAbstract extends PSX_Module_ViewAbstract
 
 		if(!empty($this->page->id))
 		{
-			// load extra rights
-			if($this->page->hasRight())
-			{
-				$this->page->loadExtraRights();
-			}
-
 			// load nav
 			if($this->page->hasNav())
 			{
@@ -67,6 +61,9 @@ abstract class Amun_Module_ApplicationAbstract extends PSX_Module_ViewAbstract
 
 			// set application template path
 			$this->template->setDir($this->config['amun_service_path'] . '/' . $this->page->application . '/template');
+
+			// add meta tags
+			$this->loadMetaTags();
 
 			// add default css
 			$this->htmlCss->add('default');
@@ -134,6 +131,26 @@ abstract class Amun_Module_ApplicationAbstract extends PSX_Module_ViewAbstract
 	protected function getHandler($name = null)
 	{
 		return $this->getProvider($name)->getHandler();
+	}
+
+	protected function loadMetaTags()
+	{
+		if(!empty($this->page->description))
+		{
+			$this->htmlContent->add(Amun_Html_Content::META, '<meta name="description" content="' . $this->page->description . '" />');
+		}
+
+		if(!empty($this->page->keywords))
+		{
+			$this->htmlContent->add(Amun_Html_Content::META, '<meta name="keywords" content="' . $this->page->keywords . '" />');
+		}
+
+		if($this->page->publishDate != '0000-00-00 00:00:00')
+		{
+			$publishDate = new DateTime($this->page->publishDate);
+
+			$this->htmlContent->add(Amun_Html_Content::META, '<meta name="date" content="' . $publishDate->format(DateTime::ATOM) . '" />');
+		}
 	}
 
 	/**

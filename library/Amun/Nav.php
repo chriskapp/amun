@@ -76,6 +76,8 @@ SELECT
 
 			AND `page`.`status` = {$status}
 
+				AND (`page`.`publishDate` = '0000-00-00 00:00:00' OR `page`.`publishDate` < NOW())
+
 				ORDER BY `page`.`sort` ASC
 EOD;
 
