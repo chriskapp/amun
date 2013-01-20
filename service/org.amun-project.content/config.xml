@@ -53,10 +53,6 @@
     <perm name="page_option_add" description="Content Page Option add"/>
     <perm name="page_option_edit" description="Content Page Option edit"/>
     <perm name="page_option_delete" description="Content Page Option delete"/>
-    <perm name="page_right_view" description="Content Page Right view"/>
-    <perm name="page_right_add" description="Content Page Right add"/>
-    <perm name="page_right_edit" description="Content Page Right edit"/>
-    <perm name="page_right_delete" description="Content Page Right delete"/>
   </permissions>
   <registry>
     <table name="content_gadget"/>
@@ -145,8 +141,11 @@
   `urlTitle` varchar(32) NOT NULL,
   `title` varchar(32) NOT NULL,
   `template` text NOT NULL,
+  `description` varchar(256) NOT NULL,
+  `keywords` varchar(256) NOT NULL,
   `cache` tinyint(1) NOT NULL,
   `expire` varchar(25) NOT NULL,
+  `publishDate` datetime NOT NULL,
   `date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `globalId` (`globalId`),
@@ -169,14 +168,6 @@
   `name` varchar(32) NOT NULL,
   `href` varchar(512) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.content_page_right}` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `pageId` int(10) NOT NULL,
-  `groupId` int(10) NOT NULL,
-  `newGroupId` int(10) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `pageGroupId` (`pageId`,`groupId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
   </database>
 </service>

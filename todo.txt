@@ -1,13 +1,11 @@
 
 [FEATURES]
 
-[ ] installation update content help page mention oembed feature
+[ ] add possibility to add dynamic content to the htmlContent class in areas
+    like meta, header, footer etc. to load i.e. google analytics js. Probably
+    add this to the template instead of the page and therefor we need a template
+    table where the templates are defined
 [ ] add twitter and github login support
-[ ] implement content page sort api to reorder pages
-[x] remove my notify and contact from my service .. since its not used and we 
-    would need a message queue .. this function should come in another service
-[ ] oauth endpoint send invalid request method header on GET at request/access
-    [ ] adding oauth scope
 [ ] possiblity to add more meta data to a page (keywords, description)
     [ ] A option to create a pasword protected page. This should be general so 
         that you can protect any page with an password ... at this move we can 
@@ -16,14 +14,17 @@
 [ ] improve right system probably with inheritance
     [x] set fitting default rights for normal and anonymous user group
         news comment add and comment add for normal users
+[ ] my service add possibility to delete (invalidate) an account
+[ ] my service add data export function where a user can export all records wich
+    he made in an XML or maybe HTML format
+[ ] implement content page sort api to reorder pages
+[ ] oauth endpoint send invalid request method header on GET at request/access
+    [ ] adding oauth scope
 [ ] Implement reference input field in backend
 [ ] implement user friend stream class
 [ ] support host meta to return json and xrd / jrd
 [ ] build general achievment system where a user based on the karma value (or
     probably other conditions) gets specific achievments on the profile
-[ ] my service add possibility to delete (invalidate) an account
-[ ] my service add data export function where a user can export all records wich
-    he made in an XML or maybe HTML format
 [ ] if someone has subscribed via PSHB to a topic and we receive these messages
     we have to create a remote user for the author of the topic if the user id
     doesnt exist. (should be done in the PSHB service)
@@ -32,6 +33,9 @@
     framework because its not amun specific and a well written proxy is in
     general needed
 [ ] test ostatus remote subscription interoperability
+[x] installation update content help page mention oembed feature
+[x] remove my notify and contact from my service .. since its not used and we 
+    would need a message queue .. this function should come in another service
 [x] a general way to embed content like images videos etc to an page using
     oembed i.e. you can add photo, video. We could use the html filter to get
     all urls and make an Oembed request ... if we find an enpoint we attach
