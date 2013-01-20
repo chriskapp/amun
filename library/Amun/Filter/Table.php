@@ -56,7 +56,7 @@ class Amun_Filter_Table extends PSX_FilterAbstract
 
 	public function getErrorMsg()
 	{
-		return '%s is not valid table';
+		return '%s is not a valid table';
 	}
 }
 

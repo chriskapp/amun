@@ -34,22 +34,34 @@
  */
 class Amun_Filter_DateTime extends PSX_FilterAbstract
 {
+	protected $emptyAllowed;
+
+	public function __construct($emptyAllowed = true)
+	{
+		$this->emptyAllowed = $emptyAllowed;
+	}
+
 	public function apply($value)
 	{
 		try
 		{
+			if(empty($value))
+			{
+				throw new InvalidArgumentException('Empty value');
+			}
+
 			$date = new DateTime($value, new DateTimeZone('UTC'));
 
 			return $date->format('Y-m-d H:i:s');
 		}
 		catch(Exception $e)
 		{
-			return '0000-00-00 00:00:00';
+			return $this->emptyAllowed ? null : false;
 		}
 	}
 
 	public function getErrorMsg()
 	{
-		return '%s is not valid';
+		return '%s is not a valid date time';
 	}
 }

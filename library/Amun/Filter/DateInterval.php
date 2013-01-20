@@ -34,26 +34,35 @@
  */
 class Amun_Filter_DateInterval extends PSX_FilterAbstract
 {
+	protected $emptyAllowed;
+
+	public function __construct($emptyAllowed = true)
+	{
+		$this->emptyAllowed = $emptyAllowed;
+	}
+
 	public function apply($value)
 	{
 		try
 		{
-			if(!empty($value))
+			if(empty($value))
 			{
-				$interval = new DateInterval($value);
+				throw new InvalidArgumentException('Empty value');
 			}
+
+			$interval = new DateInterval($value);
 
 			return true;
 		}
 		catch(Exception $e)
 		{
-			return false;
+			return $this->emptyAllowed ? null : false;
 		}
 	}
 
 	public function getErrorMsg()
 	{
-		return '%s is not valid date interval';
+		return '%s is not a valid date interval';
 	}
 }
 

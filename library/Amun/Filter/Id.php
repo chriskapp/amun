@@ -69,7 +69,7 @@ class Amun_Filter_Id extends PSX_FilterAbstract
 
 	public function getErrorMsg()
 	{
-		return '%s is not valid id';
+		return '%s is not a valid id';
 	}
 }
 
