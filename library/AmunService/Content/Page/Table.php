@@ -64,9 +64,12 @@ class AmunService_Content_Page_Table extends Amun_Sql_TableAbstract
 			'path' => self::TYPE_VARCHAR | 256,
 			'urlTitle' => self::TYPE_VARCHAR | 32,
 			'title' => self::TYPE_VARCHAR | 32,
-			'template' => self::TYPE_TEXT,
+			'template' => self::TYPE_VARCHAR | 256,
+			'description' => self::TYPE_VARCHAR | 256,
+			'keywords' => self::TYPE_VARCHAR | 256,
 			'cache' => self::TYPE_TINYINT | 1,
 			'expire' => self::TYPE_VARCHAR | 25,
+			'publishDate' => self::TYPE_DATETIME,
 			'date' => self::TYPE_DATETIME,
 
 		);

@@ -34,10 +34,9 @@
  */
 class AmunService_Content_Page_Record extends Amun_Data_RecordAbstract
 {
-	const RIGHT  = 0x1;
-	const NAV    = 0x2;
-	const PATH   = 0x4;
-	const GADGET = 0x8;
+	const NAV    = 0x1;
+	const PATH   = 0x2;
+	const GADGET = 0x4;
 
 	const NORMAL = 0x1;
 	const HIDDEN = 0x2;
@@ -190,6 +189,34 @@ class AmunService_Content_Page_Record extends Amun_Data_RecordAbstract
 		}
 	}
 
+	public function setDescription($description)
+	{
+		$description = $this->_validate->apply($description, 'string', array(new PSX_Filter_Length(0, 256), new PSX_Filter_Html()));
+
+		if(!$this->_validate->hasError())
+		{
+			$this->description = $description;
+		}
+		else
+		{
+			throw new PSX_Data_Exception($this->_validate->getLastError());
+		}
+	}
+
+	public function setKeywords($keywords)
+	{
+		$keywords = $this->_validate->apply($keywords, 'string', array(new PSX_Filter_Length(0, 256), new PSX_Filter_Html()));
+
+		if(!$this->_validate->hasError())
+		{
+			$this->keywords = $keywords;
+		}
+		else
+		{
+			throw new PSX_Data_Exception($this->_validate->getLastError());
+		}
+	}
+
 	public function setCache($cache)
 	{
 		$this->cache = $cache ? 1 : 0;
@@ -202,6 +229,20 @@ class AmunService_Content_Page_Record extends Amun_Data_RecordAbstract
 		if(!$this->_validate->hasError())
 		{
 			$this->expire = $expire;
+		}
+		else
+		{
+			throw new PSX_Data_Exception($this->_validate->getLastError());
+		}
+	}
+
+	public function setPublishDate($publishDate)
+	{
+		$publishDate = $this->_validate->apply($publishDate, 'string', array(new Amun_Filter_DateTime()), 'publishDate', 'Publish Date');
+
+		if(!$this->_validate->hasError())
+		{
+			$this->publishDate = $publishDate;
 		}
 		else
 		{
@@ -336,7 +377,6 @@ class AmunService_Content_Page_Record extends Amun_Data_RecordAbstract
 			self::NAV    => 'Navigation',
 			self::PATH   => 'Path',
 			self::GADGET => 'Gadgets',
-			self::RIGHT  => 'Right',
 
 		);
 

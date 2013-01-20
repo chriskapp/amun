@@ -97,6 +97,18 @@ class AmunService_Content_Page_Form extends Amun_Data_FormAbstract
 		$panel = new Amun_Form_Element_Panel('extras', 'Extras');
 
 
+		$description = new Amun_Form_Element_Input('description', 'Description');
+		$description->setType('text');
+
+		$panel->add($description);
+
+
+		$keywords = new Amun_Form_Element_Input('keywords', 'Keywords');
+		$keywords->setType('text');
+
+		$panel->add($keywords);
+
+
 		$right = new Amun_Form_Element_Select('rightId', 'Right');
 		$right->setOptions($this->getRights());
 
@@ -109,7 +121,7 @@ class AmunService_Content_Page_Form extends Amun_Data_FormAbstract
 		$panel->add($sort);
 
 
-		$load = new Amun_Form_Element_Input('load', 'Load', 6);
+		$load = new Amun_Form_Element_Input('load', 'Load', 3);
 		$load->setType('text');
 
 		$panel->add($load);
@@ -125,6 +137,12 @@ class AmunService_Content_Page_Form extends Amun_Data_FormAbstract
 		$expire->setType('text');
 
 		$panel->add($expire);
+
+
+		$publishDate = new Amun_Form_Element_Input('publishDate', 'Publish date');
+		$publishDate->setType('datetime');
+
+		$panel->add($publishDate);
 
 
 		$tabbedPane->add($panel);
@@ -203,6 +221,18 @@ class AmunService_Content_Page_Form extends Amun_Data_FormAbstract
 		$panel = new Amun_Form_Element_Panel('extras', 'Extras');
 
 
+		$description = new Amun_Form_Element_Input('description', 'Description', $record->description);
+		$description->setType('text');
+
+		$panel->add($description);
+
+
+		$keywords = new Amun_Form_Element_Input('keywords', 'Keywords', $record->keywords);
+		$keywords->setType('text');
+
+		$panel->add($keywords);
+
+
 		$right = new Amun_Form_Element_Select('rightId', 'Right', $record->rightId);
 		$right->setOptions($this->getRights());
 
@@ -231,6 +261,12 @@ class AmunService_Content_Page_Form extends Amun_Data_FormAbstract
 		$expire->setType('text');
 
 		$panel->add($expire);
+
+
+		$publishDate = new Amun_Form_Element_Input('publishDate', 'Publish date', $record->publishDate);
+		$publishDate->setType('datetime');
+
+		$panel->add($publishDate);
 
 
 		$tabbedPane->add($panel);
@@ -316,6 +352,20 @@ class AmunService_Content_Page_Form extends Amun_Data_FormAbstract
 		$panel = new Amun_Form_Element_Panel('extras', 'Extras');
 
 
+		$description = new Amun_Form_Element_Input('description', 'Description', $record->description);
+		$description->setType('text');
+		$description->setDisabled(true);
+
+		$panel->add($description);
+
+
+		$keywords = new Amun_Form_Element_Input('keywords', 'Keywords', $record->keywords);
+		$keywords->setType('text');
+		$keywords->setDisabled(true);
+
+		$panel->add($keywords);
+
+
 		$right = new Amun_Form_Element_Select('rightId', 'Right', $record->rightId);
 		$right->setOptions($this->getRights());
 		$right->setDisabled(true);
@@ -349,6 +399,13 @@ class AmunService_Content_Page_Form extends Amun_Data_FormAbstract
 		$expire->setDisabled(true);
 
 		$panel->add($expire);
+
+
+		$publishDate = new Amun_Form_Element_Input('publishDate', 'Publish date', $record->publishDate);
+		$publishDate->setType('datetime');
+		$expire->setDisabled(true);
+
+		$panel->add($publishDate);
 
 
 		$tabbedPane->add($panel);
