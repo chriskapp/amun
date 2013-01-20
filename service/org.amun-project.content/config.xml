@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="2f04e68b37def9d12f9c2ab21354b11a62b6fb5e">
+<service xmlns="http://amun-project.org" signature="f8ad19fb1ebf3662a0941743662ac3579b54a368">
   <status>system</status>
   <name>content</name>
   <description>Basic service wich handles pages and gadgets</description>
@@ -67,7 +67,6 @@
   <library>
     <dir name="AmunService">
       <dir name="Content">
-        <file name="LrddListener.php" md5="588a52666370c70e1e19900c0b2d36ee"/>
         <dir name="Gadget">
           <dir name="Filter">
             <file name="Path.php" md5="ccd7a842e5478e59c90989af1270bb22"/>
@@ -77,6 +76,7 @@
           <file name="Record.php" md5="f6e14fe5ed3c2610396b7f3609c51510"/>
           <file name="Table.php" md5="2cbc5456fc06957fb87123592b93a9ad"/>
         </dir>
+        <file name="LrddListener.php" md5="588a52666370c70e1e19900c0b2d36ee"/>
         <dir name="Page">
           <dir name="Filter">
             <file name="Load.php" md5="ea6b225cd948c5913070165c6c929be3"/>
@@ -85,7 +85,7 @@
             <file name="Template.php" md5="66ab20f07cd831271bcac5baf1e6fc39"/>
             <file name="TitleExists.php" md5="f43e19aa03050e5c81edc606eeab4cf4"/>
           </dir>
-          <file name="Form.php" md5="a34fbd3725b1acaaa55a38de6f955f60"/>
+          <file name="Form.php" md5="4b55615557ca810f55eaaa46a62d27b4"/>
           <dir name="Gadget">
             <file name="Form.php" md5="cab790c06670e49a1104a3b49795eaff"/>
             <file name="Handler.php" md5="24ebdb5035b5d66244398affc0df7e50"/>
@@ -99,13 +99,7 @@
             <file name="Record.php" md5="502cf761ed10d419729967ea0d6020cc"/>
             <file name="Table.php" md5="578e3fc36a2bed7eda244c2515284b35"/>
           </dir>
-          <file name="Record.php" md5="f8d7408b8e267e5a7de47c3bc95116e9"/>
-          <dir name="Right">
-            <file name="Form.php" md5="226027644e0cf4a82d0c1e27542a73f6"/>
-            <file name="Handler.php" md5="3a20bd9ae7fbd596dfca39c519a15b62"/>
-            <file name="Record.php" md5="79252c7d296a0e92fb97af5fec475f8c"/>
-            <file name="Table.php" md5="c2360bee7cabe282fe260f077ff16463"/>
-          </dir>
+          <file name="Record.php" md5="2eb49b073152219744b9f59b23418225"/>
           <file name="Table.php" md5="5c02461e0fefd7b64e8fbfba5ca93d91"/>
         </dir>
       </dir>
