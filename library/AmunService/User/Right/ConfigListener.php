@@ -66,6 +66,7 @@ class AmunService_User_Right_ConfigListener extends Amun_Data_ListenerAbstract
 							$name = $namespace . '_' . $name;
 
 							$this->sql->insert($this->registry['table.user_right'], array(
+								'serviceId'   => $record->id,
 								'name'        => $name,
 								'description' => $desc,
 							));

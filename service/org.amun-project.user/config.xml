@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="5d0f2ff687ae7bbfbd5396eb44e4d79f856d0cf9">
+<service xmlns="http://amun-project.org" signature="713a4bcbaad343d9d6e8056212008ed168d0f787">
   <status>system</status>
   <name>user</name>
   <description>Basic service wich handles user groups and rights</description>
@@ -179,7 +179,7 @@
           <file name="Table.php" md5="21be1210da05f9b8138238a8698eb15b"/>
         </dir>
         <dir name="Right">
-          <file name="ConfigListener.php" md5="f650c488fb6bf9a7f8b1b22ced3f639f"/>
+          <file name="ConfigListener.php" md5="2e8ab24ba38f17744a7d5f4ec2b8db2d"/>
           <file name="Form.php" md5="c00150589c54645e376ea19b19f77159"/>
           <file name="Handler.php" md5="6d513abd14dc212ee7480c63609db066"/>
           <file name="Record.php" md5="63478ed51cc41b08146d8124429e5487"/>
@@ -281,6 +281,7 @@
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.user_right}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
+  `serviceId` int(10) NOT NULL,
   `name` varchar(64) NOT NULL,
   `description` varchar(128) NOT NULL,
   PRIMARY KEY (`id`),
