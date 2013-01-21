@@ -52,9 +52,6 @@ class activityChart extends Amun_Module_GadgetAbstract
 	{
 		$hours = $this->args->get('count', 12);
 
-		// add css
-		$this->htmlCss->add('my');
-
 		$now  = new DateTime('NOW', $this->registry['core.default_timezone']);
 		$past = new DateTime('NOW', $this->registry['core.default_timezone']);
 		$past->sub(new DateInterval('PT' . $hours . 'H'));

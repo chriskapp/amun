@@ -51,9 +51,6 @@ class latestActivity extends Amun_Module_GadgetAbstract
 	{
 		$count = $this->args->get('count', 8);
 
-		// add css
-		$this->htmlCss->add('my');
-
 		// get activities
 		$result = Amun_Sql_Table_Registry::get('User_Activity')
 			->select(array('id', 'scope', 'summary', 'date'))

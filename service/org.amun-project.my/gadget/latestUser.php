@@ -49,9 +49,6 @@ class latestUser extends Amun_Module_GadgetAbstract
 	{
 		$count = $this->args->get('count', 10);
 
-		// add css
-		$this->htmlCss->add('my');
-
 		// get latest user
 		$result = Amun_Sql_Table_Registry::get('User_Account')
 			->select(array('id', 'name', 'thumbnailUrl', 'profileUrl', 'date'))
