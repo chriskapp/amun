@@ -89,7 +89,7 @@ SELECT
 
 	FROM {$this->registry['table.content_page']} `page`
 
-		ORDER BY `depth`, `page`.`sort` ASC
+		ORDER BY `depth`, `page`.`parentId`, `page`.`sort` ASC
 SQL;
 
 		$result = $this->sql->getAll($sql);
