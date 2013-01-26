@@ -46,15 +46,15 @@ class activityChart extends Amun_Module_GadgetAbstract
 	/**
 	 * onLoad
 	 *
-	 * @param hours integer
+	 * @param count integer
 	 */
 	public function onLoad()
 	{
-		$hours = $this->args->get('count', 12);
+		$count = $this->args->get('count', 8);
 
 		$now  = new DateTime('NOW', $this->registry['core.default_timezone']);
 		$past = new DateTime('NOW', $this->registry['core.default_timezone']);
-		$past->sub(new DateInterval('PT' . $hours . 'H'));
+		$past->sub(new DateInterval('P' . $count . 'D'));
 
 		$act = array();
 
@@ -69,7 +69,7 @@ class activityChart extends Amun_Module_GadgetAbstract
 		{
 			$date     = new DateTime($row['date'], $this->registry['core.default_timezone']);
 			$interval = $date->diff($now);
-			$key      = $interval->format('%h');
+			$key      = $interval->format('%d');
 
 			if(!isset($act[$key]))
 			{
@@ -81,17 +81,13 @@ class activityChart extends Amun_Module_GadgetAbstract
 			}
 		}
 
-
-		$now    = time();
-		$past   = $date->getTimestamp();
-		$hour   = 3600;
-
+		// build params
 		$chd    = array();
 		$labels = array();
 		$max    = 0;
 		$days   = 0;
 
-		for($i = $hours - 1; $i >= 0; $i--)
+		for($i = $count - 1; $i >= 0; $i--)
 		{
 			if(isset($act[$i]))
 			{
@@ -107,23 +103,22 @@ class activityChart extends Amun_Module_GadgetAbstract
 				$chd[$i] = 0;
 			}
 
-			$labels[] = date('H', time() - ($i * 3600));
+			$labels[] = date('d M', time() - ($i * 3600 * 24));
 
 			$days++;
 		}
-
 
 		$params = array(
 
 			'cht'  => 'ls',
 			'chd'  => 't:' . implode(',', $chd),
-			'chs'  => '260x100',
+			'chs'  => '320x100',
 			'chco' => '0077CC',
 			'chds' => '0,' . $max,
 
-			//'chxt' => 'x',
-			//'chxl' => '0:|' . implode('|', $labels),
-			//'chxr' => '0,1,' . $days . ',1',
+			'chxt' => 'x',
+			'chxl' => '0:|' . implode('|', $labels),
+			'chxr' => '0,1,' . $days . ',1',
 
 		);
 
