@@ -93,6 +93,12 @@ class AmunService_Country_Handler extends Amun_Data_HandlerAbstract
 			throw new PSX_Data_Exception('missing field in record');
 		}
 	}
+
+	protected function getDefaultSelect()
+	{
+		return $this->table
+			->select(array('id', 'title', 'code', 'longitude', 'latitude'));
+	}
 }
 
 

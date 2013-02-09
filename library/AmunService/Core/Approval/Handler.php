@@ -93,6 +93,12 @@ class AmunService_Core_Approval_Handler extends Amun_Data_HandlerAbstract
 			throw new PSX_Data_Exception('Missing field in record');
 		}
 	}
+
+	protected function getDefaultSelect()
+	{
+		return $this->table
+			->select(array('id', 'table', 'field', 'value'));
+	}
 }
 
 

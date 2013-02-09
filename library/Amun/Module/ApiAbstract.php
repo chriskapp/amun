@@ -81,11 +81,6 @@ abstract class Amun_Module_ApiAbstract extends Amun_Oauth
 		return Amun_DataFactory::getProvider($name);
 	}
 
-	protected function getTable($name = null)
-	{
-		return $this->getProvider($name)->getTable();
-	}
-
 	protected function getHandler($name = null)
 	{
 		return $this->getProvider($name)->getHandler();

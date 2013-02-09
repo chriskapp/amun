@@ -98,6 +98,18 @@ class AmunService_User_Activity_Receiver_Handler extends Amun_Data_HandlerAbstra
 			throw new PSX_Data_Exception('Missing field in record');
 		}
 	}
+
+	protected function getDefaultSelect()
+	{
+		return $this->table
+			->select(array('id', 'status', 'activityId', 'userId', 'date'))
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Activity')
+				->select(array('id', 'status', 'verb', 'summary', 'date'), 'activity')
+			)
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
+			);
+	}
 }
 
 

@@ -68,23 +68,20 @@ class index extends Amun_Module_ApplicationAbstract
 
 	private function getForum()
 	{
-		$select = Amun_Sql_Table_Registry::get('Forum')
-			->select(array('id', 'sticky', 'pageId', 'urlTitle', 'title', 'text', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Content_Page')
-				->select(array('path'), 'page')
-			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
-				->select(array('name', 'profileUrl'), 'author')
-			)
-			->where('pageId', '=', $this->page->id)
-			->orderBy('sticky', PSX_Sql::SORT_DESC)
-			->orderBy('date', PSX_Sql::SORT_DESC);
+		$con = $this->getRequestCondition();
+		$con->add('pageId', '=', $this->page->id);
 
+		$url   = new PSX_Url($this->base->getSelf());
+		$count = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
+		$count = $count > 16 ? 16 : $count;
 
-		$url    = new PSX_Url($this->base->getSelf());
-		$count  = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
-
-		$result = $select->getResultSet($url->getParam('startIndex'), $count, $url->getParam('sortBy'), $url->getParam('sortOrder'), $url->getParam('filterBy'), $url->getParam('filterOp'), $url->getParam('filterValue'), $url->getParam('updatedSince'), PSX_SQL::FETCH_OBJECT);
+		$result = $this->getHandler()->getResultSet(array(),
+			$url->getParam('startIndex'), 
+			$count, 
+			$url->getParam('sortBy'), 
+			$url->getParam('sortOrder'), 
+			$con, 
+			PSX_SQL::FETCH_OBJECT);
 
 
 		$paging = new PSX_Html_Paging($url, $result);

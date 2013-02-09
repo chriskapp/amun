@@ -39,10 +39,7 @@ class index extends Amun_Module_ApplicationAbstract
 	{
 		if($this->getProvider()->hasViewRight())
 		{
-			$file = Amun_Sql_Table_Registry::get('File')
-				->select(array('contentType', 'content', 'date'))
-				->where('pageId', '=', $this->page->id)
-				->getRow();
+			$file = $this->getHandler()->getByPageId($this->page->id);
 
 			if(!empty($file))
 			{

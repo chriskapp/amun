@@ -1,12 +1,15 @@
 
 [FEATURES]
 
+[ ] remove getSelect method from all api is now in the handler
+[ ] implement handler select methods in all applications
+[ ] fix explorer service
 [ ] add possibility to add dynamic content to the htmlContent class in areas
     like meta, header, footer etc. to load i.e. google analytics js. Probably
     add this to the template instead of the page and therefor we need a template
     table where the templates are defined
 [ ] add twitter and github login support
-[ ] possiblity to add more meta data to a page (keywords, description)
+[x] possiblity to add more meta data to a page (keywords, description)
     [ ] A option to create a pasword protected page. This should be general so 
         that you can protect any page with an password ... at this move we can 
         also add a possibility to add more meta data to a page (i.e. dublincore)

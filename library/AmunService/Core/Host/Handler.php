@@ -114,6 +114,12 @@ class AmunService_Core_Host_Handler extends Amun_Data_HandlerAbstract
 		}
 	}
 
+	protected function getDefaultSelect()
+	{
+		return $this->table
+			->select(array('id', 'status', 'name', 'url', 'template', 'date'));
+	}
+
 	private function getLrddTemplate(PSX_Url $url)
 	{
 		$http      = new PSX_Http(new PSX_Http_Handler_Curl());

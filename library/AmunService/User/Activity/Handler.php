@@ -133,6 +133,15 @@ class AmunService_User_Activity_Handler extends Amun_Data_HandlerAbstract
 		}
 	}
 
+	protected function getDefaultSelect()
+	{
+		return $this->table
+			->select(array('id', 'globalId', 'parentId', 'userId', 'title', 'summary', 'date'))
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
+			);
+	}
+
 	private function sendToReceiver(PSX_Data_RecordInterface $record)
 	{
 		$activityId = isset($record->id)    ? (integer) $record->id    : null;

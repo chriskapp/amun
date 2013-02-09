@@ -56,16 +56,15 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 		{
 			try
 			{
-				$select    = $this->getSelection();
-				$fragments = $this->getUriFragments();
 				$params    = $this->getRequestParams();
-
-				if(!empty($params['fields']))
-				{
-					$select->setColumns($params['fields']);
-				}
-
-				$resultSet = $select->getResultSet($params['startIndex'], $params['count'], $params['sortBy'], $params['sortOrder'], $params['filterBy'], $params['filterOp'], $params['filterValue'], $params['updatedSince'], $this->getMode());
+				$fields    = (array) $params['fields'];
+				$resultSet = $this->getHandler()->getResultSet($fields, 
+					$params['startIndex'], 
+					$params['count'], 
+					$params['sortBy'], 
+					$params['sortOrder'], 
+					$this->getRequestCondition(),
+					$this->getMode());
 
 				$this->setResponse($resultSet);
 			}
@@ -98,8 +97,7 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 		{
 			try
 			{
-				$select = $this->getSelection();
-				$array  = new PSX_Data_Array($select->getSupportedFields());
+				$array = new PSX_Data_Array($this->getHandler()->getSupportedFields());
 
 				$this->setResponse($array);
 			}
@@ -132,7 +130,7 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 		{
 			try
 			{
-				$record = $this->getTable()->getRecord();
+				$record = $this->getHandler()->getRecord();
 				$record->import($this->getRequest());
 
 				// check captcha
@@ -142,7 +140,7 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 				$this->getHandler()->create($record);
 
 
-				$msg = new PSX_Data_Message('You have successful create a ' . $this->getTable()->getDisplayName(), true);
+				$msg = new PSX_Data_Message('You have successful create a ' . $record->getName(), true);
 
 				$this->setResponse($msg);
 			}
@@ -175,7 +173,7 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 		{
 			try
 			{
-				$record = $this->getTable()->getRecord();
+				$record = $this->getHandler()->getRecord();
 				$record->import($this->getRequest());
 
 				// check owner
@@ -191,7 +189,7 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 				$this->getHandler()->update($record);
 
 
-				$msg = new PSX_Data_Message('You have successful edit a ' . $this->getTable()->getDisplayName(), true);
+				$msg = new PSX_Data_Message('You have successful edit a ' . $record->getName(), true);
 
 				$this->setResponse($msg);
 			}
@@ -224,7 +222,7 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 		{
 			try
 			{
-				$record = $this->getTable()->getRecord();
+				$record = $this->getHandler()->getRecord();
 				$record->import($this->getRequest());
 
 				// check owner
@@ -240,7 +238,7 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 				$this->getHandler()->delete($record);
 
 
-				$msg = new PSX_Data_Message('You have successful delete a ' . $this->getTable()->getDisplayName(), true);
+				$msg = new PSX_Data_Message('You have successful delete a ' . $record->getName(), true);
 
 				$this->setResponse($msg);
 			}
@@ -257,11 +255,6 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}
-	}
-
-	protected function getSelection()
-	{
-		return $this->getTable()->select(array('*'));
 	}
 
 	protected function isOwner(Amun_Data_RecordAbstract $record)
@@ -284,6 +277,48 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 				throw new PSX_Data_Exception('Invalid captcha');
 			}
 		}
+	}
+
+	protected function getRequestCondition()
+	{
+		$con          = new PSX_Sql_Condition();
+		$params       = $this->getRequestParams();
+		$filterBy     = $params['filterBy'];
+		$filterOp     = $params['filterOp'];
+		$filterValue  = $params['filterValue'];
+		$updatedSince = $params['updatedSince'];
+
+		if(in_array($filterBy, $this->getHandler()->getSupportedFields()))
+		{
+			switch($filterOp)
+			{
+				case 'contains':
+					$con->add($filterBy, 'LIKE', '%' . $filterValue . '%');
+					break;
+
+				case 'equals':
+					$con->add($filterBy, '=', $filterValue);
+					break;
+
+				case 'startsWith':
+					$con->add($filterBy, 'LIKE', $filterValue . '%');
+					break;
+
+				case 'present':
+					$con->add($filterBy, 'IS NOT', 'NULL', 'AND');
+					$con->add($filterBy, 'NOT LIKE', '');
+					break;
+			}
+		}
+
+		if($updatedSince !== null && in_array('date', $this->getHandler()->getSupportedFields()))
+		{
+			$datetime = new PSX_DateTime($updatedSince);
+
+			$con->add('date', '>', $datetime->format(PSX_DateTime::SQL));
+		}
+
+		return $con;
 	}
 
 	protected function getMode()

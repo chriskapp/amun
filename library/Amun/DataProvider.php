@@ -23,19 +23,6 @@
  */
 
 /**
- * The data provider class offers a general concept of handling data. The data
- * provider knows where and who wants to insert the data. Here an example howto
- * simply create a new record in an application
- * <code>
- * $provider = $this->getDataProvider('News');
- *
- * $record = $provider->getTable()->getRecord();
- * $record->setTitle('foor');
- * $record->setText('<p>bar</p>');
- *
- * $provider->getHandler()->create($record);
- * </code>
- *
  * The name wich must be passed as first argument to the constructor tells the
  * data provider where to look so i.e. if you pass as name "news" the data
  * provider gets the following informations:
@@ -87,9 +74,9 @@ class Amun_DataProvider
 		{
 			$class = self::getClass($tableName, 'Table');
 
-			if($class !== null && $class->isSubclassOf('Amun_Sql_TableInterface'))
+			if($class !== null)
 			{
-				return $this->_table = $class->newInstance($this->ct->getRegistry());
+				return $this->_table = new $class($this->ct->getRegistry());
 			}
 			else
 			{
@@ -111,9 +98,9 @@ class Amun_DataProvider
 
 		$class = self::getClass($this->getName(), 'Handler');
 
-		if($class !== null && $class->isSubclassOf('Amun_Data_HandlerAbstract'))
+		if($class !== null)
 		{
-			return $this->_handler = $class->newInstance($this->ct->getUser());
+			return $this->_handler = new $class($this->ct->getUser());
 		}
 		else
 		{
@@ -130,9 +117,9 @@ class Amun_DataProvider
 
 		$class = self::getClass($this->getName(), 'Form');
 
-		if($class !== null && $class->isSubclassOf('Amun_Data_FormAbstract'))
+		if($class !== null)
 		{
-			return $this->_form = $class->newInstance($this->getApiEndpoint());
+			return $this->_form = new $class($this->getApiEndpoint());
 		}
 		else
 		{
@@ -147,11 +134,11 @@ class Amun_DataProvider
 			return $this->_stream;
 		}
 
-		$class = self::getClass($this->getName(), 'Stream');
+		$class = self::getClass($this->getName($this->getTable()), 'Stream');
 
-		if($class !== null && $class->isSubclassOf('Amun_Data_StreamAbstract'))
+		if($class !== null)
 		{
-			return $this->_stream = $class->newInstance($this->getTable());
+			return $this->_stream = new $class();
 		}
 	}
 
@@ -195,13 +182,13 @@ class Amun_DataProvider
 
 	public static function getClass($namespace, $className)
 	{
-		try
-		{
-			$class = Amun_Registry::getClassName('AmunService_' . $namespace . '_' . $className);
+		$class = Amun_Registry::getClassName('AmunService_' . $namespace . '_' . $className);
 
-			return new ReflectionClass($class);
+		if(class_exists($class))
+		{
+			return $class;
 		}
-		catch(ReflectionException $e)
+		else
 		{
 			return null;
 		}

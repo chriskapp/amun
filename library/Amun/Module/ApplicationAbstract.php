@@ -123,11 +123,6 @@ abstract class Amun_Module_ApplicationAbstract extends PSX_Module_ViewAbstract
 		return Amun_DataFactory::getProvider($name);
 	}
 
-	protected function getTable($name = null)
-	{
-		return $this->getProvider($name)->getTable();
-	}
-
 	protected function getHandler($name = null)
 	{
 		return $this->getProvider($name)->getHandler();
@@ -176,5 +171,46 @@ abstract class Amun_Module_ApplicationAbstract extends PSX_Module_ViewAbstract
 
 		$this->template->assign('options', $options);
 	} 
+
+	protected function getRequestCondition()
+	{
+		$con          = new PSX_Sql_Condition();
+		$filterBy     = isset($_GET['filterBy']) ? $_GET['filterBy'] : null;
+		$filterOp     = isset($_GET['filterOp']) ? $_GET['filterOp'] : null;
+		$filterValue  = isset($_GET['filterValue']) ? $_GET['filterValue'] : null;
+		$updatedSince = isset($_GET['updatedSince']) ? $_GET['updatedSince'] : null;
+
+		if(in_array($filterBy, $this->getHandler()->getSupportedFields()))
+		{
+			switch($filterOp)
+			{
+				case 'contains':
+					$con->add($filterBy, 'LIKE', '%' . $filterValue . '%');
+					break;
+
+				case 'equals':
+					$con->add($filterBy, '=', $filterValue);
+					break;
+
+				case 'startsWith':
+					$con->add($filterBy, 'LIKE', $filterValue . '%');
+					break;
+
+				case 'present':
+					$con->add($filterBy, 'IS NOT', 'NULL', 'AND');
+					$con->add($filterBy, 'NOT LIKE', '');
+					break;
+			}
+		}
+
+		if($updatedSince !== null && in_array('date', $this->getHandler()->getSupportedFields()))
+		{
+			$datetime = new PSX_DateTime($updatedSince);
+
+			$con->add('date', '>', $datetime->format(PSX_DateTime::SQL));
+		}
+
+		return $con;
+	}
 }
 

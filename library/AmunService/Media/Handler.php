@@ -212,6 +212,12 @@ class AmunService_Media_Handler extends Amun_Data_HandlerAbstract
 		PSX_Log::info('Imported ' . $count . ' files');
 	}
 
+	protected function getDefaultSelect()
+	{
+		return $this->table
+			->select(array('id', 'path', 'size', 'mimeType', 'date'));
+	}
+
 	private function getType($mimeType)
 	{
 		$mimeType = strtolower($mimeType);

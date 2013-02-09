@@ -66,46 +66,46 @@ class index extends Amun_Module_ApplicationAbstract
 		}
 	}
 
+	/**
+	 * @httpMethod GET
+	 * @path /archive/{year}/{month}
+	 */
+	public function doArchive()
+	{
+		$this->doIndex();
+	}
+
 	private function getNews()
 	{
-		$select = Amun_Sql_Table_Registry::get('News')
-			->select(array('id', 'urlTitle', 'title', 'text', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
-				->select(array('name', 'profileUrl'), 'author')
-			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Content_Page')
-				->select(array('path'), 'page')
-			)
-			->where('pageId', '=', $this->page->id)
-			->orderBy('date', PSX_Sql::SORT_DESC);
+		$con = $this->getRequestCondition();
+		$con->add('pageId', '=', $this->page->id);
 
+		// archive
+		$year  = (integer) $this->getUriFragments('year');
+		$month = (integer) $this->getUriFragments('month');
 
-		$fragments = $this->getUriFragments();
-
-		if(isset($fragments[0]) && $fragments[0] == 'archive')
+		// i think this software will not be used after the year 3000 if so 
+		// please travel back in time and slap me in the face ... nothing 
+		// happens ;D
+		if(($year > 2010 && $year < 3000) && ($month > 0 && $month < 13))
 		{
-			$rawDate = isset($fragments[1]) && strlen($fragments[1]) == 6 ? $fragments[1] : date('Ym');
+			$date = new DateTime($year . '-' . ($month < 10 ? '0' : '') . $month . '-01', $this->registry['core.default_timezone']);
 
-			$year  = intval(substr($rawDate, 0, 4));
-			$month = intval(substr($rawDate, 4));
-
-			// i think this software will not be used after the year 3000
-			// if so please travel back in time and slap me in the face
-			// ... nothing happens ;D
-			if(($year > 2010 && $year < 3000) && ($month > 0 && $month < 13))
-			{
-				$date = new DateTime($year . '-' . ($month < 10 ? '0' : '') . $month . '-01', $this->registry['core.default_timezone']);
-
-				$select->where('date', '>=', $date->format(PSX_DateTime::SQL));
-				$select->where('date', '<', $date->add(new DateInterval('P1M'))->format(PSX_DateTime::SQL));
-			}
+			$con->add('date', '>=', $date->format(PSX_DateTime::SQL));
+			$con->add('date', '<', $date->add(new DateInterval('P1M'))->format(PSX_DateTime::SQL));
 		}
 
+		$url   = new PSX_Url($this->base->getSelf());
+		$count = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
+		$count = $count > 16 ? 16 : $count;
 
-		$url    = new PSX_Url($this->base->getSelf());
-		$count  = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
-
-		$result = $select->getResultSet($url->getParam('startIndex'), $count, $url->getParam('sortBy'), $url->getParam('sortOrder'), $url->getParam('filterBy'), $url->getParam('filterOp'), $url->getParam('filterValue'), $url->getParam('updatedSince'), PSX_SQL::FETCH_OBJECT);
+		$result = $this->getHandler()->getResultSet(array(),
+			$url->getParam('startIndex'), 
+			$count, 
+			$url->getParam('sortBy'), 
+			$url->getParam('sortOrder'), 
+			$con,
+			PSX_SQL::FETCH_OBJECT);
 
 
 		$paging = new PSX_Html_Paging($url, $result);

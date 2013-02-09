@@ -160,4 +160,10 @@ class AmunService_User_Group_Handler extends Amun_Data_HandlerAbstract
 			throw new PSX_Data_Exception('Missing field in record');
 		}
 	}
+
+	protected function getDefaultSelect()
+	{
+		return $this->table
+			->select(array('id', 'title', 'date'));
+	}
 }

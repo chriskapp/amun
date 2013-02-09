@@ -118,6 +118,18 @@ class AmunService_News_Handler extends Amun_Data_HandlerAbstract
 			throw new PSX_Data_Exception('Missing field in record');
 		}
 	}
+
+	protected function getDefaultSelect()
+	{
+		return $this->table
+			->select(array('id', 'globalId', 'pageId', 'userId', 'urlTitle', 'title', 'text', 'date'))
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+				->select(array('name', 'profileUrl'), 'author')
+			)
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Content_Page')
+				->select(array('path'), 'page')
+			);
+	}
 }
 
 

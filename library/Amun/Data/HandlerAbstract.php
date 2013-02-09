@@ -23,7 +23,24 @@
  */
 
 /**
- * Amun_Data_HandlerAbstract
+ * The data handler class offers a general concept of handling data. It 
+ * abstracts all SQL handling from the API and application parts. The data
+ * handler knows where and who wants to insert data. It can be used to CRUD
+ * records. Here an example howto simply create a new record
+ * <code>
+ * $handler = $this->getHandler();
+ *
+ * $record = $handler->getRecord();
+ * $record->setTitle('foor');
+ * $record->setText('<p>bar</p>');
+ *
+ * $handler->create($record);
+ * </code>
+ *
+ * And here an example howto read specific fields
+ * <code>
+ * $result = $this->getHandler()->getAll(array('id', 'title'));
+ * </code>
  *
  * @author     Christoph Kappestein <k42b3.x@gmail.com>
  * @license    http://www.gnu.org/licenses/gpl.html GPLv3
@@ -44,6 +61,8 @@ abstract class Amun_Data_HandlerAbstract implements PSX_Data_HandlerInterface
 
 	protected $ignoreApprovement = false;
 
+	protected $_select;
+
 	public function __construct(Amun_User $user = null)
 	{
 		$ct = Amun_DataFactory::getContainer();
@@ -57,14 +76,10 @@ abstract class Amun_Data_HandlerAbstract implements PSX_Data_HandlerInterface
 		$this->user     = $user === null ? $ct->getUser() : $user;
 	}
 
+	/*
 	public function getTable()
 	{
 		return $this->table;
-	}
-
-	public function getBase()
-	{
-		return $this->base;
 	}
 
 	public function getConfig()
@@ -81,10 +96,93 @@ abstract class Amun_Data_HandlerAbstract implements PSX_Data_HandlerInterface
 	{
 		return $this->registry;
 	}
+	*/
 
 	public function getUser()
 	{
 		return $this->user;
+	}
+
+	public function getAll(array $fields, $startIndex = 0, $count = 16, $sortBy = null, $sortOrder = null, PSX_Sql_Condition $con = null, $mode = 0, $class = null, array $args = array())
+	{
+		$startIndex = $startIndex !== null ? (integer) $startIndex : 0;
+		$count      = !empty($count)       ? (integer) $count      : 16;
+		$sortBy     = $sortBy     !== null ? $sortBy               : $this->table->getPrimaryKey();
+		$sortOrder  = $sortOrder  !== null ? (integer) $sortOrder  : PSX_Sql::SORT_DESC;
+
+		$select = $this->getSelect();
+		$fields = array_intersect($fields, $select->getSupportedFields());
+
+		if(!empty($fields))
+		{
+			$select->select($fields);
+		}
+
+		$select->orderBy($sortBy, $sortOrder)
+			->limit($startIndex, $count);
+
+		if($con !== null && $con->hasCondition())
+		{
+			$values = $con->toArray();
+
+			foreach($values as $row)
+			{
+				$select->where($row[0], $row[1], $row[2]);
+			}
+		}
+
+		return $select->getAll($mode, $class, $args);
+	}
+
+	/**
+	 * Returns an resultset wich can easily displayed on an html page with a 
+	 * pagination or exported as XML or JSON for an API
+	 *
+	 * @return PSX_Data_ResultSet
+	 */
+	public function getResultSet(array $fields, $startIndex = 0, $count = 16, $sortBy = null, $sortOrder = null, PSX_Sql_Condition $con = null, $mode = 0, $class = null, array $args = array())
+	{
+		$startIndex = $startIndex !== null ? (integer) $startIndex : 0;
+		$count      = !empty($count)       ? (integer) $count      : 16;
+		$sortOrder  = $sortOrder  !== null ? (strcasecmp($sortOrder, 'ascending') == 0 ? PSX_Sql::SORT_ASC : PSX_Sql::SORT_DESC) : null;
+
+		$totalResults = $this->getCount();
+		$entries      = $this->getAll($fields, $startIndex, $count, $sortBy, $sortOrder, $con, $mode, $class, $args);
+		$resultSet    = new PSX_Data_ResultSet($totalResults, $startIndex, $count, $entries);
+
+		return $resultSet;
+	}
+
+	/**
+	 * Returns an array wich contains all columns wich are supported by the 
+	 * default select
+	 *
+	 * @return array
+	 */
+	public function getSupportedFields()
+	{
+		return $this->getSelect()->getSupportedFields();
+	}
+
+	/**
+	 * Returns the count of rows regarding to the condition
+	 *
+	 * @return integer
+	 */
+	public function getCount(PSX_Sql_Condition $con = null)
+	{
+		return $this->getSelect()->getTotalResults($con);
+	}
+
+	/**
+	 * Returns a new record if the $id is not defined ot an existing record
+	 *
+	 * @param integer $id
+	 * @return PSX_Data_RecordInterface
+	 */
+	public function getRecord($id = null)
+	{
+		return $this->table->getRecord($id);
 	}
 
 	/**
@@ -228,7 +326,28 @@ SQL;
 		$className = substr($className, 0, -8); // remove _Handler
 		$className = substr($className, 12); // remove AmunService_
 
-		return Amun_Sql_Table_Registry::get($className);
+		return Amun_DataFactory::getProvider($className)->getTable();
+	}
+
+	protected function getSelect()
+	{
+		if($this->_select === null)
+		{
+			$this->_select = $this->getDefaultSelect();
+		}
+
+		return $this->_select;
+	}
+
+	/**
+	 * Returns the default select object
+	 *
+	 * @return PSX_Sql_Table_SelectInterface
+	 */
+	protected function getDefaultSelect()
+	{
+		return $this->table
+			->select(array('*'));
 	}
 }
 

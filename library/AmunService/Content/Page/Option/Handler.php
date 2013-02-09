@@ -93,5 +93,17 @@ class AmunService_Content_Page_Option_Handler extends Amun_Data_HandlerAbstract
 			throw new PSX_Data_Exception('Missing field in record');
 		}
 	}
+
+	protected function getDefaultSelect()
+	{
+		return $this->table
+			->select(array('id', 'name', 'href'))
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_Service_Option')
+				->select(array('name'), 'option')
+			)
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Content_Page')
+				->select(array('id', 'title'), 'page')
+			);
+	}
 }
 
