@@ -43,12 +43,6 @@ use PSX_Data_WriterResult;
  */
 class page extends Amun_Module_RestAbstract
 {
-	protected function getSelection()
-	{
-		return $this->getTable()
-			->select(array('id', 'parentId', 'globalId', 'status', 'load', 'path', 'title', 'template', 'date'));
-	}
-
 	protected function getProvider($name = null)
 	{
 		return parent::getProvider($name === null ? 'Content_Page' : $name);

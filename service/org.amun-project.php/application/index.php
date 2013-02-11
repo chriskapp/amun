@@ -44,7 +44,7 @@ class index extends Amun_Module_ApplicationAbstract
 		if($this->user->hasRight('php_view'))
 		{
 			// load php
-			$recordPhp = $this->getPhp();
+			$recordPhp = $this->getHandler()->getByPageId($this->page->id, PSX_Sql::FETCH_OBJECT);
 
 			$this->template->assign('recordPhp', $recordPhp);
 
@@ -99,17 +99,6 @@ class index extends Amun_Module_ApplicationAbstract
 		{
 			throw new Amun_Exception('Access not allowed');
 		}
-	}
-
-	private function getPhp()
-	{
-		return Amun_Sql_Table_Registry::get('Php')
-			->select(array('id', 'content', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
-				->select(array('name', 'profileUrl'), 'author')
-			)
-			->where('pageId', '=', $this->page->id)
-			->getRow(PSX_Sql::FETCH_OBJECT);
 	}
 }
 

@@ -36,11 +36,7 @@ class AmunService_Page_Handler extends Amun_Data_HandlerAbstract
 {
 	public function getByPageId($pageId, $mode = 0, $class = null, array $args = array())
 	{
-		return $this->table
-			->select(array('id', 'content', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
-				->select(array('name', 'profileUrl'), 'author')
-			)
+		return $this->getSelect()
 			->where('pageId', '=', $pageId)
 			->getRow($mode, $class, $args);
 	}

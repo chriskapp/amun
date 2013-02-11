@@ -50,26 +50,8 @@ class service extends Amun_Module_RestAbstract
 		$this->setResponse($msg, null, 500);
 	}
 
-	protected function getSelection()
-	{
-		return $this->getTable()
-			->select(array('id', 'status', 'name', 'type', 'link', 'author', 'license', 'version', 'date'));
-	}
-
 	protected function getProvider($name = null)
 	{
 		return parent::getProvider($name === null ? 'Core_Service' : $name);
-	}
-
-	protected function setWriterConfig(PSX_Data_WriterResult $writer)
-	{
-		switch($writer->getType())
-		{
-			case PSX_Data_WriterInterface::ATOM:
-
-				throw new PSX_Data_Exception('Atom not supported');
-
-				break;
-		}
 	}
 }

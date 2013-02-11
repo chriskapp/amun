@@ -36,6 +36,13 @@ class AmunService_Media_Handler extends Amun_Data_HandlerAbstract
 {
 	private $mimeTypes;
 
+	public function getByGlobalId($globalId, $mode = 0, $class = null, array $args = array())
+	{
+		return $this->getSelect()
+			->where('globalId', '=', $globalId)
+			->getRow($mode, $class, $args);
+	}
+
 	public function create(PSX_Data_RecordInterface $record)
 	{
 		if($record->hasFields('name', 'mimeType', 'size', 'path'))
@@ -215,7 +222,7 @@ class AmunService_Media_Handler extends Amun_Data_HandlerAbstract
 	protected function getDefaultSelect()
 	{
 		return $this->table
-			->select(array('id', 'path', 'size', 'mimeType', 'date'));
+			->select(array('id', 'globalId', 'rightId', 'name', 'path', 'type', 'size', 'mimeType', 'date'));
 	}
 
 	private function getType($mimeType)

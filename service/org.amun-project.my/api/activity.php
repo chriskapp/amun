@@ -65,10 +65,7 @@ class activity extends Amun_Module_RestAbstract
 		{
 			try
 			{
-				$select    = $this->getSelection();
-				$fragments = $this->getUriFragments();
-				$params    = $this->getRequestParams();
-				$userId    = $this->getUriFragments('userId');
+				$userId = $this->getUriFragments('userId');
 
 				if(!empty($userId))
 				{
@@ -79,20 +76,24 @@ class activity extends Amun_Module_RestAbstract
 					$this->userId = $this->user->id;
 				}
 
-				$select->where('userId', '=', $this->userId);
-
-				if(!empty($params['fields']))
-				{
-					$select->setColumns($params['fields']);
-				}
-
-				$resultSet = $select->getResultSet($params['startIndex'], $params['count'], $params['sortBy'], $params['sortOrder'], $params['filterBy'], $params['filterOp'], $params['filterValue'], $params['updatedSince'], PSX_Sql::FETCH_OBJECT, 'AmunService_My_Activity', array($select->getTable()));
+				$params    = $this->getRequestParams();
+				$fields    = (array) $params['fields'];
+				$resultSet = $this->getHandler('User_Activity')->getPublicResultSet($this->userId, 
+					array(), 
+					$params['startIndex'], 
+					$params['count'], 
+					$params['sortBy'], 
+					$params['sortOrder'], 
+					$this->getRequestCondition(),
+					PSX_Sql::FETCH_OBJECT, 
+					'AmunService_My_Activity', 
+					array(Amun_Sql_Table_Registry::get('User_Activity')));
 
 				$this->setResponse($resultSet);
 			}
 			catch(Exception $e)
 			{
-				$msg = new PSX_Data_Message($e->getMessage(), false);
+				$msg = new PSX_Data_Message($e->getTraceAsString(), false);
 
 				$this->setResponse($msg);
 			}
@@ -103,16 +104,6 @@ class activity extends Amun_Module_RestAbstract
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}
-	}
-
-	protected function getSelection()
-	{
-		return Amun_Sql_Table_Registry::get('User_Activity')
-			->select(array('id', 'globalId', 'parentId', 'userId', 'refId', 'table', 'verb', 'summary', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
-				->select(array('globalId', 'name', 'profileUrl', 'thumbnailUrl'), 'author')
-			)
-			->where('scope', '=', 0);
 	}
 
 	public function onPost()

@@ -61,63 +61,56 @@ class serve extends Amun_Module_ApiAbstract
 
 			if(strlen($mediaId) == 36)
 			{
-				$column = 'globalId';
-				$value  = $mediaId;
+				$media = $this->getHandler()->getByGlobalId($mediaId);
 			}
 			else
 			{
-				$column = 'id';
-				$value  = (integer) $mediaId;
+				$media = $this->getHandler()->getById($mediaId);
 			}
 
-			// remove caching header
-			header('Expires:');
-			header('Last-Modified:');
-			header('Cache-Control:');
-			header('Pragma:');
-
 			// get media item
-			$row = Amun_Sql_Table_Registry::get('Media')
-				->select(array('id', 'rightId', 'title', 'name', 'path', 'type', 'size', 'mimeType', 'date'))
-				->where($column, '=', $value)
-				->getRow();
-
-			if(!empty($row))
+			if(!empty($media))
 			{
+				// remove caching header
+				header('Expires:');
+				header('Last-Modified:');
+				header('Cache-Control:');
+				header('Pragma:');
+
 				// check right
-				if(!empty($row['rightId']) && !$this->user->hasRightId($row['rightId']))
+				if(!empty($media['rightId']) && !$this->user->hasRightId($media['rightId']))
 				{
 					throw new PSX_Data_Exception('Access not allowed');
 				}
 
 				// send header
-				switch($row['mimeType'])
+				switch($media['mimeType'])
 				{
 					case 'application/octet-stream':
-						header('Content-type: ' . $row['mimeType']);
-						header('Content-disposition: attachment; filename="' . $row['name'] . '"');
+						header('Content-type: ' . $media['mimeType']);
+						header('Content-disposition: attachment; filename="' . $media['name'] . '"');
 						break;
 
 					default:
-						header('Content-type: ' . $row['mimeType']);
+						header('Content-type: ' . $media['mimeType']);
 						break;
 				}
 
 				// read content
-				if($row['path'][0] == '/' || $row['path'][1] == ':')
+				if($media['path'][0] == '/' || $media['path'][1] == ':')
 				{
 					// absolute path
-					$path = $row['path'];
+					$path = $media['path'];
 				}
 				else
 				{
 					// relative path
-					$path = $this->registry['media.path'] . '/' . $row['path'];
+					$path = $this->registry['media.path'] . '/' . $media['path'];
 				}
 
 				if(!is_file($path))
 				{
-					throw new PSX_Data_Exception('File not found');
+					throw new PSX_Data_Exception('File not found', 404);
 				}
 
 				$response = file_get_contents($path);

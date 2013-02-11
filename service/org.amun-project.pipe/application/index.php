@@ -44,7 +44,7 @@ class index extends Amun_Module_ApplicationAbstract
 		if($this->user->hasRight('pipe_view'))
 		{
 			// load pipe
-			$recordPipe = $this->getPipe();
+			$recordPipe = $this->getHandler()->getByPageId($this->page->id, PSX_Sql::FETCH_OBJECT);
 
 			$this->template->assign('recordPipe', $recordPipe);
 
@@ -75,20 +75,6 @@ class index extends Amun_Module_ApplicationAbstract
 		{
 			throw new Amun_Exception('Access not allowed');
 		}
-	}
-
-	private function getPipe()
-	{
-		return Amun_Sql_Table_Registry::get('Pipe')
-			->select(array('id', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Media')
-				->select(array('rightId', 'name', 'path', 'mimeType'), 'media')
-			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
-				->select(array('name', 'profileUrl'), 'author')
-			)
-			->where('pageId', '=', $this->page->id)
-			->getRow(PSX_Sql::FETCH_OBJECT);
 	}
 }
 

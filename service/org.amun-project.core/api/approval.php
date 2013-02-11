@@ -42,12 +42,6 @@ use PSX_Data_WriterResult;
  */
 class approval extends Amun_Module_RestAbstract
 {
-	protected function getSelection()
-	{
-		return $this->getTable()
-			->select(array('id', 'table', 'field', 'value'));
-	}
-
 	protected function getProvider($name = null)
 	{
 		return parent::getProvider($name === null ? 'Core_Approval' : $name);

@@ -46,15 +46,6 @@ use PSX_Sql_Join;
  */
 class commit extends Amun_Module_RestAbstract
 {
-	protected function getSelection()
-	{
-		return $this->getTable()
-			->select(array('id', 'globalId', 'revision', 'url', 'message', 'commitDate', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Googleproject_Author')
-				->select(array('id', 'name'), 'author')
-			);
-	}
-
 	protected function getProvider($name = null)
 	{
 		return parent::getProvider($name === null ? 'Googleproject_Commit' : $name);
@@ -93,11 +84,8 @@ class commit extends Amun_Module_RestAbstract
 				$id      = 'urn:uuid:' . $this->base->getUUID('googleproject:commit');
 				$updated = new DateTime($updated, $this->registry['core.default_timezone']);
 
-
 				$writer = $writer->getWriter();
-
 				$writer->setConfig($title, $id, $updated);
-
 				$writer->setGenerator('amun ' . Amun_Base::getVersion());
 
 				if(!empty($this->config['amun_hub']))

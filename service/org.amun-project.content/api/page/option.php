@@ -41,18 +41,6 @@ use PSX_Sql_Join;
  */
 class option extends Amun_Module_RestAbstract
 {
-	protected function getSelection()
-	{
-		return $this->getTable()
-			->select(array('id', 'name', 'href'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_Service_Option')
-				->select(array('name'), 'option')
-			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Content_Page')
-				->select(array('id', 'title'), 'page')
-			);
-	}
-
 	protected function getProvider($name = null)
 	{
 		return parent::getProvider($name === null ? 'Content_Page_Option' : $name);

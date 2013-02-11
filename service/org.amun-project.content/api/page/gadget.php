@@ -41,18 +41,6 @@ use PSX_Sql_Join;
  */
 class gadget extends Amun_Module_RestAbstract
 {
-	protected function getSelection()
-	{
-		return $this->getTable()
-			->select(array('id', 'sort'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Content_Page')
-				->select(array('id', 'title'), 'page')
-			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Content_Gadget')
-				->select(array('id', 'title'), 'gadget')
-			);
-	}
-
 	protected function getProvider($name = null)
 	{
 		return parent::getProvider($name === null ? 'Content_Page_Gadget' : $name);

@@ -34,6 +34,7 @@ use PSX_Data_Message;
 use PSX_Data_WriterInterface;
 use PSX_Data_WriterResult;
 use PSX_Sql_Join;
+use PSX_Sql;
 
 /**
  * people
@@ -62,28 +63,30 @@ class people extends Amun_Module_RestAbstract
 		{
 			try
 			{
-				$select    = $this->getSelection();
-				$fragments = $this->getUriFragments();
-				$params    = $this->getRequestParams();
-				$userId    = $this->getUriFragments('userId');
+				$userId = $this->getUriFragments('userId');
 
 				if(!empty($userId))
 				{
-					$userId = $userId == '@me' ? $this->user->id : intval($userId);
+					$this->userId = $userId == '@me' ? $this->user->id : intval($userId);
 				}
 				else
 				{
-					$userId = $this->user->id;
+					$this->userId = $this->user->id;
 				}
 
-				$select->where('userId', '=', $userId);
+				$params = $this->getRequestParams();
+				$con    = $this->getRequestCondition();
+				$con->add('userId', '=', $this->userId);
 
-				if(!empty($params['fields']))
-				{
-					$select->setColumns($params['fields']);
-				}
-
-				$resultSet = $select->getResultSet($params['startIndex'], $params['count'], $params['sortBy'], $params['sortOrder'], $params['filterBy'], $params['filterOp'], $params['filterValue'], $params['updatedSince'], $this->getMode(), 'AmunService_My_People', array($select->getTable()));
+				$resultSet = $this->getHandler('User_Friend')->getResultSet(array(), 
+					$params['startIndex'], 
+					$params['count'], 
+					$params['sortBy'], 
+					$params['sortOrder'], 
+					$con,
+					PSX_Sql::FETCH_OBJECT, 
+					'AmunService_My_People', 
+					array(Amun_Sql_Table_Registry::get('User_Friend')));
 
 				$this->setResponse($resultSet);
 			}
@@ -100,23 +103,6 @@ class people extends Amun_Module_RestAbstract
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}
-	}
-
-	protected function getSelection()
-	{
-		return Amun_Sql_Table_Registry::get('User_Friend')
-			->select(array('id', 'status', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
-				->select(array('id', 'globalId', 'name', 'profileUrl'), 'author'),
-				'n:1',
-				'userId'
-			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
-				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated'), 'friend'),
-				'n:1',
-				'friendId'
-			)
-			->where('status', '=', AmunService_User_Friend_Record::NORMAL);
 	}
 
 	public function onPost()

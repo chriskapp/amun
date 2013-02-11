@@ -288,7 +288,7 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 		$filterValue  = $params['filterValue'];
 		$updatedSince = $params['updatedSince'];
 
-		if(in_array($filterBy, $this->getHandler()->getSupportedFields()))
+		if(!empty($filterBy) && !empty($filterOp) && !empty($filterValue))
 		{
 			switch($filterOp)
 			{
@@ -311,7 +311,7 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 			}
 		}
 
-		if($updatedSince !== null && in_array('date', $this->getHandler()->getSupportedFields()))
+		if(!empty($updatedSince))
 		{
 			$datetime = new PSX_DateTime($updatedSince);
 

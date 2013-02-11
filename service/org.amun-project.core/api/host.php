@@ -43,12 +43,6 @@ use PSX_Data_WriterResult;
  */
 class host extends Amun_Module_RestAbstract
 {
-	protected function getSelection()
-	{
-		return $this->getTable()
-			->select(array('id', 'status', 'name', 'url', 'template', 'date'));
-	}
-
 	protected function getProvider($name = null)
 	{
 		return parent::getProvider($name === null ? 'Core_Host' : $name);

@@ -42,22 +42,5 @@ use PSX_Data_WriterResult;
  */
 class index extends Amun_Module_RestAbstract
 {
-	protected function getSelection()
-	{
-		return $this->getTable()
-			->select(array('id', 'path', 'size', 'mimeType', 'date'));
-	}
-
-	protected function setWriterConfig(PSX_Data_WriterResult $writer)
-	{
-		switch($writer->getType())
-		{
-			case PSX_Data_WriterInterface::ATOM:
-
-				throw new PSX_Data_Exception('Atom not supported');
-
-				break;
-		}
-	}
 }
 

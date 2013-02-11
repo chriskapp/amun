@@ -42,12 +42,6 @@ use PSX_Data_WriterResult;
  */
 class gadget extends Amun_Module_RestAbstract
 {
-	protected function getSelection()
-	{
-		return $this->getTable()
-			->select(array('id', 'name', 'title', 'date'));
-	}
-
 	protected function getProvider($name = null)
 	{
 		return parent::getProvider($name === null ? 'Content_Gadget' : $name);

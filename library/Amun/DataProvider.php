@@ -138,7 +138,7 @@ class Amun_DataProvider
 
 		if($class !== null)
 		{
-			return $this->_stream = new $class();
+			return $this->_stream = new $class($this->getTable());
 		}
 	}
 

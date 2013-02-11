@@ -154,6 +154,18 @@ abstract class Amun_Data_HandlerAbstract implements PSX_Data_HandlerInterface
 	}
 
 	/**
+	 * Returns an row as associatve array or record object 
+	 *
+	 * @return array|PSX_Data_RecordInterface
+	 */
+	public function getById($id, $mode = 0, $class = null, array $args = array())
+	{
+		return $this->getSelect()
+			->where('id', '=', $id)
+			->getRow($mode, $class, $args);
+	}
+
+	/**
 	 * Returns an array wich contains all columns wich are supported by the 
 	 * default select
 	 *
@@ -169,9 +181,9 @@ abstract class Amun_Data_HandlerAbstract implements PSX_Data_HandlerInterface
 	 *
 	 * @return integer
 	 */
-	public function getCount(PSX_Sql_Condition $con = null)
+	public function getCount()
 	{
-		return $this->getSelect()->getTotalResults($con);
+		return $this->getSelect()->getTotalResults();
 	}
 
 	/**

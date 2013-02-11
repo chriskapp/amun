@@ -177,12 +177,12 @@ class AmunService_User_Friend_Handler extends Amun_Data_HandlerAbstract
 		return $this->table
 			->select(array('id', 'status', 'date'))
 			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
-				->select(array('id', 'globalId', 'name', 'profileUrl'), 'author'),
+				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'author'),
 				'n:1',
 				'userId'
 			)
 			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
-				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl'), 'friend'),
+				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'friend'),
 				'n:1',
 				'friendId'
 			)
