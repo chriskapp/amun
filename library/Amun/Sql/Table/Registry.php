@@ -36,7 +36,7 @@ class Amun_Sql_Table_Registry
 {
 	public static function get($key)
 	{
-		return Amun_DataFactory::getProvider($key)->getTable();
+		return Amun_DataFactory::getInstance()->getHandlerInstance($key)->getTable();
 	}
 }
 

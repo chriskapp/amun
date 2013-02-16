@@ -41,7 +41,7 @@ class index extends Amun_Module_ApplicationAbstract
 	 */
 	public function doProfile()
 	{
-		if($this->getProvider()->hasViewRight())
+		if($this->user->hasRight('profile_view'))
 		{
 			$account = $this->getAccount();
 

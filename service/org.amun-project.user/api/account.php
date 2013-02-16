@@ -46,21 +46,9 @@ use PSX_Sql_Join;
  */
 class account extends Amun_Module_RestAbstract
 {
-	protected function getSelection()
+	protected function getHandler($table = null)
 	{
-		return $this->getTable()
-			->select(array('id', 'globalId', 'groupId', 'status', 'name', 'updated', 'profileUrl'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Group')
-				->select(array('title'), 'group')
-			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Country')
-				->select(array('title'), 'country')
-			);
-	}
-
-	protected function getProvider($name = null)
-	{
-		return parent::getProvider($name === null ? 'User_Account' : $name);
+		return parent::getHandler($table === null ? 'User_Account' : $table);
 	}
 
 	protected function getRestrictedFields()

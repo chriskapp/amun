@@ -64,7 +64,7 @@ class message extends Amun_Module_ApiAbstract
 
 	public function onPost()
 	{
-		if($this->getProvider()->hasViewRight())
+		if($this->user->hasRight('user_activity_add'))
 		{
 			try
 			{

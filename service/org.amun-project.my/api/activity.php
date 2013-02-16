@@ -61,7 +61,7 @@ class activity extends Amun_Module_RestAbstract
 	 */
 	public function getActivity()
 	{
-		if($this->getProvider()->hasViewRight())
+		if($this->user->hasRight('my_view'))
 		{
 			try
 			{

@@ -34,10 +34,6 @@
  */
 class Amun_Service
 {
-	private $config;
-	private $sql;
-	private $registry;
-
 	public $id;
 	public $status;
 	public $source;
@@ -50,6 +46,12 @@ class Amun_Service
 	public $license;
 	public $version;
 	public $date;
+
+	private $config;
+	private $sql;
+	private $registry;
+
+	private $_description;
 
 	public function __construct($id, Amun_Registry $registry)
 	{

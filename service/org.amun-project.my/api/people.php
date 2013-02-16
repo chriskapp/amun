@@ -59,7 +59,7 @@ class people extends Amun_Module_RestAbstract
 	 */
 	public function getPeople()
 	{
-		if($this->getProvider()->hasViewRight())
+		if($this->user->hasRight('my_view'))
 		{
 			try
 			{

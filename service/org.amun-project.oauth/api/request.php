@@ -44,21 +44,9 @@ use PSX_Sql_Join;
  */
 class request extends Amun_Module_RestAbstract
 {
-	protected function getSelection()
+	protected function getHandler($table = null)
 	{
-		return $this->getTable()
-			->select(array('id', 'status', 'ip', 'callback', 'expire', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Oauth')
-				->select(array('id', 'title'), 'api')
-			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
-				->select(array('name', 'profileUrl'), 'author')
-			);
-	}
-
-	protected function getProvider($name = null)
-	{
-		return parent::getProvider($name === null ? 'Oauth_Request' : $name);
+		return parent::getHandler($table === null ? 'Oauth_Request' : $table);
 	}
 
 	protected function getRestrictedFields()

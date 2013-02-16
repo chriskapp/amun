@@ -34,26 +34,86 @@
  */
 class Amun_DataFactory
 {
-	private static $_provider;
-	private static $_container;
+	private static $_instance;
 
-	public static function setContainer(PSX_DependencyAbstract $ct)
+	protected $ct;
+	protected $_cache = array();
+
+	private function __construct(PSX_DependencyAbstract $ct)
 	{
-		self::$_container = $ct;
+		$this->ct = $ct;
 	}
 
-	public static function getContainer()
+	public function getHandlerInstance($table)
 	{
-		return self::$_container;
-	}
+		$class = Amun_Registry::getClassName('AmunService_' . $table . '_Handler');
 
-	public static function getProvider($name = null)
-	{
-		if(!isset(self::$_provider[$name]))
+		if(isset($this->_cache[$class]))
 		{
-			self::$_provider[$name] = new Amun_DataProvider($name, self::$_container);
+			return $this->_cache[$class];
 		}
 
-		return self::$_provider[$name];
+		if(class_exists($class))
+		{
+			return $this->_cache[$class] = new $class($this->ct->getUser());
+		}
+		else
+		{
+			throw new Amun_Exception('Handler "' . $class . '" does not exist');
+		}
+	}
+
+	public function getFormInstance($table)
+	{
+		$class = Amun_Registry::getClassName('AmunService_' . $table . '_Form');
+
+		if(isset($this->_cache[$class]))
+		{
+			return $this->_cache[$class];
+		}
+
+		if(class_exists($class))
+		{
+			$config = $this->ct->getConfig();
+			$path   = strtolower(str_replace('_', '/', $table));
+
+			$apiEndpoint = $config['psx_url'] . '/' . $config['psx_dispatch'] . 'api/' . $path;
+
+			return $this->_cache[$class] = new $class($apiEndpoint);
+		}
+		else
+		{
+			throw new Amun_Exception('Form "' . $class . '" does not exist');
+		}
+	}
+
+	public function getStreamInstance($table)
+	{
+		$class = Amun_Registry::getClassName('AmunService_' . $table . '_Stream');
+
+		if(isset($this->_cache[$class]))
+		{
+			return $this->_cache[$class];
+		}
+
+		if(class_exists($class))
+		{
+			return $this->_cache[$class] = new $class($this->getHandlerInstance($table)->getTable());
+		}
+	}
+
+	public function getContainer()
+	{
+		return $this->ct;
+	}
+
+	public static function getInstance()
+	{
+		return self::$_instance;
+	}
+
+	public static function initInstance(PSX_DependencyAbstract $ct)
+	{
+		return self::$_instance = new self($ct);
 	}
 }

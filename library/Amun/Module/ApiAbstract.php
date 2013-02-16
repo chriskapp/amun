@@ -63,8 +63,6 @@ abstract class Amun_Module_ApiAbstract extends Amun_Oauth
 			'api.accessId'   => $this->accessId,
 		));
 
-		Amun_DataFactory::setContainer($ct);
-
 		return $ct;
 	}
 
@@ -74,16 +72,9 @@ abstract class Amun_Module_ApiAbstract extends Amun_Oauth
 		$this->userId      = $this->claimedUserId;
 	}
 
-	protected function getProvider($name = null)
+	protected function getHandler($table = null)
 	{
-		$name = $name === null ? $this->service->namespace : $name;
-
-		return Amun_DataFactory::getProvider($name);
-	}
-
-	protected function getHandler($name = null)
-	{
-		return $this->getProvider($name)->getHandler();
+		return $this->dataFactory->getHandlerInstance($table === null ? $this->service->namespace : $table);
 	}
 }
 

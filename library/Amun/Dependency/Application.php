@@ -50,6 +50,7 @@ class Amun_Dependency_Application extends Amun_Dependency_Session
 
 		$this->getPage();
 		$this->getService();
+		$this->getDataFactory();
 		$this->getNav();
 		$this->getPath();
 		$this->getGadgetContainer();
@@ -77,6 +78,16 @@ class Amun_Dependency_Application extends Amun_Dependency_Session
 		}
 
 		return $this->set('service', new Amun_Service($this->getPage()->getServiceId(), $this->getRegistry()));
+	}
+
+	public function getDataFactory()
+	{
+		if($this->has('dataFactory'))
+		{
+			return $this->get('dataFactory');
+		}
+
+		return $this->set('dataFactory', Amun_DataFactory::initInstance($this));
 	}
 
 	public function getNav()

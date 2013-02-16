@@ -124,7 +124,7 @@ class AmunService_Comment_Handler extends Amun_Data_HandlerAbstract
 		return $this->table
 			->select(array('id', 'globalId', 'pageId', 'userId', 'refId', 'text', 'date'))
 			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
-				->select(array('name', 'profileUrl'), 'author')
+				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			)
 			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Content_Page')
 				->select(array('path'), 'page')

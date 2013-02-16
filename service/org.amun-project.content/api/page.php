@@ -43,9 +43,9 @@ use PSX_Data_WriterResult;
  */
 class page extends Amun_Module_RestAbstract
 {
-	protected function getProvider($name = null)
+	protected function getHandler($table = null)
 	{
-		return parent::getProvider($name === null ? 'Content_Page' : $name);
+		return parent::getHandler($table === null ? 'Content_Page' : $table);
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)

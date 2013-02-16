@@ -52,7 +52,7 @@ class tree extends Amun_Module_ApiAbstract
 	 */
 	public function getTree()
 	{
-		if($this->getProvider()->hasViewRight())
+		if($this->user->hasRight('content_page_view'))
 		{
 			try
 			{

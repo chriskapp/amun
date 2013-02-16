@@ -43,7 +43,7 @@ abstract class Amun_Data_FormAbstract
 
 	public function __construct($url = null)
 	{
-		$ct = Amun_DataFactory::getContainer();
+		$ct = Amun_DataFactory::getInstance()->getContainer();
 
 		$this->base     = $ct->getBase();
 		$this->config   = $ct->getConfig();

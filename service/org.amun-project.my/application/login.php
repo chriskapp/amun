@@ -42,7 +42,7 @@ class login extends Amun_Module_ApplicationAbstract
 	{
 		parent::onLoad();
 
-		if($this->getProvider()->hasViewRight())
+		if($this->user->hasRight('my_view'))
 		{
 			// assign redirect
 			$this->template->assign('redirect', $this->getRedirect($this->get));

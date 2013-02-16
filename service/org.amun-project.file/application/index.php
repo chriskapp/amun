@@ -37,7 +37,7 @@ class index extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
-		if($this->getProvider()->hasViewRight())
+		if($this->user->hasRight('file_view'))
 		{
 			$file = $this->getHandler()->getByPageId($this->page->id);
 

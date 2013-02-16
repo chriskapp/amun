@@ -42,9 +42,9 @@ use PSX_Data_WriterResult;
  */
 class approval extends Amun_Module_RestAbstract
 {
-	protected function getProvider($name = null)
+	protected function getHandler($table = null)
 	{
-		return parent::getProvider($name === null ? 'Core_Approval' : $name);
+		return parent::getHandler($table === null ? 'Core_Approval' : $table);
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)

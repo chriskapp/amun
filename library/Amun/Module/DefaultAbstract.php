@@ -38,8 +38,6 @@ abstract class Amun_Module_DefaultAbstract extends PSX_ModuleAbstract
 	{
 		$ct = new Amun_Dependency_Default($this->base->getConfig());
 
-		Amun_DataFactory::setContainer($ct);
-
 		return $ct;
 	}
 }

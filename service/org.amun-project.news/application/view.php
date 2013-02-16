@@ -44,7 +44,7 @@ class view extends Amun_Module_ApplicationAbstract
 	 */
 	public function doView()
 	{
-		if($this->getProvider()->hasViewRight())
+		if($this->user->hasRight('news_view'))
 		{
 			// get news id
 			$fragments   = $this->getUriFragments();

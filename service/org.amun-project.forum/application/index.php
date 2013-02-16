@@ -41,7 +41,7 @@ class index extends Amun_Module_ApplicationAbstract
 	 */
 	public function doIndex()
 	{
-		if($this->getProvider()->hasViewRight())
+		if($this->user->hasRight('forum_view'))
 		{
 			// load forum
 			$resultForum = $this->getForum();

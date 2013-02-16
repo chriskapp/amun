@@ -46,26 +46,9 @@ use PSX_Sql_Join;
  */
 class friend extends Amun_Module_RestAbstract
 {
-	protected function getSelection()
+	protected function getHandler($table = null)
 	{
-		return $this->getTable()
-			->select(array('id', 'status', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
-				->select(array('id', 'globalId', 'name', 'profileUrl'), 'author'),
-				'n:1',
-				'userId'
-			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
-				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl'), 'friend'),
-				'n:1',
-				'friendId'
-			)
-			->where('status', '=', AmunService_User_Friend_Record::NORMAL);
-	}
-
-	protected function getProvider($name = null)
-	{
-		return parent::getProvider($name === null ? 'User_Friend' : $name);
+		return parent::getHandler($table === null ? 'User_Friend' : $table);
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)

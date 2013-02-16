@@ -49,7 +49,7 @@ class connect extends Amun_Module_ApplicationAbstract
 	{
 		parent::onLoad();
 
-		if($this->getProvider()->hasViewRight())
+		if($this->user->hasRight('my_view'))
 		{
 			// add path
 			$this->path->add('Connect', $this->page->url . '/connect');

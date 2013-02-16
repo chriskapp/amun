@@ -55,7 +55,7 @@ class index extends Amun_Module_ApiAbstract
 	 */
 	public function getSitemap()
 	{
-		if($this->getProvider()->hasViewRight())
+		if($this->user->hasRight('sitemap_view'))
 		{
 			try
 			{

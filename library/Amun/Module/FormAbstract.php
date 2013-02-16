@@ -49,12 +49,12 @@ abstract class Amun_Module_FormAbstract extends Amun_Module_ApiAbstract
 	 */
 	public function getForm()
 	{
-		if($this->getProvider()->hasViewRight())
+		if($this->user->hasRight($this->service->namespace . '_view'))
 		{
 			try
 			{
 				$this->method = $this->get->method('string');
-				$this->form   = $this->getProvider()->getForm();
+				$this->form   = $this->dataFactory->getFormInstance($this->service->namespace);
 
 				if($this->form === null)
 				{

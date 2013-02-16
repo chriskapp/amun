@@ -52,7 +52,7 @@ class template extends Amun_Module_ApiAbstract
 	 */
 	public function getTemplate()
 	{
-		if($this->getProvider()->hasViewRight())
+		if($this->user->hasRight('content_page_view'))
 		{
 			try
 			{

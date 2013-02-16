@@ -40,7 +40,9 @@ class index extends AmunService_My_MyAbstract
 		parent::onLoad();
 
 		// get user details
-		$account = $this->getAccount();
+		$account = $this->getHandler('User_Account')->getById($this->user->id, 
+			array('id', 'status', 'name', 'gender', 'thumbnailUrl', 'timezone', 'updated', 'date', 'countryTitle'),
+			PSX_Sql::FETCH_OBJECT);
 
 		$this->template->assign('account', $account);
 
@@ -58,7 +60,12 @@ class index extends AmunService_My_MyAbstract
 		$this->template->assign('activities', $activities);
 
 		// load groups
-		$groups = $this->getGroups();
+		$groups = $this->getHandler('User_Friend_Group')->getAll(array(), 
+			0, 
+			16, 
+			'id', 
+			PSX_Sql::SORT_DESC, 
+			new PSX_Sql_Condition(array('userId', '=', $this->user->id)));
 
 		$this->template->assign('groups', $groups);
 
@@ -78,40 +85,22 @@ class index extends AmunService_My_MyAbstract
 		$this->template->set(__CLASS__ . '.tpl');
 	}
 
-	private function getAccount()
-	{
-		return Amun_Sql_Table_Registry::get('User_Account')
-			->select(array('id', 'status', 'name', 'gender', 'timezone', 'updated', 'date', 'profileUrl', 'thumbnailUrl'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Group')
-				->select(array('title'), 'group')
-			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Country')
-				->select(array('title'), 'country')
-			)
-			->where('id', '=', $this->user->id)
-			->getRow(PSX_Sql::FETCH_OBJECT);
-	}
-
 	private function getActivities()
 	{
-		$select = Amun_Sql_Table_Registry::get('User_Activity')
-			->select(array('id', 'parentId', 'status', 'verb', 'summary', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Activity_Receiver')
-				->select(array('id', 'status', 'activityId', 'userId', 'date'), 'receiver'),
-				'1:n'
-			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
-				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
-			)
-			->where('receiverUserId', '=', $this->user->id)
-			->where('parentId', '=', 0)
-			->orderBy('date', PSX_Sql::SORT_DESC);
+		$con = $this->getRequestCondition();
 
+		$url   = new PSX_Url($this->base->getSelf());
+		$count = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
+		$count = $count > 16 ? 16 : $count;
 
-		$url    = new PSX_Url($this->base->getSelf());
-		$count  = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
-
-		$result = $select->getResultSet($url->getParam('startIndex'), $count, $url->getParam('sortBy'), $url->getParam('sortOrder'), $url->getParam('filterBy'), $url->getParam('filterOp'), $url->getParam('filterValue'), $url->getParam('updatedSince'), PSX_Sql::FETCH_OBJECT);
+		$result = $this->getHandler('User_Activity')->getPrivateResultSet($this->user->id,
+			array(),
+			$url->getParam('startIndex'), 
+			$count, 
+			$url->getParam('sortBy'), 
+			$url->getParam('sortOrder'),
+			$con,
+			PSX_Sql::FETCH_OBJECT);
 
 
 		$paging = new PSX_Html_Paging($url, $result, 0);
@@ -120,13 +109,5 @@ class index extends AmunService_My_MyAbstract
 
 
 		return $result;
-	}
-
-	private function getGroups()
-	{
-		return Amun_Sql_Table_Registry::get('User_Friend_Group')
-			->select(array('id', 'title', 'date'))
-			->where('userId', '=', $this->user->id)
-			->getAll();
 	}
 }

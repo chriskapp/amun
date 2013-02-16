@@ -45,9 +45,9 @@ use PSX_Sql_Join;
  */
 class record extends Amun_Module_RestAbstract
 {
-	protected function getProvider($name = null)
+	protected function getHandler($table = null)
 	{
-		return parent::getProvider($name === null ? 'Core_Approval_Record' : $name);
+		return parent::getHandler($table === null ? 'Core_Approval_Record' : $table);
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)

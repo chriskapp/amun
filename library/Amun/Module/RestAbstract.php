@@ -52,7 +52,7 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 	 */
 	public function getRecords()
 	{
-		if($this->getProvider()->hasViewRight())
+		if($this->user->hasRight($this->service->namespace . '_view'))
 		{
 			try
 			{
@@ -93,7 +93,7 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 	 */
 	public function getSupportedFields()
 	{
-		if($this->getProvider()->hasViewRight())
+		if($this->user->hasRight($this->service->namespace . '_view'))
 		{
 			try
 			{
@@ -126,7 +126,7 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 	 */
 	public function insertRecord()
 	{
-		if($this->getProvider()->hasAddRight())
+		if($this->user->hasRight($this->service->namespace . '_add'))
 		{
 			try
 			{
@@ -169,7 +169,7 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 	 */
 	public function updateRecord()
 	{
-		if($this->getProvider()->hasEditRight())
+		if($this->user->hasRight($this->service->namespace . '_edit'))
 		{
 			try
 			{
@@ -218,7 +218,7 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 	 */
 	public function deleteRecord()
 	{
-		if($this->getProvider()->hasDeleteRight())
+		if($this->user->hasRight($this->service->namespace . '_delete'))
 		{
 			try
 			{

@@ -65,7 +65,7 @@ abstract class Amun_Data_HandlerAbstract implements PSX_Data_HandlerInterface
 
 	public function __construct(Amun_User $user = null)
 	{
-		$ct = Amun_DataFactory::getContainer();
+		$ct = Amun_DataFactory::getInstance()->getContainer();
 
 		$this->base     = $ct->getBase();
 		$this->config   = $ct->getConfig();
@@ -76,27 +76,10 @@ abstract class Amun_Data_HandlerAbstract implements PSX_Data_HandlerInterface
 		$this->user     = $user === null ? $ct->getUser() : $user;
 	}
 
-	/*
 	public function getTable()
 	{
 		return $this->table;
 	}
-
-	public function getConfig()
-	{
-		return $this->config;
-	}
-
-	public function getSql()
-	{
-		return $this->sql;
-	}
-
-	public function getRegistry()
-	{
-		return $this->registry;
-	}
-	*/
 
 	public function getUser()
 	{
@@ -135,6 +118,25 @@ abstract class Amun_Data_HandlerAbstract implements PSX_Data_HandlerInterface
 	}
 
 	/**
+	 * Returns an row as associatve array or record object 
+	 *
+	 * @return array|PSX_Data_RecordInterface
+	 */
+	public function getById($id, array $fields = array(), $mode = 0, $class = null, array $args = array())
+	{
+		$select = $this->getSelect();
+		$fields = array_intersect($fields, $select->getSupportedFields());
+
+		if(!empty($fields))
+		{
+			$select->select($fields);
+		}
+
+		return $select->where('id', '=', $id)
+			->getRow($mode, $class, $args);
+	}
+
+	/**
 	 * Returns an resultset wich can easily displayed on an html page with a 
 	 * pagination or exported as XML or JSON for an API
 	 *
@@ -146,23 +148,11 @@ abstract class Amun_Data_HandlerAbstract implements PSX_Data_HandlerInterface
 		$count      = !empty($count)       ? (integer) $count      : 16;
 		$sortOrder  = $sortOrder  !== null ? (strcasecmp($sortOrder, 'ascending') == 0 ? PSX_Sql::SORT_ASC : PSX_Sql::SORT_DESC) : null;
 
-		$totalResults = $this->getCount();
+		$totalResults = $this->getCount($con);
 		$entries      = $this->getAll($fields, $startIndex, $count, $sortBy, $sortOrder, $con, $mode, $class, $args);
 		$resultSet    = new PSX_Data_ResultSet($totalResults, $startIndex, $count, $entries);
 
 		return $resultSet;
-	}
-
-	/**
-	 * Returns an row as associatve array or record object 
-	 *
-	 * @return array|PSX_Data_RecordInterface
-	 */
-	public function getById($id, $mode = 0, $class = null, array $args = array())
-	{
-		return $this->getSelect()
-			->where('id', '=', $id)
-			->getRow($mode, $class, $args);
 	}
 
 	/**
@@ -181,9 +171,21 @@ abstract class Amun_Data_HandlerAbstract implements PSX_Data_HandlerInterface
 	 *
 	 * @return integer
 	 */
-	public function getCount()
+	public function getCount(PSX_Sql_Condition $con = null)
 	{
-		return $this->getSelect()->getTotalResults();
+		$select = $this->getSelect();
+
+		if($con !== null && $con->hasCondition())
+		{
+			$values = $con->toArray();
+
+			foreach($values as $row)
+			{
+				$select->where($row[0], $row[1], $row[2]);
+			}
+		}
+
+		return $select->getTotalResults();
 	}
 
 	/**
@@ -337,8 +339,25 @@ SQL;
 		$className = get_class($this);
 		$className = substr($className, 0, -8); // remove _Handler
 		$className = substr($className, 12); // remove AmunService_
+		$tableName = $this->registry->getTableName($className);
 
-		return Amun_DataFactory::getProvider($className)->getTable();
+		if($tableName !== false)
+		{
+			$class = Amun_Registry::getClassName('AmunService_' . $tableName . '_Table');
+
+			if(class_exists($class))
+			{
+				return new $class($this->registry);
+			}
+			else
+			{
+				throw new Amun_Exception('Table "' . $tableName . '" does not exist');
+			}
+		}
+		else
+		{
+			throw new Amun_Exception('Table "' . $className . '" does not exist');
+		}
 	}
 
 	protected function getSelect()
@@ -348,7 +367,7 @@ SQL;
 			$this->_select = $this->getDefaultSelect();
 		}
 
-		return $this->_select;
+		return clone $this->_select;
 	}
 
 	/**

@@ -111,21 +111,12 @@ abstract class Amun_Module_ApplicationAbstract extends PSX_Module_ViewAbstract
 			'application.pageId' => $this->location->getServiceId()
 		));
 
-		Amun_DataFactory::setContainer($ct);
-
 		return $ct;
 	}
 
-	protected function getProvider($name = null)
+	protected function getHandler($table = null)
 	{
-		$name = $name === null ? $this->service->namespace : $name;
-
-		return Amun_DataFactory::getProvider($name);
-	}
-
-	protected function getHandler($name = null)
-	{
-		return $this->getProvider($name)->getHandler();
+		return $this->dataFactory->getHandlerInstance($table === null ? $this->service->namespace : $table);
 	}
 
 	protected function loadMetaTags()
@@ -180,30 +171,27 @@ abstract class Amun_Module_ApplicationAbstract extends PSX_Module_ViewAbstract
 		$filterValue  = isset($_GET['filterValue']) ? $_GET['filterValue'] : null;
 		$updatedSince = isset($_GET['updatedSince']) ? $_GET['updatedSince'] : null;
 
-		if(in_array($filterBy, $this->getHandler()->getSupportedFields()))
+		switch($filterOp)
 		{
-			switch($filterOp)
-			{
-				case 'contains':
-					$con->add($filterBy, 'LIKE', '%' . $filterValue . '%');
-					break;
+			case 'contains':
+				$con->add($filterBy, 'LIKE', '%' . $filterValue . '%');
+				break;
 
-				case 'equals':
-					$con->add($filterBy, '=', $filterValue);
-					break;
+			case 'equals':
+				$con->add($filterBy, '=', $filterValue);
+				break;
 
-				case 'startsWith':
-					$con->add($filterBy, 'LIKE', $filterValue . '%');
-					break;
+			case 'startsWith':
+				$con->add($filterBy, 'LIKE', $filterValue . '%');
+				break;
 
-				case 'present':
-					$con->add($filterBy, 'IS NOT', 'NULL', 'AND');
-					$con->add($filterBy, 'NOT LIKE', '');
-					break;
-			}
+			case 'present':
+				$con->add($filterBy, 'IS NOT', 'NULL', 'AND');
+				$con->add($filterBy, 'NOT LIKE', '');
+				break;
 		}
 
-		if($updatedSince !== null && in_array('date', $this->getHandler()->getSupportedFields()))
+		if($updatedSince !== null)
 		{
 			$datetime = new PSX_DateTime($updatedSince);
 

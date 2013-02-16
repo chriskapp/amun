@@ -57,8 +57,8 @@ class registry extends Amun_Module_RestAbstract
 		$this->setResponse($msg, null, 500);
 	}
 
-	protected function getProvider($name = null)
+	protected function getHandler($table = null)
 	{
-		return parent::getProvider($name === null ? 'Core_Registry' : $name);
+		return parent::getHandler($table === null ? 'Core_Registry' : $table);
 	}
 }

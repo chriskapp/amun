@@ -43,9 +43,9 @@ use PSX_Data_WriterResult;
  */
 class host extends Amun_Module_RestAbstract
 {
-	protected function getProvider($name = null)
+	protected function getHandler($table = null)
 	{
-		return parent::getProvider($name === null ? 'Core_Host' : $name);
+		return parent::getHandler($table === null ? 'Core_Host' : $table);
 	}
 
 	protected function getRestrictedFields()

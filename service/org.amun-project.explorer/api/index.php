@@ -56,7 +56,7 @@ class index extends Amun_Module_ApiAbstract
 	 */
 	public function getExplorer()
 	{
-		if($this->getProvider()->hasViewRight())
+		if($this->user->hasRight('explorer_view'))
 		{
 			try
 			{
@@ -90,7 +90,7 @@ class index extends Amun_Module_ApiAbstract
 	 */
 	public function getSupportedFields()
 	{
-		if($this->getProvider()->hasViewRight())
+		if($this->user->hasRight('explorer_view'))
 		{
 			try
 			{
@@ -123,7 +123,7 @@ class index extends Amun_Module_ApiAbstract
 	 */
 	public function createFile()
 	{
-		if($this->getProvider()->hasAddRight())
+		if($this->user->hasRight('explorer_add'))
 		{
 			try
 			{
@@ -163,7 +163,7 @@ class index extends Amun_Module_ApiAbstract
 	 */
 	public function updateFile()
 	{
-		if($this->getProvider()->hasEditRight())
+		if($this->user->hasRight('explorer_edit'))
 		{
 			try
 			{
@@ -203,7 +203,7 @@ class index extends Amun_Module_ApiAbstract
 	 */
 	public function deleteFile()
 	{
-		if($this->getProvider()->hasDeleteRight())
+		if($this->user->hasRight('explorer_delete'))
 		{
 			try
 			{

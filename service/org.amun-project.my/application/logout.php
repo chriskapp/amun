@@ -39,7 +39,7 @@ class logout extends Amun_Module_ApplicationAbstract
 	{
 		parent::onLoad();
 
-		if($this->getProvider()->hasViewRight())
+		if($this->user->hasRight('my_view'))
 		{
 			$this->session->destroy();
 

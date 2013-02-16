@@ -44,21 +44,9 @@ use PSX_Sql_Join;
  */
 class receiver extends Amun_Module_RestAbstract
 {
-	protected function getSelection()
+	protected function getHandler($table = null)
 	{
-		return $this->getTable()
-			->select(array('id', 'status', 'activityId', 'userId', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Activity')
-				->select(array('id', 'status', 'verb', 'summary', 'date'), 'activity')
-			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
-				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
-			);
-	}
-
-	protected function getProvider($name = null)
-	{
-		return parent::getProvider($name === null ? 'User_Activity_Receiver' : $name);
+		return parent::getHandler($table === null ? 'User_Activity_Receiver' : $table);
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)

@@ -66,7 +66,7 @@ class send extends Amun_Module_ApiAbstract
 	 */
 	public function doSend()
 	{
-		if($this->getProvider()->hasViewRight())
+		if($this->user->hasRight('mail_view'))
 		{
 			try
 			{

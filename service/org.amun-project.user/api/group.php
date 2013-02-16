@@ -42,15 +42,9 @@ use PSX_Data_WriterResult;
  */
 class group extends Amun_Module_RestAbstract
 {
-	protected function getSelection()
+	protected function getHandler($table = null)
 	{
-		return $this->getTable()
-			->select(array('id', 'title', 'date'));
-	}
-
-	protected function getProvider($name = null)
-	{
-		return parent::getProvider($name === null ? 'User_Group' : $name);
+		return parent::getHandler($table === null ? 'User_Group' : $table);
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)

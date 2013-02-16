@@ -40,26 +40,12 @@ abstract class Amun_Module_GadgetAbstract extends PSX_Module_ViewAbstract
 			'gadget.id' => $this->location->getServiceId()
 		));
 
-		Amun_DataFactory::setContainer($ct);
-
 		return $ct;
 	}
 
-	protected function getProvider($name = null)
+	protected function getHandler($table = null)
 	{
-		$name = $name === null ? $this->service->namespace : $name;
-
-		return Amun_DataFactory::getProvider($name);
-	}
-
-	protected function getTable($name = null)
-	{
-		return $this->getProvider($name)->getTable();
-	}
-
-	protected function getHandler($name = null)
-	{
-		return $this->getProvider($name)->getHandler();
+		return $this->dataFactory->getHandlerInstance($table === null ? $this->service->namespace : $table);
 	}
 }
 

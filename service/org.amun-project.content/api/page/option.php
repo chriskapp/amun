@@ -41,9 +41,9 @@ use PSX_Sql_Join;
  */
 class option extends Amun_Module_RestAbstract
 {
-	protected function getProvider($name = null)
+	protected function getHandler($table = null)
 	{
-		return parent::getProvider($name === null ? 'Content_Page_Option' : $name);
+		return parent::getHandler($table === null ? 'Content_Page_Option' : $table);
 	}
 }
 

@@ -46,7 +46,7 @@ abstract class AmunService_My_LoginHandlerAbstract
 
 	public function __construct()
 	{
-		$ct = Amun_DataFactory::getContainer();
+		$ct = Amun_DataFactory::getInstance()->getContainer();
 
 		$this->base     = $ct->getBase();
 		$this->config   = $ct->getConfig();

@@ -39,9 +39,9 @@ use Amun_Module_FormAbstract;
  */
 class form extends Amun_Module_FormAbstract
 {
-	protected function getProvider($name = null)
+	protected function getHandler($table = null)
 	{
-		return parent::getProvider($name === null ? 'User_Right' : $name);
+		return parent::getHandler($table === null ? 'User_Right' : $table);
 	}
 }
 

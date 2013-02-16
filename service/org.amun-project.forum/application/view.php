@@ -44,7 +44,7 @@ class view extends Amun_Module_ApplicationAbstract
 	 */
 	public function doView()
 	{
-		if($this->getProvider()->hasViewRight())
+		if($this->user->hasRight('forum_view'))
 		{
 			// get forum id
 			$fragments   = $this->getUriFragments();
@@ -111,17 +111,9 @@ class view extends Amun_Module_ApplicationAbstract
 
 	private function getForum()
 	{
-		// query
-		$result = Amun_Sql_Table_Registry::get('Forum')
-			->select(array('id', 'sticky', 'closed', 'urlTitle', 'title', 'text', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Content_Page')
-				->select(array('path'), 'page')
-			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
-				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
-			)
-			->where('id', '=', $this->id)
-			->getRow(PSX_Sql::FETCH_OBJECT);
+		$result = $this->getHandler()->getById($this->id, 
+			array(), 
+			PSX_Sql::FETCH_OBJECT);
 
 		if(empty($result))
 		{
@@ -142,19 +134,21 @@ class view extends Amun_Module_ApplicationAbstract
 
 	private function getComments()
 	{
-		$table = Amun_Sql_Table_Registry::get('Comment')
-			->select(array('id', 'text', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
-				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
-			)
-			->where('pageId', '=', $this->page->id)
-			->where('refId', '=', $this->id)
-			->orderBy('date', PSX_Sql::SORT_ASC);
+		$con = new PSX_Sql_Condition();
+		$con->add('pageId', '=', $this->page->id);
+		$con->add('refId', '=', $this->id);
 
+		$url   = new PSX_Url($this->base->getSelf());
+		$count = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
+		$count = $count > 16 ? 16 : $count;
 
-		$url = new PSX_Url($this->base->getSelf());
-
-		$result = $table->getResultSet($url->getParam('startIndex'), $url->getParam('count'), $url->getParam('sortBy'), $url->getParam('sortOrder'), $url->getParam('filterBy'), $url->getParam('filterOp'), $url->getParam('filterValue'), $url->getParam('updatedSince'), PSX_SQL::FETCH_OBJECT);
+		$result = $this->getHandler('Comment')->getResultSet(array(),
+			$url->getParam('startIndex'),
+			$count,
+			$url->getParam('sortBy'),
+			$url->getParam('sortOrder'),
+			$con,
+			PSX_Sql::FETCH_OBJECT);
 
 
 		$paging = new PSX_Html_Paging($url, $result);

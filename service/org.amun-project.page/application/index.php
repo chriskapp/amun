@@ -41,7 +41,7 @@ class index extends Amun_Module_ApplicationAbstract
 	 */
 	public function doIndex()
 	{
-		if($this->getProvider()->hasViewRight())
+		if($this->user->hasRight('page_view'))
 		{
 			// load page
 			$recordPage = $this->getHandler()->getByPageId($this->page->id, PSX_Sql::FETCH_OBJECT);

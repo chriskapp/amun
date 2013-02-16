@@ -37,7 +37,7 @@ class index extends Amun_Module_ApplicationAbstract
 {
 	public function onLoad()
 	{
-		if($this->getProvider()->hasViewRight())
+		if($this->user->hasRight('redirect_view'))
 		{
 			$redirect = $this->getHandler()->getByPageId($this->page->id);
 

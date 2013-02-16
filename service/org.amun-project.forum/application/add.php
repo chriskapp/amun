@@ -41,7 +41,7 @@ class add extends Amun_Module_ApplicationAbstract
 	 */
 	public function doAdd()
 	{
-		if($this->getProvider()->hasAddRight())
+		if($this->user->hasRight('forum_add'))
 		{
 			// form url
 			$url = $this->service->getApiEndpoint() . '/form?format=json&method=create&pageId=' . $this->page->id;

@@ -41,7 +41,7 @@ class edit extends Amun_Module_ApplicationAbstract
 	 */
 	public function doEdit()
 	{
-		if($this->getProvider()->hasEditRight())
+		if($this->user->hasRight('forum_edit'))
 		{
 			// form url
 			$id  = $this->get->id('integer');

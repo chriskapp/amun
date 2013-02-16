@@ -51,6 +51,7 @@ class Amun_Dependency_Gadget extends Amun_Dependency_Session
 		$this->getGadget();
 		$this->getArgs();
 		$this->getService();
+		$this->getDataFactory();
 	}
 
 	public function getGadget()
@@ -71,5 +72,15 @@ class Amun_Dependency_Gadget extends Amun_Dependency_Session
 		}
 
 		return $this->set('service', new Amun_Service($this->getGadget()->getServiceId(), $this->getRegistry()));
+	}
+
+	public function getDataFactory()
+	{
+		if($this->has('dataFactory'))
+		{
+			return $this->get('dataFactory');
+		}
+
+		return $this->set('dataFactory', Amun_DataFactory::initInstance($this));
 	}
 }

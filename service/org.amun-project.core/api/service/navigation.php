@@ -55,7 +55,7 @@ class navigation extends Amun_Module_ApiAbstract
 	 */
 	public function getNavigation()
 	{
-		if($this->getProvider()->hasViewRight())
+		if($this->user->hasRight('core_view'))
 		{
 			try
 			{

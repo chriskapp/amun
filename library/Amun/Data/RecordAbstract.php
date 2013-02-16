@@ -49,7 +49,7 @@ abstract class Amun_Data_RecordAbstract extends PSX_Data_Record_TableAbstract
 
 	public function __construct(Amun_Sql_TableInterface $table)
 	{
-		$ct = Amun_DataFactory::getContainer();
+		$ct = Amun_DataFactory::getInstance()->getContainer();
 
 		$this->_base     = $ct->getBase();
 		$this->_config   = $ct->getConfig();

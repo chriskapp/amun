@@ -46,11 +46,6 @@ use PSX_Sql_Join;
  */
 class commit extends Amun_Module_RestAbstract
 {
-	protected function getProvider($name = null)
-	{
-		return parent::getProvider($name === null ? 'Googleproject_Commit' : $name);
-	}
-
 	public function onPost()
 	{
 		$msg = new PSX_Data_Message('Create a commit record is not possible', false);
@@ -70,6 +65,11 @@ class commit extends Amun_Module_RestAbstract
 		$msg = new PSX_Data_Message('Delete a commit record is not possible', false);
 
 		$this->setResponse($msg, null, 500);
+	}
+
+	protected function getHandler($table = null)
+	{
+		return parent::getHandler($table === null ? 'Googleproject_Commit' : $table);
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)

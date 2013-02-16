@@ -42,9 +42,9 @@ use PSX_Data_WriterResult;
  */
 class gadget extends Amun_Module_RestAbstract
 {
-	protected function getProvider($name = null)
+	protected function getHandler($table = null)
 	{
-		return parent::getProvider($name === null ? 'Content_Gadget' : $name);
+		return parent::getHandler($table === null ? 'Content_Gadget' : $table);
 	}
 
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)

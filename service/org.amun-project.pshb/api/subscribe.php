@@ -57,7 +57,7 @@ class subscribe extends Amun_Module_ApiAbstract
 	 */
 	public function doSubscribe()
 	{
-		if($this->getProvider()->hasAddRight())
+		if($this->user->hasRight('pshb_add'))
 		{
 			try
 			{

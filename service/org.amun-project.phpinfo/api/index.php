@@ -62,7 +62,7 @@ class index extends Amun_Module_ApiAbstract
 	 */
 	public function getPhpInfo()
 	{
-		if($this->getProvider()->hasViewRight())
+		if($this->user->hasRight('phpinfo_view'))
 		{
 			try
 			{
@@ -96,7 +96,7 @@ class index extends Amun_Module_ApiAbstract
 	 */
 	public function getSupportedFields()
 	{
-		if($this->getProvider()->hasViewRight())
+		if($this->user->hasRight('phpinfo_view'))
 		{
 			try
 			{

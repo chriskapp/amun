@@ -53,6 +53,7 @@ class Amun_Dependency_Api extends Amun_Dependency_Session
 		parent::setup();
 
 		$this->getService();
+		$this->getDataFactory();
 	}
 
 	public function getUser()
@@ -78,6 +79,16 @@ class Amun_Dependency_Api extends Amun_Dependency_Session
 		}
 
 		return $this->set('service', new Amun_Service($this->serviceId, $this->getRegistry()));
+	}
+
+	public function getDataFactory()
+	{
+		if($this->has('dataFactory'))
+		{
+			return $this->get('dataFactory');
+		}
+
+		return $this->set('dataFactory', Amun_DataFactory::initInstance($this));
 	}
 }
 
