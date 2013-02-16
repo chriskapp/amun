@@ -216,12 +216,11 @@ class AmunService_Content_Page_Handler extends Amun_Data_HandlerAbstract
 		{
 			$sql = <<<SQL
 SELECT
-
-	page.path
-
-	FROM {$this->registry['table.content_page']} `page`
-
-		WHERE page.id = {$record->parentId}
+	`page`.`path`
+FROM 
+	{$this->registry['table.content_page']} `page`
+WHERE 
+	`page`.`id` = {$record->parentId}
 SQL;
 
 			$path = $this->sql->getField($sql);
@@ -245,12 +244,11 @@ SQL;
 	{
 		$sql = <<<SQL
 SELECT
-
-	page.path
-
-	FROM {$this->registry['table.content_page']} `page`
-
-		WHERE page.id = {$record->id}
+	`page`.`path`
+FROM 
+	{$this->registry['table.content_page']} `page`
+WHERE 
+	`page`.`id` = {$record->id}
 SQL;
 
 		$row = $this->sql->getRow($sql);
@@ -263,11 +261,12 @@ SQL;
 			$newPath = (!empty($part) ? $part . '/' : '') . $record->urlTitle;
 
 			$sql = <<<SQL
-UPDATE {$this->registry['table.content_page']} SET
-
+UPDATE 
+	{$this->registry['table.content_page']} 
+SET
 	`path` = CONCAT('{$newPath}', SUBSTRING(`path`, {$len}))
-
-	WHERE `path` LIKE '{$path}%'
+WHERE 
+	`path` LIKE '{$path}%'
 SQL;
 
 			$this->sql->query($sql);
@@ -278,13 +277,12 @@ SQL;
 	{
 		$sql = <<<SQL
 SELECT
-
-	page.urlTitle,
-	page.path
-
-	FROM {$this->registry['table.content_page']} `page`
-
-		WHERE page.id = {$record->parentId}
+	`page`.`urlTitle`,
+	`page`.`path`
+FROM 
+	{$this->registry['table.content_page']} `page`
+WHERE 
+	`page`.`id` = {$record->parentId}
 SQL;
 
 		$parent = $this->sql->getRow($sql);
@@ -293,13 +291,12 @@ SQL;
 		{
 			$sql = <<<SQL
 SELECT
-
-	page.urlTitle,
-	page.path
-
-	FROM {$this->registry['table.content_page']} `page`
-
-		WHERE page.id = {$record->id}
+	`page`.`urlTitle`,
+	`page`.`path`
+FROM 
+	{$this->registry['table.content_page']} `page`
+WHERE 
+	`page`.`id` = {$record->id}
 SQL;
 
 			$row = $this->sql->getRow($sql);
@@ -317,11 +314,12 @@ SQL;
 				$newPath = (!empty($parent['path']) ? $parent['path'] . '/' : '') . $row['urlTitle'];
 
 				$sql = <<<SQL
-UPDATE {$this->registry['table.content_page']} SET
-
+UPDATE 
+	{$this->registry['table.content_page']} 
+SET
 	`path` = CONCAT('{$newPath}', SUBSTRING(`path`, {$len}))
-
-	WHERE `path` LIKE '{$path}%'
+WHERE 
+	`path` LIKE '{$path}%'
 SQL;
 
 				$this->sql->query($sql);

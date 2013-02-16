@@ -45,14 +45,13 @@ class AmunService_Core_Approval_Record_Handler extends Amun_Data_HandlerAbstract
 		{
 			$sql = <<<SQL
 SELECT
-
-	record.type   AS `recordType`,
-	record.table  AS `recordTable`,
-	record.record AS `recordRecord`
-
-	FROM {$this->table->getName()} `record`
-
-		WHERE id = ?
+	`record`.`type`   AS `recordType`,
+	`record`.`table`  AS `recordTable`,
+	`record`.`record` AS `recordRecord`
+FROM 
+	{$this->table->getName()} `record`
+WHERE 
+	`record`.`id` = ?
 SQL;
 
 			$row  = $this->sql->getRow($sql, array($record->id));

@@ -49,14 +49,13 @@ class AmunService_Content_Page_Filter_TitleExists extends PSX_FilterAbstract
 	{
 		$sql = <<<SQL
 SELECT
-
-	page.id AS `pageId`
-
-	FROM {$this->registry['table.content_page']} `page`
-
-		WHERE page.parentId = {$this->parentId}
-
-		AND page.urlTitle = ?
+	`page`.`id` AS `pageId`
+FROM 
+	{$this->registry['table.content_page']} `page`
+WHERE 
+	`page`.`parentId` = {$this->parentId}
+AND 
+	`page`.`urlTitle` = ?
 SQL;
 
 		return $this->sql->getField($sql, array($value));

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="48ff4cfd999b0527b20d7bb0b3167a7ac8558ab2">
+<service xmlns="http://amun-project.org" signature="23c9485eddfb15b4eb5b49673d2250405d4e0f27">
   <status>system</status>
   <name>mail</name>
   <description>A service to manage mail templates wich can be used by other services</description>
@@ -41,7 +41,7 @@
         <file name="Handler.php" md5="789e69b484b285c984f5a3a02fa48453"/>
         <file name="ConfigListener.php" md5="dbb1894a5df981e1473e0424c45e5611"/>
         <file name="Record.php" md5="7248d9d8944fb109570ae6504da470de"/>
-        <file name="Sender.php" md5="6d30d5c7723d086ee4caeb5fe3b79a14"/>
+        <file name="Sender.php" md5="411430d60938fe6b5711d3b33e665f74"/>
         <file name="Table.php" md5="8b9821d672abb22a5e72b81cc8ed2295"/>
       </dir>
     </dir>

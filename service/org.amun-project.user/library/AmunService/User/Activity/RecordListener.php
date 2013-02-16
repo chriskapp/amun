@@ -117,16 +117,15 @@ class AmunService_User_Activity_RecordListener extends Amun_Data_ListenerAbstrac
 		// get template message
 		$sql = <<<SQL
 SELECT
-
 	`template`.`verb`,
 	`template`.`path`,
 	`template`.`summary`
-
-	FROM {$this->registry['table.user_activity_template']} `template`
-
-		WHERE `template`.`table` = ?
-
-		AND `template`.`type` = ?
+FROM 
+	{$this->registry['table.user_activity_template']} `template`
+WHERE 
+	`template`.`table` = ?
+AND 
+	`template`.`type` = ?
 SQL;
 
 		$row = $this->sql->getRow($sql, array($table->getName(), Amun_Data_RecordAbstract::getType($type)));

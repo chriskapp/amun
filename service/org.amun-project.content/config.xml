@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="658c1fae3de156b59a44cf86b6a0afcb29e4e42d">
+<service xmlns="http://amun-project.org" signature="9e1bc0716cea98ab32c1911010c45e40ebef0092">
   <status>system</status>
   <name>content</name>
   <description>Basic service wich handles pages and gadgets</description>
@@ -83,7 +83,7 @@
             <file name="ParentId.php" md5="b471277a30e62b4a0b4fb354c7b396de"/>
             <file name="Status.php" md5="c8ce2b1e9152126465b3e95101772fbb"/>
             <file name="Template.php" md5="66ab20f07cd831271bcac5baf1e6fc39"/>
-            <file name="TitleExists.php" md5="f43e19aa03050e5c81edc606eeab4cf4"/>
+            <file name="TitleExists.php" md5="f7b73936cfa6b568d77ded24430dcd19"/>
           </dir>
           <file name="Form.php" md5="4b55615557ca810f55eaaa46a62d27b4"/>
           <dir name="Gadget">
@@ -92,9 +92,9 @@
             <file name="Record.php" md5="4b16ca9f9e36b6eb2cca75f205668435"/>
             <file name="Table.php" md5="b4060f7622e3ea5b3c001eedcff5a390"/>
           </dir>
-          <file name="Handler.php" md5="b6f0e71ab21dd167a1c6289daf701c8c"/>
+          <file name="Handler.php" md5="93432e956261b6b9ddefb415a4bc3b8c"/>
           <dir name="Option">
-            <file name="Form.php" md5="f5a564313736960b7d9ca51829a2634c"/>
+            <file name="Form.php" md5="f4935b4167fe92272d8b4034d973e0ab"/>
             <file name="Handler.php" md5="a6f689f3a02f0b5f7a9a5710b8c24df5"/>
             <file name="Record.php" md5="502cf761ed10d419729967ea0d6020cc"/>
             <file name="Table.php" md5="578e3fc36a2bed7eda244c2515284b35"/>
