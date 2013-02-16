@@ -34,6 +34,15 @@
  */
 class AmunService_Oauth_Access_Handler extends Amun_Data_HandlerAbstract
 {
+	public function isAllowed($apiId, $userId)
+	{
+		return Amun_Sql_Table_Registry::get('Oauth_Access')
+			->select(array('allowed'))
+			->where('apiId', '=', $apiId)
+			->where('userId', '=', $userId)
+			->getField();
+	}
+
 	public function create(PSX_Data_RecordInterface $record)
 	{
 		throw new PSX_Data_Exception('Access can not created');

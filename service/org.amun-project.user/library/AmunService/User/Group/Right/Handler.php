@@ -34,6 +34,17 @@
  */
 class AmunService_User_Group_Right_Handler extends Amun_Data_HandlerAbstract
 {
+	public function getByGroupId($groupId)
+	{
+		return Amun_Sql_Table_Registry::get('User_Group_Right')
+			->select(array('rightId'))
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Right')
+				->select(array('name', 'description'), 'right')
+			)
+			->where('groupId', '=', $groupId)
+			->getAll();
+	}
+
 	public function create(PSX_Data_RecordInterface $record)
 	{
 		if($record->hasFields('groupId', 'rightId'))

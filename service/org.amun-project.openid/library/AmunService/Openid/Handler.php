@@ -34,6 +34,23 @@
  */
 class AmunService_Openid_Handler extends Amun_Data_HandlerAbstract
 {
+	public function getByConsumerKey($consumerKey)
+	{
+		return Amun_Sql_Table_Registry::get('Openid')
+			->select(array('id', 'consumerKey'))
+			->where('consumerKey', '=', $consumerKey)
+			->getRow();
+	}
+
+	public function getStatus($userId, $assocId)
+	{
+		return (integer) Amun_Sql_Table_Registry::get('Openid')
+			->select(array('status'))
+			->where('userId', '=', $userId)
+			->where('assocId', '=', $assocId)
+			->getField();
+	}
+
 	public function create(PSX_Data_RecordInterface $record)
 	{
 		throw new PSX_Data_Exception('Connect can not created');
