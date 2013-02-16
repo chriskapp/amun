@@ -110,7 +110,7 @@
 					created on
 					<time datetime="<?php echo $activity->getDate()->format(DateTime::ATOM); ?>"><?php echo $activity->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></time>
 				</p>
-				<div id="activity-comments-<?php echo $activity->id; ?>">
+				<div class="amun-service-my-activity-entry-comments" id="activity-comments-<?php echo $activity->id; ?>">
 				</div>
 				<div class="amun-service-my-activity-entry-reply" id="activity-reply-<?php echo $activity->id; ?>">
 					<form id="activity-form-<?php echo $activity->id; ?>" method="post" action="<?php echo $activityUrl; ?>" class="form-inline activity-form">
