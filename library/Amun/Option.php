@@ -77,27 +77,24 @@ class Amun_Option extends RecursiveArrayIterator
 	{
 		$sql = <<<SQL
 SELECT
-
-	pageOption.rightId,
-	pageOption.name,
-	pageOption.href,
-	page.path
-
-	FROM {$this->registry['table.content_page_option']} `pageOption`
-
-		INNER JOIN {$this->registry['table.core_service_option']} `serviceOption`
-
-		ON pageOption.optionId = serviceOption.id
-
-			INNER JOIN {$this->registry['table.content_page']} `page`
-
-			ON pageOption.destPageId = page.id
-
-				WHERE serviceOption.serviceId = {$this->page->serviceId}
-
-				AND pageOption.srcPageId = {$this->page->id}
-
-					AND serviceOption.name = ?
+	`pageOption`.`rightId`,
+	`pageOption`.`name`,
+	`pageOption`.`href`,
+	`page`.`path`
+FROM 
+	{$this->registry['table.content_page_option']} `pageOption`
+INNER JOIN 
+	{$this->registry['table.core_service_option']} `serviceOption`
+	ON `pageOption`.`optionId` = `serviceOption`.`id`
+INNER JOIN 
+	{$this->registry['table.content_page']} `page`
+	ON `pageOption`.`destPageId` = `page`.`id`
+WHERE 
+	`serviceOption`.`serviceId` = {$this->page->serviceId}
+AND
+	`pageOption`.`srcPageId` = {$this->page->id}
+AND 
+	`serviceOption`.`name` = ?
 SQL;
 
 		$result = $this->sql->getAll($sql, array($this->optionName));

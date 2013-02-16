@@ -61,35 +61,32 @@ class Amun_User
 		$this->registry = $registry;
 		$this->accessId = (integer) $accessId;
 
-
 		$status = AmunService_User_Account_Record::BANNED;
-		$sql    = <<<EOD
+		$sql    = <<<SQL
 SELECT
-
-	account.id           AS `accountId`,
-	account.groupId      AS `accountGroupId`,
-	account.hostId       AS `accountHostId`,
-	account.countryId    AS `accountCountryId`,
-	account.status       AS `accountStatus`,
-	account.name         AS `accountName`,
-	account.email        AS `accountEmail`,
-	account.profileUrl   AS `accountProfileUrl`,
-	account.thumbnailUrl AS `accountThumbnailUrl`,
-	account.timezone     AS `accountTimezone`,
-	account.updated      AS `accountUpdated`,
-	account.date         AS `accountDate`,
-	group.title          AS `groupTitle`
-
-	FROM {$this->registry['table.user_account']} `account`
-
-		INNER JOIN {$this->registry['table.user_group']} `group`
-
-		ON `account`.`groupId` = `group`.`id`
-
-			WHERE `account`.`id` = ?
-
-			AND `account`.`status` NOT IN ({$status})
-EOD;
+	`account`.`id`           AS `accountId`,
+	`account`.`groupId`      AS `accountGroupId`,
+	`account`.`hostId`       AS `accountHostId`,
+	`account`.`countryId`    AS `accountCountryId`,
+	`account`.`status`       AS `accountStatus`,
+	`account`.`name`         AS `accountName`,
+	`account`.`email`        AS `accountEmail`,
+	`account`.`profileUrl`   AS `accountProfileUrl`,
+	`account`.`thumbnailUrl` AS `accountThumbnailUrl`,
+	`account`.`timezone`     AS `accountTimezone`,
+	`account`.`updated`      AS `accountUpdated`,
+	`account`.`date`         AS `accountDate`,
+	`group`.`title`          AS `groupTitle`
+FROM 
+	{$this->registry['table.user_account']} `account`
+INNER JOIN 
+	{$this->registry['table.user_group']} `group`
+	ON `account`.`groupId` = `group`.`id`
+WHERE 
+	`account`.`id` = ?
+AND 
+	`account`.`status` NOT IN ({$status})
+SQL;
 
 		$row = $this->sql->getRow($sql, array($id));
 
@@ -159,17 +156,15 @@ EOD;
 		$groupId = intval($groupId);
 		$sql     = <<<SQL
 SELECT
-
 	`right`.`id`,
 	`right`.`name`
-
-	FROM {$this->registry['table.user_group_right']} `groupRight`
-
-		INNER JOIN {$this->registry['table.user_right']} `right`
-
-		ON `right`.`id` = `groupRight`.`rightId`
-
-			WHERE `groupRight`.`groupId` = {$groupId}
+FROM 
+	{$this->registry['table.user_group_right']} `groupRight`
+INNER JOIN 
+	{$this->registry['table.user_right']} `right`
+	ON `right`.`id` = `groupRight`.`rightId`
+WHERE 
+	`groupRight`.`groupId` = {$groupId}
 SQL;
 
 		$result = $this->sql->getAll($sql);
@@ -187,25 +182,22 @@ SQL;
 		$accessId = intval($accessId);
 		$sql      = <<<SQL
 SELECT
-
 	`right`.`id`,
 	`right`.`name`
-
-	FROM {$this->registry['table.oauth_access_right']} `accessRight`
-
-		INNER JOIN {$this->registry['table.oauth_access']} `access`
-
-		ON `access`.`id` = `accessRight`.`accessId`
-
-			INNER JOIN {$this->registry['table.user_right']} `right`
-
-			ON `right`.`id` = `accessRight`.`rightId`
-
-				WHERE `accessRight`.`accessId` = {$accessId}
-
-				AND `access`.`userId` = {$this->id}
-
-					AND `access`.`allowed` = 1
+FROM 
+	{$this->registry['table.oauth_access_right']} `accessRight`
+INNER JOIN 
+	{$this->registry['table.oauth_access']} `access`
+	ON `access`.`id` = `accessRight`.`accessId`
+INNER JOIN 
+	{$this->registry['table.user_right']} `right`
+	ON `right`.`id` = `accessRight`.`rightId`
+WHERE 
+	`accessRight`.`accessId` = {$accessId}
+AND 
+	`access`.`userId` = {$this->id}
+AND 
+	`access`.`allowed` = 1
 SQL;
 
 		$result = $this->sql->getAll($sql);

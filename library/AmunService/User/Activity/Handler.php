@@ -238,7 +238,8 @@ class AmunService_User_Activity_Handler extends Amun_Data_HandlerAbstract
 		if(!empty($activityId))
 		{
 			$sql = <<<SQL
-INSERT INTO {$this->registry['table.user_activity_receiver']}
+INSERT INTO 
+	{$this->registry['table.user_activity_receiver']}
 	(`activityId`, `userId`, `date`)
 	SELECT
 		{$activityId} AS `activityId`,

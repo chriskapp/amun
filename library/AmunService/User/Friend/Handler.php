@@ -280,14 +280,13 @@ class AmunService_User_Friend_Handler extends Amun_Data_HandlerAbstract
 	{
 		$sql = <<<SQL
 SELECT
-
 	`host`.`id`       AS `hostId`,
 	`host`.`name`     AS `hostName`,
 	`host`.`template` AS `hostTemplate`
-
-	FROM {$this->registry['table.core_host']} `host`
-
-		WHERE `host`.`name` = ?
+FROM 
+	{$this->registry['table.core_host']} `host`
+WHERE 
+	`host`.`name` = ?
 SQL;
 
 		$row = $this->sql->getRow($sql, array($record->host));
@@ -347,23 +346,21 @@ SQL;
 	{
 		$sql = <<<SQL
 SELECT
-
 	`account`.`id`    AS `accountId`,
 	`host`.`id`       AS `hostId`,
 	`host`.`name`     AS `hostName`,
 	`host`.`template` AS `hostTemplate`
-
-	FROM {$this->registry['table.user_account']} `account`
-
-		INNER JOIN {$this->registry['table.core_host']} `host`
-
-		ON `account`.`hostId` = `host`.`id`
-
-			WHERE `account`.`name` = ?
-
-			AND `host`.`name` = ?
-
-				AND `account`.`status` = ?
+FROM 
+	{$this->registry['table.user_account']} `account`
+INNER JOIN 
+	{$this->registry['table.core_host']} `host`
+	ON `account`.`hostId` = `host`.`id`
+WHERE 
+	`account`.`name` = ?
+AND 
+	`host`.`name` = ?
+AND 
+	`account`.`status` = ?
 SQL;
 
 		$row = $this->sql->getRow($sql, array($record->name, $record->host, AmunService_User_Account_Record::REMOTE));

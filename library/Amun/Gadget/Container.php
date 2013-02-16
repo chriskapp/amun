@@ -99,7 +99,6 @@ class Amun_Gadget_Container extends ArrayObject
 
 		$sql = <<<SQL
 SELECT
-
 	`pageGadget`.`id`,
 	`gadget`.`rightId`,
 	`gadget`.`type`,
@@ -109,20 +108,18 @@ SELECT
 	`gadget`.`cache`,
 	`gadget`.`expire`,
 	`service`.`name` AS `serviceName`
-
-	FROM {$this->registry['table.content_page_gadget']} `pageGadget`
-
-		INNER JOIN {$this->registry['table.content_gadget']} `gadget`
-
-		ON `pageGadget`.`gadgetId` = `gadget`.`id`
-
-			INNER JOIN {$this->registry['table.core_service']} `service`
-
-			ON `gadget`.`serviceId` = `service`.`id`
-
-				WHERE `pageGadget`.`pageId` = ?
-
-				ORDER BY `pageGadget`.`sort` ASC
+FROM 
+	{$this->registry['table.content_page_gadget']} `pageGadget`
+INNER JOIN 
+	{$this->registry['table.content_gadget']} `gadget`
+	ON `pageGadget`.`gadgetId` = `gadget`.`id`
+INNER JOIN 
+	{$this->registry['table.core_service']} `service`
+	ON `gadget`.`serviceId` = `service`.`id`
+WHERE 
+	`pageGadget`.`pageId` = ?
+ORDER BY 
+	`pageGadget`.`sort` ASC
 SQL;
 
 		$result = $this->sql->getAll($sql, array($page->id), PSX_Sql::FETCH_OBJECT, 'Amun_Gadget_Item', array($this->config, $loader));

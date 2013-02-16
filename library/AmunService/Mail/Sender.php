@@ -55,16 +55,15 @@ class AmunService_Mail_Sender implements Amun_Mail_SenderInterface
 
 		$sql = <<<SQL
 SELECT
-
 	`mail`.`from`,
 	`mail`.`subject`,
 	`mail`.`text`,
 	`mail`.`html`,
 	`mail`.`values`
-
-	FROM {$this->registry['table.mail']} `mail`
-
-		WHERE `mail`.`name` = ?
+FROM 
+	{$this->registry['table.mail']} `mail`
+WHERE 
+	`mail`.`name` = ?
 SQL;
 
 		$row = $this->sql->getRow($sql, array($name));

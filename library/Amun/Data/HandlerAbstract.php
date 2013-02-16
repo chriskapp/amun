@@ -211,13 +211,12 @@ abstract class Amun_Data_HandlerAbstract implements PSX_Data_HandlerInterface
 		{
 			$sql = <<<SQL
 SELECT
-
-	approval.field AS `approvalField`,
-	approval.value AS `approvalValue`
-
-	FROM {$this->registry['table.core_approval']} `approval`
-
-		WHERE `approval`.`table` LIKE "{$this->table->getName()}"
+	`approval`.`field` AS `approvalField`,
+	`approval`.`value` AS `approvalValue`
+FROM 
+	{$this->registry['table.core_approval']} `approval`
+WHERE 
+	`approval`.`table` LIKE "{$this->table->getName()}"
 SQL;
 
 			$result = $this->sql->getAll($sql);

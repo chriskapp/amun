@@ -57,19 +57,17 @@ class Amun_Event
 	{
 		$sql = <<<SQL
 SELECT
-
 	`event`.`interface`,
 	`listener`.`class`
-
-	FROM {$this->registry['table.core_event_listener']} `listener`
-
-		INNER JOIN {$this->registry['table.core_event']} `event`
-
-		ON `listener`.`eventId` = `event`.`id`
-
-			WHERE `event`.`name` = ?
-
-			ORDER BY `listener`.`priority` DESC
+FROM 
+	{$this->registry['table.core_event_listener']} `listener`
+INNER JOIN 
+	{$this->registry['table.core_event']} `event`
+	ON `listener`.`eventId` = `event`.`id`
+WHERE 
+	`event`.`name` = ?
+ORDER BY 
+	`listener`.`priority` DESC
 SQL;
 
 		$result   = $this->sql->getAll($sql, array($name));

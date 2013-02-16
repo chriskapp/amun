@@ -349,23 +349,21 @@ class AmunService_User_Account_Record extends Amun_Data_RecordAbstract
 		{
 			$sql = <<<SQL
 SELECT
-
 	`host`.`consumerKey`,
 	`host`.`consumerSecret`,
 	`request`.`token`,
 	`request`.`tokenSecret`
-
-	FROM {$this->_registry['table.core_host_request']} `request`
-
-		INNER JOIN {$this->_registry['table.core_host']} `host`
-
-		ON `request`.`hostId` = `host`.`id`
-
-			WHERE `request`.`hostId` = {$this->hostId}
-
-			AND `request`.`userId` = {$this->id}
-
-				ORDER BY `request`.`date` DESC
+FROM 
+	{$this->_registry['table.core_host_request']} `request`
+INNER JOIN 
+	{$this->_registry['table.core_host']} `host`
+	ON `request`.`hostId` = `host`.`id`
+WHERE 
+	`request`.`hostId` = {$this->hostId}
+AND 
+	`request`.`userId` = {$this->id}
+ORDER BY 
+	`request`.`date` DESC
 SQL;
 
 			$row = $this->_sql->getRow($sql);

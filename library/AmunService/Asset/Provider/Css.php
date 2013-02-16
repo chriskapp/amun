@@ -68,7 +68,15 @@ class AmunService_Asset_Provider_Css implements AmunService_Asset_ProviderInterf
 
 	private function getContentServices()
 	{
-		$result = Amun_Sql_Table_Registry::get('Core_Service')->getAll(array('name', 'source'));
+		$sql = <<<SQL
+SELECT
+	`name`,
+	`source`
+FROM
+	{$this->registry['table.core_service']}
+SQL;
+
+		$result = $this->sql->getAll($sql);
 
 		foreach($result as $row)
 		{

@@ -79,16 +79,14 @@ class Amun_Oauth extends PSX_Oauth_ProviderAbstract
 	{
 		$sql = <<<SQL
 SELECT
-
-	api.id             AS `apiId`,
-	api.consumerKey    AS `apiConsumerKey`,
-	api.consumerSecret AS `apiConsumerSecret`
-
-	FROM {$this->registry['table.oauth']} api
-
-		WHERE api.consumerKey = ?
-
-			LIMIT 1
+	`api`.`id`             AS `apiId`,
+	`api`.`consumerKey`    AS `apiConsumerKey`,
+	`api`.`consumerSecret` AS `apiConsumerSecret`
+FROM 
+	{$this->registry['table.oauth']} api
+WHERE 
+	`api`.`consumerKey` = ?
+LIMIT 1
 SQL;
 
 		$row = $this->sql->getRow($sql, array($consumerKey));
@@ -139,27 +137,25 @@ SQL;
 	{
 		$sql = <<<SQL
 SELECT
-
-	request.id          AS `requestId`,
-	request.apiId       AS `requestApiId`,
-	request.userId      AS `requestUserId`,
-	request.status      AS `requestStatus`,
-	request.ip          AS `requestIp`,
-	request.nonce       AS `requestNonce`,
-	request.callback    AS `requestCallback`,
-	request.token       AS `requestToken`,
-	request.tokenSecret AS `requestTokenSecret`,
-	request.verifier    AS `requestVerifier`,
-	request.expire      AS `requestExpire`,
-	request.date        AS `requestDate`
-
-	FROM {$this->registry['table.oauth_request']} `request`
-
-		WHERE request.token = ?
-
-		AND request.status = ?
-
-			LIMIT 1
+	`request`.`id`          AS `requestId`,
+	`request`.`apiId`       AS `requestApiId`,
+	`request`.`userId`      AS `requestUserId`,
+	`request`.`status`      AS `requestStatus`,
+	`request`.`ip`          AS `requestIp`,
+	`request`.`nonce`       AS `requestNonce`,
+	`request`.`callback`    AS `requestCallback`,
+	`request`.`token`       AS `requestToken`,
+	`request`.`tokenSecret` AS `requestTokenSecret`,
+	`request`.`verifier`    AS `requestVerifier`,
+	`request`.`expire`      AS `requestExpire`,
+	`request`.`date`        AS `requestDate`
+FROM 
+	{$this->registry['table.oauth_request']} `request`
+WHERE 
+	`request`.`token` = ?
+AND 
+	`request`.`status` = ?
+LIMIT 1
 SQL;
 
 		$row = $this->sql->getRow($sql, array($token, AmunService_Oauth_Record::ACCESS));
@@ -173,15 +169,14 @@ SQL;
 			// check whether request is allowed
 			$sql = <<<SQL
 SELECT
-
-	access.id      AS `accessId`,
-	access.allowed AS `accessAllowed`
-
-	FROM {$this->registry['table.oauth_access']} `access`
-
-		WHERE access.apiId = ?
-
-		AND access.userId = ?
+	`access`.`id`      AS `accessId`,
+	`access`.`allowed` AS `accessAllowed`
+FROM 
+	{$this->registry['table.oauth_access']} `access`
+WHERE 
+	`access`.`apiId` = ?
+AND 
+	`access`.`userId` = ?
 SQL;
 
 			$access = $this->sql->getRow($sql, array($row['requestApiId'], $row['requestUserId']));

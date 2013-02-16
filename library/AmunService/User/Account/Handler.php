@@ -236,15 +236,14 @@ class AmunService_User_Account_Handler extends Amun_Data_HandlerAbstract
 
 		$sql = <<<SQL
 SELECT
-
-	host.name     AS `hostName`,
-	host.template AS `hostTemplate`
-
-	FROM {$this->registry['table.core_host']} `host`
-
-		WHERE `host`.`id` = ?
-
-		AND `host`.`status` = ?
+	`host`.`name`     AS `hostName`,
+	`host`.`template` AS `hostTemplate`
+FROM 
+	{$this->registry['table.core_host']} `host`
+WHERE 
+	`host`.`id` = ?
+AND 
+	`host`.`status` = ?
 SQL;
 
 		$row = $this->sql->getRow($sql, array($hostId, AmunService_Core_Host_Record::NORMAL));

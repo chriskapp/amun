@@ -59,30 +59,27 @@ class Amun_Gadget
 		$this->registry = $registry;
 		$this->user     = $user;
 
-
 		$sql = <<<SQL
 SELECT
-
-	gadget.id          AS `gadgetId`,
-	gadget.serviceId   AS `gadgetServiceId`,
-	gadget.rightId     AS `gadgetRightId`,
-	gadget.type        AS `gadgetType`,
-	gadget.name        AS `gadgetName`,
-	gadget.title       AS `gadgetTitle`,
-	gadget.path        AS `gadgetPath`,
-	gadget.param       AS `gadgetParam`,
-	gadget.cache       AS `gadgetCache`,
-	gadget.expire      AS `gadgetExpire`,
-	gadget.date        AS `gadgetDate`,
-	service.source     AS `serviceSource`
-
-	FROM {$this->registry['table.content_gadget']} `gadget`
-
-		INNER JOIN {$this->registry['table.core_service']} `service`
-
-		ON `gadget`.`serviceId` = `service`.`id`
-
-			WHERE `gadget`.`id` = ?
+	`gadget`.`id`          AS `gadgetId`,
+	`gadget`.`serviceId`   AS `gadgetServiceId`,
+	`gadget`.`rightId`     AS `gadgetRightId`,
+	`gadget`.`type`        AS `gadgetType`,
+	`gadget`.`name`        AS `gadgetName`,
+	`gadget`.`title`       AS `gadgetTitle`,
+	`gadget`.`path`        AS `gadgetPath`,
+	`gadget`.`param`       AS `gadgetParam`,
+	`gadget`.`cache`       AS `gadgetCache`,
+	`gadget`.`expire`      AS `gadgetExpire`,
+	`gadget`.`date`        AS `gadgetDate`,
+	`service`.`source`     AS `serviceSource`
+FROM 
+	{$this->registry['table.content_gadget']} `gadget`
+INNER JOIN 
+	{$this->registry['table.core_service']} `service`
+	ON `gadget`.`serviceId` = `service`.`id`
+WHERE 
+	`gadget`.`id` = ?
 SQL;
 
 		$row = $this->sql->getRow($sql, array($gadgetId));

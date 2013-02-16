@@ -62,20 +62,19 @@ class Amun_Service
 		$status = AmunService_Core_Service_Record::NORMAL;
 		$sql    = <<<SQL
 SELECT
-
-	service.id        AS `serviceId`,
-	service.status    AS `serviceStatus`,
-	service.source    AS `serviceSource`,
-	service.name      AS `serviceName`,
-	service.path      AS `servicePath`,
-	service.namespace AS `serviceNamespace`,
-	service.type      AS `serviceType`,
-	service.version   AS `serviceVersion`,
-	service.date      AS `serviceDate`
-
-	FROM {$this->registry['table.core_service']} `service`
-
-		WHERE `service`.`id` = ?
+	`service`.`id`        AS `serviceId`,
+	`service`.`status`    AS `serviceStatus`,
+	`service`.`source`    AS `serviceSource`,
+	`service`.`name`      AS `serviceName`,
+	`service`.`path`      AS `servicePath`,
+	`service`.`namespace` AS `serviceNamespace`,
+	`service`.`type`      AS `serviceType`,
+	`service`.`version`   AS `serviceVersion`,
+	`service`.`date`      AS `serviceDate`
+FROM 
+	{$this->registry['table.core_service']} `service`
+WHERE 
+	`service`.`id` = ?
 SQL;
 
 		$row = $this->sql->getRow($sql, array($id));

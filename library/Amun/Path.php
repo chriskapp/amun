@@ -55,16 +55,15 @@ class Amun_Path extends ArrayObject
 	{
 		$sql = <<<SQL
 SELECT
-
-	page.parentId,
-	page.title,
-	page.urlTitle
-
-	FROM {$this->registry['table.content_page']} `page`
-
-		WHERE SUBSTRING('{$this->page->path}', 1, LENGTH(`path`)) LIKE `path`
-
-		ORDER BY LENGTH(`path`) ASC
+	`page`.`parentId`,
+	`page`.`title`,
+	`page`.`urlTitle`
+FROM 
+	{$this->registry['table.content_page']} `page`
+WHERE 
+	SUBSTRING('{$this->page->path}', 1, LENGTH(`path`)) LIKE `path`
+ORDER BY 
+	LENGTH(`path`) ASC
 SQL;
 
 		$result = $this->sql->getAll($sql);

@@ -56,30 +56,28 @@ class Amun_Nav extends ArrayObject
 	public function load()
 	{
 		$status = AmunService_Content_Page_Record::NORMAL;
-		$sql    = <<<EOD
+		$sql    = <<<SQL
 SELECT
-
-	page.id          AS `pageId`,
-	page.rightId     AS `pageRightId`,
-	page.path        AS `pagePath`,
-	page.title       AS `pageTitle`,
-	page.urlTitle    AS `pageUrlTitle`,
-	service.name     AS `serviceName`
-
-	FROM {$this->registry['table.content_page']} `page`
-
-		INNER JOIN {$this->registry['table.core_service']} `service`
-
-		ON page.serviceId = service.id
-
-			WHERE `page`.`parentId` = 1
-
-			AND `page`.`status` = {$status}
-
-				AND (`page`.`publishDate` = '0000-00-00 00:00:00' OR `page`.`publishDate` < NOW())
-
-				ORDER BY `page`.`sort` ASC
-EOD;
+	`page`.`id`          AS `pageId`,
+	`page`.`rightId`     AS `pageRightId`,
+	`page`.`path`        AS `pagePath`,
+	`page`.`title`       AS `pageTitle`,
+	`page`.`urlTitle`    AS `pageUrlTitle`,
+	`service`.`name`     AS `serviceName`
+FROM 
+	{$this->registry['table.content_page']} `page`
+INNER JOIN 
+	{$this->registry['table.core_service']} `service`
+	ON `page`.`serviceId` = `service`.`id`
+WHERE 
+	`page`.`parentId` = 1
+AND 
+	`page`.`status` = {$status}
+AND 
+	(`page`.`publishDate` = '0000-00-00 00:00:00' OR `page`.`publishDate` < NOW())
+ORDER BY 
+	`page`.`sort` ASC
+SQL;
 
 		$result = $this->sql->getAll($sql);
 

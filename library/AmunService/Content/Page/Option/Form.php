@@ -252,20 +252,18 @@ class AmunService_Content_Page_Option_Form extends Amun_Data_FormAbstract
 		$status = AmunService_Core_Service_Record::NORMAL;
 		$sql    = <<<SQL
 SELECT
-
-	service.id,
-	service.name,
-	option.name AS optionName
-
-	FROM {$this->registry['table.core_service']} `service`
-
-		INNER JOIN {$this->registry['table.core_service_option']} `option`
-
-		ON option.serviceId = service.id
-
-			WHERE service.status = {$status}
-
-			ORDER BY option.name ASC
+	`service`.`id`,
+	`service`.`name`,
+	`option`.`name` AS optionName
+FROM 
+	{$this->registry['table.core_service']} `service`
+INNER JOIN 
+	{$this->registry['table.core_service_option']} `option`
+	ON `option`.`serviceId` = `service`.`id`
+WHERE 
+	`service`.`status` = {$status}
+ORDER BY 
+	`option`.`name` ASC
 SQL;
 
 		$option = array();

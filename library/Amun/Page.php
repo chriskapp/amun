@@ -72,32 +72,30 @@ class Amun_Page
 		$status = AmunService_Content_Page_Record::NORMAL;
 		$sql    = <<<SQL
 SELECT
-
-	page.id          AS `pageId`,
-	page.parentId    AS `pageParentId`,
-	page.serviceId   AS `pageServiceId`,
-	page.rightId     AS `pageRightId`,
-	page.status      AS `pageStatus`,
-	page.load        AS `pageLoad`,
-	page.path        AS `pagePath`,
-	page.urlTitle    AS `pageUrlTitle`,
-	page.title       AS `pageTitle`,
-	page.template    AS `pageTemplate`,
-	page.description AS `pageDescription`,
-	page.keywords    AS `pageKeywords`,
-	page.cache       AS `pageCache`,
-	page.expire      AS `pageExpire`,
-	page.publishDate AS `pagePublishDate`,
-	page.date        AS `pageDate`,
-	service.source   AS `serviceSource`
-
-	FROM {$this->registry['table.content_page']} `page`
-
-		INNER JOIN {$this->registry['table.core_service']} `service`
-
-		ON `page`.`serviceId` = `service`.`id`
-
-			WHERE `page`.`id` = ?
+	`page`.`id`          AS `pageId`,
+	`page`.`parentId`    AS `pageParentId`,
+	`page`.`serviceId`   AS `pageServiceId`,
+	`page`.`rightId`     AS `pageRightId`,
+	`page`.`status`      AS `pageStatus`,
+	`page`.`load`        AS `pageLoad`,
+	`page`.`path`        AS `pagePath`,
+	`page`.`urlTitle`    AS `pageUrlTitle`,
+	`page`.`title`       AS `pageTitle`,
+	`page`.`template`    AS `pageTemplate`,
+	`page`.`description` AS `pageDescription`,
+	`page`.`keywords`    AS `pageKeywords`,
+	`page`.`cache`       AS `pageCache`,
+	`page`.`expire`      AS `pageExpire`,
+	`page`.`publishDate` AS `pagePublishDate`,
+	`page`.`date`        AS `pageDate`,
+	`service`.`source`   AS `serviceSource`
+FROM 
+	{$this->registry['table.content_page']} `page`
+INNER JOIN 
+	{$this->registry['table.core_service']} `service`
+	ON `page`.`serviceId` = `service`.`id`
+WHERE 
+	`page`.`id` = ?
 SQL;
 
 		$row = $this->sql->getRow($sql, array($pageId));
@@ -160,12 +158,11 @@ SQL;
 		$id   = intval($pageId);
 		$stmt = <<<SQL
 SELECT
-
-	page.path
-
-	FROM {$registry['table.content_page']} `page`
-
-		WHERE `page`.`id` = {$id}
+	`page`.`path`
+FROM 
+	{$registry['table.content_page']} `page`
+WHERE 
+	`page`.`id` = {$id}
 SQL;
 
 		$row = $registry->getSql()->getRow($stmt);
