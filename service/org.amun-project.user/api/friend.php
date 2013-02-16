@@ -24,14 +24,11 @@
 
 namespace user\api;
 
-use AmunService_User_Friend_Record;
 use Amun_Base;
 use Amun_Module_RestAbstract;
-use Amun_Sql_Table_Registry;
 use DateTime;
 use PSX_Data_WriterInterface;
 use PSX_Data_WriterResult;
-use PSX_Sql_Join;
 
 /**
  * friend

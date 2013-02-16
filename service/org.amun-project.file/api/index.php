@@ -25,11 +25,6 @@
 namespace file\api;
 
 use Amun_Module_RestAbstract;
-use Amun_Sql_Table_Registry;
-use PSX_Data_Exception;
-use PSX_Data_WriterInterface;
-use PSX_Data_WriterResult;
-use PSX_Sql_Join;
 
 /**
  * index

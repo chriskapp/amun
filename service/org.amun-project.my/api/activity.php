@@ -34,7 +34,6 @@ use PSX_Data_Message;
 use PSX_Data_WriterInterface;
 use PSX_Data_WriterResult;
 use PSX_Sql;
-use PSX_Sql_Join;
 
 /**
  * activity

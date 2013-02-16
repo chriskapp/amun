@@ -25,9 +25,6 @@
 namespace country\api;
 
 use Amun_Module_RestAbstract;
-use PSX_Data_Exception;
-use PSX_Data_WriterInterface;
-use PSX_Data_WriterResult;
 
 /**
  * country

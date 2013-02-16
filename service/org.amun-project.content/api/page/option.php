@@ -25,8 +25,6 @@
 namespace content\api\page;
 
 use Amun_Module_RestAbstract;
-use Amun_Sql_Table_Registry;
-use PSX_Sql_Join;
 
 /**
  * option

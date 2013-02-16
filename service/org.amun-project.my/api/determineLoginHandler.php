@@ -24,9 +24,9 @@
 
 namespace my\api;
 
-use Amun_Module_ApiAbstract;
-use AmunService_My_LoginHandlerFactory;
 use AmunService_My_LoginHandlerAbstract;
+use AmunService_My_LoginHandlerFactory;
+use Amun_Module_ApiAbstract;
 use PSX_Json;
 
 /**
