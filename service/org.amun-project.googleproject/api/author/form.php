@@ -39,8 +39,8 @@ use Amun_Module_FormAbstract;
  */
 class form extends Amun_Module_FormAbstract
 {
-	protected function getHandler($table = null)
+	protected function getForm($table = null)
 	{
-		return parent::getHandler($table === null ? 'Googleproject_Author' : $table);
+		return parent::getForm($table === null ? 'Googleproject_Author' : $table);
 	}
 }

@@ -42,19 +42,19 @@ abstract class Amun_Module_FormAbstract extends Amun_Module_ApiAbstract
 	 *
 	 * @httpMethod GET
 	 * @path /
-	 * @nickname getForm
+	 * @nickname doForm
 	 * @parameter query method string create|update|delete
 	 * @parameter [query id integer]
 	 * @responseClass Amun_Form
 	 */
-	public function getForm()
+	public function doForm()
 	{
 		if($this->user->hasRight($this->service->namespace . '_view'))
 		{
 			try
 			{
 				$this->method = $this->get->method('string');
-				$this->form   = $this->dataFactory->getFormInstance($this->service->namespace);
+				$this->form   = $this->getForm();
 
 				if($this->form === null)
 				{
@@ -111,5 +111,9 @@ abstract class Amun_Module_FormAbstract extends Amun_Module_ApiAbstract
 	{
 		return $this->form->delete($this->get->id('integer'));
 	}
-}
 
+	protected function getForm($table = null)
+	{
+		return $this->dataFactory->getFormInstance($table === null ? $this->service->namespace : $table);
+	}
+}

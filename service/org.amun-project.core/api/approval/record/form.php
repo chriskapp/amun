@@ -39,9 +39,9 @@ use Amun_Module_FormAbstract;
  */
 class form extends Amun_Module_FormAbstract
 {
-	protected function getHandler($table = null)
+	protected function getForm($table = null)
 	{
-		return parent::getHandler($table === null ? 'Core_Approval_Record' : $table);
+		return parent::getForm($table === null ? 'Core_Approval_Record' : $table);
 	}
 }
 
