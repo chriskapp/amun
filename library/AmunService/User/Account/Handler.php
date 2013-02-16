@@ -34,6 +34,32 @@
  */
 class AmunService_User_Account_Handler extends Amun_Data_HandlerAbstract
 {
+	public function getByIdentity($identity)
+	{
+		return Amun_Sql_Table_Registry::get('User_Account')
+			->select(array('id', 'status', 'name', 'email'))
+			->where('identity', '=', $identity)
+			->getRow(PSX_Sql::FETCH_OBJECT);
+	}
+
+	public function getRecoverByToken($token)
+	{
+		return Amun_Sql_Table_Registry::get('User_Account')
+			->select(array('id', 'name', 'ip', 'email', 'date'))
+			->where('token', '=', $token)
+			->where('status', '=', AmunService_User_Account_Record::RECOVER)
+			->getRow(PSX_Sql::FETCH_OBJECT);
+	}
+
+	public function getNotActivatedByToken($token)
+	{
+		return Amun_Sql_Table_Registry::get('User_Account')
+			->select(array('id', 'ip', 'date'))
+			->where('token', '=', $token)
+			->where('status', '=', AmunService_User_Account_Record::NOT_ACTIVATED)
+			->getRow(PSX_Sql::FETCH_OBJECT);
+	}
+
 	public function create(PSX_Data_RecordInterface $record)
 	{
 		if($record->hasFields('groupId', 'status', 'identity', 'name', 'pw'))

@@ -63,15 +63,20 @@ class group extends AmunService_My_FriendsAbstract
 
 	public function getGroups()
 	{
-		$select = Amun_Sql_Table_Registry::get('User_Friend_Group')
-			->select(array('id', 'title', 'date'))
-			->where('userId', '=', $this->user->id);
+		$con = $this->getRequestCondition();
+		$con->add('userId', '=', $this->user->id);
 
+		$url   = new PSX_Url($this->base->getSelf());
+		$count = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
+		$count = $count > 16 ? 16 : $count;
 
-		// get data
-		$url = new PSX_Url($this->base->getSelf());
-
-		$result = $select->getResultSet($url->getParam('startIndex'), 8, $url->getParam('sortBy'), $url->getParam('sortOrder'), $url->getParam('filterBy'), $url->getParam('filterOp'), $url->getParam('filterValue'), $url->getParam('updatedSince'), PSX_SQL::FETCH_OBJECT);
+		$result = $this->getHandler('User_Friend_Group')->getResultSet(array(),
+			$url->getParam('startIndex'), 
+			$count, 
+			$url->getParam('sortBy'), 
+			$url->getParam('sortOrder'), 
+			$con, 
+			PSX_SQL::FETCH_OBJECT);
 
 
 		$paging = new PSX_Html_Paging($url, $result);

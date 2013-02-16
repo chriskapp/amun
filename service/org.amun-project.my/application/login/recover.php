@@ -71,10 +71,7 @@ class recover extends Amun_Module_ApplicationAbstract
 
 			if(!$this->validate->hasError())
 			{
-				$account = Amun_Sql_Table_Registry::get('User_Account')
-					->select(array('id', 'status', 'name', 'email'))
-					->where('identity', '=', sha1(Amun_Security::getSalt() . $email))
-					->getRow(PSX_Sql::FETCH_OBJECT);
+				$account = $this->getHandler('User_Account')->getByIdentity(sha1(Amun_Security::getSalt() . $email));
 
 				if($account instanceof AmunService_User_Account_Record)
 				{

@@ -34,6 +34,14 @@
  */
 class AmunService_Oauth_Request_Handler extends Amun_Data_HandlerAbstract
 {
+	public function getByToken($token)
+	{
+		return Amun_Sql_Table_Registry::get('Oauth_Request')
+			->select(array('apiId', 'status', 'callback', 'token', 'expire', 'date'))
+			->where('token', '=', $token)
+			->getRow();
+	}
+
 	public function create(PSX_Data_RecordInterface $record)
 	{
 		throw new PSX_Data_Exception('Requests can not created');

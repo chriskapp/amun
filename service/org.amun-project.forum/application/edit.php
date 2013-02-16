@@ -48,7 +48,7 @@ class edit extends Amun_Module_ApplicationAbstract
 			$url = $this->service->getApiEndpoint() . '/form?format=json&method=update&id=' . $id;
 
 			// forum
-			$forum = Amun_Sql_Table_Registry::get('Forum')->getRecord($id);
+			$forum = $this->getHandler()->getById($id, PSX_Sql::FETCH_OBJECT);
 
 			// add path
 			$this->path->add($forum->title, $this->page->url . '/view?id=' . $forum->id);

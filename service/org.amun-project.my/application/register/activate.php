@@ -57,11 +57,7 @@ class activate extends Amun_Module_ApplicationAbstract
 
 			if($token !== false)
 			{
-				$account = Amun_Sql_Table_Registry::get('User_Account')
-					->select(array('id', 'ip', 'date'))
-					->where('token', '=', $token)
-					->where('status', '=', AmunService_User_Account_Record::NOT_ACTIVATED)
-					->getRow(PSX_Sql::FETCH_OBJECT);
+				$account = $this->getHandler('User_Account')->getNotActivatedByToken($token);
 
 				if($account instanceof AmunService_User_Account_Record)
 				{

@@ -71,10 +71,7 @@ class auth extends Amun_Module_ApplicationAbstract
 				if(!empty($oauthToken))
 				{
 					// check token
-					$row = Amun_Sql_Table_Registry::get('Oauth_Request')
-						->select(array('apiId', 'callback', 'token', 'expire', 'date'))
-						->where('token', '=', $oauthToken)
-						->getRow();
+					$row = $this->getHandler('Oauth_Request')->getByToken($oauthToken);
 
 					if(!empty($row))
 					{
@@ -98,13 +95,7 @@ class auth extends Amun_Module_ApplicationAbstract
 						}
 
 						// load user rights
-						$this->userRights = Amun_Sql_Table_Registry::get('User_Group_Right')
-							->select(array('rightId'))
-							->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Right')
-								->select(array('name', 'description'), 'right')
-							)
-							->where('groupId', '=', $this->user->groupId)
-							->getAll();
+						$this->userRights = $this->getHandler('User_Group_Right')->getByGroupId($this->user->groupId);
 
 						$this->template->assign('userRights', $this->userRights);
 
@@ -133,10 +124,7 @@ class auth extends Amun_Module_ApplicationAbstract
 					}
 
 					// request consumer informations
-					$row = Amun_Sql_Table_Registry::get('Oauth')
-						->select(array('url', 'title', 'description'))
-						->where('id', '=', $this->apiId)
-						->getRow();
+					$this->getHandler('Oauth')->getById($this->apiId, array('url', 'title', 'description'));
 
 					if(!empty($row))
 					{
@@ -149,13 +137,7 @@ class auth extends Amun_Module_ApplicationAbstract
 					}
 
 					// check whether access is already allowed
-					$allowed = Amun_Sql_Table_Registry::get('Oauth_Access')
-						->select(array('allowed'))
-						->where('apiId', '=', $this->apiId)
-						->where('userId', '=', $this->user->id)
-						->getField();
-
-					if($allowed)
+					if($this->getHandler('Oauth_Access')->isAllowed())
 					{
 						$this->allowAccess($token, $callback);
 					}
@@ -187,10 +169,7 @@ class auth extends Amun_Module_ApplicationAbstract
 
 		if($token !== false)
 		{
-			$row = Amun_Sql_Table_Registry::get('Oauth_Request')
-				->select(array('status', 'token', 'callback'))
-				->where('token', '=', $token)
-				->getRow();
+			$row = $this->getHandler('Oauth_Request')->getByToken($token);
 
 			if(!empty($row))
 			{

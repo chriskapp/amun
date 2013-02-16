@@ -60,13 +60,7 @@ class settings extends AmunService_My_SettingsAbstract
 			$this->template->assign('appRights', $appRights);
 
 			// load user rights
-			$this->userRights = Amun_Sql_Table_Registry::get('User_Group_Right')
-				->select(array('rightId'))
-				->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Right')
-					->select(array('name', 'description'), 'right')
-				)
-				->where('groupId', '=', $this->user->groupId)
-				->getAll();
+			$this->userRights = $this->getHandler('User_Group_Right')->getByGroupId($this->user->groupId);
 
 			$this->template->assign('userRights', $this->userRights);
 		}

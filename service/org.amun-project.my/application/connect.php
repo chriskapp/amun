@@ -100,11 +100,7 @@ class connect extends Amun_Module_ApplicationAbstract
 			$this->assoc = $this->getAssociation();
 
 			// check whether access is already allowed or denied
-			$status = (integer) Amun_Sql_Table_Registry::get('Openid')
-				->select(array('status'))
-				->where('userId', '=', $this->user->id)
-				->where('assocId', '=', $this->assoc['id'])
-				->getField();
+			$status = $this->getHandler('Openid')->getStatus($this->user->id, $this->assoc['id']);
 
 			if($status === AmunService_Openid_Record::APPROVED)
 			{
@@ -314,11 +310,7 @@ class connect extends Amun_Module_ApplicationAbstract
 	private function handleOauthExt()
 	{
 		$consumerKey = isset($this->oauth['consumer']) ? $this->oauth['consumer'] : null;
-
-		$row = Amun_Sql_Table_Registry::get('Openid')
-			->select(array('id', 'consumerKey'))
-			->where('consumerKey', '=', $consumerKey)
-			->getRow();
+		$row         = $this->getHandler('Openid')->getByConsumerKey($consumerKey);
 
 		if(!empty($row))
 		{
