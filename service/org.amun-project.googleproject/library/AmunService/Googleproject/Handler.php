@@ -114,6 +114,12 @@ class AmunService_Googleproject_Handler extends Amun_Data_HandlerAbstract
 		}
 	}
 
+	protected function getDefaultSelect()
+	{
+		return $this->table
+			->select(array('id', 'globalId', 'name', 'date'));
+	}
+
 	private function projectExists($name)
 	{
 		$http     = new PSX_Http(new PSX_Http_Handler_Curl());

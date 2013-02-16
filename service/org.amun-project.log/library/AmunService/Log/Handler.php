@@ -102,6 +102,15 @@ class AmunService_Log_Handler extends Amun_Data_HandlerAbstract
 			throw new PSX_Data_Exception('Missing field in record');
 		}
 	}
+
+	protected function getDefaultSelect()
+	{
+		return $this->table
+			->select(array('id', 'userId', 'refId', 'type', 'table', 'date'))
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+				->select(array('name', 'profileUrl'), 'author')
+			);
+	}
 }
 
 

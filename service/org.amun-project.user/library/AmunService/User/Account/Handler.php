@@ -215,6 +215,18 @@ class AmunService_User_Account_Handler extends Amun_Data_HandlerAbstract
 		}
 	}
 
+	protected function getDefaultSelect()
+	{
+		return $this->table
+			->select(array('id', 'globalId', 'groupId', 'status', 'name', 'updated', 'profileUrl', 'thumbnailUrl', 'date'))
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Group')
+				->select(array('title'), 'group')
+			)
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Country')
+				->select(array('title'), 'country')
+			);
+	}
+
 	private function discoverProfileUrl($hostId, $name)
 	{
 		if(empty($name))

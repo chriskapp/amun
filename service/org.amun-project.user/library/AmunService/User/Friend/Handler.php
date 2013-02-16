@@ -172,6 +172,23 @@ class AmunService_User_Friend_Handler extends Amun_Data_HandlerAbstract
 		}
 	}
 
+	protected function getDefaultSelect()
+	{
+		return $this->table
+			->select(array('id', 'status', 'date'))
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'author'),
+				'n:1',
+				'userId'
+			)
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'friend'),
+				'n:1',
+				'friendId'
+			)
+			->where('status', '=', AmunService_User_Friend_Record::NORMAL);
+	}
+
 	/**
 	 * Determines the status of an friendship request. Its a bi-directional
 	 * system so the friendship relation is only established if both users has

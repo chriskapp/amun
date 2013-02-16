@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="09c56dbb4d16230b4688400e7030db68161c4b58">
+<service xmlns="http://amun-project.org" signature="264306738d2fe2c4b959c11a354571682149b84c">
   <status>normal</status>
   <name>my</name>
   <description>Service wich offers a login and social activities for a user</description>
@@ -141,9 +141,9 @@ You can login with the new password at:
           <file name="Webfinger.php" md5="3c90e3ced8a1d52dfe64d83e7bb5a545"/>
           <file name="Yahoo.php" md5="60b431bbb63515a943677976b7117b6a"/>
         </dir>
-        <file name="LoginHandlerAbstract.php" md5="01a7fd5d53cd36227ecc12aeeee119db"/>
+        <file name="LoginHandlerAbstract.php" md5="212c881b23bef2ba726b22885ebadbad"/>
         <file name="LoginHandlerFactory.php" md5="0f794e1ca7e558a112a6c4fe3ee07a2f"/>
-        <file name="MyAbstract.php" md5="2a5adae2b611d100683c8ffb572f0e48"/>
+        <file name="MyAbstract.php" md5="68e1ce1283a7d11f3c176b927954b946"/>
         <file name="People.php" md5="66b7444bc643ff6d3df6c157c2355471"/>
         <file name="SettingsAbstract.php" md5="fb509d4551e7016f9a6c2e8075014f06"/>
       </dir>

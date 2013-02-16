@@ -46,7 +46,7 @@ class AmunService_Explorer_Record extends PSX_Data_RecordAbstract
 
 	public function __construct()
 	{
-		$ct = Amun_DataFactory::getContainer();
+		$ct = Amun_DataFactory::getInstance()->getContainer();
 
 		$this->_base     = $ct->getBase();
 		$this->_config   = $ct->getConfig();

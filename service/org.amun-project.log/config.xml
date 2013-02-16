@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="876407345275fa6f3721309c5a575013fddc02da">
+<service xmlns="http://amun-project.org" signature="ffd818715658881b311523f1d72a6cfbb3fe4996">
   <status>system</status>
   <name>log</name>
   <description>Service wich logs every record insert, update or delete</description>
@@ -30,7 +30,7 @@
     <dir name="AmunService">
       <dir name="Log">
         <file name="Form.php" md5="2b9daa5ef0825c8628de3237e674429a"/>
-        <file name="Handler.php" md5="ff999234c345caf3c6ff4fb1ad758d94"/>
+        <file name="Handler.php" md5="597c4f40dc5180a7996a6c0e0e11106f"/>
         <file name="RecordListener.php" md5="5d9e2bb3f1b84f09e48f4beff8b8f1a9"/>
         <file name="Record.php" md5="759d44cc13094aaf2a0bf9889c431225"/>
         <file name="Table.php" md5="5d7ea15b3a541014ee9075e697a512b9"/>

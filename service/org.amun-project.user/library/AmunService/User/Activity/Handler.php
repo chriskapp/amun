@@ -34,6 +34,94 @@
  */
 class AmunService_User_Activity_Handler extends Amun_Data_HandlerAbstract
 {
+	public function getPrivateResultSet($userId, array $fields, $startIndex = 0, $count = 16, $sortBy = null, $sortOrder = null, PSX_Sql_Condition $con = null, $mode = 0, $class = null, array $args = array())
+	{
+		$startIndex = $startIndex !== null ? (integer) $startIndex : 0;
+		$count      = !empty($count)       ? (integer) $count      : 16;
+		$sortBy     = $sortBy     !== null ? $sortBy               : 'date';
+		$sortOrder  = $sortOrder  !== null ? (integer) $sortOrder  : PSX_Sql::SORT_DESC;
+
+		$select = $this->table
+			->select(array('id', 'parentId', 'status', 'verb', 'summary', 'date'))
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Activity_Receiver')
+				->select(array('id', 'status', 'activityId', 'userId', 'date'), 'receiver'),
+				'1:n'
+			)
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
+			)
+			->where('receiverUserId', '=', $userId)
+			->where('parentId', '=', 0)
+			->orderBy($sortBy, $sortOrder)
+			->limit($startIndex, $count);
+
+		if(!empty($fields))
+		{
+			$select->select($fields);
+		}
+
+		if($con !== null && $con->hasCondition())
+		{
+			$values = $con->toArray();
+
+			foreach($values as $row)
+			{
+				$select->where($row[0], $row[1], $row[2]);
+			}
+		}
+
+		$totalResults = $select->getTotalResults();
+		$entries      = $select->getAll($mode, $class, $args);
+		$resultSet    = new PSX_Data_ResultSet($totalResults, $startIndex, $count, $entries);
+
+		return $resultSet;
+	}
+
+	public function getPublicResultSet($userId, array $fields, $startIndex = 0, $count = 16, $sortBy = null, $sortOrder = null, PSX_Sql_Condition $con = null, $mode = 0, $class = null, array $args = array())
+	{
+		$startIndex = $startIndex !== null ? (integer) $startIndex : 0;
+		$count      = !empty($count)       ? (integer) $count      : 16;
+		$sortBy     = $sortBy     !== null ? $sortBy               : 'date';
+		$sortOrder  = $sortOrder  !== null ? (integer) $sortOrder  : PSX_Sql::SORT_DESC;
+
+		$select = Amun_Sql_Table_Registry::get('User_Activity_Receiver')
+			->select(array('id', 'status', 'activityId', 'userId', 'date'), 'receiver')
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Activity')
+				->select(array('id', 'globalId', 'parentId', 'userId', 'refId', 'table', 'status', 'scope', 'verb', 'summary', 'date'))
+				->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+					->select(array('globalId', 'name', 'profileUrl', 'thumbnailUrl'), 'author')
+				)
+			)
+			->where('receiverUserId', '=', $userId)
+			->where('receiverStatus', '=', AmunService_User_Activity_Receiver_Record::VISIBLE)
+			->where('parentId', '=', 0)
+			->where('scope', '=', 0)
+			->where('userId', '=', $userId)
+			->orderBy($sortBy, $sortOrder)
+			->limit($startIndex, $count);
+
+		if(!empty($fields))
+		{
+			$select->select($fields);
+		}
+
+		if($con !== null && $con->hasCondition())
+		{
+			$values = $con->toArray();
+
+			foreach($values as $row)
+			{
+				$select->where($row[0], $row[1], $row[2]);
+			}
+		}
+
+		$totalResults = $select->getTotalResults();
+		$entries      = $select->getAll($mode, $class, $args);
+		$resultSet    = new PSX_Data_ResultSet($totalResults, $startIndex, $count, $entries);
+
+		return $resultSet;
+	}
+
 	public function create(PSX_Data_RecordInterface $record)
 	{
 		if($record->hasFields('summary'))
@@ -131,6 +219,15 @@ class AmunService_User_Activity_Handler extends Amun_Data_HandlerAbstract
 		{
 			throw new PSX_Data_Exception('Verb not set');
 		}
+	}
+
+	protected function getDefaultSelect()
+	{
+		return $this->table
+			->select(array('id', 'globalId', 'parentId', 'userId', 'title', 'summary', 'date'))
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
+			);
 	}
 
 	private function sendToReceiver(PSX_Data_RecordInterface $record)

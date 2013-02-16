@@ -204,6 +204,12 @@ class AmunService_Content_Page_Handler extends Amun_Data_HandlerAbstract
 		}
 	}
 
+	protected function getDefaultSelect()
+	{
+		return $this->table
+			->select(array('id', 'parentId', 'globalId', 'status', 'load', 'path', 'title', 'template', 'date'));
+	}
+
 	private function buildPath(PSX_Data_RecordInterface $record)
 	{
 		if($record->parentId > 0)

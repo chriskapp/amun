@@ -189,6 +189,12 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 		}
 	}
 
+	protected function getDefaultSelect()
+	{
+		return $this->table
+			->select(array('id', 'status', 'name', 'type', 'link', 'author', 'license', 'version', 'date'));
+	}
+
 	private function parseMeta(AmunService_Core_Service_Record $record)
 	{
 		$rootElement = $this->serviceConfig->documentElement;

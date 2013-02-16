@@ -93,5 +93,17 @@ class AmunService_Content_Page_Gadget_Handler extends Amun_Data_HandlerAbstract
 			throw new PSX_Data_Exception('Missing field in record');
 		}
 	}
+
+	protected function getDefaultSelect()
+	{
+		return $this->table
+			->select(array('id', 'sort'))
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Content_Page')
+				->select(array('id', 'title'), 'page')
+			)
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Content_Gadget')
+				->select(array('id', 'title'), 'gadget')
+			);
+	}
 }
 

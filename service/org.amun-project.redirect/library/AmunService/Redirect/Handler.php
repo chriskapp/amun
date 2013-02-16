@@ -34,6 +34,14 @@
  */
 class AmunService_Redirect_Handler extends Amun_Data_HandlerAbstract
 {
+	public function getByPageId($pageId, $mode = 0, $class = null, array $args = array())
+	{
+		return $this->table
+			->select(array('href', 'date'))
+			->where('pageId', '=', $pageId)
+			->getRow($mode, $class, $args);
+	}
+
 	public function create(PSX_Data_RecordInterface $record)
 	{
 		if($record->hasFields('pageId', 'href'))
@@ -117,6 +125,18 @@ class AmunService_Redirect_Handler extends Amun_Data_HandlerAbstract
 		{
 			throw new PSX_Data_Exception('Missing field in record');
 		}
+	}
+
+	protected function getDefaultSelect()
+	{
+		return $this->table
+			->select(array('id', 'globalId', 'pageId', 'userId', 'href', 'date'))
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+				->select(array('name', 'profileUrl'), 'author')
+			)
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Content_Page')
+				->select(array('path'), 'page')
+			);
 	}
 }
 

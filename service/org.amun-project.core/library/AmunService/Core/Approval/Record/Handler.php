@@ -132,5 +132,14 @@ SQL;
 			throw new PSX_Data_Exception('Missing field in record');
 		}
 	}
+
+	protected function getDefaultSelection()
+	{
+		return $this->table
+			->select(array('id', 'userId', 'type', 'table', 'record', 'date'))
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+				->select(array('name', 'profileUrl'), 'author')
+			);
+	}
 }
 

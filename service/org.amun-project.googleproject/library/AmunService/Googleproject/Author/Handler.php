@@ -98,6 +98,15 @@ class AmunService_Googleproject_Author_Handler extends Amun_Data_HandlerAbstract
 			throw new PSX_Data_Exception('Missing field in record');
 		}
 	}
+
+	protected function getDefaultSelect()
+	{
+		return $this->table
+			->select(array('id', 'userId', 'name', 'date'))
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+				->select(array('globalId', 'name', 'profileUrl'), 'author')
+			);
+	}
 }
 
 

@@ -101,6 +101,15 @@ class AmunService_Googleproject_Commit_Handler extends Amun_Data_HandlerAbstract
 			throw new PSX_Data_Exception('Missing field in record');
 		}
 	}
+
+	protected function getDefaultSelect()
+	{
+		return $this->table
+			->select(array('id', 'globalId', 'revision', 'url', 'message', 'commitDate', 'date'))
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Googleproject_Author')
+				->select(array('id', 'name'), 'author')
+			);
+	}
 }
 
 
