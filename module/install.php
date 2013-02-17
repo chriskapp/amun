@@ -55,6 +55,10 @@ class install extends PSX_Module_ViewAbstract
 		'org.amun-project.page',
 		'org.amun-project.comment',
 		'org.amun-project.news',
+		'org.amun-project.file',
+		'org.amun-project.php',
+		'org.amun-project.redirect',
+		'org.amun-project.pipe',
 	);
 
 	public function getDependencies()
