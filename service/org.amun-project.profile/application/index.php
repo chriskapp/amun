@@ -143,26 +143,20 @@ class index extends Amun_Module_ApplicationAbstract
 
 	private function getActivities(AmunService_User_Account_Record $account)
 	{
-		$select = Amun_Sql_Table_Registry::get('User_Activity_Receiver')
-			->select(array('id', 'status', 'activityId', 'userId', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Activity')
-				->select(array('id', 'userId', 'status', 'scope', 'verb', 'summary', 'date'), 'activity')
-				->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
-					->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
-				)
-			)
-			->where('userId', '=', $account->id)
-			->where('status', '=', AmunService_User_Activity_Receiver_Record::VISIBLE)
-			->where('activityParentId', '=', 0)
-			->where('activityScope', '=', 0)
-			->where('activityUserId', '=', $account->id)
-			->orderBy('date', PSX_Sql::SORT_DESC);
+		$con = $this->getRequestCondition();
 
+		$url   = new PSX_Url($this->base->getSelf());
+		$count = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
+		$count = $count > 16 ? 16 : $count;
 
-		$url    = new PSX_Url($this->base->getSelf());
-		$count  = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
-
-		$result = $select->getResultSet($url->getParam('startIndex'), $count, $url->getParam('sortBy'), $url->getParam('sortOrder'), $url->getParam('filterBy'), $url->getParam('filterOp'), $url->getParam('filterValue'), $url->getParam('updatedSince'), PSX_SQL::FETCH_OBJECT);
+		$result = $this->getHandler('User_Activity')->getPublicResultSet($account->id,
+			array(),
+			$url->getParam('startIndex'), 
+			$count, 
+			$url->getParam('sortBy'), 
+			$url->getParam('sortOrder'), 
+			$con, 
+			PSX_SQL::FETCH_OBJECT);
 
 
 		$paging = new PSX_Html_Paging($url, $result, 0);

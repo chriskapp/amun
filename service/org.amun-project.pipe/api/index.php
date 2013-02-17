@@ -44,21 +44,6 @@ use PSX_Sql_Join;
  */
 class index extends Amun_Module_RestAbstract
 {
-	protected function getSelection()
-	{
-		return $this->getTable()
-			->select(array('id', 'globalId', 'pageId', 'mediaId', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
-				->select(array('name', 'profileUrl'), 'author')
-			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Content_Page')
-				->select(array('path'), 'page')
-			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Media')
-				->select(array('path'), 'media')
-			);
-	}
-
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)
 	{
 		switch($writer->getType())

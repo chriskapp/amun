@@ -42,10 +42,10 @@
 
 	<div class="span10 amun-service-profile-activity">
 		<?php foreach($activities as $activity): ?>
-		<div class="row amun-service-profile-activity-entry" id="activity-<?php echo $activity->activityId; ?>">
+		<div class="row amun-service-profile-activity-entry" id="activity-<?php echo $activity->id; ?>">
 			<img class="pull-left" src="<?php echo $activity->authorThumbnailUrl; ?>" alt="avatar" width="48" height="48" />
 			<h4><a href="<?php echo $activity->authorProfileUrl; ?>"><?php echo $activity->authorName; ?></a></h4>
-			<div class="amun-service-profile-activity-summary"><?php echo $activity->activitySummary; ?></div>
+			<div class="amun-service-profile-activity-summary"><?php echo $activity->summary; ?></div>
 			<p class="muted">
 				created on
 				<time datetime="<?php echo $activity->getDate()->format(DateTime::ATOM); ?>"><?php echo $activity->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></time>

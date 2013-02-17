@@ -59,15 +59,6 @@ class index extends Amun_Module_RestAbstract
 		$this->setResponse($msg, null, 500);
 	}
 
-	protected function getSelection()
-	{
-		return $this->getTable()
-			->select(array('id', 'userId', 'status', 'claimedId', 'returnTo', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
-				->select(array('name', 'profileUrl'), 'author')
-			);
-	}
-
 	protected function setWriterConfig(PSX_Data_WriterResult $writer)
 	{
 		switch($writer->getType())

@@ -48,7 +48,7 @@ class edit extends Amun_Module_ApplicationAbstract
 
 			if($id > 0)
 			{
-				$record = Amun_Sql_Table_Registry::get('Page')->getRecord($id);
+				$record = $this->getHandler()->getById($id, array(), PSX_Sql::FETCH_OBJECT);
 
 				$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/php/form?format=json&method=update&id=' . $record->id;
 

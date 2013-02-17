@@ -49,7 +49,7 @@ class edit extends Amun_Module_ApplicationAbstract
 			$url = $this->service->getApiEndpoint() . '/form?format=json&method=update&id=' . $id;
 
 			// news
-			$news = Amun_Sql_Table_Registry::get('News')->getRecord($id);
+			$news = $this->getHandler()->getById($id, array(), PSX_Sql::FETCH_OBJECT);
 
 			// add path
 			$this->path->add($news->title, $this->page->url . '/view?id=' . $news->id);

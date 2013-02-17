@@ -43,12 +43,6 @@ use PSX_Data_WriterResult;
  */
 class index extends Amun_Module_RestAbstract
 {
-	protected function getSelection()
-	{
-		return $this->getTable()
-			->select(array('id', 'status', 'url', 'title', 'description', 'date'));
-	}
-
 	protected function getRestrictedFields()
 	{
 		return array('consumerKey', 'consumerSecret', 'callback');
