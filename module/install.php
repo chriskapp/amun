@@ -61,8 +61,6 @@ class install extends PSX_Module_ViewAbstract
 	{
 		$ct = new Amun_Dependency_Install($this->base->getConfig());
 
-		Amun_DataFactory::setContainer($ct);
-
 		return $ct;
 	}
 

@@ -44,6 +44,7 @@ class Amun_Dependency_Install extends PSX_DependencyAbstract
 		$this->getGet();
 		$this->getPost();
 		$this->getSession();
+		$this->getDataFactory();
 		$this->getTemplate();
 
 		$this->getEvent();
@@ -143,6 +144,16 @@ class Amun_Dependency_Install extends PSX_DependencyAbstract
 		$session->start();
 
 		return $this->set('session', $session);
+	}
+
+	public function getDataFactory()
+	{
+		if($this->has('dataFactory'))
+		{
+			return $this->get('dataFactory');
+		}
+
+		return $this->set('dataFactory', Amun_DataFactory::initInstance($this));
 	}
 
 	public function getUser()
