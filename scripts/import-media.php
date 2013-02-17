@@ -43,19 +43,21 @@ DESCRIPTION
 	table. The user id parameter represents the user on wich behalf the
 	media files gets imported. Optional if set assigns all media entries to the
 	given right id.
+
 USAGE;
 }
 else
 {
 	try
 	{
-		$base = Amun_Base::getInstance();
-		$base->setUser($userId);
+		$ct = new Amun_Dependency_Script($config, array('script.userId' => $userId));
+
+		Amun_DataFactory::initInstance($ct);
 
 		PSX_Log::getLogger()->setLevel(PSX_Log::INFO);
 		PSX_Log::getLogger()->addHandler(new PSX_Log_Handler_Print());
 
-		$handler = new Media_Handler($base->getUser());
+		$handler = new AmunService_Media_Handler($ct->getUser());
 		$handler->import($path, $rightId);
 
 		echo 'Import successful';

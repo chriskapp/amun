@@ -25,18 +25,11 @@
 require_once('../library/PSX/Config.php');
 require_once('../library/PSX/Bootstrap.php');
 
-$config = new PSX_Config('../configuration.php');
+$config    = new PSX_Config('../configuration.php');
+$bootstrap = new PSX_Bootstrap($config);
 
 $config['psx_path_cache']    = '../cache';
 $config['psx_path_library']  = '../library';
 $config['psx_path_module']   = '../module';
 $config['psx_path_template'] = '../template';
-
-bootstrap($config);
-
-function bootstrap(PSX_Config $config)
-{
-	$bootstrap = new PSX_Bootstrap($config, '..');
-	$base      = Amun_Base::initInstance($config);
-}
 
