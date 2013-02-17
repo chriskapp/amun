@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="52adb9d21f973bf5e733ccf4a1204c8456bb60bb">
+<service xmlns="http://amun-project.org" signature="92cbe20aeabfb235faa9f08c6b7ff3548a0571f0">
   <status>system</status>
   <name>oauth</name>
   <description>Provides an Oauth 1.0 endpoint implementation where applications can register to access the API</description>
@@ -73,7 +73,7 @@
             <file name="Table.php" md5="f4264589902f6d0f114ba439cfc0cb75"/>
           </dir>
           <file name="Form.php" md5="14b6ec4356dc0d0f4b5004c048e04548"/>
-          <file name="Handler.php" md5="c1d0ed1c14c9525ce7269b6842dc55b8"/>
+          <file name="Handler.php" md5="174a1b7f1016da2f7d01fc451ff62da7"/>
           <file name="Record.php" md5="77ef41ece706330171102ebb4a512196"/>
           <file name="Table.php" md5="c2e7e0d4055c150d4e07cd96b0f578e2"/>
         </dir>

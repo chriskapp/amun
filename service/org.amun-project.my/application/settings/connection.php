@@ -63,17 +63,20 @@ class connection extends AmunService_My_SettingsAbstract
 
 	public function getConnections()
 	{
-		$select = Amun_Sql_Table_Registry::get('Openid_Access')
-			->select(array('id', 'returnTo', 'allowed', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
-				->select(array('id', 'name'), 'author')
-			)
-			->where('userId', '=', $this->user->id);
+		$con = $this->getRequestCondition();
+		$con->add('userId', '=', $this->user->id);
 
+		$url   = new PSX_Url($this->base->getSelf());
+		$count = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
+		$count = $count > 16 ? 16 : $count;
 
-		$url = new PSX_Url($this->base->getSelf());
-
-		$result = $select->getResultSet($url->getParam('startIndex'), 8, $url->getParam('sortBy'), $url->getParam('sortOrder'), $url->getParam('filterBy'), $url->getParam('filterOp'), $url->getParam('filterValue'), $url->getParam('updatedSince'), PSX_SQL::FETCH_OBJECT);
+		$result = $this->getHandler('Openid_Access')->getResultSet(array(),
+			$url->getParam('startIndex'), 
+			$count, 
+			$url->getParam('sortBy'), 
+			$url->getParam('sortOrder'), 
+			$con, 
+			PSX_SQL::FETCH_OBJECT);
 
 
 		$paging = new PSX_Html_Paging($url, $result);

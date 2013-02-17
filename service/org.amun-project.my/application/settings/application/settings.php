@@ -47,7 +47,10 @@ class settings extends AmunService_My_SettingsAbstract
 		$this->path->add('Application', $this->page->url . '/settings/application');
 
 		// load application
-		$this->application = $this->getApplication();
+		$this->application = $this->getHandler('Oauth_Access')->getAllowedApplication(
+			$this->get->appId('integer'),
+			$this->user->id
+		);
 
 		if($this->application instanceof AmunService_Oauth_Access_Record)
 		{
@@ -86,11 +89,6 @@ class settings extends AmunService_My_SettingsAbstract
 
 	public function onPost()
 	{
-		// delete any existing rights
-		$con = new PSX_Sql_Condition(array('accessId', '=', $this->application->id));
-
-		$this->sql->delete($this->registry['table.oauth_access_right'], $con);
-
 		// insert rigts
 		$rights = array();
 
@@ -101,46 +99,17 @@ class settings extends AmunService_My_SettingsAbstract
 
 			if($set)
 			{
-				$accessId = (integer) $this->application->id;
-				$rightId  = (integer) $right['rightId'];
-
-				$rights[] = '(' . $accessId . ',' . $rightId . ')';
+				$rights[] = (integer) $right['rightId'];
 			}
 		}
 
 		if(!empty($rights))
 		{
-			$sql = implode(',', $rights);
-			$sql = <<<SQL
-INSERT INTO 
-	{$this->registry['table.oauth_access_right']} (accessId, rightId)
-VALUES
-	{$sql}
-SQL;
-
-			$this->sql->query($sql);
+			$this->getHandler('Oauth_Access')->setRights($this->application->id, $rights);
 		}
 
 		// redirect
 		header('Location: ' . $this->page->url . '/settings/application/settings?appId=' . $this->application->id . '#expand-rights');
 		exit;
-	}
-
-	public function getApplication()
-	{
-		$access = Amun_Sql_Table_Registry::get('Oauth_Access')
-			->select(array('id', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Oauth')
-				->select(array('id', 'status', 'url', 'title', 'description'), 'api')
-			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
-				->select(array('id', 'name'), 'author')
-			)
-			->where('id', '=', $this->get->appId('integer'))
-			->where('authorId', '=', $this->user->id)
-			->where('allowed', '=', 1)
-			->getRow(PSX_Sql::FETCH_OBJECT);
-
-		return $access;
 	}
 }

@@ -49,7 +49,7 @@
 		<ul>
 			<?php foreach($userRights as $right): ?>
 				<li>
-					<label for="right-<?php echo $right['rightId']; ?>" class="checkbox inline">
+					<label for="right-<?php echo $right['rightId']; ?>" class="checkbox inline" style="white-space:nowrap;">
 					<input checked="checked" type="checkbox" name="right-<?php echo $right['rightId']; ?>" id="right-<?php echo $right['rightId']; ?>" value="1" /> <?php echo $right['rightDescription']; ?>
 					</label>
 				</li>

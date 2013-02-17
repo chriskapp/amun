@@ -70,14 +70,7 @@ class index extends Amun_Module_ApiAbstract
 			$this->writer->writeAttribute('xmlns', 'xri://$xrd*($v*2.0)');
 			$this->writer->startElement('XRD');
 
-			$result = Amun_Sql_Table_Registry::get('Xrds_Type')
-				->select(array('apiId', 'type'))
-				->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Xrds')
-					->select(array('priority', 'endpoint'), 'api')
-				)
-				->orderBy('apiId', PSX_Sql::SORT_ASC)
-				->getAll();
-
+			$result   = $this->getHandler('Xrds_Type')->getAll(array(), 0, 1024);
 			$baseUrl  = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'];
 			$services = array();
 

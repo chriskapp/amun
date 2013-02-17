@@ -66,7 +66,10 @@ class security extends AmunService_My_SettingsAbstract
 					throw new Amun_Exception('Passwords doesnt match');
 				}
 
-				$user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->user->id);
+				$user = $this->getHandler()->getById($this->user->id, 
+					array('id'), 
+					PSX_Sql::FETCH_OBJECT
+				);
 
 				if(strcmp($currentPw, $user->pw) === 0)
 				{

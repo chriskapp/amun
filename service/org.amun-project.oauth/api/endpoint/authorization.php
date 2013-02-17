@@ -76,8 +76,6 @@ class authorization extends PSX_ModuleAbstract
 	{
 		$ct = new Amun_Dependency_Default($this->base->getConfig());
 
-		Amun_DataFactory::setContainer($ct);
-
 		return $ct;
 	}
 }

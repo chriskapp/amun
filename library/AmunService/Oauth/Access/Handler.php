@@ -34,6 +34,22 @@
  */
 class AmunService_Oauth_Access_Handler extends Amun_Data_HandlerAbstract
 {
+	public function getAllowedApplication($applicationId, $userId)
+	{
+		return Amun_Sql_Table_Registry::get('Oauth_Access')
+			->select(array('id', 'date'))
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Oauth')
+				->select(array('id', 'status', 'url', 'title', 'description'), 'api')
+			)
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+				->select(array('id', 'name'), 'author')
+			)
+			->where('id', '=', $applicationId)
+			->where('authorId', '=', $userId)
+			->where('allowed', '=', 1)
+			->getRow(PSX_Sql::FETCH_OBJECT);
+	}
+
 	public function isAllowed($apiId, $userId)
 	{
 		return Amun_Sql_Table_Registry::get('Oauth_Access')
@@ -41,6 +57,56 @@ class AmunService_Oauth_Access_Handler extends Amun_Data_HandlerAbstract
 			->where('apiId', '=', $apiId)
 			->where('userId', '=', $userId)
 			->getField();
+	}
+
+	/**
+	 * An efficent way to set rights for an $accessId. The method deletes all
+	 * existing rights and inserts the defined $rights
+	 *
+	 * @param integer $accessId
+	 * @param array $rights<integer>
+	 * @return void
+	 */
+	public function setRights($accessId, array $rights)
+	{
+		$accessId = (integer) $accessId;
+
+		if($accessId <= 0)
+		{
+			throw new PSX_Data_Exception('Access id must be greater 0');
+		}
+
+		// delete existing rights
+		$sql = <<<SQL
+DELETE FROM 
+	{$this->registry['table.oauth_access_right']} 
+WHERE
+	`accessId` = ?
+SQL;
+
+		$this->sql->query($sql, array($accessId));
+
+		// create sql query
+		$parts = array();
+
+		foreach($rights as $rightId)
+		{
+			$rightId = (integer) $rightId;
+			$parts[] = '(' . $accessId . ',' . $rightId . ')';
+		}
+
+		if(!empty($parts))
+		{
+			$sql = implode(',', $parts);
+			$sql = <<<SQL
+INSERT INTO 
+	{$this->registry['table.oauth_access_right']} (`accessId`, `rightId`)
+VALUES
+	{$sql}
+SQL;
+
+			$this->sql->query($sql);
+		}
 	}
 
 	public function create(PSX_Data_RecordInterface $record)

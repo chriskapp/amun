@@ -81,8 +81,6 @@ class signon extends PSX_OpenId_ProviderAbstract
 	{
 		$ct = new Amun_Dependency_Session($this->base->getConfig());
 
-		Amun_DataFactory::setContainer($ct);
-
 		return $ct;
 	}
 

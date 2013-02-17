@@ -69,7 +69,7 @@ class AmunService_Openid_Access_Handler extends Amun_Data_HandlerAbstract
 		return $this->table
 			->select(array('id', 'userId', 'returnTo', 'allowed', 'date'))
 			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
-				->select(array('name', 'profileUrl'), 'author')
+				->select(array('id', 'name', 'profileUrl'), 'author')
 			);
 	}
 }

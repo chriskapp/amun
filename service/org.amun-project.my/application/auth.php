@@ -124,7 +124,7 @@ class auth extends Amun_Module_ApplicationAbstract
 					}
 
 					// request consumer informations
-					$this->getHandler('Oauth')->getById($this->apiId, array('url', 'title', 'description'));
+					$row = $this->getHandler('Oauth')->getById($this->apiId, array('url', 'title', 'description'));
 
 					if(!empty($row))
 					{
@@ -137,7 +137,7 @@ class auth extends Amun_Module_ApplicationAbstract
 					}
 
 					// check whether access is already allowed
-					if($this->getHandler('Oauth_Access')->isAllowed())
+					if($this->getHandler('Oauth_Access')->isAllowed($this->apiId, $this->user->id))
 					{
 						$this->allowAccess($token, $callback);
 					}

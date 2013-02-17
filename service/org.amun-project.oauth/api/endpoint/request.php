@@ -89,8 +89,6 @@ class request extends PSX_Oauth_Provider_RequestAbstract
 	{
 		$ct = new Amun_Dependency_Default($this->base->getConfig());
 
-		Amun_DataFactory::setContainer($ct);
-
 		return $ct;
 	}
 
