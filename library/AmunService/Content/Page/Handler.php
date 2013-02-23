@@ -207,7 +207,10 @@ class AmunService_Content_Page_Handler extends Amun_Data_HandlerAbstract
 	protected function getDefaultSelect()
 	{
 		return $this->table
-			->select(array('id', 'parentId', 'globalId', 'status', 'load', 'path', 'title', 'template', 'date'));
+			->select(array('id', 'parentId', 'globalId', 'status', 'load', 'path', 'title', 'template', 'date'))
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_Service')
+				->select(array('id', 'type'), 'service')
+			);
 	}
 
 	private function buildPath(PSX_Data_RecordInterface $record)
