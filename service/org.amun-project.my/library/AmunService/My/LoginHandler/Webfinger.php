@@ -32,7 +32,7 @@
  * @package    Amun_Service_My
  * @version    $Revision: 635 $
  */
-class AmunService_My_LoginHandler_Webfinger extends AmunService_My_LoginHandler_OpenId
+class AmunService_My_LoginHandler_Webfinger extends AmunService_My_LoginHandler_Openid
 {
 	public function isValid($identity)
 	{

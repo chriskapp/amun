@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="264306738d2fe2c4b959c11a354571682149b84c">
+<service xmlns="http://amun-project.org" signature="3f5fbe9c5d502942e36e875d9aca0d90fe063cf5">
   <status>normal</status>
   <name>my</name>
   <description>Service wich offers a login and social activities for a user</description>
@@ -132,14 +132,14 @@ You can login with the new password at:
           <file name="CallbackInterface.php" md5="1cf1c8df5fe801a97d161e1c3cd6b692"/>
           <file name="Facebook.php" md5="e36ef017e852b162b23049ed0f9a923b"/>
           <file name="Github.php" md5="7e220a353a4ca616da5090ff583767f6"/>
-          <file name="Google.php" md5="7dfc772e320ed7b0babfd1d610be4b6e"/>
+          <file name="Google.php" md5="df6445c2bf54a8976661f11aa872cd8a"/>
           <file name="Ldap.php" md5="67bbc2b26a977b336ffa8821f0549022"/>
-          <file name="Openid.php" md5="aad7a4289ad08592d29476b3199317b6"/>
-          <file name="Remote.php" md5="29630e7679f445d8657b5a9118240c7d"/>
+          <file name="Openid.php" md5="0f55374a67df5ac2767cfd442e087ebe"/>
+          <file name="Remote.php" md5="4ee90cbae95aa31bb5253bef7e4bf379"/>
           <file name="System.php" md5="ff02a5c35db47f5c41b0887853be6ad1"/>
           <file name="Twitter.php" md5="49e8e21d858fb2e4f0f19159059cf787"/>
-          <file name="Webfinger.php" md5="3c90e3ced8a1d52dfe64d83e7bb5a545"/>
-          <file name="Yahoo.php" md5="60b431bbb63515a943677976b7117b6a"/>
+          <file name="Webfinger.php" md5="ca5e865fc53a140f195d11cc353d3991"/>
+          <file name="Yahoo.php" md5="8a41b41e2f1d03eb3a55ec44b770ac86"/>
         </dir>
         <file name="LoginHandlerAbstract.php" md5="212c881b23bef2ba726b22885ebadbad"/>
         <file name="LoginHandlerFactory.php" md5="0f794e1ca7e558a112a6c4fe3ee07a2f"/>

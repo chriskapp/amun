@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="9e1bc0716cea98ab32c1911010c45e40ebef0092">
+<service xmlns="http://amun-project.org" signature="48f95a5a0ec66a16de53b5d185e0a320d082fa09">
   <status>system</status>
   <name>content</name>
   <description>Basic service wich handles pages and gadgets</description>
@@ -92,7 +92,7 @@
             <file name="Record.php" md5="4b16ca9f9e36b6eb2cca75f205668435"/>
             <file name="Table.php" md5="b4060f7622e3ea5b3c001eedcff5a390"/>
           </dir>
-          <file name="Handler.php" md5="93432e956261b6b9ddefb415a4bc3b8c"/>
+          <file name="Handler.php" md5="8bdc346dbcf907f8276a100c74373862"/>
           <dir name="Option">
             <file name="Form.php" md5="f4935b4167fe92272d8b4034d973e0ab"/>
             <file name="Handler.php" md5="a6f689f3a02f0b5f7a9a5710b8c24df5"/>
