@@ -32,7 +32,7 @@
  * @package    Amun_Service_My
  * @version    $Revision: 635 $
  */
-class AmunService_My_LoginHandler_OpenId extends AmunService_My_LoginHandlerAbstract implements AmunService_My_LoginHandler_CallbackInterface
+class AmunService_My_LoginHandler_Openid extends AmunService_My_LoginHandlerAbstract implements AmunService_My_LoginHandler_CallbackInterface
 {
 	protected $http;
 	protected $store;
