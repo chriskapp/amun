@@ -35,7 +35,7 @@ function doBootstrap()
 	$registry  = $container->getRegistry();
 
 	// set container
-	Amun_DataFactory::setContainer($container);
+	Amun_DataFactory::initInstance($container);
 
 	// set user
 	$userId = $sql->getField('SELECT id FROM ' . $registry['table.user_account'] . ' WHERE status = ' . AmunService_User_Account_Record::ADMINISTRATOR . ' ORDER BY id ASC LIMIT 1');
@@ -89,8 +89,8 @@ function getContainer()
 		$bootstrap = new PSX_Bootstrap($config);
 		$bootstrap->addIncludePath('tests');
 
-		$container = new Amun_Dependency_Session($config, array(
-			'session.userId' => 1,
+		$container = new Amun_Dependency_Script($config, array(
+			'script.userId' => 1,
 		));
 
 		echo 'Execute tests as user: ' . $container->getUser()->name . '' . PHP_EOL;
