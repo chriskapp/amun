@@ -39,7 +39,21 @@ class index extends Amun_Module_ApplicationAbstract
 	 * @httpMethod GET
 	 * @path /
 	 */
-	public function doIndex()
+	public function doGet()
+	{
+		$this->handle();
+	}
+
+	/**
+	 * @httpMethod POST
+	 * @path /
+	 */
+	public function doPost()
+	{
+		$this->handle();
+	}
+
+	protected function handle()
 	{
 		if($this->user->hasRight('php_view'))
 		{
