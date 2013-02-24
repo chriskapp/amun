@@ -64,14 +64,13 @@ class request extends AmunService_My_FriendsAbstract
 	public function getRequests()
 	{
 		$con = $this->getRequestCondition();
-		$con->add('friendId', '=', $this->user->id);
-		$con->add('status', '=', AmunService_User_Friend_Record::REQUEST);
 
 		$url   = new PSX_Url($this->base->getSelf());
 		$count = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
 		$count = $count > 16 ? 16 : $count;
 
-		$result = $this->getHandler('User_Friend')->getResultSet(array(),
+		$result = $this->getHandler('User_Friend')->getRequestResultSet($this->user->id,
+			array(),
 			$url->getParam('startIndex'), 
 			$count, 
 			$url->getParam('sortBy'), 
