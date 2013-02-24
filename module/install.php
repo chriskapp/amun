@@ -687,6 +687,10 @@ SQL;
 					'comment_add',
 					'news_view',
 					'news_comment_add',
+					'file_view',
+					'php_view',
+					'redirect_view',
+					'pipe_view',
 				));
 
 
@@ -707,6 +711,10 @@ SQL;
 					'page_view',
 					'comment_view',
 					'news_view',
+					'file_view',
+					'php_view',
+					'redirect_view',
+					'pipe_view',
 				));
 			}
 
