@@ -88,8 +88,17 @@ class AmunService_Pipe_Record extends Amun_Data_RecordAbstract
 
 	public function getContent()
 	{
-		$path = $this->_registry['media.path'] . '/' . $this->mediaPath;
-		$ext  = pathinfo($path, PATHINFO_EXTENSION);
+		// check whether we have an absolute or relative path
+		if($this->mediaPath[0] == '/' || $this->mediaPath[1] == ':')
+		{
+			$path = $this->mediaPath;
+		}
+		else
+		{
+			$path = $this->_registry['media.path'] . '/' . $this->mediaPath;
+		}
+
+		$ext = pathinfo($path, PATHINFO_EXTENSION);
 
 		if(!PSX_File::exists($path))
 		{
