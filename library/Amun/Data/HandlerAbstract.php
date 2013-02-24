@@ -329,6 +329,56 @@ SQL;
 	}
 
 	/**
+	 * Returns the view right name for the handler
+	 *
+	 * @return string
+	 */
+	public function getViewRight()
+	{
+		return $this->getRightName() . '_view';
+	}
+
+	/**
+	 * Returns the add right name for the handler
+	 *
+	 * @return string
+	 */
+	public function getAddRight()
+	{
+		return $this->getRightName() . '_add';
+	}
+
+	/**
+	 * Returns the edit right name for the handler
+	 *
+	 * @return string
+	 */
+	public function getEditRight()
+	{
+		return $this->getRightName() . '_edit';
+	}
+
+	/**
+	 * Returns the delete right name for the handler
+	 *
+	 * @return string
+	 */
+	public function getDeleteRight()
+	{
+		return $this->getRightName() . '_delete';
+	}
+
+	protected function getRightName()
+	{
+		$className = get_class($this);
+		$className = substr($className, 0, -8); // remove _Handler
+		$className = substr($className, 12); // remove AmunService_
+		$className = strtolower($className);
+
+		return $className;
+	}
+
+	/**
 	 * Returns the table instance on wich the handler operates
 	 *
 	 * @return Amun_Sql_TableInterface
