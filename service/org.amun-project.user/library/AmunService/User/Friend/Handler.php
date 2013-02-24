@@ -34,6 +34,94 @@
  */
 class AmunService_User_Friend_Handler extends Amun_Data_HandlerAbstract
 {
+	public function getRequestResultSet($userId, array $fields, $startIndex = 0, $count = 16, $sortBy = null, $sortOrder = null, PSX_Sql_Condition $con = null, $mode = 0, $class = null, array $args = array())
+	{
+		$startIndex = $startIndex !== null ? (integer) $startIndex : 0;
+		$count      = !empty($count)       ? (integer) $count      : 16;
+		$sortBy     = $sortBy     !== null ? $sortBy               : 'date';
+		$sortOrder  = $sortOrder  !== null ? (integer) $sortOrder  : PSX_Sql::SORT_DESC;
+
+		$select = $this->table
+			->select(array('id', 'status', 'date'))
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'author'),
+				'n:1',
+				'userId'
+			)
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'friend'),
+				'n:1',
+				'friendId'
+			)
+			->where('friendId', '=', $userId)
+			->where('status', '=', AmunService_User_Friend_Record::REQUEST);
+
+		if(!empty($fields))
+		{
+			$select->select($fields);
+		}
+
+		if($con !== null && $con->hasCondition())
+		{
+			$values = $con->toArray();
+
+			foreach($values as $row)
+			{
+				$select->where($row[0], $row[1], $row[2]);
+			}
+		}
+
+		$totalResults = $select->getTotalResults();
+		$entries      = $select->getAll($mode, $class, $args);
+		$resultSet    = new PSX_Data_ResultSet($totalResults, $startIndex, $count, $entries);
+
+		return $resultSet;
+	}
+
+	public function getPendingResultSet($userId, array $fields, $startIndex = 0, $count = 16, $sortBy = null, $sortOrder = null, PSX_Sql_Condition $con = null, $mode = 0, $class = null, array $args = array())
+	{
+		$startIndex = $startIndex !== null ? (integer) $startIndex : 0;
+		$count      = !empty($count)       ? (integer) $count      : 16;
+		$sortBy     = $sortBy     !== null ? $sortBy               : 'date';
+		$sortOrder  = $sortOrder  !== null ? (integer) $sortOrder  : PSX_Sql::SORT_DESC;
+
+		$select = $this->table
+			->select(array('id', 'status', 'date'))
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'author'),
+				'n:1',
+				'userId'
+			)
+			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'friend'),
+				'n:1',
+				'friendId'
+			)
+			->where('userId', '=', $userId)
+			->where('status', '=', AmunService_User_Friend_Record::REQUEST);
+
+		if(!empty($fields))
+		{
+			$select->select($fields);
+		}
+
+		if($con !== null && $con->hasCondition())
+		{
+			$values = $con->toArray();
+
+			foreach($values as $row)
+			{
+				$select->where($row[0], $row[1], $row[2]);
+			}
+		}
+
+		$totalResults = $select->getTotalResults();
+		$entries      = $select->getAll($mode, $class, $args);
+		$resultSet    = new PSX_Data_ResultSet($totalResults, $startIndex, $count, $entries);
+
+		return $resultSet;
+	}
+
 	public function create(PSX_Data_RecordInterface $record)
 	{
 		if($record->hasFields('friendId'))
