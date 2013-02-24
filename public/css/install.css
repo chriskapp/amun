@@ -23,6 +23,12 @@ body
 	font-weight:bold;
 }
 
+.progress
+{
+	background-color:#ccc;
+	background-image:none;
+}
+
 #progressStatus
 {
 	font-size:0.8em;
