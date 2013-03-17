@@ -25,6 +25,7 @@
 namespace AmunService\My;
 
 use Amun\Exception;
+use Amun\Util;
 use AmunService\User\Activity\Record;
 use PSX\Data\WriterResult;
 use PSX\Data\WriterInterface;
@@ -69,7 +70,7 @@ class Activity extends Record
 
 				$entry = $result->getWriter()->createEntry();
 
-				$entry->setTitle(Amun_Util::stripAndTruncateHtml($this->summary));
+				$entry->setTitle(Util::stripAndTruncateHtml($this->summary));
 				$entry->setId('urn:uuid:' . $this->globalId);
 				$entry->setUpdated($this->getDate());
 				$entry->setPublished($this->getDate());

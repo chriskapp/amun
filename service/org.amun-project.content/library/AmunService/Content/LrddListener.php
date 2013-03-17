@@ -22,6 +22,15 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Content;
+
+use Amun\Data\ListenerAbstract;
+use Amun\DataFactory;
+use AmunService\Content\Page;
+use PSX\DateTime;
+use PSX\Filter;
+use XMLWriter;
+
 /**
  * AmunService_Xrds_Listener
  *
@@ -32,13 +41,13 @@
  * @package    AmunService_Xrds
  * @version    $Revision: 635 $
  */
-class AmunService_Content_LrddListener extends Amun_Data_ListenerAbstract
+class LrddListener extends ListenerAbstract
 {
 	public function notify(XMLWriter $writer, $uri)
 	{
 		$page = $this->getPage($uri);
 
-		if($page instanceof AmunService_Content_Page_Record)
+		if($page instanceof Page\Record)
 		{
 			// subject
 			$subject = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $page->path;
@@ -67,7 +76,7 @@ class AmunService_Content_LrddListener extends Amun_Data_ListenerAbstract
 
 	protected function getPage($uri)
 	{
-		$filter = new PSX_Filter_Url();
+		$filter = new Filter\Url();
 
 		if($filter->apply($uri) === true)
 		{
@@ -94,7 +103,7 @@ class AmunService_Content_LrddListener extends Amun_Data_ListenerAbstract
 
 			if(!empty($pageId))
 			{
-				return Amun_Sql_Table_Registry::get('Content_Page')->getRecord($pageId);
+				return DataFactory::getTable('Content_Page')->getRecord($pageId);
 			}
 		}
 	}

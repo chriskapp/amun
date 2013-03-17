@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="b6234123305aa24173716b94d6084893912fc698">
+<service xmlns="http://amun-project.org" signature="7b5739e3c0990015352238e75c670d98403f7421">
   <status>system</status>
   <name>core</name>
   <description>Contains the core functionalities of amun</description>
@@ -111,7 +111,7 @@
               <file name="Type.php" md5="0f133a3e27605946da8ee5782a4900bf"/>
             </dir>
             <file name="Form.php" md5="2e80814313cf430fa538b0337bb61be9"/>
-            <file name="Handler.php" md5="fbdb89dbacd62ae74e5794df47fdc5a2"/>
+            <file name="Handler.php" md5="3957b6fcb5971f7eae6bfef2f7562879"/>
             <file name="Record.php" md5="ffd485b55626c16459ae3ee4cc6f6be3"/>
             <file name="Table.php" md5="4ecde03e830838e1e2e8212dd17433f5"/>
           </dir>
@@ -150,7 +150,7 @@
           <file name="Form.php" md5="06d9521cf3faceb67a73e4f9ff29bfc2"/>
           <file name="Handler.php" md5="72e1442c9cd4574c33ac88de44891ee0"/>
           <dir name="Option">
-            <file name="ConfigListener.php" md5="b0209ff775887f85f22896d1d2231150"/>
+            <file name="ConfigListener.php" md5="6f4712d4f0c39a30ec3dc5c524eb34f8"/>
             <file name="Record.php" md5="eeb08d7b2d2c088c81212152a4635b7b"/>
             <file name="Table.php" md5="fe799173ca4c43af23749af5b26195ee"/>
           </dir>

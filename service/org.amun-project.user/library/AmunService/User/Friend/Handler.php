@@ -423,7 +423,7 @@ SQL;
 				$account->setStatus(Account\Record::REMOTE);
 				$account->setIdentity($identity);
 				$account->setName($profile['name']);
-				$account->setPw(Amun_Security::generatePw());
+				$account->setPw(Security::generatePw());
 
 				$account  = $handler->create($account);
 				$friendId = $account->id;

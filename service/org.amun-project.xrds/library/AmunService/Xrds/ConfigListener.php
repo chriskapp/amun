@@ -22,6 +22,14 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Xrds;
+
+use Amun\Data\ListenerAbstract;
+use AmunService\Core\Service;
+use PSX\Log;
+use DOMDocument;
+use DOMElement;
+
 /**
  * AmunService_Xrds_Listener
  *
@@ -32,15 +40,15 @@
  * @package    AmunService_Xrds
  * @version    $Revision: 635 $
  */
-class AmunService_Xrds_ConfigListener extends Amun_Data_ListenerAbstract
+class ConfigListener extends ListenerAbstract
 {
-	public function notify(AmunService_Core_Service_Record $record, DOMDocument $config)
+	public function notify(Service\Record $record, DOMDocument $config)
 	{
 		$api = $config->getElementsByTagName('api')->item(0);
 
 		if($api !== null)
 		{
-			PSX_Log::info('Create api');
+			Log::info('Create api');
 
 			try
 			{
@@ -83,9 +91,9 @@ class AmunService_Xrds_ConfigListener extends Amun_Data_ListenerAbstract
 					}
 				}
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
-				PSX_Log::error($e->getMessage());
+				Log::error($e->getMessage());
 			}
 		}
 	}

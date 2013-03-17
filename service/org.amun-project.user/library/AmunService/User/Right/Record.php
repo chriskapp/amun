@@ -22,6 +22,14 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Right;
+
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use Amun\Filter as Amun\Filter;
+use AmunService\Core\Registry;
+use PSX\Filter;
+
 /**
  * Amun_User_Right
  *
@@ -32,11 +40,11 @@
  * @package    Amun_User_Right
  * @version    $Revision: 683 $
  */
-class AmunService_User_Right_Record extends Amun_Data_RecordAbstract
+class Record extends RecordAbstract
 {
 	public function setId($id)
 	{
-		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
+		$id = $this->_validate->apply($id, 'integer', array(new AmunFilter\Id($this->_table)), 'id', 'Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -44,13 +52,13 @@ class AmunService_User_Right_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setName($name)
 	{
-		$name = $this->_validate->apply($name, 'string', array(new PSX_Filter_Length(3, 64), new AmunService_Core_Registry_Filter_Name()), 'name', 'Name');
+		$name = $this->_validate->apply($name, 'string', array(new Filter\Length(3, 64), new Registry\Filter\Name()), 'name', 'Name');
 
 		if(!$this->_validate->hasError())
 		{
@@ -58,13 +66,13 @@ class AmunService_User_Right_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setDescription($description)
 	{
-		$description = $this->_validate->apply($description, 'string', array(new PSX_Filter_Length(3, 128), new PSX_Filter_Html()), 'description', 'Description');
+		$description = $this->_validate->apply($description, 'string', array(new Filter\Length(3, 128), new Filter\Html()), 'description', 'Description');
 
 		if(!$this->_validate->hasError())
 		{
@@ -72,7 +80,7 @@ class AmunService_User_Right_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 

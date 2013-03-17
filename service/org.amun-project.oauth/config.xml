@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="92cbe20aeabfb235faa9f08c6b7ff3548a0571f0">
+<service xmlns="http://amun-project.org" signature="a2625882a5fbd698e9d399ed46b10555e0a7f7e6">
   <status>system</status>
   <name>oauth</name>
   <description>Provides an Oauth 1.0 endpoint implementation where applications can register to access the API</description>
@@ -68,29 +68,29 @@
       <dir name="Oauth">
         <dir name="Access">
           <dir name="Right">
-            <file name="Handler.php" md5="e04b9cdcc0bbdce57983027a48c20bf4"/>
-            <file name="Record.php" md5="e29edaa249a5d80887840fece3ae1138"/>
-            <file name="Table.php" md5="f4264589902f6d0f114ba439cfc0cb75"/>
+            <file name="Handler.php" md5="dba8eab89cfc0f24532e9386bab84033"/>
+            <file name="Record.php" md5="02e1d41d7957aaa9e2cbe256c841055a"/>
+            <file name="Table.php" md5="e87a57a05b4db74f1c2c4d36e376d37d"/>
           </dir>
-          <file name="Form.php" md5="14b6ec4356dc0d0f4b5004c048e04548"/>
-          <file name="Handler.php" md5="174a1b7f1016da2f7d01fc451ff62da7"/>
-          <file name="Record.php" md5="77ef41ece706330171102ebb4a512196"/>
-          <file name="Table.php" md5="c2e7e0d4055c150d4e07cd96b0f578e2"/>
+          <file name="Form.php" md5="e683363595b4aeb8da9dad8d41cc3707"/>
+          <file name="Handler.php" md5="f9ba72a0fe81650a8f24eb50bd0bed07"/>
+          <file name="Record.php" md5="ed6bac765f12ec1fad8cd32ab3f2ff92"/>
+          <file name="Table.php" md5="8728661b728d4a24c46193d0a029ca12"/>
         </dir>
         <dir name="Filter">
-          <file name="Callback.php" md5="d06a9779a72b288ec3fb8c189a231982"/>
-          <file name="Status.php" md5="4c1fd2b1bc71e8cff28e09190a7a745d"/>
+          <file name="Callback.php" md5="20dd087a4c7096a18dc7dbd4e42a2a1c"/>
+          <file name="Status.php" md5="8c6fd1ce65809416ac40c2196c37bee0"/>
         </dir>
-        <file name="Form.php" md5="f5bf79faa7973be137203767df70caf6"/>
-        <file name="Handler.php" md5="ec521ddea2e27556f65f1218b6f95232"/>
-        <file name="Record.php" md5="52ba76bc8a1f7353a19cb862542b7572"/>
+        <file name="Form.php" md5="93d7c3feb1dd706dcb9523fc666499f0"/>
+        <file name="Handler.php" md5="cef28be207601b032cd7ebc06ba079ab"/>
+        <file name="Record.php" md5="addbe368c54f78d29272bd635716dec2"/>
         <dir name="Request">
-          <file name="Form.php" md5="1951f019589028e7d9c87f5aa9c66760"/>
-          <file name="Handler.php" md5="0e1d2df4bab6bf87b462a0952324b6d9"/>
-          <file name="Record.php" md5="3efb1a455d8d5a26f0d75452f5df4ed4"/>
-          <file name="Table.php" md5="99145a15e68088ea1df57487e1a0d30b"/>
+          <file name="Form.php" md5="16b51d33ec420a8d4353a7e73a1294e2"/>
+          <file name="Handler.php" md5="bd7a005b7e23e88b91250b49f4d5f4bc"/>
+          <file name="Record.php" md5="2b7ba22189ce1aa7a9a726195c2aae51"/>
+          <file name="Table.php" md5="03132e39b69b9e1a4e899b47607743bd"/>
         </dir>
-        <file name="Table.php" md5="d628fe433a120e5d08a65bc57ba6d504"/>
+        <file name="Table.php" md5="6d2b45f98c4636e5131808668ca9e315"/>
       </dir>
     </dir>
   </library>

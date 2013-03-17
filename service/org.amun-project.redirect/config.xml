@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="b282592d93da85b6ecd59135f8f84df2c9f23d5d">
+<service xmlns="http://amun-project.org" signature="555da1dbe70a2a64d443ba00e85d1c5d26141cf4">
   <status>normal</status>
   <name>redirect</name>
   <description>Redirects the user to an given url</description>
@@ -29,10 +29,10 @@
   <library>
     <dir name="AmunService">
       <dir name="Redirect">
-        <file name="Form.php" md5="af2ca3d0835c3ab6640fa15d52d6aaaa"/>
-        <file name="Handler.php" md5="7bb427d33f7c531fb61c7440b0c899f5"/>
-        <file name="Record.php" md5="f0e924d760f5d60fd5c4462ee2f37af1"/>
-        <file name="Table.php" md5="e465e00b148d260d860e02429640aff8"/>
+        <file name="Form.php" md5="a1dc38eed7b5b6965727587769bfe151"/>
+        <file name="Handler.php" md5="b5c36b060d6ef51e60fc3445147e58fd"/>
+        <file name="Record.php" md5="75851878f22e9d6805fd32e97b2399b1"/>
+        <file name="Table.php" md5="0308b819f9a40cbb0c75ddd97b087a9e"/>
       </dir>
     </dir>
   </library>
