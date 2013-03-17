@@ -22,6 +22,15 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Activity;
+
+use Amun\Data\ListenerAbstract;
+use Amun\Exception;
+use AmunService\Core\Service;
+use DOMDocument;
+use DOMElement;
+use PSX\Log;
+
 /**
  * AmunService_Xrds_Listener
  *
@@ -32,15 +41,15 @@
  * @package    AmunService_Xrds
  * @version    $Revision: 635 $
  */
-class AmunService_User_Activity_ConfigListener extends Amun_Data_ListenerAbstract
+class ConfigListener extends ListenerAbstract
 {
-	public function notify(AmunService_Core_Service_Record $record, DOMDocument $config)
+	public function notify(Service\Record $record, DOMDocument $config)
 	{
 		$activity = $config->getElementsByTagName('activity')->item(0);
 
 		if($activity !== null)
 		{
-			PSX_Log::info('Create user activity template');
+			Log::info('Create user activity template');
 
 			try
 			{
@@ -69,7 +78,7 @@ class AmunService_User_Activity_ConfigListener extends Amun_Data_ListenerAbstrac
 						}
 						else
 						{
-							throw new PSX_Exception('Invalid table ' . $table);
+							throw new Exception('Invalid table ' . $table);
 						}
 
 						if(!empty($type) && !empty($verb) && !empty($table) && !empty($summary))
@@ -82,15 +91,15 @@ class AmunService_User_Activity_ConfigListener extends Amun_Data_ListenerAbstrac
 								'summary' => $summary,
 							));
 
-							PSX_Log::info('> Created user activity template');
-							PSX_Log::info($summary);
+							Log::info('> Created user activity template');
+							Log::info($summary);
 						}
 					}
 				}
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
-				PSX_Log::error($e->getMessage());
+				Log::error($e->getMessage());
 			}
 		}
 	}

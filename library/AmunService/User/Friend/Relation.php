@@ -127,7 +127,7 @@ class Relation extends RecordAbstract
 				$host = isset($params['relation_host']) ? $params['relation_host'] : null;
 				$name = isset($params['relation_name']) ? $params['relation_name'] : null;
 
-				if($ns != Amun_Relation::NS)
+				if($ns != \Amun\Relation::NS)
 				{
 					throw new Exception('Invalid namespace');
 				}

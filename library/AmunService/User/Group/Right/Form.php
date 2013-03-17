@@ -22,6 +22,16 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Group\Right;
+
+use Amun\Data\FormAbstract;
+use Amun\DataFactory;
+use Amun\Form;
+use Amun\Form\Element\Panel;
+use Amun\Form\Element\Input;
+use Amun\Form\Element\Select;
+use Amun\Form\Element\Captcha;
+
 /**
  * Amun_User_Group_Right_Form
  *
@@ -32,23 +42,23 @@
  * @package    Amun_User_Group
  * @version    $Revision: 666 $
  */
-class AmunService_User_Group_Right_Form extends Amun_Data_FormAbstract
+class Form extends FormAbstract
 {
 	public function create()
 	{
-		$form = new Amun_Form('POST', $this->url);
+		$form = new Form('POST', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('right', 'Right');
+		$panel = new Panel('right', 'Right');
 
 
-		$groupId = new Amun_Form_Element_Select('groupId', 'Group ID');
+		$groupId = new Select('groupId', 'Group ID');
 		$groupId->setOptions($this->getGroup());
 
 		$panel->add($groupId);
 
 
-		$rightId = new Amun_Form_Element_Select('rightId', 'Right ID');
+		$rightId = new Select('rightId', 'Right ID');
 		$rightId->setOptions($this->getRight());
 
 		$panel->add($rightId);
@@ -56,7 +66,7 @@ class AmunService_User_Group_Right_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -71,28 +81,28 @@ class AmunService_User_Group_Right_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('User_Group_Right')->getRecord($id);
+		$record = DataFactory::getTable('User_Group_Right')->getRecord($id);
 
 
-		$form = new Amun_Form('PUT', $this->url);
+		$form = new Form('PUT', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('group', 'Group');
+		$panel = new Panel('group', 'Group');
 
 
-		$id = new Amun_Form_Element_Input('id', 'Id', $record->id);
+		$id = new Input('id', 'Id', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$groupId = new Amun_Form_Element_Select('groupId', 'Group ID', $record->rightId);
+		$groupId = new Select('groupId', 'Group ID', $record->rightId);
 		$groupId->setOptions($this->getGroup());
 
 		$panel->add($groupId);
 
 
-		$rightId = new Amun_Form_Element_Select('rightId', 'Right ID', $record->groupId);
+		$rightId = new Select('rightId', 'Right ID', $record->groupId);
 		$rightId->setOptions($this->getRight());
 
 		$panel->add($rightId);
@@ -100,7 +110,7 @@ class AmunService_User_Group_Right_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -115,29 +125,29 @@ class AmunService_User_Group_Right_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('User_Group_Right')->getRecord($id);
+		$record = DataFactory::getTable('User_Group_Right')->getRecord($id);
 
 
-		$form = new Amun_Form('DELETE', $this->url);
+		$form = new Form('DELETE', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('group', 'Group');
+		$panel = new Panel('group', 'Group');
 
 
-		$id = new Amun_Form_Element_Input('id', 'Id', $record->id);
+		$id = new Input('id', 'Id', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$groupId = new Amun_Form_Element_Select('groupId', 'Group ID', $record->rightId);
+		$groupId = new Select('groupId', 'Group ID', $record->rightId);
 		$groupId->setOptions($this->getGroup());
 		$groupId->setDisabled(true);
 
 		$panel->add($groupId);
 
 
-		$rightId = new Amun_Form_Element_Select('rightId', 'Right ID', $record->groupId);
+		$rightId = new Select('rightId', 'Right ID', $record->groupId);
 		$rightId->setOptions($this->getRight());
 		$rightId->setDisabled(true);
 
@@ -146,7 +156,7 @@ class AmunService_User_Group_Right_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);

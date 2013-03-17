@@ -27,6 +27,7 @@ namespace AmunService\Mail;
 use Amun\Mail\SenderInterface;
 use Amun\Registry;
 use Amun\Exception;
+use Zend\Mail;
 
 /**
  * AmunService_Mail_Sender
@@ -88,17 +89,18 @@ SQL;
 
 			if(count($missingValues) > 0)
 			{
-				throw new Amun_Mail_Exception('Missing values "' . implode(', ', $missingValues) . '"" in ' . $name);
+				throw new Exception('Missing values "' . implode(', ', $missingValues) . '"" in ' . $name);
 			}
 
 			// send mail
-			$mail = new Zend_Mail();
-			$mail->setBodyText($this->substituteVars($row['text'], $values));
-			$mail->setBodyHtml($this->substituteVars($row['html'], $values));
+			$mail = new Mail\Message();
+			$mail->setBody($this->substituteVars($row['text'], $values));
 			$mail->setFrom($row['from']);
 			$mail->addTo($email);
 			$mail->setSubject($this->substituteVars($row['subject'], $values));
-			$mail->send();
+
+			$transport = new Mail\Transport\Sendmail();
+			$transport->send($mail);
 		}
 		else
 		{

@@ -22,6 +22,16 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User;
+
+use Amun\Data\ListenerAbstract;
+use Amun\DataFactory;
+use AmunService\User\Account;
+use PSX\DateTime;
+use PSX\Filter;
+use PSX\Sql;
+use XMLWriter;
+
 /**
  * AmunService_Xrds_Listener
  *
@@ -32,13 +42,13 @@
  * @package    AmunService_Xrds
  * @version    $Revision: 635 $
  */
-class AmunService_User_LrddListener extends Amun_Data_ListenerAbstract
+class LrddListener extends ListenerAbstract
 {
 	public function notify(XMLWriter $writer, $uri)
 	{
 		$account = $this->getAccount($uri);
 
-		if($account instanceof AmunService_User_Account_Record)
+		if($account instanceof Account\Record)
 		{
 			// subject
 			$writer->writeElement('Subject', $uri);
@@ -113,7 +123,7 @@ class AmunService_User_LrddListener extends Amun_Data_ListenerAbstract
 	{
 		if(substr($uri, 0, 5) == 'acct:')
 		{
-			$filter = new PSX_Filter_Email();
+			$filter = new Filter\Email();
 			$email  = substr($uri, 5);
 
 			if($filter->apply($email) === true)
@@ -122,10 +132,10 @@ class AmunService_User_LrddListener extends Amun_Data_ListenerAbstract
 				list($name, $host) = explode('@', $email);
 
 				// get account record
-				$account = Amun_Sql_Table_Registry::get('User_Account')
+				$account = DataFactory::getTable('User_Account')
 					->select(array('id', 'globalId', 'name', 'profileUrl', 'timezone', 'date'))
 					->where('name', '=', $name)
-					->getRow(PSX_Sql::FETCH_OBJECT);
+					->getRow(Sql::FETCH_OBJECT);
 
 				return $account;
 			}

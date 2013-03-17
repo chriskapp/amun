@@ -72,7 +72,7 @@ SQL;
 				$class   = $this->registry->getClassNameFromTable($row['recordTable']);
 				$handler = DataFactory::getProvider($class)->getHandler();
 
-				if($handler instanceof Amun_Data_HandlerAbstract)
+				if($handler instanceof HandlerAbstract)
 				{
 					$handler->setIgnoreApprovement(true);
 

@@ -22,6 +22,14 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Right;
+
+use Amun\Data\ListenerAbstract;
+use AmunService\Core\Service;
+use PSX\Log;
+use DOMDocument;
+use DOMElement;
+
 /**
  * AmunService_Xrds_Listener
  *
@@ -32,15 +40,15 @@
  * @package    AmunService_Xrds
  * @version    $Revision: 635 $
  */
-class AmunService_User_Right_ConfigListener extends Amun_Data_ListenerAbstract
+class ConfigListener extends ListenerAbstract
 {
-	public function notify(AmunService_Core_Service_Record $record, DOMDocument $config)
+	public function notify(Service\Record $record, DOMDocument $config)
 	{
 		$permissions = $config->getElementsByTagName('permissions')->item(0);
 
 		if($permissions !== null)
 		{
-			PSX_Log::info('Create user permissions');
+			Log::info('Create user permissions');
 
 			try
 			{
@@ -71,14 +79,14 @@ class AmunService_User_Right_ConfigListener extends Amun_Data_ListenerAbstract
 								'description' => $desc,
 							));
 
-							PSX_Log::info('> Created permission "' . $name . '"');
+							Log::info('> Created permission "' . $name . '"');
 						}
 					}
 				}
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
-				PSX_Log::error($e->getMessage());
+				Log::error($e->getMessage());
 			}
 		}
 	}

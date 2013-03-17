@@ -22,6 +22,14 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Oauth\Access\Right;
+
+use Amun\Exception;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use PSX\Data\RecordIterface;
+use PSX\Sql\Condition;
+
 /**
  * AmunService_Oauth_Access_Handler
  *
@@ -32,9 +40,9 @@
  * @package    Amun_Oauth
  * @version    $Revision: 635 $
  */
-class AmunService_Oauth_Access_Right_Handler extends Amun_Data_HandlerAbstract
+class Handler extends HandlerAbstract
 {
-	public function create(PSX_Data_RecordInterface $record)
+	public function create(RecordInterface $record)
 	{
 		if($record->hasFields('accessId', 'rightId'))
 		{
@@ -43,39 +51,39 @@ class AmunService_Oauth_Access_Right_Handler extends Amun_Data_HandlerAbstract
 
 			$record->id = $this->sql->getLastInsertId();
 
-			$this->notify(Amun_Data_RecordAbstract::INSERT, $record);
+			$this->notify(RecordAbstract::INSERT, $record);
 
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
-	public function update(PSX_Data_RecordInterface $record)
+	public function update(RecordInterface $record)
 	{
-		throw new PSX_Data_Exception('Right can not updated');
+		throw new Exception('Right can not updated');
 	}
 
-	public function delete(PSX_Data_RecordInterface $record)
+	public function delete(RecordInterface $record)
 	{
 		if($record->hasFields('id'))
 		{
-			$con = new PSX_Sql_Condition(array('id', '=', $record->id));
+			$con = new Condition(array('id', '=', $record->id));
 
 			$this->table->delete($con);
 
 
-			$this->notify(Amun_Data_RecordAbstract::DELETE, $record);
+			$this->notify(RecordAbstract::DELETE, $record);
 
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 }

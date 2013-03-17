@@ -22,6 +22,13 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Core\Service\Option;
+
+use Amun\Data\ListenerAbstract;
+use AmunService\Core\Service;
+use DOMDocument;
+use PSX\Log;
+
 /**
  * AmunService_Core_Service_Option_ConfigListener
  *
@@ -32,15 +39,15 @@
  * @package    AmunService_Xrds
  * @version    $Revision: 635 $
  */
-class AmunService_Core_Service_Option_ConfigListener extends Amun_Data_ListenerAbstract
+class ConfigListener extends ListenerAbstract
 {
-	public function notify(AmunService_Core_Service_Record $record, DOMDocument $config)
+	public function notify(Service\Record $record, DOMDocument $config)
 	{
 		$navigation = $config->getElementsByTagName('navigation')->item(0);
 
 		if($navigation !== null)
 		{
-			PSX_Log::info('Navigation option');
+			Log::info('Navigation option');
 
 			try
 			{
@@ -66,14 +73,14 @@ class AmunService_Core_Service_Option_ConfigListener extends Amun_Data_ListenerA
 								'name'      => $name,
 							));
 
-							PSX_Log::info('> Created navigation option "' . $name . '"');
+							Log::info('> Created navigation option "' . $name . '"');
 						}
 					}
 				}
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
-				PSX_Log::error($e->getMessage());
+				Log::error($e->getMessage());
 			}
 		}
 	}

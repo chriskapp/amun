@@ -62,7 +62,7 @@ class Handler extends HandlerAbstract
 
 			$record->id = $this->sql->getLastInsertId();
 
-			//$this->notify(Amun_Data_RecordAbstract::INSERT, $record);
+			//$this->notify(RecordAbstract::INSERT, $record);
 
 
 			return $record;
@@ -82,7 +82,7 @@ class Handler extends HandlerAbstract
 			$this->table->update($record->getData(), $con);
 
 
-			//$this->notify(Amun_Data_RecordAbstract::UPDATE, $record);
+			//$this->notify(RecordAbstract::UPDATE, $record);
 
 
 			return $record;
@@ -102,7 +102,7 @@ class Handler extends HandlerAbstract
 			$this->table->delete($con);
 
 
-			//$this->notify(Amun_Data_RecordAbstract::DELETE, $record);
+			//$this->notify(RecordAbstract::DELETE, $record);
 
 
 			return $record;

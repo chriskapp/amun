@@ -25,6 +25,7 @@
 namespace Amun\Form\Element;
 
 use Amun\Form\ElementAbstract;
+use Amun\Exception;
 
 /**
  * Amun_Form_Element_Select
@@ -63,12 +64,12 @@ class Select extends ElementAbstract
 		{
 			if(!isset($options[0]['label']))
 			{
-				throw new Amun_Exception('Key "label" not set');
+				throw new Exception('Key "label" not set');
 			}
 
 			if(!isset($options[0]['value']))
 			{
-				throw new Amun_Exception('Key "value" not set');
+				throw new Exception('Key "value" not set');
 			}
 
 			foreach($this->options as $option)

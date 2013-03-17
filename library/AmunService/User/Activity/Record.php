@@ -204,7 +204,7 @@ class Record extends RecordAbstract
 
 				$entry = $result->getWriter()->createEntry();
 
-				$entry->setTitle(Amun_Util::stripAndTruncateHtml($this->summary));
+				$entry->setTitle(Util::stripAndTruncateHtml($this->summary));
 				$entry->setId('urn:uuid:' . $this->globalId);
 				$entry->setUpdated($this->getDate());
 				$entry->addAuthor($this->authorName, 'urn:uuid:' . $this->authorGlobalId);

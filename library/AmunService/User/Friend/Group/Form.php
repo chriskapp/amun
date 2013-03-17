@@ -22,6 +22,15 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Friend\Group;
+
+use Amun\Data\FormAbstract;
+use Amun\DataFactory;
+use Amun\Form;
+use Amun\Form\Element\Panel;
+use Amun\Form\Element\Input;
+use Amun\Form\Element\Captcha;
+
 /**
  * Amun_User_Friend_Group_Form
  *
@@ -32,17 +41,17 @@
  * @package    Amun_User_Friend
  * @version    $Revision: 666 $
  */
-class AmunService_User_Friend_Group_Form extends Amun_Data_FormAbstract
+class Form extends FormAbstract
 {
 	public function create()
 	{
-		$form = new Amun_Form('POST', $this->url);
+		$form = new Form('POST', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('group', 'Group');
+		$panel = new Panel('group', 'Group');
 
 
-		$title = new Amun_Form_Element_Input('title', 'Title');
+		$title = new Input('title', 'Title');
 		$title->setType('text');
 
 		$panel->add($title);
@@ -50,7 +59,7 @@ class AmunService_User_Friend_Group_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -65,22 +74,22 @@ class AmunService_User_Friend_Group_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('User_Friend_Group')->getRecord($id);
+		$record = DataFactory::getTable('User_Friend_Group')->getRecord($id);
 
 
-		$form = new Amun_Form('PUT', $this->url);
+		$form = new Form('PUT', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('group', 'Group');
+		$panel = new Panel('group', 'Group');
 
 
-		$id = new Amun_Form_Element_Input('id', 'Id', $record->id);
+		$id = new Input('id', 'Id', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$title = new Amun_Form_Element_Input('title', 'Title', $record->title);
+		$title = new Input('title', 'Title', $record->title);
 		$title->setType('text');
 
 		$panel->add($title);
@@ -88,7 +97,7 @@ class AmunService_User_Friend_Group_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -103,22 +112,22 @@ class AmunService_User_Friend_Group_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('User_Friend_Group')->getRecord($id);
+		$record = DataFactory::getTable('User_Friend_Group')->getRecord($id);
 
 
-		$form = new Amun_Form('DELETE', $this->url);
+		$form = new Form('DELETE', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('group', 'Group');
+		$panel = new Panel('group', 'Group');
 
 
-		$id = new Amun_Form_Element_Input('id', 'Id', $record->id);
+		$id = new Input('id', 'Id', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$title = new Amun_Form_Element_Input('title', 'Title', $record->title);
+		$title = new Input('title', 'Title', $record->title);
 		$title->setType('text');
 		$title->setDisabled(true);
 
@@ -127,7 +136,7 @@ class AmunService_User_Friend_Group_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);

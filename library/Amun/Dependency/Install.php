@@ -25,7 +25,17 @@
 
 namespace Amun\Dependency;
 
+use Amun\Base;
+use Amun\Registry;
+use Amun\Event;
+use Amun\User;
+use Amun\DataFactory;
 use PSX\DependencyAbstract;
+use PSX\Sql;
+use PSX\Validate;
+use PSX\Input;
+use PSX\Session;
+use PSX\Template;
 
 /**
  * Amun_Dependency_Install
@@ -63,7 +73,7 @@ class Install extends DependencyAbstract
 			return $this->get('base');
 		}
 
-		return $this->set('base', new Amun_Base($this->config));
+		return $this->set('base', new Base($this->config));
 	}
 
 	public function getSql()
@@ -73,7 +83,7 @@ class Install extends DependencyAbstract
 			return $this->get('sql');
 		}
 
-		return $this->set('sql', new PSX_Sql($this->config['psx_sql_host'],
+		return $this->set('sql', new Sql($this->config['psx_sql_host'],
 			$this->config['psx_sql_user'],
 			$this->config['psx_sql_pw'],
 			$this->config['psx_sql_db'])
@@ -89,9 +99,9 @@ class Install extends DependencyAbstract
 
 		try
 		{
-			return $this->set('registry', Amun_Registry::initInstance($this->getConfig(), $this->getSql()));
+			return $this->set('registry', Registry::initInstance($this->getConfig(), $this->getSql()));
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
 			return $this->set('registry', new Amun_Registry_NoDb($this->getConfig(), $this->getSql()));
 		}
@@ -104,7 +114,7 @@ class Install extends DependencyAbstract
 			return $this->get('event');
 		}
 
-		return $this->set('event', Amun_Event::initInstance($this->getRegistry()));
+		return $this->set('event', Event::initInstance($this->getRegistry()));
 	}
 
 	public function getValidate()
@@ -114,7 +124,7 @@ class Install extends DependencyAbstract
 			return $this->get('validate');
 		}
 
-		return $this->set('validate', new PSX_Validate());
+		return $this->set('validate', new Validate());
 	}
 
 	public function getGet()
@@ -124,7 +134,7 @@ class Install extends DependencyAbstract
 			return $this->get('get');
 		}
 
-		return $this->set('get', new PSX_Input_Get($this->getValidate()));
+		return $this->set('get', new Input\Get($this->getValidate()));
 	}
 
 	public function getPost()
@@ -134,7 +144,7 @@ class Install extends DependencyAbstract
 			return $this->get('post');
 		}
 
-		return $this->set('post', new PSX_Input_Post($this->getValidate()));
+		return $this->set('post', new Input\Post($this->getValidate()));
 	}
 
 	public function getSession()
@@ -144,7 +154,7 @@ class Install extends DependencyAbstract
 			return $this->get('session');
 		}
 
-		$session = new PSX_Session('amun_' . md5($this->config['psx_url']));
+		$session = new Session('amun_' . md5($this->config['psx_url']));
 		$session->start();
 
 		return $this->set('session', $session);
@@ -157,7 +167,7 @@ class Install extends DependencyAbstract
 			return $this->get('dataFactory');
 		}
 
-		return $this->set('dataFactory', Amun_DataFactory::initInstance($this));
+		return $this->set('dataFactory', DataFactory::initInstance($this));
 	}
 
 	public function getUser()
@@ -169,9 +179,9 @@ class Install extends DependencyAbstract
 
 		try
 		{
-			$userId = Amun_User::getId($this->getSession(), $this->getRegistry());
+			$userId = User::getId($this->getSession(), $this->getRegistry());
 
-			return $this->set('user', new Amun_User($userId, $this->getRegistry()));
+			return $this->set('user', new User($userId, $this->getRegistry()));
 		}
 		catch(Exception $e)
 		{
@@ -186,6 +196,6 @@ class Install extends DependencyAbstract
 			return $this->get('template');
 		}
 
-		return $this->set('template', new PSX_Template($this->config));
+		return $this->set('template', new Template($this->config));
 	}
 }
