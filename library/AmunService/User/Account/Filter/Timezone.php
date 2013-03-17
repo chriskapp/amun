@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Account\Filter;
+
+use DateTimeZone;
+use PSX\FilterAbstract;
+
 /**
  * Amun_User_Account_Filter_Timezone
  *
@@ -32,7 +37,7 @@
  * @package    Amun_User_Account
  * @version    $Revision: 635 $
  */
-class AmunService_User_Account_Filter_Timezone extends PSX_FilterAbstract
+class Timezone extends FilterAbstract
 {
 	public function apply($value)
 	{

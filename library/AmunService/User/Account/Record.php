@@ -36,6 +36,8 @@ use PSX\Data\WriterResult;
 use PSX\DateTime;
 use PSX\Filter;
 use PSX\Util\Markdown;
+use PSX\Sql\Condition;
+use PSX\Oauth\Provider\Data\Consumer;
 use DateTimeZone;
 
 /**
@@ -351,7 +353,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_karma === null)
 		{
-			$con = new PSX_Sql_Condition(array('userId', '=', $this->id));
+			$con = new Condition(array('userId', '=', $this->id));
 
 			$this->_karma = DataFactory::getTable('User_Activity')->count($con);
 		}
@@ -386,7 +388,7 @@ SQL;
 
 			if(!empty($row))
 			{
-				$consumer = new PSX_Oauth_Provider_Data_Consumer($row['consumerKey'], $row['consumerSecret'], $row['token'], $row['tokenSecret']);
+				$consumer = new Consumer($row['consumerKey'], $row['consumerSecret'], $row['token'], $row['tokenSecret']);
 
 				return $consumer;
 			}

@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Core\Host\Filter;
+
+use AmunService\Core\Host;
+use PSX\FilterAbstract;
+
 /**
  * Amun_System_Host_Filter_Status
  *
@@ -32,11 +37,11 @@
  * @package    Amun_System_Host
  * @version    $Revision: 635 $
  */
-class AmunService_Core_Host_Filter_Status extends PSX_FilterAbstract
+class Status extends FilterAbstract
 {
 	public function apply($value)
 	{
-		return AmunService_Core_Host_Record::getStatus($value) === false ? false : true;
+		return Host\Record::getStatus($value) === false ? false : true;
 	}
 
 	public function getErrorMsg()

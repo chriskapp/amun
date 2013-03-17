@@ -22,6 +22,12 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Content\Page\Filter;
+
+use AmunService\Content\Page;
+use PSX\FilterAbstract;
+use PSX\Config;
+
 /**
  * AmunService_Core_Content_Page_Filter_Template
  *
@@ -32,11 +38,11 @@
  * @package    Amun_Content_Page
  * @version    $Revision: 635 $
  */
-class AmunService_Content_Page_Filter_Template extends PSX_FilterAbstract
+class Template extends FilterAbstract
 {
 	private $config;
 
-	public function __construct(PSX_Config $config)
+	public function __construct(Config $config)
 	{
 		$this->config = $config;
 	}

@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Oauth\Filter;
+
+use AmunService\Oauth;
+use PSX\FilterAbstract;
+
 /**
  * AmunService_Oauth_Filter_Status
  *
@@ -32,11 +37,11 @@
  * @package    Amun_Oauth
  * @version    $Revision: 635 $
  */
-class AmunService_Oauth_Filter_Status extends PSX_FilterAbstract
+class Status extends FilterAbstract
 {
 	public function apply($value)
 	{
-		return AmunService_Oauth_Record::getStatus($value) === false ? false : true;
+		return Oauth\Record::getStatus($value) === false ? false : true;
 	}
 
 	public function getErrorMsg()

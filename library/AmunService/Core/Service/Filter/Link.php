@@ -22,6 +22,8 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Core\Service\Filter;
+
 /**
  * AmunService_Core_Content_Service_Filter_Link
  *
@@ -32,7 +34,7 @@
  * @package    Amun_Content_Service
  * @version    $Revision: 635 $
  */
-class AmunService_Core_Service_Filter_Link extends PSX_Filter_Url
+class Link extends \PSX\Filter\Url
 {
 	public function apply($value)
 	{

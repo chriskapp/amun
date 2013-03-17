@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Content\Gadget\Filter;
+
+use PSX\Config;
+
 /**
  * AmunService_Core_Content_Gadget_Filter_Path
  *
@@ -32,11 +36,11 @@
  * @package    Amun_Content_Gadget
  * @version    $Revision: 838 $
  */
-class AmunService_Content_Gadget_Filter_Path extends PSX_Filter_Url
+class Path extends \PSX\Filter\Url
 {
 	private $config;
 
-	public function __construct(PSX_Config $config)
+	public function __construct(Config $config)
 	{
 		$this->config = $config;
 	}

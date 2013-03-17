@@ -112,7 +112,7 @@ abstract class HandlerAbstract implements HandlerInterface
 
 		if(!empty($fields))
 		{
-			$select->select($fields);
+			$select->setColumns($fields);
 		}
 
 		$select->orderBy($sortBy, $sortOrder)
@@ -143,7 +143,7 @@ abstract class HandlerAbstract implements HandlerInterface
 
 		if(!empty($fields))
 		{
-			$select->select($fields);
+			$select->setColumns($fields);
 		}
 
 		return $select->where('id', '=', $id)

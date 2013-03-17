@@ -22,6 +22,8 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Oauth\Filter;
+
 /**
  * AmunService_Oauth_Filter_Callback
  *
@@ -32,7 +34,7 @@
  * @package    Amun_Oauth
  * @version    $Revision: 635 $
  */
-class AmunService_Oauth_Filter_Callback extends PSX_Filter_Url
+class Callback extends \PSX\Filter\Url
 {
 	public function apply($value)
 	{

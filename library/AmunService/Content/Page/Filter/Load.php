@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Content\Page\Filter;
+
+use AmunService\Content\Page;
+use PSX\FilterAbstract;
+
 /**
  * AmunService_Core_Content_Page_Filter_Load
  *
@@ -32,11 +37,11 @@
  * @package    Amun_Content_Page
  * @version    $Revision: 635 $
  */
-class AmunService_Content_Page_Filter_Load extends PSX_FilterAbstract
+class Load extends FilterAbstract
 {
 	public function apply($value)
 	{
-		return AmunService_Content_Page_Record::getLoad($value) === false ? false : true;
+		return Page\Record::getLoad($value) === false ? false : true;
 	}
 
 	public function getErrorMsg()

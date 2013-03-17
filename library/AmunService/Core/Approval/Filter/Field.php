@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Core\Approval\Filter;
+
+use PSX\Sql;
+use PSX\FilterAbstract;
+
 /**
  * AmunService_Core_System_Approval_Filter_Field
  *
@@ -32,12 +37,12 @@
  * @package    Amun_System_Approval
  * @version    $Revision: 635 $
  */
-class AmunService_Core_Approval_Filter_Field extends PSX_FilterAbstract
+class Field extends FilterAbstract
 {
 	private $sql;
 	private $table;
 
-	public function __construct(PSX_Sql $sql, $table)
+	public function __construct(Sql $sql, $table)
 	{
 		$this->sql   = $sql;
 		$this->table = $table;

@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Media\Filter;
+
+use Amun\Registry;
+use PSX\FilterAbstract;
+
 /**
  * AmunService_Core_Content_Media_Filter_Folder
  *
@@ -32,11 +37,11 @@
  * @package    Amun_Content_Media
  * @version    $Revision: 635 $
  */
-class AmunService_Media_Filter_Folder extends PSX_FilterAbstract
+class Folder extends FilterAbstract
 {
 	private $registry;
 
-	public function __construct(Amun_Registry $registry)
+	public function __construct(Registry $registry)
 	{
 		$this->registry = $registry;
 	}

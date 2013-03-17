@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Core\Approval\Record\Filter;
+
+use AmunService\Core\Approval;
+use PSX\FilterAbstract;
+
 /**
  * AmunService_Core_System_Approval_Record_Filter_Type
  *
@@ -32,11 +37,11 @@
  * @package    Amun_System_Approval
  * @version    $Revision: 635 $
  */
-class AmunService_Core_Approval_Record_Filter_Type extends PSX_FilterAbstract
+class Type extends FilterAbstract
 {
 	public function apply($value)
 	{
-		return in_array($value, AmunService_Core_Approval_Record::getType());
+		return in_array($value, Approval\Record::getType());
 	}
 
 	public function getErrorMsg()
