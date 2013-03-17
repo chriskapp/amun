@@ -26,7 +26,7 @@ namespace Amun\Module;
 
 use Amun\Oauth;
 use Amun\Dependency;
-use PSX\Base;
+use Amun\Base;
 use PSX\Loader\Location;
 
 /**

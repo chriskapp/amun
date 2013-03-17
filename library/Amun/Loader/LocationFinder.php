@@ -102,7 +102,7 @@ class LocationFinder extends FileSystem
 		{
 			// load module
 			$pathInfo = substr($pathInfo, strlen($service['path']));
-			$x        = $service['source'] . '/api/' . $pathInfo;
+			$x        = $service['source'] . '/api/' . trim($pathInfo, '/');
 
 			$location = $this->getLocation($x);
 
@@ -163,7 +163,7 @@ class LocationFinder extends FileSystem
 		if(!empty($gadget))
 		{
 			$path = $gadget['source'] . '/gadget/' . $gadget['gadgetPath'];
-			$file = $this->config['amun_service_path'] . '/' . $path;
+			$file = $this->config['amun_service_path'] . '/' . trim($path, '/');
 
 			if(is_file($file))
 			{
@@ -218,7 +218,7 @@ class LocationFinder extends FileSystem
 		{
 			// load module
 			$pathInfo = substr($pathInfo, strlen($page['path']));
-			$x        = $page['source'] . '/application/' . $pathInfo;
+			$x        = $page['source'] . '/application/' . trim($pathInfo, '/');
 
 			$location = $this->getLocation($x);
 

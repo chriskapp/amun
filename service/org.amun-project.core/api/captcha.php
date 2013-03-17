@@ -24,7 +24,6 @@
 
 namespace core\api;
 
-use Amun\Captcha;
 use Amun\Module\ApiAbstract;
 use Exception;
 
@@ -45,7 +44,7 @@ class captcha extends ApiAbstract
 	{
 		try
 		{
-			$captcha = Captcha::factory($this->config['amun_captcha']);
+			$captcha = \Amun\Captcha::factory($this->config['amun_captcha']);
 			$captcha->serve();
 
 			exit;

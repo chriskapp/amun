@@ -27,7 +27,7 @@ namespace Amun\Module;
 use Amun\Captcha;
 use Amun\Data\RecordAbstract;
 use Amun\Module\ApiAbstract;
-use PSX\Data\Array;
+use PSX\Data\ArrayList;
 use PSX\Data\Message;
 use PSX\DateTime;
 use PSX\Sql;

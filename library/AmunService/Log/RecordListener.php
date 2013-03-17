@@ -22,6 +22,14 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Log;
+
+use Amun\Data\ListenerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Sql\TableInterface;
+use Amun\DataFactory;
+use PSX\Data\RecordInterface;
+
 /**
  * AmunService_Log_Listener
  *
@@ -32,16 +40,16 @@
  * @package    Amun_Log
  * @version    $Revision: 635 $
  */
-class AmunService_Log_RecordListener extends Amun_Data_ListenerAbstract
+class RecordListener extends ListenerAbstract
 {
-	public function notify($type, Amun_Sql_TableInterface $table, PSX_Data_RecordInterface $record)
+	public function notify($type, TableInterface $table, RecordInterface $record)
 	{
-		$log = Amun_Sql_Table_Registry::get('Log')->getRecord();
+		$log = DataFactory::getTable('Log')->getRecord();
 		$log->setRefId(isset($record->id) ? $record->id : 0);
-		$log->setType(Amun_Data_RecordAbstract::getType($type));
+		$log->setType(RecordAbstract::getType($type));
 		$log->setTable($table->getName());
 
-		$handler = new AmunService_Log_Handler($this->user);
+		$handler = new Handler($this->user);
 		$handler->create($log);
 	}
 }

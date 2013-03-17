@@ -22,6 +22,19 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Activity;
+
+use Amun\Data\ListenerAbstract;
+use Amun\DataFactory;
+use Amun\User;
+use Amun\Page;
+use Amun\Data\RecordAbstract;
+use Amun\Sql\TableInterface;
+use AmunService\User\Account;
+use AmunService\User\Friend;
+use PSX\Data\RecordInterface;
+use PSX\DateTime;
+
 /**
  * AmunService_User_Activity_RecordListener
  *
@@ -32,87 +45,83 @@
  * @package    Amun_Log
  * @version    $Revision: 635 $
  */
-class AmunService_User_Activity_RecordListener extends Amun_Data_ListenerAbstract
+class RecordListener extends ListenerAbstract
 {
-	public function notify($type, Amun_Sql_TableInterface $table, PSX_Data_RecordInterface $record)
+	public function notify($type, TableInterface $table, RecordInterface $record)
 	{
 		switch(true)
 		{
-			case $record instanceof AmunService_User_Activity_Record:
-
+			case $record instanceof Record:
 				// nothing here
 				break;
 
-			case $record instanceof AmunService_User_Account_Record:
-
+			case $record instanceof Account\Record:
 				$this->handleUserAccount($type, $table, $record);
 				break;
 
-			case $record instanceof AmunService_User_Friend_Record:
-
+			case $record instanceof Friend\Record:
 				$this->handleUserFriend($type, $table, $record);
 				break;
 
 			default:
-
 				$this->handleDefault($type, $table, $record);
 				break;
 		}
 	}
 
-	private function handleUserAccount($type, Amun_Sql_TableInterface $table, PSX_Data_RecordInterface $record)
+	private function handleUserAccount($type, TableInterface $table, RecordInterface $record)
 	{
-		if($type == Amun_Data_RecordAbstract::INSERT)
+		if($type == RecordAbstract::INSERT)
 		{
 			// insert activity
-			$activity          = Amun_Sql_Table_Registry::get('User_Activity')->getRecord();
+			$activity          = DataFactory::getTable('User_Activity')->getRecord();
 			$activity->refId   = $record->id;
 			$activity->table   = $table->getName();
 			$activity->verb    = 'join';
 			$activity->summary = $record->name . ' has created an account';
 
-			$handler = new AmunService_User_Activity_Handler(new Amun_User($record->id, $this->registry));
+			$handler = new Handler(new User($record->id, $this->registry));
 			$handler->create($activity);
 		}
 	}
 
-	private function handleUserFriend($type, Amun_Sql_TableInterface $table, PSX_Data_RecordInterface $record)
+	private function handleUserFriend($type, TableInterface $table, RecordInterface $record)
 	{
-		if($type == Amun_Data_RecordAbstract::INSERT)
+		if($type == RecordAbstract::INSERT)
 		{
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-			if($record->status == AmunService_User_Friend_Record::REQUEST)
+			if($record->status == Friend\Record::REQUEST)
 			{
 			}
-			else if($record->status == AmunService_User_Friend_Record::NORMAL)
+			else if($record->status == Friend\Record::NORMAL)
 			{
 				// insert activity for user who has accepted the friend request
-				$activity          = Amun_Sql_Table_Registry::get('User_Activity')->getRecord();
+				$activity          = DataFactory::getTable('User_Activity')->getRecord();
 				$activity->refId   = $record->id;
 				$activity->table   = $table->getName();
 				$activity->verb    = 'make-friend';
 				$activity->summary = '<a href="' . $record->getUser()->profileUrl . '">' . $record->getUser()->name . '</a> and <a href="' . $record->getFriend()->profileUrl . '">' . $record->getFriend()->name . '</a> are now friends';
 
-				$handler = new AmunService_User_Activity_Handler($this->user);
+				$handler = new Handler($this->user);
 				$handler->create($activity);
 
 				// insert activity for user who has requested the friendship
 				/*
-				$activity          = Amun_Sql_Table_Registry::get('User_Activity')->getRecord();
+				$activity          = DataFactory::getTable('User_Activity')->getRecord();
 				$activity->refId   = $record->id;
 				$activity->table   = $table->getName();
 				$activity->verb    = 'make-friend';
 				$activity->summary = '<a href="' . $record->getFriend()->profileUrl . '">' . $record->getFriend()->name . '</a> and <a href="' . $record->getUser()->profileUrl . '">' . $record->getUser()->name . '</a> are now friends';
 
-				$handler = new AmunService_User_Activity_Handler(new Amun_User($record->getFriend()->id, $this->registry));
+				$handler = new Handler(new User($record->getFriend()->id, $this->registry));
 				$handler->create($activity);
 				*/
 			}
 		}
 	}
 
-	private function handleDefault($type, Amun_Sql_TableInterface $table, PSX_Data_RecordInterface $record)
+	private function handleDefault($type, TableInterface $table, RecordInterface $record)
 	{
 		// get template message
 		$sql = <<<SQL
@@ -128,25 +137,25 @@ AND
 	`template`.`type` = ?
 SQL;
 
-		$row = $this->sql->getRow($sql, array($table->getName(), Amun_Data_RecordAbstract::getType($type)));
+		$row = $this->sql->getRow($sql, array($table->getName(), RecordAbstract::getType($type)));
 
 		if(!empty($row))
 		{
 			$objectUrl = $this->getObjectUrl($record, $this->substituteVars($record, $row['path']));
 
 			// insert activity
-			$activity          = Amun_Sql_Table_Registry::get('User_Activity')->getRecord();
+			$activity          = DataFactory::getTable('User_Activity')->getRecord();
 			$activity->refId   = $record->id;
 			$activity->table   = $table->getName();
 			$activity->verb    = $row['verb'];
 			$activity->summary = $this->substituteVars($record, $row['summary'], $objectUrl);
 
-			$handler = new AmunService_User_Activity_Handler($this->user);
+			$handler = new Handler($this->user);
 			$handler->create($activity);
 		}
 	}
 
-	private function substituteVars(PSX_Data_RecordInterface $record, $content, $url = null)
+	private function substituteVars(RecordInterface $record, $content, $url = null)
 	{
 		// object fields
 		if($url !== null && strpos($content, '{object.url') !== false)
@@ -192,11 +201,11 @@ SQL;
 		return $content;
 	}
 
-	private function getObjectUrl(PSX_Data_RecordInterface $record, $path = null)
+	private function getObjectUrl(RecordInterface $record, $path = null)
 	{
 		if(isset($record->pageId))
 		{
-			$url = Amun_Page::getUrl($this->registry, $record->pageId);
+			$url = Page::getUrl($this->registry, $record->pageId);
 
 			if(!empty($path))
 			{

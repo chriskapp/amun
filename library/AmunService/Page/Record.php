@@ -83,7 +83,7 @@ class Record extends RecordAbstract
 
 	public function setContent($content)
 	{
-		$content = $this->_validate->apply($content, 'string', array(new Filter\Length(3, 65536), new Filter\Html($this->_config, $this->_user)), 'content', 'Content');
+		$content = $this->_validate->apply($content, 'string', array(new Filter\Length(3, 65536), new AmunFilter\Html($this->_config, $this->_user)), 'content', 'Content');
 
 		if(!$this->_validate->hasError())
 		{

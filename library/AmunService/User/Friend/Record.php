@@ -22,6 +22,16 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Friend;
+
+use Amun\Data\RecordAbstract;
+use Amun\DataFactory;
+use Amun\Exception;
+use Amun\Filter;
+use PSX\DateTime;
+use PSX\Data\WriterResult;
+use PSX\Data\WriterInterface;
+
 /**
  * Amun_User_Friend
  *
@@ -32,7 +42,7 @@
  * @package    Amun_User_Friend
  * @version    $Revision: 683 $
  */
-class AmunService_User_Friend_Record extends Amun_Data_RecordAbstract
+class Record extends RecordAbstract
 {
 	const REQUEST = 0x1;
 	const NORMAL  = 0x2;
@@ -44,7 +54,7 @@ class AmunService_User_Friend_Record extends Amun_Data_RecordAbstract
 
 	public function setId($id)
 	{
-		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
+		$id = $this->_validate->apply($id, 'integer', array(new Filter\Id($this->_table)), 'id', 'Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -52,13 +62,13 @@ class AmunService_User_Friend_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setGroupId($groupId)
 	{
-		$groupId = $this->_validate->apply($groupId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('User_Friend_Group'))), 'groupId', 'Group Id');
+		$groupId = $this->_validate->apply($groupId, 'integer', array(new Filter\Id(DataFactory::getTable('User_Friend_Group'))), 'groupId', 'Group Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -66,13 +76,13 @@ class AmunService_User_Friend_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setFriendId($friendId)
 	{
-		$friendId = $this->_validate->apply($friendId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('User_Friend'))), 'friendId', 'Friend Id');
+		$friendId = $this->_validate->apply($friendId, 'integer', array(new Filter\Id(DataFactory::getTable('User_Friend'))), 'friendId', 'Friend Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -80,7 +90,7 @@ class AmunService_User_Friend_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
@@ -93,7 +103,7 @@ class AmunService_User_Friend_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_group === null)
 		{
-			$this->_group = Amun_Sql_Table_Registry::get('User_Friend_Group')->getRecord($this->groupId);
+			$this->_group = DataFactory::getTable('User_Friend_Group')->getRecord($this->groupId);
 		}
 
 		return $this->_group;
@@ -103,7 +113,7 @@ class AmunService_User_Friend_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_user === null)
 		{
-			$this->_user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->userId);
+			$this->_user = DataFactory::getTable('User_Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;
@@ -113,7 +123,7 @@ class AmunService_User_Friend_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_friend === null)
 		{
-			$this->_friend = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->friendId);
+			$this->_friend = DataFactory::getTable('User_Account')->getRecord($this->friendId);
 		}
 
 		return $this->_friend;
@@ -129,18 +139,18 @@ class AmunService_User_Friend_Record extends Amun_Data_RecordAbstract
 		return $this->_date;
 	}
 
-	public function export(PSX_Data_WriterResult $result)
+	public function export(WriterResult $result)
 	{
 		switch($result->getType())
 		{
-			case PSX_Data_WriterInterface::JSON:
-			case PSX_Data_WriterInterface::XML:
+			case WriterInterface::JSON:
+			case WriterInterface::XML:
 
 				return parent::export($result);
 
 				break;
 
-			case PSX_Data_WriterInterface::ATOM:
+			case WriterInterface::ATOM:
 
 				$entry = $result->getWriter()->createEntry();
 
@@ -156,7 +166,7 @@ class AmunService_User_Friend_Record extends Amun_Data_RecordAbstract
 
 			default:
 
-				throw new PSX_Data_Exception('Writer is not supported');
+				throw new Exception('Writer is not supported');
 
 				break;
 		}

@@ -48,7 +48,7 @@ class Captcha
 
 			default:
 			case 'default':
-				return new Provider\Default();
+				return new Provider\Image();
 				break;
 		}
 	}

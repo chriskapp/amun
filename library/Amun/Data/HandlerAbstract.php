@@ -431,7 +431,10 @@ SQL;
 			$this->_select = $this->getDefaultSelect();
 		}
 
-		return clone $this->_select;
+		$select = clone $this->_select;
+		$select->getCondition()->removeAll();
+
+		return $select;
 	}
 
 	/**
