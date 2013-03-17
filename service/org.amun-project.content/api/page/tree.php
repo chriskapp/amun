@@ -40,7 +40,7 @@ use PSX\Data\Record;
  * @subpackage content_page
  * @version    $Revision: 856 $
  */
-class tree extends Amun_Module_ApiAbstract
+class tree extends ApiAbstract
 {
 	/**
 	 * Returns all pages in an tree structure

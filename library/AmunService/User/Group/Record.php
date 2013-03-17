@@ -22,6 +22,17 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Group;
+
+use Amun\Data\RecordAbstract;
+use Amun\Filter as AmunFilter;
+use Amun\Exception;
+use Amun\DataFactory;
+use AmunService\Core\Registry;
+use PSX\Filter;
+use PSX\DateTime;
+use PSX\Sql\Condition;
+
 /**
  * Amun_User_Group
  *
@@ -32,7 +43,7 @@
  * @package    Amun_User_Group
  * @version    $Revision: 880 $
  */
-class AmunService_User_Group_Record extends Amun_Data_RecordAbstract
+class Record extends RecordAbstract
 {
 	public function getFields()
 	{
@@ -46,7 +57,7 @@ class AmunService_User_Group_Record extends Amun_Data_RecordAbstract
 
 	public function setId($id)
 	{
-		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
+		$id = $this->_validate->apply($id, 'integer', array(new AmunFilter\Id($this->_table)), 'id', 'Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -54,13 +65,13 @@ class AmunService_User_Group_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setTitle($title)
 	{
-		$title = $this->_validate->apply($title, 'string', array(new PSX_Filter_Length(3, 32), new AmunService_Core_Registry_Filter_Name()));
+		$title = $this->_validate->apply($title, 'string', array(new Filter\Length(3, 32), new Registry\Filter\Name()));
 
 		if(!$this->_validate->hasError())
 		{
@@ -68,16 +79,16 @@ class AmunService_User_Group_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new psx_data_exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setRights($rights)
 	{
 		$rights = array_map('intval', explode(',', $rights));
-		$con    = new PSX_Sql_Condition(array('id', 'IN', $rights));
+		$con    = new Condition(array('id', 'IN', $rights));
 
-		$this->rights = Amun_Sql_Table_Registry::get('User_Right')->getCol('id', $con);
+		$this->rights = DataFactory::getTable('User_Right')->getCol('id', $con);
 	}
 
 	public function getId()

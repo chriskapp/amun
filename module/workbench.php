@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+use Amun\Dependency;
+use PSX\Module\ViewAbstract;
+use PSX\Template;
+
 /**
  * workbench
  *
@@ -31,16 +35,16 @@
  * @category   module
  * @version    $Revision: 818 $
  */
-class workbench extends PSX_Module_ViewAbstract
+class workbench extends ViewAbstract
 {
 	public function getDependencies()
 	{
-		return new Amun_Dependency_Session($this->base->getConfig());
+		return new Dependency\Session($this->base->getConfig());
 	}
 
 	public function onLoad()
 	{
-		$this->template = new PSX_Template($this->config);
+		$this->template = new Template($this->config);
 		$this->template->set('system/workbench.tpl');
 	}
 }

@@ -24,6 +24,7 @@
 
 namespace Amun\Module;
 
+use Amun\Exception;
 use Amun\Captcha;
 use Amun\Data\RecordAbstract;
 use Amun\Module\ApiAbstract;
@@ -79,7 +80,7 @@ abstract class RestAbstract extends ApiAbstract
 
 				$this->setResponse($resultSet);
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
 				$msg = new Message($e->getMessage(), false);
 
@@ -112,7 +113,7 @@ abstract class RestAbstract extends ApiAbstract
 
 				$this->setResponse($array);
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
 				$msg = new Message($e->getMessage(), false);
 
@@ -155,7 +156,7 @@ abstract class RestAbstract extends ApiAbstract
 
 				$this->setResponse($msg);
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
 				$msg = new Message($e->getMessage(), false);
 
@@ -204,7 +205,7 @@ abstract class RestAbstract extends ApiAbstract
 
 				$this->setResponse($msg);
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
 				$msg = new Message($e->getMessage(), false);
 
@@ -253,7 +254,7 @@ abstract class RestAbstract extends ApiAbstract
 
 				$this->setResponse($msg);
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
 				$msg = new Message($e->getMessage(), false);
 
@@ -285,7 +286,7 @@ abstract class RestAbstract extends ApiAbstract
 			}
 			else
 			{
-				throw new PSX_Data_Exception('Invalid captcha');
+				throw new Exception('Invalid captcha');
 			}
 		}
 	}

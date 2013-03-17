@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>Amun (<?php echo Amun_Base::getVersion(); ?>) Workbench</title>
+	<title>Amun (<?php echo \Amun\Base::getVersion(); ?>) Workbench</title>
 	<link rel="stylesheet" type="text/css" href="http://cdn.sencha.io/ext-4.1.0-gpl/resources/css/ext-all.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo $base; ?>/css/workbench.css">
 	<script type="text/javascript">

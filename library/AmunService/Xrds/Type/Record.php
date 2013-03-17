@@ -22,6 +22,13 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Xrds\Type;
+
+use Amun\Data\RecordAbstract;
+use Amun\Filter;
+use Amun\Exception;
+use Amun\DataFactory;
+
 /**
  * AmunService_Core_Content_Api_Type
  *
@@ -32,13 +39,13 @@
  * @package    AmunService_Content_Api
  * @version    $Revision: 683 $
  */
-class AmunService_Xrds_Type_Record extends Amun_Data_RecordAbstract
+class Record extends RecordAbstract
 {
 	protected $_api;
 
 	public function setId($id)
 	{
-		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
+		$id = $this->_validate->apply($id, 'integer', array(new Filter\Id($this->_table)), 'id', 'Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -46,13 +53,13 @@ class AmunService_Xrds_Type_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setApiId($apiId)
 	{
-		$apiId = $this->_validate->apply($apiId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Xrds'))), 'apiId', 'Api Id');
+		$apiId = $this->_validate->apply($apiId, 'integer', array(new Filter\Id(DataFactory::getTable('Xrds'))), 'apiId', 'Api Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -60,7 +67,7 @@ class AmunService_Xrds_Type_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
@@ -78,7 +85,7 @@ class AmunService_Xrds_Type_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_api === null)
 		{
-			$this->_api = Amun_Sql_Table_Registry::get('Xrds')->getRecord($this->apiId);
+			$this->_api = DataFactory::getTable('Xrds')->getRecord($this->apiId);
 		}
 
 		return $this->_api;

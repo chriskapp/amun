@@ -388,6 +388,7 @@ SQL;
 		$className = substr($className, 0, -8); // remove _Handler
 		$className = substr($className, 12); // remove AmunService_
 		$className = strtolower($className);
+		$className = str_replace('\\', '_', $className);
 
 		return $className;
 	}
