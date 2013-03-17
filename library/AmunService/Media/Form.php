@@ -22,6 +22,21 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Mail;
+
+use Amun\DataFactory;
+use Amun\Data\FormAbstract;
+use Amun\Exception;
+use Amun\Form as AmunForm;
+use Amun\Form\Element\Panel;
+use Amun\Form\Element\Reference;
+use Amun\Form\Element\Input;
+use Amun\Form\Element\TabbedPane;
+use Amun\Form\Element\Textarea;
+use Amun\Form\Element\Captcha;
+use Amun\Form\Element\Select;
+use AmunService\Media;
+
 /**
  * AmunService_Core_Content_Media_Form
  *
@@ -32,29 +47,29 @@
  * @package    Amun_Content_Media
  * @version    $Revision: 807 $
  */
-class AmunService_Media_Form extends Amun_Data_FormAbstract
+class Form extends FormAbstract
 {
 	public function create()
 	{
-		$form = new Amun_Form('POST', $this->url, 'multipart/form-data');
+		$form = new AmunForm('POST', $this->url, 'multipart/form-data');
 
 
-		$panel = new Amun_Form_Element_Panel('media', 'Media');
+		$panel = new Panel('media', 'Media');
 
 
-		$rightId = new Amun_Form_Element_Select('rightId', 'Right ID', 69); # media_view right
+		$rightId = new Select('rightId', 'Right ID', 77); # media_view right
 		$rightId->setOptions($this->getRight());
 
 		$panel->add($rightId);
 
 
-		$folder = new Amun_Form_Element_Select('folder', 'Folder', '.');
+		$folder = new Select('folder', 'Folder', '.');
 		$folder->setOptions($this->getFolder());
 
 		$panel->add($folder);
 
 
-		$path = new Amun_Form_Element_Input('path', 'File');
+		$path = new Input('path', 'File');
 		$path->setType('file');
 
 		$panel->add($path);
@@ -62,7 +77,7 @@ class AmunService_Media_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -77,28 +92,28 @@ class AmunService_Media_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Media')->getRecord($id);
+		$record = DataFactory::getTable('Media')->getRecord($id);
 
 
-		$form = new Amun_Form('PUT', $this->url);
+		$form = new AmunForm('PUT', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('media', 'Media');
+		$panel = new Panel('media', 'Media');
 
 
-		$id = new Amun_Form_Element_Input('id', 'Id', $record->id);
+		$id = new Input('id', 'Id', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$rightId = new Amun_Form_Element_Select('rightId', 'Right ID', $record->rightId);
+		$rightId = new Select('rightId', 'Right ID', $record->rightId);
 		$rightId->setOptions($this->getRight());
 
 		$panel->add($rightId);
 
 
-		$path = new Amun_Form_Element_Input('path', 'Path', $record->path);
+		$path = new Input('path', 'Path', $record->path);
 		$path->setType('text');
 		$path->setDisabled(true);
 
@@ -107,7 +122,7 @@ class AmunService_Media_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -122,29 +137,29 @@ class AmunService_Media_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Media')->getRecord($id);
+		$record = DataFactory::getTable('Media')->getRecord($id);
 
 
-		$form = new Amun_Form('DELETE', $this->url);
+		$form = new AmunForm('DELETE', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('media', 'Media');
+		$panel = new Panel('media', 'Media');
 
 
-		$id = new Amun_Form_Element_Input('id', 'Id', $record->id);
+		$id = new Input('id', 'Id', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$rightId = new Amun_Form_Element_Select('rightId', 'Right ID', $record->rightId);
+		$rightId = new Select('rightId', 'Right ID', $record->rightId);
 		$rightId->setOptions($this->getRight());
 		$rightId->setDisabled(true);
 
 		$panel->add($rightId);
 
 
-		$path = new Amun_Form_Element_Input('path', 'Path', $record->path);
+		$path = new Input('path', 'Path', $record->path);
 		$path->setType('text');
 		$path->setDisabled(true);
 
@@ -153,7 +168,7 @@ class AmunService_Media_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -169,7 +184,7 @@ class AmunService_Media_Form extends Amun_Data_FormAbstract
 	private function getType()
 	{
 		$status = array();
-		$result = AmunService_Media_Record::getType();
+		$result = Media\Record::getType();
 
 		foreach($result as $k => $v)
 		{

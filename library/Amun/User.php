@@ -22,6 +22,19 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun;
+
+use Amun\Sql\Table;
+use AmunService\User\Account;
+use AmunService\User\Friend;
+use DateInterval;
+use DateTimeZone;
+use PSX\Data\RecordInterface;
+use PSX\DateTime;
+use PSX\Session;
+use PSX\Sql;
+use PSX\Sql\Condition;
+
 /**
  * Amun_User
  *
@@ -32,7 +45,7 @@
  * @package    Amun_User
  * @version    $Revision: 880 $
  */
-class Amun_User
+class User
 {
 	public $id;
 	public $groupId;
@@ -54,14 +67,14 @@ class Amun_User
 	protected $registry;
 	protected $accessId;
 
-	public function __construct($id, Amun_Registry $registry, $accessId = null)
+	public function __construct($id, Registry $registry, $accessId = null)
 	{
 		$this->config   = $registry->getConfig();
 		$this->sql      = $registry->getSql();
 		$this->registry = $registry;
 		$this->accessId = (integer) $accessId;
 
-		$status = AmunService_User_Account_Record::BANNED;
+		$status = Account\Record::BANNED;
 		$sql    = <<<SQL
 SELECT
 	`account`.`id`           AS `accountId`,
@@ -110,11 +123,11 @@ SQL;
 
 			// update the last seen field
 			$now = new DateTime('NOW', $this->registry['core.default_timezone']);
-			$con = new PSX_Sql_Condition(array('id', '=', $this->id));
+			$con = new Condition(array('id', '=', $this->id));
 
 			$this->sql->update($this->registry['table.user_account'], array(
 
-				'lastSeen' => $now->format(PSX_DateTime::SQL),
+				'lastSeen' => $now->format(DateTime::SQL),
 
 			), $con);
 
@@ -130,7 +143,7 @@ SQL;
 		}
 		else
 		{
-			throw new Amun_User_Exception('Unknown user id');
+			throw new Exception('Unknown user id');
 		}
 	}
 
@@ -220,12 +233,12 @@ SQL;
 
 	public function isAdministrator()
 	{
-		return $this->status == AmunService_User_Account_Record::ADMINISTRATOR;
+		return $this->status == Account\Record::ADMINISTRATOR;
 	}
 
 	public function isRemote()
 	{
-		return $this->status == AmunService_User_Account_Record::REMOTE;
+		return $this->status == Account\Record::REMOTE;
 	}
 
 	public function isAnonymous()
@@ -251,9 +264,9 @@ SQL;
 		$now = new DateTime('NOW', $this->registry['core.default_timezone']);
 		$now->sub(new DateInterval($this->registry['core.input_interval']));
 
-		$con = new PSX_Sql_Condition();
+		$con = new Condition();
 		$con->add('userId', '=', $this->id);
-		$con->add('date', '>=', $now->format(PSX_DateTime::SQL));
+		$con->add('date', '>=', $now->format(DateTime::SQL));
 
 		$count = $this->sql->count($this->registry['table.log'], $con);
 
@@ -281,7 +294,7 @@ SQL;
 	 * @param PSX_Data_RecordInterface $record
 	 * @return boolean
 	 */
-	public function isOwner(PSX_Data_RecordInterface $record)
+	public function isOwner(RecordInterface $record)
 	{
 		if(!$this->isAdministrator())
 		{
@@ -300,14 +313,14 @@ SQL;
 	 * @param PSX_Data_RecordInterface $record
 	 * @return boolean
 	 */
-	public function isGroup(PSX_Data_RecordInterface $record)
+	public function isGroup(RecordInterface $record)
 	{
 		if(isset($record->userId))
 		{
-			$con = new PSX_Sql_Condition();
+			$con = new Condition();
 			$con->add('id', '=', $record->userId);
 
-			$value = $this->sql->select($this->registry['table.user_account'], array('groupId'), $con, PSX_Sql::SELECT_FIELD);
+			$value = $this->sql->select($this->registry['table.user_account'], array('groupId'), $con, Sql::SELECT_FIELD);
 
 			return $value == $this->groupId;
 		}
@@ -332,7 +345,7 @@ SQL;
 			{
 				$this->timezone = new DateTimeZone($timezone);
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
 				$this->timezone = new DateTimeZone('UTC');
 			}
@@ -350,22 +363,22 @@ SQL;
 
 	public function getAccount()
 	{
-		return Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->id);
+		return Table\Registry::get('User_Account')->getRecord($this->id);
 	}
 
-	public function hasFriend(AmunService_User_Account_Record $account)
+	public function hasFriend(Account\Record $account)
 	{
-		$con = new PSX_Sql_Condition();
+		$con = new Condition();
 		$con->add('userId', '=', $this->id);
 		$con->add('friendId', '=', $account->id);
-		$con->add('status', '=', AmunService_User_Friend_Record::NORMAL);
+		$con->add('status', '=', Friend\Record::NORMAL);
 
 		$count = $this->sql->count($this->registry['table.user_friend'], $con);
 
 		return $count > 0;
 	}
 
-	public static function getId(PSX_Session $session, Amun_Registry $registry)
+	public static function getId(Session $session, Registry $registry)
 	{
 		$id       = $session->get('amun_id');
 		$lastSeen = $session->get('amun_t');
@@ -373,7 +386,7 @@ SQL;
 
 		if($aId === false)
 		{
-			throw new Amun_User_Exception('Unknown anonymous user');
+			throw new Exception('Unknown anonymous user');
 		}
 		else
 		{

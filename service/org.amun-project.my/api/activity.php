@@ -24,16 +24,17 @@
 
 namespace my\api;
 
-use AmunService_User_Account_Record;
-use Amun_Base;
-use Amun_Module_RestAbstract;
-use Amun_Sql_Table_Registry;
-use Exception;
-use PSX_Data_Exception;
-use PSX_Data_Message;
-use PSX_Data_WriterInterface;
-use PSX_Data_WriterResult;
-use PSX_Sql;
+use AmunService\User\Account;
+use Amun\Base;
+use Amun\DataFactory;
+use Amun\Module\RestAbstract;
+use Amun\Sql\Table\Registry;
+use Amun\Exception;
+use PSX\Data\Exception;
+use PSX\Data\Message;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
+use PSX\Sql;
 
 /**
  * activity
@@ -46,7 +47,7 @@ use PSX_Sql;
  * @subpackage service_my
  * @version    $Revision: 875 $
  */
-class activity extends Amun_Module_RestAbstract
+class activity extends RestAbstract
 {
 	protected $userId;
 
@@ -84,22 +85,22 @@ class activity extends Amun_Module_RestAbstract
 					$params['sortBy'], 
 					$params['sortOrder'], 
 					$this->getRequestCondition(),
-					PSX_Sql::FETCH_OBJECT, 
+					Sql::FETCH_OBJECT, 
 					'AmunService_My_Activity', 
-					array(Amun_Sql_Table_Registry::get('User_Activity')));
+					array(DataFactory::getTable('User_Activity')));
 
 				$this->setResponse($resultSet);
 			}
 			catch(Exception $e)
 			{
-				$msg = new PSX_Data_Message($e->getTraceAsString(), false);
+				$msg = new Message($e->getTraceAsString(), false);
 
 				$this->setResponse($msg);
 			}
 		}
 		else
 		{
-			$msg = new PSX_Data_Message('Access not allowed', false);
+			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}
@@ -107,41 +108,41 @@ class activity extends Amun_Module_RestAbstract
 
 	public function onPost()
 	{
-		$msg = new PSX_Data_Message('Create a activity record is not possible', false);
+		$msg = new Message('Create a activity record is not possible', false);
 
 		$this->setResponse($msg, null, 500);
 	}
 
 	public function onPut()
 	{
-		$msg = new PSX_Data_Message('Update a activity record is not possible', false);
+		$msg = new Message('Update a activity record is not possible', false);
 
 		$this->setResponse($msg, null, 500);
 	}
 
 	public function onDelete()
 	{
-		$msg = new PSX_Data_Message('Delete a activity record is not possible', false);
+		$msg = new Message('Delete a activity record is not possible', false);
 
 		$this->setResponse($msg, null, 500);
 	}
 
-	protected function setWriterConfig(PSX_Data_WriterResult $writer)
+	protected function setWriterConfig(WriterResult $writer)
 	{
 		switch($writer->getType())
 		{
-			case PSX_Data_WriterInterface::ATOM:
+			case WriterInterface::ATOM:
 
-				$account = Amun_Sql_Table_Registry::get('User_Account')
+				$account = DataFactory::getTable('User_Account')
 					->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated'))
 					->where('id', '=', $this->userId)
-					->getRow(PSX_Sql::FETCH_OBJECT);
+					->getRow(Sql::FETCH_OBJECT);
 
-				if($account instanceof AmunService_User_Account_Record)
+				if($account instanceof Account\Record)
 				{
 					$writer = $writer->getWriter();
 					$writer->setConfig($account->name . ' activities', 'urn:uuid:' . $account->globalId, $account->getUpdated());
-					$writer->setGenerator('amun ' . Amun_Base::getVersion());
+					$writer->setGenerator('amun ' . Base::getVersion());
 					$writer->addAuthor($account->name, $account->profileUrl);
 					$writer->addLink($account->profileUrl, 'alternate', 'text/html');
 					$writer->addLink($account->thumbnailUrl, 'avatar');
@@ -154,7 +155,7 @@ class activity extends Amun_Module_RestAbstract
 				}
 				else
 				{
-					throw new PSX_Data_Exception('Invalid user account');
+					throw new Exception('Invalid user account');
 				}
 
 				break;

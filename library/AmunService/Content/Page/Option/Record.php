@@ -22,6 +22,20 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Content\Page\Option;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use Amun\Filter as AmunFilter;
+use Amun\Util;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
+use PSX\DateTime;
+use PSX\Filter;
+use PSX\Util\Markdown;
+
 /**
  * AmunService_Core_Content_Page_Option_Record
  *
@@ -32,7 +46,7 @@
  * @package    Amun_Content_Page
  * @version    $Revision: 683 $
  */
-class AmunService_Content_Page_Option_Record extends Amun_Data_RecordAbstract
+class Record extends RecordAbstract
 {
 	protected $_srcPage;
 	protected $_destPage;
@@ -44,7 +58,7 @@ class AmunService_Content_Page_Option_Record extends Amun_Data_RecordAbstract
 
 	public function setId($id)
 	{
-		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
+		$id = $this->_validate->apply($id, 'integer', array(new AmunFilter\Id($this->_table)), 'id', 'Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -52,13 +66,13 @@ class AmunService_Content_Page_Option_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setOptionId($optionId)
 	{
-		$optionId = $this->_validate->apply($optionId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_Service_Option'))), 'optionId', 'Option Id');
+		$optionId = $this->_validate->apply($optionId, 'integer', array(new AmunFilter\Id(DataFactory::getTable('Core_Service_Option'))), 'optionId', 'Option Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -66,13 +80,13 @@ class AmunService_Content_Page_Option_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setRightId($rightId)
 	{
-		$rightId = $this->_validate->apply($rightId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('User_Right'))), 'rightId', 'Right Id');
+		$rightId = $this->_validate->apply($rightId, 'integer', array(new AmunFilter\Id(DataFactory::getTable('User_Right'))), 'rightId', 'Right Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -80,13 +94,13 @@ class AmunService_Content_Page_Option_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setSrcPageId($srcPageId)
 	{
-		$srcPageId = $this->_validate->apply($srcPageId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Content_Page'))), 'srcPageId', 'Source Page Id');
+		$srcPageId = $this->_validate->apply($srcPageId, 'integer', array(new AmunFilter\Id(DataFactory::getTable('Content_Page'))), 'srcPageId', 'Source Page Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -94,13 +108,13 @@ class AmunService_Content_Page_Option_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setDestPageId($destPageId)
 	{
-		$destPageId = $this->_validate->apply($destPageId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Content_Page'))), 'destPageId', 'Destination Page Id');
+		$destPageId = $this->_validate->apply($destPageId, 'integer', array(new AmunFilter\Id(DataFactory::getTable('Content_Page'))), 'destPageId', 'Destination Page Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -108,13 +122,13 @@ class AmunService_Content_Page_Option_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setName($name)
 	{
-		$name = $this->_validate->apply($name, 'string', array(new PSX_Filter_Length(2, 32)), 'name', 'Name');
+		$name = $this->_validate->apply($name, 'string', array(new Filter\Length(2, 32)), 'name', 'Name');
 
 		if(!$this->_validate->hasError())
 		{
@@ -122,13 +136,13 @@ class AmunService_Content_Page_Option_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setHref($href)
 	{
-		$href = $this->_validate->apply($href, 'string', array(new PSX_Filter_Length(0, 256)), 'href', 'Href');
+		$href = $this->_validate->apply($href, 'string', array(new Filter\Length(0, 256)), 'href', 'Href');
 
 		if(!$this->_validate->hasError())
 		{
@@ -136,7 +150,7 @@ class AmunService_Content_Page_Option_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
@@ -149,7 +163,7 @@ class AmunService_Content_Page_Option_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_srcPage === null)
 		{
-			$this->_srcPage = Amun_Sql_Table_Registry::get('Content_Page')->getRecord($this->srcPageId);
+			$this->_srcPage = DataFactory::getTable('Content_Page')->getRecord($this->srcPageId);
 		}
 
 		return $this->_srcPage;
@@ -159,7 +173,7 @@ class AmunService_Content_Page_Option_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_destPage === null)
 		{
-			$this->_destPage = Amun_Sql_Table_Registry::get('Content_Page')->getRecord($this->destPageId);
+			$this->_destPage = DataFactory::getTable('Content_Page')->getRecord($this->destPageId);
 		}
 
 		return $this->_destPage;

@@ -24,7 +24,7 @@
 
 namespace redirect\api;
 
-use Amun_Module_FormAbstract;
+use Amun\Module\FormAbstract;
 
 /**
  * form
@@ -37,7 +37,7 @@ use Amun_Module_FormAbstract;
  * @subpackage service_redirect
  * @version    $Revision: 875 $
  */
-class form extends Amun_Module_FormAbstract
+class form extends FormAbstract
 {
 	protected function getCreateForm()
 	{

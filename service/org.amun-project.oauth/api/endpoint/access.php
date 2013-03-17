@@ -24,20 +24,19 @@
 
 namespace oauth\api\endpoint;
 
-use AmunService_Oauth_Record;
-use Amun_DataFactory;
-use Amun_Dependency_Default;
-use Amun_Security;
+use AmunService\Oauth;
+use Amun\DataFactory;
+use Amun\Dependency;
+use Amun\Security;
+use Amun\Exception;
 use DateInterval;
-use DateTime;
-use Exception;
-use PSX_DateTime;
-use PSX_Oauth_Exception;
-use PSX_Oauth_Provider_AccessAbstract;
-use PSX_Oauth_Provider_Data_Consumer;
-use PSX_Oauth_Provider_Data_Request;
-use PSX_Oauth_Provider_Data_Response;
-use PSX_Sql_Condition;
+use PSX\DateTime;
+use PSX\Oauth\Exception;
+use PSX\Oauth\Provider\AccessAbstract;
+use PSX\Oauth\Provider\Data\Consumer;
+use PSX\Oauth\Provider\Data\Request;
+use PSX\Oauth\Provider\Data\Response;
+use PSX\Sql\Condition;
 
 /**
  * access
@@ -50,7 +49,7 @@ use PSX_Sql_Condition;
  * @subpackage auth
  * @version    $Revision: 880 $
  */
-class access extends PSX_Oauth_Provider_AccessAbstract
+class access extends AccessAbstract
 {
 	private $requestId;
 	private $nonce;
@@ -70,7 +69,7 @@ class access extends PSX_Oauth_Provider_AccessAbstract
 		{
 			$this->handle();
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
 			header('HTTP/1.1 500 Internal Server Error');
 
@@ -87,7 +86,7 @@ class access extends PSX_Oauth_Provider_AccessAbstract
 
 	public function getDependencies()
 	{
-		$ct = new Amun_Dependency_Default($this->base->getConfig());
+		$ct = new Dependency\Request($this->base->getConfig());
 
 		return $ct;
 	}
@@ -117,21 +116,21 @@ SQL;
 
 			if(empty($request))
 			{
-				throw new PSX_Oauth_Exception('Invalid request');
+				throw new Exception('Invalid request');
 			}
 
 			// check whether the request token was requested
 			// from the same ip
 			if($request['requestIp'] != $_SERVER['REMOTE_ADDR'])
 			{
-				throw new PSX_Oauth_Exception('Token was requested from another ip');
+				throw new Exception('Token was requested from another ip');
 			}
 
 			// check whether the request is assigned
 			// to this api
 			if($row['apiId'] != $request['requestApiId'])
 			{
-				throw new PSX_Oauth_Exception('Request is not assigned to this API');
+				throw new Exception('Request is not assigned to this API');
 			}
 
 			// check expire
@@ -141,11 +140,11 @@ SQL;
 
 			if($now > $date)
 			{
-				$con = new PSX_Sql_Condition(array('token', '=', $token));
+				$con = new Condition(array('token', '=', $token));
 
 				$this->sql->delete($this->registry['table.oauth_request'], $con);
 
-				throw new PSX_Oauth_Exception('The token is expired');
+				throw new Exception('The token is expired');
 			}
 
 
@@ -154,20 +153,20 @@ SQL;
 			$this->verifier  = $request['requestVerifier'];
 
 
-			return new PSX_Oauth_Provider_Data_Consumer($row['apiConsumerKey'], $row['apiConsumerSecret'], $request['requestToken'], $request['requestTokenSecret']);
+			return new Consumer($row['apiConsumerKey'], $row['apiConsumerSecret'], $request['requestToken'], $request['requestTokenSecret']);
 		}
 	}
 
-	protected function getResponse(PSX_Oauth_Provider_Data_Consumer $consumer, PSX_Oauth_Provider_Data_Request $request)
+	protected function getResponse(Consumer $consumer, Request $request)
 	{
 		if($this->nonce == $request->getNonce())
 		{
-			throw new PSX_Oauth_Exception('Nonce hasnt changed');
+			throw new Exception('Nonce hasnt changed');
 		}
 
 		if($this->verifier != $request->getVerifier())
 		{
-			throw new PSX_Oauth_Exception('Invalid verifier');
+			throw new Exception('Invalid verifier');
 		}
 
 
@@ -176,24 +175,24 @@ SQL;
 
 
 		// generate a new access token
-		$token       = Amun_Security::generateToken();
-		$tokenSecret = Amun_Security::generateToken();
+		$token       = Security::generateToken();
+		$tokenSecret = Security::generateToken();
 
 		$date = new DateTime('NOW', $this->registry['core.default_timezone']);
-		$con  = new PSX_Sql_Condition(array('id', '=', $this->requestId));
+		$con  = new Condition(array('id', '=', $this->requestId));
 
 		$this->sql->update($this->registry['table.oauth_request'], array(
 
-			'status'      => AmunService_Oauth_Record::ACCESS,
+			'status'      => Oauth\Record::ACCESS,
 			'token'       => $token,
 			'tokenSecret' => $tokenSecret,
 			'expire'      => $expire,
-			'date'        => $date->format(PSX_DateTime::SQL),
+			'date'        => $date->format(DateTime::SQL),
 
 		), $con);
 
 
-		$response = new PSX_Oauth_Provider_Data_Response();
+		$response = new Response();
 		$response->setToken($token);
 		$response->setTokenSecret($tokenSecret);
 
@@ -226,7 +225,7 @@ SELECT
 			LIMIT 1
 SQL;
 
-		return $this->sql->getRow($sql, array($token, AmunService_Oauth_Record::APPROVED));
+		return $this->sql->getRow($sql, array($token, Oauth\Record::APPROVED));
 	}
 }
 

@@ -22,6 +22,13 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\application\settings;
+
+use AmunService\My\SettingsAbstract;
+use PSX\Sql;
+use PSX\Url;
+use PSX\Html\Paging;
+
 /**
  * applications
  *
@@ -33,7 +40,7 @@
  * @subpackage my
  * @version    $Revision: 875 $
  */
-class application extends AmunService_My_SettingsAbstract
+class application extends SettingsAbstract
 {
 	public function onLoad()
 	{
@@ -57,8 +64,6 @@ class application extends AmunService_My_SettingsAbstract
 		$this->htmlCss->add('my');
 		$this->htmlJs->add('amun');
 		$this->htmlJs->add('my');
-
-		$this->template->set('settings/' . __CLASS__ . '.tpl');
 	}
 
 	public function getApplications()
@@ -67,7 +72,7 @@ class application extends AmunService_My_SettingsAbstract
 		$con->add('authorId', '=', $this->user->id);
 		$con->add('allowed', '=', 1);
 
-		$url   = new PSX_Url($this->base->getSelf());
+		$url   = new Url($this->base->getSelf());
 		$count = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
 		$count = $count > 16 ? 16 : $count;
 
@@ -77,10 +82,10 @@ class application extends AmunService_My_SettingsAbstract
 			$url->getParam('sortBy'), 
 			$url->getParam('sortOrder'), 
 			$con, 
-			PSX_SQL::FETCH_OBJECT);
+			SQL::FETCH_OBJECT);
 
 
-		$paging = new PSX_Html_Paging($url, $result);
+		$paging = new Paging($url, $result);
 
 		$this->template->assign('pagingApplications', $paging, 0);
 

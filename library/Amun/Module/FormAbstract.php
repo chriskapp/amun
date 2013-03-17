@@ -22,6 +22,12 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Module;
+
+use Amun\Module\ApiAbstract;
+use Amun\Exception;
+use PSX\Data\Message;
+
 /**
  * Amun_Module_FormAbstract
  *
@@ -32,7 +38,7 @@
  * @package    Amun_Module
  * @version    $Revision: 835 $
  */
-abstract class Amun_Module_FormAbstract extends Amun_Module_ApiAbstract
+abstract class FormAbstract extends ApiAbstract
 {
 	protected $method;
 	protected $form;
@@ -58,7 +64,7 @@ abstract class Amun_Module_FormAbstract extends Amun_Module_ApiAbstract
 
 				if($this->form === null)
 				{
-					throw new Amun_Exception('Form class not available'); 
+					throw new Exception('Form class not available'); 
 				}
 
 				switch($this->method)
@@ -76,7 +82,7 @@ abstract class Amun_Module_FormAbstract extends Amun_Module_ApiAbstract
 						break;
 
 					default:
-						throw new Amun_Exception('Invalid method');
+						throw new Exception('Invalid method');
 						break;
 				}
 
@@ -84,14 +90,14 @@ abstract class Amun_Module_FormAbstract extends Amun_Module_ApiAbstract
 			}
 			catch(Exception $e)
 			{
-				$msg = new PSX_Data_Message($e->getMessage(), false);
+				$msg = new Message($e->getMessage(), false);
 
 				$this->setResponse($msg);
 			}
 		}
 		else
 		{
-			$msg = new PSX_Data_Message('Access not allowed', false);
+			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}

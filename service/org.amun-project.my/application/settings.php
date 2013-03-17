@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\application;
+
+use AmunService\My\SettingsAbstract;
+
 /**
  * settings
  *
@@ -33,7 +37,7 @@
  * @subpackage my
  * @version    $Revision: 875 $
  */
-class settings extends AmunService_My_SettingsAbstract
+class settings extends SettingsAbstract
 {
 	public function onLoad()
 	{
@@ -51,8 +55,6 @@ class settings extends AmunService_My_SettingsAbstract
 		$this->htmlCss->add('my');
 		$this->htmlJs->add('amun');
 		$this->htmlJs->add('my');
-
-		$this->template->set(__CLASS__ . '.tpl');
 	}
 }
 

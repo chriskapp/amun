@@ -20,5 +20,5 @@ amun.config = {
 </script>
 <?php echo $htmlCss->toString() . "\n"; ?>
 <?php echo $htmlJs->toString() . "\n"; ?>
-<?php echo $htmlContent->get(Amun_Html_Content::META); ?>
+<?php echo $htmlContent->get(\Amun\Html\Content::META); ?>
 

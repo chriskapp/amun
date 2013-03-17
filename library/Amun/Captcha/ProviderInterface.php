@@ -22,6 +22,8 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Captcha;
+
 /**
  * Amun_Captcha_ProviderInterface
  *
@@ -32,7 +34,7 @@
  * @package    Amun_Captcha
  * @version    $Revision: 635 $
  */
-interface Amun_Captcha_ProviderInterface
+interface ProviderInterface
 {
 	public function verify($result);
 	public function serve();

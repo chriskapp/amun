@@ -22,6 +22,8 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Form;
+
 /**
  * Amun_Form_ContainerInterface
  *
@@ -32,8 +34,8 @@
  * @package    Amun_Form
  * @version    $Revision: 635 $
  */
-interface Amun_Form_ContainerInterface
+interface ContainerInterface
 {
-	public function add(Amun_Form_ElementAbstract $element);
+	public function add(ElementAbstract $element);
 }
 

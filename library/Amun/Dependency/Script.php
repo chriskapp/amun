@@ -23,6 +23,11 @@
  * along with psx. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Dependency;
+
+use Amun\User;
+use PSX\Config;
+
 /**
  * Amun_Dependency_Default
  *
@@ -33,11 +38,11 @@
  * @package    Amun_Dependency
  * @version    $Revision: 818 $
  */
-class Amun_Dependency_Script extends Amun_Dependency_Default
+class Script extends Request
 {
 	protected $userId;
 
-	public function __construct(PSX_Config $config, array $params = array())
+	public function __construct(Config $config, array $params = array())
 	{
 		$this->userId = isset($params['script.userId']) ? $params['script.userId'] : null;
 
@@ -58,6 +63,6 @@ class Amun_Dependency_Script extends Amun_Dependency_Default
 			return $this->get('user');
 		}
 
-		return $this->set('user', new Amun_User($this->userId, $this->getRegistry()));
+		return $this->set('user', new User($this->userId, $this->getRegistry()));
 	}
 }

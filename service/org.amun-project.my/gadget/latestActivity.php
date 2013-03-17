@@ -24,11 +24,11 @@
 
 namespace my\gadget;
 
-use Amun_Module_GadgetAbstract;
-use Amun_Sql_Table_Registry;
-use DateTime;
-use PSX_Sql;
-use PSX_Sql_Join;
+use Amun\Module\GadgetAbstract;
+use Amun\DataFactory;
+use PSX\DateTime;
+use PSX\Sql;
+use PSX\Sql\Join;
 
 /**
  * latestActivity
@@ -40,7 +40,7 @@ use PSX_Sql_Join;
  * @package    gadget
  * @version    $Revision: 875 $
  */
-class latestActivity extends Amun_Module_GadgetAbstract
+class latestActivity extends GadgetAbstract
 {
 	/**
 	 * onLoad
@@ -52,13 +52,13 @@ class latestActivity extends Amun_Module_GadgetAbstract
 		$count = $this->args->get('count', 8);
 
 		// get activities
-		$result = Amun_Sql_Table_Registry::get('User_Activity')
+		$result = DataFactory::getTable('User_Activity')
 			->select(array('id', 'scope', 'summary', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(Join::INNER, DataFactory::getTable('User_Account')
 				->select(array('id', 'name', 'thumbnailUrl'), 'author')
 			)
 			->where('scope', '=', 0)
-			->orderBy('date', PSX_Sql::SORT_DESC)
+			->orderBy('date', Sql::SORT_DESC)
 			->limit($count)
 			->getAll();
 

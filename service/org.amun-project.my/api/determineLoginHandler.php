@@ -24,10 +24,10 @@
 
 namespace my\api;
 
-use AmunService_My_LoginHandlerAbstract;
-use AmunService_My_LoginHandlerFactory;
-use Amun_Module_ApiAbstract;
-use PSX_Json;
+use AmunService\My\LoginHandlerAbstract;
+use AmunService\My\LoginHandlerFactory;
+use Amun\Module\ApiAbstract;
+use PSX\Json;
 
 /**
  * verifyCredentials
@@ -40,7 +40,7 @@ use PSX_Json;
  * @subpackage service_my
  * @version    $Revision: 875 $
  */
-class determineLoginHandler extends Amun_Module_ApiAbstract
+class determineLoginHandler extends ApiAbstract
 {
 	/**
 	 * Returns whether the given identity needs an password or not
@@ -58,9 +58,9 @@ class determineLoginHandler extends Amun_Module_ApiAbstract
 
 		foreach($handles as $key)
 		{
-			$handler = AmunService_My_LoginHandlerFactory::factory($key);
+			$handler = LoginHandlerFactory::factory($key);
 
-			if($handler instanceof AmunService_My_LoginHandlerAbstract && $handler->isValid($identity))
+			if($handler instanceof LoginHandlerAbstract && $handler->isValid($identity))
 			{
 				$result = array(
 					'handler'      => $key,
@@ -72,7 +72,7 @@ class determineLoginHandler extends Amun_Module_ApiAbstract
 			}
 		}
 
-		echo PSX_Json::encode($result);
+		echo Json::encode($result);
 	}
 }
 

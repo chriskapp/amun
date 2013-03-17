@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Form\Element;
+
+use Amun\Form\ElementAbstract;
+
 /**
  * Amun_Form_Element_Datalist
  *
@@ -32,7 +36,7 @@
  * @package    Amun_Form
  * @version    $Revision: 635 $
  */
-class Amun_Form_Element_Datalist extends Amun_Form_ElementAbstract
+class Datalist extends ElementAbstract
 {
 	public function getName()
 	{

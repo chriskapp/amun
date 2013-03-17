@@ -22,6 +22,8 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Html;
+
 /**
  * Amun_Html_Content
  *
@@ -32,7 +34,7 @@
  * @package    Amun_Html
  * @version    $Revision: 635 $
  */
-class Amun_Html_Content
+class Content
 {
 	const META   = 0x1;
 	const HEADER = 0x2;

@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Filter;
+
+use Amun\Security;
+use PSX\FilterAbstract;
+
 /**
  * Amun_Filter_Salt
  *
@@ -32,11 +37,11 @@
  * @package    Amun_Filter
  * @version    $Revision: 635 $
  */
-class Amun_Filter_Salt extends PSX_FilterAbstract
+class Salt extends FilterAbstract
 {
 	public function apply($value)
 	{
-		return sha1(Amun_Security::getSalt() . $value);
+		return sha1(Security::getSalt() . $value);
 	}
 }
 

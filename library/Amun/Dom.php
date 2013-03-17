@@ -22,6 +22,8 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun;
+
 /**
  * Amun_Dom
  *
@@ -32,7 +34,7 @@
  * @package    Amun_Dom
  * @version    $Revision: 635 $
  */
-class Amun_Dom
+class Dom
 {
 	public static function createDocument()
 	{

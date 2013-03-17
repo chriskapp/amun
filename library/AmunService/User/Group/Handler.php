@@ -22,6 +22,21 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Group;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use AmunService\Core\Approval;
+use AmunService\User\Group\Right;
+use PSX\DateTime;
+use PSX\Data\RecordInterface;
+use PSX\Data\ResultSet;
+use PSX\Sql;
+use PSX\Sql\Condition;
+use PSX\Sql\Join;
+
 /**
  * Amun_User_Group_Handler
  *
@@ -32,15 +47,15 @@
  * @package    Amun_User_Group
  * @version    $Revision: 880 $
  */
-class AmunService_User_Group_Handler extends Amun_Data_HandlerAbstract
+class Handler extends HandlerAbstract
 {
-	public function create(PSX_Data_RecordInterface $record)
+	public function create(RecordInterface $record)
 	{
 		if($record->hasFields('title'))
 		{
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-			$record->date = $date->format(PSX_DateTime::SQL);
+			$record->date = $date->format(DateTime::SQL);
 
 
 			$this->table->insert($record->getData());
@@ -54,11 +69,11 @@ class AmunService_User_Group_Handler extends Amun_Data_HandlerAbstract
 
 			if(!empty($rights))
 			{
-				$handler = new AmunService_User_Group_Right_Handler($this->user);
+				$handler = new Right\Handler($this->user);
 
 				foreach($rights as $rightId)
 				{
-					$rightRecord = Amun_Sql_Table_Registry::get('User_Group_Right')->getRecord();
+					$rightRecord = DataFactory::getTable('User_Group_Right')->getRecord();
 					$rightRecord->groupId = $record->id;
 					$rightRecord->rightId = $rightId;
 
@@ -67,36 +82,36 @@ class AmunService_User_Group_Handler extends Amun_Data_HandlerAbstract
 			}
 
 
-			$this->notify(Amun_Data_RecordAbstract::INSERT, $record);
+			$this->notify(RecordAbstract::INSERT, $record);
 
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
-	public function update(PSX_Data_RecordInterface $record)
+	public function update(RecordInterface $record)
 	{
 		if($record->hasFields('id'))
 		{
-			$con = new PSX_Sql_Condition(array('id', '=', $record->id));
+			$con = new Condition(array('id', '=', $record->id));
 
 			$this->table->update($record->getData(), $con);
 
 
 			// update rights if available
 			$rights    = isset($record->rights) ? $record->rights : null;
-			$handler   = new AmunService_User_Group_Right_Handler($this->user);
-			$con       = new PSX_Sql_Condition(array('groupId', '=', $record->id));
-			$oldRights = Amun_Sql_Table_Registry::get('User_Group_Right')->getCol('id', $con);
+			$handler   = new Right\Handler($this->user);
+			$con       = new Condition(array('groupId', '=', $record->id));
+			$oldRights = DataFactory::getTable('User_Group_Right')->getCol('id', $con);
 
 			// delete old rights
 			foreach($oldRights as $id)
 			{
-				$rightRecord = Amun_Sql_Table_Registry::get('User_Group_Right')->getRecord();
+				$rightRecord = DataFactory::getTable('User_Group_Right')->getRecord();
 				$rightRecord->id = $id;
 
 				$handler->delete($rightRecord);
@@ -107,7 +122,7 @@ class AmunService_User_Group_Handler extends Amun_Data_HandlerAbstract
 				// create new rights
 				foreach($rights as $rightId)
 				{
-					$rightRecord = Amun_Sql_Table_Registry::get('User_Group_Right')->getRecord();
+					$rightRecord = DataFactory::getTable('User_Group_Right')->getRecord();
 					$rightRecord->groupId = $record->id;
 					$rightRecord->rightId = $rightId;
 
@@ -116,48 +131,48 @@ class AmunService_User_Group_Handler extends Amun_Data_HandlerAbstract
 			}
 
 
-			$this->notify(Amun_Data_RecordAbstract::UPDATE, $record);
+			$this->notify(RecordAbstract::UPDATE, $record);
 
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
-	public function delete(PSX_Data_RecordInterface $record)
+	public function delete(RecordInterface $record)
 	{
 		if($record->hasFields('id'))
 		{
-			$con = new PSX_Sql_Condition(array('id', '=', $record->id));
+			$con = new Condition(array('id', '=', $record->id));
 
 			$this->table->delete($con);
 
 
 			// delete assigned rights
-			$handler   = new AmunService_User_Group_Right_Handler($this->user);
-			$con       = new PSX_Sql_Condition(array('groupId', '=', $record->id));
-			$oldRights = Amun_Sql_Table_Registry::get('User_Group_Right')->getCol('id', $con);
+			$handler   = new Right\Handler($this->user);
+			$con       = new Condition(array('groupId', '=', $record->id));
+			$oldRights = DataFactory::getTable('User_Group_Right')->getCol('id', $con);
 
 			foreach($oldRights as $id)
 			{
-				$rightRecord = Amun_Sql_Table_Registry::get('User_Group_Right')->getRecord();
+				$rightRecord = DataFactory::getTable('User_Group_Right')->getRecord();
 				$rightRecord->id = $id;
 
 				$handler->delete($rightRecord);
 			}
 
 
-			$this->notify(Amun_Data_RecordAbstract::DELETE, $record);
+			$this->notify(RecordAbstract::DELETE, $record);
 
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 

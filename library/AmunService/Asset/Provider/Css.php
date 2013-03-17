@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Asset\Provider;
+
+use Amun\Registry;
+use AmunService\Asset\ProviderInterface;
+
 /**
  * AmunService_Asset_Provider_Css
  *
@@ -32,13 +37,13 @@
  * @package    Amun_Ext
  * @version    $Revision: 880 $
  */
-class AmunService_Asset_Provider_Css implements AmunService_Asset_ProviderInterface
+class Css implements ProviderInterface
 {
 	private $config;
 	private $sql;
 	private $registry;
 
-	public function __construct(Amun_Registry $registry)
+	public function __construct(Registry $registry)
 	{
 		$this->config   = $registry->getConfig();
 		$this->sql      = $registry->getSql();

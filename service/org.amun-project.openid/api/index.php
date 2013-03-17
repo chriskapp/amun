@@ -24,13 +24,13 @@
 
 namespace openid\api;
 
-use Amun_Module_RestAbstract;
-use Amun_Sql_Table_Registry;
-use PSX_Data_Exception;
-use PSX_Data_Message;
-use PSX_Data_WriterInterface;
-use PSX_Data_WriterResult;
-use PSX_Sql_Join;
+use Amun\Module\RestAbstract;
+use Amun\DataFactory;
+use Amun\Exception;
+use PSX\Data\Message;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
+use PSX\Sql\Join;
 
 /**
  * connect
@@ -43,30 +43,28 @@ use PSX_Sql_Join;
  * @subpackage system_connect
  * @version    $Revision: 683 $
  */
-class index extends Amun_Module_RestAbstract
+class index extends RestAbstract
 {
 	public function onPost()
 	{
-		$msg = new PSX_Data_Message('Create a connect record is not possible', false);
+		$msg = new Message('Create a connect record is not possible', false);
 
 		$this->setResponse($msg, null, 500);
 	}
 
 	public function onPut()
 	{
-		$msg = new PSX_Data_Message('Update a connect record is not possible', false);
+		$msg = new Message('Update a connect record is not possible', false);
 
 		$this->setResponse($msg, null, 500);
 	}
 
-	protected function setWriterConfig(PSX_Data_WriterResult $writer)
+	protected function setWriterConfig(WriterResult $writer)
 	{
 		switch($writer->getType())
 		{
-			case PSX_Data_WriterInterface::ATOM:
-
-				throw new PSX_Data_Exception('Atom not supported');
-
+			case WriterInterface::ATOM:
+				throw new Exception('Atom not supported');
 				break;
 		}
 	}

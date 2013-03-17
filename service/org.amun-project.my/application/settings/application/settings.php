@@ -22,6 +22,12 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\application\settings\application;
+
+use AmunService\My\SettingsAbstract;
+use AmunService\Oauth\Access;
+use Amun\Exception;
+
 /**
  * applications
  *
@@ -33,7 +39,7 @@
  * @subpackage my
  * @version    $Revision: 875 $
  */
-class settings extends AmunService_My_SettingsAbstract
+class settings extends SettingsAbstract
 {
 	private $application;
 	private $userRights;
@@ -52,7 +58,7 @@ class settings extends AmunService_My_SettingsAbstract
 			$this->user->id
 		);
 
-		if($this->application instanceof AmunService_Oauth_Access_Record)
+		if($this->application instanceof Access\Record)
 		{
 			// add path
 			$this->path->add($this->application->apiTitle, $this->page->url . '/settings/application/settings?appId=' . $this->application->id);
@@ -69,7 +75,7 @@ class settings extends AmunService_My_SettingsAbstract
 		}
 		else
 		{
-			throw new Amun_Exception('Invalid application');
+			throw new Exception('Invalid application');
 		}
 
 		$this->template->assign('application', $this->application);
@@ -83,8 +89,6 @@ class settings extends AmunService_My_SettingsAbstract
 		$this->htmlCss->add('my');
 		$this->htmlJs->add('amun');
 		$this->htmlJs->add('my');
-
-		$this->template->set('settings/application/' . __CLASS__ . '.tpl');
 	}
 
 	public function onPost()

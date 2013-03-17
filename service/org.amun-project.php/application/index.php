@@ -22,6 +22,14 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace php\application;
+
+use Amun\Module\ApplicationAbstract;
+use Amun\Option;
+use Amun\Exception;
+use AmunService\Php;
+use PSX\Sql;
+
 /**
  * index
  *
@@ -33,7 +41,7 @@
  * @subpackage php
  * @version    $Revision: 875 $
  */
-class index extends Amun_Module_ApplicationAbstract
+class index extends ApplicationAbstract
 {
 	/**
 	 * @httpMethod GET
@@ -58,13 +66,13 @@ class index extends Amun_Module_ApplicationAbstract
 		if($this->user->hasRight('php_view'))
 		{
 			// load php
-			$recordPhp = $this->getHandler()->getByPageId($this->page->id, PSX_Sql::FETCH_OBJECT);
+			$recordPhp = $this->getHandler()->getByPageId($this->page->id, Sql::FETCH_OBJECT);
 
 			$this->template->assign('recordPhp', $recordPhp);
 
 
 			// options
-			$options = new Amun_Option(__CLASS__, $this->registry, $this->user, $this->page);
+			$options = new Option(__CLASS__, $this->registry, $this->user, $this->page);
 			$options->add('php_edit', 'Edit', $this->page->url . '/edit' . (!empty($recordPhp) ? '?id=' . $recordPhp->id : ''));
 			$options->load(array($this->page));
 
@@ -75,7 +83,7 @@ class index extends Amun_Module_ApplicationAbstract
 			$phpResponse = null;
 			$phpError    = null;
 
-			if($recordPhp instanceof AmunService_Php_Record)
+			if($recordPhp instanceof Php\Record)
 			{
 				ob_start();
 
@@ -85,7 +93,7 @@ class index extends Amun_Module_ApplicationAbstract
 
 					$phpResponse = ob_get_contents();
 				}
-				catch(Exception $e)
+				catch(\Exception $e)
 				{
 					// build message
 					$phpError = '<p>' . $e->getMessage() . '</p>';
@@ -106,12 +114,10 @@ class index extends Amun_Module_ApplicationAbstract
 			// template
 			$this->htmlCss->add('php');
 			$this->htmlJs->add('prettify');
-
-			$this->template->set(__CLASS__ . '.tpl');
 		}
 		else
 		{
-			throw new Amun_Exception('Access not allowed');
+			throw new Exception('Access not allowed');
 		}
 	}
 }

@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Data;
+
+use Amun\Sql\TableAbstract;
+
 /**
  * Amun_Data_StreamAbstract
  *
@@ -32,14 +36,14 @@
  * @package    Amun_User_Activity
  * @version    $Revision: 635 $
  */
-abstract class Amun_Data_StreamAbstract
+abstract class StreamAbstract
 {
 	protected $table;
 	protected $registry;
 	protected $sql;
 	protected $config;
 
-	public function __construct(Amun_Sql_TableAbstract $table)
+	public function __construct(TableAbstract $table)
 	{
 		$this->table    = $table;
 		$this->registry = $table->getRegistry();

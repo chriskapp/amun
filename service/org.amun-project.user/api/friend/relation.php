@@ -24,13 +24,11 @@
 
 namespace user\api\friend;
 
-use AmunService_User_Friend_Handler;
-use AmunService_User_Friend_Relation;
-use Amun_Module_ApiAbstract;
-use Exception;
-use PSX_Data_Exception;
-use PSX_Data_Message;
-use PSX_Data_ReaderInterface;
+use AmunService\User\Friend;
+use Amun\Module\ApiAbstract;
+use Amun\Exception;
+use PSX\Data\Message;
+use PSX\Data\ReaderInterface;
 
 /**
  * relation
@@ -47,7 +45,7 @@ class relation extends Amun_Module_ApiAbstract
 {
 	public function onGet()
 	{
-		$msg = new PSX_Data_Message('Method not allowed', false);
+		$msg = new Message('Method not allowed', false);
 
 		$this->setResponse($msg, null, 405);
 	}
@@ -58,36 +56,36 @@ class relation extends Amun_Module_ApiAbstract
 		{
 			try
 			{
-				$relation = new AmunService_User_Friend_Relation();
-				$relation->import($this->getRequest(PSX_Data_ReaderInterface::FORM));
+				$relation = new Friend\Relation();
+				$relation->import($this->getRequest(ReaderInterface::FORM));
 
-				$handler = new AmunService_User_Friend_Handler($this->user);
+				$handler = new Friend\Handler($this->user);
 
 
 				// check if anonymous
 				if($this->user->isAnonymous())
 				{
-					throw new PSX_Data_Exception('Please sign in to make a friend request');
+					throw new Exception('Please sign in to make a friend request');
 				}
 
 
 				$handler->remote($relation);
 
 
-				$msg = new PSX_Data_Message('You have successful create a request', true);
+				$msg = new Message('You have successful create a request', true);
 
 				$this->setResponse($msg);
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
-				$msg = new PSX_Data_Message($e->getMessage(), false);
+				$msg = new Message($e->getMessage(), false);
 
 				$this->setResponse($msg);
 			}
 		}
 		else
 		{
-			$msg = new PSX_Data_Message('Access not allowed', false);
+			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}

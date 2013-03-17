@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun;
+
+use ReflectionClass;
+use ReflectionException;
+
 /**
  * Amun_Event
  *
@@ -32,7 +37,7 @@
  * @package    Amun_Event
  * @version    $Revision: 635 $
  */
-class Amun_Event
+class Event
 {
 	protected static $_instance;
 
@@ -41,7 +46,7 @@ class Amun_Event
 	private $registry;
 	private $user;
 
-	public function __construct(Amun_Registry $registry)
+	public function __construct(Registry $registry)
 	{
 		$this->config   = $registry->getConfig();
 		$this->sql      = $registry->getSql();
@@ -132,7 +137,7 @@ SQL;
 			{
 				// the method notify doesnt exist in the listener
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
 				// all other exceptions wich are thrown by the listener. If we
 				// are in debug mode redirect the exception
@@ -144,7 +149,7 @@ SQL;
 		}
 	}
 
-	public static function initInstance(Amun_Registry $registry)
+	public static function initInstance(Registry $registry)
 	{
 		return self::$_instance = new self($registry);
 	}

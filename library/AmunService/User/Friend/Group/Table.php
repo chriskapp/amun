@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Friend\Group;
+
+use Amun\Sql\TableAbstract;
+
 /**
  * Amun_User_Friend_Group_Table
  *
@@ -32,7 +36,7 @@
  * @package    Amun_User_Friend
  * @version    $Revision: 635 $
  */
-class AmunService_User_Friend_Group_Table extends Amun_Sql_TableAbstract
+class Table extends TableAbstract
 {
 	public function getConnections()
 	{

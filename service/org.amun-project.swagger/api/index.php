@@ -24,22 +24,19 @@
 
 namespace swagger\api;
 
-use Amun_Base;
-use Amun_Module_ApiAbstract;
-use Amun_Sql_Table_Registry;
-use Exception;
-use PSX_Data_Message;
-use PSX_Sql;
-use PSX_Swagger_Api;
-use PSX_Swagger_Declaration;
-use PSX_Swagger_Operation;
-use PSX_Swagger_ParameterAbstract;
-use PSX_Swagger_Parameter_Body;
-use PSX_Swagger_Parameter_Header;
-use PSX_Swagger_Parameter_Path;
-use PSX_Swagger_Parameter_Query;
-use PSX_Util_Annotation;
-use PSX_Util_Annotation_DocBlock;
+use Amun\Base;
+use Amun\Module\ApiAbstract;
+use Amun\DataFactory;
+use Amun\Exception;
+use PSX\Data\Message;
+use PSX\Sql;
+use PSX\Swagger\Api;
+use PSX\Swagger\Declaration;
+use PSX\Swagger\Operation;
+use PSX\Swagger\ParameterAbstract;
+use PSX\Swagger\Parameter;
+use PSX\Util\Annotation;
+use PSX\Util\Annotation\DocBlock;
 use ReflectionClass;
 
 /**
@@ -51,28 +48,28 @@ use ReflectionClass;
  * @category   module
  * @version    $Revision: 799 $
  */
-class index extends Amun_Module_ApiAbstract
+class index extends ApiAbstract
 {
 	/**
 	 * @httpMethod GET
 	 * @path /
 	 * @nickname getApiIndex
-	 * @responseClass PSX_Swagger_Declaration
+	 * @responseClass Declaration
 	 */
 	public function getApiIndex()
 	{
 		try
 		{
 			$basePath    = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api';
-			$declaration = new PSX_Swagger_Declaration(Amun_Base::getVersion(), $basePath, null);
+			$declaration = new Declaration(Base::getVersion(), $basePath, null);
 
 			$this->buildApiIndex($declaration);
 
 			$this->setResponse($declaration);
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
-			$msg = new PSX_Data_Message($e->getMessage(), false);
+			$msg = new Message($e->getMessage(), false);
 
 			$this->setResponse($msg);
 		}
@@ -82,52 +79,52 @@ class index extends Amun_Module_ApiAbstract
 	 * @httpMethod GET
 	 * @path /{service}
 	 * @nickname getApiDetails
-	 * @responseClass PSX_Swagger_Declaration
+	 * @responseClass Declaration
 	 */
 	public function getApiDetails()
 	{
 		try
 		{
 			$basePath    = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api';
-			$declaration = new PSX_Swagger_Declaration(Amun_Base::getVersion(), $basePath, null);
+			$declaration = new Declaration(Base::getVersion(), $basePath, null);
 			$serviceName = $this->getUriFragments('service');
 
 			$this->buildApiDetails($declaration, $serviceName);
 
 			$this->setResponse($declaration);
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
-			$msg = new PSX_Data_Message($e->getMessage(), false);
+			$msg = new Message($e->getMessage(), false);
 
 			$this->setResponse($msg);
 		}
 	}
 
-	private function buildApiIndex(PSX_Swagger_Declaration $declaration)
+	private function buildApiIndex(Declaration $declaration)
 	{
-		$result = Amun_Sql_Table_Registry::get('Core_Service')
+		$result = DataFactory::getTable('Core_Service')
 			->select(array('name', 'path'))
-			->orderBy('name', PSX_Sql::SORT_ASC)
+			->orderBy('name', Sql::SORT_ASC)
 			->getAll();
 
 		foreach($result as $row)
 		{
 			// add api
 			$desc = '-';
-			$api  = new PSX_Swagger_Api('/swagger/' . $row['name'], $desc);
+			$api  = new Api('/swagger/' . $row['name'], $desc);
 
 			$declaration->addApi($api);
 		}
 	}
 
-	private function buildApiDetails(PSX_Swagger_Declaration $declaration, $serviceName)
+	private function buildApiDetails(Declaration $declaration, $serviceName)
 	{
 		$declaration->setResourcePath('/swagger/' . $serviceName);
 
-		$result = Amun_Sql_Table_Registry::get('Core_Service')
+		$result = DataFactory::getTable('Core_Service')
 			->select(array('source', 'name', 'namespace', 'path'))
-			->orderBy('id', PSX_Sql::SORT_ASC)
+			->orderBy('id', Sql::SORT_ASC)
 			->where('name', '=', $serviceName)
 			->getAll();
 
@@ -170,7 +167,7 @@ class index extends Amun_Module_ApiAbstract
 					}
 				}
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
 			}
 		}
@@ -226,7 +223,7 @@ class index extends Amun_Module_ApiAbstract
 		return new ReflectionClass($ns . '\\' . $class);
 	}
 
-	private function scanMethods(PSX_Swagger_Declaration $declaration, ReflectionClass $class, $endpoint, array &$models)
+	private function scanMethods(Declaration $declaration, ReflectionClass $class, $endpoint, array &$models)
 	{
 		$methods  = $class->getMethods();
 		$endpoint = trim($endpoint, '/');
@@ -245,7 +242,7 @@ class index extends Amun_Module_ApiAbstract
 					// add api
 					$path = '/' . trim($endpoint . $path, '/');
 					$desc = trim($doc->getText());
-					$api  = new PSX_Swagger_Api($path, $desc);
+					$api  = new Api($path, $desc);
 
 					$this->addOperationByComment($api, $doc, $httpMethod, $models);
 
@@ -255,12 +252,12 @@ class index extends Amun_Module_ApiAbstract
 		}
 	}
 
-	private function addOperationByComment(PSX_Swagger_Api $api, PSX_Util_Annotation_DocBlock $doc, $httpMethod, array &$models)
+	private function addOperationByComment(Api $api, DocBlock $doc, $httpMethod, array &$models)
 	{
 		$summary   = $doc->getFirstAnnotation('summary');
 		$nickname  = uniqid($doc->getFirstAnnotation('nickname') . '_');
 		$response  = $doc->getFirstAnnotation('responseClass');
-		$operation = new PSX_Swagger_Operation($httpMethod, $nickname, $response, $summary);
+		$operation = new Operation($httpMethod, $nickname, $response, $summary);
 		$params    = $doc->getAnnotation('parameter');
 		$dataTypes = array();
 
@@ -287,29 +284,29 @@ class index extends Amun_Module_ApiAbstract
 			switch(strtolower($type))
 			{
 				case 'body':
-					$parameter = new PSX_Swagger_Parameter_Body($name, $desc, $dataType, $required);
+					$parameter = new Parameter\Body($name, $desc, $dataType, $required);
 					break;
 
 				case 'header':
-					$parameter = new PSX_Swagger_Parameter_Header($name, $desc, $dataType, $required);
+					$parameter = new Parameter\Header($name, $desc, $dataType, $required);
 					break;
 
 				case 'path':
-					$parameter = new PSX_Swagger_Parameter_Path($name, $desc, $dataType, $required);
+					$parameter = new Parameter\Path($name, $desc, $dataType, $required);
 					break;
 
 				case 'query':
-					$parameter = new PSX_Swagger_Parameter_Query($name, $desc, $dataType, $required);
+					$parameter = new Parameter\Query($name, $desc, $dataType, $required);
 					break;
 			}
 
-			if($parameter instanceof PSX_Swagger_ParameterAbstract)
+			if($parameter instanceof ParameterAbstract)
 			{
 				$operation->addParameter($parameter);
 			}
 
 			// if the datatype is not scalar add the model to the api
-			if(!PSX_Swagger_ParameterAbstract::isScalar($dataType))
+			if(!ParameterAbstract::isScalar($dataType))
 			{
 				$dataTypes[] = $dataType;
 			}
@@ -336,7 +333,7 @@ class index extends Amun_Module_ApiAbstract
 	 *
 	 * @param ReflectionClass $class
 	 * @param string $methodName
-	 * @return PSX_Util_Annotation_DocBlock
+	 * @return DocBlock
 	 */
 	private function getAnnotations(ReflectionClass $class, $methodName)
 	{
@@ -350,7 +347,7 @@ class index extends Amun_Module_ApiAbstract
 		}
 
 		// parse doc comments
-		$block = new PSX_Util_Annotation_DocBlock();
+		$block = new DocBlock();
 
 		foreach($parents as $class)
 		{
@@ -364,7 +361,7 @@ class index extends Amun_Module_ApiAbstract
 
 					if(!empty($comment))
 					{
-						$doc    = PSX_Util_Annotation::parse($comment);
+						$doc    = Annotation::parse($comment);
 						$params = $doc->getAnnotations();
 						$text   = $doc->getText();
 
@@ -380,7 +377,7 @@ class index extends Amun_Module_ApiAbstract
 					}
 				}
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
 				// method probably doesnt exist	
 			}

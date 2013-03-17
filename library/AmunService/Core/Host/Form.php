@@ -22,6 +22,20 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Core\Host;
+
+use Amun\DataFactory;
+use Amun\Data\FormAbstract;
+use Amun\Form as AmunForm;
+use Amun\Form\Element\Panel;
+use Amun\Form\Element\Reference;
+use Amun\Form\Element\Input;
+use Amun\Form\Element\TabbedPane;
+use Amun\Form\Element\Textarea;
+use Amun\Form\Element\Captcha;
+use Amun\Form\Element\Select;
+use AmunService\Core\Host;
+
 /**
  * Amun_System_Host_Form
  *
@@ -32,41 +46,41 @@
  * @package    Amun_System_Host
  * @version    $Revision: 666 $
  */
-class AmunService_Core_Host_Form extends Amun_Data_FormAbstract
+class Form extends FormAbstract
 {
 	public function create()
 	{
-		$form = new Amun_Form('POST', $this->url);
+		$form = new AmunForm('POST', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('api', 'API');
+		$panel = new Panel('api', 'API');
 
 
-		$status = new Amun_Form_Element_Select('status', 'Status');
+		$status = new Select('status', 'Status');
 		$status->setOptions($this->getStatus());
 
 		$panel->add($status);
 
 
-		$name = new Amun_Form_Element_Input('name', 'Name');
+		$name = new Input('name', 'Name');
 		$name->setType('text');
 
 		$panel->add($name);
 
 
-		$consumerKey = new Amun_Form_Element_Input('consumerKey', 'Consumer key');
+		$consumerKey = new Input('consumerKey', 'Consumer key');
 		$consumerKey->setType('text');
 
 		$panel->add($consumerKey);
 
 
-		$consumerSecret = new Amun_Form_Element_Input('consumerSecret', 'Consumer secret');
+		$consumerSecret = new Input('consumerSecret', 'Consumer secret');
 		$consumerSecret->setType('text');
 
 		$panel->add($consumerSecret);
 
 
-		$url = new Amun_Form_Element_Input('url', 'Url');
+		$url = new Input('url', 'Url');
 		$url->setType('url');
 
 		$panel->add($url);
@@ -74,7 +88,7 @@ class AmunService_Core_Host_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -89,46 +103,46 @@ class AmunService_Core_Host_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Core_Host')->getRecord($id);
+		$record = DataFactory::getTable('Core_Host')->getRecord($id);
 
 
-		$form = new Amun_Form('PUT', $this->url);
+		$form = new AmunForm('PUT', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('api', 'API');
+		$panel = new Panel('api', 'API');
 
 
-		$id = new Amun_Form_Element_Input('id', 'ID', $record->id);
+		$id = new Input('id', 'ID', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$status = new Amun_Form_Element_Select('status', 'Status', $record->status);
+		$status = new Select('status', 'Status', $record->status);
 		$status->setOptions($this->getStatus());
 
 		$panel->add($status);
 
 
-		$name = new Amun_Form_Element_Input('name', 'Name', $record->name);
+		$name = new Input('name', 'Name', $record->name);
 		$name->setType('text');
 
 		$panel->add($name);
 
 
-		$consumerKey = new Amun_Form_Element_Input('consumerKey', 'Consumer key', $record->consumerKey);
+		$consumerKey = new Input('consumerKey', 'Consumer key', $record->consumerKey);
 		$consumerKey->setType('text');
 
 		$panel->add($consumerKey);
 
 
-		$consumerSecret = new Amun_Form_Element_Input('consumerSecret', 'Consumer secret', $record->consumerSecret);
+		$consumerSecret = new Input('consumerSecret', 'Consumer secret', $record->consumerSecret);
 		$consumerSecret->setType('text');
 
 		$panel->add($consumerSecret);
 
 
-		$url = new Amun_Form_Element_Input('url', 'Url', $record->url);
+		$url = new Input('url', 'Url', $record->url);
 		$url->setType('url');
 
 		$panel->add($url);
@@ -151,50 +165,50 @@ class AmunService_Core_Host_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Core_Host')->getRecord($id);
+		$record = DataFactory::getTable('Core_Host')->getRecord($id);
 
 
-		$form = new Amun_Form('DELETE', $this->url);
+		$form = new AmunForm('DELETE', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('api', 'API');
+		$panel = new Panel('api', 'API');
 
 
-		$id = new Amun_Form_Element_Input('id', 'ID', $record->id);
+		$id = new Input('id', 'ID', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$status = new Amun_Form_Element_Select('status', 'Status', $record->status);
+		$status = new Select('status', 'Status', $record->status);
 		$status->setOptions($this->getStatus());
 		$status->setDisabled(true);
 
 		$panel->add($status);
 
 
-		$name = new Amun_Form_Element_Input('name', 'Name', $record->name);
+		$name = new Input('name', 'Name', $record->name);
 		$name->setType('text');
 		$name->setDisabled(true);
 
 		$panel->add($name);
 
 
-		$consumerKey = new Amun_Form_Element_Input('consumerKey', 'Consumer key', $record->consumerKey);
+		$consumerKey = new Input('consumerKey', 'Consumer key', $record->consumerKey);
 		$consumerKey->setType('text');
 		$consumerKey->setDisabled(true);
 
 		$panel->add($consumerKey);
 
 
-		$consumerSecret = new Amun_Form_Element_Input('consumerSecret', 'Consumer secret', $record->consumerSecret);
+		$consumerSecret = new Input('consumerSecret', 'Consumer secret', $record->consumerSecret);
 		$consumerSecret->setType('text');
 		$consumerSecret->setDisabled(true);
 
 		$panel->add($consumerSecret);
 
 
-		$url = new Amun_Form_Element_Input('url', 'Url', $record->url);
+		$url = new Input('url', 'Url', $record->url);
 		$url->setType('url');
 		$url->setDisabled(true);
 
@@ -203,7 +217,7 @@ class AmunService_Core_Host_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -219,7 +233,7 @@ class AmunService_Core_Host_Form extends Amun_Data_FormAbstract
 	private function getStatus()
 	{
 		$status = array();
-		$result = AmunService_Core_Host_Record::getStatus();
+		$result = Host\Record::getStatus();
 
 		foreach($result as $k => $v)
 		{

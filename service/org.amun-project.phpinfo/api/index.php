@@ -24,12 +24,12 @@
 
 namespace phpinfo\api;
 
-use Amun_Module_ApiAbstract;
-use DomDocument;
-use Exception;
-use PSX_Data_Array;
-use PSX_Data_Message;
-use PSX_Data_ResultSet;
+use Amun\Module\ApiAbstract;
+use Amun\Exception;
+use DOMDocument;
+use PSX\Data\ArrayList;
+use PSX\Data\Message;
+use PSX\Data\ResultSet;
 
 /**
  * index
@@ -42,7 +42,7 @@ use PSX_Data_ResultSet;
  * @subpackage service_phpinfo
  * @version    $Revision: 875 $
  */
-class index extends Amun_Module_ApiAbstract
+class index extends ApiAbstract
 {
 	/**
 	 * Returns the phpinfo() result
@@ -71,16 +71,16 @@ class index extends Amun_Module_ApiAbstract
 
 				$this->setResponse($resultSet);
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
-				$msg = new PSX_Data_Message($e->getMessage(), false);
+				$msg = new Message($e->getMessage(), false);
 
 				$this->setResponse($msg);
 			}
 		}
 		else
 		{
-			$msg = new PSX_Data_Message('Access not allowed', false);
+			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}
@@ -100,20 +100,20 @@ class index extends Amun_Module_ApiAbstract
 		{
 			try
 			{
-				$array = new PSX_Data_Array(array('group', 'key', 'value'));
+				$array = new ArrayList(array('group', 'key', 'value'));
 
 				$this->setResponse($array);
 			}
 			catch(Exception $e)
 			{
-				$msg = new PSX_Data_Message($e->getMessage(), false);
+				$msg = new Message($e->getMessage(), false);
 
 				$this->setResponse($msg);
 			}
 		}
 		else
 		{
-			$msg = new PSX_Data_Message('Access not allowed', false);
+			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}
@@ -121,21 +121,21 @@ class index extends Amun_Module_ApiAbstract
 
 	public function onPost()
 	{
-		$msg = new PSX_Data_Message('Create a phpinfo record is not possible', false);
+		$msg = new Message('Create a phpinfo record is not possible', false);
 
 		$this->setResponse($msg, null, 500);
 	}
 
 	public function onPut()
 	{
-		$msg = new PSX_Data_Message('Update a phpinfo record is not possible', false);
+		$msg = new Message('Update a phpinfo record is not possible', false);
 
 		$this->setResponse($msg, null, 500);
 	}
 
 	public function onDelete()
 	{
-		$msg = new PSX_Data_Message('Delete a phpinfo record is not possible', false);
+		$msg = new Message('Delete a phpinfo record is not possible', false);
 
 		$this->setResponse($msg, null, 500);
 	}
@@ -145,7 +145,7 @@ class index extends Amun_Module_ApiAbstract
 		$start = $startIndex !== null ? (integer) $startIndex : 0;
 		$count = $count      !== null ? (integer) $count      : 16;
 
-		$dom = new DomDocument();
+		$dom = new DOMDocument();
 		$dom->loadHtml($this->getPhpInfoHtml());
 
 		$result = array();
@@ -235,7 +235,7 @@ class index extends Amun_Module_ApiAbstract
 			}
 		}
 
-		return new PSX_Data_ResultSet($k, $start, $count, $result);
+		return new ResultSet($k, $start, $count, $result);
 	}
 
 	private function getPhpInfoHtml()

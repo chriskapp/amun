@@ -24,7 +24,7 @@
 
 namespace oauth\api\request;
 
-use Amun_Module_FormAbstract;
+use Amun\Module\FormAbstract;
 
 /**
  * form
@@ -37,7 +37,7 @@ use Amun_Module_FormAbstract;
  * @subpackage system_api_request
  * @version    $Revision: 683 $
  */
-class form extends Amun_Module_FormAbstract
+class form extends FormAbstract
 {
 	protected function getForm($table = null)
 	{

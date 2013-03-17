@@ -22,6 +22,28 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Friend;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use Amun\Relation;
+use Amun\Security;
+use AmunService\Core\Approval;
+use AmunService\User\Account;
+use PSX\DateTime;
+use PSX\Data\RecordInterface;
+use PSX\Data\ResultSet;
+use PSX\Sql;
+use PSX\Sql\Condition;
+use PSX\Sql\Join;
+use PSX\Url;
+use PSX\Http;
+use PSX\OpenId;
+use PSX\Webfinger;
+use PSX\Oauth\Provider\Data\Consumer;
+
 /**
  * Amun_User_Friend_Handler
  *
@@ -32,29 +54,29 @@
  * @package    Amun_User_Friend
  * @version    $Revision: 880 $
  */
-class AmunService_User_Friend_Handler extends Amun_Data_HandlerAbstract
+class Handler extends HandlerAbstract
 {
-	public function getRequestResultSet($userId, array $fields, $startIndex = 0, $count = 16, $sortBy = null, $sortOrder = null, PSX_Sql_Condition $con = null, $mode = 0, $class = null, array $args = array())
+	public function getRequestResultSet($userId, array $fields, $startIndex = 0, $count = 16, $sortBy = null, $sortOrder = null, Condition $con = null, $mode = 0, $class = null, array $args = array())
 	{
 		$startIndex = $startIndex !== null ? (integer) $startIndex : 0;
 		$count      = !empty($count)       ? (integer) $count      : 16;
 		$sortBy     = $sortBy     !== null ? $sortBy               : 'date';
-		$sortOrder  = $sortOrder  !== null ? (integer) $sortOrder  : PSX_Sql::SORT_DESC;
+		$sortOrder  = $sortOrder  !== null ? (integer) $sortOrder  : Sql::SORT_DESC;
 
 		$select = $this->table
 			->select(array('id', 'status', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(Join::INNER, DataFactory::getTable('User_Account')
 				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'author'),
 				'n:1',
 				'userId'
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(Join::INNER, DataFactory::getTable('User_Account')
 				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'friend'),
 				'n:1',
 				'friendId'
 			)
 			->where('friendId', '=', $userId)
-			->where('status', '=', AmunService_User_Friend_Record::REQUEST);
+			->where('status', '=', Record::REQUEST);
 
 		if(!empty($fields))
 		{
@@ -73,32 +95,32 @@ class AmunService_User_Friend_Handler extends Amun_Data_HandlerAbstract
 
 		$totalResults = $select->getTotalResults();
 		$entries      = $select->getAll($mode, $class, $args);
-		$resultSet    = new PSX_Data_ResultSet($totalResults, $startIndex, $count, $entries);
+		$resultSet    = new ResultSet($totalResults, $startIndex, $count, $entries);
 
 		return $resultSet;
 	}
 
-	public function getPendingResultSet($userId, array $fields, $startIndex = 0, $count = 16, $sortBy = null, $sortOrder = null, PSX_Sql_Condition $con = null, $mode = 0, $class = null, array $args = array())
+	public function getPendingResultSet($userId, array $fields, $startIndex = 0, $count = 16, $sortBy = null, $sortOrder = null, Condition $con = null, $mode = 0, $class = null, array $args = array())
 	{
 		$startIndex = $startIndex !== null ? (integer) $startIndex : 0;
 		$count      = !empty($count)       ? (integer) $count      : 16;
 		$sortBy     = $sortBy     !== null ? $sortBy               : 'date';
-		$sortOrder  = $sortOrder  !== null ? (integer) $sortOrder  : PSX_Sql::SORT_DESC;
+		$sortOrder  = $sortOrder  !== null ? (integer) $sortOrder  : Sql::SORT_DESC;
 
 		$select = $this->table
 			->select(array('id', 'status', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(Join::INNER, DataFactory::getTable('User_Account')
 				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'author'),
 				'n:1',
 				'userId'
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(Join::INNER, DataFactory::getTable('User_Account')
 				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'friend'),
 				'n:1',
 				'friendId'
 			)
 			->where('userId', '=', $userId)
-			->where('status', '=', AmunService_User_Friend_Record::REQUEST);
+			->where('status', '=', Record::REQUEST);
 
 		if(!empty($fields))
 		{
@@ -117,12 +139,12 @@ class AmunService_User_Friend_Handler extends Amun_Data_HandlerAbstract
 
 		$totalResults = $select->getTotalResults();
 		$entries      = $select->getAll($mode, $class, $args);
-		$resultSet    = new PSX_Data_ResultSet($totalResults, $startIndex, $count, $entries);
+		$resultSet    = new ResultSet($totalResults, $startIndex, $count, $entries);
 
 		return $resultSet;
 	}
 
-	public function create(PSX_Data_RecordInterface $record)
+	public function create(RecordInterface $record)
 	{
 		if($record->hasFields('friendId'))
 		{
@@ -132,7 +154,7 @@ class AmunService_User_Friend_Handler extends Amun_Data_HandlerAbstract
 			// check id
 			if($this->user->id == $record->friendId)
 			{
-				throw new PSX_Data_Exception('You can not establish a relation to yourself');
+				throw new Exception('You can not establish a relation to yourself');
 			}
 
 
@@ -147,7 +169,7 @@ class AmunService_User_Friend_Handler extends Amun_Data_HandlerAbstract
 
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-			$record->date = $date->format(PSX_DateTime::SQL);
+			$record->date = $date->format(DateTime::SQL);
 
 
 			$this->table->insert($record->getData());
@@ -156,16 +178,16 @@ class AmunService_User_Friend_Handler extends Amun_Data_HandlerAbstract
 
 
 			// build relation
-			if($record->status == AmunService_User_Friend_Record::NORMAL)
+			if($record->status == Record::NORMAL)
 			{
-				$con = new PSX_Sql_Condition();
+				$con = new Condition();
 				$con->add('userId', '=', $record->friendId);
 				$con->add('friendId', '=', $this->user->id);
 
 				$this->table->update(array(
 
-					'status' => AmunService_User_Friend_Record::NORMAL,
-					'date'   => $date->format(PSX_DateTime::SQL),
+					'status' => Record::NORMAL,
+					'date'   => $date->format(DateTime::SQL),
 
 				), $con);
 			}
@@ -173,58 +195,58 @@ class AmunService_User_Friend_Handler extends Amun_Data_HandlerAbstract
 
 			$record->id = $friendId;
 
-			$this->notify(Amun_Data_RecordAbstract::INSERT, $record);
+			$this->notify(RecordAbstract::INSERT, $record);
 
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
-	public function update(PSX_Data_RecordInterface $record)
+	public function update(RecordInterface $record)
 	{
 		if($record->hasFields('id'))
 		{
-			$con = new PSX_Sql_Condition(array('id', '=', $record->id));
+			$con = new Condition(array('id', '=', $record->id));
 
 			$this->table->update($record->getData(), $con);
 
 
-			//$this->notify(Amun_Data_RecordAbstract::UPDATE, $record);
+			//$this->notify(RecordAbstract::UPDATE, $record);
 
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
-	public function delete(PSX_Data_RecordInterface $record)
+	public function delete(RecordInterface $record)
 	{
 		if($record->hasFields('id'))
 		{
-			$con = new PSX_Sql_Condition(array('id', '=', $record->id));
+			$con = new Condition(array('id', '=', $record->id));
 
 			$this->table->delete($con);
 
 
-			$this->notify(Amun_Data_RecordAbstract::DELETE, $record);
+			$this->notify(RecordAbstract::DELETE, $record);
 
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
-	public function remote(PSX_Data_RecordInterface $record)
+	public function remote(RecordInterface $record)
 	{
 		if($record->hasFields('mode', 'host', 'name'))
 		{
@@ -243,20 +265,20 @@ class AmunService_User_Friend_Handler extends Amun_Data_HandlerAbstract
 					}
 					else
 					{
-						throw new PSX_Data_Exception('Could not call method "' . $methodName . '"');
+						throw new Exception('Could not call method "' . $methodName . '"');
 					}
 
 					break;
 
 				default:
 
-					throw new PSX_Data_Exception('Invalid mode');
+					throw new Exception('Invalid mode');
 					break;
 			}
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
@@ -264,17 +286,17 @@ class AmunService_User_Friend_Handler extends Amun_Data_HandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'status', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(Join::INNER, DataFactory::getTable('User_Account')
 				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'author'),
 				'n:1',
 				'userId'
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(Join::INNER, DataFactory::getTable('User_Account')
 				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'friend'),
 				'n:1',
 				'friendId'
 			)
-			->where('status', '=', AmunService_User_Friend_Record::NORMAL);
+			->where('status', '=', Record::NORMAL);
 	}
 
 	/**
@@ -284,15 +306,15 @@ class AmunService_User_Friend_Handler extends Amun_Data_HandlerAbstract
 	 *
 	 * @return integer
 	 */
-	protected function getStatus(PSX_Data_RecordInterface $record)
+	protected function getStatus(RecordInterface $record)
 	{
-		$con = new PSX_Sql_Condition();
+		$con = new Condition();
 		$con->add('userId', '=', $record->friendId);
 		$con->add('friendId', '=', $record->userId);
 
 		$count = $this->table->count($con);
 
-		return $count > 0 ? AmunService_User_Friend_Record::NORMAL : AmunService_User_Friend_Record::REQUEST;
+		return $count > 0 ? Record::NORMAL : Record::REQUEST;
 	}
 
 	/**
@@ -303,10 +325,10 @@ class AmunService_User_Friend_Handler extends Amun_Data_HandlerAbstract
 	 * accepted. If the user who has made the request was an remote user we send
 	 * and notification to the website that the request was accepted.
 	 *
-	 * @param PSX_Data_RecordInterface $record
+	 * @param RecordInterface $record
 	 * @return void
 	 */
-	protected function handleRemoteSubscription(PSX_Data_RecordInterface $record)
+	protected function handleRemoteSubscription(RecordInterface $record)
 	{
 		$cred = null;
 
@@ -314,12 +336,12 @@ class AmunService_User_Friend_Handler extends Amun_Data_HandlerAbstract
 		{
 			// a remote user wants to request a user as friend. We must notify
 			// the remote website about the friendship request
-			case AmunService_User_Friend_Record::REQUEST:
+			case Record::REQUEST:
 
-				if($record->getUser()->status == AmunService_User_Account_Record::REMOTE)
+				if($record->getUser()->status == Account\Record::REMOTE)
 				{
-					$url  = new PSX_Url($record->getUser()->getHost()->url);
-					$mode = Amun_Relation::REQUEST;
+					$url  = new Url($record->getUser()->getHost()->url);
+					$mode = Relation::REQUEST;
 					$host = $this->base->getHost();
 					$name = $record->getFriend()->name;
 					$cred = $record->getUser()->getRemoteCredentials();
@@ -330,12 +352,12 @@ class AmunService_User_Friend_Handler extends Amun_Data_HandlerAbstract
 			// a user accepted a friendship request where the initiator was an
 			// remote user we must inform the remote website that the request
 			// was accepted
-			case AmunService_User_Friend_Record::NORMAL:
+			case Record::NORMAL:
 
-				if($record->getFriend()->status == AmunService_User_Account_Record::REMOTE)
+				if($record->getFriend()->status == Account\Record::REMOTE)
 				{
-					$url  = new PSX_Url($record->getFriend()->getHost()->url);
-					$mode = Amun_Relation::ACCEPT;
+					$url  = new Url($record->getFriend()->getHost()->url);
+					$mode = Relation::ACCEPT;
 					$host = $this->base->getHost();
 					$name = $record->getUser()->name;
 					$cred = $record->getFriend()->getRemoteCredentials();
@@ -344,11 +366,10 @@ class AmunService_User_Friend_Handler extends Amun_Data_HandlerAbstract
 				break;
 		}
 
-		if($cred instanceof PSX_Oauth_Provider_Data_Consumer)
+		if($cred instanceof Consumer)
 		{
-			$http = new PSX_Http(new PSX_Http_Handler_Curl());
-
-			$relation = new Amun_Relation($http, $cred);
+			$http     = new Http();
+			$relation = new Relation($http, $cred);
 			$relation->request($url, $mode, $host, $name);
 		}
 	}
@@ -361,10 +382,10 @@ class AmunService_User_Friend_Handler extends Amun_Data_HandlerAbstract
 	 * user exists on the remote website we create the friend as remote user
 	 * in our user account table and create a relation to this user.
 	 *
-	 * @param PSX_Data_RecordInterface $record
+	 * @param RecordInterface $record
 	 * @return boolean
 	 */
-	protected function handleRequest(PSX_Data_RecordInterface $record)
+	protected function handleRequest(RecordInterface $record)
 	{
 		$sql = <<<SQL
 SELECT
@@ -384,22 +405,22 @@ SQL;
 			// request profile url
 			$email    = $record->name . '@' . $row['hostName'];
 			$profile  = $this->getAcctProfile($email, $row['hostTemplate']);
-			$identity = PSX_OpenId::normalizeIdentifier($profile['url']);
+			$identity = OpenId::normalizeIdentifier($profile['url']);
 
 
 			// create remote user if not exists
-			$con      = new PSX_Sql_Condition(array('identity', '=', sha1(Amun_Security::getSalt() . $identity)));
-			$friendId = $this->sql->select($this->registry['table.user_account'], array('id'), $con, PSX_Sql::SELECT_FIELD);
+			$con      = new Condition(array('identity', '=', sha1(Security::getSalt() . $identity)));
+			$friendId = $this->sql->select($this->registry['table.user_account'], array('id'), $con, Sql::SELECT_FIELD);
 
 			if(empty($friendId))
 			{
-				$handler = new AmunService_User_Account_Handler($this->user);
+				$handler = new Account\Handler($this->user);
 
-				$account = Amun_Sql_Table_Registry::get('User_Account')->getRecord();
+				$account = DataFactory::getTable('User_Account')->getRecord();
 				$account->globalId = $profile['id'];
 				$account->setGroupId($this->registry['core.default_user_group']);
 				$account->setHostId($row['hostId']);
-				$account->setStatus(AmunService_User_Account_Record::REMOTE);
+				$account->setStatus(Account\Record::REMOTE);
 				$account->setIdentity($identity);
 				$account->setName($profile['name']);
 				$account->setPw(Amun_Security::generatePw());
@@ -410,14 +431,14 @@ SQL;
 
 
 			// create relation
-			$friend = Amun_Sql_Table_Registry::get('User_Friend')->getRecord();
+			$friend = DataFactory::getTable('User_Friend')->getRecord();
 			$friend->friendId = $friendId;
 
 			return $this->create($friend);
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Invalid host');
+			throw new Exception('Invalid host');
 		}
 	}
 
@@ -427,10 +448,10 @@ SQL;
 	 * the relation was accepted. If the user exists we add a relation and set
 	 * the status
 	 *
-	 * @param PSX_Data_RecordInterface $record
+	 * @param RecordInterface $record
 	 * @return boolean
 	 */
-	protected function handleAccept(PSX_Data_RecordInterface $record)
+	protected function handleAccept(RecordInterface $record)
 	{
 		$sql = <<<SQL
 SELECT
@@ -451,7 +472,7 @@ AND
 	`account`.`status` = ?
 SQL;
 
-		$row = $this->sql->getRow($sql, array($record->name, $record->host, AmunService_User_Account_Record::REMOTE));
+		$row = $this->sql->getRow($sql, array($record->name, $record->host, Account\Record::REMOTE));
 
 		if(!empty($row))
 		{
@@ -460,23 +481,23 @@ SQL;
 
 			$this->table->insert(array(
 
-				'status'   => AmunService_User_Friend_Record::NORMAL,
+				'status'   => Record::NORMAL,
 				'userId'   => $row['accountId'],
 				'friendId' => $this->user->id,
-				'date'     => $date->format(PSX_DateTime::SQL),
+				'date'     => $date->format(DateTime::SQL),
 
 			));
 
 
 			// update status
-			$con = new PSX_Sql_Condition();
+			$con = new Condition();
 			$con->add('userId', '=', $this->user->id);
 			$con->add('friendId', '=', $row['accountId']);
 
 			$this->table->update(array(
 
-				'status' => AmunService_User_Friend_Record::NORMAL,
-				'date'   => $date->format(PSX_DateTime::SQL),
+				'status' => Record::NORMAL,
+				'date'   => $date->format(DateTime::SQL),
 
 			), $con);
 
@@ -485,20 +506,19 @@ SQL;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Account does not exist');
+			throw new Exception('Account does not exist');
 		}
 	}
 
-	protected function handleDeny(PSX_Data_RecordInterface $record)
+	protected function handleDeny(RecordInterface $record)
 	{
-		throw new PSX_Data_Exception('Not implemented yet');
+		throw new Exception('Not implemented yet');
 	}
 
 	protected function getAcctProfile($email, $lrddTemplate)
 	{
-		$http      = new PSX_Http(new PSX_Http_Handler_Curl());
-		$webfinger = new PSX_Webfinger($http);
-
+		$http      = new Http();
+		$webfinger = new Webfinger($http);
 
 		// check subject
 		$acct = 'acct:' . $email;
@@ -506,16 +526,14 @@ SQL;
 
 		if(strcmp($xrd->getSubject(), $acct) !== 0)
 		{
-			throw new PSX_Webfinger_Exception('Invalid subject');
+			throw new Exception('Invalid subject');
 		}
-
 
 		// get properties
 		$profile         = array();
 		$profile['id']   = $xrd->getPropertyValue('http://ns.amun-project.org/2011/meta/id');
 		$profile['name'] = $xrd->getPropertyValue('http://ns.amun-project.org/2011/meta/name');
 		$profile['url']  = $xrd->getLinkHref('profile');
-
 
 		// check data
 		if(isset($profile['id']) && isset($profile['name']) && isset($profile['url']))
@@ -524,7 +542,7 @@ SQL;
 		}
 		else
 		{
-			throw new PSX_Webfinger_Exception('Could not find profile with necessary data');
+			throw new Exception('Could not find profile with necessary data');
 		}
 	}
 }

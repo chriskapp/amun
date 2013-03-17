@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Redirect;
+
+use Amun\Sql\TableAbstract;
+
 /**
  * Amun_Service_Redirect_Table
  *
@@ -32,7 +36,7 @@
  * @package    Amun_Service_Redirect
  * @version    $Revision: 635 $
  */
-class AmunService_Redirect_Table extends Amun_Sql_TableAbstract
+class Table extends TableAbstract
 {
 	public function getConnections()
 	{

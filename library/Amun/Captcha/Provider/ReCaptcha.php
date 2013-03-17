@@ -22,6 +22,15 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Captcha\Provider;
+
+use Amun\Captcha\ProviderInterface;
+use Amun\Exception;
+use PSX\Http;
+use PSX\Http\GetRequest;
+use PSX\Http\PostRequest;
+use PSX\Url;
+
 /**
  * Amun_Captcha_Provider_ReCaptcha
  *
@@ -32,7 +41,7 @@
  * @package    Amun_Captcha
  * @version    $Revision: 635 $
  */
-class Amun_Captcha_Provider_ReCaptcha implements Amun_Captcha_ProviderInterface
+class ReCaptcha implements ProviderInterface
 {
 	private $publicKey  = '';
 	private $privateKey = '';
@@ -45,14 +54,14 @@ class Amun_Captcha_Provider_ReCaptcha implements Amun_Captcha_ProviderInterface
 		}
 		else
 		{
-			throw new Amun_Captcha_Exception('Challenge not set');
+			throw new Exception('Challenge not set');
 		}
 
 		if(!empty($challenge))
 		{
-			$http    = new PSX_Http(new PSX_Http_Handler_Curl());
-			$url     = new PSX_Url('http://www.google.com/recaptcha/api/verify');
-			$request = new PSX_Http_PostRequest($url, array(), array(
+			$http    = new Http();
+			$url     = new Url('http://www.google.com/recaptcha/api/verify');
+			$request = new PostRequest($url, array(), array(
 
 				'privatekey' => $this->privateKey,
 				'remoteip'   => $_SERVER['REMOTE_ADDR'],
@@ -73,9 +82,9 @@ class Amun_Captcha_Provider_ReCaptcha implements Amun_Captcha_ProviderInterface
 
 	public function serve()
 	{
-		$http    = new PSX_Http(new PSX_Http_Handler_Curl());
-		$url     = new PSX_Url('http://www.google.com/recaptcha/api/challenge?k=' . $this->publicKey . '&ajax=1&cachestop=' . time());
-		$request = new PSX_Http_GetRequest($url);
+		$http    = new Http();
+		$url     = new Url('http://www.google.com/recaptcha/api/challenge?k=' . $this->publicKey . '&ajax=1&cachestop=' . time());
+		$request = new GetRequest($url);
 
 		$response = $http->request($request);
 
@@ -86,12 +95,12 @@ class Amun_Captcha_Provider_ReCaptcha implements Amun_Captcha_ProviderInterface
 
 			if(isset($data['programming_error']))
 			{
-				throw new Amun_Captcha_Exception($data['programming_error']);
+				throw new Exception($data['programming_error']);
 			}
 
 			if(isset($data['error_message']))
 			{
-				throw new Amun_Captcha_Exception($data['error_message']);
+				throw new Exception($data['error_message']);
 			}
 
 			if(isset($data['site']) && isset($data['challenge']))
@@ -103,12 +112,12 @@ class Amun_Captcha_Provider_ReCaptcha implements Amun_Captcha_ProviderInterface
 			}
 			else
 			{
-				throw new Amun_Captcha_Exception('Couldnt parse response body');
+				throw new Exception('Couldnt parse response body');
 			}
 		}
 		else
 		{
-			throw new Amun_Captcha_Exception('Invalid recaptcha response code');
+			throw new Exception('Invalid recaptcha response code');
 		}
 	}
 

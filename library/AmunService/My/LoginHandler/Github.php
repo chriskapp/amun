@@ -22,6 +22,21 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\My\LoginHandler;
+
+use Amun\Exception;
+use Amun\DataFactory;
+use Amun\Security;
+use AmunService\My\LoginHandlerAbstract;
+use AmunService\User\Account;
+use PSX\Http;
+use PSX\Http\GetRequest;
+use PSX\Url;
+use PSX\Json;
+use PSX\Sql\Condition;
+use PSX\Oauth2;
+use PSX\Oauth2\Authorization\AuthorizationCode;
+
 /**
  * AmunService_My_LoginHandler_Github
  *
@@ -32,7 +47,7 @@
  * @package    Amun_Service_My
  * @version    $Revision: 635 $
  */
-class AmunService_My_LoginHandler_Github extends AmunService_My_LoginHandlerAbstract implements AmunService_My_LoginHandler_CallbackInterface
+class Github extends LoginHandlerAbstract implements CallbackInterface
 {
 	const CLIENT_ID      = '';
 	const CLIENT_SECRET  = '';
@@ -48,8 +63,8 @@ class AmunService_My_LoginHandler_Github extends AmunService_My_LoginHandlerAbst
 	{
 		parent::__construct();
 
-		$this->http  = new PSX_Http();
-		$this->oauth = new PSX_Oauth2();
+		$this->http  = new Http();
+		$this->oauth = new Oauth2();
 	}
 
 	public function isValid($identity)
@@ -69,42 +84,42 @@ class AmunService_My_LoginHandler_Github extends AmunService_My_LoginHandlerAbst
 		// build callback
 		$callback = $this->pageUrl . '/login/callback/github';
 
-		PSX_Oauth2_Authorization_AuthorizationCode::redirect(new PSX_Url(self::AUTHENTICATE), self::CLIENT_ID, $callback);
+		AuthorizationCode::redirect(new Url(self::AUTHENTICATE), self::CLIENT_ID, $callback);
 	}
 
 	public function callback()
 	{
-		$code = new PSX_Oauth2_Authorization_AuthorizationCode($this->http, new PSX_Url(self::ACCESS_TOKEN));
-		$code->setClientPassword(self::CLIENT_ID, self::CLIENT_SECRET, PSX_Oauth2_Authorization_AuthorizationCode::AUTH_POST);
+		$code = new AuthorizationCode($this->http, new Url(self::ACCESS_TOKEN));
+		$code->setClientPassword(self::CLIENT_ID, self::CLIENT_SECRET, AuthorizationCode::AUTH_POST);
 
 		$accessToken = $code->getAccessToken($redirect);
 
 		// request user informations
-		$url    = new PSX_Url(self::VERIFY_ACCOUNT);
+		$url    = new Url(self::VERIFY_ACCOUNT);
 		$header = array(
 			'Authorization' => $this->oauth->getAuthorizationHeader($accessToken),
 		);
 
-		$request  = new PSX_Http_GetRequest($url, $header);
+		$request  = new GetRequest($url, $header);
 		$response = $this->http->request();
 		
 		if($response->getCode() == 200)
 		{
-			$acc = PSX_Json::decode($response->getBody());
+			$acc = Json::decode($response->getBody());
 
 			if(empty($acc))
 			{
-				throw new Amun_Exception('No user informations provided');
+				throw new Exception('No user informations provided');
 			}
 
 			if(empty($acc['id']))
 			{
-				throw new Amun_Exception('No user id provided');
+				throw new Exception('No user id provided');
 			}
 
 			$identity = $acc['id'];	
-			$con      = new PSX_Sql_Condition(array('identity', '=', sha1(Amun_Security::getSalt() . $identity)));
-			$userId   = Amun_Sql_Table_Registry::get('User_Account')->getField('id', $con);
+			$con      = new Condition(array('identity', '=', sha1(Security::getSalt() . $identity)));
+			$userId   = DataFactory::getTable('User_Account')->getField('id', $con);
 
 			if(empty($userId))
 			{
@@ -112,25 +127,25 @@ class AmunService_My_LoginHandler_Github extends AmunService_My_LoginHandlerAbst
 				// registration is enabled
 				if(!$this->registry['my.registration_enabled'])
 				{
-					throw new Amun_Exception('Registration is disabled');
+					throw new Exception('Registration is disabled');
 				}
 
 				if(empty($acc['name']))
 				{
-					throw new Amun_Exception('No username provided');
+					throw new Exception('No username provided');
 				}
 
 				$name = $this->normalizeName($acc['name']);
 
 				// create user account
-				$handler = new AmunService_User_Account_Handler($this->user);
+				$handler = new Account\Handler($this->user);
 
-				$account = Amun_Sql_Table_Registry::get('User_Account')->getRecord();
+				$account = DataFactory::getTable('User_Account')->getRecord();
 				$account->setGroupId($this->registry['core.default_user_group']);
-				$account->setStatus(AmunService_User_Account_Record::NORMAL);
+				$account->setStatus(Account\Record::NORMAL);
 				$account->setIdentity($identity);
 				$account->setName($name);
-				$account->setPw(Amun_Security::generatePw());
+				$account->setPw(Security::generatePw());
 				$account->setTimezone($acc['timezone']);
 
 				$account->profileUrl   = isset($acc['html_url']) ? $acc['html_url'] : null;
@@ -147,7 +162,7 @@ class AmunService_My_LoginHandler_Github extends AmunService_My_LoginHandlerAbst
 				}
 				else
 				{
-					throw new Amun_Exception('Could not create account');
+					throw new Exception('Could not create account');
 				}
 			}
 			else
@@ -161,7 +176,7 @@ class AmunService_My_LoginHandler_Github extends AmunService_My_LoginHandlerAbst
 		}
 		else
 		{
-			throw new Amun_Exception('Authentication failed');
+			throw new Exception('Authentication failed');
 		}
 	}
 }

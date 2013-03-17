@@ -22,6 +22,20 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Data;
+
+use Amun\DataFactory;
+use Amun\Exception;
+use Amun\User;
+use Amun\Registry;
+use AmunService\Core\Approval\Record;
+use PSX\Data\HandlerInterface;
+use PSX\Data\RecordInterface;
+use PSX\Data\ResultSet;
+use PSX\DateTime;
+use PSX\Sql;
+use PSX\Sql\Condition;
+
 /**
  * The data handler class offers a general concept of handling data. It 
  * abstracts all SQL handling from the API and application parts. The data
@@ -49,7 +63,7 @@
  * @package    Amun_Data
  * @version    $Revision: 877 $
  */
-abstract class Amun_Data_HandlerAbstract implements PSX_Data_HandlerInterface
+abstract class HandlerAbstract implements HandlerInterface
 {
 	protected $base;
 	protected $config;
@@ -63,9 +77,9 @@ abstract class Amun_Data_HandlerAbstract implements PSX_Data_HandlerInterface
 
 	protected $_select;
 
-	public function __construct(Amun_User $user = null)
+	public function __construct(User $user = null)
 	{
-		$ct = Amun_DataFactory::getInstance()->getContainer();
+		$ct = DataFactory::getInstance()->getContainer();
 
 		$this->base     = $ct->getBase();
 		$this->config   = $ct->getConfig();
@@ -86,12 +100,12 @@ abstract class Amun_Data_HandlerAbstract implements PSX_Data_HandlerInterface
 		return $this->user;
 	}
 
-	public function getAll(array $fields, $startIndex = 0, $count = 16, $sortBy = null, $sortOrder = null, PSX_Sql_Condition $con = null, $mode = 0, $class = null, array $args = array())
+	public function getAll(array $fields, $startIndex = 0, $count = 16, $sortBy = null, $sortOrder = null, Condition $con = null, $mode = 0, $class = null, array $args = array())
 	{
 		$startIndex = $startIndex !== null ? (integer) $startIndex : 0;
 		$count      = !empty($count)       ? (integer) $count      : 16;
 		$sortBy     = $sortBy     !== null ? $sortBy               : $this->table->getPrimaryKey();
-		$sortOrder  = $sortOrder  !== null ? (integer) $sortOrder  : PSX_Sql::SORT_DESC;
+		$sortOrder  = $sortOrder  !== null ? (integer) $sortOrder  : Sql::SORT_DESC;
 
 		$select = $this->getSelect();
 		$fields = array_intersect($fields, $select->getSupportedFields());
@@ -142,15 +156,15 @@ abstract class Amun_Data_HandlerAbstract implements PSX_Data_HandlerInterface
 	 *
 	 * @return PSX_Data_ResultSet
 	 */
-	public function getResultSet(array $fields, $startIndex = 0, $count = 16, $sortBy = null, $sortOrder = null, PSX_Sql_Condition $con = null, $mode = 0, $class = null, array $args = array())
+	public function getResultSet(array $fields, $startIndex = 0, $count = 16, $sortBy = null, $sortOrder = null, Condition $con = null, $mode = 0, $class = null, array $args = array())
 	{
 		$startIndex = $startIndex !== null ? (integer) $startIndex : 0;
 		$count      = !empty($count)       ? (integer) $count      : 16;
-		$sortOrder  = $sortOrder  !== null ? (strcasecmp($sortOrder, 'ascending') == 0 ? PSX_Sql::SORT_ASC : PSX_Sql::SORT_DESC) : null;
+		$sortOrder  = $sortOrder  !== null ? (strcasecmp($sortOrder, 'ascending') == 0 ? Sql::SORT_ASC : Sql::SORT_DESC) : null;
 
 		$totalResults = $this->getCount($con);
 		$entries      = $this->getAll($fields, $startIndex, $count, $sortBy, $sortOrder, $con, $mode, $class, $args);
-		$resultSet    = new PSX_Data_ResultSet($totalResults, $startIndex, $count, $entries);
+		$resultSet    = new ResultSet($totalResults, $startIndex, $count, $entries);
 
 		return $resultSet;
 	}
@@ -171,7 +185,7 @@ abstract class Amun_Data_HandlerAbstract implements PSX_Data_HandlerInterface
 	 *
 	 * @return integer
 	 */
-	public function getCount(PSX_Sql_Condition $con = null)
+	public function getCount(Condition $con = null)
 	{
 		$select = $this->getSelect();
 
@@ -205,7 +219,7 @@ abstract class Amun_Data_HandlerAbstract implements PSX_Data_HandlerInterface
 	 * @param PSX_Data_RecordInterface $record
 	 * @return boolean
 	 */
-	public function hasApproval(PSX_Data_RecordInterface $record)
+	public function hasApproval(RecordInterface $record)
 	{
 		if($this->ignoreApprovement === false)
 		{
@@ -247,9 +261,9 @@ SQL;
 	 * @param PSX_Data_RecordInterface $record
 	 * @return void
 	 */
-	public function approveRecord($type, PSX_Data_RecordInterface $record)
+	public function approveRecord($type, RecordInterface $record)
 	{
-		$type = AmunService_Core_Approval_Record::getType($type);
+		$type = Record::getType($type);
 
 		if($type !== false)
 		{
@@ -261,13 +275,13 @@ SQL;
 				'type'   => $type,
 				'table'  => $this->table->getName(),
 				'record' => serialize($record->getFields()),
-				'date'   => $date->format(PSX_DateTime::SQL),
+				'date'   => $date->format(DateTime::SQL),
 
 			));
 		}
 		else
 		{
-			throw new Amun_Exception('Invalid approve record type');
+			throw new Exception('Invalid approve record type');
 		}
 	}
 
@@ -291,11 +305,11 @@ SQL;
 	 * @param PSX_Data_RecordInterface $record
 	 * @return void
 	 */
-	public function notify($type, PSX_Data_RecordInterface $record)
+	public function notify($type, RecordInterface $record)
 	{
-		if(Amun_Data_RecordAbstract::getType($type) === false)
+		if(RecordAbstract::getType($type) === false)
 		{
-			throw new Amun_Exception('Invalid notification type');
+			throw new Exception('Invalid notification type');
 		}
 
 		$this->event->notifyListener('core.record_change', array($type, $this->table, $record), $this->user);
@@ -306,7 +320,7 @@ SQL;
 	 *
 	 * @return boolean
 	 */
-	public function isOwner(PSX_Data_RecordInterface $record, $field = 'userId')
+	public function isOwner(RecordInterface $record, $field = 'userId')
 	{
 		if($this->user->isAdministrator())
 		{
@@ -317,8 +331,8 @@ SQL;
 
 		if(isset($record->$pk) && array_key_exists($field, $this->table->getColumns()))
 		{
-			$con     = new PSX_Sql_Condition(array($pk, '=', $record->$pk));
-			$ownerId = $this->sql->select($this->table->getName(), array($field), $con, PSX_Sql::SELECT_FIELD);
+			$con     = new Condition(array($pk, '=', $record->$pk));
+			$ownerId = $this->sql->select($this->table->getName(), array($field), $con, Sql::SELECT_FIELD);
 
 			return !empty($ownerId) && $ownerId == $this->user->id;
 		}
@@ -392,7 +406,8 @@ SQL;
 
 		if($tableName !== false)
 		{
-			$class = Amun_Registry::getClassName('AmunService_' . $tableName . '_Table');
+			$tableName = str_replace('_', '\\', $tableName);
+			$class     = Registry::getClassName('\AmunService\\' . $tableName . '\Table');
 
 			if(class_exists($class))
 			{
@@ -400,12 +415,12 @@ SQL;
 			}
 			else
 			{
-				throw new Amun_Exception('Table "' . $tableName . '" does not exist');
+				throw new Exception('Table "' . $tableName . '" does not exist');
 			}
 		}
 		else
 		{
-			throw new Amun_Exception('Table "' . $className . '" does not exist');
+			throw new Exception('Table "' . $className . '" does not exist');
 		}
 	}
 

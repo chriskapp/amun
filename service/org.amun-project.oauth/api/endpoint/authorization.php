@@ -24,12 +24,11 @@
 
 namespace oauth\api\endpoint;
 
-use Amun_DataFactory;
-use Amun_Dependency_Default;
-use Amun_Exception;
-use PSX_Filter_Length;
-use PSX_Filter_Xdigit;
-use PSX_ModuleAbstract;
+use Amun\DataFactory;
+use Amun\Dependency;
+use Amun\Exception;
+use PSX\Filter;
+use PSX\ModuleAbstract;
 
 /**
  * authorization
@@ -42,7 +41,7 @@ use PSX_ModuleAbstract;
  * @subpackage auth
  * @version    $Revision: 690 $
  */
-class authorization extends PSX_ModuleAbstract
+class authorization extends ModuleAbstract
 {
 	/**
 	 * Endpoint to redirect the client to the authentication page containing the
@@ -57,7 +56,7 @@ class authorization extends PSX_ModuleAbstract
 	public function doAuthorization()
 	{
 		// get oauth token
-		$oauthToken = $this->get->oauth_token('string', array(new PSX_Filter_Length(40, 40), new PSX_Filter_Xdigit()));
+		$oauthToken = $this->get->oauth_token('string', array(new Filter\Length(40, 40), new Filter\Xdigit()));
 
 		if(!$this->validate->hasError())
 		{
@@ -68,13 +67,13 @@ class authorization extends PSX_ModuleAbstract
 		}
 		else
 		{
-			throw new Amun_Exception($this->validate->getLastError());
+			throw new Exception($this->validate->getLastError());
 		}
 	}
 
 	public function getDependencies()
 	{
-		$ct = new Amun_Dependency_Default($this->base->getConfig());
+		$ct = new Dependency\Request($this->base->getConfig());
 
 		return $ct;
 	}

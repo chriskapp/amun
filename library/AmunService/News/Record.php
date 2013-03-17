@@ -22,6 +22,20 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\News;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use Amun\Filter as AmunFilter;
+use Amun\Util;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
+use PSX\DateTime;
+use PSX\Filter;
+use PSX\Util\Markdown;
+
 /**
  * Amun_Service_News
  *
@@ -32,7 +46,7 @@
  * @package    Amun_Service_News
  * @version    $Revision: 880 $
  */
-class AmunService_News_Record extends Amun_Data_RecordAbstract
+class Record extends RecordAbstract
 {
 	protected $_page;
 	protected $_user;
@@ -40,7 +54,7 @@ class AmunService_News_Record extends Amun_Data_RecordAbstract
 
 	public function setId($id)
 	{
-		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
+		$id = $this->_validate->apply($id, 'integer', array(new AmunFilter\Id($this->_table)), 'id', 'Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -48,13 +62,13 @@ class AmunService_News_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setPageId($pageId)
 	{
-		$pageId = $this->_validate->apply($pageId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Content_Page'))), 'pageId', 'Page Id');
+		$pageId = $this->_validate->apply($pageId, 'integer', array(new AmunFilter\Id(DataFactory::getTable('Content_Page'))), 'pageId', 'Page Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -62,13 +76,13 @@ class AmunService_News_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setUrlTitle($urlTitle)
 	{
-		$urlTitle = $this->_validate->apply($urlTitle, 'string', array(new Amun_Filter_UrlTitle(), new PSX_Filter_Length(3, 128)), 'urlTitle', 'Url Title');
+		$urlTitle = $this->_validate->apply($urlTitle, 'string', array(new AmunFilter\UrlTitle(), new Filter\Length(3, 128)), 'urlTitle', 'Url Title');
 
 		if(!$this->_validate->hasError())
 		{
@@ -76,13 +90,13 @@ class AmunService_News_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setTitle($title)
 	{
-		$title = $this->_validate->apply($title, 'string', array(new PSX_Filter_Length(3, 256), new PSX_Filter_Html()), 'title', 'Title');
+		$title = $this->_validate->apply($title, 'string', array(new Filter\Length(3, 256), new Filter\Html()), 'title', 'Title');
 
 		if(!$this->_validate->hasError())
 		{
@@ -92,14 +106,14 @@ class AmunService_News_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setText($text)
 	{
-		$text = PSX_Util_Markdown::decode($text);
-		$text = $this->_validate->apply($text, 'string', array(new PSX_Filter_Length(3, 16384), new Amun_Filter_Html($this->_config, $this->_user)), 'text', 'Text');
+		$text = Markdown::decode($text);
+		$text = $this->_validate->apply($text, 'string', array(new Filter\Length(3, 16384), new AmunFilter\Html($this->_config, $this->_user)), 'text', 'Text');
 
 		if(!$this->_validate->hasError())
 		{
@@ -107,7 +121,7 @@ class AmunService_News_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
@@ -115,7 +129,7 @@ class AmunService_News_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_page === null)
 		{
-			$this->_page = Amun_Sql_Table_Registry::get('Content_Page')->getRecord($this->pageId);
+			$this->_page = DataFactory::getTable('Content_Page')->getRecord($this->pageId);
 		}
 
 		return $this->_page;
@@ -125,7 +139,7 @@ class AmunService_News_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_user === null)
 		{
-			$this->_user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->userId);
+			$this->_user = DataFactory::getTable('User_Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;
@@ -151,18 +165,18 @@ class AmunService_News_Record extends Amun_Data_RecordAbstract
 		return $this->_config['psx_url'] . '/' . $this->_config['psx_dispatch'] . $this->pagePath . '/view/' . $this->id . '/' . $this->urlTitle;
 	}
 
-	public function export(PSX_Data_WriterResult $result)
+	public function export(WriterResult $result)
 	{
 		switch($result->getType())
 		{
-			case PSX_Data_WriterInterface::JSON:
-			case PSX_Data_WriterInterface::XML:
+			case WriterInterface::JSON:
+			case WriterInterface::XML:
 
 				return parent::export($result);
 
 				break;
 
-			case PSX_Data_WriterInterface::ATOM:
+			case WriterInterface::ATOM:
 
 				$entry = $result->getWriter()->createEntry();
 
@@ -179,7 +193,7 @@ class AmunService_News_Record extends Amun_Data_RecordAbstract
 
 			default:
 
-				throw new PSX_Data_Exception('Writer is not supported');
+				throw new Exception('Writer is not supported');
 
 				break;
 		}

@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Form\Element;
+
+use Amun\Form\ElementAbstract;
+
 /**
  * Amun_Form_Element_Textarea
  *
@@ -32,7 +36,7 @@
  * @package    Amun_Form
  * @version    $Revision: 864 $
  */
-class Amun_Form_Element_Textarea extends Amun_Form_ElementAbstract
+class Textarea extends ElementAbstract
 {
 	protected $role;
 

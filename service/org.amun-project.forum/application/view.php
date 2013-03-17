@@ -22,6 +22,14 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace forum\application;
+
+use Amun\Base;
+use Amun\Module\ApplicationAbstract;
+use PSX\Url;
+use PSX\Sql;
+use PSX\Sql\Condition;
+
 /**
  * view
  *
@@ -33,7 +41,7 @@
  * @subpackage forum
  * @version    $Revision: 875 $
  */
-class view extends Amun_Module_ApplicationAbstract
+class view extends ApplicationAbstract
 {
 	private $id;
 	private $title;
@@ -100,12 +108,10 @@ class view extends Amun_Module_ApplicationAbstract
 			$this->htmlJs->add('forum');
 			$this->htmlJs->add('prettify');
 			$this->htmlJs->add('ace');
-
-			$this->template->set(__CLASS__ . '.tpl');
 		}
 		else
 		{
-			throw new Amun_Exception('Access not allowed');
+			throw new Exception('Access not allowed');
 		}
 	}
 
@@ -113,11 +119,11 @@ class view extends Amun_Module_ApplicationAbstract
 	{
 		$result = $this->getHandler()->getById($this->id, 
 			array(), 
-			PSX_Sql::FETCH_OBJECT);
+			Sql::FETCH_OBJECT);
 
 		if(empty($result))
 		{
-			throw new Amun_Exception('Invalid forum id');
+			throw new Exception('Invalid forum id');
 		}
 
 		$this->id = $result->id;
@@ -125,7 +131,7 @@ class view extends Amun_Module_ApplicationAbstract
 		// redirect to correct url
 		if(empty($this->title) || $this->title != $result->urlTitle)
 		{
-			PSX_Base::setResponseCode(301);
+			Base::setResponseCode(301);
 			header('Location: ' . $this->page->url . '/view/' . $result->id . '/' . $result->urlTitle);
 		}
 
@@ -134,11 +140,11 @@ class view extends Amun_Module_ApplicationAbstract
 
 	private function getComments()
 	{
-		$con = new PSX_Sql_Condition();
+		$con = new Condition();
 		$con->add('pageId', '=', $this->page->id);
 		$con->add('refId', '=', $this->id);
 
-		$url   = new PSX_Url($this->base->getSelf());
+		$url   = new Url($this->base->getSelf());
 		$count = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
 		$count = $count > 16 ? 16 : $count;
 
@@ -148,10 +154,10 @@ class view extends Amun_Module_ApplicationAbstract
 			$url->getParam('sortBy'),
 			$url->getParam('sortOrder'),
 			$con,
-			PSX_Sql::FETCH_OBJECT);
+			Sql::FETCH_OBJECT);
 
 
-		$paging = new PSX_Html_Paging($url, $result);
+		$paging = new Paging($url, $result);
 
 		$this->template->assign('pagingComments', $paging, 0);
 

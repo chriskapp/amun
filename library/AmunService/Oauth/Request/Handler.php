@@ -22,6 +22,20 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Oauth\Request;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use AmunService\Core\Approval;
+use PSX\DateTime;
+use PSX\Data\RecordInterface;
+use PSX\Data\ResultSet;
+use PSX\Sql;
+use PSX\Sql\Condition;
+use PSX\Sql\Join;
+
 /**
  * AmunService_Oauth_Request_Handler
  *
@@ -32,43 +46,43 @@
  * @package    Amun_Oauth
  * @version    $Revision: 635 $
  */
-class AmunService_Oauth_Request_Handler extends Amun_Data_HandlerAbstract
+class Handler extends HandlerAbstract
 {
 	public function getByToken($token)
 	{
-		return Amun_Sql_Table_Registry::get('Oauth_Request')
+		return DataFactory::getTable('Oauth_Request')
 			->select(array('apiId', 'status', 'callback', 'token', 'expire', 'date'))
 			->where('token', '=', $token)
 			->getRow();
 	}
 
-	public function create(PSX_Data_RecordInterface $record)
+	public function create(RecordInterface $record)
 	{
-		throw new PSX_Data_Exception('Requests can not created');
+		throw new Exception('Requests can not created');
 	}
 
-	public function update(PSX_Data_RecordInterface $record)
+	public function update(RecordInterface $record)
 	{
-		throw new PSX_Data_Exception('Requests can not updated');
+		throw new Exception('Requests can not updated');
 	}
 
-	public function delete(PSX_Data_RecordInterface $record)
+	public function delete(RecordInterface $record)
 	{
 		if($record->hasFields('id'))
 		{
-			$con = new PSX_Sql_Condition(array('id', '=', $record->id));
+			$con = new Condition(array('id', '=', $record->id));
 
 			$this->table->delete($con);
 
 
-			$this->notify(Amun_Data_RecordAbstract::DELETE, $record);
+			$this->notify(RecordAbstract::DELETE, $record);
 
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
@@ -76,10 +90,10 @@ class AmunService_Oauth_Request_Handler extends Amun_Data_HandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'status', 'ip', 'callback', 'expire', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Oauth')
+			->join(Join::INNER, DataFactory::getTable('Oauth')
 				->select(array('id', 'title'), 'api')
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(Join::INNER, DataFactory::getTable('User_Account')
 				->select(array('name', 'profileUrl'), 'author')
 			);
 	}

@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun;
+
+use RecursiveArrayIterator;
+
 /**
  * Amun_Option
  *
@@ -32,7 +36,7 @@
  * @package    Amun_Html
  * @version    $Revision: 635 $
  */
-class Amun_Option extends RecursiveArrayIterator
+class Option extends RecursiveArrayIterator
 {
 	private $options;
 
@@ -45,7 +49,7 @@ class Amun_Option extends RecursiveArrayIterator
 
 	private $objects;
 
-	public function __construct($optionName, Amun_Registry $registry, Amun_User $user, Amun_Page $page)
+	public function __construct($optionName, Registry $registry, User $user, Page $page)
 	{
 		$this->options = array();
 

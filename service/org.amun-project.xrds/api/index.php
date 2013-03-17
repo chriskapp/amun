@@ -24,12 +24,12 @@
 
 namespace xrds\api;
 
-use Amun_Module_ApiAbstract;
-use Amun_Sql_Table_Registry;
-use Exception;
-use PSX_Data_Message;
-use PSX_Sql;
-use PSX_Sql_Join;
+use Amun\Module\ApiAbstract;
+use Amun\DataFactory;
+use Amun\Exception;
+use PSX\Data\Message;
+use PSX\Sql;
+use PSX\Sql\Join;
 use XMLWriter;
 
 /**
@@ -43,7 +43,7 @@ use XMLWriter;
  * @subpackage system_xrds
  * @version    $Revision: 799 $
  */
-class index extends Amun_Module_ApiAbstract
+class index extends ApiAbstract
 {
 	private $writer;
 
@@ -110,9 +110,9 @@ class index extends Amun_Module_ApiAbstract
 			$this->writer->endElement();
 			$this->writer->endDocument();
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
-			$msg = new PSX_Data_Message($e->getMessage(), false);
+			$msg = new Message($e->getMessage(), false);
 
 			$this->setResponse($msg);
 		}

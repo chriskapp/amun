@@ -22,6 +22,19 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Content\Gadget;
+
+use Amun\DataFactory;
+use Amun\Data\FormAbstract;
+use Amun\Form as AmunForm;
+use Amun\Form\Element\Panel;
+use Amun\Form\Element\Reference;
+use Amun\Form\Element\Input;
+use Amun\Form\Element\Textarea;
+use Amun\Form\Element\Captcha;
+use Amun\Form\Element\Select;
+use AmunService\Content\Gadget;
+
 /**
  * AmunService_Core_Content_Gadget_Form
  *
@@ -32,59 +45,59 @@
  * @package    Amun_Content_Gadget
  * @version    $Revision: 838 $
  */
-class AmunService_Content_Gadget_Form extends Amun_Data_FormAbstract
+class Form extends FormAbstract
 {
 	public function create()
 	{
-		$form = new Amun_Form('POST', $this->url);
+		$form = new AmunForm('POST', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('gadget', 'Gadget');
+		$panel = new Panel('gadget', 'Gadget');
 
 
-		$name = new Amun_Form_Element_Input('name', 'Name');
+		$name = new Input('name', 'Name');
 		$name->setType('text');
 
 		$panel->add($name);
 
 
-		$title = new Amun_Form_Element_Input('title', 'Title');
+		$title = new Input('title', 'Title');
 		$title->setType('text');
 
 		$panel->add($title);
 
 
-		$path = new Amun_Form_Element_Select('path', 'Path');
+		$path = new Select('path', 'Path');
 		$path->setOptions($this->getGadget());
 
 		$panel->add($path);
 
 
-		$type = new Amun_Form_Element_Select('type', 'Type', 'ajax');
+		$type = new Select('type', 'Type', 'ajax');
 		$type->setOptions($this->getType());
 
 		$panel->add($type);
 
 
-		$right = new Amun_Form_Element_Select('rightId', 'Right');
+		$right = new Select('rightId', 'Right');
 		$right->setOptions($this->getRights());
 
 		$panel->add($right);
 
 
-		$cache = new Amun_Form_Element_Input('cache', 'Cache');
+		$cache = new Input('cache', 'Cache');
 		$cache->setType('checkbox');
 
 		$panel->add($cache);
 
 
-		$expire = new Amun_Form_Element_Input('expire', 'Expire');
+		$expire = new Input('expire', 'Expire');
 		$expire->setType('text');
 
 		$panel->add($expire);
 
 
-		$param = new Amun_Form_Element_Input('param', 'Param');
+		$param = new Input('param', 'Param');
 		$param->setType('text');
 
 		$panel->add($param);
@@ -92,7 +105,7 @@ class AmunService_Content_Gadget_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -107,64 +120,64 @@ class AmunService_Content_Gadget_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Content_Gadget')->getRecord($id);
+		$record = DataFactory::getTable('Content_Gadget')->getRecord($id);
 
 
-		$form = new Amun_Form('PUT', $this->url);
+		$form = new AmunForm('PUT', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('gadget', 'Gadget');
+		$panel = new Panel('gadget', 'Gadget');
 
 
-		$id = new Amun_Form_Element_Input('id', 'Id', $record->id);
+		$id = new Input('id', 'Id', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$name = new Amun_Form_Element_Input('name', 'Name', $record->name);
+		$name = new Input('name', 'Name', $record->name);
 		$name->setType('text');
 
 		$panel->add($name);
 
 
-		$title = new Amun_Form_Element_Input('title', 'Title', $record->title);
+		$title = new Input('title', 'Title', $record->title);
 		$title->setType('text');
 
 		$panel->add($title);
 
 
-		$path = new Amun_Form_Element_Select('path', 'Path', $record->getPath());
+		$path = new Select('path', 'Path', $record->getPath());
 		$path->setOptions($this->getGadget());
 
 		$panel->add($path);
 
 
-		$type = new Amun_Form_Element_Select('type', 'Type', $record->type);
+		$type = new Select('type', 'Type', $record->type);
 		$type->setOptions($this->getType());
 
 		$panel->add($type);
 
 
-		$right = new Amun_Form_Element_Select('rightId', 'Right', $record->rightId);
+		$right = new Select('rightId', 'Right', $record->rightId);
 		$right->setOptions($this->getRights());
 
 		$panel->add($right);
 
 
-		$cache = new Amun_Form_Element_Input('cache', 'Cache', $record->cache);
+		$cache = new Input('cache', 'Cache', $record->cache);
 		$cache->setType('checkbox');
 
 		$panel->add($cache);
 
 
-		$expire = new Amun_Form_Element_Input('expire', 'Expire', $record->expire);
+		$expire = new Input('expire', 'Expire', $record->expire);
 		$expire->setType('text');
 
 		$panel->add($expire);
 
 
-		$param = new Amun_Form_Element_Input('param', 'Param', $record->getParam());
+		$param = new Input('param', 'Param', $record->getParam());
 		$param->setType('text');
 
 		$panel->add($param);
@@ -172,7 +185,7 @@ class AmunService_Content_Gadget_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -187,69 +200,69 @@ class AmunService_Content_Gadget_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Content_Gadget')->getRecord($id);
+		$record = DataFactory::getTable('Content_Gadget')->getRecord($id);
 
 
-		$form = new Amun_Form('DELETE', $this->url);
+		$form = new AmunForm('DELETE', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('gadget', 'Gadget');
+		$panel = new Panel('gadget', 'Gadget');
 
 
-		$id = new Amun_Form_Element_Input('id', 'Id', $record->id);
+		$id = new Input('id', 'Id', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$name = new Amun_Form_Element_Input('name', 'Name', $record->name);
+		$name = new Input('name', 'Name', $record->name);
 		$name->setType('text');
 		$name->setDisabled(true);
 
 		$panel->add($name);
 
 
-		$title = new Amun_Form_Element_Input('title', 'Title', $record->title);
+		$title = new Input('title', 'Title', $record->title);
 		$title->setType('text');
 		$title->setDisabled(true);
 
 		$panel->add($title);
 
 
-		$path = new Amun_Form_Element_Select('path', 'Path', $record->getPath());
+		$path = new Select('path', 'Path', $record->getPath());
 		$path->setOptions($this->getGadget());
 		$path->setDisabled(true);
 
 		$panel->add($path);
 
 
-		$type = new Amun_Form_Element_Select('type', 'Type', $record->type);
+		$type = new Select('type', 'Type', $record->type);
 		$type->setOptions($this->getType());
 
 		$panel->add($type);
 
 
-		$right = new Amun_Form_Element_Select('rightId', 'Right', $record->rightId);
+		$right = new Select('rightId', 'Right', $record->rightId);
 		$right->setOptions($this->getRights());
 
 		$panel->add($right);
 
 
-		$cache = new Amun_Form_Element_Input('cache', 'Cache', $record->cache);
+		$cache = new Input('cache', 'Cache', $record->cache);
 		$cache->setType('checkbox');
 		$cache->setDisabled(true);
 
 		$panel->add($cache);
 
 
-		$expire = new Amun_Form_Element_Input('expire', 'Expire', $record->expire);
+		$expire = new Input('expire', 'Expire', $record->expire);
 		$expire->setType('text');
 		$expire->setDisabled(true);
 
 		$panel->add($expire);
 
 
-		$param = new Amun_Form_Element_Input('param', 'Param', $record->getParam());
+		$param = new Input('param', 'Param', $record->getParam());
 		$param->setType('text');
 		$param->setDisabled(true);
 
@@ -258,7 +271,7 @@ class AmunService_Content_Gadget_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -274,7 +287,7 @@ class AmunService_Content_Gadget_Form extends Amun_Data_FormAbstract
 	private function getType()
 	{
 		$type   = array();
-		$result = AmunService_Content_Gadget_Record::getType();
+		$result = Gadget\Record::getType();
 
 		foreach($result as $k => $v)
 		{

@@ -24,10 +24,10 @@
 
 namespace lrdd\api;
 
-use Amun_Module_ApiAbstract;
-use Exception;
-use PSX_Data_Message;
-use PSX_Filter_Length;
+use Amun\Module\ApiAbstract;
+use Amun\Exception;
+use PSX\Data\Message;
+use PSX\Filter;
 use XMLWriter;
 
 /**
@@ -39,7 +39,7 @@ use XMLWriter;
  * @category   module
  * @version    $Revision: 799 $
  */
-class index extends Amun_Module_ApiAbstract
+class index extends ApiAbstract
 {
 	private $writer;
 	private $uri;
@@ -68,7 +68,7 @@ class index extends Amun_Module_ApiAbstract
 			$this->writer->writeAttribute('xmlns', 'http://docs.oasis-open.org/ns/xri/xrd-1.0');
 
 
-			$uri = $this->get->uri('string', array(new PSX_Filter_Length(3, 256)));
+			$uri = $this->get->uri('string', array(new Filter\Length(3, 256)));
 
 			$this->event->notifyListener('lrdd.resource_discovery', array($this->writer, $uri));
 
@@ -78,7 +78,7 @@ class index extends Amun_Module_ApiAbstract
 		}
 		catch(Exception $e)
 		{
-			$msg = new PSX_Data_Message($e->getMessage(), false);
+			$msg = new Message($e->getMessage(), false);
 
 			$this->setResponse($msg);
 		}

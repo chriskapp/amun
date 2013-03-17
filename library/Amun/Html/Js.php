@@ -22,6 +22,8 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Html;
+
 /**
  * Amun_Html_Js
  *
@@ -32,7 +34,7 @@
  * @package    Amun_Html
  * @version    $Revision: 635 $
  */
-class Amun_Html_Js extends Amun_Html_ServiceAbstract
+class Js extends ServiceAbstract
 {
 	public function getTag()
 	{

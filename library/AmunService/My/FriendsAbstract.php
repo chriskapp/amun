@@ -22,6 +22,12 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\My;
+
+use Amun\DataFactory;
+use Amun\Option;
+use AmunService\User\Friend;
+use PSX\Sql\Condition
 /**
  * Amun_Service_My_FriendsAbstract
  *
@@ -32,25 +38,25 @@
  * @package    Amun_Service_My
  * @version    $Revision: 635 $
  */
-abstract class AmunService_My_FriendsAbstract extends AmunService_My_MyAbstract
+abstract class FriendsAbstract extends MyAbstract
 {
 	public function onLoad()
 	{
 		parent::onLoad();
 
 		// friend request count
-		$con = new PSX_Sql_Condition();
+		$con = new Condition();
 		$con->add('friendId', '=', $this->user->id);
-		$con->add('status', '=', AmunService_User_Friend_Record::REQUEST);
+		$con->add('status', '=', Friend\Record::REQUEST);
 
 		$requestCount = $this->sql->count($this->registry['table.user_friend'], $con);
 
 		$this->template->assign('requestCount', $requestCount);
 
 		// pending count
-		$con = new PSX_Sql_Condition();
+		$con = new Condition();
 		$con->add('userId', '=', $this->user->id);
-		$con->add('status', '=', AmunService_User_Friend_Record::REQUEST);
+		$con->add('status', '=', Friend\Record::REQUEST);
 
 		$pendingCount = $this->sql->count($this->registry['table.user_friend'], $con);
 
@@ -62,7 +68,7 @@ abstract class AmunService_My_FriendsAbstract extends AmunService_My_MyAbstract
 		$this->template->assign('groupList', $groupList);
 
 		// options
-		$friends = new Amun_Option('friends', $this->registry, $this->user, $this->page);
+		$friends = new Option('friends', $this->registry, $this->user, $this->page);
 		$friends->add('my_view', 'Friends', $this->page->url . '/friends');
 
 		if($requestCount > 0)
@@ -83,7 +89,7 @@ abstract class AmunService_My_FriendsAbstract extends AmunService_My_MyAbstract
 
 	private function getGroups()
 	{
-		return Amun_Sql_Table_Registry::get('User_Friend_Group')
+		return DataFactory::getTable('User_Friend_Group')
 			->select(array('id', 'title', 'date'))
 			->where('userId', '=', $this->user->id)
 			->getAll();

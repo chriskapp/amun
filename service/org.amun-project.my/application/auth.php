@@ -22,6 +22,19 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\application;
+
+use Amun\Module\ApplicationAbstract;
+use Amun\Exception;
+use Amun\DataFactory;
+use Amun\Security;
+use AmunService\Oauth;
+use PSX\DateTime;
+use PSX\Filter;
+use PSX\Url;
+use PSX\Sql\Condition;
+use DateInterval;
+
 /**
  * callback
  *
@@ -33,7 +46,7 @@
  * @subpackage my
  * @version    $Revision: 875 $
  */
-class auth extends Amun_Module_ApplicationAbstract
+class auth extends ApplicationAbstract
 {
 	private $apiId;
 	private $userRights;
@@ -43,11 +56,11 @@ class auth extends Amun_Module_ApplicationAbstract
 		parent::onLoad();
 
 		// get oauth token
-		$oauthToken = $this->get->oauth_token('string', array(new PSX_Filter_Length(40, 40), new PSX_Filter_Xdigit()));
+		$oauthToken = $this->get->oauth_token('string', array(new Filter\Length(40, 40), new Filter\Xdigit()));
 
 		if($this->validate->hasError())
 		{
-			throw new Amun_Exception($this->validate->getLastError());
+			throw new Exception($this->validate->getLastError());
 		}
 
 		// check whether user is logged in if not redirect them to
@@ -87,11 +100,11 @@ class auth extends Amun_Module_ApplicationAbstract
 
 						if($now > $date)
 						{
-							$con = new PSX_Sql_Condition(array('token', '=', $oauthToken));
+							$con = new Condition(array('token', '=', $oauthToken));
 
-							Amun_Sql_Table_Registry::get('Oauth_Request')->delete($con);
+							DataFactory::getTable('Oauth_Request')->delete($con);
 
-							throw new Amun_Exception('The token is expired');
+							throw new Exception('The token is expired');
 						}
 
 						// load user rights
@@ -114,13 +127,13 @@ class auth extends Amun_Module_ApplicationAbstract
 							}
 							else
 							{
-								throw new Amun_Exception('No valid callback was defined in the request');
+								throw new Exception('No valid callback was defined in the request');
 							}
 						}
 					}
 					else
 					{
-						throw new Amun_Exception('The consumer provide an invalid token');
+						throw new Exception('The consumer provide an invalid token');
 					}
 
 					// request consumer informations
@@ -133,7 +146,7 @@ class auth extends Amun_Module_ApplicationAbstract
 					}
 					else
 					{
-						throw new Amun_Exception('Request is not assigned to an user');
+						throw new Exception('Request is not assigned to an user');
 					}
 
 					// check whether access is already allowed
@@ -144,28 +157,26 @@ class auth extends Amun_Module_ApplicationAbstract
 				}
 				else
 				{
-					throw new Amun_Exception('The consumer has not provide an valid token');
+					throw new Exception('The consumer has not provide an valid token');
 				}
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
 				$this->template->assign('error', $e->getMessage());
 			}
 
 			// template
 			$this->htmlCss->add('my');
-
-			$this->template->set(__CLASS__ . '.tpl');
 		}
 		else
 		{
-			throw new Amun_Exception('Access not allowed');
+			throw new Exception('Access not allowed');
 		}
 	}
 
 	public function onPost()
 	{
-		$token = $this->post->token('string', array(new PSX_Filter_Length(40, 40), new PSX_Filter_Xdigit()));
+		$token = $this->post->token('string', array(new Filter\Length(40, 40), new Filter\Xdigit()));
 
 		if($token !== false)
 		{
@@ -173,7 +184,7 @@ class auth extends Amun_Module_ApplicationAbstract
 
 			if(!empty($row))
 			{
-				if($row['status'] == AmunService_Oauth_Record::TEMPORARY)
+				if($row['status'] == Oauth\Record::TEMPORARY)
 				{
 					if(isset($_POST['allow']))
 					{
@@ -187,24 +198,24 @@ class auth extends Amun_Module_ApplicationAbstract
 				}
 				else
 				{
-					throw new Amun_Exception('Token has an invalid status');
+					throw new Exception('Token has an invalid status');
 				}
 			}
 			else
 			{
-				throw new Amun_Exception('Invalid user token');
+				throw new Exception('Invalid user token');
 			}
 		}
 		else
 		{
-			throw new amun_exception('Invalid token format');
+			throw new Exception('Invalid token format');
 		}
 	}
 
 	private function allowAccess($token, $callback)
 	{
 		// generate verifier
-		$verifier = Amun_Security::generateToken(32);
+		$verifier = Security::generateToken(32);
 
 		// insert or update access
 		$now = new DateTime('NOW', $this->registry['core.default_timezone']);
@@ -214,7 +225,7 @@ class auth extends Amun_Module_ApplicationAbstract
 			'apiId'   => $this->apiId,
 			'userId'  => $this->user->id,
 			'allowed' => 1,
-			'date'    => $now->format(PSX_DateTime::SQL),
+			'date'    => $now->format(DateTime::SQL),
 
 		));
 
@@ -224,12 +235,12 @@ class auth extends Amun_Module_ApplicationAbstract
 		$this->insertAppRights($accessId);
 
 		// approve token
-		$con = new PSX_Sql_Condition(array('token', '=', $token));
+		$con = new Condition(array('token', '=', $token));
 
 		$this->sql->update($this->registry['table.oauth_request'], array(
 
 			'userId'   => $this->user->id,
-			'status'   => AmunService_Oauth_Record::APPROVED,
+			'status'   => Oauth\Record::APPROVED,
 			'verifier' => $verifier,
 
 		), $con);
@@ -237,7 +248,7 @@ class auth extends Amun_Module_ApplicationAbstract
 		// redirect if callback available
 		if($callback != 'oob')
 		{
-			$url = new PSX_Url($callback);
+			$url = new Url($callback);
 
 			$url->addParam('oauth_token', $token);
 			$url->addParam('oauth_verifier', $verifier);
@@ -262,19 +273,19 @@ class auth extends Amun_Module_ApplicationAbstract
 			'apiId'   => $this->apiId,
 			'userId'  => $this->user->id,
 			'allowed' => 0,
-			'date'    => $now->format(PSX_DateTime::SQL),
+			'date'    => $now->format(DateTime::SQL),
 
 		));
 
 		// delete token
-		$con = new PSX_Sql_Condition(array('token', '=', $token));
+		$con = new Condition(array('token', '=', $token));
 
 		$this->sql->delete($this->registry['table.oauth_request'], $con);
 
 		// redirect if callback available
 		if($callback != 'oob')
 		{
-			$url = new PSX_Url($callback);
+			$url = new Url($callback);
 
 			// here we can inform the consumer that the request has been denied
 			$url->addParam('oauth_token', $token);
@@ -299,7 +310,7 @@ class auth extends Amun_Module_ApplicationAbstract
 	private function insertAppRights($accessId)
 	{
 		// delete any existing rights
-		$con = new PSX_Sql_Condition(array('accessId', '=', $accessId));
+		$con = new Condition(array('accessId', '=', $accessId));
 
 		$this->sql->delete($this->registry['table.oauth_access_right'], $con);
 

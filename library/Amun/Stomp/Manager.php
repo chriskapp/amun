@@ -22,6 +22,12 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Stomp;
+
+use Amun\Stomp\ListenerAbstract;
+use PSX\Config;
+use PSX\Json;
+
 /**
  * Amun_Stomp_Manager
  *
@@ -39,7 +45,7 @@
  * @package    Amun_Stomp
  * @version    $Revision: 635 $
  */
-class Amun_Stomp_Manager
+class Manager
 {
 	const WAIT = 4;
 
@@ -49,13 +55,13 @@ class Amun_Stomp_Manager
 	private $i = 1;
 	private $listener = array();
 
-	public function __construct(PSX_Config $config)
+	public function __construct(Config $config)
 	{
 		$this->config = $config;
 		$this->stomp  = new Stomp($config['amun_stomp_broker'], $config['amun_stomp_user'], $config['amun_stomp_pw']);
 	}
 
-	public function add(Amun_Stomp_ListenerAbstract $listener)
+	public function add(ListenerAbstract $listener)
 	{
 		$this->listener[] = $listener;
 	}
@@ -73,7 +79,7 @@ class Amun_Stomp_Manager
 				$table  = isset($msg->headers['amun-table'])   ? $msg->headers['amun-table']   : null;
 				$type   = isset($msg->headers['amun-type'])    ? $msg->headers['amun-type']    : null;
 				$userId = isset($msg->headers['amun-user-id']) ? $msg->headers['amun-user-id'] : null;
-				$data   = PSX_Json::decode($msg->body);
+				$data   = Json::decode($msg->body);
 
 				// call registered listener
 				foreach($this->listener as $listener)
@@ -84,7 +90,7 @@ class Amun_Stomp_Manager
 
 						echo 'R';
 					}
-					catch(Exception $e)
+					catch(\Exception $e)
 					{
 						echo 'E';
 					}

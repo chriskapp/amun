@@ -22,6 +22,8 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun;
+
 /**
  * Amun_Base
  *
@@ -32,13 +34,13 @@
  * @package    Amun_Base
  * @version    $Revision: 818 $
  */
-class Amun_Base extends PSX_Base
+class Base extends \PSX\Base
 {
 	const VERSION = '0.4 beta';
 
 	protected $user;
 
-	public function setUser(Amun_User $user)
+	public function setUser(User $user)
 	{
 		$this->user = $user;
 	}

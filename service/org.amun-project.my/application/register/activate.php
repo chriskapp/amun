@@ -22,6 +22,15 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\application\register;
+
+use Amun\Module\ApplicationAbstract;
+use Amun\Exception;
+use AmunService\User\Account;
+use PSX\DateTime;
+use PSX\Filter;
+use PSX\Sql\Condition;
+
 /**
  * activate
  *
@@ -33,7 +42,7 @@
  * @subpackage my
  * @version    $Revision: 875 $
  */
-class activate extends Amun_Module_ApplicationAbstract
+class activate extends ApplicationAbstract
 {
 	public function onLoad()
 	{
@@ -45,21 +54,19 @@ class activate extends Amun_Module_ApplicationAbstract
 
 		// template
 		$this->htmlCss->add('my');
-
-		$this->template->set('register/' . __CLASS__ . '.tpl');
 	}
 
 	public function onGet()
 	{
 		try
 		{
-			$token = $this->get->token('string', array(new PSX_Filter_Length(40, 40), new PSX_Filter_Xdigit()));
+			$token = $this->get->token('string', array(new Filter\Length(40, 40), new Filter\Xdigit()));
 
 			if($token !== false)
 			{
 				$account = $this->getHandler('User_Account')->getNotActivatedByToken($token);
 
-				if($account instanceof AmunService_User_Account_Record)
+				if($account instanceof Account\Record)
 				{
 					try
 					{
@@ -68,14 +75,14 @@ class activate extends Amun_Module_ApplicationAbstract
 
 						if($now > $account->getDate()->add(new DateInterval($expire)))
 						{
-							throw new Amun_Exception('Activation is expired');
+							throw new Exception('Activation is expired');
 						}
 
 						if($_SERVER['REMOTE_ADDR'] == $account->ip)
 						{
-							$account->setStatus(AmunService_User_Account_Record::NORMAL);
+							$account->setStatus(Account\Record::NORMAL);
 
-							$handler = new AmunService_User_Account_Handler($this->user);
+							$handler = new Account\Handler($this->user);
 							$handler->update($account);
 
 
@@ -83,14 +90,14 @@ class activate extends Amun_Module_ApplicationAbstract
 						}
 						else
 						{
-							throw new Amun_Exception('Registration was requested from another IP');
+							throw new Exception('Registration was requested from another IP');
 						}
 					}
-					catch(Exception $e)
+					catch(\Exception $e)
 					{
-						$con = new PSX_Sql_Condition();
+						$con = new Condition();
 						$con->add('id', '=', $account->id);
-						$con->add('status', '=', AmunService_User_Account_Record::NOT_ACTIVATED);
+						$con->add('status', '=', Account\Record::NOT_ACTIVATED);
 
 						$this->sql->delete($this->registry['table.user_account'], $con);
 
@@ -99,15 +106,15 @@ class activate extends Amun_Module_ApplicationAbstract
 				}
 				else
 				{
-					throw new Amun_Exception('Invalid token');
+					throw new Exception('Invalid token');
 				}
 			}
 			else
 			{
-				throw new Amun_Exception('Token not set');
+				throw new Exception('Token not set');
 			}
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
 			$this->template->assign('error', $e->getMessage());
 		}

@@ -22,6 +22,8 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Asset;
+
 /**
  * AmunService_Asset_ProviderInterface
  *
@@ -32,7 +34,7 @@
  * @package    Amun_Ext
  * @version    $Revision: 635 $
  */
-interface AmunService_Asset_ProviderInterface
+interface ProviderInterface
 {
 	/**
 	 * Returns the content type of the service

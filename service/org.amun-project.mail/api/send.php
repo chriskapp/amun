@@ -24,12 +24,12 @@
 
 namespace mail\api;
 
-use AmunService_Mail_Receiver_Record;
-use AmunService_Mail_Sender;
-use Amun_Module_ApiAbstract;
-use Exception;
-use PSX_Data_Message;
-use PSX_Data_Record;
+use AmunService\Mail\Receiver;
+use AmunService\Mail\Sender;
+use Amun\Module\ApiAbstract;
+use Amun\Exception;
+use PSX\Data\Message;
+use PSX\Data\Record;
 
 /**
  * send
@@ -42,11 +42,11 @@ use PSX_Data_Record;
  * @subpackage content_media
  * @version    $Revision: 880 $
  */
-class send extends Amun_Module_ApiAbstract
+class send extends ApiAbstract
 {
 	/**
-	 * Sends an mail template to specific email addresses. The API accepts 
-	 * only XML format. Here an example request:
+	 * Sends an mail template to specific email addresses. The API accepts only
+	 * XML format. Here an example request:
 	 *
 	 * <mail>
 	 * 	<receivers>
@@ -70,9 +70,9 @@ class send extends Amun_Module_ApiAbstract
 		{
 			try
 			{
-				$sender = new AmunService_Mail_Sender($this->registry);
+				$sender = new Sender($this->registry);
 
-				$record = new AmunService_Mail_Receiver_Record();
+				$record = new Receiver\Record();
 				$record->import($this->getRequest());
 
 				$receivers = $record->getReceivers();
@@ -91,7 +91,7 @@ class send extends Amun_Module_ApiAbstract
 							'success'  => true,
 						);
 					}
-					catch(Exception $e)
+					catch(\Exception $e)
 					{
 						$report[] = array(
 							'template' => $receiver['template'],
@@ -102,7 +102,7 @@ class send extends Amun_Module_ApiAbstract
 					}
 				}
 
-				$record = new PSX_Data_Record('reports', array(
+				$record = new Record('reports', array(
 					'report' => $report
 				));
 
@@ -110,14 +110,14 @@ class send extends Amun_Module_ApiAbstract
 			}
 			catch(Exception $e)
 			{
-				$msg = new PSX_Data_Message($e->getMessage(), false);
+				$msg = new Message($e->getMessage(), false);
 
 				$this->setResponse($msg, null, 404);
 			}
 		}
 		else
 		{
-			$msg = new PSX_Data_Message('Access not allowed', false);
+			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}

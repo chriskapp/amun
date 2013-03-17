@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Webdav;
+
+use PSX\Data\RecordInterface;
+use PSX\Data\Writer;
+
 /**
  * AmunService_Webdav_FileAbstract
  *
@@ -32,7 +37,7 @@
  * @package    AmunService_Webdav
  * @version    $Revision: 635 $
  */
-class AmunService_Webdav_File extends AmunService_Webdav_FileAbstract
+class File extends FileAbstract
 {
 	protected $service;
 	protected $record;
@@ -40,11 +45,11 @@ class AmunService_Webdav_File extends AmunService_Webdav_FileAbstract
 
 	protected $content;
 
-	public function __construct($service, PSX_Data_RecordInterface $record)
+	public function __construct($service, RecordInterface $record)
 	{
 		$this->service = $service;
 		$this->record  = $record;
-		$this->writer  = new PSX_Data_Writer_Xml();
+		$this->writer  = new Writer\Xml();
 	}
 
 	public function getName()
@@ -87,7 +92,7 @@ class AmunService_Webdav_File extends AmunService_Webdav_FileAbstract
 
 	public function getContentType()
 	{
-		return PSX_Data_Writer_Xml::$mime;
+		return Writer\Xml::$mime;
 	}
 
 	public function getSize()

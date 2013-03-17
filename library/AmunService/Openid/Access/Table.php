@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Openid\Access;
+
+use Amun\Sql\TableAbstract;
+
 /**
  * Amun_System_Connect_Access_Table
  *
@@ -32,7 +36,7 @@
  * @package    Amun_System_Connect
  * @version    $Revision: 635 $
  */
-class AmunService_Openid_Access_Table extends Amun_Sql_TableAbstract
+class Table extends TableAbstract
 {
 	public function getConnections()
 	{

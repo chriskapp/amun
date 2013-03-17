@@ -22,6 +22,17 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Content\Page;
+
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use AmunService\Content\Page\Gadget;
+use PSX\Data\RecordInterface;
+use PSX\DateTime;
+use PSX\Sql\Condition;
+use PSX\Sql\Join;
+
 /**
  * AmunService_Core_Content_Page_Handler
  *
@@ -32,15 +43,15 @@
  * @package    Amun_Content_Page
  * @version    $Revision: 880 $
  */
-class AmunService_Content_Page_Handler extends Amun_Data_HandlerAbstract
+class Handler extends HandlerAbstract
 {
-	public function create(PSX_Data_RecordInterface $record)
+	public function create(RecordInterface $record)
 	{
 		if($record->hasFields('parentId', 'serviceId', 'status', 'urlTitle', 'title'))
 		{
 			if(!isset($record->load))
 			{
-				$record->load = AmunService_Content_Page_Record::NAV | AmunService_Content_Page_Record::PATH;
+				$record->load = Record::NAV | Record::PATH;
 			}
 
 
@@ -54,7 +65,7 @@ class AmunService_Content_Page_Handler extends Amun_Data_HandlerAbstract
 
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-			$record->date = $date->format(PSX_DateTime::SQL);
+			$record->date = $date->format(DateTime::SQL);
 
 
 			$this->table->insert($record->getData());
@@ -64,7 +75,7 @@ class AmunService_Content_Page_Handler extends Amun_Data_HandlerAbstract
 
 			if($pageId == 0)
 			{
-				throw new PSX_Data_Exception('Couldnt insert page');
+				throw new Exception('Couldnt insert page');
 			}
 
 
@@ -76,11 +87,11 @@ class AmunService_Content_Page_Handler extends Amun_Data_HandlerAbstract
 
 			if(!empty($gadgets))
 			{
-				$handler = new AmunService_Content_Page_Gadget_Handler($this->user);
+				$handler = new Gadget\Handler($this->user);
 
 				foreach($gadgets as $gadgetId)
 				{
-					$gadgetRecord = Amun_Sql_Table_Registry::get('Content_Page_Gadget')->getRecord();
+					$gadgetRecord = DataFactory::getTable('Content_Page_Gadget')->getRecord();
 					$gadgetRecord->pageId = $record->id;
 					$gadgetRecord->gadgetId = $gadgetId;
 
@@ -89,22 +100,22 @@ class AmunService_Content_Page_Handler extends Amun_Data_HandlerAbstract
 			}
 
 
-			$this->notify(Amun_Data_RecordAbstract::INSERT, $record);
+			$this->notify(RecordAbstract::INSERT, $record);
 
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
-	public function update(PSX_Data_RecordInterface $record)
+	public function update(RecordInterface $record)
 	{
 		if($record->hasFields('id'))
 		{
-			$con = new PSX_Sql_Condition(array('id', '=', $record->id));
+			$con = new Condition(array('id', '=', $record->id));
 
 
 			$sql = 'SELECT parentId, urlTitle FROM ' . $this->table->getName() . ' WHERE id = ' . $record->id;
@@ -125,21 +136,21 @@ class AmunService_Content_Page_Handler extends Amun_Data_HandlerAbstract
 			}
 
 
-			$con = new PSX_Sql_Condition(array('id', '=', $record->id));
+			$con = new Condition(array('id', '=', $record->id));
 
 			$this->table->update($record->getData(), $con);
 
 
 			// update gadgets if available
 			$gadgets    = isset($record->gadgets) ? $record->gadgets : null;
-			$handler    = new AmunService_Content_Page_Gadget_Handler($this->user);
-			$con        = new PSX_Sql_Condition(array('pageId', '=', $record->id));
-			$oldGadgets = Amun_Sql_Table_Registry::get('Content_Page_Gadget')->getCol('id', $con);
+			$handler    = new Gadget\Handler($this->user);
+			$con        = new Condition(array('pageId', '=', $record->id));
+			$oldGadgets = DataFactory::getTable('Content_Page_Gadget')->getCol('id', $con);
 
 			// delete old gadgets
 			foreach($oldGadgets as $id)
 			{
-				$gadgetRecord = Amun_Sql_Table_Registry::get('Content_Page_Gadget')->getRecord();
+				$gadgetRecord = DataFactory::getTable('Content_Page_Gadget')->getRecord();
 				$gadgetRecord->id = $id;
 
 				$handler->delete($gadgetRecord);
@@ -150,7 +161,7 @@ class AmunService_Content_Page_Handler extends Amun_Data_HandlerAbstract
 				// create new gadgets
 				foreach($gadgets as $gadgetId)
 				{
-					$gadgetRecord = Amun_Sql_Table_Registry::get('Content_Page_Gadget')->getRecord();
+					$gadgetRecord = DataFactory::getTable('Content_Page_Gadget')->getRecord();
 					$gadgetRecord->pageId = $record->id;
 					$gadgetRecord->gadgetId = $gadgetId;
 
@@ -159,37 +170,37 @@ class AmunService_Content_Page_Handler extends Amun_Data_HandlerAbstract
 			}
 
 
-			$this->notify(Amun_Data_RecordAbstract::UPDATE, $record);
+			$this->notify(RecordAbstract::UPDATE, $record);
 
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
-	public function delete(PSX_Data_RecordInterface $record)
+	public function delete(RecordInterface $record)
 	{
 		if($record->hasFields('id'))
 		{
-			$con = new PSX_Sql_Condition(array('id', '=', $record->id));
+			$con = new Condition(array('id', '=', $record->id));
 
 			$this->table->delete($con);
 
 
-			$this->notify(Amun_Data_RecordAbstract::DELETE, $record);
+			$this->notify(RecordAbstract::DELETE, $record);
 
 
 			// delete assigned gadgets
-			$handler    = new AmunService_Content_Page_Gadget_Handler($this->user);
-			$con        = new PSX_Sql_Condition(array('pageId', '=', $record->id));
-			$oldGadgets = Amun_Sql_Table_Registry::get('Content_Page_Gadget')->getCol('id', $con);
+			$handler    = new Gadget\Handler($this->user);
+			$con        = new Condition(array('pageId', '=', $record->id));
+			$oldGadgets = DataFactory::getTable('Content_Page_Gadget')->getCol('id', $con);
 
 			foreach($oldGadgets as $id)
 			{
-				$gadgetRecord = Amun_Sql_Table_Registry::get('Content_Page_Gadget')->getRecord();
+				$gadgetRecord = DataFactory::getTable('Content_Page_Gadget')->getRecord();
 				$gadgetRecord->id = $id;
 
 				$handler->delete($gadgetRecord);
@@ -200,7 +211,7 @@ class AmunService_Content_Page_Handler extends Amun_Data_HandlerAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
@@ -208,12 +219,12 @@ class AmunService_Content_Page_Handler extends Amun_Data_HandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'parentId', 'globalId', 'status', 'load', 'path', 'title', 'template', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Core_Service')
+			->join(Join::INNER, DataFactory::getTable('Core_Service')
 				->select(array('id', 'type'), 'service')
 			);
 	}
 
-	private function buildPath(PSX_Data_RecordInterface $record)
+	private function buildPath(RecordInterface $record)
 	{
 		if($record->parentId > 0)
 		{
@@ -243,7 +254,7 @@ SQL;
 		}
 	}
 
-	private function rebuildPath(PSX_Data_RecordInterface $record)
+	private function rebuildPath(RecordInterface $record)
 	{
 		$sql = <<<SQL
 SELECT
@@ -276,7 +287,7 @@ SQL;
 		}
 	}
 
-	public function reparentPath(PSX_Data_RecordInterface $record)
+	public function reparentPath(RecordInterface $record)
 	{
 		$sql = <<<SQL
 SELECT
@@ -307,7 +318,7 @@ SQL;
 			// check whether the new parent was parent of this node
 			if(substr($parent['path'], 0, strlen($row['path'])) == $row['path'])
 			{
-				throw new PSX_Data_Exception('New parent can not be a parent of the current node');
+				throw new Exception('New parent can not be a parent of the current node');
 			}
 
 			if(!empty($row))

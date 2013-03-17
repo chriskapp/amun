@@ -22,6 +22,8 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Webdav;
+
 /**
  * AmunService_Webdav_NodeAbstract
  *
@@ -32,15 +34,16 @@
  * @package    AmunService_Webdav
  * @version    $Revision: 635 $
  */
-abstract class AmunService_Webdav_NodeAbstract
+abstract class NodeAbstract
 {
 	public function __construct()
 	{
-		$this->base     = Amun_Base::getInstance();
-		$this->config   = $this->base->getConfig();
-		$this->sql      = $this->base->getSql();
-		$this->registry = $this->base->getRegistry();
-		$this->user     = $this->base->getUser();
+		$ct = DataFactory::getInstance()->getContainer();
+
+		$this->config   = $ct->getConfig();
+		$this->sql      = $ct->getSql();
+		$this->registry = $ct->getRegistry();
+		$this->user     = $ct->getUser();
 	}
 
 	/**

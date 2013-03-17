@@ -22,6 +22,23 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Account;
+
+use Amun\Data\RecordAbstract;
+use Amun\Data\HandlerAbstract;
+use Amun\DataFactory;
+use Amun\Exception;
+use Amun\Security;
+use AmunService\User\Friend;
+use AmunService\Core\Host;
+use PSX\DateTime;
+use PSX\Http;
+use PSX\Webfinger;
+use PSX\Sql;
+use PSX\Sql\Condition;
+use PSX\Sql\Join;
+use PSX\Data\RecordInterface;
+
 /**
  * Amun_User_Account_Handler
  *
@@ -32,44 +49,44 @@
  * @package    Amun_User_Account
  * @version    $Revision: 880 $
  */
-class AmunService_User_Account_Handler extends Amun_Data_HandlerAbstract
+class Handler extends HandlerAbstract
 {
 	public function getByIdentity($identity)
 	{
-		return Amun_Sql_Table_Registry::get('User_Account')
+		return DataFactory::getTable('User_Account')
 			->select(array('id', 'status', 'name', 'email'))
 			->where('identity', '=', $identity)
-			->getRow(PSX_Sql::FETCH_OBJECT);
+			->getRow(Sql::FETCH_OBJECT);
 	}
 
 	public function getRecoverByToken($token)
 	{
-		return Amun_Sql_Table_Registry::get('User_Account')
+		return DataFactory::getTable('User_Account')
 			->select(array('id', 'name', 'ip', 'email', 'date'))
 			->where('token', '=', $token)
-			->where('status', '=', AmunService_User_Account_Record::RECOVER)
-			->getRow(PSX_Sql::FETCH_OBJECT);
+			->where('status', '=', Record::RECOVER)
+			->getRow(Sql::FETCH_OBJECT);
 	}
 
 	public function getNotActivatedByToken($token)
 	{
-		return Amun_Sql_Table_Registry::get('User_Account')
+		return DataFactory::getTable('User_Account')
 			->select(array('id', 'ip', 'date'))
 			->where('token', '=', $token)
-			->where('status', '=', AmunService_User_Account_Record::NOT_ACTIVATED)
-			->getRow(PSX_Sql::FETCH_OBJECT);
+			->where('status', '=', Record::NOT_ACTIVATED)
+			->getRow(Sql::FETCH_OBJECT);
 	}
 
-	public function create(PSX_Data_RecordInterface $record)
+	public function create(RecordInterface $record)
 	{
 		if($record->hasFields('groupId', 'status', 'identity', 'name', 'pw'))
 		{
 			// check whether identity exists
-			$con = new PSX_Sql_Condition(array('identity', '=', $record->identity));
+			$con = new Condition(array('identity', '=', $record->identity));
 
 			if($this->table->count($con) > 0)
 			{
-				throw new PSX_Data_Exception('Identity already exists');
+				throw new Exception('Identity already exists');
 			}
 
 
@@ -87,11 +104,11 @@ class AmunService_User_Account_Handler extends Amun_Data_HandlerAbstract
 
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-			$record->token    = Amun_Security::generateToken();
+			$record->token    = Security::generateToken();
 			$record->ip       = $_SERVER['REMOTE_ADDR'];
-			$record->lastSeen = $date->format(PSX_DateTime::SQL);
-			$record->updated  = $date->format(PSX_DateTime::SQL);
-			$record->date     = $date->format(PSX_DateTime::SQL);
+			$record->lastSeen = $date->format(DateTime::SQL);
+			$record->updated  = $date->format(DateTime::SQL);
+			$record->date     = $date->format(DateTime::SQL);
 
 
 			// set host id if we have an remote host discover the profile url
@@ -102,7 +119,7 @@ class AmunService_User_Account_Handler extends Amun_Data_HandlerAbstract
 			}
 			else
 			{
-				$record->status     = AmunService_User_Account_Record::REMOTE;
+				$record->status     = Record::REMOTE;
 				$record->profileUrl = $this->discoverProfileUrl($record->hostId, $record->name);
 			}
 
@@ -141,33 +158,33 @@ class AmunService_User_Account_Handler extends Amun_Data_HandlerAbstract
 			// insert relation to self
 			$this->sql->insert($this->registry['table.user_friend'], array(
 
-				'status'   => AmunService_User_Friend_Record::NORMAL,
+				'status'   => Friend\Record::NORMAL,
 				'userId'   => $record->id,
 				'friendId' => $record->id,
-				'date'     => $date->format(PSX_DateTime::SQL),
+				'date'     => $date->format(DateTime::SQL),
 
 			));
 
 
-			$this->notify(Amun_Data_RecordAbstract::INSERT, $record);
+			$this->notify(RecordAbstract::INSERT, $record);
 
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
-	public function update(PSX_Data_RecordInterface $record)
+	public function update(RecordInterface $record)
 	{
 		if($record->hasFields('id'))
 		{
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
 			$record->ip      = $_SERVER['REMOTE_ADDR'];
-			$record->updated = $date->format(PSX_DateTime::SQL);
+			$record->updated = $date->format(DateTime::SQL);
 
 
 			// set host id if we have an remote host discover the profile url
@@ -175,8 +192,8 @@ class AmunService_User_Account_Handler extends Amun_Data_HandlerAbstract
 			{
 				if(!isset($record->name))
 				{
-					$con  = new PSX_Sql_Condition(array('id', '=', $record->id));
-					$name = $this->sql->select($this->table->getName(), array('name'), $con, PSX_Sql::SELECT_FIELD);
+					$con  = new Condition(array('id', '=', $record->id));
+					$name = $this->sql->select($this->table->getName(), array('name'), $con, Sql::SELECT_FIELD);
 				}
 				else
 				{
@@ -190,7 +207,7 @@ class AmunService_User_Account_Handler extends Amun_Data_HandlerAbstract
 				}
 				else
 				{
-					$record->status     = AmunService_User_Account_Record::REMOTE;
+					$record->status     = Record::REMOTE;
 					$record->profileUrl = $this->discoverProfileUrl($record->hostId, $name);
 				}
 			}
@@ -205,39 +222,39 @@ class AmunService_User_Account_Handler extends Amun_Data_HandlerAbstract
 			}
 
 
-			$con = new PSX_Sql_Condition(array('id', '=', $record->id));
+			$con = new Condition(array('id', '=', $record->id));
 
 			$this->table->update($record->getData(), $con);
 
 
-			$this->notify(Amun_Data_RecordAbstract::UPDATE, $record);
+			$this->notify(RecordAbstract::UPDATE, $record);
 
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
-	public function delete(PSX_Data_RecordInterface $record)
+	public function delete(RecordInterface $record)
 	{
 		if($record->hasFields('id'))
 		{
-			$con = new PSX_Sql_Condition(array('id', '=', $record->id));
+			$con = new Condition(array('id', '=', $record->id));
 
 			$this->table->delete($con);
 
 
-			$this->notify(Amun_Data_RecordAbstract::DELETE, $record);
+			$this->notify(RecordAbstract::DELETE, $record);
 
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
@@ -245,10 +262,10 @@ class AmunService_User_Account_Handler extends Amun_Data_HandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'globalId', 'groupId', 'status', 'name', 'updated', 'profileUrl', 'thumbnailUrl', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Group')
+			->join(Join::INNER, DataFactory::getTable('User_Group')
 				->select(array('title'), 'group')
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Country')
+			->join(Join::INNER, DataFactory::getTable('Country')
 				->select(array('title'), 'country')
 			);
 	}
@@ -257,7 +274,7 @@ class AmunService_User_Account_Handler extends Amun_Data_HandlerAbstract
 	{
 		if(empty($name))
 		{
-			throw new PSX_Data_Exception('Need name to discover remote profile');
+			throw new Exception('Need name to discover remote profile');
 		}
 
 		$sql = <<<SQL
@@ -272,19 +289,19 @@ AND
 	`host`.`status` = ?
 SQL;
 
-		$row = $this->sql->getRow($sql, array($hostId, AmunService_Core_Host_Record::NORMAL));
+		$row = $this->sql->getRow($sql, array($hostId, Host\Record::NORMAL));
 
 		if(!empty($row))
 		{
-			$http      = new PSX_Http(new PSX_Http_Handler_Curl());
-			$webfinger = new PSX_Webfinger($http);
+			$http      = new Http();
+			$webfinger = new Webfinger($http);
 			$email     = $name . '@' . $row['hostName'];
 
 			return $webfinger->getAcctProfile($email, $row['hostTemplate']);
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Invalid host id');
+			throw new Exception('Invalid host id');
 		}
 	}
 }

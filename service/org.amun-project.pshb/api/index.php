@@ -24,7 +24,7 @@
 
 namespace pshb\api;
 
-use Amun_Module_RestAbstract;
+use Amun\Module\RestAbstract;
 
 /**
  * subscription
@@ -37,7 +37,7 @@ use Amun_Module_RestAbstract;
  * @subpackage user_subscription
  * @version    $Revision: 875 $
  */
-class index extends Amun_Module_RestAbstract
+class index extends RestAbstract
 {
 	protected function getSelection()
 	{

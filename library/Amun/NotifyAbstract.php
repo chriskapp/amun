@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun;
+
+use Amun\Sql\TableInterface;
+use PSX\Data\RecordInterface;
+
 /**
  * Amun_NotifyAbstract
  *
@@ -40,7 +45,7 @@ abstract class Amun_NotifyAbstract
 	protected $registry;
 	protected $user;
 
-	public function __construct(Amun_Sql_TableInterface $table, Amun_User $user)
+	public function __construct(TableInterface $table, User $user)
 	{
 		$this->table    = $table;
 		$this->config   = $table->getRegistry()->getConfig();
@@ -49,6 +54,6 @@ abstract class Amun_NotifyAbstract
 		$this->user     = $user;
 	}
 
-	abstract public function notify($type, PSX_Data_RecordInterface $record);
+	abstract public function notify($type, RecordInterface $record);
 }
 

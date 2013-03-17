@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace forum\application;
+
+use Amun\Module\ApplicationAbstract;
+use Amun\Exception;
+
 /**
  * add
  *
@@ -33,7 +38,7 @@
  * @subpackage forum
  * @version    $Revision: 875 $
  */
-class add extends Amun_Module_ApplicationAbstract
+class add extends ApplicationAbstract
 {
 	/**
 	 * @httpMethod GET
@@ -71,7 +76,7 @@ HTML;
 		}
 		else
 		{
-			throw new Amun_Exception('Access not allowed');
+			throw new Exception('Access not allowed');
 		}
 	}
 }

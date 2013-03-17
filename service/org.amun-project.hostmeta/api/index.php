@@ -24,9 +24,9 @@
 
 namespace hostmeta\api;
 
-use Amun_Module_ApiAbstract;
+use Amun\Module\ApiAbstract;
 use Exception;
-use PSX_Data_Message;
+use PSX\Data\Message;
 use XMLWriter;
 
 /**
@@ -38,7 +38,7 @@ use XMLWriter;
  * @category   module
  * @version    $Revision: 683 $
  */
-class index extends Amun_Module_ApiAbstract
+class index extends ApiAbstract
 {
 	private $writer;
 
@@ -98,7 +98,7 @@ class index extends Amun_Module_ApiAbstract
 		}
 		catch(Exception $e)
 		{
-			$msg = new PSX_Data_Message($e->getMessage(), false);
+			$msg = new Message($e->getMessage(), false);
 
 			$this->setResponse($msg);
 		}

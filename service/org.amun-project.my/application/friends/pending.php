@@ -22,6 +22,13 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\application\friends;
+
+use AmunService\My\FriendsAbstract;
+use PSX\Url;
+use PSX\Sql;
+use PSX\Html\Paging;
+
 /**
  * pending
  *
@@ -33,7 +40,7 @@
  * @subpackage my
  * @version    $Revision: 875 $
  */
-class pending extends AmunService_My_FriendsAbstract
+class pending extends FriendsAbstract
 {
 	public function onLoad()
 	{
@@ -57,15 +64,13 @@ class pending extends AmunService_My_FriendsAbstract
 		$this->htmlCss->add('my');
 		$this->htmlJs->add('amun');
 		$this->htmlJs->add('my');
-
-		$this->template->set('friends/' . __CLASS__ . '.tpl');
 	}
 
 	public function getRequests()
 	{
 		$con = $this->getRequestCondition();
 
-		$url   = new PSX_Url($this->base->getSelf());
+		$url   = new Url($this->base->getSelf());
 		$count = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
 		$count = $count > 16 ? 16 : $count;
 
@@ -76,10 +81,10 @@ class pending extends AmunService_My_FriendsAbstract
 			$url->getParam('sortBy'), 
 			$url->getParam('sortOrder'), 
 			$con, 
-			PSX_SQL::FETCH_OBJECT);
+			SQL::FETCH_OBJECT);
 
 
-		$paging = new PSX_Html_Paging($url, $result);
+		$paging = new Paging($url, $result);
 
 		$this->template->assign('pagingRequests', $paging, 0);
 

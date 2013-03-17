@@ -24,12 +24,12 @@
 
 namespace my\gadget;
 
-use Amun_Module_GadgetAbstract;
-use Amun_Sql_Table_Registry;
+use Amun\Module\GadgetAbstract;
+use Amun\DataFactory;
 use DateInterval;
-use DateTime;
-use PSX_DateTime;
-use PSX_Sql;
+use PSX\DateTime;
+use PSX\DateTime;
+use PSX\Sql;
 
 /**
  * activityChart
@@ -41,7 +41,7 @@ use PSX_Sql;
  * @package    gadget
  * @version    $Revision: 875 $
  */
-class activityChart extends Amun_Module_GadgetAbstract
+class activityChart extends GadgetAbstract
 {
 	/**
 	 * onLoad
@@ -59,10 +59,10 @@ class activityChart extends Amun_Module_GadgetAbstract
 		$act = array();
 
 
-		$result = Amun_Sql_Table_Registry::get('User_Activity')
+		$result = DataFactory::getTable('User_Activity')
 			->select(array('date'))
-			->where('date', '>=', $past->format(PSX_DateTime::SQL))
-			->orderBy('date', PSX_Sql::SORT_ASC)
+			->where('date', '>=', $past->format(DateTime::SQL))
+			->orderBy('date', Sql::SORT_ASC)
 			->getAll();
 
 		foreach($result as $row)

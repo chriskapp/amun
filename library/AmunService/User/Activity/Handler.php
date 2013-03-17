@@ -22,6 +22,24 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Activity;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use Amun\Security;
+use AmunService\Core\Approval;
+use AmunService\User\Activity\Receiver;
+use PSX\Atom\Entry;
+use PSX\DateTime;
+use PSX\Data\RecordInterface;
+use PSX\Data\ResultSet;
+use PSX\Sql;
+use PSX\Sql\Condition;
+use PSX\Sql\Join;
+use DOMElement;
+
 /**
  * Amun_User_Activity_Handler
  *
@@ -32,22 +50,22 @@
  * @package    Amun_User_Activity
  * @version    $Revision: 880 $
  */
-class AmunService_User_Activity_Handler extends Amun_Data_HandlerAbstract
+class Handler extends HandlerAbstract
 {
-	public function getPrivateResultSet($userId, array $fields, $startIndex = 0, $count = 16, $sortBy = null, $sortOrder = null, PSX_Sql_Condition $con = null, $mode = 0, $class = null, array $args = array())
+	public function getPrivateResultSet($userId, array $fields, $startIndex = 0, $count = 16, $sortBy = null, $sortOrder = null, Condition $con = null, $mode = 0, $class = null, array $args = array())
 	{
 		$startIndex = $startIndex !== null ? (integer) $startIndex : 0;
 		$count      = !empty($count)       ? (integer) $count      : 16;
 		$sortBy     = $sortBy     !== null ? $sortBy               : 'date';
-		$sortOrder  = $sortOrder  !== null ? (integer) $sortOrder  : PSX_Sql::SORT_DESC;
+		$sortOrder  = $sortOrder  !== null ? (integer) $sortOrder  : Sql::SORT_DESC;
 
 		$select = $this->table
 			->select(array('id', 'parentId', 'status', 'verb', 'summary', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Activity_Receiver')
+			->join(Join::INNER, DataFactory::getTable('User_Activity_Receiver')
 				->select(array('id', 'status', 'activityId', 'userId', 'date'), 'receiver'),
 				'1:n'
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(Join::INNER, DataFactory::getTable('User_Account')
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			)
 			->where('receiverUserId', '=', $userId)
@@ -72,28 +90,28 @@ class AmunService_User_Activity_Handler extends Amun_Data_HandlerAbstract
 
 		$totalResults = $select->getTotalResults();
 		$entries      = $select->getAll($mode, $class, $args);
-		$resultSet    = new PSX_Data_ResultSet($totalResults, $startIndex, $count, $entries);
+		$resultSet    = new ResultSet($totalResults, $startIndex, $count, $entries);
 
 		return $resultSet;
 	}
 
-	public function getPublicResultSet($userId, array $fields, $startIndex = 0, $count = 16, $sortBy = null, $sortOrder = null, PSX_Sql_Condition $con = null, $mode = 0, $class = null, array $args = array())
+	public function getPublicResultSet($userId, array $fields, $startIndex = 0, $count = 16, $sortBy = null, $sortOrder = null, Condition $con = null, $mode = 0, $class = null, array $args = array())
 	{
 		$startIndex = $startIndex !== null ? (integer) $startIndex : 0;
 		$count      = !empty($count)       ? (integer) $count      : 16;
 		$sortBy     = $sortBy     !== null ? $sortBy               : 'date';
-		$sortOrder  = $sortOrder  !== null ? (integer) $sortOrder  : PSX_Sql::SORT_DESC;
+		$sortOrder  = $sortOrder  !== null ? (integer) $sortOrder  : Sql::SORT_DESC;
 
-		$select = Amun_Sql_Table_Registry::get('User_Activity_Receiver')
+		$select = DataFactory::getTable('User_Activity_Receiver')
 			->select(array('id', 'status', 'activityId', 'userId', 'date'), 'receiver')
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Activity')
+			->join(Join::INNER, DataFactory::getTable('User_Activity')
 				->select(array('id', 'globalId', 'parentId', 'userId', 'refId', 'table', 'status', 'scope', 'verb', 'summary', 'date'))
-				->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+				->join(Join::INNER, DataFactory::getTable('User_Account')
 					->select(array('globalId', 'name', 'profileUrl', 'thumbnailUrl'), 'author')
 				)
 			)
 			->where('receiverUserId', '=', $userId)
-			->where('receiverStatus', '=', AmunService_User_Activity_Receiver_Record::VISIBLE)
+			->where('receiverStatus', '=', Receiver\Record::VISIBLE)
 			->where('parentId', '=', 0)
 			->where('scope', '=', 0)
 			->where('userId', '=', $userId)
@@ -117,12 +135,12 @@ class AmunService_User_Activity_Handler extends Amun_Data_HandlerAbstract
 
 		$totalResults = $select->getTotalResults();
 		$entries      = $select->getAll($mode, $class, $args);
-		$resultSet    = new PSX_Data_ResultSet($totalResults, $startIndex, $count, $entries);
+		$resultSet    = new ResultSet($totalResults, $startIndex, $count, $entries);
 
 		return $resultSet;
 	}
 
-	public function create(PSX_Data_RecordInterface $record)
+	public function create(RecordInterface $record)
 	{
 		if($record->hasFields('summary'))
 		{
@@ -138,7 +156,7 @@ class AmunService_User_Activity_Handler extends Amun_Data_HandlerAbstract
 			{
 				$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-				$record->date = $date->format(PSX_DateTime::SQL);
+				$record->date = $date->format(DateTime::SQL);
 			}
 
 
@@ -147,7 +165,7 @@ class AmunService_User_Activity_Handler extends Amun_Data_HandlerAbstract
 
 			$record->id = $this->sql->getLastInsertId();
 
-			$this->notify(Amun_Data_RecordAbstract::INSERT, $record);
+			$this->notify(RecordAbstract::INSERT, $record);
 
 
 			$this->sendToReceiver($record);
@@ -157,58 +175,58 @@ class AmunService_User_Activity_Handler extends Amun_Data_HandlerAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
-	public function update(PSX_Data_RecordInterface $record)
+	public function update(RecordInterface $record)
 	{
 		if($record->hasFields('id'))
 		{
-			$con = new PSX_Sql_Condition(array('id', '=', $record->id));
+			$con = new Condition(array('id', '=', $record->id));
 
 			$this->table->update($record->getData(), $con);
 
 
-			//$this->notify(Amun_Data_RecordAbstract::UPDATE, $record);
+			//$this->notify(RecordAbstract::UPDATE, $record);
 
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
-	public function delete(PSX_Data_RecordInterface $record)
+	public function delete(RecordInterface $record)
 	{
 		if($record->hasFields('id'))
 		{
-			$con = new PSX_Sql_Condition(array('id', '=', $record->id));
+			$con = new Condition(array('id', '=', $record->id));
 
 			$this->table->delete($con);
 
 
-			//$this->notify(Amun_Data_RecordAbstract::DELETE, $record);
+			//$this->notify(RecordAbstract::DELETE, $record);
 
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
-	public function callback(PSX_Atom_Entry $entry)
+	public function callback(Entry $entry)
 	{
 		$dom  = $entry->getDom();
 		$verb = $dom->getElementsByTagNameNS('http://activitystrea.ms/spec/1.0/', 'verb')->item(0);
 
-		if($verb instanceof DomElement)
+		if($verb instanceof DOMElement)
 		{
-			$activity = Amun_Sql_Table_Registry::get('User_Activity')->getRecord();
+			$activity = DataFactory::getTable('User_Activity')->getRecord();
 			$activity->setVerb($verb->nodeValue);
 			$activity->setSummary($entry->content);
 			$activity->table = 'amun_user_activity';
@@ -217,7 +235,7 @@ class AmunService_User_Activity_Handler extends Amun_Data_HandlerAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Verb not set');
+			throw new Exception('Verb not set');
 		}
 	}
 
@@ -225,12 +243,12 @@ class AmunService_User_Activity_Handler extends Amun_Data_HandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'globalId', 'parentId', 'userId', 'title', 'summary', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(Join::INNER, DataFactory::getTable('User_Account')
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			);
 	}
 
-	private function sendToReceiver(PSX_Data_RecordInterface $record)
+	private function sendToReceiver(RecordInterface $record)
 	{
 		$activityId = isset($record->id)    ? (integer) $record->id    : null;
 		$scope      = isset($record->scope) ? (integer) $record->scope : 0;

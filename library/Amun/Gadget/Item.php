@@ -22,6 +22,12 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Gadget;
+
+use PSX\Cache;
+use PSX\Config;
+use PSX\Loader;
+
 /**
  * Amun_Gadget_Item
  *
@@ -32,7 +38,7 @@
  * @package    Amun_Gadget
  * @version    $Revision: 880 $
  */
-class Amun_Gadget_Item
+class Item
 {
 	public $id;
 	public $name;
@@ -45,7 +51,7 @@ class Amun_Gadget_Item
 	private $loader;
 	private $body;
 
-	public function __construct(PSX_Config $config, PSX_Loader $loader)
+	public function __construct(Config $config, Loader $loader)
 	{
 		$this->config = $config;
 		$this->loader = $loader;
@@ -94,7 +100,7 @@ class Amun_Gadget_Item
 	{
 		$key    = 'gadget-' . $this->id;
 		$expire = (integer) $this->expire;
-		$cache  = new PSX_Cache($key, $expire);
+		$cache  = new Cache($key, $expire);
 
 		if($this->cache == 0 || ($content = $cache->load()) === false)
 		{

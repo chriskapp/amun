@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun;
+
+use Amun\Captcha\Provider;
+
 /**
  * Amun_Captcha
  *
@@ -32,23 +36,19 @@
  * @package    Amun_Captcha
  * @version    $Revision: 635 $
  */
-class Amun_Captcha
+class Captcha
 {
 	public static function factory($provider = null)
 	{
 		switch($provider)
 		{
 			case 'recaptcha':
-
-				return new Amun_Captcha_Provider_ReCaptcha();
-
+				return new Provider\ReCaptcha();
 				break;
 
 			default:
 			case 'default':
-
-				return new Amun_Captcha_Provider_Default();
-
+				return new Provider\Default();
 				break;
 		}
 	}

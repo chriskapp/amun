@@ -22,6 +22,13 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\My;
+
+use Amun\Sql\TableInterface;
+use Amun\User;
+use AmunService\User\Account\Record;
+use PSX\DateTime;
+
 /**
  * Amun_Service_My_Credentials
  *
@@ -32,11 +39,11 @@
  * @package    Amun_Service_My
  * @version    $Revision: 635 $
  */
-class AmunService_My_Credentials extends AmunService_User_Account_Record
+class Credentials extends Record
 {
 	protected $_user;
 
-	public function __construct(Amun_Sql_TableInterface $table, Amun_User $user)
+	public function __construct(TableInterface $table, User $user)
 	{
 		parent::__construct($table);
 

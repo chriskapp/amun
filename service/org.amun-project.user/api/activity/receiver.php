@@ -24,10 +24,10 @@
 
 namespace user\api\activity;
 
-use Amun_Module_RestAbstract;
-use PSX_Data_Exception;
-use PSX_Data_WriterInterface;
-use PSX_Data_WriterResult;
+use Amun\Module\RestAbstract;
+use Amun\Exception;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
 
 /**
  * receiver
@@ -40,21 +40,19 @@ use PSX_Data_WriterResult;
  * @subpackage user_activity
  * @version    $Revision: 683 $
  */
-class receiver extends Amun_Module_RestAbstract
+class receiver extends RestAbstract
 {
 	protected function getHandler($table = null)
 	{
 		return parent::getHandler($table === null ? 'User_Activity_Receiver' : $table);
 	}
 
-	protected function setWriterConfig(PSX_Data_WriterResult $writer)
+	protected function setWriterConfig(WriterResult $writer)
 	{
 		switch($writer->getType())
 		{
-			case PSX_Data_WriterInterface::ATOM:
-
-				throw new PSX_Data_Exception('Atom not supported');
-
+			case WriterInterface::ATOM:
+				throw new Exception('Atom not supported');
 				break;
 		}
 	}

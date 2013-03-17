@@ -22,6 +22,12 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace page\application;
+
+use Amun\Exception;
+use Amun\Module\ApplicationAbstract;
+use PSX\Sql;
+
 /**
  * index
  *
@@ -33,7 +39,7 @@
  * @subpackage page
  * @version    $Revision: 875 $
  */
-class index extends Amun_Module_ApplicationAbstract
+class index extends ApplicationAbstract
 {
 	/**
 	 * @httpMethod GET
@@ -44,7 +50,7 @@ class index extends Amun_Module_ApplicationAbstract
 		if($this->user->hasRight('page_view'))
 		{
 			// load page
-			$recordPage = $this->getHandler()->getByPageId($this->page->id, PSX_Sql::FETCH_OBJECT);
+			$recordPage = $this->getHandler()->getByPageId($this->page->id, Sql::FETCH_OBJECT);
 
 			$this->template->assign('recordPage', $recordPage);
 
@@ -57,12 +63,10 @@ class index extends Amun_Module_ApplicationAbstract
 			$this->htmlCss->add('page');
 			$this->htmlJs->add('bootstrap');
 			$this->htmlJs->add('prettify');
-
-			$this->template->set(__CLASS__ . '.tpl');
 		}
 		else
 		{
-			throw new Amun_Exception('Access not allowed');
+			throw new Exception('Access not allowed');
 		}
 	}
 }

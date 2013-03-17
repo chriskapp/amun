@@ -22,6 +22,13 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Module;
+
+use Amun\Oauth;
+use Amun\Dependency;
+use PSX\Base;
+use PSX\Loader\Location;
+
 /**
  * Amun_Module_ApiAbstract
  *
@@ -32,19 +39,19 @@
  * @package    Amun_Module
  * @version    $Revision: 835 $
  */
-abstract class Amun_Module_ApiAbstract extends Amun_Oauth
+abstract class ApiAbstract extends Oauth
 {
 	protected $sessionName;
 	protected $sessionId;
 	protected $userId;
 
-	public function __construct(PSX_Loader_Location $location, PSX_Base $base, $basePath, array $uriFragments)
+	public function __construct(Location $location, Base $base, $basePath, array $uriFragments)
 	{
 		parent::__construct($location, $base, $basePath, $uriFragments);
 
 		// if the authorization header is set follow the oauth
 		// authentication process else assign the user from the session
-		$authorization = PSX_Base::getRequestHeader('Authorization');
+		$authorization = Base::getRequestHeader('Authorization');
 
 		if($authorization !== false)
 		{
@@ -54,7 +61,7 @@ abstract class Amun_Module_ApiAbstract extends Amun_Oauth
 
 	public function getDependencies()
 	{
-		$ct = new Amun_Dependency_Api($this->base->getConfig(), array(
+		$ct = new Dependency\Api($this->base->getConfig(), array(
 			'session.name'   => $this->sessionName,
 			'session.userId' => $this->userId,
 			'session.id'     => $this->requestToken,

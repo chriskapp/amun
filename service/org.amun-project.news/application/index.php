@@ -22,6 +22,18 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace news\application;
+
+use Amun\Exception;
+use Amun\Module\ApplicationAbstract;
+use Amun\Html;
+use PSX\DateTime;
+use PSX\Sql;
+use PSX\Url;
+use PSX\Data\Writer;
+use PSX\Html\Paging;
+use DateInterval;
+
 /**
  * index
  *
@@ -33,7 +45,7 @@
  * @subpackage news
  * @version    $Revision: 875 $
  */
-class index extends Amun_Module_ApplicationAbstract
+class index extends ApplicationAbstract
 {
 	/**
 	 * @httpMethod GET
@@ -56,13 +68,11 @@ class index extends Amun_Module_ApplicationAbstract
 			// template
 			$this->htmlCss->add('news');
 			$this->htmlJs->add('prettify');
-			$this->htmlContent->add(Amun_Html_Content::META, PSX_Data_Writer_Atom::link($this->page->title, $this->service->getApiEndpoint() . '?format=atom&filterBy=pageId&filterOp=equals&filterValue=' . $this->page->id));
-
-			$this->template->set(__CLASS__ . '.tpl');
+			$this->htmlContent->add(Html\Content::META, Writer\Atom::link($this->page->title, $this->service->getApiEndpoint() . '?format=atom&filterBy=pageId&filterOp=equals&filterValue=' . $this->page->id));
 		}
 		else
 		{
-			throw new Amun_Exception('Access not allowed');
+			throw new Exception('Access not allowed');
 		}
 	}
 
@@ -91,11 +101,11 @@ class index extends Amun_Module_ApplicationAbstract
 		{
 			$date = new DateTime($year . '-' . ($month < 10 ? '0' : '') . $month . '-01', $this->registry['core.default_timezone']);
 
-			$con->add('date', '>=', $date->format(PSX_DateTime::SQL));
-			$con->add('date', '<', $date->add(new DateInterval('P1M'))->format(PSX_DateTime::SQL));
+			$con->add('date', '>=', $date->format(DateTime::SQL));
+			$con->add('date', '<', $date->add(new DateInterval('P1M'))->format(DateTime::SQL));
 		}
 
-		$url   = new PSX_Url($this->base->getSelf());
+		$url   = new Url($this->base->getSelf());
 		$count = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
 		$count = $count > 16 ? 16 : $count;
 
@@ -105,10 +115,10 @@ class index extends Amun_Module_ApplicationAbstract
 			$url->getParam('sortBy'), 
 			$url->getParam('sortOrder'), 
 			$con,
-			PSX_SQL::FETCH_OBJECT);
+			SQL::FETCH_OBJECT);
 
 
-		$paging = new PSX_Html_Paging($url, $result);
+		$paging = new Paging($url, $result);
 
 		$this->template->assign('pagingNews', $paging, 0);
 

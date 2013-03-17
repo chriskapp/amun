@@ -22,6 +22,18 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Module;
+
+use Amun\Dependency;
+use Amun\Exception;
+use Amun\Html;
+use Amun\Option;
+use PSX\Base;
+use PSX\DateTime;
+use PSX\Loader\Location;
+use PSX\Module\ViewAbstract;
+use PSX\Sql\Condition;
+
 /**
  * Amun_Module_ApplicationAbstract
  *
@@ -32,7 +44,7 @@
  * @package    Amun_Module
  * @version    $Revision: 712 $
  */
-abstract class Amun_Module_ApplicationAbstract extends PSX_Module_ViewAbstract
+abstract class ApplicationAbstract extends ViewAbstract
 {
 	public function onLoad()
 	{
@@ -44,7 +56,7 @@ abstract class Amun_Module_ApplicationAbstract extends PSX_Module_ViewAbstract
 			// load nav
 			if($this->page->hasNav())
 			{
-				$this->nav->load();
+				$this->navigation->load();
 			}
 
 			// load path
@@ -71,7 +83,7 @@ abstract class Amun_Module_ApplicationAbstract extends PSX_Module_ViewAbstract
 		}
 		else
 		{
-			throw new Amun_Page_Exception('Invalid page');
+			throw new Exception('Invalid page');
 		}
 	}
 
@@ -79,9 +91,20 @@ abstract class Amun_Module_ApplicationAbstract extends PSX_Module_ViewAbstract
 	{
 		if(empty($content))
 		{
+			// if we havent set an template file 
+			$file = $this->template->getFile();
+
+			if(empty($file))
+			{
+				$file = substr(get_class($this), strlen($this->service->namespace) + 13);
+				$file = str_replace('\\', '/', $file);
+
+				$this->template->set($file . '.tpl');
+			}
+
 			if(!($response = $this->template->transform()))
 			{
-				throw new PSX_Exception('Error while transforming template');
+				throw new Exception('Error while transforming template');
 			}
 		}
 		else
@@ -107,7 +130,7 @@ abstract class Amun_Module_ApplicationAbstract extends PSX_Module_ViewAbstract
 
 	public function getDependencies()
 	{
-		$ct = new Amun_Dependency_Application($this->base->getConfig(), array(
+		$ct = new Dependency\Application($this->base->getConfig(), array(
 			'application.pageId' => $this->location->getServiceId()
 		));
 
@@ -123,19 +146,19 @@ abstract class Amun_Module_ApplicationAbstract extends PSX_Module_ViewAbstract
 	{
 		if(!empty($this->page->description))
 		{
-			$this->htmlContent->add(Amun_Html_Content::META, '<meta name="description" content="' . $this->page->description . '" />');
+			$this->htmlContent->add(Html\Content::META, '<meta name="description" content="' . $this->page->description . '" />');
 		}
 
 		if(!empty($this->page->keywords))
 		{
-			$this->htmlContent->add(Amun_Html_Content::META, '<meta name="keywords" content="' . $this->page->keywords . '" />');
+			$this->htmlContent->add(Html\Content::META, '<meta name="keywords" content="' . $this->page->keywords . '" />');
 		}
 
 		if($this->page->publishDate != '0000-00-00 00:00:00')
 		{
 			$publishDate = new DateTime($this->page->publishDate);
 
-			$this->htmlContent->add(Amun_Html_Content::META, '<meta name="date" content="' . $publishDate->format(DateTime::ATOM) . '" />');
+			$this->htmlContent->add(Html\Content::META, '<meta name="date" content="' . $publishDate->format(DateTime::ATOM) . '" />');
 		}
 	}
 
@@ -149,7 +172,7 @@ abstract class Amun_Module_ApplicationAbstract extends PSX_Module_ViewAbstract
 	 */
 	protected function setOptions(array $data)
 	{
-		$options = new Amun_Option($this->location->getClass()->getName(), $this->registry, $this->user, $this->page);
+		$options = new Option($this->location->getClass()->getName(), $this->registry, $this->user, $this->page);
 
 		foreach($data as $row)
 		{
@@ -165,7 +188,7 @@ abstract class Amun_Module_ApplicationAbstract extends PSX_Module_ViewAbstract
 
 	protected function getRequestCondition()
 	{
-		$con          = new PSX_Sql_Condition();
+		$con          = new Condition();
 		$filterBy     = isset($_GET['filterBy']) ? $_GET['filterBy'] : null;
 		$filterOp     = isset($_GET['filterOp']) ? $_GET['filterOp'] : null;
 		$filterValue  = isset($_GET['filterValue']) ? $_GET['filterValue'] : null;
@@ -193,9 +216,9 @@ abstract class Amun_Module_ApplicationAbstract extends PSX_Module_ViewAbstract
 
 		if($updatedSince !== null)
 		{
-			$datetime = new PSX_DateTime($updatedSince);
+			$datetime = new DateTime($updatedSince);
 
-			$con->add('date', '>', $datetime->format(PSX_DateTime::SQL));
+			$con->add('date', '>', $datetime->format(DateTime::SQL));
 		}
 
 		return $con;

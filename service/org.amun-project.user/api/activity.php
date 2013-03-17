@@ -24,11 +24,11 @@
 
 namespace user\api;
 
-use Amun_Base;
-use Amun_Module_RestAbstract;
-use DateTime;
-use PSX_Data_WriterInterface;
-use PSX_Data_WriterResult;
+use Amun\Base;
+use Amun\Module\RestAbstract;
+use PSX\DateTime;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
 
 /**
  * activity
@@ -41,18 +41,18 @@ use PSX_Data_WriterResult;
  * @subpackage user_activity
  * @version    $Revision: 743 $
  */
-class activity extends Amun_Module_RestAbstract
+class activity extends RestAbstract
 {
 	protected function getHandler($table = null)
 	{
 		return parent::getHandler($table === null ? 'User_Activity' : $table);
 	}
 
-	protected function setWriterConfig(PSX_Data_WriterResult $writer)
+	protected function setWriterConfig(WriterResult $writer)
 	{
 		switch($writer->getType())
 		{
-			case PSX_Data_WriterInterface::ATOM:
+			case WriterInterface::ATOM:
 
 				$updated = $this->sql->getField('SELECT `date` FROM ' . $this->registry['table.user_activity'] . ' ORDER BY `date` DESC LIMIT 1');
 
@@ -60,12 +60,9 @@ class activity extends Amun_Module_RestAbstract
 				$id      = 'urn:uuid:' . $this->base->getUUID('user:activity');
 				$updated = new DateTime($updated, $this->registry['core.default_timezone']);
 
-
 				$writer = $writer->getWriter();
-
 				$writer->setConfig($title, $id, $updated);
-
-				$writer->setGenerator('amun ' . Amun_Base::getVersion());
+				$writer->setGenerator('amun ' . Base::getVersion());
 
 				if(!empty($this->config['amun_hub']))
 				{

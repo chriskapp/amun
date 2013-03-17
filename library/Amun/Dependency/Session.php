@@ -23,6 +23,11 @@
  * along with psx. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Dependency;
+
+use Amun\User;
+use PSX\Config;
+
 /**
  * Amun_Dependency_Default
  *
@@ -33,13 +38,13 @@
  * @package    Amun_Dependency
  * @version    $Revision: 818 $
  */
-class Amun_Dependency_Session extends Amun_Dependency_Default
+class Session extends Request
 {
 	protected $sessionName;
 	protected $sessionId;
 	protected $userId;
 
-	public function __construct(PSX_Config $config, array $params = array())
+	public function __construct(Config $config, array $params = array())
 	{
 		$this->sessionName = isset($params['session.name']) ? $params['session.name'] : 'amun_' . md5($config['psx_url']);
 		$this->sessionId   = isset($params['session.id']) ? $params['session.id'] : null;
@@ -63,7 +68,7 @@ class Amun_Dependency_Session extends Amun_Dependency_Default
 			return $this->get('session');
 		}
 
-		$session = new PSX_Session($this->sessionName);
+		$session = new \PSX\Session($this->sessionName);
 
 		if($this->sessionId !== null)
 		{
@@ -84,9 +89,9 @@ class Amun_Dependency_Session extends Amun_Dependency_Default
 
 		if($this->userId === null)
 		{
-			$this->userId = Amun_User::getId($this->getSession(), $this->getRegistry());
+			$this->userId = User::getId($this->getSession(), $this->getRegistry());
 		}
 
-		return $this->set('user', new Amun_User($this->userId, $this->getRegistry()));
+		return $this->set('user', new User($this->userId, $this->getRegistry()));
 	}
 }

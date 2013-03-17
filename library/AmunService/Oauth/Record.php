@@ -22,6 +22,21 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Oauth;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use Amun\Filter as AmunFilter;
+use Amun\Util;
+use AmunService\Oauth\Filter as OauthFilter;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
+use PSX\DateTime;
+use PSX\Filter;
+use PSX\Util\Markdown;
+
 /**
  * AmunService_Oauth_Record
  *
@@ -32,7 +47,7 @@
  * @package    Amun_Oauth
  * @version    $Revision: 683 $
  */
-class AmunService_Oauth_Record extends Amun_Data_RecordAbstract
+class Record extends RecordAbstract
 {
 	const NORMAL    = 0x1;
 	const CLOSED    = 0x2;
@@ -45,7 +60,7 @@ class AmunService_Oauth_Record extends Amun_Data_RecordAbstract
 
 	public function setId($id)
 	{
-		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
+		$id = $this->_validate->apply($id, 'integer', array(new AmunFilter\Id($this->_table)), 'id', 'Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -53,13 +68,13 @@ class AmunService_Oauth_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setStatus($status)
 	{
-		$status = $this->_validate->apply($status, 'integer', array(new AmunService_Oauth_Filter_Status()), 'status', 'Status');
+		$status = $this->_validate->apply($status, 'integer', array(new OauthFilter\Status()), 'status', 'Status');
 
 		if(!$this->_validate->hasError())
 		{
@@ -67,13 +82,13 @@ class AmunService_Oauth_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setName($name)
 	{
-		$name = $this->_validate->apply($name, 'string', array(new PSX_Filter_Length(3, 64), new PSX_Filter_Html()), 'name', 'Name');
+		$name = $this->_validate->apply($name, 'string', array(new Filter\Length(3, 64), new Filter\Html()), 'name', 'Name');
 
 		if(!$this->_validate->hasError())
 		{
@@ -81,13 +96,13 @@ class AmunService_Oauth_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setEmail($email)
 	{
-		$email = $this->_validate->apply($email, 'string', array(new PSX_Filter_Length(3, 64), new PSX_Filter_Email()), 'email', 'Email');
+		$email = $this->_validate->apply($email, 'string', array(new Filter\Length(3, 64), new Filter\Email()), 'email', 'Email');
 
 		if(!$this->_validate->hasError())
 		{
@@ -95,13 +110,13 @@ class AmunService_Oauth_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setUrl($url)
 	{
-		$url = $this->_validate->apply($url, 'string', array(new PSX_Filter_Length(3, 256), new PSX_Filter_Url()), 'url', 'Url');
+		$url = $this->_validate->apply($url, 'string', array(new Filter\Length(3, 256), new Filter\Url()), 'url', 'Url');
 
 		if(!$this->_validate->hasError())
 		{
@@ -109,13 +124,13 @@ class AmunService_Oauth_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setTitle($title)
 	{
-		$title = $this->_validate->apply($title, 'string', array(new PSX_Filter_Length(3, 64), new PSX_Filter_Html()), 'title', 'Title');
+		$title = $this->_validate->apply($title, 'string', array(new Filter\Length(3, 64), new Filter\Html()), 'title', 'Title');
 
 		if(!$this->_validate->hasError())
 		{
@@ -123,13 +138,13 @@ class AmunService_Oauth_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setDescription($description)
 	{
-		$description = $this->_validate->apply($description, 'string', array(new PSX_Filter_Length(3, 512), new PSX_Filter_Html()), 'description', 'Description');
+		$description = $this->_validate->apply($description, 'string', array(new Filter\Length(3, 512), new Filter\Html()), 'description', 'Description');
 
 		if(!$this->_validate->hasError())
 		{
@@ -137,13 +152,13 @@ class AmunService_Oauth_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setCallback($callback)
 	{
-		$callback = $this->_validate->apply($callback, 'string', array(new PSX_Filter_Length(0, 256), new AmunService_Oauth_Filter_Callback()), 'callback', 'Callback');
+		$callback = $this->_validate->apply($callback, 'string', array(new Filter\Length(0, 256), new OauthFilter\Callback()), 'callback', 'Callback');
 
 		if(!$this->_validate->hasError())
 		{
@@ -151,7 +166,7 @@ class AmunService_Oauth_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
@@ -170,18 +185,18 @@ class AmunService_Oauth_Record extends Amun_Data_RecordAbstract
 		return $this->_date;
 	}
 
-	public function export(PSX_Data_WriterResult $result)
+	public function export(WriterResult $result)
 	{
 		switch($result->getType())
 		{
-			case PSX_Data_WriterInterface::JSON:
-			case PSX_Data_WriterInterface::XML:
+			case WriterInterface::JSON:
+			case WriterInterface::XML:
 
 				return parent::export($result);
 
 				break;
 
-			case PSX_Data_WriterInterface::ATOM:
+			case WriterInterface::ATOM:
 
 				$entry = $result->getWriter()->createEntry();
 
@@ -198,7 +213,7 @@ class AmunService_Oauth_Record extends Amun_Data_RecordAbstract
 
 			default:
 
-				throw new PSX_Data_Exception('Writer is not supported');
+				throw new Exception('Writer is not supported');
 
 				break;
 		}

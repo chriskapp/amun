@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun;
+
+use Amun\Gadget\Args;
+
 /**
  * Amun_Gadget
  *
@@ -32,7 +36,7 @@
  * @package    Amun_Gadget
  * @version    $Revision: 834 $
  */
-class Amun_Gadget
+class Gadget
 {
 	public $id;
 	public $serviceId;
@@ -52,7 +56,7 @@ class Amun_Gadget
 	private $user;
 	private $body;
 
-	public function __construct($gadgetId, Amun_Registry $registry, Amun_User $user)
+	public function __construct($gadgetId, Registry $registry, User $user)
 	{
 		$this->config   = $registry->getConfig();
 		$this->sql      = $registry->getSql();
@@ -88,7 +92,7 @@ SQL;
 		{
 			if(!empty($row['gadgetRightId']) && !$this->user->hasRightId($row['gadgetRightId']))
 			{
-				throw new Amun_Exception('Access not allowed', 401);
+				throw new Exception('Access not allowed', 401);
 			}
 
 			$this->id          = $row['gadgetId'];
@@ -106,7 +110,7 @@ SQL;
 		}
 		else
 		{
-			throw new Amun_Exception('Invalid gadget');
+			throw new Exception('Invalid gadget');
 		}
 	}
 
@@ -132,7 +136,7 @@ SQL;
 	 */
 	public function getArgs()
 	{
-		return Amun_Gadget_Args::parse($this->param);
+		return Args::parse($this->param);
 	}
 }
 

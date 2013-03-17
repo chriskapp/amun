@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Filter;
+
+use PSX\FilterAbstract;
+use PSX\Sql;
+
 /**
  * Amun_Filter_Table
  *
@@ -32,11 +37,11 @@
  * @package    Amun_Filter
  * @version    $Revision: 635 $
  */
-class Amun_Filter_Table extends PSX_FilterAbstract
+class Table extends FilterAbstract
 {
 	private $sql;
 
-	public function __construct(PSX_Sql $sql)
+	public function __construct(Sql $sql)
 	{
 		$this->sql = $sql;
 	}

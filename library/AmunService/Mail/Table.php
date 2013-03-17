@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Mail;
+
+use Amun\Sql\TableAbstract;
+
 /**
  * Amun_System_Mail_Handler
  *
@@ -32,7 +36,7 @@
  * @package    Amun_System_Mail
  * @version    $Revision: 635 $
  */
-class AmunService_Mail_Table extends Amun_Sql_TableAbstract
+class Table extends TableAbstract
 {
 	public function getConnections()
 	{

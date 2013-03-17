@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Core\Host;
+
+use Amun\Sql\TableAbstract;
+
 /**
  * Amun_System_Host_Table
  *
@@ -32,7 +36,7 @@
  * @package    Amun_System_Host
  * @version    $Revision: 635 $
  */
-class AmunService_Core_Host_Table extends Amun_Sql_TableAbstract
+class Table extends TableAbstract
 {
 	public function getConnections()
 	{

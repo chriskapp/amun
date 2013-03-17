@@ -22,6 +22,22 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace profile\application;
+
+use Amun\Module\ApplicationAbstract;
+use Amun\Exception;
+use Amun\DataFactory;
+use Amun\Option;
+use Amun\Base;
+use Amun\Html;
+use AmunService\Pipe;
+use AmunService\User\Account;
+use PSX\Html\Paging;
+use PSX\Url;
+use PSX\Sql;
+use PSX\Sql\Join;
+use PSX\Data\Writer;
+
 /**
  * index
  *
@@ -33,7 +49,7 @@
  * @subpackage profile
  * @version    $Revision: 875 $
  */
-class index extends Amun_Module_ApplicationAbstract
+class index extends ApplicationAbstract
 {
 	/**
 	 * @httpMethod GET
@@ -45,18 +61,18 @@ class index extends Amun_Module_ApplicationAbstract
 		{
 			$account = $this->getAccount();
 
-			if(!$account instanceof AmunService_User_Account_Record)
+			if(!$account instanceof Account\Record)
 			{
-				throw new Amun_Exception('Invalid user');
+				throw new Exception('Invalid user');
 			}
 
 			$this->template->assign('account', $account);
 
 
 			// check whether remote profile
-			if($account->status == AmunService_User_Account_Record::REMOTE)
+			if($account->status == Account\Record::REMOTE)
 			{
-				PSX_Base::setResponseCode(301);
+				Base::setResponseCode(301);
 				header('Location: ' . $account->profileUrl);
 				exit;
 			}
@@ -74,7 +90,7 @@ class index extends Amun_Module_ApplicationAbstract
 
 			// options
 			$url     = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/friend';
-			$options = new Amun_Option(__CLASS__, $this->registry, $this->user, $this->page);
+			$options = new Option(__CLASS__, $this->registry, $this->user, $this->page);
 
 			if(!$this->user->isAnonymous() && !$this->user->hasFriend($account))
 			{
@@ -90,16 +106,16 @@ class index extends Amun_Module_ApplicationAbstract
 			$this->htmlCss->add('profile');
 			$this->htmlJs->add('amun');
 			$this->htmlJs->add('profile');
-			$this->htmlContent->add(Amun_Html_Content::META, PSX_Data_Writer_Atom::link('Activity', $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/activity/' . $account->id . '?format=atom'));
-			$this->htmlContent->add(Amun_Html_Content::META, '<link rel="alternate" type="application/stream+json" href="' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/activity/' . $account->id . '?format=json" />');
-			$this->htmlContent->add(Amun_Html_Content::META, '<link rel="meta" type="application/rdf+xml" title="FOAF" href="' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/foaf/' . $account->name . '" />');
-			$this->htmlContent->add(Amun_Html_Content::META, '<link rel="profile" type="html/text" href="' . $account->profileUrl . '" />');
+			$this->htmlContent->add(Html\Content::META, Writer\Atom::link('Activity', $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/activity/' . $account->id . '?format=atom'));
+			$this->htmlContent->add(Html\Content::META, '<link rel="alternate" type="application/stream+json" href="' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/activity/' . $account->id . '?format=json" />');
+			$this->htmlContent->add(Html\Content::META, '<link rel="meta" type="application/rdf+xml" title="FOAF" href="' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/foaf/' . $account->name . '" />');
+			$this->htmlContent->add(Html\Content::META, '<link rel="profile" type="html/text" href="' . $account->profileUrl . '" />');
 
 			$this->template->set(__CLASS__ . '.tpl');
 		}
 		else
 		{
-			throw new Amun_Exception('Access not allowed');
+			throw new Exception('Access not allowed');
 		}
 	}
 
@@ -125,27 +141,27 @@ class index extends Amun_Module_ApplicationAbstract
 		}
 		else
 		{
-			throw new Amun_Exception('No user given');
+			throw new Exception('No user given');
 		}
 
 
-		return Amun_Sql_Table_Registry::get('User_Account')
+		return DataFactory::getTable('User_Account')
 			->select(array('id', 'status', 'name', 'gender', 'timezone', 'updated', 'date', 'thumbnailUrl', 'profileUrl'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Group')
+			->join(Join::INNER, DataFactory::getTable('User_Group')
 				->select(array('title'), 'group')
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Country')
+			->join(Join::INNER, DataFactory::getTable('Country')
 				->select(array('title'), 'country')
 			)
 			->where($column, '=', $userName)
-			->getRow(PSX_Sql::FETCH_OBJECT);
+			->getRow(Sql::FETCH_OBJECT);
 	}
 
-	private function getActivities(AmunService_User_Account_Record $account)
+	private function getActivities(Account\Record $account)
 	{
 		$con = $this->getRequestCondition();
 
-		$url   = new PSX_Url($this->base->getSelf());
+		$url   = new Url($this->base->getSelf());
 		$count = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
 		$count = $count > 16 ? 16 : $count;
 
@@ -156,10 +172,10 @@ class index extends Amun_Module_ApplicationAbstract
 			$url->getParam('sortBy'), 
 			$url->getParam('sortOrder'), 
 			$con, 
-			PSX_SQL::FETCH_OBJECT);
+			Sql::FETCH_OBJECT);
 
 
-		$paging = new PSX_Html_Paging($url, $result, 0);
+		$paging = new Paging($url, $result, 0);
 
 		$this->template->assign('pagingActivities', $paging);
 

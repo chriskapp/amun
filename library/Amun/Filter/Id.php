@@ -22,6 +22,13 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Filter;
+
+use Amun\Sql\TableInterface;
+use PSX\FilterAbstract;
+use PSX\Sql;
+use PSX\Sql\Condition;
+
 /**
  * Amun_Filter_Id
  *
@@ -32,7 +39,7 @@
  * @package    Amun_Filter
  * @version    $Revision: 635 $
  */
-class Amun_Filter_Id extends PSX_FilterAbstract
+class Id extends FilterAbstract
 {
 	protected $table;
 	protected $sql;
@@ -40,7 +47,7 @@ class Amun_Filter_Id extends PSX_FilterAbstract
 
 	protected $zeroAllowed;
 
-	public function __construct(Amun_Sql_TableInterface $table, $zeroAllowed = false)
+	public function __construct(TableInterface $table, $zeroAllowed = false)
 	{
 		$this->table    = $table;
 		$this->sql      = $table->getRegistry()->getSql();
@@ -55,9 +62,9 @@ class Amun_Filter_Id extends PSX_FilterAbstract
 
 		if($value > 0)
 		{
-			$con = new PSX_Sql_Condition(array($this->table->getPrimaryKey(), '=', $value));
+			$con = new Condition(array($this->table->getPrimaryKey(), '=', $value));
 
-			return $this->sql->select($this->table->getName(), array($this->table->getPrimaryKey()), $con, PSX_Sql::SELECT_FIELD);
+			return $this->sql->select($this->table->getName(), array($this->table->getPrimaryKey()), $con, Sql::SELECT_FIELD);
 		}
 		else if($value === 0 && $this->zeroAllowed)
 		{

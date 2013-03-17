@@ -24,17 +24,15 @@
 
 namespace openid\api;
 
-use Amun_DataFactory;
-use Amun_Dependency_Session;
-use Amun_Exception;
-use DateTime;
-use Exception;
-use PSX_DateTime;
-use PSX_OpenId_ProviderAbstract;
-use PSX_OpenId_Provider_Data_Association;
-use PSX_OpenId_Provider_Data_ResRequest;
-use PSX_OpenId_Provider_Data_SetupRequest;
-use PSX_Url;
+use Amun\DataFactory;
+use Amun\Dependency;
+use Amun\Exception;
+use PSX\DateTime;
+use PSX\OpenId\ProviderAbstract;
+use PSX\OpenId\Provider\Data\Association;
+use PSX\OpenId\Provider\Data\ResRequest;
+use PSX\OpenId\Provider\Data\SetupRequest;
+use PSX\Url;
 
 /**
  * signon
@@ -47,7 +45,7 @@ use PSX_Url;
  * @subpackage service_my
  * @version    $Revision: 875 $
  */
-class signon extends PSX_OpenId_ProviderAbstract
+class signon extends ProviderAbstract
 {
 	const EXPIRE = 46800; // seconds
 
@@ -79,12 +77,12 @@ class signon extends PSX_OpenId_ProviderAbstract
 
 	public function getDependencies()
 	{
-		$ct = new Amun_Dependency_Session($this->base->getConfig());
+		$ct = new Dependency\Session($this->base->getConfig());
 
 		return $ct;
 	}
 
-	public function onAsocciation(PSX_OpenId_Provider_Data_Association $assoc)
+	public function onAsocciation(Association $assoc)
 	{
 		$sql = <<<SQL
 SELECT
@@ -112,7 +110,7 @@ SQL;
 				'sessionType' => $assoc->getSessionType(),
 				'secret'      => $assoc->getSecret(),
 				'expires'     => self::EXPIRE,
-				'date'        => $date->format(PSX_DateTime::SQL),
+				'date'        => $date->format(DateTime::SQL),
 
 			));
 
@@ -120,17 +118,17 @@ SQL;
 		}
 		else
 		{
-			throw new Amun_Exception('Association already exists');
+			throw new Exception('Association already exists');
 		}
 	}
 
-	public function onCheckidSetup(PSX_OpenId_Provider_Data_SetupRequest $request)
+	public function onCheckidSetup(SetupRequest $request)
 	{
 		// check whether authenticated
 		if(!$this->isAuthenticated())
 		{
 			$loginUrl = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'my.htm/login';
-			$selfUrl  = new PSX_Url($this->base->getSelf());
+			$selfUrl  = new Url($this->base->getSelf());
 			$values   = array_merge($_GET, $_POST);
 
 			foreach($values as $key => $value)
@@ -169,7 +167,7 @@ SQL;
 
 			if(time() > $now->getTimestamp() + $expire)
 			{
-				throw new Amun_Exception('Association is expired');
+				throw new Exception('Association is expired');
 			}
 		}
 		else
@@ -178,8 +176,8 @@ SQL;
 			{
 				// create association
 				$date        = new DateTime('NOW', $this->registry['core.default_timezone']);
-				$assocHandle = PSX_OpenId_ProviderAbstract::generateHandle();
-				$secret      = base64_encode(PSX_OpenId_ProviderAbstract::randomBytes(20));
+				$assocHandle = ProviderAbstract::generateHandle();
+				$secret      = base64_encode(ProviderAbstract::randomBytes(20));
 
 				$this->sql->insert($this->registry['table.openid_assoc'], array(
 
@@ -188,7 +186,7 @@ SQL;
 					'sessionType' => 'DH-SHA1',
 					'secret'      => $secret,
 					'expires'     => self::EXPIRE,
-					'date'        => $date->format(PSX_DateTime::SQL),
+					'date'        => $date->format(DateTime::SQL),
 
 				));
 
@@ -197,7 +195,7 @@ SQL;
 			}
 			else
 			{
-				throw new Amun_Exception('Invalid association');
+				throw new Exception('Invalid association');
 			}
 		}
 
@@ -230,7 +228,7 @@ SQL;
 				$this->sql->delete($this->registry['table.oauth_request'], $conDelete);
 			}
 
-			throw new Amun_Exception('You can have max ' . $maxCount . ' temporary account connect requests. Each request expires after 30 hour');
+			throw new Exception('You can have max ' . $maxCount . ' temporary account connect requests. Each request expires after 30 hour');
 		}
 		*/
 
@@ -244,7 +242,7 @@ SQL;
 		exit;
 	}
 
-	public function onCheckAuthentication(PSX_OpenId_Provider_Data_ResRequest $request)
+	public function onCheckAuthentication(ResRequest $request)
 	{
 		$sql = <<<SQL
 SELECT
@@ -270,7 +268,7 @@ SQL;
 		}
 		else
 		{
-			throw new Amun_Exception('Invalid association');
+			throw new Exception('Invalid association');
 		}
 	}
 

@@ -22,6 +22,8 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Exception;
+
 /**
  * Amun_Exception_Endpoint
  *
@@ -32,6 +34,6 @@
  * @package    Amun_Exception
  * @version    $Revision: 635 $
  */
-class Amun_Exception_Endpoint extends Amun_Exception
+class Endpoint extends \Amun\Exception
 {
 }

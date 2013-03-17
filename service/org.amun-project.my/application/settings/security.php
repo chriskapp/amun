@@ -22,6 +22,17 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\application\settings;
+
+use Amun\Filter;
+use Amun\Exception;
+use AmunService\User\Account\Filter as AccountFilter;
+use AmunService\User\Account;
+use AmunService\My\SettingsAbstract;
+use PSX\Sql;
+use PSX\Url;
+use PSX\Html\Paging;
+
 /**
  * security
  *
@@ -33,7 +44,7 @@
  * @subpackage my
  * @version    $Revision: 875 $
  */
-class security extends AmunService_My_SettingsAbstract
+class security extends SettingsAbstract
 {
 	public function onLoad()
 	{
@@ -47,50 +58,48 @@ class security extends AmunService_My_SettingsAbstract
 		$this->htmlCss->add('my');
 		$this->htmlJs->add('amun');
 		$this->htmlJs->add('my');
-
-		$this->template->set('settings/' . __CLASS__ . '.tpl');
 	}
 
 	public function onPost()
 	{
 		try
 		{
-			$currentPw = $this->post->current_password('string', array(new AmunService_User_Account_Filter_Pw(), new Amun_Filter_Salt()), 'Current password');
-			$newPw     = $this->post->new_password('string', array(new AmunService_User_Account_Filter_Pw()), 'New password');
-			$verifyPw  = $this->post->verify_password('string', array(new AmunService_User_Account_Filter_Pw()), 'Verify password');
+			$currentPw = $this->post->current_password('string', array(new AccountFilter\Pw(), new Filter\Salt()), 'Current password');
+			$newPw     = $this->post->new_password('string', array(new AccountFilter\Pw()), 'New password');
+			$verifyPw  = $this->post->verify_password('string', array(new AccountFilter\Pw()), 'Verify password');
 
 			if(!$this->validate->hasError())
 			{
 				if(strcmp($newPw, $verifyPw) !== 0)
 				{
-					throw new Amun_Exception('Passwords doesnt match');
+					throw new Exception('Passwords doesnt match');
 				}
 
 				$user = $this->getHandler()->getById($this->user->id, 
 					array('id'), 
-					PSX_Sql::FETCH_OBJECT
+					Sql::FETCH_OBJECT
 				);
 
 				if(strcmp($currentPw, $user->pw) === 0)
 				{
 					$user->setPw($newPw);
 
-					$handler = new AmunService_User_Account_Handler($this->user);
+					$handler = new Account\Handler($this->user);
 					$handler->update($user);
 
 					$this->template->assign('success', true);
 				}
 				else
 				{
-					throw new Amun_Exception('Invalid password');
+					throw new Exception('Invalid password');
 				}
 			}
 			else
 			{
-				throw new Amun_Exception($this->validate->getLastError());
+				throw new Exception($this->validate->getLastError());
 			}
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
 			$this->template->assign('error', $e->getMessage());
 		}

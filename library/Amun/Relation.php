@@ -22,6 +22,17 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun;
+
+use PSX\Http;
+use PSX\Http\PostRequest;
+use PSX\Http\Request;
+use PSX\Json;
+use PSX\Oauth;
+use PSX\Oauth\Provider\Data\Consumer;
+use PSX\Url;
+use PSX\Yadis;
+
 /**
  * Amun_Relation
  *
@@ -32,7 +43,7 @@
  * @package    Amun_Relation
  * @version    $Revision: 635 $
  */
-class Amun_Relation
+class Relation
 {
 	const NS = 'http://ns.amun-project.org/2011/amun/user/friend/relation/1.0';
 
@@ -44,22 +55,22 @@ class Amun_Relation
 	private $oauth;
 	private $cred;
 
-	public function __construct(PSX_Http $http, PSX_Oauth_Provider_Data_Consumer $consumer = null)
+	public function __construct(Http $http, Consumer $consumer = null)
 	{
 		$this->http = $http;
 
 		if($consumer !== null)
 		{
-			$this->oauth = new PSX_Oauth($http);
+			$this->oauth = new Oauth($http);
 			$this->cred  = $consumer;
 		}
 	}
 
-	public function request(PSX_Url $url, $mode, $host, $name, $header = array())
+	public function request(Url $url, $mode, $host, $name, $header = array())
 	{
 		if(empty($mode) || ($mode = self::getMode($mode)) === false)
 		{
-			throw new Amun_Exception('Invalid mode');
+			throw new Exception('Invalid mode');
 		}
 
 
@@ -70,7 +81,7 @@ class Amun_Relation
 		// headers
 		if($this->oauth !== null)
 		{
-			$header = PSX_Http_Request::mergeHeader(array(
+			$header = Request::mergeHeader(array(
 
 				'Accept' => 'application/json',
 				'Authorization' => $this->oauth->getAuthorizationHeader($url, $this->cred->getConsumerKey(), $this->cred->getConsumerSecret(), $this->cred->getToken(), $this->cred->getTokenSecret(), 'HMAC-SHA1', 'POST'),
@@ -79,7 +90,7 @@ class Amun_Relation
 		}
 		else
 		{
-			$header = PSX_Http_Request::mergeHeader(array(
+			$header = Request::mergeHeader(array(
 
 				'Accept' => 'application/json',
 
@@ -98,12 +109,12 @@ class Amun_Relation
 		);
 
 
-		$request  = new PSX_Http_PostRequest($url, $header, $body);
+		$request  = new PostRequest($url, $header, $body);
 		$response = $this->http->request($request);
 
 		if($response->getCode() == 200)
 		{
-			$data = PSX_Json::decode($response->getBody());
+			$data = Json::decode($response->getBody());
 
 			if(isset($data['success']) && $data['success'] === true)
 			{
@@ -113,18 +124,18 @@ class Amun_Relation
 			{
 				$msg = isset($data['text']) ? $data['text'] : 'An error occured';
 
-				throw new PSX_Data_Exception($msg);
+				throw new Exception($msg);
 			}
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Invalid response code ' . $response->getCode());
+			throw new Exception('Invalid response code ' . $response->getCode());
 		}
 	}
 
-	public function discover(PSX_Url $url)
+	public function discover(Url $url)
 	{
-		$yadis = new PSX_Yadis($this->http);
+		$yadis = new Yadis($this->http);
 		$xrds  = $yadis->discover($url);
 
 		if($xrds !== false && isset($xrds->service))
@@ -141,16 +152,16 @@ class Amun_Relation
 
 			if(!empty($uri))
 			{
-				return new PSX_Url($uri);
+				return new Url($uri);
 			}
 			else
 			{
-				throw new Amun_Exception('Could not find service');
+				throw new Exception('Could not find service');
 			}
 		}
 		else
 		{
-			throw new Amun_Exception('Could not find xrds');
+			throw new Exception('Could not find xrds');
 		}
 	}
 

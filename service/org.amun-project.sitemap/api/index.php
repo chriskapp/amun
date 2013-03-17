@@ -24,10 +24,10 @@
 
 namespace sitemap\api;
 
-use Amun_Module_ApiAbstract;
-use DateTime;
-use Exception;
-use PSX_Data_Message;
+use Amun\Module\ApiAbstract;
+use Amun\Exception;
+use PSX\DateTime;
+use PSX\Data\Message;
 use XMLWriter;
 
 /**
@@ -41,7 +41,7 @@ use XMLWriter;
  * @subpackage service_phpinfo
  * @version    $Revision: 875 $
  */
-class index extends Amun_Module_ApiAbstract
+class index extends ApiAbstract
 {
 	private $writer;
 
@@ -75,16 +75,16 @@ class index extends Amun_Module_ApiAbstract
 				$this->writer->endDocument();
 				$this->writer->flush();
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
-				$msg = new PSX_Data_Message($e->getMessage(), false);
+				$msg = new Message($e->getMessage(), false);
 
 				$this->setResponse($msg);
 			}
 		}
 		else
 		{
-			$msg = new PSX_Data_Message('Access not allowed', false);
+			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}
@@ -92,21 +92,21 @@ class index extends Amun_Module_ApiAbstract
 
 	public function onPost()
 	{
-		$msg = new PSX_Data_Message('Create a sitemap record is not possible', false);
+		$msg = new Message('Create a sitemap record is not possible', false);
 
 		$this->setResponse($msg, null, 500);
 	}
 
 	public function onPut()
 	{
-		$msg = new PSX_Data_Message('Update a sitemap record is not possible', false);
+		$msg = new Message('Update a sitemap record is not possible', false);
 
 		$this->setResponse($msg, null, 500);
 	}
 
 	public function onDelete()
 	{
-		$msg = new PSX_Data_Message('Delete a sitemap record is not possible', false);
+		$msg = new Message('Delete a sitemap record is not possible', false);
 
 		$this->setResponse($msg, null, 500);
 	}

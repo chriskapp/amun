@@ -22,6 +22,20 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\My\LoginHandler;
+
+use Amun\Security;
+use Amun\DataFactory;
+use Amun\Exception;
+use AmunService\My\LoginHandlerAbstract;
+use AmunService\User\Account;
+use PSX\Http;
+use PSX\Http\GetRequest;
+use PSX\Oauth;
+use PSX\Url;
+use PSX\Json;
+use PSX\Sql\Condition;
+
 /**
  * In order to use the twitter handler you have to create a new twitter 
  * application and enter the consumer key and secret in this class
@@ -33,7 +47,7 @@
  * @package    Amun_Service_My
  * @version    $Revision: 635 $
  */
-class AmunService_My_LoginHandler_Twitter extends AmunService_My_LoginHandlerAbstract implements AmunService_My_LoginHandler_CallbackInterface
+class Twitter extends LoginHandlerAbstract implements CallbackInterface
 {
 	const CONSUMER_KEY    = '';
 	const CONSUMER_SECRET = '';
@@ -50,8 +64,8 @@ class AmunService_My_LoginHandler_Twitter extends AmunService_My_LoginHandlerAbs
 	{
 		parent::__construct();
 
-		$this->http  = new PSX_Http();
-		$this->oauth = new PSX_Oauth($this->http);
+		$this->http  = new Http();
+		$this->oauth = new Oauth($this->http);
 	}
 
 	public function isValid($identity)
@@ -68,7 +82,7 @@ class AmunService_My_LoginHandler_Twitter extends AmunService_My_LoginHandlerAbs
 	{
 		// build callback
 		$callback = $this->pageUrl . '/login/callback/twitter';
-		$response = $this->oauth->requestToken(new PSX_Url(self::REQUEST_TOKEN), self::CONSUMER_KEY, self::CONSUMER_SECRET, 'HMAC-SHA1', $callback);
+		$response = $this->oauth->requestToken(new Url(self::REQUEST_TOKEN), self::CONSUMER_KEY, self::CONSUMER_SECRET, 'HMAC-SHA1', $callback);
 
 		$token       = $response->getToken();
 		$tokenSecret = $response->getTokenSecret();
@@ -77,7 +91,7 @@ class AmunService_My_LoginHandler_Twitter extends AmunService_My_LoginHandlerAbs
 		$this->session->set('oauth_login_token_secret', $tokenSecret);
 
 		// redirect user to twitter
-		$this->oauth->userAuthorization(new PSX_Url(self::AUTHENTICATE), array('oauth_token' => $token));
+		$this->oauth->userAuthorization(new Url(self::AUTHENTICATE), array('oauth_token' => $token));
 	}
 
 	public function callback()
@@ -89,10 +103,10 @@ class AmunService_My_LoginHandler_Twitter extends AmunService_My_LoginHandlerAbs
 
 		if(empty($token) || empty($tokenSecret))
 		{
-			throw new Amun_Exception('Token not set');
+			throw new Exception('Token not set');
 		}
 
-		$response = $this->oauth->accessToken(new PSX_Url(self::ACCESS_TOKEN), self::CONSUMER_KEY, self::CONSUMER_SECRET, $token, $tokenSecret, $verifier, 'HMAC-SHA1');
+		$response = $this->oauth->accessToken(new Url(self::ACCESS_TOKEN), self::CONSUMER_KEY, self::CONSUMER_SECRET, $token, $tokenSecret, $verifier, 'HMAC-SHA1');
 
 		$token       = $response->getToken();
 		$tokenSecret = $response->getTokenSecret();
@@ -100,35 +114,35 @@ class AmunService_My_LoginHandler_Twitter extends AmunService_My_LoginHandlerAbs
 		// check access token
 		if(empty($token) || empty($tokenSecret))
 		{
-			throw new Amun_Exception('Could not request access token');
+			throw new Exception('Could not request access token');
 		}
 
 		// request user informations
-		$url    = new PSX_Url(self::VERIFY_ACCOUNT);
+		$url    = new Url(self::VERIFY_ACCOUNT);
 		$header = array(
 			'Authorization' => $this->oauth->getAuthorizationHeader($url, self::CONSUMER_KEY, self::CONSUMER_SECRET, $token, $tokenSecret, $method = 'HMAC-SHA1'),
 		);
 
-		$request  = new PSX_Http_GetRequest($url, $header);
+		$request  = new GetRequest($url, $header);
 		$response = $this->http->request($request);
 
 		if($response->getCode() == 200)
 		{
-			$acc = PSX_Json::decode($response->getBody());
+			$acc = Json::decode($response->getBody());
 
 			if(empty($acc))
 			{
-				throw new Amun_Exception('No user informations provided');
+				throw new Exception('No user informations provided');
 			}
 
 			if(empty($acc['screen_name']))
 			{
-				throw new Amun_Exception('No username provided');
+				throw new Exception('No username provided');
 			}
 
 			$identity = $acc['screen_name'] . '@twitter.com';	
-			$con      = new PSX_Sql_Condition(array('identity', '=', sha1(Amun_Security::getSalt() . $identity)));
-			$userId   = Amun_Sql_Table_Registry::get('User_Account')->getField('id', $con);
+			$con      = new Condition(array('identity', '=', sha1(Security::getSalt() . $identity)));
+			$userId   = DataFactory::getTable('User_Account')->getField('id', $con);
 
 			if(empty($userId))
 			{
@@ -136,21 +150,21 @@ class AmunService_My_LoginHandler_Twitter extends AmunService_My_LoginHandlerAbs
 				// registration is enabled
 				if(!$this->registry['my.registration_enabled'])
 				{
-					throw new Amun_Exception('Registration is disabled');
+					throw new Exception('Registration is disabled');
 				}
 
 				// normalize name
 				$name = $this->normalizeName($acc['screen_name']);
 
 				// create user account
-				$handler = new AmunService_User_Account_Handler($this->user);
+				$handler = new Account\Handler($this->user);
 
-				$account = Amun_Sql_Table_Registry::get('User_Account')->getRecord();
+				$account = DataFactory::getTable('User_Account')->getRecord();
 				$account->setGroupId($this->registry['core.default_user_group']);
-				$account->setStatus(AmunService_User_Account_Record::NORMAL);
+				$account->setStatus(Account\Record::NORMAL);
 				$account->setIdentity($identity);
 				$account->setName($name);
-				$account->setPw(Amun_Security::generatePw());
+				$account->setPw(Security::generatePw());
 
 				$account->profileUrl   = 'https://twitter.com/' . $acc['screen_name'];
 				$account->thumbnailUrl = isset($acc['profile_image_url']) ? $acc['profile_image_url'] : null;
@@ -166,7 +180,7 @@ class AmunService_My_LoginHandler_Twitter extends AmunService_My_LoginHandlerAbs
 				}
 				else
 				{
-					throw new Amun_Exception('Could not create account');
+					throw new Exception('Could not create account');
 				}
 			}
 			else
@@ -180,7 +194,7 @@ class AmunService_My_LoginHandler_Twitter extends AmunService_My_LoginHandlerAbs
 		}
 		else
 		{
-			throw new Amun_Exception('Authentication failed');
+			throw new Exception('Authentication failed');
 		}
 	}
 }

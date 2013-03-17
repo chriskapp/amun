@@ -24,21 +24,20 @@
 
 namespace oauth\api\endpoint;
 
-use AmunService_Oauth_Record;
-use Amun_DataFactory;
-use Amun_Dependency_Default;
-use Amun_Security;
+use AmunService\Oauth;
+use Amun\DataFactory;
+use Amun\Dependency;
+use Amun\Security;
+use Amun\Exception;
 use DateInterval;
-use DateTime;
-use Exception;
-use PSX_DateTime;
-use PSX_Oauth_Exception;
-use PSX_Oauth_Provider_Data_Consumer;
-use PSX_Oauth_Provider_Data_Request;
-use PSX_Oauth_Provider_Data_Response;
-use PSX_Oauth_Provider_RequestAbstract;
-use PSX_Sql;
-use PSX_Sql_Condition;
+use PSX\DateTime;
+use PSX\Oauth\Exception;
+use PSX\Oauth\Provider\Data\Consumer;
+use PSX\Oauth\Provider\Data\Request;
+use PSX\Oauth\Provider\Data\Response;
+use PSX\Oauth\Provider\RequestAbstract;
+use PSX\Sql;
+use PSX\Sql\Condition;
 
 /**
  * request
@@ -51,7 +50,7 @@ use PSX_Sql_Condition;
  * @subpackage auth
  * @version    $Revision: 880 $
  */
-class request extends PSX_Oauth_Provider_RequestAbstract
+class request extends RequestAbstract
 {
 	private $apiId;
 	private $callback;
@@ -87,7 +86,7 @@ class request extends PSX_Oauth_Provider_RequestAbstract
 
 	public function getDependencies()
 	{
-		$ct = new Amun_Dependency_Default($this->base->getConfig());
+		$ct = new Dependency\Request($this->base->getConfig());
 
 		return $ct;
 	}
@@ -114,22 +113,22 @@ SQL;
 		{
 			$this->apiId = $row['apiId'];
 
-			return new PSX_Oauth_Provider_Data_Consumer($row['apiConsumerKey'], $row['apiConsumerSecret']);
+			return new Consumer($row['apiConsumerKey'], $row['apiConsumerSecret']);
 		}
 	}
 
-	protected function getResponse(PSX_Oauth_Provider_Data_Consumer $consumer, PSX_Oauth_Provider_Data_Request $request)
+	protected function getResponse(Consumer $consumer, Request $request)
 	{
 		// we check how often this ip has requested an token ... because
 		// of security reasons each consumer can have max 5 request tokens
 		$maxCount = 5;
 		$ip       = $_SERVER['REMOTE_ADDR'];
-		$con      = new PSX_Sql_Condition(array('ip', '=', $ip), array('status', '=', AmunService_Oauth_Record::TEMPORARY));
+		$con      = new Condition(array('ip', '=', $ip), array('status', '=', Oauth\Record::TEMPORARY));
 		$count    = $this->sql->count($this->registry['table.oauth_request'], $con);
 
 		if($count >= $maxCount)
 		{
-			$conDelete = new PSX_Sql_Condition();
+			$conDelete = new Condition();
 			$result    = $this->sql->select($this->registry['table.oauth_request'], array('id', 'expire', 'date'), $con, PSX_Sql::SELECT_ALL);
 
 			foreach($result as $row)
@@ -149,7 +148,7 @@ SQL;
 				$this->sql->delete($this->registry['table.oauth_request'], $conDelete);
 			}
 
-			throw new PSX_Oauth_Exception('You can only have max. ' . $maxCount . ' active request tokens');
+			throw new Exception('You can only have max. ' . $maxCount . ' active request tokens');
 		}
 
 
@@ -162,8 +161,8 @@ SQL;
 
 
 		// generate tokens
-		$token       = Amun_Security::generateToken();
-		$tokenSecret = Amun_Security::generateToken();
+		$token       = Security::generateToken();
+		$tokenSecret = Security::generateToken();
 
 
 		// we save the timestamp in the request but because it comes from
@@ -181,7 +180,7 @@ SQL;
 		$this->sql->insert($this->registry['table.oauth_request'], array(
 
 			'apiId'       => $this->apiId,
-			'status'      => AmunService_Oauth_Record::TEMPORARY,
+			'status'      => Oauth\Record::TEMPORARY,
 			'ip'          => $ip,
 			'nonce'       => $nonce,
 			'callback'    => $callback,
@@ -189,12 +188,12 @@ SQL;
 			'tokenSecret' => $tokenSecret,
 			'timestamp'   => $timestamp,
 			'expire'      => $expire,
-			'date'        => $date->format(PSX_DateTime::SQL),
+			'date'        => $date->format(DateTime::SQL),
 
 		));
 
 
-		$response = new PSX_Oauth_Provider_Data_Response();
+		$response = new Response();
 		$response->setToken($token);
 		$response->setTokenSecret($tokenSecret);
 

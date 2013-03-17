@@ -22,6 +22,12 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace file\application;
+
+use Amun\Module\ApplicationAbstract;
+use Amun\Exception;
+use PSX\DateTime;
+
 /**
  * index
  *
@@ -33,7 +39,7 @@
  * @subpackage page
  * @version    $Revision: 875 $
  */
-class index extends Amun_Module_ApplicationAbstract
+class index extends ApplicationAbstract
 {
 	public function onLoad()
 	{
@@ -53,12 +59,12 @@ class index extends Amun_Module_ApplicationAbstract
 			}
 			else
 			{
-				throw new Amun_Exception('No file set');
+				throw new Exception('No file set');
 			}
 		}
 		else
 		{
-			throw new Amun_Exception('Access not allowed');
+			throw new Exception('Access not allowed');
 		}
 	}
 }

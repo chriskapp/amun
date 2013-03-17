@@ -22,6 +22,22 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\My\LoginHandler;
+
+use Amun\DataFactory;
+use Amun\Exception;
+use Amun\Security;
+use AmunService\Core\Host;
+use PSX\Filter;
+use PSX\Http;
+use PSX\Url;
+use PSX\Webfinger;
+use PSX\Sql\Condition;
+use PSX\OpenId;
+use PSX\OpenId\Store;
+use PSX\OpenId\Extension;
+use PSX\OpenId\ProviderAbstract;
+
 /**
  * This is an experimental login handler to create an federated social network
  * between multiple amun instances
@@ -33,7 +49,7 @@
  * @package    Amun_Service_My
  * @version    $Revision: 635 $
  */
-class AmunService_My_LoginHandler_Remote extends AmunService_My_LoginHandler_Openid
+class Remote extends Openid
 {
 	public function isValid($identity)
 	{
@@ -53,12 +69,10 @@ class AmunService_My_LoginHandler_Remote extends AmunService_My_LoginHandler_Ope
 		$callback = $this->pageUrl . '/login/callback/remote';
 
 		// create an openid object
-		$http   = new PSX_Http(new PSX_Http_Handler_Curl());
-		$store  = new PSX_OpenId_Store_Sql($this->sql, $this->registry['table.core_assoc']);
-		$openid = new PSX_OpenId($http, $this->config['psx_url'], $store);
+		$openid = new OpenId($this->http, $this->config['psx_url'], $this->store);
 
 		// check whether identity is an url if not it is an email
-		$filter = new PSX_Filter_Url();
+		$filter = new Filter\Url();
 
 		if($filter->apply($identity) === false)
 		{
@@ -67,17 +81,16 @@ class AmunService_My_LoginHandler_Remote extends AmunService_My_LoginHandler_Ope
 
 			// check whether the provider belongs to an connected website. If
 			// yes we also try to get an token and tokenSecret for the user
-			$host = Amun_Sql_Table_Registry::get('Core_Host')
+			$host = DataFactory::getTable('Core_Host')
 				->select(array('id', 'consumerKey', 'url', 'template'))
 				->where('name', '=', $provider)
-				->where('status', '=', AmunService_Core_Host_Record::NORMAL)
+				->where('status', '=', Host\Record::NORMAL)
 				->getRow();
 
 			if(!empty($host))
 			{
 				// make webfinger request
-				$http       = new PSX_Http(new PSX_Http_Handler_Curl());
-				$webfinger  = new PSX_Webfinger($http);
+				$webfinger  = new Webfinger($this->http);
 
 				$acct = 'acct:' . $identity;
 				$xrd  = $webfinger->getLrdd($acct, $host['template']);
@@ -85,7 +98,7 @@ class AmunService_My_LoginHandler_Remote extends AmunService_My_LoginHandler_Ope
 				// check subject
 				if(strcmp($xrd->getSubject(), $acct) !== 0)
 				{
-					throw new Amun_Exception('Invalid subject');
+					throw new Exception('Invalid subject');
 				}
 
 				// get profile url
@@ -93,7 +106,7 @@ class AmunService_My_LoginHandler_Remote extends AmunService_My_LoginHandler_Ope
 
 				if(empty($profileUrl))
 				{
-					throw new Amun_Exception('Could not find profile');
+					throw new Exception('Could not find profile');
 				}
 
 				// get global id
@@ -102,20 +115,20 @@ class AmunService_My_LoginHandler_Remote extends AmunService_My_LoginHandler_Ope
 				// initalize openid
 				$openid->initialize($profileUrl, $callback);
 
-				// if the provider is connected with the website and
-				// supports the oauth extension request an token
-				$identity = sha1(Amun_Security::getSalt() . PSX_OpenId::normalizeIdentifier($profileUrl));
-				$con      = new PSX_Sql_Condition(array('identity', '=', $identity));
-				$userId   = Amun_Sql_Table_Registry::get('User_Account')->getField('id', $con);
+				// if the provider is connected with the website and supports 
+				// the oauth extension request an token
+				$identity = sha1(Security::getSalt() . OpenId::normalizeIdentifier($profileUrl));
+				$con      = new Condition(array('identity', '=', $identity));
+				$userId   = DataFactory::getTable('User_Account')->getField('id', $con);
 				$oauth    = false;
 
 				if(!empty($userId))
 				{
-					$con = new PSX_Sql_Condition();
+					$con = new Condition();
 					$con->add('hostId', '=', $host['id']);
 					$con->add('userId', '=', $userId);
 
-					$requestId = Amun_Sql_Table_Registry::get('Core_Host_Request')->getField('id', $con);
+					$requestId = DataFactory::getTable('Core_Host_Request')->getField('id', $con);
 
 					if(empty($requestId))
 					{
@@ -129,7 +142,7 @@ class AmunService_My_LoginHandler_Remote extends AmunService_My_LoginHandler_Ope
 
 				if($oauth)
 				{
-					$oauth = new PSX_OpenId_Extension_Oauth($host['consumerKey']);
+					$oauth = new Extension\Oauth($host['consumerKey']);
 
 					if($openid->hasExtension($oauth->getNs()))
 					{
@@ -147,31 +160,132 @@ class AmunService_My_LoginHandler_Remote extends AmunService_My_LoginHandler_Ope
 		return false;
 	}
 
+	public function callback()
+	{
+		// initialize openid
+		$openid = new \PSX\OpenId($this->http, $this->config['psx_url'], $this->store);
+
+		if($openid->verify() === true)
+		{
+			$identity = $openid->getIdentifier();
+
+			if(!empty($identity))
+			{
+				// check whether user is already registered
+				$data   = $openid->getData();
+				$con    = new Condition(array('identity', '=', sha1(Security::getSalt() . $openid->getIdentifier())));
+				$userId = DataFactory::getTable('User_Account')->getField('id', $con);
+
+				if(empty($userId))
+				{
+					// user doesnt exist so register a new user check whether 
+					// registration is enabled
+					if(!$this->registry['my.registration_enabled'])
+					{
+						throw new Exception('Registration is disabled');
+					}
+
+					$hostId   = $this->session->get('openid_register_user_host_id');
+					$globalId = $this->session->get('openid_register_user_global_id');
+
+					if(empty($hostId))
+					{
+						throw new Exception('No host id provided');
+					}
+
+					if(empty($globalId))
+					{
+						throw new Exception('No global id provided');
+					}
+
+					// get data for account
+					$acc = $this->getAccountData($data);
+
+					if(empty($acc))
+					{
+						throw new Exception('No user informations provided');
+					}
+
+					if(empty($acc['name']))
+					{
+						throw new Exception('No username provided');
+					}
+
+					$name = $this->normalizeName($acc['name']);
+
+					// create user account
+					$handler = new Account\Handler($this->user);
+
+					$account = DataFactory::getTable('User_Account')->getRecord();
+					$account->setGlobalId($globalId);
+					$account->setGroupId($this->registry['core.default_user_group']);
+					$account->setHostId($hostId);
+					$account->setStatus(Account\Record::REMOTE);
+					$account->setIdentity($identity);
+					$account->setName($name);
+					$account->setPw(Security::generatePw());
+					$account->setGender($acc['gender']);
+					$account->setTimezone($acc['timezone']);
+
+					$account = $handler->create($account);
+					$userId  = $account->id;
+
+					// if the id is not set the account was probably added to
+					// the approval table
+					if(!empty($userId))
+					{
+						$this->setUserId($userId);
+					}
+					else
+					{
+						throw new Exception('Could not create account');
+					}
+				}
+				else
+				{
+					$this->setUserId($userId);
+				}
+
+				// redirect
+				header('Location: ' . $this->config['psx_url']);
+				exit;
+			}
+			else
+			{
+				throw new Exception('Invalid identity');
+			}
+		}
+		else
+		{
+			throw new Exception('Authentication failed');
+		}
+	}
+
 	private function getOauthAccessToken($hostId, array $data)
 	{
-		$data = PSX_OpenId_ProviderAbstract::getExtension($data, PSX_OpenId_Extension_Oauth::NS);
+		$data = ProviderAbstract::getExtension($data, Extension\Oauth::NS);
 
 		$token    = isset($data['request_token']) ? $data['request_token'] : null;
 		$verifier = isset($data['verifier'])      ? $data['verifier']      : null;
 
 		if($hostId > 0 && !empty($token) && !empty($verifier))
 		{
-			$row = Amun_Sql_Table_Registry::get('Core_Host')
+			$row = DataFactory::getTable('Core_Host')
 				->select(array('consumerKey', 'consumerSecret', 'url'))
 				->where('id', '=', $hostId)
-				->where('status', '=', AmunService_Core_Host_Record::NORMAL)
+				->where('status', '=', Host\Record::NORMAL)
 				->getRow();
 
 			if(!empty($row))
 			{
-				$url   = $this->discoverOauthAcessUrl(new PSX_Url($row['url']));
-				$oauth = new PSX_Oauth($this->http);
+				$url   = $this->discoverOauthAcessUrl(new Url($row['url']));
+				$oauth = new Oauth($this->http);
 
 				return $oauth->accessToken($url, $row['consumerKey'], $row['consumerSecret'], $token, '', $verifier);
 			}
 			else
 			{
-				throw new Amun_Exception('Invalid host id');
+				throw new Exception('Invalid host id');
 			}
 		}
 	}

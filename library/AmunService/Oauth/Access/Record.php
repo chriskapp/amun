@@ -22,6 +22,20 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Oauth\Access;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use Amun\Filter as AmunFilter;
+use Amun\Util;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
+use PSX\DateTime;
+use PSX\Filter;
+use PSX\Util\Markdown;
+
 /**
  * AmunService_Oauth_Access_Record
  *
@@ -32,7 +46,7 @@
  * @package    Amun_Oauth
  * @version    $Revision: 683 $
  */
-class AmunService_Oauth_Access_Record extends Amun_Data_RecordAbstract
+class Record extends RecordAbstract
 {
 	protected $_api;
 	protected $_user;
@@ -41,7 +55,7 @@ class AmunService_Oauth_Access_Record extends Amun_Data_RecordAbstract
 
 	public function setId($id)
 	{
-		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
+		$id = $this->_validate->apply($id, 'integer', array(new AmunFilter\Id($this->_table)), 'id', 'Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -49,13 +63,13 @@ class AmunService_Oauth_Access_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setApiId($apiId)
 	{
-		$apiId = $this->_validate->apply($apiId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Oauth'))), 'apiId', 'Api Id');
+		$apiId = $this->_validate->apply($apiId, 'integer', array(new AmunFilter\Id(DataFactory::getTable('Oauth'))), 'apiId', 'Api Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -63,7 +77,7 @@ class AmunService_Oauth_Access_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
@@ -81,7 +95,7 @@ class AmunService_Oauth_Access_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_api === null)
 		{
-			$this->_api = Amun_Sql_Table_Registry::get('Oauth')->getRecord($this->apiId);
+			$this->_api = DataFactory::getTable('Oauth')->getRecord($this->apiId);
 		}
 
 		return $this->_api;
@@ -91,7 +105,7 @@ class AmunService_Oauth_Access_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_user === null)
 		{
-			$this->_user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->userId);
+			$this->_user = DataFactory::getTable('User_Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;
@@ -111,9 +125,9 @@ class AmunService_Oauth_Access_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_rights === null)
 		{
-			$con = new PSX_Sql_Condition(array('accessId', '=', $this->id));
+			$con = new Condition(array('accessId', '=', $this->id));
 
-			$this->_rights = Amun_Sql_Table_Registry::get('Oauth_Access_Right')->getCol('rightId', $con);
+			$this->_rights = DataFactory::getTable('Oauth_Access_Right')->getCol('rightId', $con);
 		}
 
 		return $this->_rights;

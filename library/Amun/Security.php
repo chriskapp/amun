@@ -22,6 +22,8 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun;
+
 /**
  * Amun_Security
  *
@@ -32,7 +34,7 @@
  * @package    Amun_Security
  * @version    $Revision: 794 $
  */
-class Amun_Security
+class Security
 {
 	/**
 	 * Returns the salt from the config or an default salt if the parameter
@@ -42,7 +44,7 @@ class Amun_Security
 	 */
 	public static function getSalt()
 	{
-		$config = Amun_Registry::getInstance()->getConfig();
+		$config = Registry::getInstance()->getConfig();
 		$salt   = isset($config['amun_salt']) ? $config['amun_salt'] : '4ec656bfdee95a3596e31c3d36e49dda';
 
 		return $salt;
@@ -50,7 +52,7 @@ class Amun_Security
 
 	public static function getPwAlphaCount()
 	{
-		$registry = Amun_Registry::getInstance();
+		$registry = Registry::getInstance();
 		$count    = isset($registry['core.pw_alpha']) ? $registry['core.pw_alpha'] : 4;
 
 		return $count;
@@ -58,7 +60,7 @@ class Amun_Security
 
 	public static function getPwNumericCount()
 	{
-		$registry = Amun_Registry::getInstance();
+		$registry = Registry::getInstance();
 		$count    = isset($registry['core.pw_numeric']) ? $registry['core.pw_numeric'] : 2;
 
 		return $count;
@@ -66,7 +68,7 @@ class Amun_Security
 
 	public static function getPwSpecialCount()
 	{
-		$registry = Amun_Registry::getInstance();
+		$registry = Registry::getInstance();
 		$count    = isset($registry['core.pw_special']) ? $registry['core.pw_special'] : 0;
 
 		return $count;
@@ -123,7 +125,7 @@ class Amun_Security
 		}
 		else
 		{
-			throw new Amun_Security_Exception('Cannot generate pw length is to short to contain all required characters');
+			throw new Exception('Cannot generate pw length is to short to contain all required characters');
 		}
 	}
 

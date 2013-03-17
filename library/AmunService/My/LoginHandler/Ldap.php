@@ -22,6 +22,16 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\My\LoginHandler;
+
+use Amun\Exception;
+use Amun\Security;
+use Amun\DataFactory;
+use AmunService\My\LoginHandlerAbstract;
+use AmunService\My\Login\InvalidPasswordException;
+use AmunService\User\Account;
+use PSX\Sql\Condition;
+
 /**
  * Handles authentication against an LDAP server. The handler was tested with
  * the OpenDS (http://opends.java.net/) server. If you have problems with other 
@@ -35,7 +45,7 @@
  * @package    Amun_Service_My
  * @version    $Revision: 635 $
  */
-class AmunService_My_LoginHandler_Ldap extends AmunService_My_LoginHandlerAbstract
+class Ldap extends LoginHandlerAbstract
 {
 	const LDAP_HOST = 'localhost';
 	const USER_DN   = ''; // user i.e. cn=Foo
@@ -52,12 +62,12 @@ class AmunService_My_LoginHandler_Ldap extends AmunService_My_LoginHandlerAbstra
 
 		if(!$this->res)
 		{
-			throw new Amun_Exception('Ldap connection failed');
+			throw new Exception('Ldap connection failed');
 		}
 
 		if(!ldap_bind($this->res, self::USER_DN, self::USER_PW))
 		{
-			throw new Amun_Exception('Could not bind Ldap');
+			throw new Exception('Could not bind Ldap');
 		}
 	}
 
@@ -87,24 +97,24 @@ class AmunService_My_LoginHandler_Ldap extends AmunService_My_LoginHandlerAbstra
 
 			if(empty($mail))
 			{
-				throw new Amun_Exception('Mail not set');
+				throw new Exception('Mail not set');
 			}
 
 			if(empty($name))
 			{
-				throw new Amun_Exception('Given name not set');
+				throw new Exception('Given name not set');
 			}
 
 			if(empty($pw))
 			{
-				throw new Amun_Exception('User password not set');
+				throw new Exception('User password not set');
 			}
 
 			if($this->comparePassword($pw, $password) === true)
 			{
 				$identity = $mail;
-				$con      = new PSX_Sql_Condition(array('identity', '=', sha1(Amun_Security::getSalt() . $identity)));
-				$userId   = Amun_Sql_Table_Registry::get('User_Account')->getField('id', $con);
+				$con      = new Condition(array('identity', '=', sha1(Security::getSalt() . $identity)));
+				$userId   = DataFactory::getTable('User_Account')->getField('id', $con);
 
 				if(empty($userId))
 				{
@@ -112,21 +122,21 @@ class AmunService_My_LoginHandler_Ldap extends AmunService_My_LoginHandlerAbstra
 					// registration is enabled
 					if(!$this->registry['my.registration_enabled'])
 					{
-						throw new Amun_Exception('Registration is disabled');
+						throw new Exception('Registration is disabled');
 					}
 
 					// normalize name
 					$name = $this->normalizeName($name);
 
 					// create user account
-					$handler = new AmunService_User_Account_Handler($this->user);
+					$handler = new Account\Handler($this->user);
 
-					$account = Amun_Sql_Table_Registry::get('User_Account')->getRecord();
+					$account = DataFactory::getTable('User_Account')->getRecord();
 					$account->setGroupId($this->registry['core.default_user_group']);
-					$account->setStatus(AmunService_User_Account_Record::NORMAL);
+					$account->setStatus(Account\Record::NORMAL);
 					$account->setIdentity($identity);
 					$account->setName($name);
-					$account->setPw(Amun_Security::generatePw());
+					$account->setPw(Security::generatePw());
 
 					$account = $handler->create($account);
 					$userId  = $account->id;
@@ -139,7 +149,7 @@ class AmunService_My_LoginHandler_Ldap extends AmunService_My_LoginHandlerAbstra
 					}
 					else
 					{
-						throw new Amun_Exception('Could not create account');
+						throw new Exception('Could not create account');
 					}
 				}
 				else
@@ -151,7 +161,7 @@ class AmunService_My_LoginHandler_Ldap extends AmunService_My_LoginHandlerAbstra
 			}
 			else
 			{
-				throw new AmunService_My_Login_InvalidPasswordException('Invalid password');
+				throw new InvalidPasswordException('Invalid password');
 			}
 		}
 	}

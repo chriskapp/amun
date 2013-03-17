@@ -22,6 +22,19 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\application;
+
+use Amun\Module\ApplicationAbstract;
+use Amun\Exception;
+use Amun\Captcha;
+use AmunService\My\Attempt;
+use AmunService\User\Account;
+use AmunService\My\LoginHandlerFactory;
+use AmunService\My\LoginHandlerAbstract;
+use AmunService\My\Login\InvalidPasswordException;
+use PSX\Filter;
+use PSX\Input;
+
 /**
  * login
  *
@@ -33,7 +46,7 @@
  * @subpackage my
  * @version    $Revision: 875 $
  */
-class login extends Amun_Module_ApplicationAbstract
+class login extends ApplicationAbstract
 {
 	private $attempt;
 	private $stage;
@@ -51,30 +64,28 @@ class login extends Amun_Module_ApplicationAbstract
 			$this->path->add('Login', $this->page->url . '/login');
 
 			// check login attempts
-			$this->attempt = new AmunService_My_Attempt($this->registry);
+			$this->attempt = new Attempt($this->registry);
 			$this->stage   = $this->attempt->getStage();
 
-			if($this->stage == AmunService_My_Attempt::TRYING)
+			if($this->stage == Attempt::TRYING)
 			{
 				$captcha = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha';
 
 				$this->template->assign('captcha', $captcha);
 			}
-			else if($this->stage == AmunService_My_Attempt::ABUSE)
+			else if($this->stage == Attempt::ABUSE)
 			{
-				throw new Amun_Exception('Your IP ' . $_SERVER['REMOTE_ADDR'] . ' is banned for 30 minutes because of too many wrong logins');
+				throw new Exception('Your IP ' . $_SERVER['REMOTE_ADDR'] . ' is banned for 30 minutes because of too many wrong logins');
 			}
 
 			// template
 			$this->htmlCss->add('my');
 			$this->htmlJs->add('amun');
 			$this->htmlJs->add('my');
-
-			$this->template->set(__CLASS__ . '.tpl');
 		}
 		else
 		{
-			throw new Amun_Exception('Access not allowed');
+			throw new Exception('Access not allowed');
 		}
 	}
 
@@ -87,23 +98,23 @@ class login extends Amun_Module_ApplicationAbstract
 		}
 
 		$redirect = $this->getRedirect($this->post);
-		$identity = $this->post->identity('string', array(new AmunService_User_Account_Filter_Identity()));
-		$pw       = $this->post->pw('string', array(new AmunService_User_Account_Filter_Pw()));
+		$identity = $this->post->identity('string', array(new Account\Filter\Identity()));
+		$pw       = $this->post->pw('string', array(new Account\Filter\Pw()));
 		$captcha  = $this->post->captcha('integer');
 
 		try
 		{
 			if(empty($identity))
 			{
-				throw new Amun_Exception('Invalid identity');
+				throw new Exception('Invalid identity');
 			}
 
 			// check captcha if needed
-			if($this->stage == AmunService_My_Attempt::TRYING)
+			if($this->stage == Attempt::TRYING)
 			{
-				if(!Amun_Captcha::factory($this->config['amun_captcha'])->verify($captcha))
+				if(!Captcha::factory($this->config['amun_captcha'])->verify($captcha))
 				{
-					throw new PSX_Data_Exception('Invalid captcha');
+					throw new Exception('Invalid captcha');
 				}
 			}
 
@@ -112,15 +123,15 @@ class login extends Amun_Module_ApplicationAbstract
 
 			foreach($handles as $handler)
 			{
-				$handler = AmunService_My_LoginHandlerFactory::factory($handler);
+				$handler = LoginHandlerFactory::factory($handler);
 
-				if($handler instanceof AmunService_My_LoginHandlerAbstract && $handler->isValid($identity))
+				if($handler instanceof LoginHandlerAbstract && $handler->isValid($identity))
 				{
 					$handler->setPageUrl($this->page->url);
 
 					if($handler->hasPassword() && empty($pw))
 					{
-						throw new Amun_Exception('Invalid password');
+						throw new Exception('Invalid password');
 					}
 
 					try
@@ -128,7 +139,7 @@ class login extends Amun_Module_ApplicationAbstract
 						if($handler->handle($identity, $pw) === true)
 						{
 							// clear attempts
-							if($this->stage != AmunService_My_Attempt::NONE)
+							if($this->stage != Attempt::NONE)
 							{
 								$this->attempt->clear();
 							}
@@ -142,13 +153,13 @@ class login extends Amun_Module_ApplicationAbstract
 							break;
 						}
 					}
-					catch(AmunService_My_Login_InvalidPasswordException $e)
+					catch(InvalidPasswordException $e)
 					{
 						// increase login attempt
 						$this->attempt->increase();
 
 						// if none assign captcha
-						if($this->stage == AmunService_My_Attempt::NONE)
+						if($this->stage == Attempt::NONE)
 						{
 							$captcha = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha';
 
@@ -173,9 +184,9 @@ class login extends Amun_Module_ApplicationAbstract
 	 *
 	 * @return string|false
 	 */
-	private function getRedirect(PSX_Input $input)
+	private function getRedirect(Input $input)
 	{
-		$redirect = $input->redirect('string', array(new PSX_Filter_Urldecode(), new PSX_Filter_Length(8, 1024), new PSX_Filter_Url()), 'redirect', 'Redirect', false);
+		$redirect = $input->redirect('string', array(new Filter\Urldecode(), new Filter\Length(8, 1024), new Filter\Url()), 'redirect', 'Redirect', false);
 		$base     = $this->config['psx_url'];
 
 		if(!empty($redirect) && strcasecmp(substr($redirect, 0, strlen($base)), $base) == 0)

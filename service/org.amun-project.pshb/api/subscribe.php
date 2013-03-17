@@ -24,14 +24,12 @@
 
 namespace pshb\api;
 
-use AmunService_Pshb_Subscription_Handler;
-use Amun_Module_ApiAbstract;
-use Exception;
-use PSX_Data_Exception;
-use PSX_Data_Message;
-use PSX_Data_Record;
-use PSX_Filter_Length;
-use PSX_Filter_Url;
+use AmunService\Pshb\Subscription;
+use Amun\Module\ApiAbstract;
+use Amun\Exception;
+use PSX\Data\Message;
+use PSX\Data\Record;
+use PSX\Filter;
 
 /**
  * subscription
@@ -44,7 +42,7 @@ use PSX_Filter_Url;
  * @subpackage user_subscription
  * @version    $Revision: 875 $
  */
-class subscribe extends Amun_Module_ApiAbstract
+class subscribe extends ApiAbstract
 {
 	/**
 	 * Subscribes to a specific topic
@@ -53,7 +51,7 @@ class subscribe extends Amun_Module_ApiAbstract
 	 * @path /
 	 * @nickname doSubscribe
 	 * @parameter query topic string
-	 * @responseClass PSX_Data_Message
+	 * @responseClass Message
 	 */
 	public function doSubscribe()
 	{
@@ -62,41 +60,41 @@ class subscribe extends Amun_Module_ApiAbstract
 			try
 			{
 				// get source
-				$topic = $this->get->topic('string', array(new PSX_Filter_Length(3, 256), new PSX_Filter_Url()));
+				$topic = $this->get->topic('string', array(new Filter\Length(3, 256), new Filter\Url()));
 
 				if(empty($topic))
 				{
-					throw new PSX_Data_Exception('Invalid topic url');
+					throw new Exception('Invalid topic url');
 				}
 
 				// redirect to login
 				if($this->user->isAnonymous())
 				{
-					throw new PSX_Data_Exception('Please sign in to subscribe to an topic');
+					throw new Exception('Please sign in to subscribe to an topic');
 				}
 
 				// subscribe to hub
-				$record = new PSX_Data_Record();
+				$record = new Record();
 				$record->setFields(array('topic' => $topic));
 
-				$handler = new AmunService_Pshb_Subscription_Handler($this->user);
+				$handler = new Subscription\Handler($this->user);
 				$handler->create($record);
 
 
-				$msg = new PSX_Data_Message('You have successful subscribe a topic', true);
+				$msg = new Message('You have successful subscribe a topic', true);
 
 				$this->setResponse($msg);
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
-				$msg = new PSX_Data_Message($e->getMessage(), false);
+				$msg = new Message($e->getMessage(), false);
 
 				$this->setResponse($msg);
 			}
 		}
 		else
 		{
-			$msg = new PSX_Data_Message('Access not allowed', false);
+			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}

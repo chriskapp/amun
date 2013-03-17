@@ -22,6 +22,8 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun;
+
 /**
  * Amun_Exception
  *
@@ -32,6 +34,6 @@
  * @package    Amun_Exception
  * @version    $Revision: 635 $
  */
-class Amun_Exception extends PSX_Html_Exception
+class Exception extends \PSX\Exception
 {
 }

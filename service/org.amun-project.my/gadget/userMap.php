@@ -24,7 +24,7 @@
 
 namespace my\gadget;
 
-use Amun_Module_GadgetAbstract;
+use Amun\Module\GadgetAbstract;
 
 /**
  * userMap
@@ -36,7 +36,7 @@ use Amun_Module_GadgetAbstract;
  * @package    gadget
  * @version    $Revision: 875 $
  */
-class userMap extends Amun_Module_GadgetAbstract
+class userMap extends GadgetAbstract
 {
 	/**
 	 * onLoad

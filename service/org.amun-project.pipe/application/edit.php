@@ -22,6 +22,12 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace pipe\application;
+
+use Amun\Module\ApplicationAbstract;
+use Amun\Exception;
+use PSX\Sql;
+
 /**
  * edit
  *
@@ -33,7 +39,7 @@
  * @subpackage pipe
  * @version    $Revision: 875 $
  */
-class edit extends Amun_Module_ApplicationAbstract
+class edit extends ApplicationAbstract
 {
 	/**
 	 * @httpMethod GET
@@ -48,7 +54,7 @@ class edit extends Amun_Module_ApplicationAbstract
 
 			if($id > 0)
 			{
-				$record = $this->getHandler()->getById($id, array(), PSX_Sql::FETCH_OBJECT);
+				$record = $this->getHandler()->getById($id, array(), Sql::FETCH_OBJECT);
 
 				$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/pipe/form?format=json&method=update&id=' . $record->id;
 
@@ -84,7 +90,7 @@ HTML;
 		}
 		else
 		{
-			throw new Amun_Exception('Access not allowed');
+			throw new Exception('Access not allowed');
 		}
 	}
 }

@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Sql\Table;
+
+use Amun\DataFactory;
+
 /**
  * Amun_Sql_Table_Registry
  *
@@ -32,11 +36,11 @@
  * @package    Amun_Sql
  * @version    $Revision: 802 $
  */
-class Amun_Sql_Table_Registry
+class Registry
 {
 	public static function get($key)
 	{
-		return Amun_DataFactory::getInstance()->getHandlerInstance($key)->getTable();
+		return DataFactory::getInstance()->getHandlerInstance($key)->getTable();
 	}
 }
 

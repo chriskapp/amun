@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Stomp\Listener;
+
+use Amun\Stomp\ListenerAbstract;
+
 /**
  * Amun_Stomp_Listener_PshbContentNotification
  *
@@ -34,7 +38,7 @@
  * @package    Amun_Stomp
  * @version    $Revision: 635 $
  */
-class Amun_Stomp_Listener_PshbContentNotification extends Amun_Stomp_ListenerAbstract
+class PshbContentNotification extends ListenerAbstract
 {
 	public function run($table, $type, $userId, array $data)
 	{

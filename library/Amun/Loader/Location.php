@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Loader;
+
+use ReflectionClass;
+
 /**
  * Amun_Loader_Location
  *
@@ -32,7 +36,7 @@
  * @package    Amun_Loader
  * @version    $Revision: 818 $
  */
-class Amun_Loader_Location extends PSX_Loader_Location
+class Location extends \PSX\Loader\Location
 {
 	private $serviceId;
 

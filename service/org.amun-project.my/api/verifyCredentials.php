@@ -24,11 +24,11 @@
 
 namespace my\api;
 
-use Amun_Module_ApiAbstract;
-use Amun_Sql_Table_Registry;
-use Exception;
-use PSX_Data_Message;
-use PSX_Sql;
+use Amun\Module\ApiAbstract;
+use Amun\DataFactory;
+use Amun\Exception;
+use PSX\Data\Message;
+use PSX\Sql;
 
 /**
  * verifyCredentials
@@ -41,7 +41,7 @@ use PSX_Sql;
  * @subpackage service_my
  * @version    $Revision: 875 $
  */
-class verifyCredentials extends Amun_Module_ApiAbstract
+class verifyCredentials extends ApiAbstract
 {
 	/**
 	 * Returns informations about the current loggedin user
@@ -55,17 +55,17 @@ class verifyCredentials extends Amun_Module_ApiAbstract
 	{
 		try
 		{
-			$select = Amun_Sql_Table_Registry::get('User_Account')
+			$select = DataFactory::getTable('User_Account')
 				->select(array('id', 'groupId', 'status', 'name', 'gender', 'profileUrl', 'thumbnailUrl', 'timezone', 'updated', 'date'))
 				->where('id', '=', $this->user->id);
 
-			$account = $select->getRow(PSX_Sql::FETCH_OBJECT, 'AmunService_My_Credentials', array($select->getTable(), $this->user));
+			$account = $select->getRow(Sql::FETCH_OBJECT, '\AmunService\My\Credentials', array($select->getTable(), $this->user));
 
 			$this->setResponse($account);
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
-			$msg = new PSX_Data_Message($e->getMessage(), false);
+			$msg = new Message($e->getMessage(), false);
 
 			$this->setResponse($msg);
 		}

@@ -22,6 +22,8 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Sql;
+
 /**
  * Amun_Sql_TableInterface
  *
@@ -32,7 +34,7 @@
  * @package    Amun_Sql
  * @version    $Revision: 635 $
  */
-interface Amun_Sql_TableInterface extends PSX_Sql_TableInterface
+interface TableInterface extends \PSX\Sql\TableInterface
 {
 	public function getRegistry();
 }

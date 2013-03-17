@@ -22,6 +22,12 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\application\login;
+
+use Amun\Module\ApplicationAbstract;
+use AmunService\My\LoginHandlerFactory;
+use AmunService\My\CallbackInterface;
+
 /**
  * callback
  *
@@ -33,7 +39,7 @@
  * @subpackage my
  * @version    $Revision: 875 $
  */
-class callback extends Amun_Module_ApplicationAbstract
+class callback extends ApplicationAbstract
 {
 	/**
 	 * @httpMethod GET
@@ -56,9 +62,9 @@ class callback extends Amun_Module_ApplicationAbstract
 	protected function handleCallback()
 	{
 		$handler = $this->getUriFragments('loginHandler');
-		$handler = AmunService_My_LoginHandlerFactory::factory($handler);
+		$handler = LoginHandlerFactory::factory($handler);
 
-		if($handler instanceof AmunService_My_LoginHandler_CallbackInterface)
+		if($handler instanceof CallbackInterface)
 		{
 			$handler->callback();
 		}

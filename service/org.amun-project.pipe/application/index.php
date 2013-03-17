@@ -22,6 +22,14 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace pipe\application;
+
+use Amun\Module\ApplicationAbstract;
+use Amun\Exception;
+use Amun\Option;
+use AmunService\Pipe;
+use PSX\Sql;
+
 /**
  * index
  *
@@ -33,7 +41,7 @@
  * @subpackage pipe
  * @version    $Revision: 875 $
  */
-class index extends Amun_Module_ApplicationAbstract
+class index extends ApplicationAbstract
 {
 	/**
 	 * @httpMethod GET
@@ -44,20 +52,20 @@ class index extends Amun_Module_ApplicationAbstract
 		if($this->user->hasRight('pipe_view'))
 		{
 			// load pipe
-			$recordPipe = $this->getHandler()->getByPageId($this->page->id, PSX_Sql::FETCH_OBJECT);
+			$recordPipe = $this->getHandler()->getByPageId($this->page->id, Sql::FETCH_OBJECT);
 
 			$this->template->assign('recordPipe', $recordPipe);
 
 
 			// check whether user has the media right
-			if($recordPipe instanceof Service_Pipe && !$this->user->hasRightId($recordPipe->mediaRightId)) 
+			if($recordPipe instanceof Pipe\Record && !$this->user->hasRightId($recordPipe->mediaRightId)) 
 			{
-				throw new Amun_Exception('Access not allowed');
+				throw new Exception('Access not allowed');
 			}
 
 
 			// options
-			$options = new Amun_Option(__CLASS__, $this->registry, $this->user, $this->page);
+			$options = new Option(__CLASS__, $this->registry, $this->user, $this->page);
 			$options->add('pipe_edit', 'Edit', $this->page->url . '/edit' . (!empty($recordPipe) ? '?id=' . $recordPipe->id : ''));
 			$options->load(array($this->page));
 
@@ -73,7 +81,7 @@ class index extends Amun_Module_ApplicationAbstract
 		}
 		else
 		{
-			throw new Amun_Exception('Access not allowed');
+			throw new Exception('Access not allowed');
 		}
 	}
 }

@@ -22,6 +22,13 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Loader;
+
+use Amun\Registry;
+use Amun\Exception;
+use ReflectionClass;
+use PSX\Loader\LocationFinder\FileSystem;
+
 /**
  * Amun_Loader_NamespaceStrategy
  *
@@ -32,13 +39,13 @@
  * @package    Amun_Loader
  * @version    $Revision: 818 $
  */
-class Amun_Loader_LocationFinder extends PSX_Loader_LocationFinder_FileSystem
+class LocationFinder extends FileSystem
 {
 	protected $config;
 	protected $sql;
 	protected $registry;
 
-	public function __construct(Amun_Registry $registry)
+	public function __construct(Registry $registry)
 	{
 		$this->config   = $registry->getConfig();
 		$this->sql      = $registry->getSql();
@@ -123,12 +130,12 @@ class Amun_Loader_LocationFinder extends PSX_Loader_LocationFinder_FileSystem
 				$rest = self::removePathPart($class->getShortName(), $rest);
 
 				// return location
-				return new Amun_Loader_Location(md5($file), $rest, $class, $service['id']);
+				return new Location(md5($file), $rest, $class, $service['id']);
 			}
 		}
 		else
 		{
-			throw new PSX_Exception('Service not found', 404);
+			throw new Exception('Service not found', 404);
 		}
 	}
 
@@ -172,16 +179,16 @@ class Amun_Loader_LocationFinder extends PSX_Loader_LocationFinder_FileSystem
 				$class = new ReflectionClass($namespace . '\\' . $class);
 
 				// return location
-				return new Amun_Loader_Location(md5(uniqid()), null, $class, $gadget['id']);
+				return new Location(md5(uniqid()), null, $class, $gadget['id']);
 			}
 			else
 			{
-				throw new PSX_Exception('Gadget file not found', 500);
+				throw new Exception('Gadget file not found', 500);
 			}
 		}
 		else
 		{
-			throw new PSX_Exception('Gadget not found', 404);
+			throw new Exception('Gadget not found', 404);
 		}
 	}
 
@@ -191,7 +198,8 @@ class Amun_Loader_LocationFinder extends PSX_Loader_LocationFinder_FileSystem
 		$sql = "SELECT
 					`page`.`id`,
 					`page`.`path`,
-					`service`.`source`
+					`service`.`source`,
+					`service`.`namespace`
 				FROM
 					" . $this->registry['table.content_page'] . " `page`
 				INNER JOIN
@@ -222,7 +230,9 @@ class Amun_Loader_LocationFinder extends PSX_Loader_LocationFinder_FileSystem
 				require_once($file);
 
 				// create class
-				$class = new ReflectionClass('\\' . $class);
+				$namespace = $this->getApiNamespace($path, $page['source'], $page['namespace']);
+
+				$class = new ReflectionClass($namespace  . '\\' . $class);
 
 				// remove path and class
 				$rest = $pathInfo;
@@ -235,12 +245,12 @@ class Amun_Loader_LocationFinder extends PSX_Loader_LocationFinder_FileSystem
 				$rest = self::removePathPart($class->getShortName(), $rest);
 
 				// return location
-				return new Amun_Loader_Location(md5($file), $rest, $class, $page['id']);
+				return new Location(md5($file), $rest, $class, $page['id']);
 			}
 		}
 		else
 		{
-			throw new PSX_Exception('Page not found', 404);
+			throw new Exception('Page not found', 404);
 		}
 	}
 
@@ -259,6 +269,8 @@ class Amun_Loader_LocationFinder extends PSX_Loader_LocationFinder_FileSystem
 			$ns = str_replace('/', '\\', $path);
 			$ns = '\\' . $namespace . '\\' . $ns;
 		}
+
+		$ns = rtrim($ns, '\\');
 
 		return $ns;
 	}

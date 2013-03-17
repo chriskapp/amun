@@ -1,7 +1,7 @@
 
 <nav>
 	<ul>
-		<?php foreach($nav as $item): ?>
+		<?php foreach($navigation as $item): ?>
 			<?php if($item['selected']): ?>
 				<li class="active"><a href="<?php echo $item['href']; ?>"><?php echo $item['title']; ?></a></li>
 			<?php else: ?>

@@ -22,6 +22,22 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Core\Registry;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use Amun\Filter as AmunFilter;
+use Amun\Util;
+use AmunService\Core\Registry\Filter as RegistryFilter;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
+use PSX\DateTime;
+use PSX\Filter;
+use PSX\Util\Markdown;
+use PSX\Url;
+
 /**
  * Amun_System_Registry
  *
@@ -32,7 +48,7 @@
  * @package    Amun_System_Registry
  * @version    $Revision: 683 $
  */
-class AmunService_Core_Registry_Record extends Amun_Data_RecordAbstract
+class Record extends RecordAbstract
 {
 	const STRING  = 0x1;
 	const INTEGER = 0x2;
@@ -41,7 +57,7 @@ class AmunService_Core_Registry_Record extends Amun_Data_RecordAbstract
 
 	public function setId($id)
 	{
-		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
+		$id = $this->_validate->apply($id, 'integer', array(new AmunFilter\Id($this->_table)), 'id', 'Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -49,13 +65,13 @@ class AmunService_Core_Registry_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setName($name)
 	{
-		$name = $this->_validate->apply($name, 'string', array(new PSX_Filter_Length(3, 64), new AmunService_Core_Registry_Filter_Name()), 'name', 'Name');
+		$name = $this->_validate->apply($name, 'string', array(new Filter\Length(3, 64), new RegistryFilter\Name()), 'name', 'Name');
 
 		if(!$this->_validate->hasError())
 		{
@@ -63,13 +79,13 @@ class AmunService_Core_Registry_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setType($type)
 	{
-		$type = $this->_validate->apply($type, 'string', array(new PSX_Filter_InArray(self::getType())), 'type', 'Type');
+		$type = $this->_validate->apply($type, 'string', array(new Filter\InArray(self::getType())), 'type', 'Type');
 
 		if(!$this->_validate->hasError())
 		{
@@ -77,13 +93,13 @@ class AmunService_Core_Registry_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setClass($class)
 	{
-		$class = $this->_validate->apply($class, 'string', array(new AmunService_Core_Registry_Filter_Class()), 'class', 'Class');
+		$class = $this->_validate->apply($class, 'string', array(new RegistryFilter\Class()), 'class', 'Class');
 
 		if(!$this->_validate->hasError())
 		{
@@ -91,7 +107,7 @@ class AmunService_Core_Registry_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 

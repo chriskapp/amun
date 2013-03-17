@@ -22,6 +22,15 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\application\login;
+
+use Amun\Module\ApplicationAbstract;
+use Amun\Captcha;
+use Amun\Security;
+use Amun\Exception;
+use AmunService\User\Account;
+use PSX\Filter;
+
 /**
  * recover
  *
@@ -33,7 +42,7 @@
  * @subpackage my
  * @version    $Revision: 875 $
  */
-class recover extends Amun_Module_ApplicationAbstract
+class recover extends ApplicationAbstract
 {
 	public function onLoad()
 	{
@@ -50,47 +59,45 @@ class recover extends Amun_Module_ApplicationAbstract
 
 		// template
 		$this->htmlCss->add('my');
-
-		$this->template->set('login/' . __CLASS__ . '.tpl');
 	}
 
 	public function onPost()
 	{
 		try
 		{
-			$email   = $this->post->email('string', array(new PSX_Filter_Length(3, 64), new PSX_Filter_Email()));
+			$email   = $this->post->email('string', array(new Filter\Length(3, 64), new Filter\Email()));
 			$captcha = $this->post->captcha('string');
 
 			// check captcha if anonymous
-			$captchaProvider = Amun_Captcha::factory($this->config['amun_captcha']);
+			$captchaProvider = Captcha::factory($this->config['amun_captcha']);
 
 			if(!$captchaProvider->verify($captcha))
 			{
-				throw new Amun_Exception('Invalid captcha');
+				throw new Exception('Invalid captcha');
 			}
 
 			if(!$this->validate->hasError())
 			{
-				$account = $this->getHandler('User_Account')->getByIdentity(sha1(Amun_Security::getSalt() . $email));
+				$account = $this->getHandler('User_Account')->getByIdentity(sha1(Security::getSalt() . $email));
 
-				if($account instanceof AmunService_User_Account_Record)
+				if($account instanceof Account\Record)
 				{
-					if(!in_array($account->status, array(AmunService_User_Account_Record::NORMAL, AmunService_User_Account_Record::ADMINISTRATOR)))
+					if(!in_array($account->status, array(Account\Record::NORMAL, Account\Record::ADMINISTRATOR)))
 					{
-						throw new Amun_Exception('Account has an invalid status');
+						throw new Exception('Account has an invalid status');
 					}
 
 					if(!empty($account->email))
 					{
-						$token = Amun_Security::generateToken();
+						$token = Security::generateToken();
 						$link  = $this->page->url . '/login/resetPw?token=' . $token;
 						$date  = new DateTime('NOW', $this->registry['core.default_timezone']);
 
 						// update status
-						$account->setStatus(AmunService_User_Account_Record::RECOVER);
+						$account->setStatus(Account\Record::RECOVER);
 						$account->setToken($token);
 
-						$handler = new AmunService_User_Account_Handler($this->user);
+						$handler = new Account\Handler($this->user);
 						$handler->update($account);
 
 						// send mail
@@ -112,20 +119,20 @@ class recover extends Amun_Module_ApplicationAbstract
 					}
 					else
 					{
-						throw new Amun_Exception('No public email address is set for this account');
+						throw new Exception('No public email address is set for this account');
 					}
 				}
 				else
 				{
-					throw new Amun_Exception('Account does not exist');
+					throw new Exception('Account does not exist');
 				}
 			}
 			else
 			{
-				throw new Amun_Exception($this->validate->getLastError());
+				throw new Exception($this->validate->getLastError());
 			}
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
 			$this->template->assign('error', $e->getMessage());
 		}

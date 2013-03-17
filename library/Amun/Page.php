@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun;
+
+use AmunService\Content\Page\Record;
+
 /**
  * Amun_Page
  *
@@ -32,7 +36,7 @@
  * @package    Amun_Page
  * @version    $Revision: 840 $
  */
-class Amun_Page
+class Page
 {
 	public $id;
 	public $parentId;
@@ -61,7 +65,7 @@ class Amun_Page
 	private $registry;
 	private $user;
 
-	public function __construct($pageId, Amun_Registry $registry, Amun_User $user)
+	public function __construct($pageId, Registry $registry, User $user)
 	{
 		$this->config   = $registry->getConfig();
 		$this->sql      = $registry->getSql();
@@ -69,7 +73,7 @@ class Amun_Page
 		$this->user     = $user;
 
 
-		$status = AmunService_Content_Page_Record::NORMAL;
+		$status = Record::NORMAL;
 		$sql    = <<<SQL
 SELECT
 	`page`.`id`          AS `pageId`,
@@ -104,7 +108,7 @@ SQL;
 		{
 			if(!empty($row['pageRightId']) && !$this->user->hasRightId($row['pageRightId']))
 			{
-				throw new Amun_Exception('Access not allowed', 401);
+				throw new Exception('Access not allowed', 401);
 			}
 
 			$this->id          = $row['pageId'];
@@ -129,7 +133,7 @@ SQL;
 		}
 		else
 		{
-			throw new Amun_Exception('Invalid page');
+			throw new Exception('Invalid page');
 		}
 	}
 
@@ -140,20 +144,20 @@ SQL;
 
 	public function hasNav()
 	{
-		return $this->load & AmunService_Content_Page_Record::NAV;
+		return $this->load & Record::NAV;
 	}
 
 	public function hasPath()
 	{
-		return $this->load & AmunService_Content_Page_Record::PATH;
+		return $this->load & Record::PATH;
 	}
 
 	public function hasGadget()
 	{
-		return $this->load & AmunService_Content_Page_Record::GADGET;
+		return $this->load & Record::GADGET;
 	}
 
-	public static function getUrl(Amun_Registry $registry, $pageId)
+	public static function getUrl(Registry $registry, $pageId)
 	{
 		$id   = intval($pageId);
 		$stmt = <<<SQL
@@ -174,7 +178,7 @@ SQL;
 		}
 		else
 		{
-			throw new Amun_Page_Exception('Invalid page id');
+			throw new Exception('Invalid page id');
 		}
 
 		return $url;

@@ -23,6 +23,13 @@
  * along with psx. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Dependency;
+
+use Amun\DataFactory;
+use Amun\Gadget;
+use Amun\Service;
+use PSX\Config;
+
 /**
  * Amun_Dependency_Gadget
  *
@@ -33,11 +40,11 @@
  * @package    Amun_Dependency
  * @version    $Revision: 818 $
  */
-class Amun_Dependency_Gadget extends Amun_Dependency_Session
+class Gadget extends Session
 {
 	protected $gadgetId;
 
-	public function __construct(PSX_Config $config, array $params)
+	public function __construct(Config $config, array $params)
 	{
 		$this->gadgetId = isset($params['gadget.id']) ? $params['gadget.id'] : null;;
 
@@ -56,7 +63,7 @@ class Amun_Dependency_Gadget extends Amun_Dependency_Session
 
 	public function getGadget()
 	{
-		return $this->set('gadget', new Amun_Gadget($this->gadgetId, $this->getRegistry(), $this->getUser()));
+		return $this->set('gadget', new Gadget($this->gadgetId, $this->getRegistry(), $this->getUser()));
 	}
 
 	public function getArgs()
@@ -71,7 +78,7 @@ class Amun_Dependency_Gadget extends Amun_Dependency_Session
 			return $this->get('service');
 		}
 
-		return $this->set('service', new Amun_Service($this->getGadget()->getServiceId(), $this->getRegistry()));
+		return $this->set('service', new Service($this->getGadget()->getServiceId(), $this->getRegistry()));
 	}
 
 	public function getDataFactory()
@@ -81,6 +88,6 @@ class Amun_Dependency_Gadget extends Amun_Dependency_Session
 			return $this->get('dataFactory');
 		}
 
-		return $this->set('dataFactory', Amun_DataFactory::initInstance($this));
+		return $this->set('dataFactory', DataFactory::initInstance($this));
 	}
 }

@@ -24,8 +24,8 @@
 
 namespace core\api;
 
-use Amun_Module_RestAbstract;
-use PSX_Data_Message;
+use Amun\Module\RestAbstract;
+use PSX\Data\Message;
 
 /**
  * service
@@ -38,11 +38,11 @@ use PSX_Data_Message;
  * @subpackage content_service
  * @version    $Revision: 683 $
  */
-class service extends Amun_Module_RestAbstract
+class service extends RestAbstract
 {
 	public function onPut()
 	{
-		$msg = new PSX_Data_Message('Update a service record is not possible', false);
+		$msg = new Message('Update a service record is not possible', false);
 
 		$this->setResponse($msg, null, 500);
 	}

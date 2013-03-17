@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Html\Filter\Collection;
+
+use PSX\Html\Filter\Collection\Html5Inline;
+
 /**
  * Amun_Html_Filter_Collection_FullTrusted
  *
@@ -32,6 +36,6 @@
  * @package    Amun_Html
  * @version    $Revision: 635 $
  */
-class Amun_Html_Filter_Collection_FullTrusted extends PSX_Html_Filter_Collection_Html5Inline
+class FullTrusted extends Html5Inline
 {
 }

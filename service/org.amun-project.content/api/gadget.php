@@ -24,10 +24,10 @@
 
 namespace content\api;
 
-use Amun_Module_RestAbstract;
-use PSX_Data_Exception;
-use PSX_Data_WriterInterface;
-use PSX_Data_WriterResult;
+use Amun\Module\RestAbstract;
+use PSX\Data\Exception;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
 
 /**
  * gadget
@@ -40,21 +40,19 @@ use PSX_Data_WriterResult;
  * @subpackage content_gadget
  * @version    $Revision: 861 $
  */
-class gadget extends Amun_Module_RestAbstract
+class gadget extends RestAbstract
 {
 	protected function getHandler($table = null)
 	{
 		return parent::getHandler($table === null ? 'Content_Gadget' : $table);
 	}
 
-	protected function setWriterConfig(PSX_Data_WriterResult $writer)
+	protected function setWriterConfig(WriterResult $writer)
 	{
 		switch($writer->getType())
 		{
-			case PSX_Data_WriterInterface::ATOM:
-
+			case WriterInterface::ATOM:
 				throw new PSX_Data_Exception('Atom not supported');
-
 				break;
 		}
 	}

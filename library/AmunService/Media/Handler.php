@@ -22,6 +22,24 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Media;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use AmunService\Core\Approval;
+use PSX\DateTime;
+use PSX\Data\RecordInterface;
+use PSX\Data\ResultSet;
+use PSX\Upload\File;
+use PSX\Sql\Condition;
+use PSX\Sql\Join;
+use PSX\Log;
+use PSX\Url;
+use PSX\Http;
+use PSX\Http\GetRequest;
+
 /**
  * AmunService_Core_Content_Media_Handler
  *
@@ -32,7 +50,7 @@
  * @package    Amun_Content_Media
  * @version    $Revision: 880 $
  */
-class AmunService_Media_Handler extends Amun_Data_HandlerAbstract
+class Handler extends HandlerAbstract
 {
 	private $mimeTypes;
 
@@ -43,20 +61,20 @@ class AmunService_Media_Handler extends Amun_Data_HandlerAbstract
 			->getRow($mode, $class, $args);
 	}
 
-	public function create(PSX_Data_RecordInterface $record)
+	public function create(RecordInterface $record)
 	{
 		if($record->hasFields('name', 'mimeType', 'size', 'path'))
 		{
 			$record->globalId = $this->base->getUUID('content:media:' . $record->path . ':' . uniqid());
 
-			if($record->path instanceof PSX_Upload_File)
+			if($record->path instanceof File)
 			{
 				// check mime type
 				$type = $this->getType($record->path->getType());
 
 				if($type === false)
 				{
-					throw new PSX_Data_Exception('Invalide type');
+					throw new Exception('Invalide type');
 				}
 
 				// check size
@@ -64,7 +82,7 @@ class AmunService_Media_Handler extends Amun_Data_HandlerAbstract
 
 				if($size < 1 || $size > $this->registry['media.upload_size'])
 				{
-					throw new PSX_Data_Exception('Invalid upload size');
+					throw new Exception('Invalid upload size');
 				}
 
 				// move file
@@ -74,7 +92,7 @@ class AmunService_Media_Handler extends Amun_Data_HandlerAbstract
 
 				if(is_file($path))
 				{
-					throw new PSX_Data_Exception('File already exists');
+					throw new Exception('File already exists');
 				}
 
 				if($record->path->move($path))
@@ -84,17 +102,17 @@ class AmunService_Media_Handler extends Amun_Data_HandlerAbstract
 				}
 				else
 				{
-					throw new PSX_Data_Exception('Could not move file');
+					throw new Exception('Could not move file');
 				}
 			}
 			else if(!is_file($record->path))
 			{
-				throw new PSX_Data_Exception('Invalid path');
+				throw new Exception('Invalid path');
 			}
 
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-			$record->date = $date->format(PSX_DateTime::SQL);
+			$record->date = $date->format(DateTime::SQL);
 
 
 			$this->table->insert($record->getData());
@@ -102,54 +120,54 @@ class AmunService_Media_Handler extends Amun_Data_HandlerAbstract
 
 			$record->id = $this->sql->getLastInsertId();
 
-			$this->notify(Amun_Data_RecordAbstract::INSERT, $record);
+			$this->notify(RecordAbstract::INSERT, $record);
 
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
-	public function update(PSX_Data_RecordInterface $record)
+	public function update(RecordInterface $record)
 	{
 		if($record->hasFields('id'))
 		{
-			$con = new PSX_Sql_Condition(array('id', '=', $record->id));
+			$con = new Condition(array('id', '=', $record->id));
 
 			$this->table->update($record->getData(), $con);
 
 
-			$this->notify(Amun_Data_RecordAbstract::UPDATE, $record);
+			$this->notify(RecordAbstract::UPDATE, $record);
 
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
-	public function delete(PSX_Data_RecordInterface $record)
+	public function delete(RecordInterface $record)
 	{
 		if($record->hasFields('id'))
 		{
-			$con = new PSX_Sql_Condition(array('id', '=', $record->id));
+			$con = new Condition(array('id', '=', $record->id));
 
 			$this->table->delete($con);
 
 
-			$this->notify(Amun_Data_RecordAbstract::DELETE, $record);
+			$this->notify(RecordAbstract::DELETE, $record);
 
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
@@ -163,10 +181,10 @@ class AmunService_Media_Handler extends Amun_Data_HandlerAbstract
 	{
 		if(!is_dir($path))
 		{
-			throw new PSX_Data_Exception('Path is not a valid dir');
+			throw new Exception('Path is not a valid dir');
 		}
 
-		PSX_Log::info('Scan ' . $path);
+		Log::info('Scan ' . $path);
 
 		$files = scandir($path);
 		$count = 0;
@@ -191,7 +209,7 @@ class AmunService_Media_Handler extends Amun_Data_HandlerAbstract
 					{
 						try
 						{
-							$record = new AmunService_Media_Record($this->table);
+							$record = new Record($this->table);
 							$record->name = $f;
 							$record->path = realpath($item);
 							$record->type = $type;
@@ -209,14 +227,14 @@ class AmunService_Media_Handler extends Amun_Data_HandlerAbstract
 						}
 						catch(Exception $e)
 						{
-							PSX_Log::error($e->getMessage());
+							Log::error($e->getMessage());
 						}
 					}
 				}
 			}
 		}
 
-		PSX_Log::info('Imported ' . $count . ' files');
+		Log::info('Imported ' . $count . ' files');
 	}
 
 	protected function getDefaultSelect()
@@ -228,7 +246,7 @@ class AmunService_Media_Handler extends Amun_Data_HandlerAbstract
 	private function getType($mimeType)
 	{
 		$mimeType = strtolower($mimeType);
-		$types    = AmunService_Media_Record::getType();
+		$types    = Record::getType();
 
 		foreach($types as $type => $val)
 		{
@@ -263,9 +281,9 @@ class AmunService_Media_Handler extends Amun_Data_HandlerAbstract
 
 	private function getMimeTypes()
 	{
-		$url      = new PSX_Url('http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types');
-		$http     = new PSX_Http(new PSX_Http_Handler_Curl());
-		$request  = new PSX_Http_GetRequest($url);
+		$url      = new Url('http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types');
+		$http     = new Http();
+		$request  = new GetRequest($url);
 		$response = $http->request($request);
 		$types    = array();
 

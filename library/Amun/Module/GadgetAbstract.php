@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Module;
+
+use Amun\Dependency;
+use PSX\Module\ViewAbstract;
+
 /**
  * Amun_Module_GadgetAbstract
  *
@@ -32,11 +37,11 @@
  * @package    Amun_Module
  * @version    $Revision: 813 $
  */
-abstract class Amun_Module_GadgetAbstract extends PSX_Module_ViewAbstract
+abstract class GadgetAbstract extends ViewAbstract
 {
 	public function getDependencies()
 	{
-		$ct = new Amun_Dependency_Gadget($this->base->getConfig(), array(
+		$ct = new Dependency\Gadget($this->base->getConfig(), array(
 			'gadget.id' => $this->location->getServiceId()
 		));
 

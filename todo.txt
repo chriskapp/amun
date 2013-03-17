@@ -1,6 +1,7 @@
 
 [FEATURES]
 
+[ ] implement http://xing.github.com/wysihtml5/ as service for page editing
 [ ] remove getSelect method from all api is now in the handler
 [ ] implement handler select methods in all applications
 [ ] fix explorer service

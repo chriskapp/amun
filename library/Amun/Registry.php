@@ -22,6 +22,13 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun;
+
+use ArrayObject;
+use PSX\Config;
+use PSX\Sql;
+use PSX\Sql\Condition;
+
 /**
  * Amun_Registry
  *
@@ -32,7 +39,7 @@
  * @package    Amun_Registry
  * @version    $Revision: 801 $
  */
-class Amun_Registry extends ArrayObject
+class Registry extends ArrayObject
 {
 	protected static $_instance;
 
@@ -40,7 +47,7 @@ class Amun_Registry extends ArrayObject
 	protected $config;
 	protected $sql;
 
-	public function __construct(PSX_Config $config, PSX_Sql $sql)
+	public function __construct(Config $config, Sql $sql)
 	{
 		parent::__construct($this->container, parent::ARRAY_AS_PROPS);
 
@@ -93,7 +100,7 @@ class Amun_Registry extends ArrayObject
 					$class = $row['class'];
 					$value = new $class($value);
 				}
-				catch(Exception $e)
+				catch(\Exception $e)
 				{
 					$value = null;
 				}
@@ -105,6 +112,7 @@ class Amun_Registry extends ArrayObject
 
 	public function getTableName($offset)
 	{
+		$offset = str_replace('\\', '_', $offset);
 		$offset = strtolower($offset);
 
 		if(parent::offsetExists('table.' . $offset))
@@ -146,7 +154,7 @@ class Amun_Registry extends ArrayObject
 
 		foreach($serviceIds as $serviceId)
 		{
-			$result[] = new Amun_Service($serviceId, $this->registry);
+			$result[] = new Service($serviceId, $this->registry);
 		}
 
 		return $result;
@@ -154,7 +162,7 @@ class Amun_Registry extends ArrayObject
 
 	public function hasService($source)
 	{
-		$con   = new PSX_Sql_Condition(array('source', '=', $source));
+		$con   = new Condition(array('source', '=', $source));
 		$count = $this->sql->count($this->offsetGet('table.core_service'), $con);
 
 		return $count > 0;
@@ -175,7 +183,7 @@ class Amun_Registry extends ArrayObject
 		return self::getInstance()->offsetExists($key);
 	}
 
-	public static function initInstance(PSX_Config $config, PSX_Sql $sql)
+	public static function initInstance(Config $config, Sql $sql)
 	{
 		return self::$_instance = new self($config, $sql);
 	}
@@ -187,7 +195,7 @@ class Amun_Registry extends ArrayObject
 
 	public static function getClassName($table)
 	{
-		return implode('_', array_map('ucfirst', explode('_', $table)));
+		return implode('\\', array_map('ucfirst', explode('\\', $table)));
 	}
 }
 

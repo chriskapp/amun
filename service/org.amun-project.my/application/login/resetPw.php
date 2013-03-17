@@ -22,6 +22,14 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\application\login;
+
+use Amun\Module\ApplicationAbstract;
+use Amun\Security;
+use Amun\Mail;
+use AmunService\User\Account;
+use PSX\Filter;
+
 /**
  * resetPw
  *
@@ -33,7 +41,7 @@
  * @subpackage my
  * @version    $Revision: 875 $
  */
-class resetPw extends Amun_Module_ApplicationAbstract
+class resetPw extends ApplicationAbstract
 {
 	public function onLoad()
 	{
@@ -45,33 +53,31 @@ class resetPw extends Amun_Module_ApplicationAbstract
 
 		// template
 		$this->htmlCss->add('my');
-
-		$this->template->set('login/' . __CLASS__ . '.tpl');
 	}
 
 	public function onGet()
 	{
 		try
 		{
-			$token = $this->get->token('string', array(new PSX_Filter_Length(40, 40), new PSX_Filter_Xdigit()));
+			$token = $this->get->token('string', array(new Filter\Length(40, 40), new Filter\Xdigit()));
 
 			if($token !== false)
 			{
 				$account = $this->getHandler('User_Account')->getRecoverByToken($token);
 
-				if($account instanceof AmunService_User_Account_Record)
+				if($account instanceof Account\Record)
 				{
 					if(!empty($account->email))
 					{
 						if($_SERVER['REMOTE_ADDR'] == $account->ip)
 						{
-							$pw   = Amun_Security::generatePw();
+							$pw   = Security::generatePw();
 							$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-							$account->setStatus(AmunService_User_Account_Record::NORMAL);
+							$account->setStatus(Account\Record::NORMAL);
 							$account->setPw($pw);
 
-							$handler = new AmunService_User_Account_Handler($this->user);
+							$handler = new Account\Handler($this->user);
 							$handler->update($account);
 
 							// send mail
@@ -85,32 +91,32 @@ class resetPw extends Amun_Module_ApplicationAbstract
 
 							);
 
-							$mail = new Amun_Mail($this->registry);
+							$mail = new Mail($this->registry);
 							$mail->send('MY_RECOVER_SUCCESS', $account->email, $values);
 
 							$this->template->assign('success', true);
 						}
 						else
 						{
-							throw new Amun_Exception('Recover process was requested from another IP');
+							throw new Exception('Recover process was requested from another IP');
 						}
 					}
 					else
 					{
-						throw new Amun_Exception('No public email address is set for this account');
+						throw new Exception('No public email address is set for this account');
 					}
 				}
 				else
 				{
-					throw new Amun_Exception('Invalid token');
+					throw new Exception('Invalid token');
 				}
 			}
 			else
 			{
-				throw new Amun_Exception('Token not set');
+				throw new Exception('Token not set');
 			}
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
 			$this->template->assign('error', $e->getMessage());
 		}

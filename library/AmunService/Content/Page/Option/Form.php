@@ -22,6 +22,20 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Content\Page\Option;
+
+use Amun\DataFactory;
+use Amun\Data\FormAbstract;
+use Amun\Form as AmunForm;
+use Amun\Form\Element\Panel;
+use Amun\Form\Element\Reference;
+use Amun\Form\Element\Input;
+use Amun\Form\Element\TabbedPane;
+use Amun\Form\Element\Textarea;
+use Amun\Form\Element\Captcha;
+use Amun\Form\Element\Select;
+use AmunService\Core\Service;
+
 /**
  * AmunService_Core_Content_Page_Option_Form
  *
@@ -32,29 +46,29 @@
  * @package    Amun_Content_Page
  * @version    $Revision: 666 $
  */
-class AmunService_Content_Page_Option_Form extends Amun_Data_FormAbstract
+class Form extends FormAbstract
 {
 	public function create()
 	{
-		$form = new Amun_Form('POST', $this->url);
+		$form = new AmunForm('POST', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('option', 'Option');
+		$panel = new Panel('option', 'Option');
 
 
-		$optionId = new Amun_Form_Element_Select('optionId', 'Option ID');
+		$optionId = new Select('optionId', 'Option ID');
 		$optionId->setOptions($this->getOption());
 
 		$panel->add($optionId);
 
 
-		$rightId = new Amun_Form_Element_Select('rightId', 'Right ID');
+		$rightId = new Select('rightId', 'Right ID');
 		$rightId->setOptions($this->getRight());
 
 		$panel->add($rightId);
 
 
-		$srcPageId = new Amun_Form_Element_Reference('srcPageId', 'Source Page ID');
+		$srcPageId = new Reference('srcPageId', 'Source Page ID');
 		$srcPageId->setValueField('id');
 		$srcPageId->setLabelField('title');
 		$srcPageId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/page');
@@ -62,7 +76,7 @@ class AmunService_Content_Page_Option_Form extends Amun_Data_FormAbstract
 		$panel->add($srcPageId);
 
 
-		$destPageId = new Amun_Form_Element_Reference('destPageId', 'Destination Page ID');
+		$destPageId = new Reference('destPageId', 'Destination Page ID');
 		$destPageId->setValueField('id');
 		$destPageId->setLabelField('title');
 		$destPageId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/page');
@@ -70,13 +84,13 @@ class AmunService_Content_Page_Option_Form extends Amun_Data_FormAbstract
 		$panel->add($destPageId);
 
 
-		$name = new Amun_Form_Element_Input('name', 'Name');
+		$name = new Input('name', 'Name');
 		$name->setType('text');
 
 		$panel->add($name);
 
 
-		$href = new Amun_Form_Element_Input('href', 'Href');
+		$href = new Input('href', 'Href');
 		$href->setType('text');
 
 		$panel->add($href);
@@ -84,7 +98,7 @@ class AmunService_Content_Page_Option_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -99,34 +113,34 @@ class AmunService_Content_Page_Option_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Content_Page_Option')->getRecord($id);
+		$record = DataFactory::getTable('Content_Page_Option')->getRecord($id);
 
 
-		$form = new Amun_Form('PUT', $this->url);
+		$form = new AmunForm('PUT', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('option', 'Option');
+		$panel = new Panel('option', 'Option');
 
 
-		$id = new Amun_Form_Element_Input('id', 'ID', $record->id);
+		$id = new Input('id', 'ID', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$optionId = new Amun_Form_Element_Select('optionId', 'Option ID', $record->optionId);
+		$optionId = new Select('optionId', 'Option ID', $record->optionId);
 		$optionId->setOptions($this->getOption());
 
 		$panel->add($optionId);
 
 
-		$rightId = new Amun_Form_Element_Select('rightId', 'Right ID', $record->rightId);
+		$rightId = new Select('rightId', 'Right ID', $record->rightId);
 		$rightId->setOptions($this->getRight());
 
 		$panel->add($rightId);
 
 
-		$srcPageId = new Amun_Form_Element_Reference('srcPageId', 'Source Page ID', $record->srcPageId);
+		$srcPageId = new Reference('srcPageId', 'Source Page ID', $record->srcPageId);
 		$srcPageId->setValueField('id');
 		$srcPageId->setLabelField('title');
 		$srcPageId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/page');
@@ -134,7 +148,7 @@ class AmunService_Content_Page_Option_Form extends Amun_Data_FormAbstract
 		$panel->add($srcPageId);
 
 
-		$destPageId = new Amun_Form_Element_Reference('destPageId', 'Destination Page ID', $record->destPageId);
+		$destPageId = new Reference('destPageId', 'Destination Page ID', $record->destPageId);
 		$destPageId->setValueField('id');
 		$destPageId->setLabelField('title');
 		$destPageId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/page');
@@ -142,13 +156,13 @@ class AmunService_Content_Page_Option_Form extends Amun_Data_FormAbstract
 		$panel->add($destPageId);
 
 
-		$name = new Amun_Form_Element_Input('name', 'Name', $record->name);
+		$name = new Input('name', 'Name', $record->name);
 		$name->setType('text');
 
 		$panel->add($name);
 
 
-		$href = new Amun_Form_Element_Input('href', 'Href', $record->href);
+		$href = new Input('href', 'Href', $record->href);
 		$href->setType('text');
 
 		$panel->add($href);
@@ -156,7 +170,7 @@ class AmunService_Content_Page_Option_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -171,36 +185,36 @@ class AmunService_Content_Page_Option_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Content_Page_Option')->getRecord($id);
+		$record = DataFactory::getTable('Content_Page_Option')->getRecord($id);
 
 
-		$form = new Amun_Form('DELETE', $this->url);
+		$form = new AmunForm('DELETE', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('option', 'Option');
+		$panel = new Panel('option', 'Option');
 
 
-		$id = new Amun_Form_Element_Input('id', 'ID', $record->id);
+		$id = new Input('id', 'ID', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$optionId = new Amun_Form_Element_Select('optionId', 'Option ID', $record->optionId);
+		$optionId = new Select('optionId', 'Option ID', $record->optionId);
 		$optionId->setOptions($this->getOption());
 		$optionId->setDisabled(true);
 
 		$panel->add($optionId);
 
 
-		$rightId = new Amun_Form_Element_Select('rightId', 'Right ID', $record->rightId);
+		$rightId = new Select('rightId', 'Right ID', $record->rightId);
 		$rightId->setOptions($this->getRight());
 		$rightId->setDisabled(true);
 
 		$panel->add($rightId);
 
 
-		$srcPageId = new Amun_Form_Element_Reference('srcPageId', 'Source Page ID', $record->srcPageId);
+		$srcPageId = new Reference('srcPageId', 'Source Page ID', $record->srcPageId);
 		$srcPageId->setValueField('id');
 		$srcPageId->setLabelField('title');
 		$srcPageId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/page');
@@ -209,7 +223,7 @@ class AmunService_Content_Page_Option_Form extends Amun_Data_FormAbstract
 		$panel->add($srcPageId);
 
 
-		$destPageId = new Amun_Form_Element_Reference('destPageId', 'Destination Page ID', $record->destPageId);
+		$destPageId = new Reference('destPageId', 'Destination Page ID', $record->destPageId);
 		$destPageId->setValueField('id');
 		$destPageId->setLabelField('title');
 		$destPageId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/page');
@@ -218,14 +232,14 @@ class AmunService_Content_Page_Option_Form extends Amun_Data_FormAbstract
 		$panel->add($destPageId);
 
 
-		$name = new Amun_Form_Element_Input('name', 'Name', $record->name);
+		$name = new Input('name', 'Name', $record->name);
 		$name->setType('text');
 		$name->setDisabled(true);
 
 		$panel->add($name);
 
 
-		$href = new Amun_Form_Element_Input('href', 'Href', $record->href);
+		$href = new Input('href', 'Href', $record->href);
 		$href->setType('text');
 		$href->setDisabled(true);
 
@@ -234,7 +248,7 @@ class AmunService_Content_Page_Option_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -249,7 +263,7 @@ class AmunService_Content_Page_Option_Form extends Amun_Data_FormAbstract
 
 	private function getOption()
 	{
-		$status = AmunService_Core_Service_Record::NORMAL;
+		$status = Service\Record::NORMAL;
 		$sql    = <<<SQL
 SELECT
 	`service`.`id`,

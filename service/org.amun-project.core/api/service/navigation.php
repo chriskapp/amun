@@ -24,13 +24,12 @@
 
 namespace core\api\service;
 
-use Amun_Module_ApiAbstract;
-use Amun_Sql_Table_Registry;
-use Exception;
-use PSX_Data_Message;
-use PSX_Data_Record;
-use PSX_Sql;
-use PSX_Sql_Join;
+use Amun\Module\ApiAbstract;
+use Amun\DataFactory;
+use PSX\Data\Message;
+use PSX\Data\Record;
+use PSX\Sql;
+use PSX\Sql\Join;
 
 /**
  * tree
@@ -43,7 +42,7 @@ use PSX_Sql_Join;
  * @subpackage content_page
  * @version    $Revision: 856 $
  */
-class navigation extends Amun_Module_ApiAbstract
+class navigation extends ApiAbstract
 {
 	/**
 	 * Returns a navigation structure for all installed services
@@ -59,18 +58,18 @@ class navigation extends Amun_Module_ApiAbstract
 		{
 			try
 			{
-				$this->setResponse(new PSX_Data_Record('navigation', array('item' => $this->buildNavigation())));
+				$this->setResponse(new Record('navigation', array('item' => $this->buildNavigation())));
 			}
 			catch(Exception $e)
 			{
-				$msg = new PSX_Data_Message($e->getMessage(), false);
+				$msg = new Message($e->getMessage(), false);
 
 				$this->setResponse($msg);
 			}
 		}
 		else
 		{
-			$msg = new PSX_Data_Message('Access not allowed', false);
+			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}
@@ -151,12 +150,12 @@ SQL;
 
 	private function getXrds()
 	{
-		$result = Amun_Sql_Table_Registry::get('Xrds_Type')
+		$result = DataFactory::getTable('Xrds_Type')
 			->select(array('apiId', 'type'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Xrds')
+			->join(Join::INNER, DataFactory::getTable('Xrds')
 				->select(array('serviceId', 'priority', 'endpoint'), 'api')
 			)
-			->orderBy('apiId', PSX_Sql::SORT_ASC)
+			->orderBy('apiId', Sql::SORT_ASC)
 			->getAll();
 
 		$baseUrl  = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'];

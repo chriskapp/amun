@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\application;
+
+use Amun\Module\ApplicationAbstract;
+use Amun\Exception;
+
 /**
  * logout
  *
@@ -33,7 +38,7 @@
  * @subpackage my
  * @version    $Revision: 875 $
  */
-class logout extends Amun_Module_ApplicationAbstract
+class logout extends ApplicationAbstract
 {
 	public function onLoad()
 	{
@@ -49,7 +54,7 @@ class logout extends Amun_Module_ApplicationAbstract
 		}
 		else
 		{
-			throw new Amun_Exception('Access not allowed');
+			throw new Exception('Access not allowed');
 		}
 	}
 }

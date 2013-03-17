@@ -24,14 +24,13 @@
 
 namespace explorer\api;
 
-use AmunService_Explorer_Handler;
-use AmunService_Explorer_Record;
-use Amun_Module_ApiAbstract;
-use Exception;
-use PSX_Data_Array;
-use PSX_Data_Message;
-use PSX_Data_ResultSet;
-use PSX_DateTime;
+use AmunService\Explorer\Handler;
+use AmunService\Explorer\Record;
+use Amun\Module\ApiAbstract;
+use PSX\Data\ArrayList;
+use PSX\Data\Message;
+use PSX\Data\ResultSet;
+use PSX\DateTime;
 
 /**
  * xrds
@@ -44,7 +43,7 @@ use PSX_DateTime;
  * @subpackage system_xrds
  * @version    $Revision: 799 $
  */
-class index extends Amun_Module_ApiAbstract
+class index extends ApiAbstract
 {
 	/**
 	 * Returns all registered services
@@ -65,16 +64,16 @@ class index extends Amun_Module_ApiAbstract
 
 				$this->setResponse($resultSet);
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
-				$msg = new PSX_Data_Message($e->getMessage(), false);
+				$msg = new Message($e->getMessage(), false);
 
 				$this->setResponse($msg);
 			}
 		}
 		else
 		{
-			$msg = new PSX_Data_Message('Access not allowed', false);
+			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}
@@ -94,20 +93,20 @@ class index extends Amun_Module_ApiAbstract
 		{
 			try
 			{
-				$array = new PSX_Data_Array(array('name', 'size', 'perms', 'date'));
+				$array = new ArrayList(array('name', 'size', 'perms', 'date'));
 
 				$this->setResponse($array);
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
-				$msg = new PSX_Data_Message($e->getMessage(), false);
+				$msg = new Message($e->getMessage(), false);
 
 				$this->setResponse($msg);
 			}
 		}
 		else
 		{
-			$msg = new PSX_Data_Message('Access not allowed', false);
+			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}
@@ -127,27 +126,27 @@ class index extends Amun_Module_ApiAbstract
 		{
 			try
 			{
-				$record = new AmunService_Explorer_Record();
+				$record = new Record();
 				$record->import($this->getRequest());
 
 				// insert
 				$this->getHandler()->create($record);
 
 
-				$msg = new PSX_Data_Message('You have successful create a file', true);
+				$msg = new Message('You have successful create a file', true);
 
 				$this->setResponse($msg);
 			}
 			catch(Exception $e)
 			{
-				$msg = new PSX_Data_Message($e->getMessage(), false);
+				$msg = new Message($e->getMessage(), false);
 
 				$this->setResponse($msg);
 			}
 		}
 		else
 		{
-			$msg = new PSX_Data_Message('Access not allowed', false);
+			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}
@@ -167,27 +166,27 @@ class index extends Amun_Module_ApiAbstract
 		{
 			try
 			{
-				$record = new AmunService_Explorer_Record();
+				$record = new Record();
 				$record->import($this->getRequest());
 
 				// update
 				$this->getHandler()->update($record);
 
 
-				$msg = new PSX_Data_Message('You have successful update a file', true);
+				$msg = new Message('You have successful update a file', true);
 
 				$this->setResponse($msg);
 			}
 			catch(Exception $e)
 			{
-				$msg = new PSX_Data_Message($e->getMessage(), false);
+				$msg = new Message($e->getMessage(), false);
 
 				$this->setResponse($msg);
 			}
 		}
 		else
 		{
-			$msg = new PSX_Data_Message('Access not allowed', false);
+			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}
@@ -207,27 +206,27 @@ class index extends Amun_Module_ApiAbstract
 		{
 			try
 			{
-				$record = new AmunService_Explorer_Record();
+				$record = new Record();
 				$record->import($this->getRequest());
 
 				// delete
 				$this->getHandler()->delete($record);
 
 
-				$msg = new PSX_Data_Message('You have successful delete a file', true);
+				$msg = new Message('You have successful delete a file', true);
 
 				$this->setResponse($msg);
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
-				$msg = new PSX_Data_Message($e->getMessage(), false);
+				$msg = new Message($e->getMessage(), false);
 
 				$this->setResponse($msg);
 			}
 		}
 		else
 		{
-			$msg = new PSX_Data_Message('Access not allowed', false);
+			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}
@@ -318,7 +317,7 @@ class index extends Amun_Module_ApiAbstract
 		// sort
 		array_multisort($dKeys, \SORT_DESC, $keys, $sortOrder, $result);
 
-		return new PSX_Data_ResultSet(count($files), $start, $count, $result);
+		return new ResultSet(count($files), $start, $count, $result);
 	}
 
 	/**
@@ -392,7 +391,7 @@ class index extends Amun_Module_ApiAbstract
 
 	protected function getHandler($name = null)
 	{
-		return new AmunService_Explorer_Handler();
+		return new Handler();
 	}
 }
 

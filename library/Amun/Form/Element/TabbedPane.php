@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Form\Element;
+
+use Amun\Form\ContainerInterface;
+use Amun\Form\ElementAbstract;
+
 /**
  * Amun_Form_Element_TabbedPane
  *
@@ -32,7 +37,7 @@
  * @package    Amun_Form
  * @version    $Revision: 635 $
  */
-class Amun_Form_Element_TabbedPane extends Amun_Form_ElementAbstract implements Amun_Form_ContainerInterface
+class TabbedPane extends ElementAbstract implements ContainerInterface
 {
 	protected $children = array();
 

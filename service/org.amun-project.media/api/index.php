@@ -24,7 +24,7 @@
 
 namespace media\api;
 
-use Amun_Module_RestAbstract;
+use Amun\Module\RestAbstract;
 
 /**
  * media
@@ -37,7 +37,7 @@ use Amun_Module_RestAbstract;
  * @subpackage content_media
  * @version    $Revision: 852 $
  */
-class index extends Amun_Module_RestAbstract
+class index extends RestAbstract
 {
 }
 

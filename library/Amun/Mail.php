@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun;
+
+use Zend\Mail;
+
 /**
  * Amun_Mail
  *
@@ -32,13 +36,13 @@
  * @package    Amun_Mail
  * @version    $Revision: 635 $
  */
-class Amun_Mail
+class Mail
 {
 	private $config;
 	private $sql;
 	private $registry;
 
-	public function __construct(Amun_Registry $registry)
+	public function __construct(Registry $registry)
 	{
 		$this->config   = $registry->getConfig();
 		$this->sql      = $registry->getSql();
@@ -80,22 +84,23 @@ SQL;
 
 			if(count(array_diff(array_keys($values), $neededValues)) > 0)
 			{
-				throw new Amun_Mail_Exception('Missing values in ' . $name);
+				throw new Exception('Missing values in ' . $name);
 			}
 
 
 			// send mail
-			$mail = new Zend_Mail();
-			$mail->setBodyText($this->substituteVars($row['text'], $values));
-			$mail->setBodyHtml($this->substituteVars($row['html'], $values));
+			$mail = new Mail\Message();
+			$mail->setBody($this->substituteVars($row['text'], $values));
 			$mail->setFrom($row['from']);
 			$mail->addTo($email);
 			$mail->setSubject($this->substituteVars($row['subject'], $values));
-			$mail->send();
+
+			$transport = new Mail\Transport\Sendmail();
+			$transport->send($mail);
 		}
 		else
 		{
-			throw new Amun_Mail_Exception('Invalid mail template');
+			throw new Exception('Invalid mail template');
 		}
 	}
 

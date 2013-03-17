@@ -22,6 +22,12 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\My;
+
+use AmunService\User\Friend\Record;
+use PSX\Data\WriterResult;
+use PSX\Data\WriterInterface;
+
 /**
  * Amun_Service_My_People
  *
@@ -32,7 +38,7 @@
  * @package    Amun_Service_My
  * @version    $Revision: 635 $
  */
-class AmunService_My_People extends AmunService_User_Friend_Record
+class People extends Record
 {
 	public function getName()
 	{
@@ -54,16 +60,16 @@ class AmunService_My_People extends AmunService_User_Friend_Record
 		);
 	}
 
-	public function export(PSX_Data_WriterResult $result)
+	public function export(WriterResult $result)
 	{
 		switch($result->getType())
 		{
-			case PSX_Data_WriterInterface::JSON:
-			case PSX_Data_WriterInterface::XML:
+			case WriterInterface::JSON:
+			case WriterInterface::XML:
 				return parent::export($result);
 				break;
 
-			case PSX_Data_WriterInterface::ATOM:
+			case WriterInterface::ATOM:
 				$entry = $result->getWriter()->createEntry();
 
 				$entry->setTitle($this->friendName);
@@ -77,7 +83,7 @@ class AmunService_My_People extends AmunService_User_Friend_Record
 				break;
 
 			default:
-				throw new PSX_Data_Exception('Writer is not supported');
+				throw new Exception('Writer is not supported');
 				break;
 		}
 	}

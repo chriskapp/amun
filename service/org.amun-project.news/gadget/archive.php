@@ -24,7 +24,7 @@
 
 namespace news\gadget;
 
-use Amun_Module_GadgetAbstract;
+use Amun\Module\GadgetAbstract;
 
 /**
  * archive
@@ -37,7 +37,7 @@ use Amun_Module_GadgetAbstract;
  * @subpackage news
  * @version    $Revision: 744 $
  */
-class archive extends Amun_Module_GadgetAbstract
+class archive extends GadgetAbstract
 {
 	/**
 	 * onLoad

@@ -23,6 +23,13 @@
  * along with psx. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Dependency;
+
+use Amun\DataFactory;
+use Amun\Service;
+use Amun\User;
+use PSX\Config;
+
 /**
  * Amun_Dependency_Api
  *
@@ -33,13 +40,13 @@
  * @package    Amun_Dependency
  * @version    $Revision: 818 $
  */
-class Amun_Dependency_Api extends Amun_Dependency_Session
+class Api extends Session
 {
 	protected $serviceId;
 	protected $requestId;
 	protected $accessId;
 
-	public function __construct(PSX_Config $config, array $params)
+	public function __construct(Config $config, array $params)
 	{
 		$this->serviceId = isset($params['api.serviceId']) ? $params['api.serviceId'] : null;
 		$this->requestId = isset($params['api.requestId']) ? $params['api.requestId'] : null;
@@ -65,10 +72,10 @@ class Amun_Dependency_Api extends Amun_Dependency_Session
 
 		if($this->userId === null)
 		{
-			$this->userId = Amun_User::getId($this->getSession(), $this->getRegistry());
+			$this->userId = User::getId($this->getSession(), $this->getRegistry());
 		}
 
-		return $this->set('user', new Amun_User($this->userId, $this->getRegistry(), $this->accessId));
+		return $this->set('user', new User($this->userId, $this->getRegistry(), $this->accessId));
 	}
 
 	public function getService()
@@ -78,7 +85,7 @@ class Amun_Dependency_Api extends Amun_Dependency_Session
 			return $this->get('service');
 		}
 
-		return $this->set('service', new Amun_Service($this->serviceId, $this->getRegistry()));
+		return $this->set('service', new Service($this->serviceId, $this->getRegistry()));
 	}
 
 	public function getDataFactory()
@@ -88,7 +95,7 @@ class Amun_Dependency_Api extends Amun_Dependency_Session
 			return $this->get('dataFactory');
 		}
 
-		return $this->set('dataFactory', Amun_DataFactory::initInstance($this));
+		return $this->set('dataFactory', DataFactory::initInstance($this));
 	}
 }
 

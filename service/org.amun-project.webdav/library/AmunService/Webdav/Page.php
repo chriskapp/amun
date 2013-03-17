@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Webdav;
+
+use Sabre\DAV\Exception;
+use PSX\Sql\Condition;
+
 /**
  * Amun_Service_Webdav_Page
  *
@@ -32,7 +37,7 @@
  * @package    Amun_Service_Webdav
  * @version    $Revision: 787 $
  */
-class AmunService_Webdav_Page extends AmunService_Webdav_CollectionAbstract
+class Page extends CollectionAbstract
 {
 	protected $base;
 	protected $config;
@@ -50,33 +55,31 @@ class AmunService_Webdav_Page extends AmunService_Webdav_CollectionAbstract
 
 		$sql = <<<SQL
 SELECT
-
 	`page`.`id`       AS `id`,
 	`page`.`urlTitle` AS `urlTitle`,
 	`page`.`rightId`  AS `rightId`,
 	`page`.`date`     AS `date`,
 	`service`.`id`    AS `serviceId`,
 	`service`.`name`  AS `serviceName`
-
-	FROM {$this->registry['table.content_page']} `page`
-
-		INNER JOIN {$this->registry['table.core_service']} `service`
-
-		ON `page`.`serviceId` = `service`.`id`
-
-			WHERE `page`.`id` = ?
+FROM 
+	{$this->registry['table.content_page']} `page`
+INNER JOIN 
+	{$this->registry['table.core_service']} `service`
+	ON `page`.`serviceId` = `service`.`id`
+WHERE 
+	`page`.`id` = ?
 SQL;
 
 		$this->page = $this->sql->getRow($sql, array($id));
 
 		if(empty($this->page))
 		{
-			throw new Sabre_DAV_Exception_FileNotFound('Page doesnt exist');
+			throw new Exception\FileNotFound('Page doesnt exist');
 		}
 
 		if(!$this->user->hasRightId($this->page['rightId']))
 		{
-			throw new Sabre_DAV_Exception_Forbidden('Access not allowed');
+			throw new Exception\Forbidden('Access not allowed');
 		}
 	}
 
@@ -99,18 +102,16 @@ SQL;
 			// load page nodes
 			$sql = <<<SQL
 SELECT
-
 	`page`.`id`           AS `id`,
 	`service`.`name`      AS `serviceName`
 	`service`.`namespace` AS `serviceNamespace`
-
-	FROM {$this->registry['table.content_page']} `page`
-
-		INNER JOIN {$this->registry['table.core_service']} `service`
-
-		ON `page`.`serviceId` = `service`.`id`
-
-			WHERE parentId = ?
+FROM 
+	{$this->registry['table.content_page']} `page`
+INNER JOIN 
+	{$this->registry['table.core_service']} `service`
+	ON `page`.`serviceId` = `service`.`id`
+WHERE 
+	`parentId` = ?
 SQL;
 
 			$result = $this->sql->getAll($sql, array($this->page['id']));
@@ -119,18 +120,18 @@ SQL;
 			{
 				if($this->user->hasRight('service_' . $row['serviceName'] . '_view'))
 				{
-					$this->children[] = new AmunService_Webdav_Page($row['id']);
+					$this->children[] = new self($row['id']);
 				}
 			}
 
 			// load service nodes
-			$class = 'AmunService_' . $this->page['serviceNamespace'] . '_Node';
+			$class = '\AmunService\\' . $this->page['serviceNamespace'] . '\Node';
 
 			if(class_exists($class))
 			{
 				$node = new $class();
 
-				if($node instanceof AmunService_Webdav_NodeAbstract)
+				if($node instanceof NodeAbstract)
 				{
 					$children = $node->getChildren($row['id']);
 
@@ -150,7 +151,7 @@ SQL;
 
 	public function childExists($urlTitle)
 	{
-		$con = new PSX_Sql_Condition();
+		$con = new Condition();
 		$con->add('parentId', '=', $this->page['id']);
 		$con->add('urlTitle', '=', $urlTitle);
 

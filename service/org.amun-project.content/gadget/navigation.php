@@ -24,10 +24,10 @@
 
 namespace content\gadget;
 
-use AmunService_Content_Page_Record;
-use Amun_Module_GadgetAbstract;
-use Amun_Sql_Table_Registry;
-use PSX_Sql;
+use AmunService\Content\Page;
+use Amun\DataFactory;
+use Amun\Module\GadgetAbstract;
+use PSX\Sql;
 
 /**
  * navigation
@@ -39,7 +39,7 @@ use PSX_Sql;
  * @package    gadget
  * @version    $Revision: 875 $
  */
-class navigation extends Amun_Module_GadgetAbstract
+class navigation extends GadgetAbstract
 {
 	/**
 	 * onLoad
@@ -53,11 +53,11 @@ class navigation extends Amun_Module_GadgetAbstract
 		$tabs   = $this->args->get('tabs', false);
 
 		// get pages
-		$result = Amun_Sql_Table_Registry::get('Content_Page')
+		$result = DataFactory::getTable('Content_Page')
 			->select(array('id', 'rightId', 'urlTitle', 'title', 'path'))
 			->where('parentId', '=', $pageId)
-			->where('status', '=', AmunService_Content_Page_Record::NORMAL)
-			->orderBy('sort', PSX_Sql::SORT_ASC)
+			->where('status', '=', Page\Record::NORMAL)
+			->orderBy('sort', Sql::SORT_ASC)
 			->getAll();
 
 

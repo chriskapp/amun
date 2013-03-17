@@ -22,6 +22,15 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\My\LoginHandler;
+
+use Amun\Security;
+use Amun\DataFactory;
+use Amun\Exception;
+use AmunService\My\LoginHandlerAbstract;
+use AmunService\My\Login\InvalidPasswordException;
+use AmunService\User\Account;
+
 /**
  * AmunService_My_LoginHandler_System
  *
@@ -32,7 +41,7 @@
  * @package    Amun_Service_My
  * @version    $Revision: 635 $
  */
-class AmunService_My_LoginHandler_System extends AmunService_My_LoginHandlerAbstract
+class System extends LoginHandlerAbstract
 {
 	public function isValid($identity)
 	{
@@ -48,18 +57,18 @@ class AmunService_My_LoginHandler_System extends AmunService_My_LoginHandlerAbst
 	{
 		// we have given an email address if a password is set we check
 		// whether the user exists
-		$identity = sha1(Amun_Security::getSalt() . $identity);
+		$identity = sha1(Security::getSalt() . $identity);
 
 		if(!empty($password))
 		{
-			$row = Amun_Sql_Table_Registry::get('User_Account')
+			$row = DataFactory::getTable('User_Account')
 				->select(array('id', 'status', 'pw'))
 				->where('identity', '=', $identity)
 				->getRow();
 
 			if(!empty($row))
 			{
-				if($row['pw'] == sha1(Amun_Security::getSalt() . $password))
+				if($row['pw'] == sha1(Security::getSalt() . $password))
 				{
 					if(($error = $this->isValidStatus($row['status'])) === true)
 					{
@@ -69,12 +78,12 @@ class AmunService_My_LoginHandler_System extends AmunService_My_LoginHandlerAbst
 					}
 					else
 					{
-						throw new Amun_Exception($error);
+						throw new Exception($error);
 					}
 				}
 				else
 				{
-					throw new AmunService_My_Login_InvalidPasswordException('Invalid password');
+					throw new InvalidPasswordException('Invalid password');
 				}
 			}
 		}
@@ -84,20 +93,20 @@ class AmunService_My_LoginHandler_System extends AmunService_My_LoginHandlerAbst
 	{
 		switch($status)
 		{
-			case AmunService_User_Account_Record::NORMAL:
-			case AmunService_User_Account_Record::ADMINISTRATOR:
+			case Account\Record::NORMAL:
+			case Account\Record::ADMINISTRATOR:
 				return true;
 				break;
 
-			case AmunService_User_Account_Record::NOT_ACTIVATED:
+			case Account\Record::NOT_ACTIVATED:
 				return 'Account is not activated';
 				break;
 
-			case AmunService_User_Account_Record::BANNED:
+			case Account\Record::BANNED:
 				return 'Account is banned';
 				break;
 
-			case AmunService_User_Account_Record::RECOVER:
+			case Account\Record::RECOVER:
 				return 'Account is under recovery';
 				break;
 

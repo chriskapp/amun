@@ -22,6 +22,16 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Gadget;
+
+use Amun\Registry;
+use Amun\User;
+use Amun\Page;
+use Amun\Html;
+use ArrayObject;
+use PSX\Loader;
+use PSX\Sql;
+
 /**
  * Amun_Gadget_Container
  *
@@ -32,7 +42,7 @@
  * @package    Amun_Gadget
  * @version    $Revision: 834 $
  */
-class Amun_Gadget_Container extends ArrayObject
+class Container extends ArrayObject
 {
 	private $config;
 	private $sql;
@@ -42,7 +52,7 @@ class Amun_Gadget_Container extends ArrayObject
 	private $gadgets = array();
 	private $iterator;
 
-	public function __construct(Amun_Registry $registry, Amun_User $user)
+	public function __construct(Registry $registry, User $user)
 	{
 		$this->config   = $registry->getConfig();
 		$this->sql      = $registry->getSql();
@@ -93,7 +103,7 @@ class Amun_Gadget_Container extends ArrayObject
 	 * @param Amun_Html_Css $htmlCss
 	 * @return void
 	 */
-	public function load(PSX_Loader $loader, Amun_Page $page, Amun_Html_Css $htmlCss)
+	public function load(Loader $loader, Page $page, Html\Css $htmlCss)
 	{
 		$this->exchangeArray($this->gadgets = array());
 
@@ -122,7 +132,7 @@ ORDER BY
 	`pageGadget`.`sort` ASC
 SQL;
 
-		$result = $this->sql->getAll($sql, array($page->id), PSX_Sql::FETCH_OBJECT, 'Amun_Gadget_Item', array($this->config, $loader));
+		$result = $this->sql->getAll($sql, array($page->id), Sql::FETCH_OBJECT, '\Amun\Gadget\Item', array($this->config, $loader));
 
 		foreach($result as $gadget)
 		{

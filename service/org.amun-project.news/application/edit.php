@@ -22,6 +22,12 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace news\application;
+
+use Amun\Exception;
+use Amun\Module\ApplicationAbstract;
+use PSX\Sql;
+
 /**
  * edit
  *
@@ -33,7 +39,7 @@
  * @subpackage news
  * @version    $Revision: 875 $
  */
-class edit extends Amun_Module_ApplicationAbstract
+class edit extends ApplicationAbstract
 {
 	/**
 	 * @httpMethod GET
@@ -49,7 +55,7 @@ class edit extends Amun_Module_ApplicationAbstract
 			$url = $this->service->getApiEndpoint() . '/form?format=json&method=update&id=' . $id;
 
 			// news
-			$news = $this->getHandler()->getById($id, array(), PSX_Sql::FETCH_OBJECT);
+			$news = $this->getHandler()->getById($id, array(), Sql::FETCH_OBJECT);
 
 			// add path
 			$this->path->add($news->title, $this->page->url . '/view?id=' . $news->id);
@@ -73,7 +79,7 @@ HTML;
 		}
 		else
 		{
-			throw new Amun_Exception('Access not allowed');
+			throw new Exception('Access not allowed');
 		}
 	}
 }

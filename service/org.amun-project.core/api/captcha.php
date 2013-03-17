@@ -24,8 +24,8 @@
 
 namespace core\api;
 
-use Amun_Captcha;
-use Amun_Module_ApiAbstract;
+use Amun\Captcha;
+use Amun\Module\ApiAbstract;
 use Exception;
 
 /**
@@ -39,14 +39,13 @@ use Exception;
  * @subpackage system_captcha
  * @version    $Revision: 683 $
  */
-class captcha extends Amun_Module_ApiAbstract
+class captcha extends ApiAbstract
 {
 	public function onLoad()
 	{
 		try
 		{
-			$captcha = Amun_Captcha::factory($this->config['amun_captcha']);
-
+			$captcha = Captcha::factory($this->config['amun_captcha']);
 			$captcha->serve();
 
 			exit;
@@ -60,11 +59,8 @@ class captcha extends Amun_Module_ApiAbstract
 			$bgcolor   = imagecolorallocate($im, 255, 255, 255);
 
 			imagefill($im, 0, 0, $bgcolor);
-
 			imagestring($im, 3, 4, 4,  $e->getMessage(), $textcolor);
-
 			imagepng($im);
-
 			imagedestroy($im);
 		}
 	}

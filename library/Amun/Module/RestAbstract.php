@@ -22,6 +22,17 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Module;
+
+use Amun\Captcha;
+use Amun\Data\RecordAbstract;
+use Amun\Module\ApiAbstract;
+use PSX\Data\Array;
+use PSX\Data\Message;
+use PSX\DateTime;
+use PSX\Sql;
+use PSX\Sql\Condition;
+
 /**
  * Amun_Module_RestAbstract
  *
@@ -32,7 +43,7 @@
  * @package    Amun_Module
  * @version    $Revision: 835 $
  */
-abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
+abstract class RestAbstract extends ApiAbstract
 {
 	/**
 	 * Returns the resultset
@@ -70,14 +81,14 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 			}
 			catch(Exception $e)
 			{
-				$msg = new PSX_Data_Message($e->getMessage(), false);
+				$msg = new Message($e->getMessage(), false);
 
 				$this->setResponse($msg);
 			}
 		}
 		else
 		{
-			$msg = new PSX_Data_Message('Access not allowed', false);
+			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}
@@ -97,20 +108,20 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 		{
 			try
 			{
-				$array = new PSX_Data_Array($this->getHandler()->getSupportedFields());
+				$array = new ArrayList($this->getHandler()->getSupportedFields());
 
 				$this->setResponse($array);
 			}
 			catch(Exception $e)
 			{
-				$msg = new PSX_Data_Message($e->getMessage(), false);
+				$msg = new Message($e->getMessage(), false);
 
 				$this->setResponse($msg);
 			}
 		}
 		else
 		{
-			$msg = new PSX_Data_Message('Access not allowed', false);
+			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}
@@ -140,20 +151,20 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 				$this->getHandler()->create($record);
 
 
-				$msg = new PSX_Data_Message('You have successful create a ' . $record->getName(), true);
+				$msg = new Message('You have successful create a ' . $record->getName(), true);
 
 				$this->setResponse($msg);
 			}
 			catch(Exception $e)
 			{
-				$msg = new PSX_Data_Message($e->getMessage(), false);
+				$msg = new Message($e->getMessage(), false);
 
 				$this->setResponse($msg);
 			}
 		}
 		else
 		{
-			$msg = new PSX_Data_Message('Access not allowed', false);
+			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}
@@ -179,7 +190,7 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 				// check owner
 				if(!$this->isOwner($record))
 				{
-					throw new PSX_Data_Exception('You are not the owner of the record');
+					throw new Exception('You are not the owner of the record');
 				}
 
 				// check captcha
@@ -189,20 +200,20 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 				$this->getHandler()->update($record);
 
 
-				$msg = new PSX_Data_Message('You have successful edit a ' . $record->getName(), true);
+				$msg = new Message('You have successful edit a ' . $record->getName(), true);
 
 				$this->setResponse($msg);
 			}
 			catch(Exception $e)
 			{
-				$msg = new PSX_Data_Message($e->getMessage(), false);
+				$msg = new Message($e->getMessage(), false);
 
 				$this->setResponse($msg);
 			}
 		}
 		else
 		{
-			$msg = new PSX_Data_Message('Access not allowed', false);
+			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}
@@ -228,7 +239,7 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 				// check owner
 				if(!$this->isOwner($record))
 				{
-					throw new PSX_Data_Exception('You are not the owner of the record');
+					throw new Exception('You are not the owner of the record');
 				}
 
 				// check captcha
@@ -238,35 +249,35 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 				$this->getHandler()->delete($record);
 
 
-				$msg = new PSX_Data_Message('You have successful delete a ' . $record->getName(), true);
+				$msg = new Message('You have successful delete a ' . $record->getName(), true);
 
 				$this->setResponse($msg);
 			}
 			catch(Exception $e)
 			{
-				$msg = new PSX_Data_Message($e->getMessage(), false);
+				$msg = new Message($e->getMessage(), false);
 
 				$this->setResponse($msg);
 			}
 		}
 		else
 		{
-			$msg = new PSX_Data_Message('Access not allowed', false);
+			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}
 	}
 
-	protected function isOwner(Amun_Data_RecordAbstract $record)
+	protected function isOwner(RecordAbstract $record)
 	{
 		return $this->getHandler()->isOwner($record);
 	}
 
-	protected function handleCaptcha(Amun_Data_RecordAbstract $record)
+	protected function handleCaptcha(RecordAbstract $record)
 	{
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = Amun_Captcha::factory($this->config['amun_captcha']);
+			$captcha = Captcha::factory($this->config['amun_captcha']);
 
 			if($captcha->verify($record->captcha))
 			{
@@ -281,7 +292,7 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 
 	protected function getRequestCondition()
 	{
-		$con          = new PSX_Sql_Condition();
+		$con          = new Condition();
 		$params       = $this->getRequestParams();
 		$filterBy     = $params['filterBy'];
 		$filterOp     = $params['filterOp'];
@@ -313,9 +324,9 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 
 		if(!empty($updatedSince))
 		{
-			$datetime = new PSX_DateTime($updatedSince);
+			$datetime = new DateTime($updatedSince);
 
-			$con->add('date', '>', $datetime->format(PSX_DateTime::SQL));
+			$con->add('date', '>', $datetime->format(DateTime::SQL));
 		}
 
 		return $con;
@@ -328,13 +339,13 @@ abstract class Amun_Module_RestAbstract extends Amun_Module_ApiAbstract
 		switch($format)
 		{
 			case 'atom':
-				return PSX_Sql::FETCH_OBJECT;
+				return Sql::FETCH_OBJECT;
 				break;
 
 			case 'xml':
 			case 'json':
 			default:
-				return PSX_Sql::FETCH_ASSOC;
+				return Sql::FETCH_ASSOC;
 				break;
 		}
 	}

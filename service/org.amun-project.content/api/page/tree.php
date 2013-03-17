@@ -24,10 +24,10 @@
 
 namespace content\api\page;
 
-use Amun_Module_ApiAbstract;
-use Exception;
-use PSX_Data_Message;
-use PSX_Data_Record;
+use Amun\Module\ApiAbstract;
+use Amun\Exception;
+use PSX\Data\Message;
+use PSX\Data\Record;
 
 /**
  * tree
@@ -56,18 +56,18 @@ class tree extends Amun_Module_ApiAbstract
 		{
 			try
 			{
-				$this->setResponse(new PSX_Data_Record('tree', array($this->buildTreeArray())));
+				$this->setResponse(new Record('tree', array($this->buildTreeArray())));
 			}
 			catch(Exception $e)
 			{
-				$msg = new PSX_Data_Message($e->getMessage(), false);
+				$msg = new Message($e->getMessage(), false);
 
 				$this->setResponse($msg);
 			}
 		}
 		else
 		{
-			$msg = new PSX_Data_Message('Access not allowed', false);
+			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}

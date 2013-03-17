@@ -24,12 +24,11 @@
 
 namespace asset\api;
 
-use AmunService_Asset_Manager;
-use AmunService_Asset_ProviderInterface;
-use AmunService_Asset_Provider_Css;
-use AmunService_Asset_Provider_Js;
-use Amun_Module_ApiAbstract;
-use PSX_Base;
+use AmunService\Asset\Manager;
+use AmunService\Asset\ProviderInterface;
+use AmunService\Asset\Provider;
+use Amun\Module\ApiAbstract;
+use PSX\Base;
 
 /**
  * index
@@ -42,7 +41,7 @@ use PSX_Base;
  * @subpackage service_page
  * @version    $Revision: 875 $
  */
-class index extends Amun_Module_ApiAbstract
+class index extends ApiAbstract
 {
 	/**
 	 * @httpMethod GET
@@ -54,7 +53,7 @@ class index extends Amun_Module_ApiAbstract
 	public function getJs()
 	{
 		$services = $this->get->services('string');
-		$provider = new AmunService_Asset_Provider_Js($this->registry);
+		$provider = new Provider\Js($this->registry);
 
 		$this->serve($provider, $services);
 	}
@@ -69,15 +68,15 @@ class index extends Amun_Module_ApiAbstract
 	public function getCss()
 	{
 		$services = $this->get->services('string');
-		$provider = new AmunService_Asset_Provider_Css($this->registry);
+		$provider = new Provider\Css($this->registry);
 
 		$this->serve($provider, $services);
 	}
 
-	private function serve(AmunService_Asset_ProviderInterface $provider, $services)
+	private function serve(ProviderInterface $provider, $services)
 	{
 		// get response
-		$manager  = new AmunService_Asset_Manager($this->config, $provider);
+		$manager  = new Manager($this->config, $provider);
 		$response = $manager->serve($services);
 
 		// remove caching header
@@ -87,7 +86,7 @@ class index extends Amun_Module_ApiAbstract
 		header('Pragma:');
 
 		// gzip encoding
-		$acceptEncoding = PSX_Base::getRequestHeader('Accept-Encoding');
+		$acceptEncoding = Base::getRequestHeader('Accept-Encoding');
 
 		if($this->config['psx_gzip'] === true && strpos($acceptEncoding, 'gzip') !== false)
 		{
@@ -98,7 +97,7 @@ class index extends Amun_Module_ApiAbstract
 
 		// caching header
 		$etag  = md5($response);
-		$match = PSX_Base::getRequestHeader('If-None-Match');
+		$match = Base::getRequestHeader('If-None-Match');
 		$match = $match !== false ? trim($match, '"') : '';
 
 		header('Etag: "' . $etag . '"');
@@ -109,7 +108,7 @@ class index extends Amun_Module_ApiAbstract
 		}
 		else
 		{
-			PSX_Base::setResponseCode(304);
+			Base::setResponseCode(304);
 		}
 
 		exit;

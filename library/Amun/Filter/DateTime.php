@@ -22,6 +22,13 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Filter;
+
+use DateTimeZone;
+use InvalidArgumentException;
+use PSX\DateTime;
+use PSX\FilterAbstract;
+
 /**
  * Amun_Filter_DateTime
  *
@@ -32,7 +39,7 @@
  * @package    Amun_Filter
  * @version    $Revision: 635 $
  */
-class Amun_Filter_DateTime extends PSX_FilterAbstract
+class DateTime extends PSX_FilterAbstract
 {
 	protected $emptyAllowed;
 
@@ -54,7 +61,7 @@ class Amun_Filter_DateTime extends PSX_FilterAbstract
 
 			return $date->format('Y-m-d H:i:s');
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
 			return $this->emptyAllowed ? null : false;
 		}

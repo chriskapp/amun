@@ -22,6 +22,18 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\My\LoginHandler;
+
+use Amun\Exception;
+use Amun\Security;
+use Amun\DataFactory;
+use AmunService\My\LoginHandlerAbstract;
+use PSX\Http;
+use PSX\OpenId\Store;
+use PSX\OpenId\Extension;
+use PSX\OpenId\ProviderAbstract;
+use DateTimeZone;
+
 /**
  * AmunService_My_LoginHandler_OpenId
  *
@@ -32,7 +44,7 @@
  * @package    Amun_Service_My
  * @version    $Revision: 635 $
  */
-class AmunService_My_LoginHandler_Openid extends AmunService_My_LoginHandlerAbstract implements AmunService_My_LoginHandler_CallbackInterface
+class Openid extends LoginHandlerAbstract implements CallbackInterface
 {
 	protected $http;
 	protected $store;
@@ -41,8 +53,8 @@ class AmunService_My_LoginHandler_Openid extends AmunService_My_LoginHandlerAbst
 	{
 		parent::__construct();
 
-		$this->http  = new PSX_Http();
-		$this->store = new PSX_OpenId_Store_Sql($this->sql, $this->registry['table.core_assoc']);
+		$this->http  = new Http();
+		$this->store = new Store\Sql($this->sql, $this->registry['table.core_assoc']);
 	}
 
 	public function isValid($identity)
@@ -78,7 +90,7 @@ class AmunService_My_LoginHandler_Openid extends AmunService_My_LoginHandlerAbst
 			{
 				// here we can add addition extensions depending what 
 				// informations we need from the user
-				$sreg = new PSX_OpenId_Extension_Sreg(array('fullname', 'nickname', 'gender', 'timezone'));
+				$sreg = new Extension\Sreg(array('fullname', 'nickname', 'gender', 'timezone'));
 
 				if($openid->hasExtension($sreg->getNs()))
 				{
@@ -86,7 +98,7 @@ class AmunService_My_LoginHandler_Openid extends AmunService_My_LoginHandlerAbst
 				}
 				else
 				{
-					$ax = new PSX_OpenId_Extension_Ax(array(
+					$ax = new Extension\Ax(array(
 
 						'fullname'  => 'http://axschema.org/namePerson',
 						'firstname' => 'http://axschema.org/namePerson/first',
@@ -107,19 +119,19 @@ class AmunService_My_LoginHandler_Openid extends AmunService_My_LoginHandlerAbst
 			}
 			else
 			{
-				throw new Amun_Exception('Invalid identity');
+				throw new Exception('Invalid identity');
 			}
 		}
 		else
 		{
-			throw new Amun_Exception('Invalid openid identity');
+			throw new Exception('Invalid openid identity');
 		}
 	}
 
 	public function callback()
 	{
 		// initialize openid
-		$openid = new PSX_OpenId($this->http, $this->config['psx_url'], $this->store);
+		$openid = new \PSX\OpenId($this->http, $this->config['psx_url'], $this->store);
 
 		if($openid->verify() === true)
 		{
@@ -129,8 +141,8 @@ class AmunService_My_LoginHandler_Openid extends AmunService_My_LoginHandlerAbst
 			{
 				// check whether user is already registered
 				$data   = $openid->getData();
-				$con    = new PSX_Sql_Condition(array('identity', '=', sha1(Amun_Security::getSalt() . $openid->getIdentifier())));
-				$userId = Amun_Sql_Table_Registry::get('User_Account')->getField('id', $con);
+				$con    = new Condition(array('identity', '=', sha1(Security::getSalt() . $openid->getIdentifier())));
+				$userId = DataFactory::getTable('User_Account')->getField('id', $con);
 
 				if(empty($userId))
 				{
@@ -138,7 +150,7 @@ class AmunService_My_LoginHandler_Openid extends AmunService_My_LoginHandlerAbst
 					// registration is enabled
 					if(!$this->registry['my.registration_enabled'])
 					{
-						throw new Amun_Exception('Registration is disabled');
+						throw new Exception('Registration is disabled');
 					}
 
 					// get data for account
@@ -146,25 +158,25 @@ class AmunService_My_LoginHandler_Openid extends AmunService_My_LoginHandlerAbst
 
 					if(empty($acc))
 					{
-						throw new Amun_Exception('No user informations provided');
+						throw new Exception('No user informations provided');
 					}
 
 					if(empty($acc['name']))
 					{
-						throw new Amun_Exception('No username provided');
+						throw new Exception('No username provided');
 					}
 
 					$name = $this->normalizeName($acc['name']);
 
 					// create user account
-					$handler = new AmunService_User_Account_Handler($this->user);
+					$handler = new Account\Handler($this->user);
 
-					$account = Amun_Sql_Table_Registry::get('User_Account')->getRecord();
+					$account = DataFactory::getTable('User_Account')->getRecord();
 					$account->setGroupId($this->registry['core.default_user_group']);
-					$account->setStatus(AmunService_User_Account_Record::NORMAL);
+					$account->setStatus(Account\Record::NORMAL);
 					$account->setIdentity($identity);
 					$account->setName($name);
-					$account->setPw(Amun_Security::generatePw());
+					$account->setPw(Security::generatePw());
 					$account->setGender($acc['gender']);
 					$account->setTimezone($acc['timezone']);
 
@@ -179,7 +191,7 @@ class AmunService_My_LoginHandler_Openid extends AmunService_My_LoginHandlerAbst
 					}
 					else
 					{
-						throw new Amun_Exception('Could not create account');
+						throw new Exception('Could not create account');
 					}
 				}
 				else
@@ -193,12 +205,12 @@ class AmunService_My_LoginHandler_Openid extends AmunService_My_LoginHandlerAbst
 			}
 			else
 			{
-				throw new Amun_Exception('Invalid identity');
+				throw new Exception('Invalid identity');
 			}
 		}
 		else
 		{
-			throw new Amun_Exception('Authentication failed');
+			throw new Exception('Authentication failed');
 		}
 	}
 
@@ -233,7 +245,7 @@ class AmunService_My_LoginHandler_Openid extends AmunService_My_LoginHandlerAbst
 		$account = array();
 
 		// sreg extension
-		$params = PSX_OpenId_ProviderAbstract::getExtension($data, PSX_OpenId_Extension_Sreg::NS);
+		$params = ProviderAbstract::getExtension($data, Extension\Sreg::NS);
 
 		if(!empty($params))
 		{
@@ -270,7 +282,7 @@ class AmunService_My_LoginHandler_Openid extends AmunService_My_LoginHandlerAbst
 		}
 
 		// ax extension
-		$params = PSX_OpenId_ProviderAbstract::getExtension($data, PSX_OpenId_Extension_Ax::NS);
+		$params = ProviderAbstract::getExtension($data, Extension\Ax::NS);
 
 		if(!empty($params))
 		{

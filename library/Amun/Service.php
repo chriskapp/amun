@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun;
+
+use AmunService\Core\Service\Record;
+
 /**
  * Amun_Service
  *
@@ -32,7 +36,7 @@
  * @package    Amun_Service
  * @version    $Revision: 840 $
  */
-class Amun_Service
+class Service
 {
 	public $id;
 	public $status;
@@ -53,13 +57,13 @@ class Amun_Service
 
 	private $_description;
 
-	public function __construct($id, Amun_Registry $registry)
+	public function __construct($id, Registry $registry)
 	{
 		$this->config   = $registry->getConfig();
 		$this->sql      = $registry->getSql();
 		$this->registry = $registry;
 
-		$status = AmunService_Core_Service_Record::NORMAL;
+		$status = Record::NORMAL;
 		$sql    = <<<SQL
 SELECT
 	`service`.`id`        AS `serviceId`,
@@ -93,7 +97,7 @@ SQL;
 		}
 		else
 		{
-			throw new Amun_Exception('Invalid service');
+			throw new Exception('Invalid service');
 		}
 	}
 

@@ -23,6 +23,10 @@
  * along with psx. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Dependency;
+
+use PSX\DependencyAbstract;
+
 /**
  * Amun_Dependency_Install
  *
@@ -33,7 +37,7 @@
  * @package    Amun_Dependency
  * @version    $Revision: 818 $
  */
-class Amun_Dependency_Install extends PSX_DependencyAbstract
+class Install extends DependencyAbstract
 {
 	public function setup()
 	{

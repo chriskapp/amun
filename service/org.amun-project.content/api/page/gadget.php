@@ -24,7 +24,7 @@
 
 namespace content\api\page;
 
-use Amun_Module_RestAbstract;
+use Amun\Module\RestAbstract;
 
 /**
  * gadget
@@ -37,7 +37,7 @@ use Amun_Module_RestAbstract;
  * @subpackage content_page
  * @version    $Revision: 683 $
  */
-class gadget extends Amun_Module_RestAbstract
+class gadget extends RestAbstract
 {
 	protected function getHandler($table = null)
 	{

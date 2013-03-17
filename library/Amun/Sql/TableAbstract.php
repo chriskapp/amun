@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Sql;
+
+use Amun\Registry;
+
 /**
  * Amun_Sql_TableAbstract
  *
@@ -32,11 +36,11 @@
  * @package    Amun_Sql
  * @version    $Revision: 635 $
  */
-abstract class Amun_Sql_TableAbstract extends PSX_Sql_TableAbstract implements Amun_Sql_TableInterface
+abstract class TableAbstract extends \PSX\Sql\TableAbstract implements TableInterface
 {
 	protected $registry;
 
-	public function __construct(Amun_Registry $registry)
+	public function __construct(Registry $registry)
 	{
 		$this->registry = $registry;
 
@@ -50,7 +54,7 @@ abstract class Amun_Sql_TableAbstract extends PSX_Sql_TableAbstract implements A
 
 	public function getDefaultRecordClass()
 	{
-		return substr(get_class($this), 0, -6) . '_Record';
+		return '\\' . substr(get_class($this), 0, -6) . '\Record';
 	}
 }
 

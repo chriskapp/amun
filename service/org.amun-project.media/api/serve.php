@@ -24,11 +24,11 @@
 
 namespace media\api;
 
-use Amun_Module_ApiAbstract;
-use Exception;
-use PSX_Base;
-use PSX_Data_Exception;
-use PSX_Data_Message;
+use Amun\Base;
+use Amun\Exception;
+use Amun\Module\ApiAbstract;
+use PSX\Data\Exception;
+use PSX\Data\Message;
 
 /**
  * serve
@@ -41,7 +41,7 @@ use PSX_Data_Message;
  * @subpackage content_media
  * @version    $Revision: 880 $
  */
-class serve extends Amun_Module_ApiAbstract
+class serve extends ApiAbstract
 {
 	/**
 	 * Outputs the raw media item
@@ -79,7 +79,7 @@ class serve extends Amun_Module_ApiAbstract
 				// check right
 				if(!empty($media['rightId']) && !$this->user->hasRightId($media['rightId']))
 				{
-					throw new PSX_Data_Exception('Access not allowed');
+					throw new Exception('Access not allowed');
 				}
 
 				// send header
@@ -109,14 +109,14 @@ class serve extends Amun_Module_ApiAbstract
 
 				if(!is_file($path))
 				{
-					throw new PSX_Data_Exception('File not found', 404);
+					throw new Exception('File not found', 404);
 				}
 
 				$response = file_get_contents($path);
 
 				// caching header
 				$etag  = md5($response);
-				$match = PSX_Base::getRequestHeader('If-None-Match');
+				$match = Base::getRequestHeader('If-None-Match');
 				$match = $match !== false ? trim($match, '"') : '';
 
 				header('Etag: "' . $etag . '"');
@@ -134,12 +134,12 @@ class serve extends Amun_Module_ApiAbstract
 			}
 			else
 			{
-				throw new PSX_Data_Exception('Invalid media id');
+				throw new Exception('Invalid media id');
 			}
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
-			$msg = new PSX_Data_Message($e->getMessage(), false);
+			$msg = new Message($e->getMessage(), false);
 
 			$this->setResponse($msg, null, 404);
 		}

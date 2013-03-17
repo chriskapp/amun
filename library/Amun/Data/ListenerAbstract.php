@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Data;
+
+use Amun\DataFactory;
+use Amun\User;
+
 /**
  * Amun_Module_ListenerAbstract
  *
@@ -32,7 +37,7 @@
  * @package    Amun_Module
  * @version    $Revision: 813 $
  */
-abstract class Amun_Data_ListenerAbstract
+abstract class ListenerAbstract
 {
 	protected $base;
 	protected $config;
@@ -41,9 +46,9 @@ abstract class Amun_Data_ListenerAbstract
 	protected $event;
 	protected $user;
 
-	public function __construct(Amun_User $user = null)
+	public function __construct(User $user = null)
 	{
-		$ct = Amun_DataFactory::getInstance()->getContainer();
+		$ct = DataFactory::getInstance()->getContainer();
 
 		$this->base     = $ct->getBase();
 		$this->config   = $ct->getConfig();

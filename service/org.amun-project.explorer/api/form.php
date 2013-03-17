@@ -24,8 +24,8 @@
 
 namespace explorer\api;
 
-use AmunService_Explorer_Filter_Path;
-use Amun_Module_FormAbstract;
+use AmunService\Explorer\Filter\Path;
+use Amun\Module\FormAbstract;
 
 /**
  * form
@@ -38,7 +38,7 @@ use Amun_Module_FormAbstract;
  * @subpackage service_page
  * @version    $Revision: 875 $
  */
-class form extends Amun_Module_FormAbstract
+class form extends FormAbstract
 {
 	protected function getCreateForm()
 	{
@@ -47,11 +47,11 @@ class form extends Amun_Module_FormAbstract
 
 	protected function getUpdateForm()
 	{
-		return $this->form->update($this->get->path('string', array(new AmunService_Explorer_Filter_Path($this->registry))));
+		return $this->form->update($this->get->path('string', array(new Path($this->registry))));
 	}
 
 	protected function getDeleteForm()
 	{
-		return $this->form->delete($this->get->path('string', array(new AmunService_Explorer_Filter_Path($this->registry))));
+		return $this->form->delete($this->get->path('string', array(new Path($this->registry))));
 	}
 }

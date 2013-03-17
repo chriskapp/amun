@@ -24,9 +24,9 @@
 
 namespace my\api;
 
-use Amun_Module_ApiAbstract;
-use Exception;
-use PSX_Data_Message;
+use Amun\Module\ApiAbstract;
+use Amun\Exception;
+use PSX\Data\Message;
 
 /**
  * endSession
@@ -39,7 +39,7 @@ use PSX_Data_Message;
  * @subpackage service_my
  * @version    $Revision: 875 $
  */
-class endSession extends Amun_Module_ApiAbstract
+class endSession extends ApiAbstract
 {
 	/**
 	 * Logs the user out from the system
@@ -58,13 +58,13 @@ class endSession extends Amun_Module_ApiAbstract
 			$this->session->destroy();
 
 
-			$msg = new PSX_Data_Message('You have successful end the session', true);
+			$msg = new Message('You have successful end the session', true);
 
 			$this->setResponse($msg);
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
-			$msg = new PSX_Data_Message($e->getMessage(), false);
+			$msg = new Message($e->getMessage(), false);
 
 			$this->setResponse($msg);
 		}

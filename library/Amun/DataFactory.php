@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun;
+
+use PSX\DependencyAbstract;
+
 /**
  * Amun_DataFactory
  *
@@ -32,21 +36,22 @@
  * @package    Amun_DataProvider
  * @version    $Revision: 635 $
  */
-class Amun_DataFactory
+class DataFactory
 {
 	private static $_instance;
 
 	protected $ct;
 	protected $_cache = array();
 
-	private function __construct(PSX_DependencyAbstract $ct)
+	private function __construct(DependencyAbstract $ct)
 	{
 		$this->ct = $ct;
 	}
 
 	public function getHandlerInstance($table)
 	{
-		$class = Amun_Registry::getClassName('AmunService_' . $table . '_Handler');
+		$table = str_replace('_', '\\', $table);
+		$class = Registry::getClassName('\AmunService\\' . $table . '\Handler');
 
 		if(isset($this->_cache[$class]))
 		{
@@ -59,13 +64,14 @@ class Amun_DataFactory
 		}
 		else
 		{
-			throw new Amun_Exception('Handler "' . $class . '" does not exist');
+			throw new Exception('Handler "' . $class . '" does not exist');
 		}
 	}
 
 	public function getFormInstance($table)
 	{
-		$class = Amun_Registry::getClassName('AmunService_' . $table . '_Form');
+		$table = str_replace('_', '\\', $table);
+		$class = Registry::getClassName('\AmunService\\' . $table . '\Form');
 
 		if(isset($this->_cache[$class]))
 		{
@@ -83,13 +89,14 @@ class Amun_DataFactory
 		}
 		else
 		{
-			throw new Amun_Exception('Form "' . $class . '" does not exist');
+			throw new Exception('Form "' . $class . '" does not exist');
 		}
 	}
 
 	public function getStreamInstance($table)
 	{
-		$class = Amun_Registry::getClassName('AmunService_' . $table . '_Stream');
+		$table = str_replace('_', '\\', $table);
+		$class = Registry::getClassName('\AmunService\\' . $table . '\Stream');
 
 		if(isset($this->_cache[$class]))
 		{
@@ -112,8 +119,13 @@ class Amun_DataFactory
 		return self::$_instance;
 	}
 
-	public static function initInstance(PSX_DependencyAbstract $ct)
+	public static function initInstance(DependencyAbstract $ct)
 	{
 		return self::$_instance = new self($ct);
+	}
+
+	public static function getTable($table)
+	{
+		return self::getInstance()->getHandlerInstance($table)->getTable();
 	}
 }

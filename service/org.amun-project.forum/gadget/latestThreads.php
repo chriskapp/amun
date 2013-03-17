@@ -24,11 +24,11 @@
 
 namespace forum\gadget;
 
-use Amun_Module_GadgetAbstract;
-use Amun_Sql_Table_Registry;
-use DateTime;
-use PSX_Sql;
-use PSX_Sql_Join;
+use Amun\Module\GadgetAbstract;
+use Amun\DataFactory;
+use PSX\DateTime;
+use PSX\Sql;
+use PSX\Sql\Join;
 
 /**
  * latestThreads
@@ -41,7 +41,7 @@ use PSX_Sql_Join;
  * @subpackage forum
  * @version    $Revision: 845 $
  */
-class latestThreads extends Amun_Module_GadgetAbstract
+class latestThreads extends GadgetAbstract
 {
 	/**
 	 * onLoad
@@ -58,12 +58,12 @@ class latestThreads extends Amun_Module_GadgetAbstract
 		$this->htmlCss->add('forum');
 
 		// get latest thread
-		$select = Amun_Sql_Table_Registry::get('Forum')
+		$select = DataFactory::getTable('Forum')
 			->select(array('id', 'urlTitle', 'title', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(Join::INNER, DataFactory::getTable('User_Account')
 				->select(array('id', 'name', 'profileUrl'), 'author')
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Content_Page')
+			->join(Join::INNER, DataFactory::getTable('Content_Page')
 				->select(array('path'), 'page')
 			);
 
@@ -72,9 +72,9 @@ class latestThreads extends Amun_Module_GadgetAbstract
 			$select->where('pageId', '=', $pageId);
 		}
 
-		$result = $select->orderBy('date', PSX_Sql::SORT_DESC)
+		$result = $select->orderBy('date', Sql::SORT_DESC)
 			->limit($count)
-			->getAll(PSX_Sql::FETCH_OBJECT);
+			->getAll(Sql::FETCH_OBJECT);
 
 
 		$this->display($result);

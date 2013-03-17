@@ -24,10 +24,10 @@
 
 namespace oauth\api;
 
-use Amun_Module_RestAbstract;
-use PSX_Data_Exception;
-use PSX_Data_WriterInterface;
-use PSX_Data_WriterResult;
+use Amun\Module\RestAbstract;
+use Amun\Exception;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
 
 /**
  * request
@@ -40,7 +40,7 @@ use PSX_Data_WriterResult;
  * @subpackage system_api
  * @version    $Revision: 683 $
  */
-class request extends Amun_Module_RestAbstract
+class request extends RestAbstract
 {
 	protected function getHandler($table = null)
 	{
@@ -52,14 +52,12 @@ class request extends Amun_Module_RestAbstract
 		return array('nonce', 'callback', 'token', 'tokenSecret', 'verifier', 'timestamp');
 	}
 
-	protected function setWriterConfig(PSX_Data_WriterResult $writer)
+	protected function setWriterConfig(WriterResult $writer)
 	{
 		switch($writer->getType())
 		{
-			case PSX_Data_WriterInterface::ATOM:
-
-				throw new PSX_Data_Exception('Atom not supported');
-
+			case WriterInterface::ATOM:
+				throw new Exception('Atom not supported');
 				break;
 		}
 	}

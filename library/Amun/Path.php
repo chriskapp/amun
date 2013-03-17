@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun;
+
+use ArrayObject;
+
 /**
  * Amun_Path
  *
@@ -32,7 +36,7 @@
  * @package    Amun_Path
  * @version    $Revision: 635 $
  */
-class Amun_Path extends ArrayObject
+class Path extends ArrayObject
 {
 	private $config;
 	private $sql;
@@ -41,7 +45,7 @@ class Amun_Path extends ArrayObject
 
 	private $path = array();
 
-	public function __construct(Amun_Registry $registry, Amun_Page $page)
+	public function __construct(Registry $registry, Page $page)
 	{
 		parent::__construct($this->path);
 

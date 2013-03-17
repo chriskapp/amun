@@ -22,6 +22,17 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\application;
+
+use Amun\Html;
+use AmunService\My\MyAbstract;
+use AmunService\User\Account;
+use PSX\Data\Writer;
+use PSX\Sql;
+use PSX\Url;
+use PSX\Sql\Condition;
+use PSX\Html\Paging;
+
 /**
  * index
  *
@@ -33,7 +44,7 @@
  * @subpackage my
  * @version    $Revision: 875 $
  */
-class index extends AmunService_My_MyAbstract
+class index extends MyAbstract
 {
 	public function onLoad()
 	{
@@ -42,12 +53,12 @@ class index extends AmunService_My_MyAbstract
 		// get user details
 		$account = $this->getHandler('User_Account')->getById($this->user->id, 
 			array('id', 'status', 'name', 'gender', 'thumbnailUrl', 'timezone', 'updated', 'date', 'countryTitle'),
-			PSX_Sql::FETCH_OBJECT);
+			Sql::FETCH_OBJECT);
 
 		$this->template->assign('account', $account);
 
 		// check whether remote profile
-		if($account->status == AmunService_User_Account_Record::REMOTE)
+		if($account->status == Account\Record::REMOTE)
 		{
 			header('HTTP/1.1 301 Moved Permanently');
 			header('Location: ' . $account->profileUrl);
@@ -64,8 +75,8 @@ class index extends AmunService_My_MyAbstract
 			0, 
 			16, 
 			'id', 
-			PSX_Sql::SORT_DESC, 
-			new PSX_Sql_Condition(array('userId', '=', $this->user->id)));
+			Sql::SORT_DESC, 
+			new Condition(array('userId', '=', $this->user->id)));
 
 		$this->template->assign('groups', $groups);
 
@@ -80,16 +91,14 @@ class index extends AmunService_My_MyAbstract
 		$this->htmlCss->add('my');
 		$this->htmlJs->add('amun');
 		$this->htmlJs->add('my');
-		$this->htmlContent->add(Amun_Html_Content::META, PSX_Data_Writer_Atom::link($this->page->title, $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/activity/' . $this->user->name . '?format=atom'));
-
-		$this->template->set(__CLASS__ . '.tpl');
+		$this->htmlContent->add(Html\Content::META, Writer\Atom::link($this->page->title, $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/activity/' . $this->user->name . '?format=atom'));
 	}
 
 	private function getActivities()
 	{
 		$con = $this->getRequestCondition();
 
-		$url   = new PSX_Url($this->base->getSelf());
+		$url   = new Url($this->base->getSelf());
 		$count = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
 		$count = $count > 16 ? 16 : $count;
 
@@ -100,10 +109,10 @@ class index extends AmunService_My_MyAbstract
 			$url->getParam('sortBy'), 
 			$url->getParam('sortOrder'),
 			$con,
-			PSX_Sql::FETCH_OBJECT);
+			Sql::FETCH_OBJECT);
 
 
-		$paging = new PSX_Html_Paging($url, $result, 0);
+		$paging = new Paging($url, $result, 0);
 
 		$this->template->assign('pagingActivities', $paging);
 

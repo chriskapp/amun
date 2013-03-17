@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Module;
+
+use Amun\Dependency;
+use PSX\ModuleAbstract;
+
 /**
  * Amun_Module_DefaultAbstract
  *
@@ -32,11 +37,11 @@
  * @package    Amun_Module
  * @version    $Revision: 696 $
  */
-abstract class Amun_Module_DefaultAbstract extends PSX_ModuleAbstract
+abstract class DefaultAbstract extends ModuleAbstract
 {
 	public function getDependencies()
 	{
-		$ct = new Amun_Dependency_Default($this->base->getConfig());
+		$ct = new Dependency\Request($this->base->getConfig());
 
 		return $ct;
 	}

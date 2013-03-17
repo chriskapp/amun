@@ -22,6 +22,16 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun;
+
+use Amun\Dependency;
+use AmunService\Oauth\Record;
+use DateInterval;
+use DateTime;
+use PSX\Oauth\ProviderAbstract;
+use PSX\Oauth\Provider\Data\Consumer;
+use PSX\Loader\Location;
+
 /**
  * Amun_Oauth
  *
@@ -32,7 +42,7 @@
  * @package    Amun_Oauth
  * @version    $Revision: 652 $
  */
-class Amun_Oauth extends PSX_Oauth_ProviderAbstract
+class Oauth extends ProviderAbstract
 {
 	protected $claimedUserId;
 	protected $requestId;
@@ -43,11 +53,11 @@ class Amun_Oauth extends PSX_Oauth_ProviderAbstract
 	protected $sql;
 	protected $registry;
 
-	public function __construct(PSX_Loader_Location $location, PSX_Base $base, $basePath, array $uriFragments)
+	public function __construct(Location $location, \PSX\Base $base, $basePath, array $uriFragments)
 	{
 		parent::__construct($location, $base, $basePath, $uriFragments);
 
-		$container = new Amun_Dependency_Default($this->base->getConfig());
+		$container = new Dependency\Request($this->base->getConfig());
 
 		$this->config   = $container->getConfig();
 		$this->sql      = $container->getSql();
@@ -108,7 +118,7 @@ SQL;
 			// to this api
 			if($row['apiId'] != $request['requestApiId'])
 			{
-				throw new PSX_Oauth_Exception('Request is not assigned to this API');
+				throw new Exception('Request is not assigned to this API');
 			}
 
 			// check expire
@@ -120,16 +130,16 @@ SQL;
 			{
 				$this->sql->delete($this->registry['table.oauth_request'], 'token', $token);
 
-				throw new PSX_Oauth_Exception('The token is expired');
+				throw new Exception('The token is expired');
 			}
 
 			$this->claimedUserId = $request['requestUserId'];
 
-			return new PSX_Oauth_Provider_Data_Consumer($row['apiConsumerKey'], $row['apiConsumerSecret'], $request['requestToken'], $request['requestTokenSecret']);
+			return new Consumer($row['apiConsumerKey'], $row['apiConsumerSecret'], $request['requestToken'], $request['requestTokenSecret']);
 		}
 		else
 		{
-			throw new PSX_Oauth_Exception('Invalid consumer key');
+			throw new Exception('Invalid consumer key');
 		}
 	}
 
@@ -158,7 +168,7 @@ AND
 LIMIT 1
 SQL;
 
-		$row = $this->sql->getRow($sql, array($token, AmunService_Oauth_Record::ACCESS));
+		$row = $this->sql->getRow($sql, array($token, Record::ACCESS));
 
 		if(!empty($row))
 		{

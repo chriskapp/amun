@@ -22,6 +22,12 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace forum\application;
+
+use Amun\Module\ApplicationAbstract;
+use Amun\Exception;
+use PSX\Sql;
+
 /**
  * edit
  *
@@ -33,7 +39,7 @@
  * @subpackage forum
  * @version    $Revision: 875 $
  */
-class edit extends Amun_Module_ApplicationAbstract
+class edit extends ApplicationAbstract
 {
 	/**
 	 * @httpMethod GET
@@ -48,7 +54,7 @@ class edit extends Amun_Module_ApplicationAbstract
 			$url = $this->service->getApiEndpoint() . '/form?format=json&method=update&id=' . $id;
 
 			// forum
-			$forum = $this->getHandler()->getById($id, PSX_Sql::FETCH_OBJECT);
+			$forum = $this->getHandler()->getById($id, Sql::FETCH_OBJECT);
 
 			// add path
 			$this->path->add($forum->title, $this->page->url . '/view?id=' . $forum->id);
@@ -72,7 +78,7 @@ HTML;
 		}
 		else
 		{
-			throw new Amun_Exception('Access not allowed');
+			throw new Exception('Access not allowed');
 		}
 	}
 }

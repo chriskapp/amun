@@ -22,6 +22,8 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\My;
+
 /**
  * AmunService_My_LoginHandlerFactory
  *
@@ -32,7 +34,7 @@
  * @package    Amun_Service_My
  * @version    $Revision: 635 $
  */
-class AmunService_My_LoginHandlerFactory
+class LoginHandlerFactory
 {
 	/**
 	 * Returns the fitting login handler for the $handler name
@@ -55,7 +57,7 @@ class AmunService_My_LoginHandlerFactory
 			case 'twitter':
 			case 'webfinger':
 			case 'yahoo':
-				$class = 'AmunService_My_LoginHandler_' . ucfirst($handler);
+				$class = '\AmunService\My\LoginHandler\\' . ucfirst($handler);
 				return new $class();
 				break;
 		}

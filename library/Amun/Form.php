@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun;
+
+use Amun\Form\ContainerInterface;
+use PSX\Data\RecordAbstract;
+
 /**
  * Amun_Form
  *
@@ -32,7 +37,7 @@
  * @package    Amun_Form
  * @version    $Revision: 692 $
  */
-class Amun_Form extends PSX_Data_RecordAbstract
+class Form extends RecordAbstract
 {
 	protected $class;
 	protected $ref;
@@ -68,7 +73,7 @@ class Amun_Form extends PSX_Data_RecordAbstract
 		);
 	}
 
-	public function setContainer(Amun_Form_ContainerInterface $container)
+	public function setContainer(ContainerInterface $container)
 	{
 		$this->item = $container->getFields();
 	}

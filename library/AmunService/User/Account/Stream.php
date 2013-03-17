@@ -22,6 +22,14 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Account;
+
+use Amun\DataFactory;
+use Amun\Data\StreamAbstract;
+use PSX\ActivityStream\Type;
+use PSX\DateTime;
+use PSX\Sql\Join;
+
 /**
  * Amun_User_Activity_Stream
  *
@@ -32,7 +40,7 @@
  * @package    Amun_User_Activity
  * @version    $Revision: 635 $
  */
-class AmunService_User_Account_Stream extends Amun_Data_StreamAbstract
+class Stream extends StreamAbstract
 {
 	public function getObject($id)
 	{
@@ -46,7 +54,7 @@ class AmunService_User_Account_Stream extends Amun_Data_StreamAbstract
 			$updated = new DateTime($row['updated']);
 			$date    = new DateTime($row['date']);
 
-			$person               = new PSX_ActivityStream_Type_Person();
+			$person               = new Type\Person();
 			$person->displayName  = $row['name'];
 			$person->image        = $row['thumbnailUrl'];
 			$person->id           = $row['globalId'];

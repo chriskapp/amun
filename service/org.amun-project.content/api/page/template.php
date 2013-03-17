@@ -24,10 +24,10 @@
 
 namespace content\api\page;
 
-use Amun_Module_ApiAbstract;
+use Amun\Module\ApiAbstract;
 use Exception;
-use PSX_Data_Message;
-use PSX_Data_ResultSet;
+use PSX\Data\Message;
+use PSX\Data\ResultSet;
 
 /**
  * template
@@ -40,7 +40,7 @@ use PSX_Data_ResultSet;
  * @subpackage content_page
  * @version    $Revision: 683 $
  */
-class template extends Amun_Module_ApiAbstract
+class template extends ApiAbstract
 {
 	/**
 	 * Returns all available templates
@@ -62,20 +62,20 @@ class template extends Amun_Module_ApiAbstract
 				$count        = count($data);
 
 
-				$resultset = new PSX_Data_ResultSet($totalResults, $startIndex, $count, $data);
+				$resultset = new ResultSet($totalResults, $startIndex, $count, $data);
 
 				$this->setResponse($resultset);
 			}
 			catch(Exception $e)
 			{
-				$msg = new PSX_Data_Message($e->getMessage(), false);
+				$msg = new Message($e->getMessage(), false);
 
 				$this->setResponse($msg);
 			}
 		}
 		else
 		{
-			$msg = new PSX_Data_Message('Access not allowed', false);
+			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}

@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Comment;
+
+use Amun\Sql\TableAbstract;
+
 /**
  * Amun_Service_Comment_Table
  *
@@ -32,7 +36,7 @@
  * @package    Amun_Service_Comment
  * @version    $Revision: 635 $
  */
-class AmunService_Comment_Table extends Amun_Sql_TableAbstract
+class Table extends TableAbstract
 {
 	public function getConnections()
 	{

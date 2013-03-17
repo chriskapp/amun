@@ -22,6 +22,25 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Filter;
+
+use Amun\User;
+use Amun\Html\Filter\Collection;
+use Amun\Sql\Table\Registry;
+use AmunService\User\Account\Record;
+use PSX\FilterAbstract;
+use PSX\Html\Filter;
+use PSX\Html\Filter\ElementListenerInterface;
+use PSX\Html\Filter\TextListenerInterface;
+use PSX\Html\Lexer\Token;
+use PSX\Config;
+use PSX\Http;
+use PSX\Url;
+use PSX\Oembed;
+use PSX\Oembed\Type;
+use PSX\Sql;
+use PSX\Sql\Condition;
+
 /**
  * Amun_Filter_Html
  *
@@ -32,7 +51,7 @@
  * @package    Amun_Filter
  * @version    $Revision: 810 $
  */
-class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_ElementListenerInterface, PSX_Html_Filter_TextListenerInterface
+class Html extends FilterAbstract implements ElementListenerInterface, TextListenerInterface
 {
 	private $config;
 	private $user;
@@ -44,33 +63,33 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 	private $oembedHosts;
 	private $oembedMedia;
 
-	public function __construct(PSX_Config $config, Amun_User $user, $discoverOembed = false)
+	public function __construct(Config $config, User $user, $discoverOembed = false)
 	{
 		$this->config = $config;
 		$this->user   = $user;
 
 		switch($this->user->status)
 		{
-			case AmunService_User_Account_Record::ADMINISTRATOR:
-				$this->collection = new Amun_Html_Filter_Collection_FullTrusted();
+			case Record::ADMINISTRATOR:
+				$this->collection = new Collection\FullTrusted();
 				$this->discover   = $discoverOembed;
 				break;
 
-			case AmunService_User_Account_Record::NORMAL:
-			case AmunService_User_Account_Record::REMOTE:
-				$this->collection = new Amun_Html_Filter_Collection_NormalTrusted();
+			case Record::NORMAL:
+			case Record::REMOTE:
+				$this->collection = new Collection\NormalTrusted();
 				$this->discover   = $discoverOembed;
 				break;
 
-			case AmunService_User_Account_Record::ANONYMOUS:
+			case Record::ANONYMOUS:
 			default:
-				$this->collection = new Amun_Html_Filter_Collection_Untrusted();
+				$this->collection = new Collection\Untrusted();
 				$this->discover   = false;
 				break;
 		}
 
-		$this->http   = new PSX_Http();
-		$this->oembed = new PSX_Oembed($this->http);
+		$this->http   = new Http();
+		$this->oembed = new Oembed($this->http);
 
 		// whitelist of available oembed endpoints
 		$this->oembedHosts = array(
@@ -97,7 +116,7 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 	{
 		$this->oembedMedia = array();
 
-		$filter = new PSX_Html_Filter($value, $this->collection);
+		$filter = new Filter($value, $this->collection);
 		$filter->addElementListener($this);
 		$filter->addTextListener($this);
 
@@ -112,15 +131,15 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 
 			foreach($this->oembedMedia as $type)
 			{
-				if($type instanceof PSX_Oembed_Type_Photo)
+				if($type instanceof Type\Photo)
 				{
 					$html.= '<li><div><img src="' . $type->url . '" /></div></li>';
 				}
-				else if($type instanceof PSX_Oembed_Type_Rich)
+				else if($type instanceof Type\Rich)
 				{
 					$html.= '<li><div>' . $type->html . '</div></li>';
 				}
-				else if($type instanceof PSX_Oembed_Type_Video)
+				else if($type instanceof Type\Video)
 				{
 					$html.= '<li><div>' . $type->html . '</div></li>';
 				}
@@ -139,7 +158,7 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 		return '%s contains invalid markup';
 	}
 
-	public function onElement(PSX_Html_Lexer_Token_Element $element)
+	public function onElement(Token\Element $element)
 	{
 		if($element->getName() == 'a')
 		{
@@ -187,7 +206,7 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 		}
 	}
 
-	public function onText(PSX_Html_Lexer_Token_Text $text)
+	public function onText(Token\Text $text)
 	{
 		$this->replaceUrl($text);
 		$this->replaceProfileUrl($text);
@@ -196,7 +215,7 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 		return $text;
 	}
 
-	private function replaceProfileUrl(PSX_Html_Lexer_Token_Text $text)
+	private function replaceProfileUrl(Token\Text $text)
 	{
 		if(strpos($text->data, '@') === false)
 		{
@@ -214,10 +233,10 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 			}
 			else
 			{
-				$con = new PSX_Sql_Condition();
+				$con = new Condition();
 				$con->add('name', '=', $part);
 
-				$profileUrl = Amun_Sql_Table_Registry::get('User_Account')->getField('profileUrl', $con);
+				$profileUrl = Registry::get('User_Account')->getField('profileUrl', $con);
 
 				if(!empty($profileUrl))
 				{
@@ -233,7 +252,7 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 		$text->data = $data;
 	}
 
-	private function replacePage(PSX_Html_Lexer_Token_Text $text)
+	private function replacePage(Token\Text $text)
 	{
 		if(strpos($text->data, '&') === false)
 		{
@@ -251,10 +270,10 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 			}
 			else
 			{
-				$con = new PSX_Sql_Condition();
+				$con = new Condition();
 				$con->add('urlTitle', '=', $part);
 
-				$path = Amun_Sql_Table_Registry::get('Content_Page')->getField('path', $con);
+				$path = Registry::get('Content_Page')->getField('path', $con);
 
 				if(!empty($path))
 				{
@@ -272,7 +291,7 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 		$text->data = $data;
 	}
 
-	private function replaceUrl(PSX_Html_Lexer_Token_Text $text)
+	private function replaceUrl(Token\Text $text)
 	{
 		if(strpos($text->data, 'http://') === false && strpos($text->data, 'https://') === false)
 		{
@@ -282,7 +301,7 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 		// if parent element of the text is an link dont replace links
 		$isHref = false;
 
-		if($text->parentNode instanceof PSX_Html_Lexer_Token_Element && strtolower($text->parentNode->name) == 'a')
+		if($text->parentNode instanceof Token\Element && strtolower($text->parentNode->name) == 'a')
 		{
 			$isHref = true;
 		}
@@ -300,7 +319,7 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 			{
 				try
 				{
-					$url = new PSX_Url($part);
+					$url = new Url($part);
 
 					if($this->discover)
 					{
@@ -310,7 +329,7 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 							{
 								try
 								{
-									$api = new PSX_Url($endpoint);
+									$api = new Url($endpoint);
 									$api->addParam('url', $part);
 									$api->addParam('maxwidth', 240);
 									$api->addParam('maxheight', 180);
@@ -320,7 +339,7 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 									$this->oembedMedia[] = $type;
 									break;
 								}
-								catch(Exception $e)
+								catch(\Exception $e)
 								{
 									// oembed discovery failed
 								}
@@ -354,10 +373,10 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 			return false;
 		}
 
-		$con = new PSX_Sql_Condition();
+		$con = new Condition();
 		$con->add('path', '=', $href);
 
-		$path = Amun_Sql_Table_Registry::get('Content_Page')->getField('path', $con);
+		$path = Registry::get('Content_Page')->getField('path', $con);
 
 		if(!empty($path))
 		{
@@ -374,10 +393,10 @@ class Amun_Filter_Html extends PSX_FilterAbstract implements PSX_Html_Filter_Ele
 			return false;
 		}
 
-		$con = new PSX_Sql_Condition();
+		$con = new Condition();
 		$con->add('path', '=', $href);
 
-		$globalId = Amun_Sql_Table_Registry::get('Media')->getField('globalId', $con);
+		$globalId = Registry::get('Media')->getField('globalId', $con);
 
 		if(!empty($globalId))
 		{

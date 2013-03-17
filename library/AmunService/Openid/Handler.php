@@ -22,6 +22,21 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Openid;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use Amun\Security;
+use AmunService\Core\Approval;
+use PSX\DateTime;
+use PSX\Data\RecordInterface;
+use PSX\Data\ResultSet;
+use PSX\Sql;
+use PSX\Sql\Condition;
+use PSX\Sql\Join;
+
 /**
  * Amun_System_Connect_Handler
  *
@@ -32,11 +47,11 @@
  * @package    Amun_System_Connect
  * @version    $Revision: 635 $
  */
-class AmunService_Openid_Handler extends Amun_Data_HandlerAbstract
+class Handler extends HandlerAbstract
 {
 	public function getByConsumerKey($consumerKey)
 	{
-		return Amun_Sql_Table_Registry::get('Openid')
+		return DataFactory::getTable('Openid')
 			->select(array('id', 'consumerKey'))
 			->where('consumerKey', '=', $consumerKey)
 			->getRow();
@@ -44,40 +59,40 @@ class AmunService_Openid_Handler extends Amun_Data_HandlerAbstract
 
 	public function getStatus($userId, $assocId)
 	{
-		return (integer) Amun_Sql_Table_Registry::get('Openid')
+		return (integer) DataFactory::getTable('Openid')
 			->select(array('status'))
 			->where('userId', '=', $userId)
 			->where('assocId', '=', $assocId)
 			->getField();
 	}
 
-	public function create(PSX_Data_RecordInterface $record)
+	public function create(RecordInterface $record)
 	{
-		throw new PSX_Data_Exception('Connect can not created');
+		throw new Exception('Connect can not created');
 	}
 
-	public function update(PSX_Data_RecordInterface $record)
+	public function update(RecordInterface $record)
 	{
-		throw new PSX_Data_Exception('Connect can not updated');
+		throw new Exception('Connect can not updated');
 	}
 
-	public function delete(PSX_Data_RecordInterface $record)
+	public function delete(RecordInterface $record)
 	{
 		if($record->hasFields('id'))
 		{
-			$con = new PSX_Sql_Condition(array('id', '=', $record->id));
+			$con = new Condition(array('id', '=', $record->id));
 
 			$this->table->delete($con);
 
 
-			$this->notify(Amun_Data_RecordAbstract::DELETE, $record);
+			$this->notify(RecordAbstract::DELETE, $record);
 
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
@@ -85,7 +100,7 @@ class AmunService_Openid_Handler extends Amun_Data_HandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'userId', 'status', 'claimedId', 'returnTo', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(Join::INNER, DataFactory::getTable('User_Account')
 				->select(array('name', 'profileUrl'), 'author')
 			);
 	}

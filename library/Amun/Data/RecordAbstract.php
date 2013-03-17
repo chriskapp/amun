@@ -22,6 +22,12 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Data;
+
+use Amun\DataFactory;
+use Amun\Sql\TableInterface;
+use PSX\Data\Record\TableAbstract;
+
 /**
  * Amun_Data_RecordAbstract
  *
@@ -32,7 +38,7 @@
  * @package    Amun_Data
  * @version    $Revision: 762 $
  */
-abstract class Amun_Data_RecordAbstract extends PSX_Data_Record_TableAbstract
+abstract class RecordAbstract extends TableAbstract
 {
 	const INSERT = 0x1;
 	const UPDATE = 0x2;
@@ -47,9 +53,9 @@ abstract class Amun_Data_RecordAbstract extends PSX_Data_Record_TableAbstract
 
 	public $captcha;
 
-	public function __construct(Amun_Sql_TableInterface $table)
+	public function __construct(TableInterface $table)
 	{
-		$ct = Amun_DataFactory::getInstance()->getContainer();
+		$ct = DataFactory::getInstance()->getContainer();
 
 		$this->_base     = $ct->getBase();
 		$this->_config   = $ct->getConfig();

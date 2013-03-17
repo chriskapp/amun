@@ -22,6 +22,27 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Core\Service;
+
+use Amun\Base;
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use AmunService\Core\Approval;
+use AmunService\Core\Service;
+use PSX\DateTime;
+use PSX\Data\RecordInterface;
+use PSX\Sql;
+use PSX\Sql\Condition;
+use PSX\Sql\Join;
+use PSX\Log;
+use PharData;
+use DOMDocument;
+use DOMElement;
+use DOMNodeList;
+use DOMNode;
+
 /**
  * Amun_Content_Service_Handler
  *
@@ -32,7 +53,7 @@
  * @package    Amun_Content_Service
  * @version    $Revision: 880 $
  */
-class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
+class Handler extends HandlerAbstract
 {
 	const SECRET = 'd6b0c93c6f9b0a7917fdb402298ac692bf25fab8';
 
@@ -41,24 +62,24 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 
 	private $ids = array();
 
-	public function create(PSX_Data_RecordInterface $record)
+	public function create(RecordInterface $record)
 	{
 		if($record->hasFields('source'))
 		{
 			// already installed
 			if($this->registry->hasService($record->source))
 			{
-				throw new PSX_Data_Exception('Service already installed');
+				throw new Exception('Service already installed');
 			}
 
 
 			// set logger if in debug mode
 			if($this->config['psx_debug'] === true)
 			{
-				PSX_Log::getLogger()->setHandler(new PSX_Log_Handler_File(PSX_PATH_CACHE . '/log.txt'));
-				PSX_Log::getLogger()->setLevel(PSX_Log::ALL);
+				Log::getLogger()->setHandler(new Log\Handler\File(PSX_PATH_CACHE . '/log.txt'));
+				Log::getLogger()->setLevel(Log::ALL);
 
-				PSX_Log::info('Start installation of service ' . $record->source);
+				Log::info('Start installation of service ' . $record->source);
 			}
 
 
@@ -73,14 +94,14 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 
 				if(!empty($configXml))
 				{
-					$this->serviceConfig = new DomDocument();
+					$this->serviceConfig = new DOMDocument();
 					$this->serviceConfig->loadXML($configXml, LIBXML_NOBLANKS);
 
 					$this->parseMeta($record);
 				}
 				else
 				{
-					throw new PSX_Data_Exception('Found no config');
+					throw new Exception('Found no config');
 				}
 
 				// copy files
@@ -93,14 +114,14 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 
 				if(is_file($configFile))
 				{
-					$this->serviceConfig = new DomDocument();
+					$this->serviceConfig = new DOMDocument();
 					$this->serviceConfig->load($configFile, LIBXML_NOBLANKS);
 
 					$this->parseMeta($record);
 				}
 				else
 				{
-					throw new PSX_Data_Exception('Found no config.xml');
+					throw new Exception('Found no config.xml');
 				}
 
 				// copy files
@@ -111,13 +132,13 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 			// check config fields
 			if(!$record->hasFields('status', 'name', 'path', 'namespace', 'type', 'link', 'author', 'license', 'version'))
 			{
-				throw new PSX_Data_Exception('Missing fields in config');
+				throw new Exception('Missing fields in config');
 			}
 
 
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-			$record->date = $date->format(PSX_DateTime::SQL);
+			$record->date = $date->format(DateTime::SQL);
 
 
 			$this->table->insert($record->getData());
@@ -139,33 +160,33 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 			$this->event->notifyListener('core.service_install', array($record, $this->serviceConfig));
 
 
-			$this->notify(Amun_Data_RecordAbstract::INSERT, $record);
+			$this->notify(RecordAbstract::INSERT, $record);
 
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
-	public function update(PSX_Data_RecordInterface $record)
+	public function update(RecordInterface $record)
 	{
-		throw new PSX_Data_Exception('Update a service record is not possible');
+		throw new Exception('Update a service record is not possible');
 	}
 
-	public function delete(PSX_Data_RecordInterface $record)
+	public function delete(RecordInterface $record)
 	{
 		if($record->hasFields('id'))
 		{
-			$con = new PSX_Sql_Condition(array('serviceId', '=', $record->id));
+			$con = new Condition(array('serviceId', '=', $record->id));
 
 
 			// check whether page exists wich uses this service
 			if($this->sql->count($this->registry['table.content_page'], $con) > 0)
 			{
-				throw new PSX_Data_Exception('Page exists wich uses this service');
+				throw new Exception('Page exists wich uses this service');
 			}
 
 
@@ -173,19 +194,19 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 			$this->sql->delete($this->registry['table.core_service_option'], $con);
 
 
-			$con = new PSX_Sql_Condition(array('id', '=', $record->id));
+			$con = new Condition(array('id', '=', $record->id));
 
 			$this->table->delete($con);
 
 
-			$this->notify(Amun_Data_RecordAbstract::DELETE, $record);
+			$this->notify(RecordAbstract::DELETE, $record);
 
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
@@ -195,7 +216,7 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 			->select(array('id', 'status', 'name', 'type', 'link', 'author', 'license', 'version', 'date'));
 	}
 
-	private function parseMeta(AmunService_Core_Service_Record $record)
+	private function parseMeta(Service\Record $record)
 	{
 		$rootElement = $this->serviceConfig->documentElement;
 
@@ -205,7 +226,7 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 
 		if(empty($foreignSignature))
 		{
-			throw new PSX_Data_Exception('No signature given');
+			throw new Exception('No signature given');
 		}
 
 		$rootElement->setAttribute('signature', '');
@@ -217,7 +238,7 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 
 		if(strcmp($signature, $foreignSignature) !== 0)
 		{
-			throw new PSX_Data_Exception('Invalid configuration signature');
+			throw new Exception('Invalid configuration signature');
 		}
 
 
@@ -228,7 +249,7 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 		{
 			$node = $rootElement->childNodes->item($i);
 
-			if($node instanceof DomElement)
+			if($node instanceof DOMElement)
 			{
 				if(in_array($node->nodeName, $fields))
 				{
@@ -243,7 +264,7 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 
 		if(count($diff) > 0)
 		{
-			throw new PSX_Data_Exception('Missing fields: ' . implode(', ', $diff));
+			throw new Exception('Missing fields: ' . implode(', ', $diff));
 		}
 
 
@@ -258,7 +279,7 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 			{
 				$node = $required->childNodes->item($i);
 
-				if($node instanceof DomElement && $node->nodeName == 'service')
+				if($node instanceof DOMElement && $node->nodeName == 'service')
 				{
 					$services[] = $node->nodeValue;
 				}
@@ -269,7 +290,7 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 				if(!$this->registry->hasService($source))
 				{
 					// try to install required services
-					$service = Amun_Sql_Table_Registry::get('Core_Service')->getRecord();
+					$service = DataFactory::getTable('Core_Service')->getRecord();
 					$service->setSource($source);
 
 					$this->create($service);
@@ -278,7 +299,7 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 		}
 	}
 
-	private function parsePharFiles(AmunService_Core_Service_Record $record)
+	private function parsePharFiles(Service\Record $record)
 	{
 		// library
 		$library = $this->serviceConfig->getElementsByTagName('library');
@@ -287,18 +308,18 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 		{
 			if(is_dir(PSX_PATH_LIBRARY))
 			{
-				PSX_Log::info('Copy library files');
+				Log::info('Copy library files');
 
 				$this->copyFiles('phar://' . $this->config['amun_service_path'] . '/' . $record->source . '/library', PSX_PATH_LIBRARY, $library->item(0));
 			}
 			else
 			{
-				PSX_Log::info('Library path is not an folder');
+				Log::info('Library path is not an folder');
 			}
 		}
 	}
 
-	private function parseFolderFiles(AmunService_Core_Service_Record $record)
+	private function parseFolderFiles(Service\Record $record)
 	{
 		// library
 		$library = $this->serviceConfig->getElementsByTagName('library');
@@ -311,25 +332,25 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 
 				if(is_dir($srcDir))
 				{
-					PSX_Log::info('Copy library files');
+					Log::info('Copy library files');
 
 					$this->copyFiles($srcDir, PSX_PATH_LIBRARY, $library->item(0));
 				}
 			}
 			else
 			{
-				PSX_Log::info('Library path is not an folder');
+				Log::info('Library path is not an folder');
 			}
 		}
 	}
 
-	private function parseEvents(AmunService_Core_Service_Record $record)
+	private function parseEvents(Service\Record $record)
 	{
 		$event = $this->serviceConfig->getElementsByTagName('event')->item(0);
 
 		if($event !== null)
 		{
-			PSX_Log::info('Create events');
+			Log::info('Create events');
 
 			$events = $event->childNodes;
 
@@ -360,7 +381,7 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 								'description' => $description,
 							));
 
-							PSX_Log::info('> Created publisher event "' . $name . '"');
+							Log::info('> Created publisher event "' . $name . '"');
 						}
 					}
 
@@ -376,13 +397,13 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 						}
 						else
 						{
-							throw new PSX_Exception('Empty listener event class');
+							throw new Exception('Empty listener event class');
 						}
 
 						if(!empty($name))
 						{
-							$con     = new PSX_Sql_Condition(array('name', '=', $name));
-							$eventId = $this->sql->select($this->registry['table.core_event'], array('id'), $con, PSX_Sql::SELECT_FIELD);
+							$con     = new Condition(array('name', '=', $name));
+							$eventId = $this->sql->select($this->registry['table.core_event'], array('id'), $con, Sql::SELECT_FIELD);
 
 							if(!empty($eventId))
 							{
@@ -392,34 +413,34 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 									'class'    => $class->getName(),
 								));
 
-								PSX_Log::info('> Added event listener "' . $name . '" to event ' . $eventId);
+								Log::info('> Added event listener "' . $name . '" to event ' . $eventId);
 							}
 							else
 							{
-								throw new PSX_Exception('Unknown listener event name');
+								throw new Exception('Unknown listener event name');
 							}
 						}
 						else
 						{
-							throw new PSX_Exception('Empty listener event name');
+							throw new Exception('Empty listener event name');
 						}
 					}
 				}
 				catch(Exception $e)
 				{
-					PSX_Log::error($e->getMessage());
+					Log::error($e->getMessage());
 				}
 			}
 		}
 	}
 
-	private function parseRegistry(AmunService_Core_Service_Record $record)
+	private function parseRegistry(Service\Record $record)
 	{
 		$registry = $this->serviceConfig->getElementsByTagName('registry')->item(0);
 
 		if($registry !== null)
 		{
-			PSX_Log::info('Create registry entries');
+			Log::info('Create registry entries');
 
 			$params = $registry->childNodes;
 
@@ -443,7 +464,7 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 
 						if(empty($name))
 						{
-							throw new PSX_Exception('Empty param name');
+							throw new Exception('Empty param name');
 						}
 
 						$name = $record->namespace . '.' . $name;
@@ -465,7 +486,7 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 							'class' => $class,
 						));
 
-						PSX_Log::info('> Created registry entry "' . $name . '" = "' . $value . '"');
+						Log::info('> Created registry entry "' . $name . '" = "' . $value . '"');
 					}
 					else if($param->nodeName == 'table')
 					{
@@ -474,7 +495,7 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 
 						if(empty($name))
 						{
-							throw new PSX_Exception('Empty table name');
+							throw new Exception('Empty table name');
 						}
 
 						$value = empty($value) ? $name : $value;
@@ -487,12 +508,12 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 							'type'  => 'STRING',
 						));
 
-						PSX_Log::info('> Created registry entry "' . $name . '" = "' . $value . '"');
+						Log::info('> Created registry entry "' . $name . '" = "' . $value . '"');
 					}
 				}
 				catch(Exception $e)
 				{
-					PSX_Log::error($e->getMessage());
+					Log::error($e->getMessage());
 				}
 			}
 
@@ -501,13 +522,13 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 		}
 	}
 
-	private function parseDatabase(AmunService_Core_Service_Record $record)
+	private function parseDatabase(Service\Record $record)
 	{
 		$database = $this->serviceConfig->getElementsByTagName('database')->item(0);
 
 		if($database !== null)
 		{
-			PSX_Log::info('Execute sql queries');
+			Log::info('Execute sql queries');
 
 			try
 			{
@@ -515,12 +536,12 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 			}
 			catch(Exception $e)
 			{
-				PSX_Log::error($e->getMessage());
+				Log::error($e->getMessage());
 			}
 		}
 	}
 
-	private function parseQueries(DOMNodeList $queries, AmunService_Core_Service_Record $record)
+	private function parseQueries(DOMNodeList $queries, Service\Record $record)
 	{
 		for($i = 0; $i < $queries->length; $i++)
 		{
@@ -535,7 +556,7 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 			{
 				$sql = $this->substituteVars($query->nodeValue, $record);
 
-				PSX_Log::info('> ' . $sql);
+				Log::info('> ' . $sql);
 
 				$this->sql->query($sql);
 
@@ -598,17 +619,17 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 
 	private function opHasVersion($value)
 	{
-		return $this->parseVersion(Amun_Base::getVersion()) == $this->parseVersion($value);
+		return $this->parseVersion(Base::getVersion()) == $this->parseVersion($value);
 	}
 
 	private function opHasMinVersion($value)
 	{
-		return $this->parseVersion(Amun_Base::getVersion()) >= $this->parseVersion($value);
+		return $this->parseVersion(Base::getVersion()) >= $this->parseVersion($value);
 	}
 
 	private function opHasMaxVersion($value)
 	{
-		return $this->parseVersion(Amun_Base::getVersion()) <= $this->parseVersion($value);
+		return $this->parseVersion(Base::getVersion()) <= $this->parseVersion($value);
 	}
 
 	private function parseVersion($value)
@@ -626,21 +647,21 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 		return $ver;
 	}
 
-	private function copyFiles($src, $dest, DomNode $el)
+	private function copyFiles($src, $dest, DOMNode $el)
 	{
 		if(!is_dir($src))
 		{
-			throw new PSX_Data_Exception('Invalid source path ' . $src);
+			throw new Exception('Invalid source path ' . $src);
 		}
 
 		if(!is_dir($dest))
 		{
 			if(!mkdir($dest, 0755))
 			{
-				throw new PSX_Data_Exception('Could not create folder ' . $dest);
+				throw new Exception('Could not create folder ' . $dest);
 			}
 
-			PSX_Log::info('A ' . $dest);
+			Log::info('A ' . $dest);
 		}
 
 		for($i = 0; $i < $el->childNodes->length; $i++)
@@ -661,19 +682,19 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 
 					if(!is_file($srcFile))
 					{
-						throw new PSX_Data_Exception('Invalid source file ' . $srcFile);
+						throw new Exception('Invalid source file ' . $srcFile);
 					}
 
 					if(md5_file($srcFile) != $e->getAttribute('md5'))
 					{
-						throw new PSX_Data_Exception('Invalid md5 hash for file: ' . $srcFile);
+						throw new Exception('Invalid md5 hash for file: ' . $srcFile);
 					}
 
 					if(!is_file($destFile))
 					{
 						file_put_contents($destFile, file_get_contents($srcFile));
 
-						PSX_Log::info('A ' . $destFile);
+						Log::info('A ' . $destFile);
 					}
 					else
 					{
@@ -684,7 +705,7 @@ class AmunService_Core_Service_Handler extends Amun_Data_HandlerAbstract
 		}
 	}
 
-	public function substituteVars($sql, AmunService_Core_Service_Record $record)
+	public function substituteVars($sql, Service\Record $record)
 	{
 		// tables
 		$result = $this->sql->getAll('SELECT name, value FROM ' . $this->registry['table.core_registry'] . ' WHERE name LIKE "table.%"');

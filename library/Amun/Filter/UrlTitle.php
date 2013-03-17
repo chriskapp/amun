@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Filter;
+
+use PSX\FilterAbstract;
+
 /**
  * Amun_Filter_UrlTitle
  *
@@ -32,7 +36,7 @@
  * @package    Amun_Filter
  * @version    $Revision: 792 $
  */
-class Amun_Filter_UrlTitle extends PSX_FilterAbstract
+class UrlTitle extends FilterAbstract
 {
 	public function apply($value)
 	{

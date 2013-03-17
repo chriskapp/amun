@@ -22,6 +22,16 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\application;
+
+use Amun\Module\ApplicationAbstract;
+use Amun\Exception;
+use Amun\Captcha;
+use Amun\Mail;
+use AmunService\User\Account;
+use PSX\DateTime;
+use PSX\Filter;
+
 /**
  * register
  *
@@ -33,7 +43,7 @@
  * @subpackage my
  * @version    $Revision: 875 $
  */
-class register extends Amun_Module_ApplicationAbstract
+class register extends ApplicationAbstract
 {
 	public function onLoad()
 	{
@@ -52,12 +62,10 @@ class register extends Amun_Module_ApplicationAbstract
 			// template
 			$this->htmlCss->add('my');
 			$this->htmlJs->add('jquery');
-
-			$this->template->set(__CLASS__ . '.tpl');
 		}
 		else
 		{
-			throw new Amun_Exception('Access not allowed');
+			throw new Exception('Access not allowed');
 		}
 	}
 
@@ -65,8 +73,8 @@ class register extends Amun_Module_ApplicationAbstract
 	{
 		try
 		{
-			$name      = $this->post->name('string', array(new PSX_Filter_Length(3, 32)), 'name', 'Name');
-			$identity  = $this->post->identity('string', array(new PSX_Filter_Length(3, 128), new PSX_Filter_Email()), 'email', 'Email');
+			$name      = $this->post->name('string', array(new Filter\Length(3, 32)), 'name', 'Name');
+			$identity  = $this->post->identity('string', array(new Filter\Length(3, 128), new Filter\Email()), 'email', 'Email');
 			$pw        = $this->post->pw('string');
 			$pwRepeat  = $this->post->pwRepeat('string');
 			$longitude = $this->post->longitude('float');
@@ -78,13 +86,13 @@ class register extends Amun_Module_ApplicationAbstract
 				// check whether registration is enabled
 				if(!$this->registry['my.registration_enabled'])
 				{
-					throw new Amun_Exception('Registration is disabled');
+					throw new Exception('Registration is disabled');
 				}
 
 				// compare pws
 				if(strcmp($pw, $pwRepeat) != 0)
 				{
-					throw new Amun_Exception('Password ist not the same');
+					throw new Exception('Password ist not the same');
 				}
 
 				// check captcha if anonymous
@@ -92,15 +100,15 @@ class register extends Amun_Module_ApplicationAbstract
 
 				if(!$captchaProvider->verify($captcha))
 				{
-					throw new Amun_Exception('Invalid captcha');
+					throw new Exception('Invalid captcha');
 				}
 
 				// create account record
-				$handler = new AmunService_User_Account_Handler($this->user);
+				$handler = new Account\Handler($this->user);
 
 				$account = $handler->getRecord();
 				$account->setGroupId($this->registry['core.default_user_group']);
-				$account->setStatus(AmunService_User_Account_Record::NOT_ACTIVATED);
+				$account->setStatus(Account\Record::NOT_ACTIVATED);
 				$account->setIdentity($identity);
 				$account->setName($name);
 				$account->setPw($pw);
@@ -124,22 +132,22 @@ class register extends Amun_Module_ApplicationAbstract
 
 					);
 
-					$mail = new Amun_Mail($this->registry);
+					$mail = new Mail($this->registry);
 					$mail->send('MY_REGISTRATION', $identity, $values);
 
 					$this->template->assign('success', true);
 				}
 				else
 				{
-					throw new Amun_Exception('Your account was added for approval');
+					throw new Exception('Your account was added for approval');
 				}
 			}
 			else
 			{
-				throw new Amun_Exception($this->validate->getLastError());
+				throw new Exception($this->validate->getLastError());
 			}
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
 			$this->template->assign('name', htmlspecialchars($name));
 			$this->template->assign('identity', htmlspecialchars($identity));

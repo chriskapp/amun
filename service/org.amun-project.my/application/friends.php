@@ -22,6 +22,16 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\application;
+
+use AmunService\My\FriendsAbstract;
+use AmunService\User\Friend;
+use Amun\Html;
+use PSX\Data\Writer;
+use PSX\Sql;
+use PSX\Url;
+use PSX\Html\Paging;
+
 /**
  * friends
  *
@@ -33,7 +43,7 @@
  * @subpackage my
  * @version    $Revision: 875 $
  */
-class friends extends AmunService_My_FriendsAbstract
+class friends extends FriendsAbstract
 {
 	public function onLoad()
 	{
@@ -56,16 +66,14 @@ class friends extends AmunService_My_FriendsAbstract
 		$this->htmlCss->add('my');
 		$this->htmlJs->add('amun');
 		$this->htmlJs->add('my');
-		$this->htmlContent->add(Amun_Html_Content::META, PSX_Data_Writer_Atom::link($this->page->title, $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/friend?format=atom&filterBy=authorId&filterOp=equals&filterValue=' . $this->user->id));
-
-		$this->template->set(__CLASS__ . '.tpl');
+		$this->htmlContent->add(Html\Content::META, Writer\Atom::link($this->page->title, $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/friend?format=atom&filterBy=authorId&filterOp=equals&filterValue=' . $this->user->id));
 	}
 
 	private function getFriends()
 	{
 		$con = $this->getRequestCondition();
 		$con->add('authorId', '=', $this->user->id);
-		$con->add('status', '=', AmunService_User_Friend_Record::NORMAL);
+		$con->add('status', '=', Friend\Record::NORMAL);
 
 		// search
 		$search = $this->post->search('string');
@@ -75,7 +83,7 @@ class friends extends AmunService_My_FriendsAbstract
 			$con->add('friendName', 'LIKE', '%' . $search . '%');
 		}
 
-		$url   = new PSX_Url($this->base->getSelf());
+		$url   = new Url($this->base->getSelf());
 		$count = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
 		$count = $count > 16 ? 16 : $count;
 
@@ -85,10 +93,10 @@ class friends extends AmunService_My_FriendsAbstract
 			$url->getParam('sortBy'), 
 			$url->getParam('sortOrder'),
 			$con,
-			PSX_Sql::FETCH_OBJECT);
+			Sql::FETCH_OBJECT);
 
 
-		$paging = new PSX_Html_Paging($url, $result);
+		$paging = new Paging($url, $result);
 
 		$this->template->assign('pagingFriends', $paging, 0);
 

@@ -24,8 +24,8 @@
 
 namespace core\api;
 
-use Amun_Module_RestAbstract;
-use PSX_Data_Message;
+use Amun\Module\RestAbstract;
+use PSX\Data\Message;
 
 /**
  * registry
@@ -38,18 +38,18 @@ use PSX_Data_Message;
  * @subpackage system_vars
  * @version    $Revision: 683 $
  */
-class registry extends Amun_Module_RestAbstract
+class registry extends RestAbstract
 {
 	public function onPost()
 	{
-		$msg = new PSX_Data_Message('Create a registry record is not possible', false);
+		$msg = new Message('Create a registry record is not possible', false);
 
 		$this->setResponse($msg, null, 500);
 	}
 
 	public function onDelete()
 	{
-		$msg = new PSX_Data_Message('Delete a registry record is not possible', false);
+		$msg = new Message('Delete a registry record is not possible', false);
 
 		$this->setResponse($msg, null, 500);
 	}

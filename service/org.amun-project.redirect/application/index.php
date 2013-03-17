@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace redirect\application;
+
+use Amun\Exception;
+
 /**
  * index
  *
@@ -33,7 +37,7 @@
  * @subpackage redirect
  * @version    $Revision: 875 $
  */
-class index extends Amun_Module_ApplicationAbstract
+class index extends ApplicationAbstract
 {
 	public function onLoad()
 	{
@@ -50,12 +54,12 @@ class index extends Amun_Module_ApplicationAbstract
 			}
 			else
 			{
-				throw new Amun_Exception('No redirection set');
+				throw new Exception('No redirection set');
 			}
 		}
 		else
 		{
-			throw new Amun_Exception('Access not allowed');
+			throw new Exception('Access not allowed');
 		}
 	}
 }

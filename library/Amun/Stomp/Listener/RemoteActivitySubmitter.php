@@ -22,6 +22,24 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Stomp\Listener;
+
+use Amun\Data\RecordAbstract;
+use Amun\Stomp\ListenerAbstract;
+use Amun\Registry;
+use Amun\Sql\Table;
+use AmunService\User\Activity\Receiver;
+use AmunService\User\Account;
+use PSX\Http;
+use PSX\Http\PostRequest;
+use PSX\Oauth;
+use PSX\Yadis;
+use PSX\Sql;
+use PSX\Url;
+use PSX\DateTime;
+use PSX\Data\Writer;
+use PSX\Data\ResultSet
+
 /**
  * Amun_Stomp_Listener_RemoteActivitySubmitter
  *
@@ -34,7 +52,7 @@
  * @package    Amun_Stomp
  * @version    $Revision: 635 $
  */
-class Amun_Stomp_Listener_RemoteActivitySubmitter extends Amun_Stomp_ListenerAbstract
+class RemoteActivitySubmitter extends ListenerAbstract
 {
 	const SERVICE_NS = 'http://ns.amun-project.org/2012/amun/user/activity/message/1.0';
 
@@ -46,14 +64,14 @@ class Amun_Stomp_Listener_RemoteActivitySubmitter extends Amun_Stomp_ListenerAbs
 	{
 		parent::__construct();
 
-		$this->http  = new PSX_Http(new PSX_Http_Handler_Curl());
-		$this->oauth = new PSX_Oauth($this->http);
-		$this->yadis = new PSX_Yadis($this->http);
+		$this->http  = new Http();
+		$this->oauth = new Oauth($this->http);
+		$this->yadis = new Yadis($this->http);
 	}
 
 	public function run($table, $type, $userId, array $data)
 	{
-		if($type != Amun_Data_RecordAbstract::INSERT || $table != Amun_Registry::get('table.user_activity'))
+		if($type != RecordAbstract::INSERT || $table != Registry::get('table.user_activity'))
 		{
 			return;
 		}
@@ -62,11 +80,11 @@ class Amun_Stomp_Listener_RemoteActivitySubmitter extends Amun_Stomp_ListenerAbs
 		$body = $this->getMessage($data['id']);
 
 		// send request
-		$receivers = Amun_Sql_Table_Registry::get('User_Activity_Receiver')
+		$receivers = Table\Registry::get('User_Activity_Receiver')
 			->select(array('status', 'activityId', 'userId'))
 			->where('activityId', '=', $data['id'])
-			->where('status', '=', AmunService_User_Activity_Receiver::VISIBLE)
-			->getAll(PSX_Sql::FETCH_OBJECT);
+			->where('status', '=', Receiver::VISIBLE)
+			->getAll(Sql::FETCH_OBJECT);
 
 		foreach($receivers as $receiver)
 		{
@@ -74,7 +92,7 @@ class Amun_Stomp_Listener_RemoteActivitySubmitter extends Amun_Stomp_ListenerAbs
 			$account = $receiver->getUser();
 			$host    = $account->getHost();
 
-			if($account->status != AmunService_User_Account::REMOTE)
+			if($account->status != Account::REMOTE)
 			{
 				continue;
 			}
@@ -87,14 +105,14 @@ class Amun_Stomp_Listener_RemoteActivitySubmitter extends Amun_Stomp_ListenerAbs
 
 			// discover host
 			$url     = null;
-			$hostUrl = new PSX_Url($host->url);
+			$hostUrl = new Url($host->url);
 			$xrds    = $this->yadis->discover($hostUrl);
 
 			foreach($xrds->service as $service)
 			{
 				if(in_array(self::SERVICE_NS, $service->getType()))
 				{
-					$url = new PSX_Url($service->getUri());
+					$url = new Url($service->getUri());
 					break;
 				}
 			}
@@ -123,7 +141,7 @@ class Amun_Stomp_Listener_RemoteActivitySubmitter extends Amun_Stomp_ListenerAbs
 
 			);
 
-			$request  = new PSX_Http_PostRequest($url, $header, $body);
+			$request  = new PostRequest($url, $header, $body);
 			$response = $this->http->request($request);
 
 			if($response->getCode() == 200)
@@ -142,7 +160,7 @@ class Amun_Stomp_Listener_RemoteActivitySubmitter extends Amun_Stomp_ListenerAbs
 	{
 		// get remote activities for remote host
 		$entries  = array();
-		$activity = Amun_Sql_Table_Registry::get('User_Activity')->getRecord($activityId);
+		$activity = Table\Registry::get('User_Activity')->getRecord($activityId);
 		$account  = $activity->getUser();
 
 
@@ -157,10 +175,10 @@ class Amun_Stomp_Listener_RemoteActivitySubmitter extends Amun_Stomp_ListenerAbs
 
 
 		// build request
-		$writer = new PSX_Data_Writer_Atom();
+		$writer = new Writer\Atom();
 		$writer->setConfig('Messages for ' . $account->name, 'urn:uuid:' . $account->globalId, new DateTime('NOW'));
 
-		$resultset = new PSX_Data_ResultSet(count($entries), $startIndex, count($entries), $entries);
+		$resultset = new ResultSet(count($entries), $startIndex, count($entries), $entries);
 
 		ob_start();
 

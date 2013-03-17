@@ -24,7 +24,7 @@
 
 namespace country\api;
 
-use Amun_Module_RestAbstract;
+use Amun\Module\RestAbstract;
 
 /**
  * country
@@ -37,7 +37,7 @@ use Amun_Module_RestAbstract;
  * @subpackage system_country
  * @version    $Revision: 683 $
  */
-class index extends Amun_Module_RestAbstract
+class index extends RestAbstract
 {
 }
 

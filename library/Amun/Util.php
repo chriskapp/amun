@@ -22,6 +22,8 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun;
+
 /**
  * Amun_Util
  *
@@ -32,7 +34,7 @@
  * @package    Amun_Util
  * @version    $Revision: 635 $
  */
-class Amun_Util
+class Util
 {
 	/**
 	 * Strip html tags and truncate the string to 64 signs if required

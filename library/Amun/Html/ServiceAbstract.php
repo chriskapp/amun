@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Html;
+
+use PSX\Config;
+
 /**
  * Amun_Html_ServiceAbstract
  *
@@ -32,12 +36,12 @@
  * @package    Amun_Ext
  * @version    $Revision: 635 $
  */
-abstract class Amun_Html_ServiceAbstract
+abstract class ServiceAbstract
 {
 	protected $config;
 	protected $services = array();
 
-	public function __construct(PSX_Config $config)
+	public function __construct(Config $config)
 	{
 		$this->config = $config;
 	}

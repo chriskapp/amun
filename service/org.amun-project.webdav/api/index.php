@@ -24,14 +24,14 @@
 
 namespace webdav\api;
 
-use AmunService_User_Account_Record;
-use AmunService_Webdav_Page;
-use Amun_Module_DefaultAbstract;
-use Amun_Security;
-use Amun_Sql_Table_Registry;
-use PSX_Url;
-use Sabre_DAV_Server;
-use Sabre_HTTP_BasicAuth;
+use AmunService\User\Account;
+use AmunService\Webdav\Page;
+use Amun\Module\DefaultAbstract;
+use Amun\Security;
+use Amun\DataFactory;
+use PSX\Url;
+use Sabre\DAV\Server;
+use Sabre\HTTP\BasicAuth;
 
 /**
  * index
@@ -44,35 +44,35 @@ use Sabre_HTTP_BasicAuth;
  * @subpackage service_webdav
  * @version    $Revision: 875 $
  */
-class index extends Amun_Module_DefaultAbstract
+class index extends DefaultAbstract
 {
 	public function onLoad()
 	{
-		$auth = new Sabre_HTTP_BasicAuth();
+		$auth = new BasicAuth();
 
 		list($username, $pw) = $auth->getUserPass();
 
-		$identity = sha1(Amun_Security::getSalt() . $username);
+		$identity = sha1(Security::getSalt() . $username);
 
 		if(!empty($pw))
 		{
-			$row = Amun_Sql_Table_Registry::get('User_Account')
+			$row = DataFactory::getTable('User_Account')
 				->select(array('id', 'status', 'pw'))
 				->where('identity', '=', $identity)
 				->getRow();
 
 			if(!empty($row))
 			{
-				if($row['pw'] == sha1(Amun_Security::getSalt() . $pw))
+				if($row['pw'] == sha1(Security::getSalt() . $pw))
 				{
 					if($this->isValidStatus($row['status']) === true)
 					{
 						$this->base->setUser($row['id']);
 
-						$root = new AmunService_Webdav_Page(1);
-						$url  = new PSX_Url($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/webdav');
+						$root = new Page(1);
+						$url  = new Url($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/webdav');
 
-						$server = new Sabre_DAV_Server($root);
+						$server = new Server($root);
 						$server->setBaseUri($url->getPath());
 
 						$server->exec();
@@ -93,8 +93,8 @@ class index extends Amun_Module_DefaultAbstract
 	{
 		switch($status)
 		{
-			case AmunService_User_Account_Record::NORMAL:
-			case AmunService_User_Account_Record::ADMINISTRATOR:
+			case Account\Record::NORMAL:
+			case Account\Record::ADMINISTRATOR:
 				return true;
 				break;
 		}

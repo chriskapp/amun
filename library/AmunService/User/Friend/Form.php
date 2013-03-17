@@ -22,6 +22,20 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Friend;
+
+use Amun\DataFactory;
+use Amun\Data\FormAbstract;
+use Amun\Exception;
+use Amun\Form as AmunForm;
+use Amun\Form\Element\Panel;
+use Amun\Form\Element\Reference;
+use Amun\Form\Element\Input;
+use Amun\Form\Element\TabbedPane;
+use Amun\Form\Element\Textarea;
+use Amun\Form\Element\Captcha;
+use Amun\Form\Element\Select;
+
 /**
  * Amun_User_Friend_Form
  *
@@ -32,31 +46,31 @@
  * @package    Amun_User_Friend
  * @version    $Revision: 666 $
  */
-class AmunService_User_Friend_Form extends Amun_Data_FormAbstract
+class Form extends FormAbstract
 {
 	public function create()
 	{
-		$form = new Amun_Form('POST', $this->url);
+		$form = new AmunForm('POST', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('friend', 'Friend');
+		$panel = new Panel('friend', 'Friend');
 
 
-		$status = new Amun_Form_Element_Select('status', 'Status', AmunService_User_Friend_Record::REQUEST);
+		$status = new Select('status', 'Status', Record::REQUEST);
 		$status->setOptions($this->getStatus());
 		$status->setDisabled(true);
 
 		$panel->add($status);
 
 
-		$userId = new Amun_Form_Element_Input('userId', 'User', $this->user->name);
+		$userId = new Input('userId', 'User', $this->user->name);
 		$userId->setType('text');
 		$userId->setDisabled(true);
 
 		$panel->add($userId);
 
 
-		$friendId = new Amun_Form_Element_Reference('friendId', 'Friend ID');
+		$friendId = new Reference('friendId', 'Friend ID');
 		$friendId->setValueField('id');
 		$friendId->setLabelField('name');
 		$friendId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/account');
@@ -66,7 +80,7 @@ class AmunService_User_Friend_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -81,41 +95,41 @@ class AmunService_User_Friend_Form extends Amun_Data_FormAbstract
 
 	public function update()
 	{
-		throw new PSX_Data_Exception('You cant update a friend record');
+		throw new Exception('You cant update a friend record');
 	}
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('User_Friend')->getRecord($id);
+		$record = DataFactory::getTable('User_Friend')->getRecord($id);
 
 
-		$form = new Amun_Form('DELETE', $this->url);
+		$form = new AmunForm('DELETE', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('friend', 'Friend');
+		$panel = new Panel('friend', 'Friend');
 
 
-		$id = new Amun_Form_Element_Input('id', 'Id', $record->id);
+		$id = new Input('id', 'Id', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$status = new Amun_Form_Element_Select('status', 'Status', $record->status);
+		$status = new Select('status', 'Status', $record->status);
 		$status->setOptions($this->getStatus());
 		$status->setDisabled(true);
 
 		$panel->add($status);
 
 
-		$userId = new Amun_Form_Element_Input('userId', 'User', $record->getUser()->name);
+		$userId = new Input('userId', 'User', $record->getUser()->name);
 		$userId->setType('text');
 		$userId->setDisabled(true);
 
 		$panel->add($userId);
 
 
-		$friendId = new Amun_Form_Element_Input('friendId', 'Friend ID', $record->getFriend()->name);
+		$friendId = new Input('friendId', 'Friend ID', $record->getFriend()->name);
 		$friendId->setType('text');
 		$friendId->setDisabled(true);
 
@@ -124,7 +138,7 @@ class AmunService_User_Friend_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -140,7 +154,7 @@ class AmunService_User_Friend_Form extends Amun_Data_FormAbstract
 	public function getStatus()
 	{
 		$status = array();
-		$result = AmunService_User_Friend_Record::getStatus();
+		$result = Record::getStatus();
 
 		foreach($result as $k => $v)
 		{

@@ -22,6 +22,21 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace my\application;
+
+use Amun\Module\ApplicationAbstract;
+use Amun\DataFactory;
+use Amun\Exception;
+use Amun\Security;
+use AmunService\Openid;
+use PSX\DateTime;
+use PSX\OpenId\Provider\Data\SetupRequest;
+use PSX\OpenId\Provider\Data\Redirect;
+use PSX\OpenId\ProviderAbstract;
+use PSX\OpenId\Extension;
+use PSX\Sql\Condition;
+use DateTimeZone;
+
 /**
  * connect
  *
@@ -33,7 +48,7 @@
  * @subpackage my
  * @version    $Revision: 875 $
  */
-class connect extends Amun_Module_ApplicationAbstract
+class connect extends ApplicationAbstract
 {
 	private $request;
 	private $assoc;
@@ -57,23 +72,23 @@ class connect extends Amun_Module_ApplicationAbstract
 			// check whether connection was started
 			$this->request = isset($_SESSION['amun_openid_request']) ? $_SESSION['amun_openid_request'] : null;
 
-			if($this->request instanceof PSX_OpenId_Provider_Data_SetupRequest)
+			if($this->request instanceof SetupRequest)
 			{
 				// sreg extension
 				$sreg     = null;
-				$params   = $this->request->getExtension(PSX_OpenId_Extension_Sreg::NS);
+				$params   = $this->request->getExtension(Extension\Sreg::NS);
 				$required = isset($params['required']) ? explode(',', $params['required']) : array();
 				$optional = isset($params['optional']) ? explode(',', $params['optional']) : array();
 				$fields   = array_merge($required, $optional);
 
 				if(!empty($fields))
 				{
-					$sreg = PSX_OpenId_Extension_Sreg::validateFields($fields);
+					$sreg = Extension\Sreg::validateFields($fields);
 				}
 
 				// oauth extension
 				$oauth    = null;
-				$params   = $this->request->getExtension(PSX_OpenId_Extension_Oauth::NS);
+				$params   = $this->request->getExtension(Extension\Oauth::NS);
 				$consumer = isset($params['consumer']) ? $params['consumer'] : null;
 
 				if(!empty($consumer))
@@ -93,7 +108,7 @@ class connect extends Amun_Module_ApplicationAbstract
 			}
 			else
 			{
-				throw new Amun_Exception('No connection was initialized');
+				throw new Exception('No connection was initialized');
 			}
 
 			// get association
@@ -102,24 +117,22 @@ class connect extends Amun_Module_ApplicationAbstract
 			// check whether access is already allowed or denied
 			$status = $this->getHandler('Openid')->getStatus($this->user->id, $this->assoc['id']);
 
-			if($status === AmunService_Openid_Record::APPROVED)
+			if($status === Openid\Record::APPROVED)
 			{
 				$this->allowAccess();
 			}
 
-			if($status === AmunService_Openid_Record::DENIED)
+			if($status === Openid\Record::DENIED)
 			{
 				$this->denyAccess();
 			}
 
 			// template
 			$this->htmlCss->add('my');
-
-			$this->template->set(__CLASS__ . '.tpl');
 		}
 		else
 		{
-			throw new Amun_Exception('Access not allowed');
+			throw new Exception('Access not allowed');
 		}
 	}
 
@@ -140,7 +153,7 @@ class connect extends Amun_Module_ApplicationAbstract
 		catch(Exception $e)
 		{
 			// cancel request
-			$this->returnTo->addParam('openid.ns', PSX_OpenId_ProviderAbstract::NS);
+			$this->returnTo->addParam('openid.ns', ProviderAbstract::NS);
 			$this->returnTo->addParam('openid.mode', 'error');
 			$this->returnTo->addParam('openid.error', $e->getMessage());
 
@@ -155,9 +168,9 @@ class connect extends Amun_Module_ApplicationAbstract
 		$_SESSION['amun_openid_request'] = null;
 
 		// build redirect
-		$nonce = gmdate('Y-m-d\TH:i:s\Z') . Amun_Security::generateToken(15);
+		$nonce = gmdate('Y-m-d\TH:i:s\Z') . Security::generateToken(15);
 
-		$redirect = new PSX_OpenId_Provider_Data_Redirect();
+		$redirect = new Redirect();
 		$redirect->setOpEndpoint($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/signon');
 		$redirect->setClaimedId($this->claimedId);
 		$redirect->setIdentity($this->identity);
@@ -186,16 +199,16 @@ class connect extends Amun_Module_ApplicationAbstract
 			'identity'      => $this->identity,
 			'returnTo'      => (string) $this->returnTo,
 			'responseNonce' => $nonce,
-			'date'          => $now->format(PSX_DateTime::SQL),
+			'date'          => $now->format(DateTime::SQL),
 
 		);
 
 		if(isset($_POST['remember']) && $_POST['remember'] === '1')
 		{
-			$data['status'] = AmunService_Openid_Record::APPROVED;
+			$data['status'] = Openid\Record::APPROVED;
 		}
 
-		Amun_Sql_Table_Registry::get('Openid')->replace($data);
+		DataFactory::getTable('Openid')->replace($data);
 
 		// redirect to rp
 		$redirect->redirect($this->assoc['secret'], $this->assoc['assocType']);
@@ -209,13 +222,13 @@ class connect extends Amun_Module_ApplicationAbstract
 		// delete oauth token
 		if(!empty($this->oauth))
 		{
-			$con = new PSX_Sql_Condition(array('id', '=', $this->oauth['requestId']));
+			$con = new Condition(array('id', '=', $this->oauth['requestId']));
 
 			$this->sql->delete($this->registry['table.oauth_request'], $con);
 		}
 
 		// insert or update connect
-		$nonce = gmdate('Y-m-d\TH:i:s\Z') . Amun_Security::generateToken(15);
+		$nonce = gmdate('Y-m-d\TH:i:s\Z') . Security::generateToken(15);
 		$now   = new DateTime('NOW', $this->registry['core.default_timezone']);
 		$data  = array(
 
@@ -225,19 +238,19 @@ class connect extends Amun_Module_ApplicationAbstract
 			'identity'      => $this->identity,
 			'returnTo'      => (string) $this->returnTo,
 			'responseNonce' => $nonce,
-			'date'          => $now->format(PSX_DateTime::SQL),
+			'date'          => $now->format(DateTime::SQL),
 
 		);
 
 		if(isset($_POST['remember']) && $_POST['remember'] === '1')
 		{
-			$data['status'] = AmunService_Openid_Record::DENIED;
+			$data['status'] = Openid\Record::DENIED;
 		}
 
-		Amun_Sql_Table_Registry::get('Openid')->replace($data);
+		DataFactory::getTable('Openid')->replace($data);
 
 		// cancel request
-		$this->returnTo->addParam('openid.ns', PSX_OpenId_ProviderAbstract::NS);
+		$this->returnTo->addParam('openid.ns', ProviderAbstract::NS);
 		$this->returnTo->addParam('openid.mode', 'cancel');
 
 		header('Location: ' . strval($this->returnTo));
@@ -248,7 +261,7 @@ class connect extends Amun_Module_ApplicationAbstract
 	{
 		if(!empty($this->assocHandle))
 		{
-			$row = Amun_Sql_Table_Registry::get('Openid_Assoc')
+			$row = DataFactory::getTable('Openid_Assoc')
 				->select(array('id', 'assocHandle', 'assocType', 'sessionType', 'secret', 'expires', 'date'))
 				->where('assocHandle', '=', $this->assocHandle)
 				->getRow();
@@ -259,19 +272,19 @@ class connect extends Amun_Module_ApplicationAbstract
 			}
 			else
 			{
-				throw new Amun_Exception('Invalid association');
+				throw new Exception('Invalid association');
 			}
 		}
 		else
 		{
-			throw new Amun_Exception('Assoc handle not set');
+			throw new Exception('Assoc handle not set');
 		}
 	}
 
 	private function handleSregExt()
 	{
 		$params = array();
-		$params['openid.ns.sreg'] = PSX_OpenId_Extension_Sreg::NS;
+		$params['openid.ns.sreg'] = Extension\Sreg::NS;
 
 		$fields = $this->getAvailableSregExtFields();
 		$keys   = array_intersect(array_keys($fields), $this->sreg);
@@ -314,24 +327,24 @@ class connect extends Amun_Module_ApplicationAbstract
 
 		if(!empty($row))
 		{
-			$token    = Amun_Security::generateToken(40);
-			$verifier = Amun_Security::generateToken(32);
+			$token    = Security::generateToken(40);
+			$verifier = Security::generateToken(32);
 			$date     = new DateTime('NOW', $this->registry['core.default_timezone']);
 
 			$this->sql->insert($this->registry['table.oauth_request'], array(
 
 				'apiId'       => $row['id'],
 				'userId'      => $this->user->id,
-				'status'      => AmunService_Oauth_Record::APPROVED,
+				'status'      => Oauth\Record::APPROVED,
 				'ip'          => $_SERVER['REMOTE_ADDR'],
-				'nonce'       => Amun_Security::generateToken(16),
+				'nonce'       => Security::generateToken(16),
 				'callback'    => 'oob',
 				'token'       => $token,
 				'tokenSecret' => '',
 				'verifier'    => $verifier,
 				'timestamp'   => time(),
 				'expire'      => 'PT30M',
-				'date'        => $date->format(PSX_DateTime::SQL),
+				'date'        => $date->format(DateTime::SQL),
 
 			));
 
@@ -341,13 +354,13 @@ class connect extends Amun_Module_ApplicationAbstract
 				'apiId'   => $row['id'],
 				'userId'  => $this->user->id,
 				'allowed' => 1,
-				'date'    => $date->format(PSX_DateTime::SQL),
+				'date'    => $date->format(DateTime::SQL),
 
 			));
 
 			// return params
 			$params = array();
-			$params['openid.ns.oauth'] = PSX_OpenId_Extension_Oauth::NS;
+			$params['openid.ns.oauth'] = Extension\Oauth::NS;
 			$params['openid.oauth.request_token'] = $token;
 			$params['openid.oauth.verifier'] = $verifier;
 
@@ -355,7 +368,7 @@ class connect extends Amun_Module_ApplicationAbstract
 		}
 		else
 		{
-			throw new Amun_Exception('Invalid consumer');
+			throw new Exception('Invalid consumer');
 		}
 	}
 }

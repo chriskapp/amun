@@ -22,6 +22,8 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Gadget;
+
 /**
  * Amun_Gadget_Args
  *
@@ -32,7 +34,7 @@
  * @package    Amun_Gadget
  * @version    $Revision: 635 $
  */
-class Amun_Gadget_Args
+class Args
 {
 	private $args = array();
 

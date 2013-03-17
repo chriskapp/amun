@@ -24,15 +24,16 @@
 
 namespace my\api;
 
-use Amun_Base;
-use Amun_Module_RestAbstract;
-use Amun_Sql_Table_Registry;
-use DateTime;
-use Exception;
-use PSX_Data_Message;
-use PSX_Data_WriterInterface;
-use PSX_Data_WriterResult;
-use PSX_Sql;
+use Amun\Base;
+use Amun\Module\RestAbstract;
+use Amun\Sql\Table\Registry;
+use Amun\Exception;
+use Amun\DataFactory;
+use PSX\DateTime;
+use PSX\Data\Message;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
+use PSX\Sql;
 
 /**
  * people
@@ -45,7 +46,7 @@ use PSX_Sql;
  * @subpackage service_my
  * @version    $Revision: 875 $
  */
-class people extends Amun_Module_RestAbstract
+class people extends RestAbstract
 {
 	/**
 	 * Returns informations about the current loggedin user
@@ -84,20 +85,20 @@ class people extends Amun_Module_RestAbstract
 					$con,
 					PSX_Sql::FETCH_OBJECT, 
 					'AmunService_My_People', 
-					array(Amun_Sql_Table_Registry::get('User_Friend')));
+					array(DataFactory::getTable('User_Friend')));
 
 				$this->setResponse($resultSet);
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
-				$msg = new PSX_Data_Message($e->getMessage(), false);
+				$msg = new Message($e->getMessage(), false);
 
 				$this->setResponse($msg);
 			}
 		}
 		else
 		{
-			$msg = new PSX_Data_Message('Access not allowed', false);
+			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}
@@ -105,30 +106,30 @@ class people extends Amun_Module_RestAbstract
 
 	public function onPost()
 	{
-		$msg = new PSX_Data_Message('Create a person record is not possible', false);
+		$msg = new Message('Create a person record is not possible', false);
 
 		$this->setResponse($msg, null, 500);
 	}
 
 	public function onPut()
 	{
-		$msg = new PSX_Data_Message('Update a person record is not possible', false);
+		$msg = new Message('Update a person record is not possible', false);
 
 		$this->setResponse($msg, null, 500);
 	}
 
 	public function onDelete()
 	{
-		$msg = new PSX_Data_Message('Delete a person record is not possible', false);
+		$msg = new Message('Delete a person record is not possible', false);
 
 		$this->setResponse($msg, null, 500);
 	}
 
-	protected function setWriterConfig(PSX_Data_WriterResult $writer)
+	protected function setWriterConfig(WriterResult $writer)
 	{
 		switch($writer->getType())
 		{
-			case PSX_Data_WriterInterface::ATOM:
+			case WriterInterface::ATOM:
 
 				$updated = $this->sql->getField('SELECT `date` FROM ' . $this->registry['table.user_friend'] . ' ORDER BY `date` DESC LIMIT 1');
 
@@ -138,7 +139,7 @@ class people extends Amun_Module_RestAbstract
 
 				$writer = $writer->getWriter();
 				$writer->setConfig($title, $id, $updated);
-				$writer->setGenerator('amun ' . Amun_Base::getVersion());
+				$writer->setGenerator('amun ' . Base::getVersion());
 
 				if(!empty($this->config['amun_hub']))
 				{

@@ -24,7 +24,7 @@
 
 namespace file\api;
 
-use Amun_Module_RestAbstract;
+use Amun\Module\RestAbstract;
 
 /**
  * index
@@ -37,6 +37,6 @@ use Amun_Module_RestAbstract;
  * @subpackage service_page
  * @version    $Revision: 875 $
  */
-class index extends Amun_Module_RestAbstract
+class index extends RestAbstract
 {
 }

@@ -24,23 +24,22 @@
 
 namespace user\api\activity;
 
-use AmunService_User_Activity_Handler;
-use Amun_Module_ApiAbstract;
-use Amun_Sql_Table_Registry;
-use Amun_User;
-use Exception;
-use PSX_Atom;
-use PSX_Atom_Entry;
-use PSX_Base;
-use PSX_Data_Exception;
-use PSX_Data_Message;
-use PSX_Data_ReaderInterface;
-use PSX_Data_WriterInterface;
-use PSX_Data_Writer_Atom;
-use PSX_DateTime;
-use PSX_Sql;
-use PSX_Sql_Condition;
-use PSX_Urn;
+use AmunService\User\Activity;
+use Amun\Module\ApiAbstract;
+use Amun\DataFactory;
+use Amun\User;
+use Amun\Exception;
+use Amun\Base;
+use PSX\Atom;
+use PSX\Atom\Entry;
+use PSX\Data\Message;
+use PSX\Data\ReaderInterface;
+use PSX\Data\WriterInterface;
+use PSX\Data\Writer;
+use PSX\DateTime;
+use PSX\Sql;
+use PSX\Sql\Condition;
+use PSX\Urn;
 
 /**
  * message
@@ -57,7 +56,7 @@ class message extends Amun_Module_ApiAbstract
 {
 	public function onGet()
 	{
-		$msg = new PSX_Data_Message('Method not allowed', false);
+		$msg = new Message('Method not allowed', false);
 
 		$this->setResponse($msg, null, 405);
 	}
@@ -68,14 +67,14 @@ class message extends Amun_Module_ApiAbstract
 		{
 			try
 			{
-				$contentType = PSX_Base::getRequestHeader('Content-Type');
+				$contentType = Base::getRequestHeader('Content-Type');
 
 				switch($contentType)
 				{
-					case PSX_Data_Writer_Atom::$mime:
+					case Writer\Atom::$mime:
 
-						$atom = new PSX_Atom();
-						$atom->import($this->getRequest(PSX_Data_ReaderInterface::DOM));
+						$atom = new Atom();
+						$atom->import($this->getRequest(ReaderInterface::DOM));
 
 						foreach($atom as $entry)
 						{
@@ -83,7 +82,7 @@ class message extends Amun_Module_ApiAbstract
 							{
 								$this->insertEntry($entry);
 							}
-							catch(Exception $e)
+							catch(\Exception $e)
 							{
 							}
 						}
@@ -91,35 +90,34 @@ class message extends Amun_Module_ApiAbstract
 						break;
 
 					default:
-
-						throw new PSX_Data_Exception('Invalid content type');
+						throw new Exception('Invalid content type');
 						break;
 				}
 
 
-				$msg = new PSX_Data_Message('You have successful create a message', true);
+				$msg = new Message('You have successful create a message', true);
 
-				$this->setResponse($msg, PSX_Data_WriterInterface::XML);
+				$this->setResponse($msg, WriterInterface::XML);
 			}
 			catch(Exception $e)
 			{
-				$msg = new PSX_Data_Message($e->getMessage(), false);
+				$msg = new Message($e->getMessage(), false);
 
-				$this->setResponse($msg, PSX_Data_WriterInterface::XML);
+				$this->setResponse($msg, WriterInterface::XML);
 			}
 		}
 		else
 		{
-			$msg = new PSX_Data_Message('Access not allowed', false);
+			$msg = new Message('Access not allowed', false);
 
-			$this->setResponse($msg, PSX_Data_WriterInterface::XML, $this->user->isAnonymous() ? 401 : 403);
+			$this->setResponse($msg, WriterInterface::XML, $this->user->isAnonymous() ? 401 : 403);
 		}
 	}
 
-	private function insertEntry(PSX_Atom_Entry $entry)
+	private function insertEntry(Entry $entry)
 	{
 		// get global id
-		$urn      = new PSX_Urn($entry->id);
+		$urn      = new Urn($entry->id);
 		$globalId = $urn->getNss();
 
 		// get author of the entry
@@ -127,18 +125,18 @@ class message extends Amun_Module_ApiAbstract
 
 		if(!empty($author))
 		{
-			$urn = new PSX_Urn($author['uri']);
-			$con = new PSX_Sql_Condition();
+			$urn = new Urn($author['uri']);
+			$con = new Condition();
 			$con->add('globalId', '=', $urn->getNss());
 			$con->add('name', '=', $author['name']);
 
-			$userId  = $this->sql->select($this->registry['table.user_account'], array('id'), $con, PSX_Sql::SELECT_FIELD);
-			$user    = new Amun_User($userId, $this->registry);
-			$handler = new AmunService_User_Activity_Handler($user);
+			$userId  = $this->sql->select($this->registry['table.user_account'], array('id'), $con, Sql::SELECT_FIELD);
+			$user    = new User($userId, $this->registry);
+			$handler = new Activity\Handler($user);
 		}
 		else
 		{
-			throw new PSX_Data_Exception('No author set');
+			throw new Exception('No author set');
 		}
 
 		// get threading extension
@@ -149,24 +147,24 @@ class message extends Amun_Module_ApiAbstract
 		{
 			// search for referenced activity globalId
 			$ref   = $thread->item(0)->getAttribute('ref');
-			$urn   = new PSX_Urn($ref);
+			$urn   = new Urn($ref);
 
-			$con   = new PSX_Sql_Condition(array('globalId', '=', $urn->getNss()));
-			$refId = Amun_Sql_Table_Registry::get('User_Activity')->getField('id', $con);
+			$con   = new Condition(array('globalId', '=', $urn->getNss()));
+			$refId = DataFactory::getTable('User_Activity')->getField('id', $con);
 
 			if(empty($refId))
 			{
-				throw new PSX_Data_Exception('Invalid referenced id');
+				throw new Exception('Invalid referenced id');
 			}
 		}
 
-		$activity           = Amun_Sql_Table_Registry::get('User_Activity')->getRecord();
+		$activity           = DataFactory::getTable('User_Activity')->getRecord();
 		$activity->globalId = $globalId;
 		$activity->parentId = $refId;
 		$activity->table    = 'amun_user_activity';
 		$activity->verb     = 'add';
 		$activity->summary  = $entry->content;
-		$activity->date     = $entry->updated->format(PSX_DateTime::SQL);
+		$activity->date     = $entry->updated->format(DateTime::SQL);
 
 		$handler->create($activity);
 	}

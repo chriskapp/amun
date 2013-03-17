@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Data;
+
+use Amun\DataFactory;
+
 /**
  * Amun_Data_FormAbstract
  *
@@ -32,7 +36,7 @@
  * @package    Amun_Data
  * @version    $Revision: 762 $
  */
-abstract class Amun_Data_FormAbstract
+abstract class FormAbstract
 {
 	protected $base;
 	protected $config;
@@ -43,7 +47,7 @@ abstract class Amun_Data_FormAbstract
 
 	public function __construct($url = null)
 	{
-		$ct = Amun_DataFactory::getInstance()->getContainer();
+		$ct = DataFactory::getInstance()->getContainer();
 
 		$this->base     = $ct->getBase();
 		$this->config   = $ct->getConfig();

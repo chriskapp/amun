@@ -24,9 +24,9 @@
 
 namespace my\gadget;
 
-use Amun_Module_GadgetAbstract;
-use Amun_Sql_Table_Registry;
-use PSX_Sql;
+use Amun\Module\GadgetAbstract;
+use Amun\DataFactory;
+use PSX\Sql;
 
 /**
  * latestUser
@@ -38,7 +38,7 @@ use PSX_Sql;
  * @package    gadget
  * @version    $Revision: 875 $
  */
-class latestUser extends Amun_Module_GadgetAbstract
+class latestUser extends GadgetAbstract
 {
 	/**
 	 * onLoad
@@ -50,11 +50,11 @@ class latestUser extends Amun_Module_GadgetAbstract
 		$count = $this->args->get('count', 10);
 
 		// get latest user
-		$result = Amun_Sql_Table_Registry::get('User_Account')
+		$result = DataFactory::getTable('User_Account')
 			->select(array('id', 'name', 'thumbnailUrl', 'profileUrl', 'date'))
-			->orderBy('date', PSX_Sql::SORT_DESC)
+			->orderBy('date', Sql::SORT_DESC)
 			->limit($count)
-			->getAll(PSX_Sql::FETCH_OBJECT);
+			->getAll(Sql::FETCH_OBJECT);
 
 
 		$this->display($result);

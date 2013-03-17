@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Stomp;
+
+use Amun\Registry;
+
 /**
  * Amun_Stomp_ListenerAbstract
  *
@@ -32,15 +36,15 @@
  * @package    Amun_Stomp
  * @version    $Revision: 635 $
  */
-abstract class Amun_Stomp_ListenerAbstract
+abstract class ListenerAbstract
 {
 	protected $config;
 	protected $sql;
 
 	public function __construct()
 	{
-		$this->config = Amun_Registry::getInstance()->getConfig();
-		$this->sql    = Amun_Registry::getInstance()->getSql();
+		$this->config = Registry::getInstance()->getConfig();
+		$this->sql    = Registry::getInstance()->getSql();
 	}
 
 	abstract public function run($table, $type, $userId, array $data);

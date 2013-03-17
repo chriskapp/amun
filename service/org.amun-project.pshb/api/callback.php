@@ -24,20 +24,19 @@
 
 namespace pshb\api;
 
-use AmunService_Pshb_Subscription_Record;
-use AmunService_User_Activity_Handler;
-use Amun_Dependency_Default;
-use Amun_Exception;
-use Amun_User;
-use Exception;
-use PSX_Atom;
-use PSX_Base;
-use PSX_Data_Exception;
-use PSX_PubSubHubBub_CallbackAbstract;
-use PSX_Rss;
-use PSX_SQL;
-use PSX_Sql_Condition;
-use PSX_Url;
+use AmunService\Pshb\Subscription;
+use AmunService\User\Activity;
+use Amun\Dependency;
+use Amun\Exception;
+use Amun\User;
+use PSX\Atom;
+use PSX\Base;
+use PSX\Data\Exception;
+use PSX\PubSubHubBub\CallbackAbstract;
+use PSX\Rss;
+use PSX\Sql;
+use PSX\Sql\Condition;
+use PSX\Url;
 
 /**
  * callback
@@ -50,7 +49,7 @@ use PSX_Url;
  * @subpackage service_my
  * @version    $Revision: 875 $
  */
-class callback extends PSX_PubSubHubBub_CallbackAbstract
+class callback extends CallbackAbstract
 {
 	private $user;
 
@@ -68,7 +67,7 @@ class callback extends PSX_PubSubHubBub_CallbackAbstract
 		{
 			$this->handle();
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
 			header('HTTP/1.1 404 Not Found');
 
@@ -85,10 +84,10 @@ class callback extends PSX_PubSubHubBub_CallbackAbstract
 
 	public function getDependencies()
 	{
-		return new Amun_Dependency_Default($this->base->getConfig());
+		return new Dependency\Request($this->base->getConfig());
 	}
 
-	protected function onAtom(PSX_Atom $atom)
+	protected function onAtom(Atom $atom)
 	{
 		// find topic url
 		$topic = null;
@@ -103,25 +102,25 @@ class callback extends PSX_PubSubHubBub_CallbackAbstract
 
 		if(empty($topic))
 		{
-			throw new Amun_Exception('Could not find self link');
+			throw new Exception('Could not find self link');
 		}
 
 
 		// get topic secret
-		$con = new PSX_Sql_Condition();
-		$con->add('status', '=', AmunService_Pshb_Subscription_Record::SUBSCRIBE);
+		$con = new Condition();
+		$con->add('status', '=', Subscription\Record::SUBSCRIBE);
 		$con->add('topic', '=', $topic);
 
-		$subscription = $this->sql->select($this->registry['table.pshb_subscription'], array('userId', 'secret'), $con, PSX_SQL::SELECT_ROW);
+		$subscription = $this->sql->select($this->registry['table.pshb_subscription'], array('userId', 'secret'), $con, Sql::SELECT_ROW);
 
 		if(empty($subscription))
 		{
-			throw new Amun_Exception('Invalid topic');
+			throw new Exception('Invalid topic');
 		}
 
 
 		// check signature
-		$foreignSig = PSX_Base::getRequestHeader('x-hub-signature');
+		$foreignSig = Base::getRequestHeader('x-hub-signature');
 
 		if(!empty($foreignSig))
 		{
@@ -132,31 +131,31 @@ class callback extends PSX_PubSubHubBub_CallbackAbstract
 
 			if(in_array($method, hash_algos()))
 			{
-				$body = PSX_Base::getRawInput();
+				$body = Base::getRawInput();
 
 				if(strcmp($signature, hash_hmac($method, $body, $subscription['secret'])) === 0)
 				{
 					// if the signature is valid we have an user
-					$this->user = new Amun_User($subscription['userId'], $this->registry);
+					$this->user = new User($subscription['userId'], $this->registry);
 				}
 				else
 				{
-					throw new PSX_Data_Exception('Invalid signature');
+					throw new Exception('Invalid signature');
 				}
 			}
 			else
 			{
-				throw new PSX_Data_Exception('Invalid signature method');
+				throw new Exception('Invalid signature method');
 			}
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Signature not set');
+			throw new Exception('Signature not set');
 		}
 
 
 		// insert entries
-		$handler = new AmunService_User_Activity_Handler($this->user);
+		$handler = new Activity\Handler($this->user);
 
 		foreach($atom as $entry)
 		{
@@ -164,19 +163,19 @@ class callback extends PSX_PubSubHubBub_CallbackAbstract
 			{
 				$handler->callback($entry);
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
 				// if something fails skip entry
 			}
 		}
 	}
 
-	protected function onRss(PSX_Rss $rss)
+	protected function onRss(Rss $rss)
 	{
-		throw new Amun_Exception('Rss is not supported');
+		throw new Exception('Rss is not supported');
 	}
 
-	protected function onVerify($mode, PSX_Url $topic, $leaseSeconds, $verifyToken)
+	protected function onVerify($mode, Url $topic, $leaseSeconds, $verifyToken)
 	{
 		$sql = <<<SQL
 SELECT
@@ -195,27 +194,27 @@ SELECT
 			AND `subscription`.`verifyToken` = ?
 SQL;
 
-		$row = $this->sql->getRow($sql, array(AmunService_Pshb_Subscription_Record::PENDING, (string) $topic, $verifyToken));
+		$row = $this->sql->getRow($sql, array(Subscription\Record::PENDING, (string) $topic, $verifyToken));
 
 		if(!empty($row))
 		{
 			switch($mode)
 			{
 				case 'subscribe':
-					$status = AmunService_Pshb_Subscription_Record::SUBSCRIBE;
+					$status = Subscription\Record::SUBSCRIBE;
 					break;
 
 				case 'unsubscribe':
-					$status = AmunService_Pshb_Subscription_Record::UNSUBSCRIBE;
+					$status = Subscription\Record::UNSUBSCRIBE;
 					break;
 
 				default:
-					throw new Amun_Exception('Invalid mode');
+					throw new Exception('Invalid mode');
 					break;
 			}
 
 
-			$con = new PSX_Sql_Condition(array('topic', '=', (string) $topic));
+			$con = new Condition(array('topic', '=', (string) $topic));
 
 			$this->sql->update($this->registry['table.pshb_subscription'], array(
 

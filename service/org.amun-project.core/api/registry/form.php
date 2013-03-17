@@ -24,7 +24,7 @@
 
 namespace core\api\registry;
 
-use Amun_Module_FormAbstract;
+use Amun\Module\FormAbstract;
 
 /**
  * form
@@ -37,7 +37,7 @@ use Amun_Module_FormAbstract;
  * @subpackage system_registry
  * @version    $Revision: 683 $
  */
-class form extends Amun_Module_FormAbstract
+class form extends FormAbstract
 {
 	protected function getForm($table = null)
 	{

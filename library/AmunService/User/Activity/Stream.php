@@ -22,6 +22,14 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Activity;
+
+use Amun\DataFactory;
+use Amun\Data\StreamAbstract;
+use PSX\ActivityStream\Type;
+use PSX\DateTime;
+use PSX\Sql\Join;
+
 /**
  * Amun_User_Activity_Stream
  *
@@ -32,12 +40,12 @@
  * @package    Amun_User_Activity
  * @version    $Revision: 635 $
  */
-class AmunService_User_Activity_Stream extends Amun_Data_StreamAbstract
+class Stream extends StreamAbstract
 {
 	public function getObject($id)
 	{
 		$row = $this->table->select(array('globalId', 'userId', 'summary', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(Join::INNER, DataFactory::getTable('User_Account')
 				->select(array('globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'author')
 			)
 			->where('id', '=', $id)
@@ -49,7 +57,7 @@ class AmunService_User_Activity_Stream extends Amun_Data_StreamAbstract
 			$updated = new DateTime($row['authorUpdated']);
 			$date    = new DateTime($row['authorDate']);
 
-			$person               = new PSX_ActivityStream_Type_Person();
+			$person               = new Type\Person();
 			$person->displayName  = $row['authorName'];
 			$person->image        = $row['authorThumbnailUrl'];
 			$person->id           = $row['authorGlobalId'];
@@ -60,7 +68,7 @@ class AmunService_User_Activity_Stream extends Amun_Data_StreamAbstract
 			// comment
 			$published = new DateTime($row['date']);
 
-			$note              = new PSX_ActivityStream_Type_Note();
+			$note              = new Type\Note();
 			$note->author      = $person;
 			$note->content     = $row['summary'];
 			$note->id          = $row['globalId'];

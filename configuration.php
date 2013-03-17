@@ -26,7 +26,7 @@
 $config = array(
 
 	// amun
-	'amun_captcha'            => 'default',
+	'amun_captcha'            => 'image',
 	'amun_table_registry'     => 'core_registry',
 	'amun_table_prefix'       => 'amun_',
 	'amun_service_path'       => '../service',

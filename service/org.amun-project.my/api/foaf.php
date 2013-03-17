@@ -24,11 +24,12 @@
 
 namespace my\api;
 
-use AmunService_User_Friend_Record;
-use Amun_Exception;
-use Amun_Module_ApiAbstract;
-use Amun_Sql_Table_Registry;
-use PSX_Sql_Join;
+use AmunService\User\Friend;
+use Amun\Exception;
+use Amun\DataFactory;
+use Amun\Module\ApiAbstract;
+use Amun\Sql\Table\Registry;
+use PSX\Sql\Join;
 use XMLWriter;
 
 /**
@@ -42,7 +43,7 @@ use XMLWriter;
  * @subpackage service_my
  * @version    $Revision: 875 $
  */
-class foaf extends Amun_Module_ApiAbstract
+class foaf extends ApiAbstract
 {
 	/**
 	 * Returns FOAF informations about an user
@@ -127,7 +128,7 @@ class foaf extends Amun_Module_ApiAbstract
 			$val = $this->user->id;
 		}
 
-		$account = Amun_Sql_Table_Registry::get('User_Account')
+		$account = DataFactory::getTable('User_Account')
 			->select(array('id', 'globalId', 'name', 'gender', 'profileUrl', 'thumbnailUrl'))
 			->where($col, '=', $val)
 			->getRow();
@@ -144,20 +145,20 @@ class foaf extends Amun_Module_ApiAbstract
 
 	private function getFriends($userId)
 	{
-		return Amun_Sql_Table_Registry::get('User_Friend')
+		return DataFactory::getTable('User_Friend')
 			->select(array('id', 'status', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(Join::INNER, DataFactory::getTable('User_Account')
 				->select(array('id', 'globalId', 'name'), 'author'),
 				'n:1',
 				'userId'
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(Join::INNER, DataFactory::getTable('User_Account')
 				->select(array('id', 'globalId', 'name', 'gender', 'profileUrl', 'thumbnailUrl'), 'friend'),
 				'n:1',
 				'friendId'
 			)
 			->where('authorId', '=', $userId)
-			->where('status', '=', AmunService_User_Friend_Record::NORMAL)
+			->where('status', '=', Friend\Record::NORMAL)
 			->getAll();
 	}
 }

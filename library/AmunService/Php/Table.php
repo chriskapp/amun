@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Php;
+
+use Amun\Sql\TableAbstract;
+
 /**
  * Amun_Service_Php_Table
  *
@@ -32,7 +36,7 @@
  * @package    Amun_Service_Php
  * @version    $Revision: 714 $
  */
-class AmunService_Php_Table extends Amun_Sql_TableAbstract
+class Table extends TableAbstract
 {
 	public function getConnections()
 	{

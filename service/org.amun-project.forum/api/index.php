@@ -24,11 +24,11 @@
 
 namespace forum\api;
 
-use Amun_Base;
-use Amun_Module_RestAbstract;
-use DateTime;
-use PSX_Data_WriterInterface;
-use PSX_Data_WriterResult;
+use Amun\Base;
+use Amun\Module\RestAbstract;
+use PSX\DateTime;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
 
 /**
  * index
@@ -41,13 +41,13 @@ use PSX_Data_WriterResult;
  * @subpackage service_forum
  * @version    $Revision: 875 $
  */
-class index extends Amun_Module_RestAbstract
+class index extends RestAbstract
 {
-	protected function setWriterConfig(PSX_Data_WriterResult $writer)
+	protected function setWriterConfig(WriterResult $writer)
 	{
 		switch($writer->getType())
 		{
-			case PSX_Data_WriterInterface::ATOM:
+			case WriterInterface::ATOM:
 
 				$updated = $this->sql->getField('SELECT `date` FROM ' . $this->registry['table.forum'] . ' ORDER BY `date` DESC LIMIT 1');
 
@@ -57,7 +57,7 @@ class index extends Amun_Module_RestAbstract
 
 				$writer = $writer->getWriter();
 				$writer->setConfig($title, $id, $updated);
-				$writer->setGenerator('amun ' . Amun_Base::getVersion());
+				$writer->setGenerator('amun ' . Base::getVersion());
 
 				if(!empty($this->config['amun_hub']))
 				{

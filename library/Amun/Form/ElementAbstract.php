@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Form;
+
+use PSX\Data\RecordAbstract;
+
 /**
  * Amun_Form_ElementAbstract
  *
@@ -32,7 +36,7 @@
  * @package    Amun_Form
  * @version    $Revision: 635 $
  */
-abstract class Amun_Form_ElementAbstract extends PSX_Data_RecordAbstract
+abstract class ElementAbstract extends RecordAbstract
 {
 	protected $class;
 	protected $ref;

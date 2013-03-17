@@ -22,6 +22,8 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Mail;
+
 /**
  * Amun_Mail_SenderInterface
  *
@@ -32,7 +34,7 @@
  * @package    Amun_Mail
  * @version    $Revision: 666 $
  */
-interface Amun_Mail_SenderInterface
+interface SenderInterface
 {
 	public function send($name, $email, array $values = array());
 }
