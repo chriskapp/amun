@@ -22,6 +22,24 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Account;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use Amun\Filter as AmunFilter;
+use Amun\Util;
+use AmunService\User\Account\Filter as AccountFilter;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
+use PSX\DateTime;
+use PSX\Filter;
+use PSX\Util\Markdown;
+use PSX\Sql\Condition;
+use PSX\Oauth\Provider\Data\Consumer;
+use DateTimeZone;
+
 /**
  * Amun_User_Account
  *
@@ -32,7 +50,7 @@
  * @package    Amun_User_Account
  * @version    $Revision: 683 $
  */
-class AmunService_User_Account_Record extends Amun_Data_RecordAbstract
+class Record extends RecordAbstract
 {
 	const BANNED        = 0x1;
 	const ANONYMOUS     = 0x2;
@@ -53,7 +71,7 @@ class AmunService_User_Account_Record extends Amun_Data_RecordAbstract
 
 	public function setId($id)
 	{
-		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
+		$id = $this->_validate->apply($id, 'integer', array(new AmunFilter\Id($this->_table)), 'id', 'Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -61,13 +79,13 @@ class AmunService_User_Account_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setGroupId($groupId)
 	{
-		$groupId = $this->_validate->apply($groupId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('User_Group'))), 'groupId', 'Group Id');
+		$groupId = $this->_validate->apply($groupId, 'integer', array(new AmunFilter\Id(DataFactory::getTable('User_Group'))), 'groupId', 'Group Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -75,13 +93,13 @@ class AmunService_User_Account_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setHostId($hostId)
 	{
-		$hostId = $this->_validate->apply($hostId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_Host'), true)), 'hostId', 'Host Id');
+		$hostId = $this->_validate->apply($hostId, 'integer', array(new AmunFilter\Id(DataFactory::getTable('Core_Host'), true)), 'hostId', 'Host Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -89,13 +107,13 @@ class AmunService_User_Account_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setCountryId($countryId)
 	{
-		$countryId = $this->_validate->apply($countryId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Country'))), 'countryId', 'Country Id');
+		$countryId = $this->_validate->apply($countryId, 'integer', array(new AmunFilter\Id(DataFactory::getTable('Country'))), 'countryId', 'Country Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -103,13 +121,13 @@ class AmunService_User_Account_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setStatus($status)
 	{
-		$status = $this->_validate->apply($status, 'integer', array(new AmunService_User_Account_Filter_Status()), 'status', 'Status');
+		$status = $this->_validate->apply($status, 'integer', array(new AccountFilter\Status()), 'status', 'Status');
 
 		if(!$this->_validate->hasError())
 		{
@@ -117,13 +135,13 @@ class AmunService_User_Account_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setIdentity($identity)
 	{
-		$identity = $this->_validate->apply($identity, 'string', array(new AmunService_User_Account_Filter_Identity(), new Amun_Filter_Salt()), 'identity', 'Identity');
+		$identity = $this->_validate->apply($identity, 'string', array(new AccountFilter\Identity(), new AmunFilter\Salt()), 'identity', 'Identity');
 
 		if(!$this->_validate->hasError())
 		{
@@ -131,13 +149,13 @@ class AmunService_User_Account_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setName($name)
 	{
-		$name = $this->_validate->apply($name, 'string', array(new AmunService_User_Account_Filter_Name()), 'name', 'Name');
+		$name = $this->_validate->apply($name, 'string', array(new AccountFilter\Name()), 'name', 'Name');
 
 		if(!$this->_validate->hasError())
 		{
@@ -145,13 +163,13 @@ class AmunService_User_Account_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setPw($pw)
 	{
-		$pw = $this->_validate->apply($pw, 'string', array(new AmunService_User_Account_Filter_Pw(), new Amun_Filter_Salt()), 'pw', 'Password');
+		$pw = $this->_validate->apply($pw, 'string', array(new AccountFilter\Pw(), new AmunFilter\Salt()), 'pw', 'Password');
 
 		if(!$this->_validate->hasError())
 		{
@@ -159,7 +177,7 @@ class AmunService_User_Account_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
@@ -169,7 +187,7 @@ class AmunService_User_Account_Record extends Amun_Data_RecordAbstract
 
 		if(!empty($email))
 		{
-			$email = $this->_validate->apply($email, 'string', array(new PSX_Filter_Length(3, 64), new PSX_Filter_Email()), 'email', 'Email');
+			$email = $this->_validate->apply($email, 'string', array(new Filter\Length(3, 64), new Filter\Email()), 'email', 'Email');
 
 			if(!$this->_validate->hasError())
 			{
@@ -177,7 +195,7 @@ class AmunService_User_Account_Record extends Amun_Data_RecordAbstract
 			}
 			else
 			{
-				throw new PSX_Data_Exception($this->_validate->getLastError());
+				throw new Exception($this->_validate->getLastError());
 			}
 		}
 		else
@@ -188,7 +206,7 @@ class AmunService_User_Account_Record extends Amun_Data_RecordAbstract
 
 	public function setToken($token)
 	{
-		$token = $this->_validate->apply($token, 'string', array(new PSX_Filter_Length(40, 40), new PSX_Filter_Xdigit()), 'token', 'Token');
+		$token = $this->_validate->apply($token, 'string', array(new Filter\Length(40, 40), new Filter\Xdigit()), 'token', 'Token');
 
 		if(!$this->_validate->hasError())
 		{
@@ -196,13 +214,13 @@ class AmunService_User_Account_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setGender($gender)
 	{
-		$gender = $this->_validate->apply($gender, 'string', array(new AmunService_User_Account_Filter_Gender()), 'gender', 'Gender');
+		$gender = $this->_validate->apply($gender, 'string', array(new AccountFilter\Gender()), 'gender', 'Gender');
 
 		if(!$this->_validate->hasError())
 		{
@@ -210,13 +228,13 @@ class AmunService_User_Account_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setTimezone($timezone)
 	{
-		$timezone = $this->_validate->apply($timezone, 'string', array(new AmunService_User_Account_Filter_Timezone()), 'timezone', 'Timezone');
+		$timezone = $this->_validate->apply($timezone, 'string', array(new AccountFilter\Timezone()), 'timezone', 'Timezone');
 
 		if(!$this->_validate->hasError())
 		{
@@ -224,13 +242,13 @@ class AmunService_User_Account_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setLongitude($longitude)
 	{
-		$longitude = $this->_validate->apply($longitude, 'float', array(new PSX_Filter_Length(-180, 180)), 'longitude', 'Longitude');
+		$longitude = $this->_validate->apply($longitude, 'float', array(new Filter\Length(-180, 180)), 'longitude', 'Longitude');
 
 		if(!$this->_validate->hasError())
 		{
@@ -238,13 +256,13 @@ class AmunService_User_Account_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setLatitude($latitude)
 	{
-		$latitude = $this->_validate->apply($latitude, 'float', array(new PSX_Filter_Length(-90, 90)), 'latitude', 'Latitude');
+		$latitude = $this->_validate->apply($latitude, 'float', array(new Filter\Length(-90, 90)), 'latitude', 'Latitude');
 
 		if(!$this->_validate->hasError())
 		{
@@ -252,7 +270,7 @@ class AmunService_User_Account_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
@@ -265,7 +283,7 @@ class AmunService_User_Account_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_group === null)
 		{
-			$this->_group = Amun_Sql_Table_Registry::get('User_Group')->getRecord($this->groupId);
+			$this->_group = DataFactory::getTable('User_Group')->getRecord($this->groupId);
 		}
 
 		return $this->_group;
@@ -275,7 +293,7 @@ class AmunService_User_Account_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_host === null && $this->hostId > 0)
 		{
-			$this->_host = Amun_Sql_Table_Registry::get('Core_Host')->getRecord($this->hostId);
+			$this->_host = DataFactory::getTable('Core_Host')->getRecord($this->hostId);
 		}
 
 		return $this->_host;
@@ -285,7 +303,7 @@ class AmunService_User_Account_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_country === null)
 		{
-			$this->_country = Amun_Sql_Table_Registry::get('Country')->getRecord($this->countryId);
+			$this->_country = DataFactory::getTable('Country')->getRecord($this->countryId);
 		}
 
 		return $this->_country;
@@ -335,9 +353,9 @@ class AmunService_User_Account_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_karma === null)
 		{
-			$con = new PSX_Sql_Condition(array('userId', '=', $this->id));
+			$con = new Condition(array('userId', '=', $this->id));
 
-			$this->_karma = Amun_Sql_Table_Registry::get('User_Activity')->count($con);
+			$this->_karma = DataFactory::getTable('User_Activity')->count($con);
 		}
 
 		return $this->_karma;
@@ -370,7 +388,7 @@ SQL;
 
 			if(!empty($row))
 			{
-				$consumer = new PSX_Oauth_Provider_Data_Consumer($row['consumerKey'], $row['consumerSecret'], $row['token'], $row['tokenSecret']);
+				$consumer = new Consumer($row['consumerKey'], $row['consumerSecret'], $row['token'], $row['tokenSecret']);
 
 				return $consumer;
 			}
@@ -381,22 +399,22 @@ SQL;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('User is not an remote account');
+			throw new Exception('User is not an remote account');
 		}
 	}
 
-	public function export(PSX_Data_WriterResult $result)
+	public function export(WriterResult $result)
 	{
 		switch($result->getType())
 		{
-			case PSX_Data_WriterInterface::JSON:
-			case PSX_Data_WriterInterface::XML:
+			case WriterInterface::JSON:
+			case WriterInterface::XML:
 
 				return parent::export($result);
 
 				break;
 
-			case PSX_Data_WriterInterface::ATOM:
+			case WriterInterface::ATOM:
 
 				$entry = $result->getWriter()->createEntry();
 
@@ -413,7 +431,7 @@ SQL;
 
 			default:
 
-				throw new PSX_Data_Exception('Writer is not supported');
+				throw new Exception('Writer is not supported');
 
 				break;
 		}

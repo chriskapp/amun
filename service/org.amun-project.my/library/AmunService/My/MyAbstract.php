@@ -22,6 +22,12 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\My;
+
+use Amun\Exception;
+use Amun\Option;
+use Amun\Module\ApplicationAbstract;
+
 /**
  * Amun_Service_My_MyAbstract
  *
@@ -32,7 +38,7 @@
  * @package    Amun_Service_My
  * @version    $Revision: 683 $
  */
-abstract class AmunService_My_MyAbstract extends Amun_Module_ApplicationAbstract
+abstract class MyAbstract extends ApplicationAbstract
 {
 	public function onLoad()
 	{
@@ -43,16 +49,16 @@ abstract class AmunService_My_MyAbstract extends Amun_Module_ApplicationAbstract
 			// check status of current user
 			if($this->user->isAnonymous())
 			{
-				throw new Amun_Exception_Forbidden('Anonymous user cant view their profile');
+				throw new Exception('Anonymous user cant view their profile');
 			}
 		}
 		else
 		{
-			throw new Amun_Exception('Access not allowed');
+			throw new Exception('Access not allowed');
 		}
 
 		// options
-		$options = new Amun_Option('index', $this->registry, $this->user, $this->page);
+		$options = new Option('index', $this->registry, $this->user, $this->page);
 		$options->add('my_view', 'Settings', $this->page->url . '/settings');
 		$options->add('my_view', 'Friends', $this->page->url . '/friends');
 		$options->add('my_view', 'Account', $this->page->url);

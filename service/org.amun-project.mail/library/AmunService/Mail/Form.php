@@ -22,6 +22,20 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Mail;
+
+use Amun\DataFactory;
+use Amun\Data\FormAbstract;
+use Amun\Exception;
+use Amun\Form as AmunForm;
+use Amun\Form\Element\Panel;
+use Amun\Form\Element\Reference;
+use Amun\Form\Element\Input;
+use Amun\Form\Element\TabbedPane;
+use Amun\Form\Element\Textarea;
+use Amun\Form\Element\Captcha;
+use Amun\Form\Element\Select;
+
 /**
  * Amun_System_Mail_Form
  *
@@ -32,45 +46,45 @@
  * @package    Amun_System_Mail
  * @version    $Revision: 666 $
  */
-class AmunService_Mail_Form extends Amun_Data_FormAbstract
+class Form extends FormAbstract
 {
 	public function create()
 	{
-		$form = new Amun_Form('POST', $this->url);
+		$form = new AmunForm('POST', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('mail', 'Mail');
+		$panel = new Panel('mail', 'Mail');
 
 
-		$name = new Amun_Form_Element_Input('name', 'Name');
+		$name = new Input('name', 'Name');
 		$name->setType('text');
 
 		$panel->add($name);
 
 
-		$from = new Amun_Form_Element_Input('from', 'From');
+		$from = new Input('from', 'From');
 		$from->setType('text');
 
 		$panel->add($from);
 
 
-		$subject = new Amun_Form_Element_Input('subject', 'Subject');
+		$subject = new Input('subject', 'Subject');
 		$subject->setType('text');
 
 		$panel->add($subject);
 
 
-		$text = new Amun_Form_Element_Textarea('text', 'Text');
+		$text = new Textarea('text', 'Text');
 
 		$panel->add($text);
 
 
-		$html = new Amun_Form_Element_Textarea('html', 'Html');
+		$html = new Textarea('html', 'Html');
 
 		$panel->add($html);
 
 
-		$values = new Amun_Form_Element_Input('values', 'Values');
+		$values = new Input('values', 'Values');
 		$values->setType('text');
 
 		$panel->add($values);
@@ -78,7 +92,7 @@ class AmunService_Mail_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -93,50 +107,50 @@ class AmunService_Mail_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Mail')->getRecord($id);
+		$record = DataFactory::getTable('Mail')->getRecord($id);
 
 
-		$form = new Amun_Form('PUT', $this->url);
+		$form = new AmunForm('PUT', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('mail', 'Mail');
+		$panel = new Panel('mail', 'Mail');
 
 
-		$id = new Amun_Form_Element_Input('id', 'Id', $record->id);
+		$id = new Input('id', 'Id', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$name = new Amun_Form_Element_Input('name', 'Name', $record->name);
+		$name = new Input('name', 'Name', $record->name);
 		$name->setType('text');
 
 		$panel->add($name);
 
 
-		$from = new Amun_Form_Element_Input('from', 'From', $record->from);
+		$from = new Input('from', 'From', $record->from);
 		$from->setType('text');
 
 		$panel->add($from);
 
 
-		$subject = new Amun_Form_Element_Input('subject', 'Subject', $record->subject);
+		$subject = new Input('subject', 'Subject', $record->subject);
 		$subject->setType('text');
 
 		$panel->add($subject);
 
 
-		$text = new Amun_Form_Element_Textarea('text', 'Text', $record->text);
+		$text = new Textarea('text', 'Text', $record->text);
 
 		$panel->add($text);
 
 
-		$html = new Amun_Form_Element_Textarea('html', 'Html', $record->html);
+		$html = new Textarea('html', 'Html', $record->html);
 
 		$panel->add($html);
 
 
-		$values = new Amun_Form_Element_Input('values', 'Values', $record->values);
+		$values = new Input('values', 'Values', $record->values);
 		$values->setType('text');
 
 		$panel->add($values);
@@ -144,7 +158,7 @@ class AmunService_Mail_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -159,7 +173,7 @@ class AmunService_Mail_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		throw new PSX_Data_Exception('You cant delete a mail record');
+		throw new Exception('You cant delete a mail record');
 	}
 }
 

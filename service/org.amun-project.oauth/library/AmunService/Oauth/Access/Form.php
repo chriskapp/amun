@@ -22,6 +22,20 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Oauth\Access;
+
+use Amun\DataFactory;
+use Amun\Data\FormAbstract;
+use Amun\Exception;
+use Amun\Form as AmunForm;
+use Amun\Form\Element\Panel;
+use Amun\Form\Element\Reference;
+use Amun\Form\Element\Input;
+use Amun\Form\Element\TabbedPane;
+use Amun\Form\Element\Textarea;
+use Amun\Form\Element\Captcha;
+use Amun\Form\Element\Select;
+
 /**
  * AmunService_Oauth_Access_Form
  *
@@ -32,43 +46,43 @@
  * @package    Amun_Oauth
  * @version    $Revision: 666 $
  */
-class AmunService_Oauth_Access_Form extends Amun_Data_FormAbstract
+class Form extends FormAbstract
 {
 	public function create()
 	{
-		throw new PSX_Data_Exception('You cant create a access record');
+		throw new Exception('You cant create a access record');
 	}
 
 	public function update($id)
 	{
-		throw new PSX_Data_Exception('You cant update a access record');
+		throw new Exception('You cant update a access record');
 	}
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Oauth_Access')->getRecord($id);
+		$record = DataFactory::getTable('Oauth_Access')->getRecord($id);
 
 
-		$form = new Amun_Form('DELETE', $this->url);
+		$form = new AmunForm('DELETE', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('access', 'Access');
+		$panel = new Panel('access', 'Access');
 
 
-		$id = new Amun_Form_Element_Input('id', 'Id', $record->id);
+		$id = new Input('id', 'Id', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$api = new Amun_Form_Element_Input('api', 'API', $record->getApi()->name);
+		$api = new Input('api', 'API', $record->getApi()->name);
 		$api->setType('text');
 		$api->setDisabled(true);
 
 		$panel->add($api);
 
 
-		$user = new Amun_Form_Element_Input('user', 'User', $record->getUser()->name);
+		$user = new Input('user', 'User', $record->getUser()->name);
 		$user->setType('text');
 		$user->setDisabled(true);
 
@@ -77,7 +91,7 @@ class AmunService_Oauth_Access_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);

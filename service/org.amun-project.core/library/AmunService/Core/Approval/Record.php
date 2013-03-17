@@ -22,6 +22,22 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Core\Approval;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use Amun\Filter as AmunFilter;
+use Amun\Util;
+use Amun\Registry;
+use AmunService\Core\Approval\Filter as ApprovalFilter;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
+use PSX\DateTime;
+use PSX\Filter;
+use PSX\Util\Markdown;
+
 /**
  * Amun_System_Approval
  *
@@ -32,7 +48,7 @@
  * @package    Amun_System_Approval
  * @version    $Revision: 683 $
  */
-class AmunService_Core_Approval_Record extends Amun_Data_RecordAbstract
+class Record extends RecordAbstract
 {
 	const INSERT = 0x1;
 	const UPDATE = 0x2;
@@ -40,7 +56,7 @@ class AmunService_Core_Approval_Record extends Amun_Data_RecordAbstract
 
 	public function setId($id)
 	{
-		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
+		$id = $this->_validate->apply($id, 'integer', array(new AmunFilter\Id($this->_table)), 'id', 'Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -48,13 +64,13 @@ class AmunService_Core_Approval_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setTable($table)
 	{
-		$table = $this->_validate->apply($table, 'string', array(new Amun_Filter_Table($this->_sql)), 'table', 'Table');
+		$table = $this->_validate->apply($table, 'string', array(new AmunFilter\Table($this->_sql)), 'table', 'Table');
 
 		if(!$this->_validate->hasError())
 		{
@@ -62,13 +78,13 @@ class AmunService_Core_Approval_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setField($field)
 	{
-		$field = $this->_validate->apply($field, 'string', array(new AmunService_Core_Approval_Filter_Field($this->_sql, $this->table)), 'field', 'Field');
+		$field = $this->_validate->apply($field, 'string', array(new ApprovalFilter\Field($this->_sql, $this->table)), 'field', 'Field');
 
 		if(!$this->_validate->hasError())
 		{
@@ -76,7 +92,7 @@ class AmunService_Core_Approval_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 

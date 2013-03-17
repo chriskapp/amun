@@ -22,6 +22,13 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Asset;
+
+use Amun\Exception;
+use PSX\Cache;
+use PSX\Config;
+use PSX\File;
+
 /**
  * AmunService_Asset_Manager
  *
@@ -32,7 +39,7 @@
  * @package    Amun_Ext
  * @version    $Revision: 880 $
  */
-class AmunService_Asset_Manager
+class Manager
 {
 	private $config;
 	private $provider;
@@ -42,7 +49,7 @@ class AmunService_Asset_Manager
 	private $loaded = array();
 	private $expire = 86400;
 
-	public function __construct(PSX_Config $config, AmunService_Asset_ProviderInterface $provider)
+	public function __construct(Config $config, ProviderInterface $provider)
 	{
 		$this->config   = $config;
 		$this->provider = $provider;
@@ -56,11 +63,11 @@ class AmunService_Asset_Manager
 
 		if(empty($services))
 		{
-			throw new Amun_Exception('No service selected');
+			throw new Exception('No service selected');
 		}
 
 		$key   = 'asset-' . implode('-', $services);
-		$cache = new PSX_Cache($key, $this->expire);
+		$cache = new Cache($key, $this->expire);
 
 		if(($content = $cache->load()) === false)
 		{
@@ -91,7 +98,7 @@ class AmunService_Asset_Manager
 		{
 			foreach($this->services[$service] as $srv)
 			{
-				if(!in_array($srv, $this->loaded) && PSX_File::exists($srv))
+				if(!in_array($srv, $this->loaded) && File::exists($srv))
 				{
 					$content.= file_get_contents($srv) . "\n\n";
 

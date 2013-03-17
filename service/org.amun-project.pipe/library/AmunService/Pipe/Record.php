@@ -22,6 +22,22 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Pipe;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use Amun\Filter as AmunFilter;
+use Amun\Util;
+use AmunService\Openid\Filter as OpenidFilter;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
+use PSX\DateTime;
+use PSX\Filter;
+use PSX\File;
+use PSX\Util\Markdown;
+
 /**
  * Amun_Service_Pipe
  *
@@ -32,7 +48,7 @@
  * @package    Amun_Service_Pipe
  * @version    $Revision: 845 $
  */
-class AmunService_Pipe_Record extends Amun_Data_RecordAbstract
+class Record extends RecordAbstract
 {
 	protected $_page;
 	protected $_user;
@@ -41,7 +57,7 @@ class AmunService_Pipe_Record extends Amun_Data_RecordAbstract
 
 	public function setId($id)
 	{
-		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
+		$id = $this->_validate->apply($id, 'integer', array(new AmunFilter\Id($this->_table)), 'id', 'Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -49,13 +65,13 @@ class AmunService_Pipe_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setPageId($pageId)
 	{
-		$pageId = $this->_validate->apply($pageId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Content_Page'))), 'pageId', 'Page Id');
+		$pageId = $this->_validate->apply($pageId, 'integer', array(new AmunFilter\Id(DataFactory::getTable('Content_Page'))), 'pageId', 'Page Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -63,13 +79,13 @@ class AmunService_Pipe_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setMediaId($mediaId)
 	{
-		$mediaId = $this->_validate->apply($mediaId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Media'))), 'mediaId', 'Media Id');
+		$mediaId = $this->_validate->apply($mediaId, 'integer', array(new AmunFilter\Id(DataFactory::getTable('Media'))), 'mediaId', 'Media Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -77,7 +93,7 @@ class AmunService_Pipe_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
@@ -100,9 +116,9 @@ class AmunService_Pipe_Record extends Amun_Data_RecordAbstract
 
 		$ext = pathinfo($path, PATHINFO_EXTENSION);
 
-		if(!PSX_File::exists($path))
+		if(!File::exists($path))
 		{
-			throw new Amun_Exception('File not found', 404);
+			throw new Exception('File not found', 404);
 		}
 
 		switch($ext)
@@ -120,7 +136,7 @@ class AmunService_Pipe_Record extends Amun_Data_RecordAbstract
 
 			// markdown
 			case 'md':
-				return PSX_Util_Markdown::decode(file_get_contents($path));
+				return Markdown::decode(file_get_contents($path));
 				break;
 
 			// source code files
@@ -160,7 +176,7 @@ class AmunService_Pipe_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_page === null)
 		{
-			$this->_page = Amun_Sql_Table_Registry::get('Content_Page')->getRecord($this->pageId);
+			$this->_page = DataFactory::getTable('Content_Page')->getRecord($this->pageId);
 		}
 
 		return $this->_page;
@@ -170,7 +186,7 @@ class AmunService_Pipe_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_user === null)
 		{
-			$this->_user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->userId);
+			$this->_user = DataFactory::getTable('User_Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;
@@ -180,7 +196,7 @@ class AmunService_Pipe_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_media === null)
 		{
-			$this->_media = Amun_Sql_Table_Registry::get('Media')->getRecord($this->mediaId);
+			$this->_media = DataFactory::getTable('Media')->getRecord($this->mediaId);
 		}
 
 		return $this->_media;

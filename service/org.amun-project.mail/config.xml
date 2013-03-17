@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="23c9485eddfb15b4eb5b49673d2250405d4e0f27">
+<service xmlns="http://amun-project.org" signature="5515384e55cabf3f82b168c6e9c417a5da3a146a">
   <status>system</status>
   <name>mail</name>
   <description>A service to manage mail templates wich can be used by other services</description>
@@ -32,82 +32,139 @@
   <library>
     <dir name="Amun">
       <dir name="Mail">
-        <file name="SenderInterface.php" md5="61d5c17a876e6e722298da7110fb4f32"/>
+        <file name="SenderInterface.php" md5="286a8ef050c1c899b27a4e1957ef8366"/>
       </dir>
     </dir>
     <dir name="AmunService">
       <dir name="Mail">
-        <file name="Form.php" md5="7fb0e4d21bc96daf45a15a738098e4e3"/>
-        <file name="Handler.php" md5="789e69b484b285c984f5a3a02fa48453"/>
-        <file name="ConfigListener.php" md5="dbb1894a5df981e1473e0424c45e5611"/>
-        <file name="Record.php" md5="7248d9d8944fb109570ae6504da470de"/>
-        <file name="Sender.php" md5="411430d60938fe6b5711d3b33e665f74"/>
-        <file name="Table.php" md5="8b9821d672abb22a5e72b81cc8ed2295"/>
+        <file name="Form.php" md5="79e8605348362618f8cb47bc0f32cbbd"/>
+        <file name="Handler.php" md5="c708f0b464ee6d5cbcf69e393bda8e59"/>
+        <file name="ConfigListener.php" md5="d36c3d341aa8107e06f3ae4a33b8de94"/>
+        <file name="Record.php" md5="5bd424227f8fda21552ac7b08372c291"/>
+        <file name="Sender.php" md5="b56f21b169becdd95606538f2fc232f4"/>
+        <file name="Table.php" md5="63e8611748669a5625455719a215b220"/>
       </dir>
     </dir>
     <dir name="Zend">
-      <file name="Exception.php" md5="496025ea0e253c9d0b75a0fbf8f355b2"/>
       <dir name="Mail">
-        <file name="Exception.php" md5="c919ec2627b24350edd7ad8c0a1ab50e"/>
-        <dir name="Message">
-          <file name="File.php" md5="45c4e3c40269e9105cacafdc54591d54"/>
-          <file name="Interface.php" md5="af4c8ae1d3d254c93e5a0b54f70e399c"/>
+        <dir name="Address">
+          <file name="AddressInterface.php" md5="5430809eff849f89c461a1436061040c"/>
         </dir>
-        <file name="Message.php" md5="61f8fa0e780cfaaf9c1b1d441db2d061"/>
-        <dir name="Part">
-          <file name="File.php" md5="92f9255434cdd382ead81bb5271d4a4b"/>
-          <file name="Interface.php" md5="b153b7dd982d2e9f23b48e2f379d4f4c"/>
+        <file name="Address.php" md5="f60d624f177bb1b7bcf5715374e33031"/>
+        <file name="AddressList.php" md5="d5c8e2f92a1463296169cc3e598ae92c"/>
+        <dir name="Exception">
+          <file name="BadMethodCallException.php" md5="b7ec2d8e73147b36a39ccb501c6ef66b"/>
+          <file name="DomainException.php" md5="d59271398892dc49ea538bd0a18c7f0c"/>
+          <file name="ExceptionInterface.php" md5="806c94b2ee9ebe07b67899ca986540d9"/>
+          <file name="InvalidArgumentException.php" md5="12e0266869f3d40d36ae56b9f59837d9"/>
+          <file name="OutOfBoundsException.php" md5="0c15ea95e690e3b9c8288c9092db4f56"/>
+          <file name="RuntimeException.php" md5="8521b82beae1f698c56bee7a901efb46"/>
         </dir>
-        <file name="Part.php" md5="83d5cab897af6641e5cd083b5c48d5cd"/>
+        <dir name="Header">
+          <file name="AbstractAddressList.php" md5="bfa423506f377a38a6724ef78f2805ec"/>
+          <file name="Bcc.php" md5="d6e5430d8dfb09633fefdf1bef18586d"/>
+          <file name="Cc.php" md5="dd4b2972606bc9bdb3e639fcda3eb427"/>
+          <file name="ContentType.php" md5="5a2f3378ff8449198eca5b4892c0d93c"/>
+          <file name="Date.php" md5="b25607bd49d5a879c7b0f97ecce96140"/>
+          <dir name="Exception">
+            <file name="BadMethodCallException.php" md5="1e0109662e37def00ad104702256ce0b"/>
+            <file name="ExceptionInterface.php" md5="a2245a5ac397a5ccbda9b0a0136e129c"/>
+            <file name="InvalidArgumentException.php" md5="8f24eefc9a26ef548a51db99662f691b"/>
+            <file name="RuntimeException.php" md5="f9fd5040bc3e66d682792a2a6fea5ed4"/>
+          </dir>
+          <file name="From.php" md5="a76fe740a128d88cb7c8de72e34c65c5"/>
+          <file name="GenericHeader.php" md5="6f6ddb084980099cb63061846c7916a8"/>
+          <file name="GenericMultiHeader.php" md5="25d2011b8e49ca4cf9160ad32dc072c8"/>
+          <file name="HeaderInterface.php" md5="91a0e1cb066371f9b0900867e6042881"/>
+          <file name="HeaderLoader.php" md5="28c3719bfaa9b6644bb12a22f751ede3"/>
+          <file name="HeaderWrap.php" md5="806c34960204115e3c46ac1b597051be"/>
+          <file name="MessageId.php" md5="95c7cb9d052d0c4396f3b83f7a0af14a"/>
+          <file name="MimeVersion.php" md5="564fdc26619982668c770cfb11f344f4"/>
+          <file name="MultipleHeadersInterface.php" md5="f959d5af21762c9dcefc90dad9198cae"/>
+          <file name="Received.php" md5="b1ab2386841b43ae223639441409060a"/>
+          <file name="ReplyTo.php" md5="4af70e117e9b41dae1e43308c38a4611"/>
+          <file name="Sender.php" md5="4a0d40454f8920e5907b660f1e6518c1"/>
+          <file name="StructuredInterface.php" md5="85c253d939a2035d22243e0f92ee8518"/>
+          <file name="Subject.php" md5="a98bd58cc5899ab9f7e1eacca65f3022"/>
+          <file name="To.php" md5="e852f60d0267378bc729a15d928d9679"/>
+          <file name="UnstructuredInterface.php" md5="dbf97926188d40204bc73caf904b2cd4"/>
+        </dir>
+        <file name="Headers.php" md5="b82646fbc320d2bb32f43b0e9eb1bf47"/>
+        <file name="Message.php" md5="fe59e74b3f50c4f7e9c580b9c4bdca39"/>
         <dir name="Protocol">
-          <file name="Abstract.php" md5="90982c14e180fb1d9d48ffa08bc7cea3"/>
-          <file name="Exception.php" md5="e7d1b91c825530c452cf1ae2cd4b7e96"/>
-          <file name="Imap.php" md5="390607e16032e5efc992c0f0cd58359a"/>
-          <file name="Pop3.php" md5="efeff3bbd8e9a20aa29a4ed085a2484a"/>
+          <file name="AbstractProtocol.php" md5="691ec3a006b9591cf078b7470f8d98e0"/>
+          <dir name="Exception">
+            <file name="ExceptionInterface.php" md5="00f48ebec72a5dd09032f4668fbb0756"/>
+            <file name="InvalidArgumentException.php" md5="a8e61b3eb88312945629d8e378b1d6ab"/>
+            <file name="RuntimeException.php" md5="3bf1d2cfa4a829dd0b3cf40c95c63919"/>
+          </dir>
+          <file name="Imap.php" md5="2498295287efd5afb0f32213adce698a"/>
+          <file name="Pop3.php" md5="2d660a5fe2e60fa747f74d9c367fca4c"/>
           <dir name="Smtp">
             <dir name="Auth">
-              <file name="Crammd5.php" md5="78ec81a76229400054bc8e1a72973543"/>
-              <file name="Login.php" md5="db550c04ce8f996e76ef130ab728873d"/>
-              <file name="Plain.php" md5="c5c6772d6c1cfbd35d6d65d280345fec"/>
+              <file name="Crammd5.php" md5="556b993e7d5fba6014bab5530e0e85d3"/>
+              <file name="Login.php" md5="33d00afeb1d6453b31181b48e4320f65"/>
+              <file name="Plain.php" md5="2e97146326c76086086de4eddbb48670"/>
             </dir>
           </dir>
-          <file name="Smtp.php" md5="c00acfa1d91be4d45347b7c528d6254c"/>
+          <file name="Smtp.php" md5="59bdf67555130a4f8fcf0955e642b8a2"/>
+          <file name="SmtpPluginManager.php" md5="722fb23b56c12181a6248d424505ca6b"/>
         </dir>
+        <file name="README.md" md5="9f96480fa89cf5c444d687ed68231572"/>
         <dir name="Storage">
-          <file name="Abstract.php" md5="4d13b659872d2d2d7b3a8e82b401e0e9"/>
-          <file name="Exception.php" md5="e9f5de07ad8e06cdb0180b1ece24dd96"/>
+          <file name="AbstractStorage.php" md5="c8a3f1fb668dfca1d924aa3952ce9fce"/>
+          <dir name="Exception">
+            <file name="ExceptionInterface.php" md5="6cb6b644f168f2e67acd1ad542dcc713"/>
+            <file name="InvalidArgumentException.php" md5="b1a25473b88e146733be2e2ec885fab0"/>
+            <file name="OutOfBoundsException.php" md5="b1d1c631564ce1cf91b6fc89c86f28ef"/>
+            <file name="RuntimeException.php" md5="4e54080dfbad2486d699e0146fa172bc"/>
+          </dir>
           <dir name="Folder">
-            <file name="Interface.php" md5="c42d375159c8c7e2f52336ae21898815"/>
-            <file name="Maildir.php" md5="e058ad5d3b2097f45808702b90cacc97"/>
-            <file name="Mbox.php" md5="039c4264c936dec2f432893a959e2bbc"/>
+            <file name="FolderInterface.php" md5="62abe8eda77b36e91cf8892370de2f00"/>
+            <file name="Maildir.php" md5="1a36ea78c6fac6ae720b0b5e13f576b1"/>
+            <file name="Mbox.php" md5="4f667b86368cb4e17de91d26e18cb92b"/>
           </dir>
-          <file name="Folder.php" md5="29eaa7d50d24e33d7e6523b5a4c3f780"/>
-          <file name="Imap.php" md5="34bed69abe6b8c01e2e6fad303112483"/>
-          <file name="Maildir.php" md5="1af672f57ad4386ca250e820dba30943"/>
-          <file name="Mbox.php" md5="4a221a5987da252eddeff11c0720b7a9"/>
-          <file name="Pop3.php" md5="11a2109d3d93e1d402aef4fc43270129"/>
+          <file name="Folder.php" md5="2ce6d6b8ad45bf738a7083fe740f5142"/>
+          <file name="Imap.php" md5="a008d4c37a134b413dc1f198489474bd"/>
+          <file name="Maildir.php" md5="75fbf7fe2eee66c2b0e53b0e3ac5892d"/>
+          <file name="Mbox.php" md5="bee10c3b73823315161d2ed1ac4944c8"/>
+          <dir name="Message">
+            <file name="File.php" md5="9437b71cc1ef470a4b949aa76103babb"/>
+            <file name="MessageInterface.php" md5="a243f4187de6f0015b08255e1eeb4160"/>
+          </dir>
+          <file name="Message.php" md5="28864773a336d39e4ac16710ee9628b7"/>
+          <dir name="Part">
+            <dir name="Exception">
+              <file name="ExceptionInterface.php" md5="284cd85b2ddbc70db2e68ac3fde550be"/>
+              <file name="InvalidArgumentException.php" md5="36ede38208f2767366963947f64c4024"/>
+              <file name="RuntimeException.php" md5="f0302f53e0be8684aefa3838b286e983"/>
+            </dir>
+            <file name="File.php" md5="c870abe60ff0d23d7acf7190f451b65e"/>
+            <file name="PartInterface.php" md5="ef4d58dcdbbfd5f49b9c4118c8d74a23"/>
+          </dir>
+          <file name="Part.php" md5="f8059a73eae4f122244615eef53b352e"/>
+          <file name="Pop3.php" md5="1119c26b94f21ec67ec99ade96f31998"/>
           <dir name="Writable">
-            <file name="Interface.php" md5="a9a8ec8103b5db53d20ad23f31ffe63b"/>
-            <file name="Maildir.php" md5="6f9c8779fccc498de933eefe832e6319"/>
+            <file name="Maildir.php" md5="7517e20e0f1ab77ee5b6f0f8e136bf2a"/>
+            <file name="WritableInterface.php" md5="b03e4da42fb967de06c383124f151ae2"/>
           </dir>
         </dir>
-        <file name="Storage.php" md5="f6dfb86357dd6c45e9ff8a4c71ed9a3e"/>
+        <file name="Storage.php" md5="5924f9bfb1dde5854dcf4574dc2d7132"/>
         <dir name="Transport">
-          <file name="Abstract.php" md5="f6b2c1d2d385b1e03a0d55257553bd3f"/>
-          <file name="Exception.php" md5="a3a47574bd3ed8222c36542c280cb502"/>
-          <file name="File.php" md5="69a30a4f731073c2c9cb5572383cd52b"/>
-          <file name="Sendmail.php" md5="a5156fcb68f059f9125a4d04268eb003"/>
-          <file name="Smtp.php" md5="31eb38b7827b1d52fa47d3981d137d86"/>
+          <dir name="Exception">
+            <file name="ExceptionInterface.php" md5="2a481c46f9f0b4471084652bb4dc20ef"/>
+            <file name="InvalidArgumentException.php" md5="4dc46bfcae1ff1932c0cb3c3f861c5b0"/>
+            <file name="RuntimeException.php" md5="02a14887d479484544c8530ad2f79c9f"/>
+          </dir>
+          <file name="File.php" md5="5a1b0dd628b4dc1b0a8ea5b316ab3bb9"/>
+          <file name="FileOptions.php" md5="2e7c6c0aa2581ceab8e614664b8d9078"/>
+          <file name="Sendmail.php" md5="c78b2f2e343d0ee17b9920fc7f9d3324"/>
+          <file name="Smtp.php" md5="2c76f5607991a17c75b0e85a26dec486"/>
+          <file name="SmtpOptions.php" md5="7b7152897e44d7ac2c0169119c73c7a0"/>
+          <file name="TransportInterface.php" md5="5a083dc9c31b4df460a4958f8d9a437f"/>
         </dir>
+        <file name="composer.json" md5="d6faaaa8a98d3125276ee570107492e1"/>
       </dir>
-      <file name="Mail.php" md5="5a5326e74e44feba08ccc589423e9d5c"/>
-      <dir name="Mime">
-        <file name="Decode.php" md5="8f5e29919c4cc8a424fbb34264a6428e"/>
-        <file name="Exception.php" md5="38b2929457173348edfa36275d52bee5"/>
-        <file name="Message.php" md5="f28eaa629d89f59b9eb7a7941d22fbb5"/>
-        <file name="Part.php" md5="2ed34dd2ebba18cf3f34add091c906fc"/>
-      </dir>
-      <file name="Mime.php" md5="0059c7eef064f1225af33d1ddc0e8cef"/>
     </dir>
   </library>
   <database>

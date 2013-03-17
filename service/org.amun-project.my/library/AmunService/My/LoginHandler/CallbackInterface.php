@@ -22,6 +22,8 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\My\LoginHandler;
+
 /**
  * AmunService_My_LoginHandler_CallbackInterface
  *
@@ -32,7 +34,7 @@
  * @package    Amun_Service_My
  * @version    $Revision: 635 $
  */
-interface AmunService_My_LoginHandler_CallbackInterface
+interface CallbackInterface
 {
 	/**
 	 * If the login handler requires an http callback this interface can be

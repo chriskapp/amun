@@ -22,6 +22,13 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Xrds;
+
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use Amun\Filter;
+use Amun\DataFactory;
+
 /**
  * AmunService_Core_Content_Api_Record
  *
@@ -32,13 +39,13 @@
  * @package    AmunService_Content_Api
  * @version    $Revision: 683 $
  */
-class AmunService_Xrds_Record extends Amun_Data_RecordAbstract
+class Record extends RecordAbstract
 {
 	protected $_service;
 
 	public function setId($id)
 	{
-		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
+		$id = $this->_validate->apply($id, 'integer', array(new Filter\Id($this->_table)), 'id', 'Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -46,13 +53,13 @@ class AmunService_Xrds_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setServiceId($serviceId)
 	{
-		$serviceId = $this->_validate->apply($serviceId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_Service'))), 'serviceId', 'Service Id');
+		$serviceId = $this->_validate->apply($serviceId, 'integer', array(new Filter\Id(DataFactory::getTable('Core_Service'))), 'serviceId', 'Service Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -60,7 +67,7 @@ class AmunService_Xrds_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
@@ -83,7 +90,7 @@ class AmunService_Xrds_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_service === null)
 		{
-			$this->_service = Amun_Sql_Table_Registry::get('Core_Service')->getRecord($this->serviceId);
+			$this->_service = DataFactory::getTable('Core_Service')->getRecord($this->serviceId);
 		}
 
 		return $this->_service;

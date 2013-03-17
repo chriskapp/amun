@@ -22,6 +22,21 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Content\Page;
+
+use Amun\DataFactory;
+use Amun\Data\FormAbstract;
+use Amun\Form as AmunForm;
+use Amun\Form\Element\Panel;
+use Amun\Form\Element\Reference;
+use Amun\Form\Element\Input;
+use Amun\Form\Element\TabbedPane;
+use Amun\Form\Element\Textarea;
+use Amun\Form\Element\Captcha;
+use Amun\Form\Element\Select;
+use AmunService\Content\Page;
+use AmunService\Core\Service;
+
 /**
  * AmunService_Core_Content_Page_Form
  *
@@ -32,7 +47,7 @@
  * @package    Amun_Content_Page
  * @version    $Revision: 840 $
  */
-class AmunService_Content_Page_Form extends Amun_Data_FormAbstract
+class Form extends FormAbstract
 {
 	public function getUrl()
 	{
@@ -41,16 +56,16 @@ class AmunService_Content_Page_Form extends Amun_Data_FormAbstract
 
 	public function create()
 	{
-		$form = new Amun_Form('POST', $this->url);
+		$form = new AmunForm('POST', $this->url);
 
 
-		$tabbedPane = new Amun_Form_Element_TabbedPane('page', 'Page');
+		$tabbedPane = new TabbedPane('page', 'Page');
 
 
-		$panel = new Amun_Form_Element_Panel('settings', 'Settings');
+		$panel = new Panel('settings', 'Settings');
 
 
-		$parentId = new Amun_Form_Element_Reference('parentId', 'Parent ID');
+		$parentId = new Reference('parentId', 'Parent ID');
 		$parentId->setValueField('id');
 		$parentId->setLabelField('title');
 		$parentId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/page');
@@ -58,25 +73,25 @@ class AmunService_Content_Page_Form extends Amun_Data_FormAbstract
 		$panel->add($parentId);
 
 
-		$service = new Amun_Form_Element_Select('serviceId', 'Service');
+		$service = new Select('serviceId', 'Service');
 		$service->setOptions($this->getService());
 
 		$panel->add($service);
 
 
-		$status = new Amun_Form_Element_Select('status', 'Status');
+		$status = new Select('status', 'Status');
 		$status->setOptions($this->getStatus());
 
 		$panel->add($status);
 
 
-		$title = new Amun_Form_Element_Input('title', 'Title');
+		$title = new Input('title', 'Title');
 		$title->setType('text');
 
 		$panel->add($title);
 
 
-		$template = new Amun_Form_Element_Select('template', 'Template');
+		$template = new Select('template', 'Template');
 		$template->setOptions($this->getTemplate());
 
 		$panel->add($template);
@@ -84,7 +99,7 @@ class AmunService_Content_Page_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -94,52 +109,52 @@ class AmunService_Content_Page_Form extends Amun_Data_FormAbstract
 		$tabbedPane->add($panel);
 
 
-		$panel = new Amun_Form_Element_Panel('extras', 'Extras');
+		$panel = new Panel('extras', 'Extras');
 
 
-		$description = new Amun_Form_Element_Input('description', 'Description');
+		$description = new Input('description', 'Description');
 		$description->setType('text');
 
 		$panel->add($description);
 
 
-		$keywords = new Amun_Form_Element_Input('keywords', 'Keywords');
+		$keywords = new Input('keywords', 'Keywords');
 		$keywords->setType('text');
 
 		$panel->add($keywords);
 
 
-		$right = new Amun_Form_Element_Select('rightId', 'Right');
+		$right = new Select('rightId', 'Right');
 		$right->setOptions($this->getRights());
 
 		$panel->add($right);
 
 
-		$sort = new Amun_Form_Element_Input('sort', 'Sort');
+		$sort = new Input('sort', 'Sort');
 		$sort->setType('text');
 
 		$panel->add($sort);
 
 
-		$load = new Amun_Form_Element_Input('load', 'Load', 3);
+		$load = new Input('load', 'Load', 3);
 		$load->setType('text');
 
 		$panel->add($load);
 
 
-		$cache = new Amun_Form_Element_Input('cache', 'Cache');
+		$cache = new Input('cache', 'Cache');
 		$cache->setType('text');
 
 		$panel->add($cache);
 
 
-		$expire = new Amun_Form_Element_Input('expire', 'Expire');
+		$expire = new Input('expire', 'Expire');
 		$expire->setType('text');
 
 		$panel->add($expire);
 
 
-		$publishDate = new Amun_Form_Element_Input('publishDate', 'Publish date');
+		$publishDate = new Input('publishDate', 'Publish date');
 		$publishDate->setType('datetime');
 
 		$panel->add($publishDate);
@@ -156,25 +171,25 @@ class AmunService_Content_Page_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Content_Page')->getRecord($id);
+		$record = DataFactory::getTable('Content_Page')->getRecord($id);
 
 
-		$form = new Amun_Form('PUT', $this->url);
+		$form = new AmunForm('PUT', $this->url);
 
 
-		$tabbedPane = new Amun_Form_Element_TabbedPane('page', 'Page');
+		$tabbedPane = new TabbedPane('page', 'Page');
 
 
-		$panel = new Amun_Form_Element_Panel('settings', 'Settings');
+		$panel = new Panel('settings', 'Settings');
 
 
-		$id = new Amun_Form_Element_Input('id', 'ID', $record->id);
+		$id = new Input('id', 'ID', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$parentId = new Amun_Form_Element_Reference('parentId', 'Parent ID', $record->parentId);
+		$parentId = new Reference('parentId', 'Parent ID', $record->parentId);
 		$parentId->setValueField('id');
 		$parentId->setLabelField('title');
 		$parentId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/page');
@@ -182,25 +197,25 @@ class AmunService_Content_Page_Form extends Amun_Data_FormAbstract
 		$panel->add($parentId);
 
 
-		$service = new Amun_Form_Element_Select('serviceId', 'Service', $record->serviceId);
+		$service = new Select('serviceId', 'Service', $record->serviceId);
 		$service->setOptions($this->getService());
 
 		$panel->add($service);
 
 
-		$status = new Amun_Form_Element_Select('status', 'Status', $record->status);
+		$status = new Select('status', 'Status', $record->status);
 		$status->setOptions($this->getStatus());
 
 		$panel->add($status);
 
 
-		$title = new Amun_Form_Element_Input('title', 'Title', $record->title);
+		$title = new Input('title', 'Title', $record->title);
 		$title->setType('text');
 
 		$panel->add($title);
 
 
-		$template = new Amun_Form_Element_Select('template', 'Template', $record->template);
+		$template = new Select('template', 'Template', $record->template);
 		$template->setOptions($this->getTemplate());
 
 		$panel->add($template);
@@ -208,7 +223,7 @@ class AmunService_Content_Page_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -218,52 +233,52 @@ class AmunService_Content_Page_Form extends Amun_Data_FormAbstract
 		$tabbedPane->add($panel);
 
 
-		$panel = new Amun_Form_Element_Panel('extras', 'Extras');
+		$panel = new Panel('extras', 'Extras');
 
 
-		$description = new Amun_Form_Element_Input('description', 'Description', $record->description);
+		$description = new Input('description', 'Description', $record->description);
 		$description->setType('text');
 
 		$panel->add($description);
 
 
-		$keywords = new Amun_Form_Element_Input('keywords', 'Keywords', $record->keywords);
+		$keywords = new Input('keywords', 'Keywords', $record->keywords);
 		$keywords->setType('text');
 
 		$panel->add($keywords);
 
 
-		$right = new Amun_Form_Element_Select('rightId', 'Right', $record->rightId);
+		$right = new Select('rightId', 'Right', $record->rightId);
 		$right->setOptions($this->getRights());
 
 		$panel->add($right);
 
 
-		$sort = new Amun_Form_Element_Input('sort', 'Sort', $record->sort);
+		$sort = new Input('sort', 'Sort', $record->sort);
 		$sort->setType('text');
 
 		$panel->add($sort);
 
 
-		$load = new Amun_Form_Element_Input('load', 'Load', $record->load);
+		$load = new Input('load', 'Load', $record->load);
 		$load->setType('text');
 
 		$panel->add($load);
 
 
-		$cache = new Amun_Form_Element_Input('cache', 'Cache', $record->cache);
+		$cache = new Input('cache', 'Cache', $record->cache);
 		$cache->setType('text');
 
 		$panel->add($cache);
 
 
-		$expire = new Amun_Form_Element_Input('expire', 'Expire', $record->expire);
+		$expire = new Input('expire', 'Expire', $record->expire);
 		$expire->setType('text');
 
 		$panel->add($expire);
 
 
-		$publishDate = new Amun_Form_Element_Input('publishDate', 'Publish date', $record->publishDate);
+		$publishDate = new Input('publishDate', 'Publish date', $record->publishDate);
 		$publishDate->setType('datetime');
 
 		$panel->add($publishDate);
@@ -280,26 +295,26 @@ class AmunService_Content_Page_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Content_Page')->getRecord($id);
+		$record = DataFactory::getTable('Content_Page')->getRecord($id);
 
 
-		$form = new Amun_Form('DELETE', $this->url);
+		$form = new AmunForm('DELETE', $this->url);
 
 
-		$tabbedPane = new Amun_Form_Element_TabbedPane('page', 'Page');
+		$tabbedPane = new TabbedPane('page', 'Page');
 
 
-		$panel = new Amun_Form_Element_Panel('settings', 'Settings');
+		$panel = new Panel('settings', 'Settings');
 
 
 		// settings
-		$id = new Amun_Form_Element_Input('id', 'ID', $record->id);
+		$id = new Input('id', 'ID', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$parentId = new Amun_Form_Element_Reference('parentId', 'Parent ID', $record->parentId);
+		$parentId = new Reference('parentId', 'Parent ID', $record->parentId);
 		$parentId->setValueField('id');
 		$parentId->setLabelField('title');
 		$parentId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/page');
@@ -308,28 +323,28 @@ class AmunService_Content_Page_Form extends Amun_Data_FormAbstract
 		$panel->add($parentId);
 
 
-		$service = new Amun_Form_Element_Select('serviceId', 'Service', $record->serviceId);
+		$service = new Select('serviceId', 'Service', $record->serviceId);
 		$service->setOptions($this->getService());
 		$service->setDisabled(true);
 
 		$panel->add($service);
 
 
-		$status = new Amun_Form_Element_Select('status', 'Status', $record->status);
+		$status = new Select('status', 'Status', $record->status);
 		$status->setOptions($this->getStatus());
 		$status->setDisabled(true);
 
 		$panel->add($status);
 
 
-		$title = new Amun_Form_Element_Input('title', 'Title', $record->title);
+		$title = new Input('title', 'Title', $record->title);
 		$title->setType('text');
 		$title->setDisabled(true);
 
 		$panel->add($title);
 
 
-		$template = new Amun_Form_Element_Select('template', 'Template', $record->template);
+		$template = new Select('template', 'Template', $record->template);
 		$template->setOptions($this->getTemplate());
 		$template->setDisabled(true);
 
@@ -338,7 +353,7 @@ class AmunService_Content_Page_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -349,59 +364,59 @@ class AmunService_Content_Page_Form extends Amun_Data_FormAbstract
 
 
 		// extras
-		$panel = new Amun_Form_Element_Panel('extras', 'Extras');
+		$panel = new Panel('extras', 'Extras');
 
 
-		$description = new Amun_Form_Element_Input('description', 'Description', $record->description);
+		$description = new Input('description', 'Description', $record->description);
 		$description->setType('text');
 		$description->setDisabled(true);
 
 		$panel->add($description);
 
 
-		$keywords = new Amun_Form_Element_Input('keywords', 'Keywords', $record->keywords);
+		$keywords = new Input('keywords', 'Keywords', $record->keywords);
 		$keywords->setType('text');
 		$keywords->setDisabled(true);
 
 		$panel->add($keywords);
 
 
-		$right = new Amun_Form_Element_Select('rightId', 'Right', $record->rightId);
+		$right = new Select('rightId', 'Right', $record->rightId);
 		$right->setOptions($this->getRights());
 		$right->setDisabled(true);
 
 		$panel->add($right);
 
 
-		$sort = new Amun_Form_Element_Input('sort', 'Sort', $record->sort);
+		$sort = new Input('sort', 'Sort', $record->sort);
 		$sort->setType('text');
 		$sort->setDisabled(true);
 
 		$panel->add($sort);
 
 
-		$load = new Amun_Form_Element_Input('load', 'Load', $record->load);
+		$load = new Input('load', 'Load', $record->load);
 		$load->setType('text');
 		$load->setDisabled(true);
 
 		$panel->add($load);
 
 
-		$cache = new Amun_Form_Element_Input('cache', 'Cache', $record->cache);
+		$cache = new Input('cache', 'Cache', $record->cache);
 		$cache->setType('text');
 		$cache->setDisabled(true);
 
 		$panel->add($cache);
 
 
-		$expire = new Amun_Form_Element_Input('expire', 'Expire', $record->expire);
+		$expire = new Input('expire', 'Expire', $record->expire);
 		$expire->setType('text');
 		$expire->setDisabled(true);
 
 		$panel->add($expire);
 
 
-		$publishDate = new Amun_Form_Element_Input('publishDate', 'Publish date', $record->publishDate);
+		$publishDate = new Input('publishDate', 'Publish date', $record->publishDate);
 		$publishDate->setType('datetime');
 		$expire->setDisabled(true);
 
@@ -420,7 +435,7 @@ class AmunService_Content_Page_Form extends Amun_Data_FormAbstract
 	private function getStatus()
 	{
 		$status = array();
-		$result = AmunService_Content_Page_Record::getStatus();
+		$result = Page\Record::getStatus();
 
 		foreach($result as $k => $v)
 		{
@@ -438,7 +453,7 @@ class AmunService_Content_Page_Form extends Amun_Data_FormAbstract
 	private function getService()
 	{
 		$service = array();
-		$status  = AmunService_Core_Service_Record::NORMAL;
+		$status  = Service\Record::NORMAL;
 		$result  = $this->sql->getAll('SELECT id, name FROM ' . $this->registry['table.core_service'] . ' WHERE status = ' . $status . ' ORDER BY name ASC');
 
 		foreach($result as $row)

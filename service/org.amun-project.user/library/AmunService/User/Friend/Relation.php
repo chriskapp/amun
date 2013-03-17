@@ -22,6 +22,17 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Friend;
+
+use Amun\Exception;
+use AmunService\Core\Host\Filter\Name as HostFilter;
+use AmunService\User\Account\Filter\Name as AccountFilter;
+use PSX\Data\RecordAbstract;
+use PSX\Validate;
+use PSX\Filter;
+use PSX\Data\ReaderInterface;
+use PSX\Data\ReaderResult;
+
 /**
  * Amun_User_Friend_Relation
  *
@@ -32,7 +43,7 @@
  * @package    Amun_User_Friend
  * @version    $Revision: 635 $
  */
-class AmunService_User_Friend_Relation extends PSX_Data_RecordAbstract
+class Relation extends RecordAbstract
 {
 	protected $_validate;
 
@@ -42,7 +53,7 @@ class AmunService_User_Friend_Relation extends PSX_Data_RecordAbstract
 
 	public function __construct()
 	{
-		$this->_validate = new PSX_Validate();
+		$this->_validate = new Validate();
 	}
 
 	public function getName()
@@ -63,7 +74,7 @@ class AmunService_User_Friend_Relation extends PSX_Data_RecordAbstract
 
 	public function setMode($mode)
 	{
-		$mode = $this->_validate->apply($mode, 'string', array(new PSX_Filter_Length(1, 16)), 'mode', 'Mode');
+		$mode = $this->_validate->apply($mode, 'string', array(new Filter\Length(1, 16)), 'mode', 'Mode');
 
 		if(!$this->_validate->hasError())
 		{
@@ -71,13 +82,13 @@ class AmunService_User_Friend_Relation extends PSX_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setHost($host)
 	{
-		$host = $this->_validate->apply($host, 'string', array(new AmunService_Core_Host_Filter_Name()), 'host', 'Host');
+		$host = $this->_validate->apply($host, 'string', array(new HostFilter()), 'host', 'Host');
 
 		if(!$this->_validate->hasError())
 		{
@@ -85,13 +96,13 @@ class AmunService_User_Friend_Relation extends PSX_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setName($name)
 	{
-		$name = $this->_validate->apply($name, 'string', array(new AmunService_User_Account_Filter_Name()), 'name', 'Name');
+		$name = $this->_validate->apply($name, 'string', array(new AccountFilter()), 'name', 'Name');
 
 		if(!$this->_validate->hasError())
 		{
@@ -99,15 +110,15 @@ class AmunService_User_Friend_Relation extends PSX_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
-	public function import(PSX_Data_ReaderResult $result)
+	public function import(ReaderResult $result)
 	{
 		switch($result->getType())
 		{
-			case PSX_Data_ReaderInterface::FORM:
+			case ReaderInterface::FORM:
 
 				$params = $result->getData();
 
@@ -118,7 +129,7 @@ class AmunService_User_Friend_Relation extends PSX_Data_RecordAbstract
 
 				if($ns != Amun_Relation::NS)
 				{
-					throw new PSX_Data_Exception('Invalid namespace');
+					throw new Exception('Invalid namespace');
 				}
 
 				$this->setMode($mode);
@@ -129,7 +140,7 @@ class AmunService_User_Friend_Relation extends PSX_Data_RecordAbstract
 
 			default:
 
-				throw new PSX_Data_Exception('Can only import from form reader');
+				throw new Exception('Can only import from form reader');
 
 				break;
 		}

@@ -22,6 +22,21 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Oauth;
+
+use Amun\DataFactory;
+use Amun\Data\FormAbstract;
+use Amun\Exception;
+use Amun\Form as AmunForm;
+use Amun\Form\Element\Panel;
+use Amun\Form\Element\Reference;
+use Amun\Form\Element\Input;
+use Amun\Form\Element\TabbedPane;
+use Amun\Form\Element\Textarea;
+use Amun\Form\Element\Captcha;
+use Amun\Form\Element\Select;
+use AmunService\Oauth;
+
 /**
  * AmunService_Oauth_Form
  *
@@ -32,52 +47,52 @@
  * @package    Amun_Oauth
  * @version    $Revision: 666 $
  */
-class AmunService_Oauth_Form extends Amun_Data_FormAbstract
+class Form extends FormAbstract
 {
 	public function create()
 	{
-		$form = new Amun_Form('POST', $this->url);
+		$form = new AmunForm('POST', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('api', 'API');
+		$panel = new Panel('api', 'API');
 
 
-		$status = new Amun_Form_Element_Select('status', 'Status');
+		$status = new Select('status', 'Status');
 		$status->setOptions($this->getStatus());
 
 		$panel->add($status);
 
 
-		$name = new Amun_Form_Element_Input('name', 'Name');
+		$name = new Input('name', 'Name');
 		$name->setType('text');
 
 		$panel->add($name);
 
 
-		$email = new Amun_Form_Element_Input('email', 'Email');
+		$email = new Input('email', 'Email');
 		$email->setType('email');
 
 		$panel->add($email);
 
 
-		$url = new Amun_Form_Element_Input('url', 'Url');
+		$url = new Input('url', 'Url');
 		$url->setType('url');
 
 		$panel->add($url);
 
 
-		$title = new Amun_Form_Element_Input('title', 'Title');
+		$title = new Input('title', 'Title');
 		$title->setType('text');
 
 		$panel->add($title);
 
 
-		$description = new Amun_Form_Element_Textarea('description', 'Description');
+		$description = new Textarea('description', 'Description');
 
 		$panel->add($description);
 
 
-		$callback = new Amun_Form_Element_Input('callback', 'Callback');
+		$callback = new Input('callback', 'Callback');
 		$callback->setType('url');
 
 		$panel->add($callback);
@@ -85,7 +100,7 @@ class AmunService_Oauth_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -100,57 +115,57 @@ class AmunService_Oauth_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Oauth')->getRecord($id);
+		$record = DataFactory::getTable('Oauth')->getRecord($id);
 
 
-		$form = new Amun_Form('PUT', $this->url);
+		$form = new AmunForm('PUT', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('api', 'API');
+		$panel = new Panel('api', 'API');
 
 
-		$id = new Amun_Form_Element_Input('id', 'ID', $record->id);
+		$id = new Input('id', 'ID', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$status = new Amun_Form_Element_Select('status', 'Status', $record->status);
+		$status = new Select('status', 'Status', $record->status);
 		$status->setOptions($this->getStatus());
 
 		$panel->add($status);
 
 
-		$name = new Amun_Form_Element_Input('name', 'Name', $record->name);
+		$name = new Input('name', 'Name', $record->name);
 		$name->setType('text');
 
 		$panel->add($name);
 
 
-		$email = new Amun_Form_Element_Input('email', 'Email', $record->email);
+		$email = new Input('email', 'Email', $record->email);
 		$email->setType('email');
 
 		$panel->add($email);
 
 
-		$url = new Amun_Form_Element_Input('url', 'Url', $record->url);
+		$url = new Input('url', 'Url', $record->url);
 		$url->setType('url');
 
 		$panel->add($url);
 
 
-		$title = new Amun_Form_Element_Input('title', 'Title', $record->title);
+		$title = new Input('title', 'Title', $record->title);
 		$title->setType('text');
 
 		$panel->add($title);
 
 
-		$description = new Amun_Form_Element_Textarea('description', 'Description', $record->description);
+		$description = new Textarea('description', 'Description', $record->description);
 
 		$panel->add($description);
 
 
-		$callback = new Amun_Form_Element_Input('callback', 'Callback', $record->callback);
+		$callback = new Input('callback', 'Callback', $record->callback);
 		$callback->setType('url');
 
 		$panel->add($callback);
@@ -173,63 +188,63 @@ class AmunService_Oauth_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Oauth')->getRecord($id);
+		$record = DataFactory::getTable('Oauth')->getRecord($id);
 
 
-		$form = new Amun_Form('DELETE', $this->url);
+		$form = new AmunForm('DELETE', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('api', 'API');
+		$panel = new Panel('api', 'API');
 
 
-		$id = new Amun_Form_Element_Input('id', 'ID', $record->id);
+		$id = new Input('id', 'ID', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$status = new Amun_Form_Element_Select('status', 'Status', $record->status);
+		$status = new Select('status', 'Status', $record->status);
 		$status->setOptions($this->getStatus());
 		$status->setDisabled(true);
 
 		$panel->add($status);
 
 
-		$name = new Amun_Form_Element_Input('name', 'Name', $record->name);
+		$name = new Input('name', 'Name', $record->name);
 		$name->setType('text');
 		$name->setDisabled(true);
 
 		$panel->add($name);
 
 
-		$email = new Amun_Form_Element_Input('email', 'Email', $record->email);
+		$email = new Input('email', 'Email', $record->email);
 		$email->setType('email');
 		$email->setDisabled(true);
 
 		$panel->add($email);
 
 
-		$url = new Amun_Form_Element_Input('url', 'Url', $record->url);
+		$url = new Input('url', 'Url', $record->url);
 		$url->setType('url');
 		$url->setDisabled(true);
 
 		$panel->add($url);
 
 
-		$title = new Amun_Form_Element_Input('title', 'Title', $record->title);
+		$title = new Input('title', 'Title', $record->title);
 		$title->setType('text');
 		$title->setDisabled(true);
 
 		$panel->add($title);
 
 
-		$description = new Amun_Form_Element_Textarea('description', 'Description', $record->description);
+		$description = new Textarea('description', 'Description', $record->description);
 		$description->setDisabled(true);
 
 		$panel->add($description);
 
 
-		$callback = new Amun_Form_Element_Input('callback', 'Callback', $record->callback);
+		$callback = new Input('callback', 'Callback', $record->callback);
 		$callback->setType('url');
 		$callback->setDisabled(true);
 
@@ -238,7 +253,7 @@ class AmunService_Oauth_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -254,7 +269,7 @@ class AmunService_Oauth_Form extends Amun_Data_FormAbstract
 	private function getStatus()
 	{
 		$status = array();
-		$result = AmunService_Oauth_Record::getStatus();
+		$result = Oauth\Record::getStatus();
 
 		foreach($result as $k => $v)
 		{

@@ -22,6 +22,22 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Openid\Access;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use Amun\Filter as AmunFilter;
+use Amun\Util;
+use AmunService\Oauth\Filter as OauthFilter;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
+use PSX\DateTime;
+use PSX\Filter;
+use PSX\Util\Markdown;
+use PSX\Url;
+
 /**
  * Amun_System_Connect_Access
  *
@@ -32,7 +48,7 @@
  * @package    Amun_System_Connect
  * @version    $Revision: 683 $
  */
-class AmunService_Openid_Access_Record extends Amun_Data_RecordAbstract
+class Record extends RecordAbstract
 {
 	protected $_user;
 	protected $_returnTo;
@@ -40,7 +56,7 @@ class AmunService_Openid_Access_Record extends Amun_Data_RecordAbstract
 
 	public function setId($id)
 	{
-		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
+		$id = $this->_validate->apply($id, 'integer', array(new AmunFilter\Id($this->_table)), 'id', 'Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -48,7 +64,7 @@ class AmunService_Openid_Access_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
@@ -66,7 +82,7 @@ class AmunService_Openid_Access_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_user === null)
 		{
-			$this->_user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->userId);
+			$this->_user = DataFactory::getTable('User_Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;
@@ -76,7 +92,7 @@ class AmunService_Openid_Access_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_returnTo === null)
 		{
-			$this->_returnTo = new PSX_Url($this->returnTo);
+			$this->_returnTo = new Url($this->returnTo);
 		}
 
 		return $this->_returnTo;

@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Country;
+
+use Amun\Sql\TableAbstract;
+
 /**
  * Amun_System_Country_Table
  *
@@ -32,7 +36,7 @@
  * @package    Amun_System_Country
  * @version    $Revision: 635 $
  */
-class AmunService_Country_Table extends Amun_Sql_TableAbstract
+class Table extends TableAbstract
 {
 	public function getConnections()
 	{

@@ -22,6 +22,22 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Core\Service;
+
+use Amun\DataFactory;
+use Amun\Data\FormAbstract;
+use Amun\Exception;
+use Amun\Form as AmunForm;
+use Amun\Form\Element\Panel;
+use Amun\Form\Element\Reference;
+use Amun\Form\Element\Input;
+use Amun\Form\Element\TabbedPane;
+use Amun\Form\Element\Textarea;
+use Amun\Form\Element\Captcha;
+use Amun\Form\Element\Select;
+use PharData;
+use SimpleXMLElement;
+
 /**
  * AmunService_Core_Content_Service_Form
  *
@@ -32,17 +48,17 @@
  * @package    Amun_Content_Service
  * @version    $Revision: 687 $
  */
-class AmunService_Core_Service_Form extends Amun_Data_FormAbstract
+class Form extends FormAbstract
 {
 	public function create()
 	{
-		$form = new Amun_Form('POST', $this->url);
+		$form = new AmunForm('POST', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('service', 'Service');
+		$panel = new Panel('service', 'Service');
 
 
-		$path = new Amun_Form_Element_Select('source', 'Source');
+		$path = new Select('source', 'Source');
 		$path->setOptions($this->getInstallableService());
 
 		$panel->add($path);
@@ -50,7 +66,7 @@ class AmunService_Core_Service_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -65,62 +81,62 @@ class AmunService_Core_Service_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		throw new PSX_Data_Exception('Update a service record is not possible');
+		throw new Exception('Update a service record is not possible');
 	}
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Core_Service')->getRecord($id);
+		$record = DataFactory::getTable('Core_Service')->getRecord($id);
 
 
-		$form = new Amun_Form('DELETE', $this->url);
+		$form = new AmunForm('DELETE', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('service', 'Service');
+		$panel = new Panel('service', 'Service');
 
 
-		$id = new Amun_Form_Element_Input('id', 'ID', $record->id);
+		$id = new Input('id', 'ID', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$name = new Amun_Form_Element_Input('name', 'Name', $record->name);
+		$name = new Input('name', 'Name', $record->name);
 		$name->setType('text');
 		$name->setDisabled(true);
 
 		$panel->add($name);
 
 
-		$type = new Amun_Form_Element_Input('type', 'Type', $record->type);
+		$type = new Input('type', 'Type', $record->type);
 		$type->setType('text');
 		$type->setDisabled(true);
 
 		$panel->add($type);
 
 
-		$link = new Amun_Form_Element_Input('link', 'Link', $record->link);
+		$link = new Input('link', 'Link', $record->link);
 		$link->setType('text');
 		$link->setDisabled(true);
 
 		$panel->add($link);
 
 
-		$author = new Amun_Form_Element_Input('author', 'Author', $record->author);
+		$author = new Input('author', 'Author', $record->author);
 		$author->setType('text');
 		$author->setDisabled(true);
 
 		$panel->add($author);
 
 
-		$license = new Amun_Form_Element_Input('license', 'License', $record->license);
+		$license = new Input('license', 'License', $record->license);
 		$license->setType('text');
 		$license->setDisabled(true);
 
 		$panel->add($license);
 
 
-		$version = new Amun_Form_Element_Input('version', 'Version', $record->version);
+		$version = new Input('version', 'Version', $record->version);
 		$version->setType('text');
 		$version->setDisabled(true);
 
@@ -129,7 +145,7 @@ class AmunService_Core_Service_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -179,7 +195,7 @@ class AmunService_Core_Service_Form extends Amun_Data_FormAbstract
 					}
 				}
 
-				if($xml instanceof SimpleXmlElement)
+				if($xml instanceof SimpleXMLElement)
 				{
 					if(isset($xml->name))
 					{

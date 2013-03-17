@@ -22,6 +22,18 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Content\Page\Gadget;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use AmunService\Core\Approval;
+use PSX\DateTime;
+use PSX\Data\RecordInterface;
+use PSX\Sql\Condition;
+use PSX\Sql\Join;
+
 /**
  * AmunService_Core_Content_Page_Gadget_Handler
  *
@@ -32,9 +44,9 @@
  * @package    Amun_Content_Page
  * @version    $Revision: 635 $
  */
-class AmunService_Content_Page_Gadget_Handler extends Amun_Data_HandlerAbstract
+class Handler extends HandlerAbstract
 {
-	public function create(PSX_Data_RecordInterface $record)
+	public function create(RecordInterface $record)
 	{
 		if($record->hasFields('pageId', 'gadgetId'))
 		{
@@ -43,54 +55,54 @@ class AmunService_Content_Page_Gadget_Handler extends Amun_Data_HandlerAbstract
 
 			$record->id = $this->sql->getLastInsertId();
 
-			$this->notify(Amun_Data_RecordAbstract::INSERT, $record);
+			$this->notify(RecordAbstract::INSERT, $record);
 
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
-	public function update(PSX_Data_RecordInterface $record)
+	public function update(RecordInterface $record)
 	{
 		if($record->hasFields('id'))
 		{
-			$con = new PSX_Sql_Condition(array('id', '=', $record->id));
+			$con = new Condition(array('id', '=', $record->id));
 
 			$this->table->update($record->getData(), $con);
 
 
-			$this->notify(Amun_Data_RecordAbstract::UPDATE, $record);
+			$this->notify(RecordAbstract::UPDATE, $record);
 
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
-	public function delete(PSX_Data_RecordInterface $record)
+	public function delete(RecordInterface $record)
 	{
 		if($record->hasFields('id'))
 		{
-			$con = new PSX_Sql_Condition(array('id', '=', $record->id));
+			$con = new Condition(array('id', '=', $record->id));
 
 			$this->table->delete($con);
 
 
-			$this->notify(Amun_Data_RecordAbstract::DELETE, $record);
+			$this->notify(RecordAbstract::DELETE, $record);
 
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
@@ -98,10 +110,10 @@ class AmunService_Content_Page_Gadget_Handler extends Amun_Data_HandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'sort'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Content_Page')
+			->join(Join::INNER, DataFactory::getTable('Content_Page')
 				->select(array('id', 'title'), 'page')
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Content_Gadget')
+			->join(Join::INNER, DataFactory::getTable('Content_Gadget')
 				->select(array('id', 'title'), 'gadget')
 			);
 	}

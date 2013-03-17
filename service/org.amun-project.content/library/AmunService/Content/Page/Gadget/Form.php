@@ -22,6 +22,19 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Content\Page\Gadget;
+
+use Amun\DataFactory;
+use Amun\Data\FormAbstract;
+use Amun\Form as AmunForm;
+use Amun\Form\Element\Panel;
+use Amun\Form\Element\Reference;
+use Amun\Form\Element\Input;
+use Amun\Form\Element\TabbedPane;
+use Amun\Form\Element\Textarea;
+use Amun\Form\Element\Captcha;
+use Amun\Form\Element\Select;
+
 /**
  * AmunService_Core_Content_Page_Gadget_Form
  *
@@ -32,17 +45,17 @@
  * @package    Amun_Content_Page
  * @version    $Revision: 666 $
  */
-class AmunService_Content_Page_Gadget_Form extends Amun_Data_FormAbstract
+class Form extends FormAbstract
 {
 	public function create()
 	{
-		$form = new Amun_Form('POST', $this->url);
+		$form = new AmunForm('POST', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('gadget', 'Gadget');
+		$panel = new Panel('gadget', 'Gadget');
 
 
-		$pageId = new Amun_Form_Element_Reference('pageId', 'Page ID');
+		$pageId = new Reference('pageId', 'Page ID');
 		$pageId->setValueField('id');
 		$pageId->setLabelField('title');
 		$pageId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/page');
@@ -50,7 +63,7 @@ class AmunService_Content_Page_Gadget_Form extends Amun_Data_FormAbstract
 		$panel->add($pageId);
 
 
-		$gadgetId = new Amun_Form_Element_Reference('gadgetId', 'Gadget ID');
+		$gadgetId = new Reference('gadgetId', 'Gadget ID');
 		$gadgetId->setValueField('id');
 		$gadgetId->setLabelField('name');
 		$gadgetId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/gadget');
@@ -58,7 +71,7 @@ class AmunService_Content_Page_Gadget_Form extends Amun_Data_FormAbstract
 		$panel->add($gadgetId);
 
 
-		$sort = new Amun_Form_Element_Input('sort', 'Sort');
+		$sort = new Input('sort', 'Sort');
 		$sort->setType('text');
 
 		$panel->add($sort);
@@ -66,7 +79,7 @@ class AmunService_Content_Page_Gadget_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -81,22 +94,22 @@ class AmunService_Content_Page_Gadget_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Content_Page_Gadget')->getRecord($id);
+		$record = DataFactory::getTable('Content_Page_Gadget')->getRecord($id);
 
 
-		$form = new Amun_Form('PUT', $this->url);
+		$form = new AmunForm('PUT', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('gadget', 'Gadget');
+		$panel = new Panel('gadget', 'Gadget');
 
 
-		$id = new Amun_Form_Element_Input('id', 'ID', $record->id);
+		$id = new Input('id', 'ID', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$pageId = new Amun_Form_Element_Reference('pageId', 'Page ID', $record->pageId);
+		$pageId = new Reference('pageId', 'Page ID', $record->pageId);
 		$pageId->setValueField('id');
 		$pageId->setLabelField('title');
 		$pageId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/page');
@@ -104,7 +117,7 @@ class AmunService_Content_Page_Gadget_Form extends Amun_Data_FormAbstract
 		$panel->add($pageId);
 
 
-		$gadgetId = new Amun_Form_Element_Reference('gadgetId', 'Gadget ID', $record->gadgetId);
+		$gadgetId = new Reference('gadgetId', 'Gadget ID', $record->gadgetId);
 		$gadgetId->setValueField('id');
 		$gadgetId->setLabelField('name');
 		$gadgetId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/gadget');
@@ -112,7 +125,7 @@ class AmunService_Content_Page_Gadget_Form extends Amun_Data_FormAbstract
 		$panel->add($gadgetId);
 
 
-		$sort = new Amun_Form_Element_Input('sort', 'Sort', $record->sort);
+		$sort = new Input('sort', 'Sort', $record->sort);
 		$sort->setType('text');
 
 		$panel->add($sort);
@@ -120,7 +133,7 @@ class AmunService_Content_Page_Gadget_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -135,22 +148,22 @@ class AmunService_Content_Page_Gadget_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Content_Page_Gadget')->getRecord($id);
+		$record = DataFactory::getTable('Content_Page_Gadget')->getRecord($id);
 
 
-		$form = new Amun_Form('DELETE', $this->url);
+		$form = new AmunForm('DELETE', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('gadget', 'Gadget');
+		$panel = new Panel('gadget', 'Gadget');
 
 
-		$id = new Amun_Form_Element_Input('id', 'ID', $record->id);
+		$id = new Input('id', 'ID', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$pageId = new Amun_Form_Element_Reference('pageId', 'Page ID', $record->pageId);
+		$pageId = new Reference('pageId', 'Page ID', $record->pageId);
 		$pageId->setValueField('id');
 		$pageId->setLabelField('title');
 		$pageId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/page');
@@ -159,7 +172,7 @@ class AmunService_Content_Page_Gadget_Form extends Amun_Data_FormAbstract
 		$panel->add($pageId);
 
 
-		$gadgetId = new Amun_Form_Element_Reference('gadgetId', 'Gadget ID', $record->gadgetId);
+		$gadgetId = new Reference('gadgetId', 'Gadget ID', $record->gadgetId);
 		$gadgetId->setValueField('id');
 		$gadgetId->setLabelField('name');
 		$gadgetId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/gadget');
@@ -168,7 +181,7 @@ class AmunService_Content_Page_Gadget_Form extends Amun_Data_FormAbstract
 		$panel->add($gadgetId);
 
 
-		$sort = new Amun_Form_Element_Input('sort', 'Sort', $record->sort);
+		$sort = new Input('sort', 'Sort', $record->sort);
 		$sort->setType('text');
 		$sort->setDisabled(true);
 
@@ -177,7 +190,7 @@ class AmunService_Content_Page_Gadget_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);

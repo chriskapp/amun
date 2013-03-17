@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Content\Page\Filter;
+
+use Amun\Filter\Id;
+
 /**
  * AmunService_Core_Content_Page_Filter_ParentId
  *
@@ -32,7 +36,7 @@
  * @package    Amun_Content_Page
  * @version    $Revision: 635 $
  */
-class AmunService_Content_Page_Filter_ParentId extends Amun_Filter_Id
+class ParentId extends Id
 {
 	public function apply($value)
 	{

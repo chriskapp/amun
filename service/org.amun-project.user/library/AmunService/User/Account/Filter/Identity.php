@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Account\Filter;
+
+use PSX\FilterAbstract;
+
 /**
  * Amun_User_Account_Filter_Identity
  *
@@ -32,7 +36,7 @@
  * @package    Amun_User_Account
  * @version    $Revision: 635 $
  */
-class AmunService_User_Account_Filter_Identity extends PSX_FilterAbstract
+class Identity extends FilterAbstract
 {
 	public function apply($value)
 	{

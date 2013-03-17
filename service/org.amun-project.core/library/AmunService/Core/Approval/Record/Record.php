@@ -22,6 +22,22 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Core\Approval\Record;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use Amun\Filter as AmunFilter;
+use Amun\Util;
+use Amun\Registry;
+use AmunService\Core\Approval\Record\Filter as ApprovalFilter;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
+use PSX\DateTime;
+use PSX\Filter;
+use PSX\Util\Markdown;
+
 /**
  * AmunService_Core_System_Approval_Record_Record
  *
@@ -32,7 +48,7 @@
  * @package    Amun_System_Approval
  * @version    $Revision: 743 $
  */
-class AmunService_Core_Approval_Record_Record extends Amun_Data_RecordAbstract
+class Record extends RecordAbstract
 {
 	protected $_user;
 	protected $_record;
@@ -40,7 +56,7 @@ class AmunService_Core_Approval_Record_Record extends Amun_Data_RecordAbstract
 
 	public function setId($id)
 	{
-		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
+		$id = $this->_validate->apply($id, 'integer', array(new AmunFilter\Id($this->_table)), 'id', 'Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -48,13 +64,13 @@ class AmunService_Core_Approval_Record_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setType($type)
 	{
-		$type = $this->_validate->apply($type, 'string', array(new AmunService_Core_Approval_Record_Filter_Type()), 'type', 'Type');
+		$type = $this->_validate->apply($type, 'string', array(new ApprovalFilter\Type()), 'type', 'Type');
 
 		if(!$this->_validate->hasError())
 		{
@@ -62,13 +78,13 @@ class AmunService_Core_Approval_Record_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setTable($table)
 	{
-		$table = $this->_validate->apply($table, 'string', array(new Amun_Filter_Table($this->_sql)), 'table', 'Table');
+		$table = $this->_validate->apply($table, 'string', array(new AmunFilter\Table($this->_sql)), 'table', 'Table');
 
 		if(!$this->_validate->hasError())
 		{
@@ -76,7 +92,7 @@ class AmunService_Core_Approval_Record_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
@@ -94,7 +110,7 @@ class AmunService_Core_Approval_Record_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_user === null)
 		{
-			$this->_user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->userId);
+			$this->_user = DataFactory::getTable('User_Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;
@@ -105,7 +121,7 @@ class AmunService_Core_Approval_Record_Record extends Amun_Data_RecordAbstract
 		if($this->_record === null && !empty($this->record))
 		{
 			$fields = unserialize($this->record);
-			$class  = Amun_Registry::getClassName($this->table);
+			$class  = Registry::getClassName($this->table);
 			$record = new $class($this->_table);
 
 			foreach($fields as $k => $v)
@@ -129,12 +145,12 @@ class AmunService_Core_Approval_Record_Record extends Amun_Data_RecordAbstract
 		return $this->_date;
 	}
 
-	public function export(PSX_Data_WriterResult $result)
+	public function export(WriterResult $result)
 	{
 		switch($result->getType())
 		{
-			case PSX_Data_WriterInterface::JSON:
-			case PSX_Data_WriterInterface::XML:
+			case WriterInterface::JSON:
+			case WriterInterface::XML:
 
 				$fields = parent::export($result);
 
@@ -147,7 +163,7 @@ class AmunService_Core_Approval_Record_Record extends Amun_Data_RecordAbstract
 
 				break;
 
-			case PSX_Data_WriterInterface::ATOM:
+			case WriterInterface::ATOM:
 
 				$entry = $result->getWriter()->createEntry();
 
@@ -163,7 +179,7 @@ class AmunService_Core_Approval_Record_Record extends Amun_Data_RecordAbstract
 
 			default:
 
-				throw new PSX_Data_Exception('Writer is not supported');
+				throw new Exception('Writer is not supported');
 
 				break;
 		}

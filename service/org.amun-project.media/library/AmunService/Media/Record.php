@@ -22,6 +22,22 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Media;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use Amun\Filter as AmunFilter;
+use Amun\Util;
+use AmunService\Media\Filter as MediaFilter;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
+use PSX\DateTime;
+use PSX\Filter;
+use PSX\Util\Markdown;
+use PSX\Upload\File;
+
 /**
  * AmunService_Core_Content_Media_Record
  *
@@ -32,7 +48,7 @@
  * @package    Amun_Content_Media
  * @version    $Revision: 807 $
  */
-class AmunService_Media_Record extends Amun_Data_RecordAbstract
+class Record extends RecordAbstract
 {
 	protected $_user;
 
@@ -48,7 +64,7 @@ class AmunService_Media_Record extends Amun_Data_RecordAbstract
 
 	public function setId($id)
 	{
-		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
+		$id = $this->_validate->apply($id, 'integer', array(new AmunFilter\Id($this->_table)), 'id', 'Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -56,13 +72,13 @@ class AmunService_Media_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setRightId($rightId)
 	{
-		$rightId = $this->_validate->apply($rightId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('User_Right'))), 'rightId', 'Right Id');
+		$rightId = $this->_validate->apply($rightId, 'integer', array(new AmunFilter\Id(DataFactory::getTable('User_Right'))), 'rightId', 'Right Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -70,13 +86,13 @@ class AmunService_Media_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setFolder($folder)
 	{
-		$folder = $this->_validate->apply($folder, 'string', array(new AmunService_Media_Filter_Folder($this->_registry)), 'folder', 'Folder');
+		$folder = $this->_validate->apply($folder, 'string', array(new MediaFilter\Folder($this->_registry)), 'folder', 'Folder');
 
 		if(!$this->_validate->hasError())
 		{
@@ -84,13 +100,13 @@ class AmunService_Media_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setPath(array $path)
 	{
-		$file = new PSX_Upload_File($path);
+		$file = new File($path);
 
 		$this->name     = $file->getName();
 		$this->mimeType = $file->getType();

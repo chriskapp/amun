@@ -22,6 +22,16 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Core\Approval\Record;
+
+use Amun\Data\RecordAbstract;
+use Amun\Data\HandlerAbstract;
+use Amun\Exception;
+use Amun\DataFactory;
+use PSX\Data\RecordInterface;
+use PSX\Sql\Condition;
+use PSX\Sql\Join;
+
 /**
  * AmunService_Core_System_Approval_Record_Handler
  *
@@ -32,14 +42,14 @@
  * @package    Amun_System_Approval
  * @version    $Revision: 801 $
  */
-class AmunService_Core_Approval_Record_Handler extends Amun_Data_HandlerAbstract
+class Handler extends HandlerAbstract
 {
-	public function create(PSX_Data_RecordInterface $record)
+	public function create(RecordInterface $record)
 	{
-		throw new PSX_Data_Exception('You cant create a approval record');
+		throw new Exception('You cant create a approval record');
 	}
 
-	public function update(PSX_Data_RecordInterface $record)
+	public function update(RecordInterface $record)
 	{
 		if($record->hasFields('id'))
 		{
@@ -60,7 +70,7 @@ SQL;
 			if(!empty($data) && is_array($data))
 			{
 				$class   = $this->registry->getClassNameFromTable($row['recordTable']);
-				$handler = Amun_DataFactory::getProvider($class)->getHandler();
+				$handler = DataFactory::getProvider($class)->getHandler();
 
 				if($handler instanceof Amun_Data_HandlerAbstract)
 				{
@@ -76,28 +86,24 @@ SQL;
 					switch($row['recordType'])
 					{
 						case 'INSERT':
-
 							$handler->create($object);
 							break;
 
 						case 'UPDATE':
-
 							$handler->update($object);
 							break;
 
 						case 'DELETE':
-
 							$handler->delete($object);
 							break;
 
 						default:
-
-							throw new PSX_Data_Exception('Invalid record type');
+							throw new Exception('Invalid record type');
 					}
 				}
 				else
 				{
-					throw new PSX_Data_Exception('Invalid record table');
+					throw new Exception('Invalid record table');
 				}
 			}
 
@@ -108,27 +114,27 @@ SQL;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
-	public function delete(PSX_Data_RecordInterface $record)
+	public function delete(RecordInterface $record)
 	{
 		if($record->hasFields('id'))
 		{
-			$con = new PSX_Sql_Condition(array('id', '=', $record->id));
+			$con = new Condition(array('id', '=', $record->id));
 
 			$this->table->delete($con);
 
 
-			$this->notify(Amun_Data_RecordAbstract::DELETE, $record);
+			$this->notify(RecordAbstract::DELETE, $record);
 
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
@@ -136,7 +142,7 @@ SQL;
 	{
 		return $this->table
 			->select(array('id', 'userId', 'type', 'table', 'record', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(Join::INNER, DataFactory::getTable('User_Account')
 				->select(array('name', 'profileUrl'), 'author')
 			);
 	}

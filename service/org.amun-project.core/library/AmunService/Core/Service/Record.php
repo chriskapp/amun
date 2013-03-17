@@ -22,6 +22,22 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Core\Service;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use Amun\Filter as AmunFilter;
+use Amun\Util;
+use AmunService\Core\Service\Filter as ServiceFilter;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
+use PSX\DateTime;
+use PSX\Filter;
+use PSX\Util\Markdown;
+use PSX\Url;
+
 /**
  * AmunService_Core_Content_Service_Record
  *
@@ -32,7 +48,7 @@
  * @package    Amun_Content_Service
  * @version    $Revision: 840 $
  */
-class AmunService_Core_Service_Record extends Amun_Data_RecordAbstract
+class Record extends RecordAbstract
 {
 	const NORMAL = 0x1;
 	const SYSTEM = 0x2;
@@ -41,7 +57,7 @@ class AmunService_Core_Service_Record extends Amun_Data_RecordAbstract
 
 	public function setId($id)
 	{
-		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
+		$id = $this->_validate->apply($id, 'integer', array(new AmunFilter\Id($this->_table)), 'id', 'Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -49,13 +65,13 @@ class AmunService_Core_Service_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setStatus($status)
 	{
-		$status = $this->_validate->apply($status, 'string', array(new AmunService_Core_Service_Filter_Status()), 'status', 'Status');
+		$status = $this->_validate->apply($status, 'string', array(new ServiceFilter\Status()), 'status', 'Status');
 
 		if(!$this->_validate->hasError())
 		{
@@ -63,13 +79,13 @@ class AmunService_Core_Service_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setSource($source)
 	{
-		$source = $this->_validate->apply($source, 'string', array(new PSX_Filter_Length(2, 128)), 'source', 'Source');
+		$source = $this->_validate->apply($source, 'string', array(new Filter\Length(2, 128)), 'source', 'Source');
 
 		if(!$this->_validate->hasError())
 		{
@@ -77,13 +93,13 @@ class AmunService_Core_Service_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setName($name)
 	{
-		$name = $this->_validate->apply($name, 'string', array(new PSX_Filter_Length(2, 32)), 'name', 'Name');
+		$name = $this->_validate->apply($name, 'string', array(new Filter\Length(2, 32)), 'name', 'Name');
 
 		if(!$this->_validate->hasError())
 		{
@@ -91,13 +107,13 @@ class AmunService_Core_Service_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setPath($path)
 	{
-		$path = $this->_validate->apply($path, 'string', array(new PSX_Filter_Length(2, 256)), 'path', 'Path');
+		$path = $this->_validate->apply($path, 'string', array(new Filter\Length(2, 256)), 'path', 'Path');
 
 		if(!$this->_validate->hasError())
 		{
@@ -105,13 +121,13 @@ class AmunService_Core_Service_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setNamespace($namespace)
 	{
-		$namespace = $this->_validate->apply($namespace, 'string', array(new PSX_Filter_Length(2, 64)), 'namespace', 'Namespace');
+		$namespace = $this->_validate->apply($namespace, 'string', array(new Filter\Length(2, 64)), 'namespace', 'Namespace');
 
 		if(!$this->_validate->hasError())
 		{
@@ -119,13 +135,13 @@ class AmunService_Core_Service_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setType($type)
 	{
-		$type = $this->_validate->apply($type, 'string', array(new PSX_Filter_Length(7, 256), new PSX_Filter_Url()), 'type', 'Type');
+		$type = $this->_validate->apply($type, 'string', array(new Filter\Length(7, 256), new Filter\Url()), 'type', 'Type');
 
 		if(!$this->_validate->hasError())
 		{
@@ -133,13 +149,13 @@ class AmunService_Core_Service_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setLink($link)
 	{
-		$link = $this->_validate->apply($link, 'string', array(new PSX_Filter_Length(7, 256), new AmunService_Core_Service_Filter_Link()), 'link', 'Link');
+		$link = $this->_validate->apply($link, 'string', array(new Filter\Length(7, 256), new ServiceFilter\Link()), 'link', 'Link');
 
 		if(!$this->_validate->hasError())
 		{
@@ -147,7 +163,7 @@ class AmunService_Core_Service_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 

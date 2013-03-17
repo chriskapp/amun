@@ -22,6 +22,14 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Friend\Group;
+
+use Amun\Exception;
+use Amun\Data\RecordAbstract;
+use Amun\Filter as AmunFilter;
+use PSX\Filter;
+use PSX\DateTime;
+
 /**
  * Amun_User_Friend_Group
  *
@@ -32,11 +40,11 @@
  * @package    Amun_User_Friend
  * @version    $Revision: 683 $
  */
-class AmunService_User_Friend_Group_Record extends Amun_Data_RecordAbstract
+class Record extends RecordAbstract
 {
 	public function setId($id)
 	{
-		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
+		$id = $this->_validate->apply($id, 'integer', array(new AmunFilter\Id($this->_table)), 'id', 'Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -44,13 +52,13 @@ class AmunService_User_Friend_Group_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setTitle($title)
 	{
-		$title = $this->_validate->apply($title, 'string', array(new PSX_Filter_Length(3, 64), new PSX_Filter_Alnum()));
+		$title = $this->_validate->apply($title, 'string', array(new Filter\Length(3, 64), new Filter\Alnum()));
 
 		if(!$this->_validate->hasError())
 		{
@@ -58,7 +66,7 @@ class AmunService_User_Friend_Group_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new psx_data_exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 

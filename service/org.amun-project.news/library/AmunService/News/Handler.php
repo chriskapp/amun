@@ -22,6 +22,19 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\News;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use AmunService\Core\Approval;
+use PSX\DateTime;
+use PSX\Data\RecordInterface;
+use PSX\Data\ResultSet;
+use PSX\Sql\Condition;
+use PSX\Sql\Join;
+
 /**
  * Amun_Service_News_Handler
  *
@@ -32,9 +45,9 @@
  * @package    Amun_Service_News
  * @version    $Revision: 880 $
  */
-class AmunService_News_Handler extends Amun_Data_HandlerAbstract
+class Handler extends HandlerAbstract
 {
-	public function create(PSX_Data_RecordInterface $record)
+	public function create(RecordInterface $record)
 	{
 		if($record->hasFields('pageId', 'urlTitle', 'title', 'text'))
 		{
@@ -43,7 +56,7 @@ class AmunService_News_Handler extends Amun_Data_HandlerAbstract
 
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-			$record->date = $date->format(PSX_DateTime::SQL);
+			$record->date = $date->format(DateTime::SQL);
 
 			if(!$this->hasApproval($record))
 			{
@@ -52,70 +65,70 @@ class AmunService_News_Handler extends Amun_Data_HandlerAbstract
 
 				$record->id = $this->sql->getLastInsertId();
 
-				$this->notify(Amun_Data_RecordAbstract::INSERT, $record);
+				$this->notify(RecordAbstract::INSERT, $record);
 			}
 			else
 			{
-				$this->approveRecord(AmunService_Core_Approval_Record::INSERT, $record);
+				$this->approveRecord(Approval\Record::INSERT, $record);
 			}
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
-	public function update(PSX_Data_RecordInterface $record)
+	public function update(RecordInterface $record)
 	{
 		if($record->hasFields('id'))
 		{
 			if(!$this->hasApproval($record))
 			{
-				$con = new PSX_Sql_Condition(array('id', '=', $record->id));
+				$con = new Condition(array('id', '=', $record->id));
 
 				$this->table->update($record->getData(), $con);
 
 
-				$this->notify(Amun_Data_RecordAbstract::UPDATE, $record);
+				$this->notify(RecordAbstract::UPDATE, $record);
 			}
 			else
 			{
-				$this->approveRecord(AmunService_Core_Approval_Record::UPDATE, $record);
+				$this->approveRecord(Approval\Record::UPDATE, $record);
 			}
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
-	public function delete(PSX_Data_RecordInterface $record)
+	public function delete(RecordInterface $record)
 	{
 		if($record->hasFields('id'))
 		{
 			if(!$this->hasApproval($record))
 			{
-				$con = new PSX_Sql_Condition(array('id', '=', $record->id));
+				$con = new Condition(array('id', '=', $record->id));
 
 				$this->table->delete($con);
 
 
-				$this->notify(Amun_Data_RecordAbstract::DELETE, $record);
+				$this->notify(RecordAbstract::DELETE, $record);
 			}
 			else
 			{
-				$this->approveRecord(AmunService_Core_Approval_Record::DELETE, $record);
+				$this->approveRecord(Approval\Record::DELETE, $record);
 			}
 
 			return $record;
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
@@ -123,10 +136,10 @@ class AmunService_News_Handler extends Amun_Data_HandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'globalId', 'pageId', 'userId', 'urlTitle', 'title', 'text', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(Join::INNER, DataFactory::getTable('User_Account')
 				->select(array('name', 'profileUrl'), 'author')
 			)
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('Content_Page')
+			->join(Join::INNER, DataFactory::getTable('Content_Page')
 				->select(array('path'), 'page')
 			);
 	}

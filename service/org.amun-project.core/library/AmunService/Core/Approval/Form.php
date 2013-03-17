@@ -22,6 +22,19 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Core\Approval;
+
+use Amun\DataFactory;
+use Amun\Data\FormAbstract;
+use Amun\Form as AmunForm;
+use Amun\Form\Element\Panel;
+use Amun\Form\Element\Reference;
+use Amun\Form\Element\Input;
+use Amun\Form\Element\TabbedPane;
+use Amun\Form\Element\Textarea;
+use Amun\Form\Element\Captcha;
+use Amun\Form\Element\Select;
+
 /**
  * Amun_System_Approval_Form
  *
@@ -32,29 +45,29 @@
  * @package    Amun_System_Approval
  * @version    $Revision: 666 $
  */
-class AmunService_Core_Approval_Form extends Amun_Data_FormAbstract
+class Form extends FormAbstract
 {
 	public function create()
 	{
-		$form = new Amun_Form('POST', $this->url);
+		$form = new AmunForm('POST', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('approval', 'Approval');
+		$panel = new Panel('approval', 'Approval');
 
 
-		$table = new Amun_Form_Element_Select('table', 'Table');
+		$table = new Select('table', 'Table');
 		$table->setOptions($this->getTable());
 
 		$panel->add($table);
 
 
-		$field = new Amun_Form_Element_Input('field', 'Field');
+		$field = new Input('field', 'Field');
 		$field->setType('text');
 
 		$panel->add($field);
 
 
-		$value = new Amun_Form_Element_Input('value', 'Value');
+		$value = new Input('value', 'Value');
 		$value->setType('text');
 
 		$panel->add($value);
@@ -62,7 +75,7 @@ class AmunService_Core_Approval_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -77,34 +90,34 @@ class AmunService_Core_Approval_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Core_Approval')->getRecord($id);
+		$record = DataFactory::getTable('Core_Approval')->getRecord($id);
 
 
-		$form = new Amun_Form('PUT', $this->url);
+		$form = new AmunForm('PUT', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('approval', 'Approval');
+		$panel = new Panel('approval', 'Approval');
 
 
-		$id = new Amun_Form_Element_Input('id', 'ID', $record->id);
+		$id = new Input('id', 'ID', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$table = new Amun_Form_Element_Select('table', 'Table', $record->table);
+		$table = new Select('table', 'Table', $record->table);
 		$table->setOptions($this->getTable());
 
 		$panel->add($table);
 
 
-		$field = new Amun_Form_Element_Input('field', 'Field', $record->field);
+		$field = new Input('field', 'Field', $record->field);
 		$field->setType('text');
 
 		$panel->add($field);
 
 
-		$value = new Amun_Form_Element_Input('value', 'Value', $record->value);
+		$value = new Input('value', 'Value', $record->value);
 		$value->setType('text');
 
 		$panel->add($value);
@@ -112,7 +125,7 @@ class AmunService_Core_Approval_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -127,36 +140,36 @@ class AmunService_Core_Approval_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Core_Approval')->getRecord($id);
+		$record = DataFactory::getTable('Core_Approval')->getRecord($id);
 
 
-		$form = new Amun_Form('DELETE', $this->url);
+		$form = new AmunForm('DELETE', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('approval', 'Approval');
+		$panel = new Panel('approval', 'Approval');
 
 
-		$id = new Amun_Form_Element_Input('id', 'ID', $record->id);
+		$id = new Input('id', 'ID', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$table = new Amun_Form_Element_Select('table', 'Table', $record->table);
+		$table = new Select('table', 'Table', $record->table);
 		$table->setOptions($this->getTable());
 		$table->setDisabled(true);
 
 		$panel->add($table);
 
 
-		$field = new Amun_Form_Element_Input('field', 'Field', $record->field);
+		$field = new Input('field', 'Field', $record->field);
 		$field->setType('text');
 		$field->setDisabled(true);
 
 		$panel->add($field);
 
 
-		$value = new Amun_Form_Element_Input('value', 'Value', $record->value);
+		$value = new Input('value', 'Value', $record->value);
 		$value->setType('text');
 		$value->setDisabled(true);
 
@@ -165,7 +178,7 @@ class AmunService_Core_Approval_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);

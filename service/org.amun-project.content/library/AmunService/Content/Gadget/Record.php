@@ -22,6 +22,25 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Content\Gadget;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use Amun\Filter as AmunFilter;
+use Amun\Util;
+use AmunService\Core\Registry\Filter\Name as FilterName;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
+use PSX\DateTime;
+use PSX\Filter;
+use PSX\Sql\Condition;
+use PSX\Util\Annotation;
+use PSX\Util\Markdown;
+use ReflectionClass;
+use DateInterval;
+
 /**
  * AmunService_Core_Content_Gadget_Record
  *
@@ -32,7 +51,7 @@
  * @package    Amun_Content_Gadget
  * @version    $Revision: 838 $
  */
-class AmunService_Content_Gadget_Record extends Amun_Data_RecordAbstract
+class Record extends RecordAbstract
 {
 	const STRING  = 0x1;
 	const INTEGER = 0x2;
@@ -48,7 +67,7 @@ class AmunService_Content_Gadget_Record extends Amun_Data_RecordAbstract
 
 	public function setId($id)
 	{
-		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
+		$id = $this->_validate->apply($id, 'integer', array(new AmunFilter\Id($this->_table)), 'id', 'Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -56,13 +75,13 @@ class AmunService_Content_Gadget_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setRightId($rightId)
 	{
-		$rightId = $this->_validate->apply($rightId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('User_Right'), true)), 'rightId', 'Right Id');
+		$rightId = $this->_validate->apply($rightId, 'integer', array(new AmunFilter\Id(DataFactory::getTable('User_Right'), true)), 'rightId', 'Right Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -70,13 +89,13 @@ class AmunService_Content_Gadget_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setType($type)
 	{
-		$type = $this->_validate->apply($type, 'string', array(new PSX_Filter_KeyExists(self::getType())), 'type', 'Type');
+		$type = $this->_validate->apply($type, 'string', array(new Filter\KeyExists(self::getType())), 'type', 'Type');
 
 		if(!$this->_validate->hasError())
 		{
@@ -84,13 +103,13 @@ class AmunService_Content_Gadget_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setName($name)
 	{
-		$name = $this->_validate->apply($name, 'string', array(new PSX_Filter_Length(3, 64), new AmunService_Core_Registry_Filter_Name()), 'name', 'Name');
+		$name = $this->_validate->apply($name, 'string', array(new Filter\Length(3, 64), new FilterName()), 'name', 'Name');
 
 		if(!$this->_validate->hasError())
 		{
@@ -98,13 +117,13 @@ class AmunService_Content_Gadget_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setTitle($title)
 	{
-		$title = $this->_validate->apply($title, 'string', array(new PSX_Filter_Length(2, 32), new PSX_Filter_Html()), 'title', 'Title');
+		$title = $this->_validate->apply($title, 'string', array(new Filter\Length(2, 32), new PSX_Filter_Html()), 'title', 'Title');
 
 		if(!$this->_validate->hasError())
 		{
@@ -112,7 +131,7 @@ class AmunService_Content_Gadget_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
@@ -124,8 +143,8 @@ class AmunService_Content_Gadget_Record extends Amun_Data_RecordAbstract
 		{
 			list($serviceId, $file) = $parts;
 
-			$con      = new PSX_Sql_Condition(array('id', '=', $serviceId));
-			$service  = Amun_Sql_Table_Registry::get('Core_Service')->getRow(array('id', 'source', 'namespace'), $con);
+			$con      = new Condition(array('id', '=', $serviceId));
+			$service  = DataFactory::getTable('Core_Service')->getRow(array('id', 'source', 'namespace'), $con);
 
 			if(!empty($service))
 			{
@@ -140,17 +159,17 @@ class AmunService_Content_Gadget_Record extends Amun_Data_RecordAbstract
 				}
 				else
 				{
-					throw new PSX_Data_Exception('Invalid gadget path');
+					throw new Exception('Invalid gadget path');
 				}
 			}
 			else
 			{
-				throw new PSX_Data_Exception('Invalid service');
+				throw new Exception('Invalid service');
 			}
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Invalid path format must be [serviceId]:[gadgetFile]');
+			throw new Exception('Invalid path format must be [serviceId]:[gadgetFile]');
 		}
 	}
 
@@ -158,7 +177,7 @@ class AmunService_Content_Gadget_Record extends Amun_Data_RecordAbstract
 	{
 		if(empty($this->file))
 		{
-			throw new PSX_Data_Exception('No path specified');
+			throw new Exception('No path specified');
 		}
 
 		$data  = array();
@@ -195,7 +214,7 @@ class AmunService_Content_Gadget_Record extends Amun_Data_RecordAbstract
 						break;
 
 					default:
-						throw new PSX_Data_Exception('Invalid type');
+						throw new Exception('Invalid type');
 						break;
 				}
 
@@ -216,7 +235,7 @@ class AmunService_Content_Gadget_Record extends Amun_Data_RecordAbstract
 
 	public function setExpire($expire)
 	{
-		$expire = $this->_validate->apply($expire, 'string', array(new Amun_Filter_DateInterval()), 'expire', 'Expire');
+		$expire = $this->_validate->apply($expire, 'string', array(new AmunFilter\DateInterval()), 'expire', 'Expire');
 
 		if(!$this->_validate->hasError())
 		{
@@ -224,7 +243,7 @@ class AmunService_Content_Gadget_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
@@ -287,7 +306,7 @@ class AmunService_Content_Gadget_Record extends Amun_Data_RecordAbstract
 
 		if(!empty($comment))
 		{
-			$doc = PSX_Util_Annotation::parse($comment);
+			$doc = Annotation::parse($comment);
 
 			$params = $doc->getAnnotation('param');
 			$result = array();
@@ -309,7 +328,7 @@ class AmunService_Content_Gadget_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Empty doc comment');
+			throw new Exception('Empty doc comment');
 		}
 	}
 

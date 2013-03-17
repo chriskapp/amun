@@ -22,6 +22,24 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Activity;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Data\StreamAbstract;
+use Amun\Exception;
+use Amun\Filter as AmunFilter;
+use Amun\Util;
+use AmunService\User\Activity\Filter as ActivityFilter;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
+use PSX\DateTime;
+use PSX\Filter;
+use PSX\Util\Markdown;
+use PSX\Sql;
+use PSX\Sql\Join;
+
 /**
  * Amun_User_Activity
  *
@@ -32,14 +50,14 @@
  * @package    Amun_User_Activity
  * @version    $Revision: 880 $
  */
-class AmunService_User_Activity_Record extends Amun_Data_RecordAbstract
+class Record extends RecordAbstract
 {
 	protected $_user;
 	protected $_date;
 
 	public function setId($id)
 	{
-		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
+		$id = $this->_validate->apply($id, 'integer', array(new AmunFilter\Id($this->_table)), 'id', 'Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -47,13 +65,13 @@ class AmunService_User_Activity_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setParentId($parentId)
 	{
-		$parentId = $this->_validate->apply($parentId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('User_Activity'), true)), 'parentId', 'Parent Id');
+		$parentId = $this->_validate->apply($parentId, 'integer', array(new AmunFilter\Id(DataFactory::getTable('User_Activity'), true)), 'parentId', 'Parent Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -61,13 +79,13 @@ class AmunService_User_Activity_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setScope($scope)
 	{
-		$scope = $this->_validate->apply($scope, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('User_Friend_Group'), true)), 'scope', 'Scope');
+		$scope = $this->_validate->apply($scope, 'integer', array(new AmunFilter\Id(DataFactory::getTable('User_Friend_Group'), true)), 'scope', 'Scope');
 
 		if(!$this->_validate->hasError())
 		{
@@ -75,13 +93,13 @@ class AmunService_User_Activity_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setVerb($verb)
 	{
-		$verb = $this->_validate->apply($verb, 'string', array(new AmunService_User_Activity_Filter_Verb()), 'verb', 'Verb');
+		$verb = $this->_validate->apply($verb, 'string', array(new ActivityFilter\Verb()), 'verb', 'Verb');
 
 		if(!$this->_validate->hasError())
 		{
@@ -89,14 +107,14 @@ class AmunService_User_Activity_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setSummary($summary)
 	{
-		$summary = PSX_Util_Markdown::decode($summary);
-		$summary = $this->_validate->apply($summary, 'string', array(new PSX_Filter_Length(3, 4096), new Amun_Filter_Html($this->_config, $this->_user, true)), 'summary', 'Summary');
+		$summary = Markdown::decode($summary);
+		$summary = $this->_validate->apply($summary, 'string', array(new Filter\Length(3, 4096), new AmunFilter\Html($this->_config, $this->_user, true)), 'summary', 'Summary');
 
 		if(!$this->_validate->hasError())
 		{
@@ -104,7 +122,7 @@ class AmunService_User_Activity_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
@@ -117,7 +135,7 @@ class AmunService_User_Activity_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_user === null)
 		{
-			$this->_user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->userId);
+			$this->_user = DataFactory::getTable('User_Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;
@@ -141,28 +159,28 @@ class AmunService_User_Activity_Record extends Amun_Data_RecordAbstract
 	public function getComments()
 	{
 		return $this->_table->select(array('id', 'refId', 'table', 'verb', 'summary', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(Join::INNER, DataFactory::getTable('User_Account')
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			)
 			->where('parentId', '=', $this->id)
-			->orderBy('date', PSX_Sql::SORT_ASC)
-			->getAll(PSX_Sql::FETCH_OBJECT);
+			->orderBy('date', Sql::SORT_ASC)
+			->getAll(Sql::FETCH_OBJECT);
 	}
 
 	public function getObject()
 	{
 		if(empty($this->table))
 		{
-			$stream = new AmunService_User_Activity_Stream($this->_table);
+			$stream = new Stream($this->_table);
 
 			return $stream->getObject($this->id);
 		}
 		else if($this->refId > 0)
 		{
 			$class  = $this->_registry->getClassNameFromTable($this->table);
-			$stream = Amun_DataFactory::getProvider($class)->getStream();
+			$stream = DataFactory::getProvider($class)->getStream();
 
-			if($stream instanceof Amun_Data_StreamAbstract)
+			if($stream instanceof StreamAbstract)
 			{
 				return $stream->getObject($this->refId);
 			}
@@ -171,18 +189,18 @@ class AmunService_User_Activity_Record extends Amun_Data_RecordAbstract
 		return null;
 	}
 
-	public function export(PSX_Data_WriterResult $result)
+	public function export(WriterResult $result)
 	{
 		switch($result->getType())
 		{
-			case PSX_Data_WriterInterface::JSON:
-			case PSX_Data_WriterInterface::XML:
+			case WriterInterface::JSON:
+			case WriterInterface::XML:
 
 				return parent::export($result);
 
 				break;
 
-			case PSX_Data_WriterInterface::ATOM:
+			case WriterInterface::ATOM:
 
 				$entry = $result->getWriter()->createEntry();
 
@@ -210,7 +228,7 @@ class AmunService_User_Activity_Record extends Amun_Data_RecordAbstract
 
 			default:
 
-				throw new PSX_Data_Exception('Writer is not supported');
+				throw new Exception('Writer is not supported');
 
 				break;
 		}

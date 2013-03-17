@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Account\Filter;
+
+use AmunService\User\Account;
+use PSX\FilterAbstract;
+
 /**
  * Amun_User_Account_Filter_Status
  *
@@ -32,11 +37,11 @@
  * @package    Amun_User_Account
  * @version    $Revision: 635 $
  */
-class AmunService_User_Account_Filter_Status extends PSX_FilterAbstract
+class Status extends FilterAbstract
 {
 	public function apply($value)
 	{
-		return AmunService_User_Account_Record::getStatus($value) === false ? false : true;
+		return Account\Record::getStatus($value) === false ? false : true;
 	}
 
 	public function getErrorMsg()

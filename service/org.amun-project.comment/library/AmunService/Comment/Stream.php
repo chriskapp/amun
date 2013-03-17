@@ -22,6 +22,14 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Comment;
+
+use Amun\DataFactory;
+use Amun\Data\StreamAbstract;
+use PSX\ActivityStream\Type;
+use PSX\DateTime;
+use PSX\Sql\Join;
+
 /**
  * Amun_Service_Comment_Stream
  *
@@ -32,12 +40,12 @@
  * @package    Amun_Service_Comment
  * @version    $Revision: 635 $
  */
-class AmunService_Comment_Stream extends Amun_Data_StreamAbstract
+class Stream extends StreamAbstract
 {
 	public function getObject($id)
 	{
 		$row = $this->table->select(array('globalId', 'pageId', 'userId', 'refId', 'text', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(Join::INNER, DataFactory::getTable('User_Account')
 				->select(array('globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'author')
 			)
 			->where('id', '=', $id)
@@ -49,7 +57,7 @@ class AmunService_Comment_Stream extends Amun_Data_StreamAbstract
 			$updated = new DateTime($row['authorUpdated']);
 			$date    = new DateTime($row['authorDate']);
 
-			$person              = new PSX_ActivityStream_Type_Person();
+			$person              = new Type\Person();
 			$person->displayName = $row['authorName'];
 			$person->image       = $row['authorThumbnailUrl'];
 			$person->id          = $row['authorGlobalId'];
@@ -60,7 +68,7 @@ class AmunService_Comment_Stream extends Amun_Data_StreamAbstract
 			// comment
 			$published = new DateTime($row['date']);
 
-			$comment             = new PSX_ActivityStream_Type_Comment();
+			$comment             = new Type\Comment();
 			$comment->author     = $person;
 			$comment->content    = $row['text'];
 			$comment->id         = $row['globalId'];

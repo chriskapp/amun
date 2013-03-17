@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Log;
+
+use Amun\Data\FormAbstract;
+use Amun\Exception;
+
 /**
  * AmunService_Log_Form
  *
@@ -32,21 +37,21 @@
  * @package    Amun_Log
  * @version    $Revision: 635 $
  */
-class AmunService_Log_Form extends Amun_Data_FormAbstract
+class Form extends FormAbstract
 {
 	public function create()
 	{
-		throw new PSX_Data_Exception('You cant create a log record');
+		throw new Exception('You cant create a log record');
 	}
 
 	public function update($id)
 	{
-		throw new PSX_Data_Exception('You cant update a log record');
+		throw new Exception('You cant update a log record');
 	}
 
 	public function delete($id)
 	{
-		throw new PSX_Data_Exception('You cant delete a log record');
+		throw new Exception('You cant delete a log record');
 	}
 }
 

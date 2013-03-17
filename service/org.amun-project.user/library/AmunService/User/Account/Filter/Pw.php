@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Account\Filter;
+
+use Amun\Security;
+use PSX\FilterAbstract;
+
 /**
  * Amun_User_Account_Filter_Pw
  *
@@ -32,13 +37,13 @@
  * @package    Amun_User_Account
  * @version    $Revision: 793 $
  */
-class AmunService_User_Account_Filter_Pw extends PSX_FilterAbstract
+class Pw extends FilterAbstract
 {
 	public function apply($value)
 	{
 		$len = strlen($value);
 
-		if($len < Amun_Security::getMinPwLength() || $len > Amun_Security::getMaxPwLength())
+		if($len < Security::getMinPwLength() || $len > Security::getMaxPwLength())
 		{
 			return false;
 		}
@@ -70,17 +75,17 @@ class AmunService_User_Account_Filter_Pw extends PSX_FilterAbstract
 			}
 
 			# verify complexity
-			if($alpha < Amun_Security::getPwAlphaCount())
+			if($alpha < Security::getPwAlphaCount())
 			{
 				return false;
 			}
 
-			if($numeric < Amun_Security::getPwNumericCount())
+			if($numeric < Security::getPwNumericCount())
 			{
 				return false;
 			}
 
-			if($special < Amun_Security::getPwSpecialCount())
+			if($special < Security::getPwSpecialCount())
 			{
 				return false;
 			}
@@ -91,7 +96,7 @@ class AmunService_User_Account_Filter_Pw extends PSX_FilterAbstract
 
 	public function getErrorMsg()
 	{
-		return '%s must have at least ' . Amun_Security::getPwAlphaCount() . ' alpha, ' . Amun_Security::getPwNumericCount() . ' numeric and ' . Amun_Security::getPwSpecialCount() . ' special signs';
+		return '%s must have at least ' . Security::getPwAlphaCount() . ' alpha, ' . Security::getPwNumericCount() . ' numeric and ' . Security::getPwSpecialCount() . ' special signs';
 	}
 }
 

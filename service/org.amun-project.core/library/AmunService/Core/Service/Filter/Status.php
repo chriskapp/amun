@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Core\Service\Filter;
+
+use AmunService\Core\Service;
+use PSX\FilterAbstract;
+
 /**
  * AmunService_Core_Content_Service_Filter_Status
  *
@@ -32,11 +37,11 @@
  * @package    Amun_Content_Service
  * @version    $Revision: 635 $
  */
-class AmunService_Core_Service_Filter_Status extends PSX_FilterAbstract
+class Status extends FilterAbstract
 {
 	public function apply($value)
 	{
-		$statuuus = AmunService_Core_Service_Record::getStatus();
+		$statuuus = Service\Record::getStatus();
 
 		foreach($statuuus as $k => $v)
 		{

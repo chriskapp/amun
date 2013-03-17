@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\My;
+
+use Amun\DataFactory;
+
 /**
  * AmunService_My_LoginHandlerAbstract
  *
@@ -32,7 +36,7 @@
  * @package    Amun_Service_My
  * @version    $Revision: 635 $
  */
-abstract class AmunService_My_LoginHandlerAbstract
+abstract class LoginHandlerAbstract
 {
 	protected $base;
 	protected $config;
@@ -46,7 +50,7 @@ abstract class AmunService_My_LoginHandlerAbstract
 
 	public function __construct()
 	{
-		$ct = Amun_DataFactory::getInstance()->getContainer();
+		$ct = DataFactory::getInstance()->getContainer();
 
 		$this->base     = $ct->getBase();
 		$this->config   = $ct->getConfig();

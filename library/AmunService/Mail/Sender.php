@@ -22,6 +22,12 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Mail;
+
+use Amun\Mail\SenderInterface;
+use Amun\Registry;
+use Amun\Exception;
+
 /**
  * AmunService_Mail_Sender
  *
@@ -32,13 +38,13 @@
  * @package    AmunService_Mail
  * @version    $Revision: 635 $
  */
-class AmunService_Mail_Sender implements Amun_Mail_SenderInterface
+class Sender implements SenderInterface
 {
 	private $config;
 	private $sql;
 	private $registry;
 
-	public function __construct(Amun_Registry $registry)
+	public function __construct(Registry $registry)
 	{
 		$this->config   = $registry->getConfig();
 		$this->sql      = $registry->getSql();
@@ -96,7 +102,7 @@ SQL;
 		}
 		else
 		{
-			throw new Amun_Mail_Exception('Invalid mail template');
+			throw new Exception('Invalid mail template');
 		}
 	}
 

@@ -22,6 +22,21 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Core\Host\Request;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use Amun\Filter as AmunFilter;
+use Amun\Util;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
+use PSX\DateTime;
+use PSX\Filter;
+use PSX\Util\Markdown;
+use PSX\Url;
+
 /**
  * Amun_System_Host_Request
  *
@@ -32,7 +47,7 @@
  * @package    Amun_System_Host
  * @version    $Revision: 811 $
  */
-class AmunService_Core_Host_Request_Record extends Amun_Data_RecordAbstract
+class Record extends RecordAbstract
 {
 	protected $_host;
 	protected $_user;
@@ -40,7 +55,7 @@ class AmunService_Core_Host_Request_Record extends Amun_Data_RecordAbstract
 
 	public function setId($id)
 	{
-		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
+		$id = $this->_validate->apply($id, 'integer', array(new AmunFilter\Id($this->_table)), 'id', 'Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -48,13 +63,13 @@ class AmunService_Core_Host_Request_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setHostId($hostId)
 	{
-		$hostId = $this->_validate->apply($hostId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Core_Host'))), 'hostId', 'Host Id');
+		$hostId = $this->_validate->apply($hostId, 'integer', array(new AmunFilter\Id(DataFactory::getTable('Core_Host'))), 'hostId', 'Host Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -62,13 +77,13 @@ class AmunService_Core_Host_Request_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setUserId($userId)
 	{
-		$userId = $this->_validate->apply($userId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('User_Account'))), 'userId', 'User Id');
+		$userId = $this->_validate->apply($userId, 'integer', array(new AmunFilter\Id(DataFactory::getTable('User_Account'))), 'userId', 'User Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -76,13 +91,13 @@ class AmunService_Core_Host_Request_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setIp($ip)
 	{
-		$ip = $this->_validate->apply($ip, 'string', array(new PSX_Filter_Ip()), 'ip', 'Ip');
+		$ip = $this->_validate->apply($ip, 'string', array(new Filter\Ip()), 'ip', 'Ip');
 
 		if(!$this->_validate->hasError())
 		{
@@ -90,13 +105,13 @@ class AmunService_Core_Host_Request_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setExpire($expire)
 	{
-		$expire = $this->_validate->apply($expire, 'string', array(new Amun_Filter_DateInterval()), 'expire', 'Expire');
+		$expire = $this->_validate->apply($expire, 'string', array(new AmunFilter\DateInterval()), 'expire', 'Expire');
 
 		if(!$this->_validate->hasError())
 		{
@@ -104,7 +119,7 @@ class AmunService_Core_Host_Request_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
@@ -117,7 +132,7 @@ class AmunService_Core_Host_Request_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_host === null)
 		{
-			$this->_host = Amun_Sql_Table_Registry::get('Core_Host')->getRecord($this->hostId);
+			$this->_host = DataFactory::getTable('Core_Host')->getRecord($this->hostId);
 		}
 
 		return $this->_host;
@@ -127,7 +142,7 @@ class AmunService_Core_Host_Request_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_user === null)
 		{
-			$this->_user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->userId);
+			$this->_user = DataFactory::getTable('User_Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;

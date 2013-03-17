@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Explorer\Filter;
+
+use Amun\Registry;
+use PSX\FilterAbstract;
+
 /**
  * AmunService_Core_Content_Page_Filter_Template
  *
@@ -32,11 +37,11 @@
  * @package    Amun_Content_Page
  * @version    $Revision: 635 $
  */
-class AmunService_Explorer_Filter_Path extends PSX_FilterAbstract
+class Path extends FilterAbstract
 {
 	private $registry;
 
-	public function __construct(Amun_Registry $registry)
+	public function __construct(Registry $registry)
 	{
 		$this->registry = $registry;
 	}

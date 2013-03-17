@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="23a0fa0b78b1d16816b99f909d8af89c4848b6ad">
+<service xmlns="http://amun-project.org" signature="9baabf74685989aa03b0e7e23981ed0e33fec6ea">
   <status>system</status>
   <name>asset</name>
   <description>A service wich concatenates various css or js files into one output</description>
@@ -19,12 +19,12 @@
   <library>
     <dir name="AmunService">
       <dir name="Asset">
-        <file name="Manager.php" md5="1e3ac229287355d4b518e4c71b8be955"/>
+        <file name="Manager.php" md5="8907363de5f99cab26782034967b1067"/>
         <dir name="Provider">
-          <file name="Css.php" md5="669e0b0121260afe10fde4226d211c7e"/>
-          <file name="Js.php" md5="881c7c34dafe26eef24f5e630b82da28"/>
+          <file name="Css.php" md5="206556daf9227ad40e9f00959d68cb18"/>
+          <file name="Js.php" md5="768dc931cefb5bcff55d96334c494575"/>
         </dir>
-        <file name="ProviderInterface.php" md5="fec6b8d2b956c8c21a99e45608d1c834"/>
+        <file name="ProviderInterface.php" md5="ecc8764c7e86094a31dfd9e023eb8a7e"/>
       </dir>
     </dir>
   </library>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="b8927d6b2a83e3152fa6c6d686a1f317b450370a">
+<service xmlns="http://amun-project.org" signature="cde952248632cbdb93bd188481a431299cb7e89f">
   <status>system</status>
   <name>explorer</name>
   <description>Provides an API to browse, create, edit and delete files on the server</description>
@@ -29,11 +29,11 @@
     <dir name="AmunService">
       <dir name="Explorer">
         <dir name="Filter">
-          <file name="Path.php" md5="460624b4f94885707881a6cccce84568"/>
+          <file name="Path.php" md5="5fa967de9a5fcfc5fb7e305faffa90f0"/>
         </dir>
-        <file name="Form.php" md5="b65ced4cb3e6d623a2f8fc3fcbf51614"/>
-        <file name="Handler.php" md5="9071de7fc45b9015c73c0d4dd4f30423"/>
-        <file name="Record.php" md5="4a53469b213a1f536987f08c0106dd93"/>
+        <file name="Form.php" md5="207fb4a1fe77002a32e3dbb516224a6d"/>
+        <file name="Handler.php" md5="fd96138a42717f600eeab902e0061add"/>
+        <file name="Record.php" md5="c1281d568e77fdebdc5093f442903c84"/>
       </dir>
     </dir>
   </library>

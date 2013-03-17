@@ -22,6 +22,8 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\My\Login;
+
 /**
  * AmunService_My_Login_InvalidPasswordException
  *
@@ -32,6 +34,6 @@
  * @package    Amun_Service_My
  * @version    $Revision: 635 $
  */
-class AmunService_My_Login_InvalidPasswordException extends Amun_Exception
+class InvalidPasswordException extends \Amun\Exception
 {
 }

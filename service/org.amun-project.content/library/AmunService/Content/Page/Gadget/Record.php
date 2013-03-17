@@ -22,6 +22,20 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Content\Page\Gadget;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use Amun\Filter as AmunFilter;
+use Amun\Util;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
+use PSX\DateTime;
+use PSX\Filter;
+use PSX\Util\Markdown;
+
 /**
  * AmunService_Core_Content_Page_Gadget_Record
  *
@@ -32,14 +46,14 @@
  * @package    Amun_Content_Page
  * @version    $Revision: 683 $
  */
-class AmunService_Content_Page_Gadget_Record extends Amun_Data_RecordAbstract
+class Record extends RecordAbstract
 {
 	protected $_page;
 	protected $_gadget;
 
 	public function setId($id)
 	{
-		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
+		$id = $this->_validate->apply($id, 'integer', array(new AmunFilter\Id($this->_table)), 'id', 'Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -47,13 +61,13 @@ class AmunService_Content_Page_Gadget_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setPageId($pageId)
 	{
-		$pageId = $this->_validate->apply($pageId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Content_Page'))), 'pageId', 'Page Id');
+		$pageId = $this->_validate->apply($pageId, 'integer', array(new AmunFilter\Id(DataFactory::getTable('Content_Page'))), 'pageId', 'Page Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -61,13 +75,13 @@ class AmunService_Content_Page_Gadget_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setGadgetId($gadgetId)
 	{
-		$gadgetId = $this->_validate->apply($gadgetId, 'integer', array(new Amun_Filter_Id(Amun_Sql_Table_Registry::get('Content_Gadget'))), 'gadgetId', 'Gadget Id');
+		$gadgetId = $this->_validate->apply($gadgetId, 'integer', array(new AmunFilter\Id(DataFactory::getTable('Content_Gadget'))), 'gadgetId', 'Gadget Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -75,7 +89,7 @@ class AmunService_Content_Page_Gadget_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
@@ -93,7 +107,7 @@ class AmunService_Content_Page_Gadget_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_page === null)
 		{
-			$this->_page = Amun_Sql_Table_Registry::get('Content_Page')->getRecord($this->pageId);
+			$this->_page = DataFactory::getTable('Content_Page')->getRecord($this->pageId);
 		}
 
 		return $this->_page;
@@ -103,7 +117,7 @@ class AmunService_Content_Page_Gadget_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_gadget === null)
 		{
-			$this->_gadget = Amun_Sql_Table_Registry::get('Content_Gadget')->getRecord($this->gadgetId);
+			$this->_gadget = DataFactory::getTable('Content_Gadget')->getRecord($this->gadgetId);
 		}
 
 		return $this->_gadget;

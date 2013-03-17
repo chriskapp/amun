@@ -22,6 +22,20 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Forum;
+
+use Amun\DataFactory;
+use Amun\Data\FormAbstract;
+use Amun\Exception;
+use Amun\Form as AmunForm;
+use Amun\Form\Element\Panel;
+use Amun\Form\Element\Reference;
+use Amun\Form\Element\Input;
+use Amun\Form\Element\TabbedPane;
+use Amun\Form\Element\Textarea;
+use Amun\Form\Element\Captcha;
+use Amun\Form\Element\Select;
+
 /**
  * Amun_Service_Forum_Form
  *
@@ -32,19 +46,19 @@
  * @package    Amun_Service_Forum
  * @version    $Revision: 666 $
  */
-class AmunService_Forum_Form extends Amun_Data_FormAbstract
+class Form extends FormAbstract
 {
 	public function create($pageId = 0)
 	{
-		$form = new Amun_Form('POST', $this->url);
+		$form = new AmunForm('POST', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('forum', 'Forum');
+		$panel = new Panel('forum', 'Forum');
 
 
 		if(empty($pageId))
 		{
-			$pageId = new Amun_Form_Element_Reference('pageId', 'Page ID');
+			$pageId = new Reference('pageId', 'Page ID');
 			$pageId->setValueField('id');
 			$pageId->setLabelField('title');
 			$pageId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/page');
@@ -53,27 +67,27 @@ class AmunService_Forum_Form extends Amun_Data_FormAbstract
 		}
 		else
 		{
-			$pageId = new Amun_Form_Element_Input('pageId', 'Page ID', $pageId);
+			$pageId = new Input('pageId', 'Page ID', $pageId);
 			$pageId->setType('hidden');
 
 			$panel->add($pageId);
 		}
 
 
-		$title = new Amun_Form_Element_Input('title', 'Title');
+		$title = new Input('title', 'Title');
 		$title->setType('text');
 
 		$panel->add($title);
 
 
-		$text = new Amun_Form_Element_Textarea('text', 'Text');
+		$text = new Textarea('text', 'Text');
 
 		$panel->add($text);
 
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -88,35 +102,35 @@ class AmunService_Forum_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Forum')->getRecord($id);
+		$record = DataFactory::getTable('Forum')->getRecord($id);
 
 
-		$form = new Amun_Form('PUT', $this->url);
+		$form = new AmunForm('PUT', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('forum', 'Forum');
+		$panel = new Panel('forum', 'Forum');
 
 
-		$id = new Amun_Form_Element_Input('id', 'ID', $record->id);
+		$id = new Input('id', 'ID', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$title = new Amun_Form_Element_Input('title', 'Title', $record->title);
+		$title = new Input('title', 'Title', $record->title);
 		$title->setType('text');
 
 		$panel->add($title);
 
 
-		$text = new Amun_Form_Element_Textarea('text', 'Text', $record->text);
+		$text = new Textarea('text', 'Text', $record->text);
 
 		$panel->add($text);
 
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -131,29 +145,29 @@ class AmunService_Forum_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Forum')->getRecord($id);
+		$record = DataFactory::getTable('Forum')->getRecord($id);
 
 
-		$form = new Amun_Form('DELETE', $this->url);
+		$form = new AmunForm('DELETE', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('forum', 'Forum');
+		$panel = new Panel('forum', 'Forum');
 
 
-		$id = new Amun_Form_Element_Input('id', 'ID', $record->id);
+		$id = new Input('id', 'ID', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$title = new Amun_Form_Element_Input('title', 'Title', $record->title);
+		$title = new Input('title', 'Title', $record->title);
 		$title->setType('text');
 		$title->setDisabled(true);
 
 		$panel->add($title);
 
 
-		$text = new Amun_Form_Element_Textarea('text', 'Text', $record->text);
+		$text = new Textarea('text', 'Text', $record->text);
 		$text->setDisabled(true);
 
 		$panel->add($text);
@@ -161,7 +175,7 @@ class AmunService_Forum_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);

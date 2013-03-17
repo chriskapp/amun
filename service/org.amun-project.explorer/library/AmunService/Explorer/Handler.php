@@ -22,6 +22,19 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Explorer;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use AmunService\Core\Approval;
+use PSX\DateTime;
+use PSX\Data\RecordInterface;
+use PSX\Data\ResultSet;
+use PSX\Sql\Condition;
+use PSX\Sql\Join;
+
 /**
  * Amun_Service_Page_Handler
  *
@@ -32,9 +45,9 @@
  * @package    Amun_Service_Page
  * @version    $Revision: 880 $
  */
-class AmunService_Explorer_Handler implements PSX_Data_HandlerInterface
+class Handler implements HandlerInterface
 {
-	public function getAll(array $fields, $startIndex = 0, $count = 16, $sortBy = null, $sortOrder = null, PSX_Sql_Condition $con = null, $mode = 0, $class = null, array $args = array())
+	public function getAll(array $fields, $startIndex = 0, $count = 16, $sortBy = null, $sortOrder = null, Condition $con = null, $mode = 0, $class = null, array $args = array())
 	{
 		$start     = $startIndex !== null ? (integer) $startIndex : 0;
 		$count     = $count      !== null ? (integer) $count      : 16;
@@ -72,7 +85,7 @@ class AmunService_Explorer_Handler implements PSX_Data_HandlerInterface
 					'name'  => $name,
 					'size'  => $size,
 					'perms' => $perms,
-					'date'  => date(PSX_DateTime::SQL, $date),
+					'date'  => date(DateTime::SQL, $date),
 				);
 
 				// check conditions
@@ -94,16 +107,16 @@ class AmunService_Explorer_Handler implements PSX_Data_HandlerInterface
 		// sort
 		array_multisort($dKeys, \SORT_DESC, $keys, $sortOrder, $result);
 
-		return new PSX_Data_ResultSet(count($files), $start, $count, $result);
+		return new ResultSet(count($files), $start, $count, $result);
 	}
 
-	public function create(PSX_Data_RecordInterface $record)
+	public function create(RecordInterface $record)
 	{
 		if($record->hasFields('path', 'content'))
 		{
 			if(is_file($record->getPath()))
 			{
-				throw new PSX_Data_Exception('File already exist');
+				throw new Exception('File already exist');
 			}
 
 
@@ -114,17 +127,17 @@ class AmunService_Explorer_Handler implements PSX_Data_HandlerInterface
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
-	public function update(PSX_Data_RecordInterface $record)
+	public function update(RecordInterface $record)
 	{
 		if($record->hasFields('path', 'content'))
 		{
 			if(!is_file($record->getPath()))
 			{
-				throw new PSX_Data_Exception('File does not exist');
+				throw new Exception('File does not exist');
 			}
 
 
@@ -135,17 +148,17 @@ class AmunService_Explorer_Handler implements PSX_Data_HandlerInterface
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 
-	public function delete(PSX_Data_RecordInterface $record)
+	public function delete(RecordInterface $record)
 	{
 		if($record->hasFields('path'))
 		{
 			if(!is_file($record->getPath()))
 			{
-				throw new PSX_Data_Exception('File does not exist');
+				throw new Exception('File does not exist');
 			}
 
 
@@ -156,7 +169,7 @@ class AmunService_Explorer_Handler implements PSX_Data_HandlerInterface
 		}
 		else
 		{
-			throw new PSX_Data_Exception('Missing field in record');
+			throw new Exception('Missing field in record');
 		}
 	}
 

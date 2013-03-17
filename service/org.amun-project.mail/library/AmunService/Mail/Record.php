@@ -22,6 +22,20 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Mail;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use Amun\Filter as AmunFilter;
+use Amun\Util;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
+use PSX\DateTime;
+use PSX\Filter;
+use PSX\Util\Markdown;
+
 /**
  * Amun_System_Mail_Handler
  *
@@ -32,11 +46,11 @@
  * @package    Amun_System_Mail
  * @version    $Revision: 635 $
  */
-class AmunService_Mail_Record extends Amun_Data_RecordAbstract
+class Record extends RecordAbstract
 {
 	public function setId($id)
 	{
-		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
+		$id = $this->_validate->apply($id, 'integer', array(new AmunFilter\Id($this->_table)), 'id', 'Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -44,13 +58,13 @@ class AmunService_Mail_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setName($name)
 	{
-		$name = $this->_validate->apply($name, 'string', array(new PSX_Filter_Length(3, 32)), 'name', 'Name');
+		$name = $this->_validate->apply($name, 'string', array(new Filter\Length(3, 32)), 'name', 'Name');
 
 		if(!$this->_validate->hasError())
 		{
@@ -58,7 +72,7 @@ class AmunService_Mail_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
@@ -66,7 +80,7 @@ class AmunService_Mail_Record extends Amun_Data_RecordAbstract
 	{
 		// replace hostname
 		$from = str_replace('%host%', $this->_base->getHost(), $from);
-		$from = $this->_validate->apply($from, 'string', array(new PSX_Filter_Length(3, 64)), 'from', 'From');
+		$from = $this->_validate->apply($from, 'string', array(new Filter\Length(3, 64)), 'from', 'From');
 
 		if(!$this->_validate->hasError())
 		{
@@ -74,13 +88,13 @@ class AmunService_Mail_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setSubject($subject)
 	{
-		$subject = $this->_validate->apply($subject, 'string', array(new PSX_Filter_Length(3, 256)), 'subject', 'Subject');
+		$subject = $this->_validate->apply($subject, 'string', array(new Filter\Length(3, 256)), 'subject', 'Subject');
 
 		if(!$this->_validate->hasError())
 		{
@@ -88,13 +102,13 @@ class AmunService_Mail_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setText($text)
 	{
-		$text = $this->_validate->apply($text, 'string', array(new PSX_Filter_Length(3, 4096)), 'text', 'Text');
+		$text = $this->_validate->apply($text, 'string', array(new Filter\Length(3, 4096)), 'text', 'Text');
 
 		if(!$this->_validate->hasError())
 		{
@@ -102,13 +116,13 @@ class AmunService_Mail_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setHtml($html)
 	{
-		$html = $this->_validate->apply($html, 'string', array(new PSX_Filter_Length(3, 4096)), 'html', 'Html');
+		$html = $this->_validate->apply($html, 'string', array(new Filter\Length(3, 4096)), 'html', 'Html');
 
 		if(!$this->_validate->hasError())
 		{
@@ -116,7 +130,7 @@ class AmunService_Mail_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 

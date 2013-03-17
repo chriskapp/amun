@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Core\Host\Filter;
+
+use PSX\FilterAbstract;
+
 /**
  * Amun_System_Host_Filter_Name
  *
@@ -32,7 +36,7 @@
  * @package    Amun_System_Host
  * @version    $Revision: 635 $
  */
-class AmunService_Core_Host_Filter_Name extends PSX_FilterAbstract
+class Name extends FilterAbstract
 {
 	public function apply($value)
 	{

@@ -22,6 +22,15 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Mail;
+
+use Amun\Data\ListenerAbstract;
+use Amun\DataFactory;
+use AmunService\Core\Service;
+use PSX\Log;
+use DOMDocument;
+use DOMElement;
+
 /**
  * Adds the option to insert an mail template to the service config
  *
@@ -32,15 +41,15 @@
  * @package    AmunService_Mail
  * @version    $Revision: 635 $
  */
-class AmunService_Mail_ConfigListener extends Amun_Data_ListenerAbstract
+class ConfigListener extends ListenerAbstract
 {
-	public function notify(AmunService_Core_Service_Record $record, DOMDocument $config)
+	public function notify(Service\Record $record, DOMDocument $config)
 	{
 		$mail = $config->getElementsByTagName('mail')->item(0);
 
 		if($mail !== null)
 		{
-			PSX_Log::info('Create mail');
+			Log::info('Create mail');
 
 			try
 			{
@@ -66,7 +75,7 @@ class AmunService_Mail_ConfigListener extends Amun_Data_ListenerAbstract
 
 						if($text instanceof DOMElement && $html instanceof DOMElement)
 						{
-							$record = Amun_Sql_Table_Registry::get('Mail')->getRecord();
+							$record = DataFactory::getTable('Mail')->getRecord();
 							$record->setName($name);
 							$record->setFrom($from);
 							$record->setSubject($subject);
@@ -74,15 +83,15 @@ class AmunService_Mail_ConfigListener extends Amun_Data_ListenerAbstract
 							$record->setText($text->nodeValue);
 							$record->setHtml($html->nodeValue);
 
-							$handler = new AmunService_Mail_Handler($this->user);
+							$handler = new Handler($this->user);
 							$handler->create($record);
 						}
 					}
 				}
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
-				PSX_Log::error($e->getMessage());
+				Log::error($e->getMessage());
 			}
 		}
 	}

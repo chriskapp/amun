@@ -22,6 +22,14 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\My;
+
+use Amun\Exception;
+use AmunService\User\Activity\Record;
+use PSX\Data\WriterResult;
+use PSX\Data\WriterInterface;
+use PSX\ActivityStream\Type;
+
 /**
  * Amun_Service_My_Activity
  *
@@ -32,16 +40,16 @@
  * @package    Amun_Service_My
  * @version    $Revision: 635 $
  */
-class AmunService_My_Activity extends AmunService_User_Activity_Record
+class Activity extends Record
 {
-	public function export(PSX_Data_WriterResult $result)
+	public function export(WriterResult $result)
 	{
 		switch($result->getType())
 		{
-			case PSX_Data_WriterInterface::JSON:
-			case PSX_Data_WriterInterface::XML:
+			case WriterInterface::JSON:
+			case WriterInterface::XML:
 
-				$person              = new PSX_ActivityStream_Type_Person();
+				$person              = new Type\Person();
 				$person->displayName = $this->authorName;
 				$person->image       = $this->authorThumbnailUrl;
 				$person->id          = $this->authorGlobalId;
@@ -57,7 +65,7 @@ class AmunService_My_Activity extends AmunService_User_Activity_Record
 
 				break;
 
-			case PSX_Data_WriterInterface::ATOM:
+			case WriterInterface::ATOM:
 
 				$entry = $result->getWriter()->createEntry();
 
@@ -86,9 +94,7 @@ class AmunService_My_Activity extends AmunService_User_Activity_Record
 				break;
 
 			default:
-
-				throw new PSX_Data_Exception('Writer is not supported');
-
+				throw new Exception('Writer is not supported');
 				break;
 		}
 	}

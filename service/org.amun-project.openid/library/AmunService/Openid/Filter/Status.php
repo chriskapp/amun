@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Openid\Filter;
+
+use AmunService\Openid;
+use PSX\FilterAbstract;
+
 /**
  * Amun_System_Connect_Filter_Status
  *
@@ -32,11 +37,11 @@
  * @package    Amun_System_Connect
  * @version    $Revision: 635 $
  */
-class AmunService_Openid_Filter_Status extends PSX_FilterAbstract
+class Status extends FilterAbstract
 {
 	public function apply($value)
 	{
-		return AmunService_Openid_Record::getStatus($value) === false ? false : true;
+		return Openid\Record::getStatus($value) === false ? false : true;
 	}
 
 	public function getErrorMsg()

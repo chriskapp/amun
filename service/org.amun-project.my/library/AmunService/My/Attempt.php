@@ -22,6 +22,14 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\My;
+
+use Amun\Registry;
+use PSX\DateTime;
+use PSX\Sql;
+use PSX\Sql\Condition;
+use DateInterval;
+
 /**
  * Amun_Service_My_Attempt
  *
@@ -32,7 +40,7 @@
  * @package    Amun_Service_My
  * @version    $Revision: 880 $
  */
-class AmunService_My_Attempt
+class Attempt
 {
 	const NONE   = 0x0;
 	const TRYING = 0x1;
@@ -42,7 +50,7 @@ class AmunService_My_Attempt
 	private $sql;
 	private $registry;
 
-	public function __construct(Amun_Registry $registry)
+	public function __construct(Registry $registry)
 	{
 		$this->config   = $registry->getConfig();
 		$this->sql      = $registry->getSql();
@@ -54,11 +62,11 @@ class AmunService_My_Attempt
 		$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 		$date->sub(new DateInterval('PT30M'));
 
-		$con = new PSX_Sql_Condition();
+		$con = new Condition();
 		$con->add('ip', '=', $_SERVER['REMOTE_ADDR']);
-		$con->add('date', '>', $date->format(PSX_DateTime::SQL));
+		$con->add('date', '>', $date->format(DateTime::SQL));
 
-		$count = $this->sql->select($this->registry['table.my_attempt'], array('count'), $con, PSX_Sql::SELECT_FIELD);
+		$count = $this->sql->select($this->registry['table.my_attempt'], array('count'), $con, Sql::SELECT_FIELD);
 
 		return (integer) $count;
 	}
@@ -83,7 +91,7 @@ class AmunService_My_Attempt
 
 	public function clear()
 	{
-		$con = new PSX_Sql_Condition();
+		$con = new Condition();
 		$con->add('ip', '=', $_SERVER['REMOTE_ADDR']);
 
 		$this->sql->delete($this->registry['table.my_attempt'], $con);
@@ -97,7 +105,7 @@ class AmunService_My_Attempt
 
 			'ip'    => $_SERVER['REMOTE_ADDR'],
 			'count' => $this->getCount() + 1,
-			'date'  => $date->format(PSX_DateTime::SQL),
+			'date'  => $date->format(DateTime::SQL),
 
 		));
 	}

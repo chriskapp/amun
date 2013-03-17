@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\My\LoginHandler;
+
+use PSX\OpenId\Op;
+
 /**
  * AmunService_My_LoginHandler_Yahoo
  *
@@ -32,7 +36,7 @@
  * @package    Amun_Service_My
  * @version    $Revision: 635 $
  */
-class AmunService_My_LoginHandler_Yahoo extends AmunService_My_LoginHandler_Openid
+class Yahoo extends Openid
 {
 	public function isValid($identity)
 	{
@@ -44,7 +48,7 @@ class AmunService_My_LoginHandler_Yahoo extends AmunService_My_LoginHandler_Open
 		// build callback
 		$callback = $this->pageUrl . '/login/callback/openid';
 
-		$openid = new PSX_OpenId_Op_Yahoo($this->http, $this->config['psx_url'], $this->store);
+		$openid = new Op\Yahoo($this->http, $this->config['psx_url'], $this->store);
 		$openid->initialize($identity, $callback);
 
 		return $openid;

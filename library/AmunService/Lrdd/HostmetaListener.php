@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Lrdd;
+
+use Amun\Data\ListenerAbstract;
+use XMLWriter;
+
 /**
  * AmunService_Xrds_Listener
  *
@@ -32,7 +37,7 @@
  * @package    AmunService_Xrds
  * @version    $Revision: 635 $
  */
-class AmunService_Lrdd_HostmetaListener extends Amun_Data_ListenerAbstract
+class HostmetaListener extends ListenerAbstract
 {
 	public function notify(XMLWriter $writer)
 	{

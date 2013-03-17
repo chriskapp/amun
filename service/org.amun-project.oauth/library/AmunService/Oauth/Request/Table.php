@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Oauth\Request;
+
+use Amun\Sql\TableAbstract;
+
 /**
  * AmunService_Oauth_Request_Table
  *
@@ -32,7 +36,7 @@
  * @package    Amun_Oauth
  * @version    $Revision: 635 $
  */
-class AmunService_Oauth_Request_Table extends Amun_Sql_TableAbstract
+class Table extends TableAbstract
 {
 	public function getConnections()
 	{

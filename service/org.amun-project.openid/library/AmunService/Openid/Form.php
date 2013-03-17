@@ -22,6 +22,21 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Openid;
+
+use Amun\DataFactory;
+use Amun\Data\FormAbstract;
+use Amun\Exception;
+use Amun\Form as AmunForm;
+use Amun\Form\Element\Panel;
+use Amun\Form\Element\Reference;
+use Amun\Form\Element\Input;
+use Amun\Form\Element\TabbedPane;
+use Amun\Form\Element\Textarea;
+use Amun\Form\Element\Captcha;
+use Amun\Form\Element\Select;
+use AmunService\Openid;
+
 /**
  * Amun_System_Connect_Form
  *
@@ -32,71 +47,71 @@
  * @package    Amun_System_Connect
  * @version    $Revision: 666 $
  */
-class AmunService_Openid_Form extends Amun_Data_FormAbstract
+class Form extends FormAbstract
 {
 	public function create()
 	{
-		throw new PSX_Data_Exception('You cant create a connect record');
+		throw new Exception('You cant create a connect record');
 	}
 
 	public function update($id)
 	{
-		throw new PSX_Data_Exception('You cant update a connect record');
+		throw new Exception('You cant update a connect record');
 	}
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Openid')->getRecord($id);
+		$record = DataFactory::getTable('Openid')->getRecord($id);
 
 
-		$form = new Amun_Form('DELETE', $this->url);
+		$form = new AmunForm('DELETE', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('connect', 'Connect');
+		$panel = new Panel('connect', 'Connect');
 
 
-		$id = new Amun_Form_Element_Input('id', 'ID', $record->id);
+		$id = new Input('id', 'ID', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$status = new Amun_Form_Element_Select('status', 'Status', $record->status);
+		$status = new Select('status', 'Status', $record->status);
 		$status->setOptions($this->getStatus());
 		$status->setDisabled(true);
 
 		$panel->add($status);
 
 
-		$claimedId = new Amun_Form_Element_Input('claimedId', 'Claimed Id', $record->claimedId);
+		$claimedId = new Input('claimedId', 'Claimed Id', $record->claimedId);
 		$claimedId->setType('url');
 		$claimedId->setDisabled(true);
 
 		$panel->add($claimedId);
 
 
-		$identity = new Amun_Form_Element_Input('identity', 'Identity', $record->identity);
+		$identity = new Input('identity', 'Identity', $record->identity);
 		$identity->setType('url');
 		$identity->setDisabled(true);
 
 		$panel->add($identity);
 
 
-		$returnTo = new Amun_Form_Element_Input('returnTo', 'Return to', $record->returnTo);
+		$returnTo = new Input('returnTo', 'Return to', $record->returnTo);
 		$returnTo->setType('url');
 		$returnTo->setDisabled(true);
 
 		$panel->add($returnTo);
 
 
-		$expire = new Amun_Form_Element_Input('expire', 'Expire', $record->expire);
+		$expire = new Input('expire', 'Expire', $record->expire);
 		$expire->setType('text');
 		$expire->setDisabled(true);
 
 		$panel->add($expire);
 
 
-		$date = new Amun_Form_Element_Input('date', 'Date', $record->date);
+		$date = new Input('date', 'Date', $record->date);
 		$date->setType('text');
 		$date->setDisabled(true);
 
@@ -105,7 +120,7 @@ class AmunService_Openid_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -121,7 +136,7 @@ class AmunService_Openid_Form extends Amun_Data_FormAbstract
 	private function getStatus()
 	{
 		$status = array();
-		$result = AmunService_Openid_Record::getStatus();
+		$result = Openid\Record::getStatus();
 
 		foreach($result as $k => $v)
 		{

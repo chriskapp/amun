@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Forum;
+
+use Amun\Sql\TableAbstract;
+
 /**
  * Amun_Service_Forum_Table
  *
@@ -32,7 +36,7 @@
  * @package    Amun_Service_Forum
  * @version    $Revision: 670 $
  */
-class AmunService_Forum_Table extends Amun_Sql_TableAbstract
+class Table extends TableAbstract
 {
 	public function getConnections()
 	{

@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Media;
+
+use Amun\Sql\TableAbstract;
+
 /**
  * AmunService_Core_Content_Media_Table
  *
@@ -32,7 +36,7 @@
  * @package    Amun_Content_Media
  * @version    $Revision: 807 $
  */
-class AmunService_Media_Table extends Amun_Sql_TableAbstract
+class Table extends TableAbstract
 {
 	public function getConnections()
 	{

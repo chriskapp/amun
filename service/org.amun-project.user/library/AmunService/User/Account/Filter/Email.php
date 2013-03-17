@@ -22,6 +22,8 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Account\Filter;
+
 /**
  * Amun_User_Account_Filter_Email
  *
@@ -32,7 +34,7 @@
  * @package    Amun_User_Account
  * @version    $Revision: 635 $
  */
-class AmunService_User_Account_Filter_Email extends PSX_Filter_Email
+class Email extends \PSX\Filter\Email
 {
 	public function apply($value)
 	{

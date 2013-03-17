@@ -22,6 +22,14 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Friend;
+
+use Amun\DataFactory;
+use Amun\Data\StreamAbstract;
+use PSX\ActivityStream\Type;
+use PSX\DateTime;
+use PSX\Sql\Join;
+
 /**
  * AmunService_User_Friend_Stream
  *
@@ -32,12 +40,12 @@
  * @package    Amun_User_Activity
  * @version    $Revision: 635 $
  */
-class AmunService_User_Friend_Stream extends Amun_Data_StreamAbstract
+class Stream extends StreamAbstract
 {
 	public function getObject($id)
 	{
 		$row = $this->table->select(array('id', 'status', 'date'))
-			->join(PSX_Sql_Join::INNER, Amun_Sql_Table_Registry::get('User_Account')
+			->join(Join::INNER, DataFactory::getTable('User_Account')
 				->select(array('globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'author')
 			, 'n:1', 'friendId')
 			->where('id', '=', $id)
@@ -49,7 +57,7 @@ class AmunService_User_Friend_Stream extends Amun_Data_StreamAbstract
 			$updated = new DateTime($row['authorUpdated']);
 			$date    = new DateTime($row['authorDate']);
 
-			$person               = new PSX_ActivityStream_Type_Person();
+			$person               = new Type\Person();
 			$person->displayName  = $row['authorName'];
 			$person->image        = $row['authorThumbnailUrl'];
 			$person->id           = $row['authorGlobalId'];

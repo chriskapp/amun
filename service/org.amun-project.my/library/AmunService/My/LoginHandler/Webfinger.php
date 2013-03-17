@@ -22,6 +22,13 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\My\LoginHandler;
+
+use Amun\Exception;
+use PSX\OpenId;
+use PSX\Webfinger;
+use PSX\Url;
+
 /**
  * AmunService_My_LoginHandler_Webfinger
  *
@@ -32,7 +39,7 @@
  * @package    Amun_Service_My
  * @version    $Revision: 635 $
  */
-class AmunService_My_LoginHandler_Webfinger extends AmunService_My_LoginHandler_Openid
+class Webfinger extends Openid
 {
 	public function isValid($identity)
 	{
@@ -49,8 +56,8 @@ class AmunService_My_LoginHandler_Webfinger extends AmunService_My_LoginHandler_
 
 		// @todo we should probably add here an request cache for 
 		// the lrdd template
-		$webfinger = new PSX_Webfinger($http);
-		$url       = new PSX_Url('http://' . $provider);
+		$webfinger = new Webfinger($this->http);
+		$url       = new Url('http://' . $provider);
 		$template  = $webfinger->getLrddTemplate($url);
 
 		// get acct xrd
@@ -60,7 +67,7 @@ class AmunService_My_LoginHandler_Webfinger extends AmunService_My_LoginHandler_
 		// check subject
 		if(strcmp($xrd->getSubject(), $acct) !== 0)
 		{
-			throw new Amun_Exception('Invalid subject');
+			throw new Exception('Invalid subject');
 		}
 
 		// find openid profile url
@@ -69,7 +76,7 @@ class AmunService_My_LoginHandler_Webfinger extends AmunService_My_LoginHandler_
 		if(!empty($profileUrl))
 		{
 			// initalize openid
-			$openid = new PSX_OpenId($this->http, $this->config['psx_url'], $this->store);
+			$openid = new OpenId($this->http, $this->config['psx_url'], $this->store);
 			$openid->initialize($profileUrl, $callback);
 
 			return $openid;

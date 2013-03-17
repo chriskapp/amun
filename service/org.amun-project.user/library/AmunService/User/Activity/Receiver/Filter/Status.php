@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Activity\Receiver\Filter;
+
+use AmunService\User\Activity\Receiver;
+use PSX\FilterAbstract;
+
 /**
  * Amun_User_Activity_Receiver_Filter_Status
  *
@@ -32,11 +37,11 @@
  * @package    Amun_User_Activity
  * @version    $Revision: 635 $
  */
-class AmunService_User_Activity_Receiver_Filter_Status extends PSX_FilterAbstract
+class Status extends FilterAbstract
 {
 	public function apply($value)
 	{
-		return AmunService_User_Activity_Receiver_Record::getStatus($value) === false ? false : true;
+		return Receiver\Record::getStatus($value) === false ? false : true;
 	}
 
 	public function getErrorMsg()

@@ -22,6 +22,20 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Log;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use Amun\Filter as AmunFilter;
+use Amun\Util;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
+use PSX\DateTime;
+use PSX\Filter;
+use PSX\Util\Markdown;
+
 /**
  * Amun_System_Log
  *
@@ -32,14 +46,14 @@
  * @package    Amun_Log
  * @version    $Revision: 683 $
  */
-class AmunService_Log_Record extends Amun_Data_RecordAbstract
+class Record extends RecordAbstract
 {
 	protected $_user;
 	protected $_date;
 
 	public function setId($id)
 	{
-		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
+		$id = $this->_validate->apply($id, 'integer', array(new AmunFilter\Id($this->_table)), 'id', 'Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -47,7 +61,7 @@ class AmunService_Log_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
@@ -58,7 +72,7 @@ class AmunService_Log_Record extends Amun_Data_RecordAbstract
 
 	public function setType($type)
 	{
-		$type = $this->_validate->apply($type, 'string', array(new PSX_Filter_InArray(Amun_Data_RecordAbstract::getType())), 'type', 'Type');
+		$type = $this->_validate->apply($type, 'string', array(new Filter\InArray(RecordAbstract::getType())), 'type', 'Type');
 
 		if(!$this->_validate->hasError())
 		{
@@ -66,13 +80,13 @@ class AmunService_Log_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setTable($table)
 	{
-		$table = $this->_validate->apply($table, 'string', array(new Amun_Filter_Table($this->_sql)), 'table', 'Table');
+		$table = $this->_validate->apply($table, 'string', array(new AmunFilter\Table($this->_sql)), 'table', 'Table');
 
 		if(!$this->_validate->hasError())
 		{
@@ -80,7 +94,7 @@ class AmunService_Log_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
@@ -93,7 +107,7 @@ class AmunService_Log_Record extends Amun_Data_RecordAbstract
 	{
 		if($this->_user === null)
 		{
-			$this->_user = Amun_Sql_Table_Registry::get('User_Account')->getRecord($this->userId);
+			$this->_user = DataFactory::getTable('User_Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;

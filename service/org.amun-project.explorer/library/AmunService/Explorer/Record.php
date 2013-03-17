@@ -22,6 +22,21 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Explorer;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use Amun\Filter as AmunFilter;
+use Amun\Util;
+use AmunService\Explorer\Filter as ExplorerFilter;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
+use PSX\DateTime;
+use PSX\Filter;
+use PSX\Util\Markdown;
+
 /**
  * Amun_Service_Page
  *
@@ -32,7 +47,7 @@
  * @package    Amun_Service_Page
  * @version    $Revision: 880 $
  */
-class AmunService_Explorer_Record extends PSX_Data_RecordAbstract
+class Record extends RecordAbstract
 {
 	public $path;
 	public $content;
@@ -46,7 +61,7 @@ class AmunService_Explorer_Record extends PSX_Data_RecordAbstract
 
 	public function __construct()
 	{
-		$ct = Amun_DataFactory::getInstance()->getContainer();
+		$ct = DataFactory::getInstance()->getContainer();
 
 		$this->_base     = $ct->getBase();
 		$this->_config   = $ct->getConfig();
@@ -71,7 +86,7 @@ class AmunService_Explorer_Record extends PSX_Data_RecordAbstract
 
 	public function setPath($path)
 	{
-		$path = $this->_validate->apply($path, 'string', array(new AmunService_Explorer_Filter_Path($this->_registry)), 'path', 'Path');
+		$path = $this->_validate->apply($path, 'string', array(new ExplorerFilter\Path($this->_registry)), 'path', 'Path');
 
 		if(!$this->_validate->hasError())
 		{
@@ -79,7 +94,7 @@ class AmunService_Explorer_Record extends PSX_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
@@ -93,7 +108,7 @@ class AmunService_Explorer_Record extends PSX_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 

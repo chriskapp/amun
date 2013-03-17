@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Content\Page\Filter;
+
+use Amun\Registry;
+use PSX\FilterAbstract;
+
 /**
  * AmunService_Core_Content_Page_Filter_TitleExists
  *
@@ -32,13 +37,13 @@
  * @package    Amun_Content_Page
  * @version    $Revision: 635 $
  */
-class AmunService_Content_Page_Filter_TitleExists extends PSX_FilterAbstract
+class TitleExists extends FilterAbstract
 {
 	private $sql;
 	private $registry;
 	private $parentId;
 
-	public function __construct(Amun_Registry $registry, $parentId = 0)
+	public function __construct(Registry $registry, $parentId = 0)
 	{
 		$this->sql      = $registry->getSql();
 		$this->registry = $registry;

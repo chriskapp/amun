@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="f33cf554b3bc0806327ecdc08d3262a1bcff2c03">
+<service xmlns="http://amun-project.org" signature="315fb55f88c8a9ffeb344a6e5a7fa52cbe17f7b3">
   <status>system</status>
   <name>webdav</name>
   <description>Service wich offers an webdav API. Every service can provide a custom DAV node wich represents the page</description>
@@ -22,8 +22,8 @@
   <library>
     <dir name="AmunService">
       <dir name="Webdav">
-        <file name="File.php" md5="21685ab43b896f728f0e2dc83e0ab1c1"/>
-        <file name="Page.php" md5="c6fd2241e7dea6bb7f5334d2b6259496"/>
+        <file name="File.php" md5="56ff5bfce026b22f996b6951573323be"/>
+        <file name="Page.php" md5="e9647260c1689f56aaa6cf87c5821e7d"/>
       </dir>
     </dir>
   </library>

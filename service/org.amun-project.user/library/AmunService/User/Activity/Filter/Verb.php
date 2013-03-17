@@ -22,6 +22,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Activity\Filter;
+
+use PSX\FilterAbstract;
+
 /**
  * Amun_User_Activity_Filter_Verb
  *
@@ -32,7 +36,7 @@
  * @package    Amun_User_Activity
  * @version    $Revision: 635 $
  */
-class AmunService_User_Activity_Filter_Verb extends PSX_FilterAbstract
+class Verb extends FilterAbstract
 {
 	private $verbs;
 

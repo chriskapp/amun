@@ -22,6 +22,21 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\User\Account;
+
+use Amun\DataFactory;
+use Amun\Data\FormAbstract;
+use Amun\Exception;
+use Amun\Form as AmunForm;
+use Amun\Form\Element\Panel;
+use Amun\Form\Element\Reference;
+use Amun\Form\Element\Input;
+use Amun\Form\Element\TabbedPane;
+use Amun\Form\Element\Textarea;
+use Amun\Form\Element\Captcha;
+use Amun\Form\Element\Select;
+use DateTimeZone;
+
 /**
  * Amun_User_Account_Form
  *
@@ -32,68 +47,68 @@
  * @package    Amun_User_Account
  * @version    $Revision: 683 $
  */
-class AmunService_User_Account_Form extends Amun_Data_FormAbstract
+class Form extends FormAbstract
 {
 	public function create()
 	{
-		$form = new Amun_Form('POST', $this->url);
+		$form = new AmunForm('POST', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('account', 'Account');
+		$panel = new Panel('account', 'Account');
 
 
 		if($this->user->isAdministrator())
 		{
-			$groupId = new Amun_Form_Element_Select('groupId', 'Group');
+			$groupId = new Select('groupId', 'Group');
 			$groupId->setOptions($this->getGroup());
 
 			$panel->add($groupId);
 
 
-			$status = new Amun_Form_Element_Select('status', 'Status');
+			$status = new Select('status', 'Status');
 			$status->setOptions($this->getStatus());
 
 			$panel->add($status);
 		}
 
 
-		$identity = new Amun_Form_Element_Input('identity', 'Identity');
+		$identity = new Input('identity', 'Identity');
 		$identity->setType('text');
 
 		$panel->add($identity);
 
 
-		$name = new Amun_Form_Element_Input('name', 'Name');
+		$name = new Input('name', 'Name');
 		$name->setType('text');
 
 		$panel->add($name);
 
 
-		$pw = new Amun_Form_Element_Input('pw', 'Password');
+		$pw = new Input('pw', 'Password');
 		$pw->setType('password');
 
 		$panel->add($pw);
 
 
-		$email = new Amun_Form_Element_Input('email', 'Email');
+		$email = new Input('email', 'Email');
 		$email->setType('email');
 
 		$panel->add($email);
 
 
-		$country = new Amun_Form_Element_Select('countryId', 'Country');
+		$country = new Select('countryId', 'Country');
 		$country->setOptions($this->getCountry());
 
 		$panel->add($country);
 
 
-		$gender = new Amun_Form_Element_Select('gender', 'Gender');
+		$gender = new Select('gender', 'Gender');
 		$gender->setOptions($this->getGender());
 
 		$panel->add($gender);
 
 
-		$timezone = new Amun_Form_Element_Select('timezone', 'Timezone', 'UTC');
+		$timezone = new Select('timezone', 'Timezone', 'UTC');
 		$timezone->setOptions($this->getTimezone());
 
 		$panel->add($timezone);
@@ -101,7 +116,7 @@ class AmunService_User_Account_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -116,16 +131,16 @@ class AmunService_User_Account_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('User_Account')->getRecord($id);
+		$record = DataFactory::getTable('User_Account')->getRecord($id);
 
 
-		$form = new Amun_Form('PUT', $this->url);
+		$form = new AmunForm('PUT', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('account', 'Account');
+		$panel = new Panel('account', 'Account');
 
 
-		$id = new Amun_Form_Element_Input('id', 'Id', $record->id);
+		$id = new Input('id', 'Id', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
@@ -133,45 +148,45 @@ class AmunService_User_Account_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAdministrator())
 		{
-			$groupId = new Amun_Form_Element_Select('groupId', 'Group', $record->groupId);
+			$groupId = new Select('groupId', 'Group', $record->groupId);
 			$groupId->setOptions($this->getGroup());
 
 			$panel->add($groupId);
 
 
-			$status = new Amun_Form_Element_Select('status', 'Status', $record->status);
+			$status = new Select('status', 'Status', $record->status);
 			$status->setOptions($this->getStatus());
 
 			$panel->add($status);
 		}
 
 
-		$name = new Amun_Form_Element_Input('name', 'Name', $record->name);
+		$name = new Input('name', 'Name', $record->name);
 		$name->setType('text');
 		$name->setDisabled(true);
 
 		$panel->add($name);
 
 
-		$email = new Amun_Form_Element_Input('email', 'Email', $record->email);
+		$email = new Input('email', 'Email', $record->email);
 		$email->setType('email');
 
 		$panel->add($email);
 
 
-		$country = new Amun_Form_Element_Select('countryId', 'Country', $record->countryId);
+		$country = new Select('countryId', 'Country', $record->countryId);
 		$country->setOptions($this->getCountry());
 
 		$panel->add($country);
 
 
-		$gender = new Amun_Form_Element_Select('gender', 'Gender', $record->gender);
+		$gender = new Select('gender', 'Gender', $record->gender);
 		$gender->setOptions($this->getGender());
 
 		$panel->add($gender);
 
 
-		$timezone = new Amun_Form_Element_Select('timezone', 'Timezone', $record->timezone);
+		$timezone = new Select('timezone', 'Timezone', $record->timezone);
 		$timezone->setOptions($this->getTimezone());
 
 		$panel->add($timezone);
@@ -179,7 +194,7 @@ class AmunService_User_Account_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -194,16 +209,16 @@ class AmunService_User_Account_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('User_Account')->getRecord($id);
+		$record = DataFactory::getTable('User_Account')->getRecord($id);
 
 
-		$form = new Amun_Form('DELETE', $this->url);
+		$form = new AmunForm('DELETE', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('account', 'Account');
+		$panel = new Panel('account', 'Account');
 
 
-		$id = new amun_form_element_input('id', 'Id', $record->id);
+		$id = new Input('id', 'Id', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
@@ -211,14 +226,14 @@ class AmunService_User_Account_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAdministrator())
 		{
-			$groupId = new Amun_Form_Element_Select('groupId', 'Group', $record->groupId);
+			$groupId = new Select('groupId', 'Group', $record->groupId);
 			$groupId->setOptions($this->getGroup());
 			$groupId->setDisabled(true);
 
 			$panel->add($groupId);
 
 
-			$status = new Amun_Form_Element_Select('status', 'Status', $record->status);
+			$status = new Select('status', 'Status', $record->status);
 			$status->setOptions($this->getStatus());
 			$status->setDisabled(true);
 
@@ -226,35 +241,35 @@ class AmunService_User_Account_Form extends Amun_Data_FormAbstract
 		}
 
 
-		$name = new Amun_Form_Element_Input('name', 'Name', $record->name);
+		$name = new Input('name', 'Name', $record->name);
 		$name->setType('text');
 		$name->setDisabled(true);
 
 		$panel->add($name);
 
 
-		$email = new Amun_Form_Element_Input('email', 'Email', $record->email);
+		$email = new Input('email', 'Email', $record->email);
 		$email->setType('email');
 		$email->setDisabled(true);
 
 		$panel->add($email);
 
 
-		$country = new Amun_Form_Element_Select('countryId', 'Country', $record->countryId);
+		$country = new Select('countryId', 'Country', $record->countryId);
 		$country->setOptions($this->getCountry());
 		$country->setDisabled(true);
 
 		$panel->add($country);
 
 
-		$gender = new Amun_Form_Element_Select('gender', 'Gender', $record->gender);
+		$gender = new Select('gender', 'Gender', $record->gender);
 		$gender->setOptions($this->getGender());
 		$gender->setDisabled(true);
 
 		$panel->add($gender);
 
 
-		$timezone = new Amun_Form_Element_Select('timezone', 'Timezone', $record->timezone);
+		$timezone = new Select('timezone', 'Timezone', $record->timezone);
 		$timezone->setOptions($this->getTimezone());
 		$timezone->setDisabled(true);
 
@@ -263,7 +278,7 @@ class AmunService_User_Account_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -340,7 +355,7 @@ class AmunService_User_Account_Form extends Amun_Data_FormAbstract
 	private function getStatus()
 	{
 		$status = array();
-		$result = AmunService_User_Account_Record::getStatus();
+		$result = Record::getStatus();
 
 		foreach($result as $k => $v)
 		{
@@ -358,7 +373,7 @@ class AmunService_User_Account_Form extends Amun_Data_FormAbstract
 	private function getGender()
 	{
 		$gender = array();
-		$result = AmunService_User_Account_Record::getGender();
+		$result = Record::getGender();
 
 		foreach($result as $k => $v)
 		{

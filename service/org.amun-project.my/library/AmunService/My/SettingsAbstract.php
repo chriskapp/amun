@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\My;
+
+use Amun\Option;
+use AmunService\My\MyAbstract;
+
 /**
  * Amun_Service_My_SettingsAbstract
  *
@@ -32,21 +37,16 @@
  * @package    Amun_Service_My
  * @version    $Revision: 635 $
  */
-abstract class AmunService_My_SettingsAbstract extends AmunService_My_MyAbstract
+abstract class SettingsAbstract extends MyAbstract
 {
 	public function onLoad()
 	{
 		parent::onLoad();
 
 		// options
-		$settings = new Amun_Option('settings', $this->registry, $this->user, $this->page);
+		$settings = new Option('settings', $this->registry, $this->user, $this->page);
 		$settings->add('my_view', 'Account', $this->page->url . '/settings');
 		$settings->add('my_view', 'Security', $this->page->url . '/settings/security');
-		/*
-		$settings->add('my_view', 'Contact', $this->page->url . '/settings/contact');
-		$settings->add('my_view', 'Notification', $this->page->url . '/settings/notification');
-		$settings->add('my_view', 'Subscription', $this->page->url . '/settings/subscription');
-		*/
 		$settings->add('my_view', 'Connection', $this->page->url . '/settings/connection');
 		$settings->add('my_view', 'Application', $this->page->url . '/settings/application');
 		$settings->load(array($this->page));

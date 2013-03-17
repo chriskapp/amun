@@ -22,6 +22,20 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Country;
+
+use Amun\DataFactory;
+use Amun\Data\HandlerAbstract;
+use Amun\Data\RecordAbstract;
+use Amun\Exception;
+use Amun\Filter as AmunFilter;
+use Amun\Util;
+use PSX\Data\WriterInterface;
+use PSX\Data\WriterResult;
+use PSX\DateTime;
+use PSX\Filter;
+use PSX\Util\Markdown;
+
 /**
  * Amun_System_country
  *
@@ -32,7 +46,7 @@
  * @package    Amun_System_Country
  * @version    $Revision: 683 $
  */
-class AmunService_Country_Record extends Amun_Data_RecordAbstract
+class Record extends RecordAbstract
 {
 	public function getName()
 	{
@@ -41,7 +55,7 @@ class AmunService_Country_Record extends Amun_Data_RecordAbstract
 
 	public function setId($id)
 	{
-		$id = $this->_validate->apply($id, 'integer', array(new Amun_Filter_Id($this->_table)), 'id', 'Id');
+		$id = $this->_validate->apply($id, 'integer', array(new AmunFilter\Id($this->_table)), 'id', 'Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -49,13 +63,13 @@ class AmunService_Country_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setTitle($title)
 	{
-		$title = $this->_validate->apply($title, 'string', array(new PSX_Filter_Length(3, 64)), 'title', 'Title');
+		$title = $this->_validate->apply($title, 'string', array(new Filter\Length(3, 64)), 'title', 'Title');
 
 		if(!$this->_validate->hasError())
 		{
@@ -63,13 +77,13 @@ class AmunService_Country_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setCode($code)
 	{
-		$code = $this->_validate->apply($code, 'string', array(new PSX_Filter_Alpha(), new PSX_Filter_Length(2)), 'code', 'Code');
+		$code = $this->_validate->apply($code, 'string', array(new Filter\Alpha(), new Filter\Length(2)), 'code', 'Code');
 
 		if(!$this->_validate->hasError())
 		{
@@ -77,13 +91,13 @@ class AmunService_Country_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setLongitude($longitude)
 	{
-		$longitude = $this->_validate->apply($longitude, 'float', array(new PSX_Filter_Length(-180, 180)), 'longitude', 'Longitude');
+		$longitude = $this->_validate->apply($longitude, 'float', array(new Filter\Length(-180, 180)), 'longitude', 'Longitude');
 
 		if(!$this->_validate->hasError())
 		{
@@ -91,13 +105,13 @@ class AmunService_Country_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 
 	public function setLatitude($latitude)
 	{
-		$latitude = $this->_validate->apply($latitude, 'float', array(new PSX_Filter_Length(-90, 90)), 'latitude', 'Latitude');
+		$latitude = $this->_validate->apply($latitude, 'float', array(new Filter\Length(-90, 90)), 'latitude', 'Latitude');
 
 		if(!$this->_validate->hasError())
 		{
@@ -105,7 +119,7 @@ class AmunService_Country_Record extends Amun_Data_RecordAbstract
 		}
 		else
 		{
-			throw new PSX_Data_Exception($this->_validate->getLastError());
+			throw new Exception($this->_validate->getLastError());
 		}
 	}
 

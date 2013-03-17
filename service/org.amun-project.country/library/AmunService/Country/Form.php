@@ -22,6 +22,20 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Country;
+
+use Amun\DataFactory;
+use Amun\Data\FormAbstract;
+use Amun\Exception;
+use Amun\Form as AmunForm;
+use Amun\Form\Element\Panel;
+use Amun\Form\Element\Reference;
+use Amun\Form\Element\Input;
+use Amun\Form\Element\TabbedPane;
+use Amun\Form\Element\Textarea;
+use Amun\Form\Element\Captcha;
+use Amun\Form\Element\Select;
+
 /**
  * AmunService_Country_Form
  *
@@ -32,35 +46,35 @@
  * @package    AmunService_Country
  * @version    $Revision: 666 $
  */
-class AmunService_Country_Form extends Amun_Data_FormAbstract
+class Form extends FormAbstract
 {
 	public function create()
 	{
-		$form = new Amun_Form('POST', $this->url);
+		$form = new AmunForm('POST', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('country', 'Country');
+		$panel = new Panel('country', 'Country');
 
 
-		$title = new Amun_Form_Element_Input('title', 'Title');
+		$title = new Input('title', 'Title');
 		$title->setType('text');
 
 		$panel->add($title);
 
 
-		$code = new Amun_Form_Element_Input('code', 'Code');
+		$code = new Input('code', 'Code');
 		$code->setType('text');
 
 		$panel->add($code);
 
 
-		$longitude = new Amun_Form_Element_Input('longitude', 'Longitude');
+		$longitude = new Input('longitude', 'Longitude');
 		$longitude->setType('text');
 
 		$panel->add($longitude);
 
 
-		$latitude = new Amun_Form_Element_Input('latitude', 'Latitude');
+		$latitude = new Input('latitude', 'Latitude');
 		$latitude->setType('text');
 
 		$panel->add($latitude);
@@ -68,7 +82,7 @@ class AmunService_Country_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -83,40 +97,40 @@ class AmunService_Country_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Country')->getRecord($id);
+		$record = DataFactory::getTable('Country')->getRecord($id);
 
 
-		$form = new Amun_Form('PUT', $this->url);
+		$form = new AmunForm('PUT', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('country', 'Country');
+		$panel = new Panel('country', 'Country');
 
 
-		$id = new Amun_Form_Element_Input('id', 'ID', $record->id);
+		$id = new Input('id', 'ID', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$title = new Amun_Form_Element_Input('title', 'Title', $record->title);
+		$title = new Input('title', 'Title', $record->title);
 		$title->setType('text');
 
 		$panel->add($title);
 
 
-		$code = new Amun_Form_Element_Input('code', 'Code', $record->code);
+		$code = new Input('code', 'Code', $record->code);
 		$code->setType('text');
 
 		$panel->add($code);
 
 
-		$longitude = new Amun_Form_Element_Input('longitude', 'Longitude', $record->longitude);
+		$longitude = new Input('longitude', 'Longitude', $record->longitude);
 		$longitude->setType('text');
 
 		$panel->add($longitude);
 
 
-		$latitude = new Amun_Form_Element_Input('latitude', 'Latitude', $record->latitude);
+		$latitude = new Input('latitude', 'Latitude', $record->latitude);
 		$latitude->setType('text');
 
 		$panel->add($latitude);
@@ -124,7 +138,7 @@ class AmunService_Country_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new amun_form_element_captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -139,43 +153,43 @@ class AmunService_Country_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Country')->getRecord($id);
+		$record = DataFactory::getTable('Country')->getRecord($id);
 
 
-		$form = new Amun_Form('DELETE', $this->url);
+		$form = new AmunForm('DELETE', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('country', 'Country');
+		$panel = new Panel('country', 'Country');
 
 
-		$id = new Amun_Form_Element_Input('id', 'ID', $record->id);
+		$id = new Input('id', 'ID', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$title = new Amun_Form_Element_Input('title', 'Title', $record->title);
+		$title = new Input('title', 'Title', $record->title);
 		$title->setType('text');
 		$title->setDisabled(true);
 
 		$panel->add($title);
 
 
-		$code = new Amun_Form_Element_Input('code', 'Code', $record->code);
+		$code = new Input('code', 'Code', $record->code);
 		$code->setType('text');
 		$code->setDisabled(true);
 
 		$panel->add($code);
 
 
-		$longitude = new Amun_Form_Element_Input('longitude', 'Longitude', $record->longitude);
+		$longitude = new Input('longitude', 'Longitude', $record->longitude);
 		$longitude->setType('text');
 		$longitude->setDisabled(true);
 
 		$panel->add($longitude);
 
 
-		$latitude = new Amun_Form_Element_Input('latitude', 'Latitude', $record->latitude);
+		$latitude = new Input('latitude', 'Latitude', $record->latitude);
 		$latitude->setType('text');
 		$latitude->setDisabled(true);
 
@@ -184,7 +198,7 @@ class AmunService_Country_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['amun_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);

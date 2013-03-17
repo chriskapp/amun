@@ -22,6 +22,20 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Pipe;
+
+use Amun\DataFactory;
+use Amun\Data\FormAbstract;
+use Amun\Exception;
+use Amun\Form as AmunForm;
+use Amun\Form\Element\Panel;
+use Amun\Form\Element\Reference;
+use Amun\Form\Element\Input;
+use Amun\Form\Element\TabbedPane;
+use Amun\Form\Element\Textarea;
+use Amun\Form\Element\Captcha;
+use Amun\Form\Element\Select;
+
 /**
  * Amun_Service_Pipe_Form
  *
@@ -32,19 +46,19 @@
  * @package    Amun_Service_Pipe
  * @version    $Revision: 666 $
  */
-class AmunService_Pipe_Form extends Amun_Data_FormAbstract
+class Form extends FormAbstract
 {
 	public function create($pageId = 0)
 	{
-		$form = new Amun_Form('POST', $this->url);
+		$form = new AmunForm('POST', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('page', 'Pipe');
+		$panel = new Panel('page', 'Pipe');
 
 
 		if(empty($pageId))
 		{
-			$pageId = new Amun_Form_Element_Reference('pageId', 'Page ID');
+			$pageId = new Reference('pageId', 'Page ID');
 			$pageId->setValueField('id');
 			$pageId->setLabelField('title');
 			$pageId->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/page');
@@ -53,14 +67,14 @@ class AmunService_Pipe_Form extends Amun_Data_FormAbstract
 		}
 		else
 		{
-			$pageId = new Amun_Form_Element_Input('pageId', 'Page ID', $pageId);
+			$pageId = new Input('pageId', 'Page ID', $pageId);
 			$pageId->setType('hidden');
 
 			$panel->add($pageId);
 		}
 
 
-		$media = new Amun_Form_Element_Select('mediaId', 'Media');
+		$media = new Select('mediaId', 'Media');
 		$media->setOptions($this->getMedia());
 
 		$panel->add($media);
@@ -68,7 +82,7 @@ class AmunService_Pipe_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -83,22 +97,22 @@ class AmunService_Pipe_Form extends Amun_Data_FormAbstract
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Pipe')->getRecord($id);
+		$record = DataFactory::getTable('Pipe')->getRecord($id);
 
 
-		$form = new Amun_Form('PUT', $this->url);
+		$form = new AmunForm('PUT', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('page', 'Page');
+		$panel = new Panel('page', 'Page');
 
 
-		$id = new Amun_Form_Element_Input('id', 'ID', $record->id);
+		$id = new Input('id', 'ID', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$media = new Amun_Form_Element_Select('mediaId', 'Media', $record->mediaId);
+		$media = new Select('mediaId', 'Media', $record->mediaId);
 		$media->setOptions($this->getMedia());
 
 		$panel->add($media);
@@ -106,7 +120,7 @@ class AmunService_Pipe_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -121,22 +135,22 @@ class AmunService_Pipe_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Pipe')->getRecord($id);
+		$record = DataFactory::getTable('Pipe')->getRecord($id);
 
 
-		$form = new Amun_Form('PUT', $this->url);
+		$form = new AmunForm('PUT', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('page', 'Page');
+		$panel = new Panel('page', 'Page');
 
 
-		$id = new Amun_Form_Element_Input('id', 'ID', $record->id);
+		$id = new Input('id', 'ID', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$media = new Amun_Form_Element_Select('mediaId', 'Media', $record->mediaId);
+		$media = new Select('mediaId', 'Media', $record->mediaId);
 		$media->setOptions($this->getMedia());
 		$media->setDisabled(true);
 
@@ -145,7 +159,7 @@ class AmunService_Pipe_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);

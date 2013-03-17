@@ -22,6 +22,21 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace AmunService\Core\Registry;
+
+use Amun\DataFactory;
+use Amun\Data\FormAbstract;
+use Amun\Exception;
+use Amun\Form as AmunForm;
+use Amun\Form\Element\Panel;
+use Amun\Form\Element\Reference;
+use Amun\Form\Element\Input;
+use Amun\Form\Element\TabbedPane;
+use Amun\Form\Element\Textarea;
+use Amun\Form\Element\Captcha;
+use Amun\Form\Element\Select;
+use AmunService\Core\Registry;
+
 /**
  * Amun_System_Registry_Form
  *
@@ -32,38 +47,38 @@
  * @package    Amun_System_Registry
  * @version    $Revision: 666 $
  */
-class AmunService_Core_Registry_Form extends Amun_Data_FormAbstract
+class Form extends FormAbstract
 {
 	public function create()
 	{
-		throw new PSX_Data_Exception('You cant create a registry record');
+		throw new Exception('You cant create a registry record');
 	}
 
 	public function update($id)
 	{
-		$record = Amun_Sql_Table_Registry::get('Core_Registry')->getRecord($id);
+		$record = DataFactory::getTable('Core_Registry')->getRecord($id);
 
 
-		$form = new Amun_Form('PUT', $this->url);
+		$form = new AmunForm('PUT', $this->url);
 
 
-		$panel = new Amun_Form_Element_Panel('registry', 'Registry');
+		$panel = new Panel('registry', 'Registry');
 
 
-		$id = new Amun_Form_Element_Input('id', 'Id', $record->id);
+		$id = new Input('id', 'Id', $record->id);
 		$id->setType('hidden');
 
 		$panel->add($id);
 
 
-		$name = new Amun_Form_Element_Input('name', 'Name', $record->name);
+		$name = new Input('name', 'Name', $record->name);
 		$name->setType('text');
 		$name->setDisabled(true);
 
 		$panel->add($name);
 
 
-		$value = new Amun_Form_Element_Input('value', 'Value', $record->value);
+		$value = new Input('value', 'Value', $record->value);
 		$value->setType('text');
 
 		$panel->add($value);
@@ -71,7 +86,7 @@ class AmunService_Core_Registry_Form extends Amun_Data_FormAbstract
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
-			$captcha = new Amun_Form_Element_Captcha('captcha', 'Captcha');
+			$captcha = new Captcha('captcha', 'Captcha');
 			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
 
 			$panel->add($captcha);
@@ -86,13 +101,13 @@ class AmunService_Core_Registry_Form extends Amun_Data_FormAbstract
 
 	public function delete($id)
 	{
-		throw new PSX_Data_Exception('You cant delete a registry record');
+		throw new Exception('You cant delete a registry record');
 	}
 
 	public function getType()
 	{
 		$type   = array();
-		$result = AmunService_Core_Registry_Record::getType();
+		$result = Registry\Record::getType();
 
 		foreach($result as $k => $v)
 		{
