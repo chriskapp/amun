@@ -42,6 +42,7 @@ use DOMDocument;
 use DOMElement;
 use DOMNodeList;
 use DOMNode;
+use ReflectionClass;
 
 /**
  * Amun_Content_Service_Handler
@@ -426,7 +427,7 @@ class Handler extends HandlerAbstract
 						}
 					}
 				}
-				catch(Exception $e)
+				catch(\Exception $e)
 				{
 					Log::error($e->getMessage());
 				}
@@ -511,7 +512,7 @@ class Handler extends HandlerAbstract
 						Log::info('> Created registry entry "' . $name . '" = "' . $value . '"');
 					}
 				}
-				catch(Exception $e)
+				catch(\Exception $e)
 				{
 					Log::error($e->getMessage());
 				}
@@ -534,7 +535,7 @@ class Handler extends HandlerAbstract
 			{
 				$this->parseQueries($database->childNodes, $record);
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
 				Log::error($e->getMessage());
 			}
