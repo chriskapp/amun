@@ -22,7 +22,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace AmunService\Mail;
+namespace AmunService\Media;
 
 use Amun\DataFactory;
 use Amun\Data\FormAbstract;
