@@ -99,7 +99,7 @@ class Record extends RecordAbstract
 
 	public function setClass($class)
 	{
-		$class = $this->_validate->apply($class, 'string', array(new RegistryFilter\Class()), 'class', 'Class');
+		$class = $this->_validate->apply($class, 'string', array(new RegistryFilter\ClassName()), 'class', 'Class');
 
 		if(!$this->_validate->hasError())
 		{

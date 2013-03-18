@@ -69,8 +69,6 @@ class Facebook extends LoginHandlerAbstract implements CallbackInterface
 
 	public function isValid($identity)
 	{
-		// not complete tested
-		return false;
 		return filter_var($identity, FILTER_VALIDATE_EMAIL) !== false && strpos($identity, '@facebook.com') !== false;
 	}
 
@@ -92,7 +90,7 @@ class Facebook extends LoginHandlerAbstract implements CallbackInterface
 		$code = new AuthorizationCode($this->http, new Url(self::ACCESS_TOKEN));
 		$code->setClientPassword(self::CLIENT_ID, self::CLIENT_SECRET, AuthorizationCode::AUTH_POST);
 
-		$accessToken = $code->getAccessToken($redirect);
+		$accessToken = $code->getAccessToken($this->pageUrl . '/login/callback/facebook');
 
 		// request user informations
 		$url    = new Url(self::VERIFY_ACCOUNT);
@@ -101,8 +99,8 @@ class Facebook extends LoginHandlerAbstract implements CallbackInterface
 		);
 
 		$request  = new GetRequest($url, $header);
-		$response = $this->http->request();
-		
+		$response = $this->http->request($request);
+
 		if($response->getCode() == 200)
 		{
 			$acc = Json::decode($response->getBody());
@@ -130,12 +128,12 @@ class Facebook extends LoginHandlerAbstract implements CallbackInterface
 					throw new Exception('Registration is disabled');
 				}
 
-				if(empty($acc['name']))
+				if(empty($acc['username']))
 				{
 					throw new Exception('No username provided');
 				}
 
-				$name = $this->normalizeName($acc['name']);
+				$name = $this->normalizeName($acc['username']);
 
 				// create user account
 				$handler = new Account\Handler($this->user);
@@ -146,10 +144,9 @@ class Facebook extends LoginHandlerAbstract implements CallbackInterface
 				$account->setIdentity($identity);
 				$account->setName($name);
 				$account->setPw(Security::generatePw());
-				$account->setTimezone($acc['timezone']);
 
-				$account->profileUrl   = isset($acc['html_url']) ? $acc['html_url'] : null;
-				$account->thumbnailUrl = isset($acc['avatar_url']) ? $acc['avatar_url'] : null;
+				$account->profileUrl   = isset($acc['link']) ? $acc['link'] : null;
+				$account->thumbnailUrl = 'http://graph.facebook.com/' . $identity . '/picture';
 
 				$account = $handler->create($account);
 				$userId  = $account->id;

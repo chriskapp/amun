@@ -12,7 +12,7 @@
 <div class="row amun-service-my">
 
 	<div class="span2 hidden-phone">
-		<img src="<?php echo $account->thumbnailUrl; ?>" />
+		<img src="<?php echo $account->thumbnailUrl; ?>" width="48" height="48" />
 		<dl>
 			<dt>Name</dt>
 			<dd><?php echo $account->name; ?></dd>

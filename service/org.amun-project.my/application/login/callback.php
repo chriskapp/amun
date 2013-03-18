@@ -26,7 +26,7 @@ namespace my\application\login;
 
 use Amun\Module\ApplicationAbstract;
 use AmunService\My\LoginHandlerFactory;
-use AmunService\My\CallbackInterface;
+use AmunService\My\LoginHandler\CallbackInterface;
 
 /**
  * callback
@@ -66,6 +66,7 @@ class callback extends ApplicationAbstract
 
 		if($handler instanceof CallbackInterface)
 		{
+			$handler->setPageUrl($this->page->url);
 			$handler->callback();
 		}
 	}

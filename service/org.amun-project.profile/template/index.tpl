@@ -12,7 +12,7 @@
 <div class="row vcard amun-service-profile">
 
 	<div class="span2 vcard hidden-phone">
-		<img class="photo" src="<?php echo $account->thumbnailUrl; ?>" />
+		<img class="photo" src="<?php echo $account->thumbnailUrl; ?>" width="48" height="48" />
 		<dl>
 			<dt>Name</dt>
 			<dd><a href="<?php echo $account->profileUrl; ?>" rel="me" class="nickname url uid"><?php echo $account->name; ?></a></dd>

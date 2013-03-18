@@ -33,6 +33,7 @@ use AmunService\User\Friend;
 use AmunService\Core\Host;
 use PSX\DateTime;
 use PSX\Http;
+use PSX\Url;
 use PSX\Webfinger;
 use PSX\Sql;
 use PSX\Sql\Condition;
@@ -127,7 +128,7 @@ class Handler extends HandlerAbstract
 			// set global id
 			if(!isset($record->globalId))
 			{
-				$profileUrl = new PSX_Url($record->profileUrl);
+				$profileUrl = new Url($record->profileUrl);
 
 				$record->globalId = $this->base->getUUID('user:account:' . $profileUrl->getHost() . ':' . $record->name . ':' . uniqid());
 			}

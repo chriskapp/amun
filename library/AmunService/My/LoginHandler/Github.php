@@ -38,7 +38,7 @@ use PSX\Oauth2;
 use PSX\Oauth2\Authorization\AuthorizationCode;
 
 /**
- * AmunService_My_LoginHandler_Github
+ * AmunService_My_LoginHandler_Facebook
  *
  * @author     Christoph Kappestein <k42b3.x@gmail.com>
  * @license    http://www.gnu.org/licenses/gpl.html GPLv3
@@ -53,8 +53,8 @@ class Github extends LoginHandlerAbstract implements CallbackInterface
 	const CLIENT_SECRET  = '';
 
 	const AUTHENTICATE   = 'https://github.com/login/oauth/authorize';
-	const ACCESS_TOKEN   = 'https://graph.facebook.com/oauth/access_token';
-	const VERIFY_ACCOUNT = 'https://api.github.com/users';
+	const ACCESS_TOKEN   = 'https://github.com/login/oauth/access_token';
+	const VERIFY_ACCOUNT = 'https://api.github.com/user';
 
 	protected $http;
 	protected $oauth;
@@ -69,8 +69,6 @@ class Github extends LoginHandlerAbstract implements CallbackInterface
 
 	public function isValid($identity)
 	{
-		// not complete tested
-		return false;
 		return filter_var($identity, FILTER_VALIDATE_EMAIL) !== false && strpos($identity, '@github.com') !== false;
 	}
 
@@ -92,7 +90,7 @@ class Github extends LoginHandlerAbstract implements CallbackInterface
 		$code = new AuthorizationCode($this->http, new Url(self::ACCESS_TOKEN));
 		$code->setClientPassword(self::CLIENT_ID, self::CLIENT_SECRET, AuthorizationCode::AUTH_POST);
 
-		$accessToken = $code->getAccessToken($redirect);
+		$accessToken = $code->getAccessToken($this->pageUrl . '/login/callback/github');
 
 		// request user informations
 		$url    = new Url(self::VERIFY_ACCOUNT);
@@ -101,8 +99,8 @@ class Github extends LoginHandlerAbstract implements CallbackInterface
 		);
 
 		$request  = new GetRequest($url, $header);
-		$response = $this->http->request();
-		
+		$response = $this->http->request($request);
+
 		if($response->getCode() == 200)
 		{
 			$acc = Json::decode($response->getBody());
@@ -146,7 +144,6 @@ class Github extends LoginHandlerAbstract implements CallbackInterface
 				$account->setIdentity($identity);
 				$account->setName($name);
 				$account->setPw(Security::generatePw());
-				$account->setTimezone($acc['timezone']);
 
 				$account->profileUrl   = isset($acc['html_url']) ? $acc['html_url'] : null;
 				$account->thumbnailUrl = isset($acc['avatar_url']) ? $acc['avatar_url'] : null;
