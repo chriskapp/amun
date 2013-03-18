@@ -28,10 +28,13 @@ use Amun\Exception;
 use Amun\Security;
 use Amun\DataFactory;
 use AmunService\My\LoginHandlerAbstract;
+use AmunService\User\Account;
 use PSX\Http;
+use PSX\Url;
 use PSX\OpenId\Store;
 use PSX\OpenId\Extension;
 use PSX\OpenId\ProviderAbstract;
+use PSX\Sql\Condition;
 use DateTimeZone;
 
 /**
@@ -234,7 +237,7 @@ class Openid extends LoginHandlerAbstract implements CallbackInterface
 		// build callback
 		$callback = $this->pageUrl . '/login/callback/openid';
 
-		$openid = new PSX_OpenId($this->http, $this->config['psx_url'], $this->store);
+		$openid = new \PSX\OpenId($this->http, $this->config['psx_url'], $this->store);
 		$openid->initialize($identity, $callback);
 
 		return $openid;
