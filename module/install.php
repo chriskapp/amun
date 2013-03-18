@@ -22,6 +22,27 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+use Amun\Dependency;
+use Amun\Exception;
+use Amun\DataFactory;
+use Amun\Security;
+use Amun\Registry;
+use Amun\User;
+use AmunService\User\Account;
+use AmunService\User\Group;
+use AmunService\Content\Page as ContentPage;
+use AmunService\Core\Service;
+use AmunService\Oauth;
+use AmunService\Page;
+use PSX\Module\ViewAbstract;
+use PSX\Template;
+use PSX\Config;
+use PSX\Sql;
+use PSX\Sql\Condition;
+use PSX\Json;
+use PSX\Filter;
+use PSX\DateTime;
+
 /**
  * install
  *
@@ -31,7 +52,7 @@
  * @category   module
  * @version    $Revision: 880 $
  */
-class install extends PSX_Module_ViewAbstract
+class install extends ViewAbstract
 {
 	protected $services = array(
 		'org.amun-project.log',
@@ -63,7 +84,7 @@ class install extends PSX_Module_ViewAbstract
 
 	public function getDependencies()
 	{
-		$ct = new Amun_Dependency_Install($this->base->getConfig());
+		$ct = new Dependency\Install($this->base->getConfig());
 
 		return $ct;
 	}
@@ -72,17 +93,17 @@ class install extends PSX_Module_ViewAbstract
 	{
 		try
 		{
-			$con         = new PSX_Sql_Condition(array('name', '=', 'core.install_date'));
-			$installDate = $this->sql->select($this->registry['table.core_registry'], array('value'), $con, PSX_Sql::SELECT_FIELD);
+			$con         = new Condition(array('name', '=', 'core.install_date'));
+			$installDate = $this->sql->select($this->registry['table.core_registry'], array('value'), $con, Sql::SELECT_FIELD);
 
 			if(!empty($installDate))
 			{
-				throw new Amun_Exception('You already have run the installer, for security reasons the installer stops here.');
+				throw new Exception('You already have run the installer, for security reasons the installer stops here.');
 			}
 
 			$this->registry->load();
 		}
-		catch(PSX_Sql_Exception $e)
+		catch(\PDOException $e)
 		{
 		}
 	}
@@ -145,13 +166,13 @@ class install extends PSX_Module_ViewAbstract
 
 			if(!$cache->isWritable())
 			{
-				throw new Amun_Exception('Cache directory is not writeable');
+				throw new Exception('Cache directory is not writeable');
 			}
 
 
-			echo PSX_Json::encode(array('success' => true));
+			echo Json::encode(array('success' => true));
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
 			$debug = '';
 
@@ -160,7 +181,7 @@ class install extends PSX_Module_ViewAbstract
 				$debug.= "\n" . $e->getTraceAsString();
 			}
 
-			echo PSX_Json::encode(array('success' => false, 'msg' => $e->getMessage() . $debug));
+			echo Json::encode(array('success' => false, 'msg' => $e->getMessage() . $debug));
 		}
 	}
 
@@ -270,9 +291,9 @@ SQL;
 				$this->sql->query($query);
 			}
 
-			echo PSX_Json::encode(array('success' => true));
+			echo Json::encode(array('success' => true));
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
 			$debug = '';
 
@@ -281,7 +302,7 @@ SQL;
 				$debug.= "\n" . $e->getTraceAsString();
 			}
 
-			echo PSX_Json::encode(array('success' => false, 'msg' => $e->getMessage() . $debug));
+			echo Json::encode(array('success' => false, 'msg' => $e->getMessage() . $debug));
 		}
 	}
 
@@ -302,9 +323,9 @@ SQL;
 				$this->sql->query($query);
 			}
 
-			echo PSX_Json::encode(array('success' => true));
+			echo Json::encode(array('success' => true));
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
 			$debug = '';
 
@@ -313,7 +334,7 @@ SQL;
 				$debug.= "\n" . $e->getTraceAsString();
 			}
 
-			echo PSX_Json::encode(array('success' => false, 'msg' => $e->getMessage() . $debug));
+			echo Json::encode(array('success' => false, 'msg' => $e->getMessage() . $debug));
 		}
 	}
 
@@ -330,19 +351,19 @@ SQL;
 
 			if($count == 0)
 			{
-				$handler = new AmunService_Core_Service_Handler($this->user);
+				$handler = new Service\Handler($this->user);
 				$errors  = array();
 
 				foreach($this->services as $source)
 				{
 					try
 					{
-						$service = Amun_Sql_Table_Registry::get('Core_Service')->getRecord();
+						$service = DataFactory::getTable('Core_Service')->getRecord();
 						$service->setSource($source);
 
 						$handler->create($service);
 					}
-					catch(Exception $e)
+					catch(\Exception $e)
 					{
 						$debug = '';
 
@@ -359,7 +380,7 @@ SQL;
 				// check errors
 				if(count($errors) > 0)
 				{
-					throw new Amun_Exception('The following errors occured while installing the services: ' . "\n" . implode("\n", $errors) . "\n" . '--');
+					throw new Exception('The following errors occured while installing the services: ' . "\n" . implode("\n", $errors) . "\n" . '--');
 				}
 
 
@@ -393,9 +414,9 @@ SQL;
 				}
 			}
 
-			echo PSX_Json::encode(array('success' => true));
+			echo Json::encode(array('success' => true));
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
 			$debug = '';
 
@@ -404,7 +425,7 @@ SQL;
 				$debug.= "\n" . $e->getTraceAsString();
 			}
 
-			echo PSX_Json::encode(array('success' => false, 'msg' => $e->getMessage() . $debug));
+			echo Json::encode(array('success' => false, 'msg' => $e->getMessage() . $debug));
 		}
 	}
 
@@ -416,13 +437,13 @@ SQL;
 	{
 		try
 		{
-			$title    = $this->post->title('string', array(new PSX_Filter_Length(3, 64), new PSX_Filter_Html()), 'title', 'Title');
-			$subTitle = $this->post->subTitle('string', array(new PSX_Filter_Length(0, 128), new PSX_Filter_Html()), 'subTitle', 'Sub Title');
+			$title    = $this->post->title('string', array(new Filter\Length(3, 64), new Filter\Html()), 'title', 'Title');
+			$subTitle = $this->post->subTitle('string', array(new Filter\Length(0, 128), new Filter\Html()), 'subTitle', 'Sub Title');
 
 			if(!$this->validate->hasError())
 			{
 				// set title
-				$con = new PSX_Sql_Condition(array('name', '=', 'core.title'));
+				$con = new Condition(array('name', '=', 'core.title'));
 
 				$this->sql->update($this->registry['table.core_registry'], array(
 
@@ -432,7 +453,7 @@ SQL;
 
 
 				// set sub title
-				$con = new PSX_Sql_Condition(array('name', '=', 'core.sub_title'));
+				$con = new Condition(array('name', '=', 'core.sub_title'));
 
 				$this->sql->update($this->registry['table.core_registry'], array(
 
@@ -446,12 +467,12 @@ SQL;
 			}
 			else
 			{
-				throw new Amun_Exception($this->validate->getLastError());
+				throw new Exception($this->validate->getLastError());
 			}
 
-			echo PSX_Json::encode(array('success' => true));
+			echo Json::encode(array('success' => true));
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
 			$debug = '';
 
@@ -460,7 +481,7 @@ SQL;
 				$debug.= "\n" . $e->getTraceAsString();
 			}
 
-			echo PSX_Json::encode(array('success' => false, 'msg' => $e->getMessage() . $debug));
+			echo Json::encode(array('success' => false, 'msg' => $e->getMessage() . $debug));
 		}
 	}
 
@@ -481,7 +502,7 @@ SQL;
 				$this->sql->insert($this->registry['table.user_group'], array(
 
 					'title' => 'Administrator',
-					'date'  => $date->format(PSX_DateTime::SQL),
+					'date'  => $date->format(DateTime::SQL),
 
 				));
 
@@ -501,9 +522,9 @@ SQL;
 				}
 			}
 
-			echo PSX_Json::encode(array('success' => true));
+			echo Json::encode(array('success' => true));
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
 			$debug = '';
 
@@ -512,7 +533,7 @@ SQL;
 				$debug.= "\n" . $e->getTraceAsString();
 			}
 
-			echo PSX_Json::encode(array('success' => false, 'msg' => $e->getMessage() . $debug));
+			echo Json::encode(array('success' => false, 'msg' => $e->getMessage() . $debug));
 		}
 	}
 
@@ -532,11 +553,11 @@ SQL;
 
 			if($count == 0)
 			{
-				$handler = new AmunService_User_Account_Handler($this->user);
+				$handler = new Account\Handler($this->user);
 
-				$account = Amun_Sql_Table_Registry::get('User_Account')->getRecord();
+				$account = DataFactory::getTable('User_Account')->getRecord();
 				$account->setGroupId(1);
-				$account->setStatus(AmunService_User_Account_Record::ADMINISTRATOR);
+				$account->setStatus(Account\Record::ADMINISTRATOR);
 				$account->setIdentity($email);
 				$account->setName($name);
 				$account->setPw($pw);
@@ -551,9 +572,9 @@ SQL;
 				$this->session->set('administratorEmail', $email);
 			}
 
-			echo PSX_Json::encode(array('success' => true));
+			echo Json::encode(array('success' => true));
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
 			$debug = '';
 
@@ -562,7 +583,7 @@ SQL;
 				$debug.= "\n" . $e->getTraceAsString();
 			}
 
-			echo PSX_Json::encode(array('success' => false, 'msg' => $e->getMessage() . $debug));
+			echo Json::encode(array('success' => false, 'msg' => $e->getMessage() . $debug));
 		}
 	}
 
@@ -582,10 +603,10 @@ SQL;
 
 
 				// insert api
-				$handler = new AmunService_Oauth_Handler($this->user);
+				$handler = new Oauth\Handler($this->user);
 
-				$api = Amun_Sql_Table_Registry::get('Oauth')->getRecord();
-				$api->setStatus(AmunService_Oauth_Record::NORMAL);
+				$api = DataFactory::getTable('Oauth')->getRecord();
+				$api->setStatus(Oauth\Record::NORMAL);
 				$api->setName('System');
 				$api->setEmail($email);
 				$api->setUrl($this->config['psx_url']);
@@ -608,25 +629,13 @@ SQL;
 						'consumer.secret' => $row['consumerSecret'],
 
 					);
-
-					/*
-					try
-					{
-						$mail = new Amun_Mail($this->registry);
-						$mail->send('INSTALL_SUCCESS', $email, $values);
-					}
-					catch(Zend_Mail_Transport_Exception $e)
-					{
-						// ignore send mail errors
-					}
-					*/
 				}
 			}
 
 
-			echo PSX_Json::encode(array('success' => true));
+			echo Json::encode(array('success' => true));
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
 			$debug = '';
 
@@ -635,7 +644,7 @@ SQL;
 				$debug.= "\n" . $e->getTraceAsString();
 			}
 
-			echo PSX_Json::encode(array('success' => false, 'msg' => $e->getMessage() . $debug));
+			echo Json::encode(array('success' => false, 'msg' => $e->getMessage() . $debug));
 		}
 	}
 
@@ -652,11 +661,11 @@ SQL;
 
 			if($count == 1)
 			{
-				$handler = new AmunService_User_Group_Handler($this->user);
+				$handler = new Group\Handler($this->user);
 
 
 				// normal group
-				$group = Amun_Sql_Table_Registry::get('User_Group')->getRecord();
+				$group = DataFactory::getTable('User_Group')->getRecord();
 				$group->setTitle('Normal');
 
 				$handler->create($group);
@@ -695,7 +704,7 @@ SQL;
 
 
 				// anonymous group
-				$group = Amun_Sql_Table_Registry::get('User_Group')->getRecord();
+				$group = DataFactory::getTable('User_Group')->getRecord();
 				$group->setTitle('Anonymous');
 
 				$handler->create($group);
@@ -724,15 +733,15 @@ SQL;
 
 			if($count == 1)
 			{
-				$handler = new AmunService_User_Account_Handler($this->user);
+				$handler = new Account\Handler($this->user);
 
 				// anonymous
-				$record = Amun_Sql_Table_Registry::get('User_Account')->getRecord();
+				$record = DataFactory::getTable('User_Account')->getRecord();
 				$record->setGroupId(3);
-				$record->setStatus(AmunService_User_Account_Record::ANONYMOUS);
+				$record->setStatus(Account\Record::ANONYMOUS);
 				$record->setIdentity('anonymous@anonymous.com');
 				$record->setName('Anonymous');
-				$record->setPw(Amun_Security::generatePw());
+				$record->setPw(Security::generatePw());
 				$record->setTimezone('UTC');
 
 				$handler->create($record);
@@ -740,14 +749,14 @@ SQL;
 
 
 			// find services
-			$con = new PSX_Sql_Condition(array('source', '=', 'org.amun-project.page'));
-			$servicePageId = Amun_Sql_Table_Registry::get('Core_Service')->getField('id', $con);
+			$con = new Condition(array('source', '=', 'org.amun-project.page'));
+			$servicePageId = DataFactory::getTable('Core_Service')->getField('id', $con);
 
-			$con = new PSX_Sql_Condition(array('source', '=', 'org.amun-project.profile'));
-			$serviceProfileId = Amun_Sql_Table_Registry::get('Core_Service')->getField('id', $con);
+			$con = new Condition(array('source', '=', 'org.amun-project.profile'));
+			$serviceProfileId = DataFactory::getTable('Core_Service')->getField('id', $con);
 
-			$con = new PSX_Sql_Condition(array('source', '=', 'org.amun-project.my'));
-			$serviceMyId = Amun_Sql_Table_Registry::get('Core_Service')->getField('id', $con);
+			$con = new Condition(array('source', '=', 'org.amun-project.my'));
+			$serviceMyId = DataFactory::getTable('Core_Service')->getField('id', $con);
 
 
 			// insert pages
@@ -755,13 +764,13 @@ SQL;
 
 			if($count == 0)
 			{
-				$handler = new AmunService_Content_Page_Handler($this->user);
+				$handler = new ContentPage\Handler($this->user);
 
 				// root
-				$record = Amun_Sql_Table_Registry::get('Content_Page')->getRecord();
+				$record = DataFactory::getTable('Content_Page')->getRecord();
 				$record->setParentId(0);
 				$record->setServiceId($servicePageId);
-				$record->setStatus(AmunService_Content_Page_Record::HIDDEN);
+				$record->setStatus(ContentPage\Record::HIDDEN);
 				$record->setTitle($_SESSION['settingsTitle']);
 				$record->setTemplate(null);
 
@@ -769,10 +778,10 @@ SQL;
 
 
 				// home
-				$record = Amun_Sql_Table_Registry::get('Content_Page')->getRecord();
+				$record = DataFactory::getTable('Content_Page')->getRecord();
 				$record->setParentId(1);
 				$record->setServiceId($servicePageId);
-				$record->setStatus(AmunService_Content_Page_Record::NORMAL);
+				$record->setStatus(ContentPage\Record::NORMAL);
 				$record->setTitle('Home');
 				$record->setTemplate(null);
 
@@ -780,10 +789,10 @@ SQL;
 
 
 				// my
-				$record = Amun_Sql_Table_Registry::get('Content_Page')->getRecord();
+				$record = DataFactory::getTable('Content_Page')->getRecord();
 				$record->setParentId(1);
 				$record->setServiceId($serviceMyId);
-				$record->setStatus(AmunService_Content_Page_Record::HIDDEN);
+				$record->setStatus(ContentPage\Record::HIDDEN);
 				$record->setTitle('My');
 				$record->setTemplate(null);
 
@@ -791,10 +800,10 @@ SQL;
 
 
 				// profile
-				$record = Amun_Sql_Table_Registry::get('Content_Page')->getRecord();
+				$record = DataFactory::getTable('Content_Page')->getRecord();
 				$record->setParentId(1);
 				$record->setServiceId($serviceProfileId);
-				$record->setStatus(AmunService_Content_Page_Record::HIDDEN);
+				$record->setStatus(ContentPage\Record::HIDDEN);
 				$record->setTitle('Profile');
 				$record->setTemplate(null);
 
@@ -802,10 +811,10 @@ SQL;
 
 
 				// help
-				$record = Amun_Sql_Table_Registry::get('Content_Page')->getRecord();
+				$record = DataFactory::getTable('Content_Page')->getRecord();
 				$record->setParentId(1);
 				$record->setServiceId($servicePageId);
-				$record->setStatus(AmunService_Content_Page_Record::HIDDEN);
+				$record->setStatus(ContentPage\Record::HIDDEN);
 				$record->setTitle('Help');
 				$record->setTemplate(null);
 
@@ -818,7 +827,7 @@ SQL;
 
 			if($count == 0)
 			{
-				$handler = new AmunService_Page_Handler($this->user);
+				$handler = new Page\Handler($this->user);
 
 				// root
 				$content = <<<TEXT
@@ -827,7 +836,7 @@ SQL;
 <p>The web server software is running but no content has been added, yet.</p>
 TEXT;
 
-				$record = Amun_Sql_Table_Registry::get('Page')->getRecord();
+				$record = DataFactory::getTable('Page')->getRecord();
 				$record->setPageId(1);
 				$record->setContent($content);
 
@@ -840,7 +849,7 @@ TEXT;
 <p>consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
 TEXT;
 
-				$record = Amun_Sql_Table_Registry::get('Page')->getRecord();
+				$record = DataFactory::getTable('Page')->getRecord();
 				$record->setPageId(2);
 				$record->setContent($content);
 
@@ -948,7 +957,7 @@ tempor invidunt ut labore
 
 TEXT;
 
-				$record = Amun_Sql_Table_Registry::get('Page')->getRecord();
+				$record = DataFactory::getTable('Page')->getRecord();
 				$record->setPageId(5);
 				$record->setContent($content);
 
@@ -957,7 +966,7 @@ TEXT;
 
 
 			// set default_page
-			$con = new PSX_Sql_Condition(array('name', '=', 'core.default_page'));
+			$con = new Condition(array('name', '=', 'core.default_page'));
 
 			$this->sql->update($this->registry['table.core_registry'], array(
 
@@ -967,7 +976,7 @@ TEXT;
 
 
 			// set default user group
-			$con = new PSX_Sql_Condition(array('name', '=', 'core.default_user_group'));
+			$con = new Condition(array('name', '=', 'core.default_user_group'));
 
 			$this->sql->update($this->registry['table.core_registry'], array(
 
@@ -977,7 +986,7 @@ TEXT;
 
 
 			// set anonymous_user
-			$con = new PSX_Sql_Condition(array('name', '=', 'core.anonymous_user'));
+			$con = new Condition(array('name', '=', 'core.anonymous_user'));
 
 			$this->sql->update($this->registry['table.core_registry'], array(
 
@@ -987,18 +996,18 @@ TEXT;
 
 
 			// set install date
-			$con  = new PSX_Sql_Condition(array('name', '=', 'core.install_date'));
+			$con  = new Condition(array('name', '=', 'core.install_date'));
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
 			$this->sql->update($this->registry['table.core_registry'], array(
 
-				'value' => $date->format(PSX_DateTime::SQL),
+				'value' => $date->format(DateTime::SQL),
 
 			), $con);
 
-			echo PSX_Json::encode(array('success' => true));
+			echo Json::encode(array('success' => true));
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
 			$debug = '';
 
@@ -1007,7 +1016,7 @@ TEXT;
 				$debug.= "\n" . $e->getTraceAsString();
 			}
 
-			echo PSX_Json::encode(array('success' => false, 'msg' => $e->getMessage() . $debug));
+			echo Json::encode(array('success' => false, 'msg' => $e->getMessage() . $debug));
 		}
 	}
 
@@ -1049,13 +1058,13 @@ TEXT;
 	}
 }
 
-class Amun_Registry_NoDb extends Amun_Registry
+class RegistryNoDb extends Registry
 {
 	protected $container = array();
 	protected $config;
 	protected $sql;
 
-	public function __construct(PSX_Config $config, PSX_Sql $sql)
+	public function __construct(Config $config, Sql $sql)
 	{
 		$this->config = $config;
 		$this->sql    = $sql;
@@ -1074,14 +1083,14 @@ class Amun_Registry_NoDb extends Amun_Registry
 	}
 }
 
-class Amun_User_NoDb extends Amun_User
+class UserNoDb extends User
 {
 	public $id      = 1;
 	public $groupId = 1;
 	public $name    = 'System';
-	public $status  = AmunService_User_Account_Record::ADMINISTRATOR;
+	public $status  = Account\Record::ADMINISTRATOR;
 
-	public function __construct(Amun_Registry $registry)
+	public function __construct(Registry $registry)
 	{
 		$this->registry = $registry;
 		$this->config   = $registry->getConfig();

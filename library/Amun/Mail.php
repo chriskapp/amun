@@ -24,8 +24,6 @@
 
 namespace Amun;
 
-use Zend\Mail;
-
 /**
  * Amun_Mail
  *
@@ -89,13 +87,13 @@ SQL;
 
 
 			// send mail
-			$mail = new Mail\Message();
+			$mail = new \Zend\Mail\Message();
 			$mail->setBody($this->substituteVars($row['text'], $values));
 			$mail->setFrom($row['from']);
 			$mail->addTo($email);
 			$mail->setSubject($this->substituteVars($row['subject'], $values));
 
-			$transport = new Mail\Transport\Sendmail();
+			$transport = new \Zend\Mail\Transport\Sendmail();
 			$transport->send($mail);
 		}
 		else

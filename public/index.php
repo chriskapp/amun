@@ -29,7 +29,7 @@ require_once('../library/PSX/Bootstrap.php');
 $config    = new PSX\Config('../configuration.php');
 $bootstrap = new PSX\Bootstrap($config);
 
-//ob_start('responseProcess');
+ob_start('responseProcess');
 
 try
 {

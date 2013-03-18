@@ -26,16 +26,16 @@
 require_once('../library/PSX/Config.php');
 require_once('../library/PSX/Bootstrap.php');
 
-$config    = new PSX_Config('../configuration.php');
+$config    = new PSX\Config('../configuration.php');
 $config['psx_module_default'] = 'install';
-$bootstrap = new PSX_Bootstrap($config);
+$bootstrap = new PSX\Bootstrap($config);
 
 ob_start('responseProcess');
 
 try
 {
 	// initialize base class
-	$container = new PSX_Dependency_Default($config);
+	$container = new PSX\Dependency\Request($config);
 
 	// load module
 	$module = loadModule($container);
@@ -48,8 +48,8 @@ try
 }
 catch(Exception $e)
 {
-	$code    = isset(PSX_Http::$codes[$e->getCode()]) ? $e->getCode() : 500;
-	$accept  = PSX_Base::getRequestHeader('Accept');
+	$code    = isset(PSX\Http::$codes[$e->getCode()]) ? $e->getCode() : 500;
+	$accept  = PSX\Base::getRequestHeader('Accept');
 	$message = $e->getMessage();
 	$trace   = '';
 
@@ -62,7 +62,7 @@ catch(Exception $e)
 	// build response
 	if(strpos($accept, 'text/html') !== false)
 	{
-		PSX_Base::setResponseCode(200);
+		PSX\Base::setResponseCode(200);
 		header('Content-type: text/html');
 
 		$response = <<<HTML
@@ -80,14 +80,14 @@ HTML;
 	}
 	else
 	{
-		PSX_Base::setResponseCode($code);
+		PSX\Base::setResponseCode($code);
 		header('Content-type: text/plain');
 
 		$response = $message . "\n" . $trace;
 	}
 
 	// logging
-	PSX_Log::error($e->getMessage() . "\n" . 'Stack trace:' . "\n" . $e->getTraceAsString() . "\n");
+	PSX\Log::error($e->getMessage() . "\n" . 'Stack trace:' . "\n" . $e->getTraceAsString() . "\n");
 }
 
 ob_end_clean();
@@ -122,7 +122,7 @@ function responseProcess($content)
  *
  * @return PSX_ModuleAbstract
  */
-function loadModule(PSX_DependencyAbstract $container)
+function loadModule(PSX\DependencyAbstract $container)
 {
 	$config  = $container->getConfig();
 	$default = $config['psx_module_default'];
@@ -140,14 +140,14 @@ function loadModule(PSX_DependencyAbstract $container)
 
 	if(strpos($x, '..') !== false)
 	{
-		throw new PSX_Exception('Invalid signs in input');
+		throw new PSX\Exception('Invalid signs in input');
 	}
 
 	if($length != 0)
 	{
 		if(strlen($x) > $length)
 		{
-			throw new PSX_Exception('Max length of input is ' . $length, 414);
+			throw new PSX\Exception('Max length of input is ' . $length, 414);
 		}
 	}
 

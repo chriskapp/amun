@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="19d080e506a4a6233783db761a3527de2327730f">
+<service xmlns="http://amun-project.org" signature="2a3eb28ccd0fedbbd7b72fb24a71cb217e657647">
   <status>system</status>
   <name>xrds</name>
   <description>Provides an xrds endpoint to discover all APIs</description>
@@ -24,7 +24,7 @@
     <table name="xrds_type"/>
   </registry>
   <event>
-    <listener name="core.service_install" class="AmunService_Xrds_ConfigListener"/>
+    <listener name="core.service_install" class="\AmunService\Xrds\ConfigListener"/>
   </event>
   <library>
     <dir name="AmunService">

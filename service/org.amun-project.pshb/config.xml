@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="0421e17afb98583ef4a8cd221b1d5be1df58bbee">
+<service xmlns="http://amun-project.org" signature="74d885f2271e32e9065dc7b6146f438978ced502">
   <status>system</status>
   <name>pshb</name>
   <description>PubSubHubBub notifier wich sends a new content notification request to an hub</description>
@@ -14,8 +14,8 @@
     <param name="hub" value="http://pubsubhubbub.appspot.com"/>
   </registry>
   <event>
-    <listener name="core.record_change" class="AmunService_Pshb_RecordListener"/>
-    <listener name="hostmeta.request" class="AmunService_Pshb_HostmetaListener"/>
+    <listener name="core.record_change" class="\AmunService\Pshb\RecordListener"/>
+    <listener name="hostmeta.request" class="\AmunService\Pshb\HostmetaListener"/>
   </event>
   <registry>
     <table name="pshb_subscription"/>

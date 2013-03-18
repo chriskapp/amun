@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="f4875977d8a69b0544aa8346208bbe3438982a6d">
+<service xmlns="http://amun-project.org" signature="ac8f0f69adff67cd838530ea0e6dc4ea71e560ed">
   <status>system</status>
   <name>googleproject</name>
   <description>Gateway to receive googleproject commits</description>
@@ -44,7 +44,7 @@
   </registry>
   <event>
     <publisher name="googleproject.commit" description="Notifies if a commit was made"/>
-    <listener name="googleproject.commit" class="AmunService_Googleproject_CommitListener"/>
+    <listener name="googleproject.commit" class="\AmunService\Googleproject\CommitListener"/>
   </event>
   <library>
     <dir name="AmunService">

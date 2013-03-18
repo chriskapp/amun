@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="54fb025b6bcba8dcb271ae22d7ff265ca9698d98">
+<service xmlns="http://amun-project.org" signature="29eec8c4daa6096c5adf6c0ede43c4545009f7b5">
   <status>system</status>
   <name>content</name>
   <description>Basic service wich handles pages and gadgets</description>
@@ -62,7 +62,7 @@
     <table name="content_page_right"/>
   </registry>
   <event>
-    <listener name="lrdd.resource_discovery" class="AmunService_Content_LrddListener"/>
+    <listener name="lrdd.resource_discovery" class="\AmunService\Content\LrddListener"/>
   </event>
   <library>
     <dir name="AmunService">

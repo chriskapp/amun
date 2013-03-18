@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="1dfc1d1817c4fd138b7f62e2435c37b61f237837">
+<service xmlns="http://amun-project.org" signature="1d44d4bfdccb28a4bc225666594095f4592ce3fa">
   <status>system</status>
   <name>log</name>
   <description>Service wich logs every record insert, update or delete</description>
@@ -24,7 +24,7 @@
     <table name="log"/>
   </registry>
   <event>
-    <listener name="core.record_change" class="AmunService_Log_RecordListener"/>
+    <listener name="core.record_change" class="\AmunService\Log\RecordListener"/>
   </event>
   <library>
     <dir name="AmunService">

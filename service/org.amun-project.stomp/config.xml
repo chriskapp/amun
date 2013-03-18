@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="4b56c18630cd6854c309976b7139c6244e4e9d80">
+<service xmlns="http://amun-project.org" signature="775351a40a67fb65f70215a26663d805987afc2b">
   <status>system</status>
   <name>stomp</name>
   <description>Stomp gateway wich sends all record changes to an broker</description>
@@ -17,7 +17,7 @@
     <param name="destination" value="/queue/amun"/>
   </registry>
   <event>
-    <listener name="core.record_change" class="AmunService_Stomp_Listener"/>
+    <listener name="core.record_change" class="\AmunService\Stomp\Listener"/>
   </event>
   <library>
     <dir name="AmunService">

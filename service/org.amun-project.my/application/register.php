@@ -96,7 +96,7 @@ class register extends ApplicationAbstract
 				}
 
 				// check captcha if anonymous
-				$captchaProvider = Amun_Captcha::factory($this->config['amun_captcha']);
+				$captchaProvider = Captcha::factory($this->config['amun_captcha']);
 
 				if(!$captchaProvider->verify($captcha))
 				{

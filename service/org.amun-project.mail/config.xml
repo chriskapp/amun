@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="bd8ac498861fa868587b01f6428f8ca71b7052fd">
+<service xmlns="http://amun-project.org" signature="a34190370b7415b82c6cd474791bc689aacbbe55">
   <status>system</status>
   <name>mail</name>
   <description>A service to manage mail templates wich can be used by other services</description>
@@ -27,7 +27,7 @@
     <table name="mail"/>
   </registry>
   <event>
-    <listener name="core.service_install" class="AmunService_Mail_ConfigListener"/>
+    <listener name="core.service_install" class="\AmunService\Mail\ConfigListener"/>
   </event>
   <library>
     <dir name="Amun">

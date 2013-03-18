@@ -103,7 +103,7 @@ class Install extends DependencyAbstract
 		}
 		catch(\Exception $e)
 		{
-			return $this->set('registry', new Amun_Registry_NoDb($this->getConfig(), $this->getSql()));
+			return $this->set('registry', new \RegistryNoDb($this->getConfig(), $this->getSql()));
 		}
 	}
 
@@ -183,9 +183,9 @@ class Install extends DependencyAbstract
 
 			return $this->set('user', new User($userId, $this->getRegistry()));
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
-			return $this->set('user', new Amun_User_NoDb($this->getRegistry()));
+			return $this->set('user', new \UserNoDb($this->getRegistry()));
 		}
 	}
 

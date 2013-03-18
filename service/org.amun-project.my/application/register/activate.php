@@ -30,6 +30,7 @@ use AmunService\User\Account;
 use PSX\DateTime;
 use PSX\Filter;
 use PSX\Sql\Condition;
+use DateInterval;
 
 /**
  * activate
