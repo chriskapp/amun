@@ -24,7 +24,6 @@
 
 namespace Amun\Filter;
 
-use DateInterval;
 use InvalidArgumentException;
 use PSX\DateTime;
 use PSX\FilterAbstract;
@@ -57,7 +56,7 @@ class DateInterval extends FilterAbstract
 				throw new InvalidArgumentException('Empty value');
 			}
 
-			$interval = new DateInterval($value);
+			$interval = new \DateInterval($value);
 
 			return true;
 		}

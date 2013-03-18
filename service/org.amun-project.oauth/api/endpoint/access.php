@@ -31,11 +31,8 @@ use Amun\Security;
 use Amun\Exception;
 use DateInterval;
 use PSX\DateTime;
-use PSX\Oauth\Exception;
 use PSX\Oauth\Provider\AccessAbstract;
-use PSX\Oauth\Provider\Data\Consumer;
-use PSX\Oauth\Provider\Data\Request;
-use PSX\Oauth\Provider\Data\Response;
+use PSX\Oauth\Provider\Data as Provider;
 use PSX\Sql\Condition;
 
 /**
@@ -153,11 +150,11 @@ SQL;
 			$this->verifier  = $request['requestVerifier'];
 
 
-			return new Consumer($row['apiConsumerKey'], $row['apiConsumerSecret'], $request['requestToken'], $request['requestTokenSecret']);
+			return new Provider\Consumer($row['apiConsumerKey'], $row['apiConsumerSecret'], $request['requestToken'], $request['requestTokenSecret']);
 		}
 	}
 
-	protected function getResponse(Consumer $consumer, Request $request)
+	protected function getResponse(Provider\Consumer $consumer, Provider\Request $request)
 	{
 		if($this->nonce == $request->getNonce())
 		{
@@ -192,7 +189,7 @@ SQL;
 		), $con);
 
 
-		$response = new Response();
+		$response = new Provider\Response();
 		$response->setToken($token);
 		$response->setTokenSecret($tokenSecret);
 

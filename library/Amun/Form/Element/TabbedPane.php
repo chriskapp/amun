@@ -55,7 +55,7 @@ class TabbedPane extends ElementAbstract implements ContainerInterface
 		));
 	}
 
-	public function add(Amun_Form_ElementAbstract $element)
+	public function add(ElementAbstract $element)
 	{
 		$this->children['item'][] = $element->getFields();
 	}

@@ -31,10 +31,7 @@ use Amun\Security;
 use Amun\Exception;
 use DateInterval;
 use PSX\DateTime;
-use PSX\Oauth\Exception;
-use PSX\Oauth\Provider\Data\Consumer;
-use PSX\Oauth\Provider\Data\Request;
-use PSX\Oauth\Provider\Data\Response;
+use PSX\Oauth\Provider\Data as Provider;
 use PSX\Oauth\Provider\RequestAbstract;
 use PSX\Sql;
 use PSX\Sql\Condition;
@@ -69,7 +66,7 @@ class request extends RequestAbstract
 		{
 			$this->handle();
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
 			header('HTTP/1.1 500 Internal Server Error');
 
@@ -113,11 +110,11 @@ SQL;
 		{
 			$this->apiId = $row['apiId'];
 
-			return new Consumer($row['apiConsumerKey'], $row['apiConsumerSecret']);
+			return new Provider\Consumer($row['apiConsumerKey'], $row['apiConsumerSecret']);
 		}
 	}
 
-	protected function getResponse(Consumer $consumer, Request $request)
+	protected function getResponse(Provider\Consumer $consumer, Provider\Request $request)
 	{
 		// we check how often this ip has requested an token ... because
 		// of security reasons each consumer can have max 5 request tokens
@@ -129,7 +126,7 @@ SQL;
 		if($count >= $maxCount)
 		{
 			$conDelete = new Condition();
-			$result    = $this->sql->select($this->registry['table.oauth_request'], array('id', 'expire', 'date'), $con, PSX_Sql::SELECT_ALL);
+			$result    = $this->sql->select($this->registry['table.oauth_request'], array('id', 'expire', 'date'), $con, Sql::SELECT_ALL);
 
 			foreach($result as $row)
 			{
@@ -193,7 +190,7 @@ SQL;
 		));
 
 
-		$response = new Response();
+		$response = new Provider\Response();
 		$response->setToken($token);
 		$response->setTokenSecret($tokenSecret);
 

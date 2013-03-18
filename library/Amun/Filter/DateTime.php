@@ -26,7 +26,6 @@ namespace Amun\Filter;
 
 use DateTimeZone;
 use InvalidArgumentException;
-use PSX\DateTime;
 use PSX\FilterAbstract;
 
 /**
@@ -39,7 +38,7 @@ use PSX\FilterAbstract;
  * @package    Amun_Filter
  * @version    $Revision: 635 $
  */
-class DateTime extends PSX_FilterAbstract
+class DateTime extends FilterAbstract
 {
 	protected $emptyAllowed;
 
@@ -57,7 +56,7 @@ class DateTime extends PSX_FilterAbstract
 				throw new InvalidArgumentException('Empty value');
 			}
 
-			$date = new DateTime($value, new DateTimeZone('UTC'));
+			$date = new \DateTime($value, new DateTimeZone('UTC'));
 
 			return $date->format('Y-m-d H:i:s');
 		}

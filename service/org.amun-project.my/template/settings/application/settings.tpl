@@ -25,7 +25,7 @@
 		<form method="post">
 			<h3><?php echo $application->apiTitle; ?></h3>
 
-			<?php if($application->apiStatus == AmunService_Oauth_Record::CLOSED): ?>
+			<?php if($application->apiStatus == \AmunService\Oauth\Record::CLOSED): ?>
 			<p><b>Note this application was disabled by the website administrator.</b></p>
 			<?php endif; ?>
 
