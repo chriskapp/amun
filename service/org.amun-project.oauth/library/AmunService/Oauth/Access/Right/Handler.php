@@ -27,7 +27,7 @@ namespace AmunService\Oauth\Access\Right;
 use Amun\Exception;
 use Amun\Data\HandlerAbstract;
 use Amun\Data\RecordAbstract;
-use PSX\Data\RecordIterface;
+use PSX\Data\RecordInterface;
 use PSX\Sql\Condition;
 
 /**
