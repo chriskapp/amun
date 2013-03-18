@@ -27,7 +27,6 @@ namespace media\api;
 use Amun\Base;
 use Amun\Exception;
 use Amun\Module\ApiAbstract;
-use PSX\Data\Exception;
 use PSX\Data\Message;
 
 /**

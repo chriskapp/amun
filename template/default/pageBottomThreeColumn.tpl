@@ -5,7 +5,7 @@
 </head>
 <body>
 
-<?php echo $htmlContent->get(Amun_Html_Content::HEADER); ?>
+<?php echo $htmlContent->get(\Amun\Html\Content::HEADER); ?>
 
 <header class="amun-header">
 	<div class="container">
@@ -64,7 +64,7 @@
 	</div>
 </footer>
 
-<?php echo $htmlContent->get(Amun_Html_Content::FOOTER); ?>
+<?php echo $htmlContent->get(\Amun\Html\Content::FOOTER); ?>
 
 </body>
 </html>

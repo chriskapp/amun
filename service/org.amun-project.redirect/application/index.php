@@ -24,6 +24,7 @@
 
 namespace redirect\application;
 
+use Amun\Module\ApplicationAbstract;
 use Amun\Exception;
 
 /**

@@ -29,6 +29,7 @@ use Amun\Filter;
 use Amun\Exception;
 use Amun\DataFactory;
 use AmunService\User\Activity\Receiver;
+use DateTime;
 
 /**
  * Amun_User_Activity_Receiver

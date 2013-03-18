@@ -26,7 +26,7 @@
 namespace Amun\Dependency;
 
 use Amun\DataFactory;
-use Amun\Gadget;
+use Amun\Gadget as AmunGadget;
 use Amun\Service;
 use PSX\Config;
 
@@ -63,7 +63,7 @@ class Gadget extends Session
 
 	public function getGadget()
 	{
-		return $this->set('gadget', new Gadget($this->gadgetId, $this->getRegistry(), $this->getUser()));
+		return $this->set('gadget', new AmunGadget($this->gadgetId, $this->getRegistry(), $this->getUser()));
 	}
 
 	public function getArgs()
