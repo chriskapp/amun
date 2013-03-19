@@ -97,6 +97,20 @@ class Record extends RecordAbstract
 		}
 	}
 
+	public function setProcessor($processor)
+	{
+		$proc = ProcessorAbstract::factory($processor);
+
+		if($proc instanceof ProcessorInterface)
+		{
+			$this->processor = $processor;
+		}
+		else
+		{
+			throw new Exception('Invalid processor type');
+		}
+	}
+
 	public function getId()
 	{
 		return $this->_base->getUrn('pipe', $this->id);
@@ -114,61 +128,16 @@ class Record extends RecordAbstract
 			$path = $this->_registry['media.path'] . '/' . $this->mediaPath;
 		}
 
-		$ext = pathinfo($path, PATHINFO_EXTENSION);
-
 		if(!File::exists($path))
 		{
 			throw new Exception('File not found', 404);
 		}
 
-		switch($ext)
+		$processor = ProcessorAbstract::factory($this->processor);
+
+		if($processor instanceof ProcessorInterface)
 		{
-			// html
-			case 'htm':
-			case 'html':
-				return file_get_contents($path);
-				break;
-
-			// text
-			case 'txt':
-				return '<pre>' . file_get_contents($path) . '</pre>';
-				break;
-
-			// markdown
-			case 'md':
-				return Markdown::decode(file_get_contents($path));
-				break;
-
-			// source code files
-			case 'bsh':
-			case 'c':
-			case 'cc':
-			case 'cpp':
-			case 'cs':
-			case 'csh':
-			case 'css':
-			case 'cyc':
-			case 'cv':
-			case 'java':
-			case 'js':
-			case 'm':
-			case 'mxml':
-			case 'perl':
-			case 'php':
-			case 'pl':
-			case 'pm':
-			case 'py':
-			case 'rb':
-			case 'sh':
-			case 'sql':
-			case 'xml':
-			case 'xsl':
-				return '<pre class="prettyprint">' . htmlspecialchars(file_get_contents($path)) . '</pre>';
-				break;
-
-			default:
-				return 'Unknown file extension';
-				break;
+			return $processor->process($path);
 		}
 	}
 

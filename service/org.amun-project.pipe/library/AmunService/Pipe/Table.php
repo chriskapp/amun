@@ -63,6 +63,7 @@ class Table extends TableAbstract
 			'pageId' => self::TYPE_INT | 10,
 			'userId' => self::TYPE_INT | 10,
 			'mediaId' => self::TYPE_INT | 10,
+			'processor' => self::TYPE_VARCHAR | 32,
 			'date' => self::TYPE_DATETIME,
 
 		);

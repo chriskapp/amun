@@ -80,6 +80,12 @@ class Form extends FormAbstract
 		$panel->add($media);
 
 
+		$processor = new Select('processor', 'Processor', 'passthru');
+		$processor->setOptions($this->getProcessor());
+
+		$panel->add($processor);
+
+
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
 			$captcha = new Captcha('captcha', 'Captcha');
@@ -116,6 +122,12 @@ class Form extends FormAbstract
 		$media->setOptions($this->getMedia());
 
 		$panel->add($media);
+
+
+		$processor = new Select('processor', 'Processor', $record->processor);
+		$processor->setOptions($this->getProcessor());
+
+		$panel->add($processor);
 
 
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
@@ -157,6 +169,13 @@ class Form extends FormAbstract
 		$panel->add($media);
 
 
+		$processor = new Select('processor', 'Processor', $record->processor);
+		$processor->setOptions($this->getProcessor());
+		$processor->setDisabled(true);
+
+		$panel->add($processor);
+
+
 		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
 		{
 			$captcha = new Captcha('captcha', 'Captcha');
@@ -188,6 +207,32 @@ class Form extends FormAbstract
 		}
 
 		return $media;
+	}
+
+	private function getProcessor()
+	{
+		$procs  = array();
+		$path   = PSX_PATH_LIBRARY . '/AmunService/Pipe/Processor';
+		$files  = scandir($path);
+
+		foreach($files as $file)
+		{
+			$proc = $path . '/' . $file;
+
+			if($file[0] != '.' && is_file($proc))
+			{
+				$className = pathinfo($proc, PATHINFO_FILENAME);
+
+				array_push($procs, array(
+
+					'label' => $className,
+					'value' => strtolower($className),
+
+				));
+			}
+		}
+
+		return $procs;
 	}
 }
 

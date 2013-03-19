@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="aeafd0a6f6f3c331e1c94921a67dc7395e631afb">
+<service xmlns="http://amun-project.org" signature="3fffcda821cdcd383cc41e57478957a9d8fcd75a">
   <status>normal</status>
   <name>pipe</name>
   <description>Service wich redirects the content of an media item to an page</description>
@@ -32,10 +32,18 @@
   <library>
     <dir name="AmunService">
       <dir name="Pipe">
-        <file name="Form.php" md5="f20bdead57efe24940d9392ff09277dd"/>
-        <file name="Handler.php" md5="2878847299d919933e3d4559c85a29f1"/>
-        <file name="Record.php" md5="7e9b5d0c4f35ec03960a68b41aa467f0"/>
-        <file name="Table.php" md5="e51ace2f526a1c60e24267869311595b"/>
+        <file name="Form.php" md5="f3bf3f3f9bf0103d61abc51289215756"/>
+        <file name="Handler.php" md5="2fa51b11885a87709c193d525d9eff5d"/>
+        <dir name="Processor">
+          <file name="Exec.php" md5="166d7ce2b6ea893b72c4350a50484520"/>
+          <file name="Highlite.php" md5="cc62aadbe7fb026b422a1d7a63ec93fc"/>
+          <file name="Markdown.php" md5="7fb846fef9611c335e23b7e22b43f4ea"/>
+          <file name="Passthru.php" md5="d42de7b452d973df5798a85cc51b1a99"/>
+        </dir>
+        <file name="ProcessorAbstract.php" md5="2e92d3fd03b462e33a34e4f04e848ba6"/>
+        <file name="ProcessorInterface.php" md5="f04217576fc5f390ed3738d8c755976f"/>
+        <file name="Record.php" md5="aad45c34f6ed09ca580f40f220b30481"/>
+        <file name="Table.php" md5="65386402f6766f8bf9849c7a45c228ca"/>
       </dir>
     </dir>
   </library>
@@ -46,6 +54,7 @@
   `pageId` INT(10) NOT NULL,
   `userId` INT(10) NOT NULL,
   `mediaId` INT(10) NOT NULL,
+  `processor` VARCHAR(32) DEFAULT NULL,
   `date` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `globalId` (`globalId`)

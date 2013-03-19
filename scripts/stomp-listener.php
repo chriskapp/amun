@@ -24,11 +24,11 @@
 
 require_once('bootstrap.php');
 
-$manager = new Amun_Stomp_Manager($config);
+$manager = new Amun\Stomp\Manager($config);
 
-//$manager->add(new Amun_Stomp_Listener_NotifySubmitter());
-//$manager->add(new Amun_Stomp_Listener_PshbContentNotification());
-$manager->add(new Amun_Stomp_Listener_RemoteActivitySubmitter());
+//$manager->add(new Amun\Stomp\Listener\NotifySubmitter());
+//$manager->add(new Amun\Stomp\Listener\PshbContentNotification());
+$manager->add(new Amun\Stomp\Listener\RemoteActivitySubmitter());
 
 $manager->run();
 

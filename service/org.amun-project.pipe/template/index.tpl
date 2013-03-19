@@ -12,7 +12,7 @@
 <div class="amun-service-pipe">
 	<?php if(!empty($recordPipe)): ?>
 		<div class="amun-service-pipe-entry">
-			<div class="amun-service-pipe-content"><?php echo $recordPipe->getContent(); ?></div>
+			<div class="amun-service-pipe-content"><?php echo $data; ?></div>
 			<p class="muted">
 				by
 				<a href="<?php echo $recordPipe->authorProfileUrl; ?>" rel="author"><?php echo $recordPipe->authorName; ?></a>

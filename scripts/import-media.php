@@ -50,20 +50,20 @@ else
 {
 	try
 	{
-		$ct = new Amun_Dependency_Script($config, array('script.userId' => $userId));
+		$ct = new Amun\Dependency\Script($config, array('script.userId' => $userId));
 
-		Amun_DataFactory::initInstance($ct);
+		Amun\DataFactory::initInstance($ct);
 
-		PSX_Log::getLogger()->setLevel(PSX_Log::INFO);
-		PSX_Log::getLogger()->addHandler(new PSX_Log_Handler_Print());
+		PSX\Log::getLogger()->setLevel(PSX\Log::INFO);
+		PSX\Log::getLogger()->addHandler(new PSX\Log\Handler\Println());
 
-		$handler = new AmunService_Media_Handler($ct->getUser());
+		$handler = new AmunService\Media\Handler($ct->getUser());
 		$handler->import($path, $rightId);
 
 		echo 'Import successful';
 		exit(0);
 	}
-	catch(Exception $e)
+	catch(\Exception $e)
 	{
 		echo 'Exception: ' . $e->getMessage() . "\n";
 		exit(1);

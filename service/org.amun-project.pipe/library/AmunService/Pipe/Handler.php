@@ -52,7 +52,7 @@ class Handler extends HandlerAbstract
 	public function getByPageId($pageId, $mode = 0, $class = null, array $args = array())
 	{
 		return $this->table
-			->select(array('id', 'date'))
+			->select(array('id', 'processor', 'date'))
 			->join(Join::INNER, DataFactory::getTable('Media')
 				->select(array('rightId', 'name', 'path', 'mimeType'), 'media')
 			)

@@ -58,9 +58,22 @@ class index extends ApplicationAbstract
 
 
 			// check whether user has the media right
-			if($recordPipe instanceof Pipe\Record && !$this->user->hasRightId($recordPipe->mediaRightId)) 
+			if($recordPipe instanceof Pipe\Record && (!empty($recordPipe->mediaRightId) && !$this->user->hasRightId($recordPipe->mediaRightId)))
 			{
 				throw new Exception('Access not allowed');
+			}
+
+			$content  = $recordPipe->getContent();
+			$embedded = $this->get->embedded('boolean');
+
+			if(!$embedded)
+			{
+				$this->template->assign('data', $content);
+			}
+			else
+			{
+				echo $content;
+				exit;
 			}
 
 
