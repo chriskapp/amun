@@ -29,6 +29,7 @@ use Amun\Module\ApplicationAbstract;
 use PSX\Url;
 use PSX\Sql;
 use PSX\Sql\Condition;
+use PSX\Html\Paging;
 
 /**
  * view

@@ -141,8 +141,7 @@ class Handler extends HandlerAbstract
 			)
 			->join(Join::INNER, DataFactory::getTable('Content_Page')
 				->select(array('path'), 'page')
-			)
-			->orderBy('id', Sql::SORT_ASC);
+			);
 	}
 }
 

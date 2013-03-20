@@ -25,7 +25,6 @@
 namespace lrdd\api;
 
 use Amun\Module\ApiAbstract;
-use Amun\Exception;
 use PSX\Data\Message;
 use PSX\Filter;
 use XMLWriter;
@@ -76,7 +75,7 @@ class index extends ApiAbstract
 			$this->writer->endElement();
 			$this->writer->endDocument();
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
 			$msg = new Message($e->getMessage(), false);
 

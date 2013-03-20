@@ -54,7 +54,7 @@ class edit extends ApplicationAbstract
 			$url = $this->service->getApiEndpoint() . '/form?format=json&method=update&id=' . $id;
 
 			// forum
-			$forum = $this->getHandler()->getById($id, Sql::FETCH_OBJECT);
+			$forum = $this->getHandler()->getById($id, array(), Sql::FETCH_OBJECT);
 
 			// add path
 			$this->path->add($forum->title, $this->page->url . '/view?id=' . $forum->id);

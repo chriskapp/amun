@@ -25,7 +25,6 @@
 namespace hostmeta\api;
 
 use Amun\Module\ApiAbstract;
-use Exception;
 use PSX\Data\Message;
 use XMLWriter;
 
@@ -96,7 +95,7 @@ class index extends ApiAbstract
 			$this->writer->endDocument();
 			$this->writer->flush();
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
 			$msg = new Message($e->getMessage(), false);
 

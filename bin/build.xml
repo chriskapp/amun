@@ -64,7 +64,9 @@
 			<fileset dir="${scripts}" />
 		</copy>
 		<copy todir="${build}/service">
-			<fileset dir="${service}" />
+			<fileset dir="${service}">
+				<exclude name="**/org.amun-project.beta.*/**" />
+			</fileset>
 		</copy>
 		<copy todir="${build}/template">
 			<fileset dir="${template}" />
