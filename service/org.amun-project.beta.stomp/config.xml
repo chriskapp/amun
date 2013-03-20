@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="775351a40a67fb65f70215a26663d805987afc2b">
+  <status>system</status>
+  <name>stomp</name>
+  <description>Stomp gateway wich sends all record changes to an broker</description>
+  <path>/stomp</path>
+  <namespace>stomp</namespace>
+  <type>http://ns.amun-project.org/2011/amun/service/stomp</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <registry>
+    <param name="broker" value="tcp://localhost:61613"/>
+    <param name="user" value="admin"/>
+    <param name="pw" value="password"/>
+    <param name="destination" value="/queue/amun"/>
+  </registry>
+  <event>
+    <listener name="core.record_change" class="\AmunService\Stomp\Listener"/>
+  </event>
+  <library>
+    <dir name="AmunService">
+      <dir name="Stomp">
+        <file name="Listener.php" md5="930160c2438a33631e5deb8948a94d04"/>
+      </dir>
+    </dir>
+  </library>
+</service>

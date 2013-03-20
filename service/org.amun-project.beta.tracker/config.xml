@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="1fc8fb79115e33e8ab7f5bf9fbc906803a11456a">
+  <status>normal</status>
+  <name>tracker</name>
+  <description>An torrent tracker to list and download torrents</description>
+  <path>/tracker</path>
+  <namespace>tracker</namespace>
+  <type>http://ns.amun-project.org/2011/amun/service/tracker</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <required>
+    <service>org.amun-project.comment</service>
+  </required>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/tracker</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/tracker/announce</type>
+      <uri>/announce</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Tracker View"/>
+    <perm name="add" description="Tracker Add"/>
+    <perm name="edit" description="Tracker Edit"/>
+    <perm name="delete" description="Tracker Delete"/>
+    <perm name="comment_add" description="Tracker Comment Add"/>
+  </permissions>
+  <registry>
+    <table name="tracker"/>
+    <table name="tracker_peer"/>
+    <param name="upload_path" value="../cache" type="STRING"/>
+  </registry>
+  <library>
+    <dir name="AmunService">
+      <dir name="Tracker">
+        <file name="Form.php" md5="43467ad1d8e528808137dbddf22eb781"/>
+        <file name="Handler.php" md5="e676c013ecbe346f1716fbe39b16dcf9"/>
+        <dir name="Peer">
+          <file name="Table.php" md5="8309be219440f27057ea97dcff453264"/>
+        </dir>
+        <file name="Record.php" md5="a6d36087acc32e788cda604a6393e75a"/>
+        <file name="Table.php" md5="89fb3d24f35fc3552fa66cf839c304b6"/>
+      </dir>
+    </dir>
+  </library>
+  <database>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.tracker}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `globalId` varchar(36) NOT NULL,
+  `pageId` int(10) NOT NULL,
+  `userId` int(10) NOT NULL,
+  `urlTitle` varchar(128) NOT NULL,
+  `title` varchar(128) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `length` int(10) NOT NULL,
+  `seeder` int(10) NOT NULL DEFAULT '0',
+  `leecher` int(10) NOT NULL DEFAULT '0',
+  `completed` int(10) NOT NULL DEFAULT '0',
+  `infoHash` varchar(40) NOT NULL,
+  `torrent` varchar(40) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `globalId` (`globalId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.tracker_peer}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `infoHash` varchar(40) NOT NULL,
+  `peerId` varchar(40) NOT NULL,
+  `ip` varchar(32) NOT NULL,
+  `port` int(10) NOT NULL,
+  `uploaded` int(10) NOT NULL,
+  `downloaded` int(10) NOT NULL,
+  `left` int(10) NOT NULL,
+  `event` varchar(12) NOT NULL,
+  `key` varchar(64) NOT NULL,
+  `status` varchar(32) NOT NULL,
+  `client` varchar(128) NOT NULL,
+  `priority` int(10) NOT NULL DEFAULT '0',
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `infoHashPeerId` (`infoHash`,`peerId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+    <query><![CDATA[INSERT INTO `{table.amun_content_service_option}` (`serviceId`, `name`) VALUES
+({service.id}, 'index'),
+({service.id}, 'view');]]></query>
+    <query><![CDATA[INSERT INTO `{table.amun_user_activity_template}` (`type`, `verb`, `table`, `path`, `summary`) VALUES
+('INSERT', 'add', 'amun_service_tracker', 'view?id={record.id}', '<p><a href="{user.profileUrl}">{user.name}</a> has added a <a href="{object.url}">torrent</a></p>');]]></query>
+    <if hasService="my">
+      <query><![CDATA[INSERT INTO `{table.amun_service_my_notify_service}` (`table`, `title`) VALUES
+('amun_service_tracker', 'Tracker');]]></query>
+    </if>
+  </database>
+</service>

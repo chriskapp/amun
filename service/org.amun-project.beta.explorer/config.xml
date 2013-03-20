@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="cde952248632cbdb93bd188481a431299cb7e89f">
+  <status>system</status>
+  <name>explorer</name>
+  <description>Provides an API to browse, create, edit and delete files on the server</description>
+  <path>/explorer</path>
+  <namespace>explorer</namespace>
+  <type>http://ns.amun-project.org/2011/amun/service/explorer</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/explorer</type>
+      <uri>/</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Explorer View"/>
+    <perm name="add" description="Explorer Add"/>
+    <perm name="edit" description="Explorer Edit"/>
+    <perm name="delete" description="Explorer Delete"/>
+  </permissions>
+  <registry>
+    <param name="path" value="." type="STRING"/>
+  </registry>
+  <library>
+    <dir name="AmunService">
+      <dir name="Explorer">
+        <dir name="Filter">
+          <file name="Path.php" md5="5fa967de9a5fcfc5fb7e305faffa90f0"/>
+        </dir>
+        <file name="Form.php" md5="207fb4a1fe77002a32e3dbb516224a6d"/>
+        <file name="Handler.php" md5="fd96138a42717f600eeab902e0061add"/>
+        <file name="Record.php" md5="c1281d568e77fdebdc5093f442903c84"/>
+      </dir>
+    </dir>
+  </library>
+</service>

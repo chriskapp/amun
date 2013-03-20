@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="315fb55f88c8a9ffeb344a6e5a7fa52cbe17f7b3">
+  <status>system</status>
+  <name>webdav</name>
+  <description>Service wich offers an webdav API. Every service can provide a custom DAV node wich represents the page</description>
+  <path>/webdav</path>
+  <namespace>webdav</namespace>
+  <type>http://ns.amun-project.org/2011/amun/service/webdav</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/webdav</type>
+      <uri>/</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Webdav View"/>
+  </permissions>
+  <library>
+    <dir name="AmunService">
+      <dir name="Webdav">
+        <file name="File.php" md5="56ff5bfce026b22f996b6951573323be"/>
+        <file name="Page.php" md5="e9647260c1689f56aaa6cf87c5821e7d"/>
+      </dir>
+    </dir>
+  </library>
+</service>
