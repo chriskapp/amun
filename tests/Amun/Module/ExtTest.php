@@ -22,6 +22,12 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Module;
+
+use PSX\Http;
+use PSX\Http\GetRequest;
+use PSX\Url;
+
 /**
  * Amun_Module_ExtTest
  *
@@ -32,15 +38,15 @@
  * @version    $Revision: 637 $
  * @backupStaticAttributes disabled
  */
-class Amun_Module_ExtTest extends PHPUnit_Framework_TestCase
+class ExtTest extends \PHPUnit_Framework_TestCase
 {
 	protected $config;
 	protected $http;
 
 	protected function setUp()
 	{
-		$this->config = Amun_Registry::getInstance()->getConfig();
-		$this->http   = new PSX_Http(new PSX_Http_Handler_Curl());
+		$this->config = getContainer()->getConfig();
+		$this->http   = new Http();
 	}
 
 	protected function tearDown()
@@ -49,8 +55,8 @@ class Amun_Module_ExtTest extends PHPUnit_Framework_TestCase
 
 	public function testCssRequest()
 	{
-		$url  = new PSX_Url($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'ext?mode=Amun_Html_Css&services=default');
-		$resp = $this->http->request(new PSX_Http_GetRequest($url));
+		$url  = new Url($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'ext?mode=Amun_Html_Css&services=default');
+		$resp = $this->http->request(new GetRequest($url));
 
 		$this->assertEquals(200, $resp->getCode());
 		$this->assertEquals(true, strlen($resp->getBody()) > 2048);
@@ -58,8 +64,8 @@ class Amun_Module_ExtTest extends PHPUnit_Framework_TestCase
 
 	public function testJsRequest()
 	{
-		$url  = new PSX_Url($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'ext?mode=Amun_Html_Js&services=jquery');
-		$resp = $this->http->request(new PSX_Http_GetRequest($url));
+		$url  = new Url($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'ext?mode=Amun_Html_Js&services=jquery');
+		$resp = $this->http->request(new GetRequest($url));
 
 		$this->assertEquals(200, $resp->getCode());
 		$this->assertEquals(true, strlen($resp->getBody()) > 2048);

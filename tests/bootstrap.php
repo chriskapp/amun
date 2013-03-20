@@ -35,10 +35,10 @@ function doBootstrap()
 	$registry  = $container->getRegistry();
 
 	// set container
-	Amun_DataFactory::initInstance($container);
+	Amun\DataFactory::initInstance($container);
 
 	// set user
-	$userId = $sql->getField('SELECT id FROM ' . $registry['table.user_account'] . ' WHERE status = ' . AmunService_User_Account_Record::ADMINISTRATOR . ' ORDER BY id ASC LIMIT 1');
+	$userId = $sql->getField('SELECT id FROM ' . $registry['table.user_account'] . ' WHERE status = ' . \AmunService\User\Account\Record::ADMINISTRATOR . ' ORDER BY id ASC LIMIT 1');
 
 	// get API credentials
 	$consumerKey    = '';
@@ -54,15 +54,42 @@ function doBootstrap()
 		$consumerKey    = $api['consumerKey'];
 		$consumerSecret = $api['consumerSecret'];
 
-		$req = $sql->getRow('SELECT token, tokenSecret FROM ' . $registry['table.oauth_request'] . ' WHERE apiId = ' . $api['id'] . ' AND status = ' . AmunService_Oauth_Record::ACCESS. ' LIMIT 1');
+		$req = $sql->getRow('SELECT token, tokenSecret FROM ' . $registry['table.oauth_request'] . ' WHERE apiId = ' . $api['id'] . ' AND status = ' . \AmunService\Oauth\Record::ACCESS. ' LIMIT 1');
 
 		if(!empty($req))
 		{
 			$token       = $req['token'];
 			$tokenSecret = $req['tokenSecret'];
-
-			$hasCredentials = true;
 		}
+		else
+		{
+			$status      = \AmunService\Oauth\Record::ACCESS;
+			$token       = sha1(uniqid());
+			$tokenSecret = sha1(uniqid());
+			$timestamp   = time();
+
+			$query = <<<SQL
+INSERT INTO 
+	`amun_oauth_request`
+SET
+	`apiId` = {$api['id']}, 
+	`userId` = {$userId}, 
+	`status` = {$status}, 
+	`ip` = '127.0.0.1', 
+	`nonce` = '4460f8e54130cb1a', 
+	`callback` = 'oob', 
+	`token` = '{$token}', 
+	`tokenSecret` = '{$tokenSecret}', 
+	`verifier` = '8f28b3b18a6eabb92854cd937397b042', 
+	`timestamp` = '{$timestamp}', 
+	`expire` = 'P6M',
+	`date` = NOW()
+SQL;
+
+			$sql->query($query);
+		}
+
+		$hasCredentials = true;
 	}
 
 	define('CONSUMER_KEY', $consumerKey);
@@ -78,7 +105,7 @@ function getContainer()
 
 	if($container === null)
 	{
-		$config = new PSX_Config('configuration.php');
+		$config = new PSX\Config('configuration.php');
 		$config['amun_service_path'] = 'service';
 		$config['psx_path_cache']    = 'cache';
 		$config['psx_path_library']  = 'library';
@@ -86,10 +113,10 @@ function getContainer()
 		$config['psx_path_template'] = 'template';
 
 		// bootstrap
-		$bootstrap = new PSX_Bootstrap($config);
+		$bootstrap = new PSX\Bootstrap($config);
 		$bootstrap->addIncludePath('tests');
 
-		$container = new Amun_Dependency_Script($config, array(
+		$container = new Amun\Dependency\Script($config, array(
 			'script.userId' => 1,
 		));
 

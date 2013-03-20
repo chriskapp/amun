@@ -22,6 +22,17 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Api;
+
+use Amun\Data\RecordAbstract;
+use PSX\Http;
+use PSX\Http\Response;
+use PSX\Oauth;
+use PSX\Url;
+use PSX\Json;
+use PSX\Sql;
+use InvalidArgumentException;
+
 /**
  * Amun_Api_RestTest
  *
@@ -32,7 +43,7 @@
  * @version    $Revision: 792 $
  * @backupStaticAttributes disabled
  */
-abstract class Amun_Api_RestTest extends PHPUnit_Framework_TestCase
+abstract class RestTest extends \PHPUnit_Framework_TestCase
 {
 	protected $config;
 	protected $sql;
@@ -48,8 +59,8 @@ abstract class Amun_Api_RestTest extends PHPUnit_Framework_TestCase
 			$this->config   = getContainer()->getConfig();
 			$this->sql      = getContainer()->getSql();
 			$this->registry = getContainer()->getRegistry();
-			$this->http     = new PSX_Http(new PSX_Http_Handler_Curl());
-			$this->oauth    = new PSX_Oauth($this->http);
+			$this->http     = new Http();
+			$this->oauth    = new Oauth($this->http);
 			$this->table    = $this->getTable();
 		}
 		else
@@ -72,25 +83,25 @@ abstract class Amun_Api_RestTest extends PHPUnit_Framework_TestCase
 		return $this->sendSignedRequest('GET');
 	}
 
-	protected function post(Amun_Data_RecordAbstract $record)
+	protected function post(RecordAbstract $record)
 	{
 		return $this->sendSignedRequest('POST', $record);
 	}
 
-	protected function put(Amun_Data_RecordAbstract $record)
+	protected function put(RecordAbstract $record)
 	{
 		return $this->sendSignedRequest('PUT', $record);
 	}
 
-	protected function delete(Amun_Data_RecordAbstract $record)
+	protected function delete(RecordAbstract $record)
 	{
 		return $this->sendSignedRequest('DELETE', $record);
 	}
 
-	protected function sendSignedRequest($type, Amun_Data_RecordAbstract $record = null)
+	protected function sendSignedRequest($type, RecordAbstract $record = null)
 	{
-		$url    = new PSX_Url($this->getEndpoint());
-		$body   = $record !== null ? PSX_Json::encode($record->getFields()) : null;
+		$url    = new Url($this->getEndpoint());
+		$body   = $record !== null ? Json::encode($record->getFields()) : null;
 		$header = array(
 
 			'Content-Type'  => 'application/json',
@@ -102,19 +113,19 @@ abstract class Amun_Api_RestTest extends PHPUnit_Framework_TestCase
 		switch($type)
 		{
 			case 'GET':
-				$request = new PSX_Http_GetRequest($url, $header);
+				$request = new Http\GetRequest($url, $header);
 				break;
 
 			case 'POST':
-				$request = new PSX_Http_PostRequest($url, $header, $body);
+				$request = new Http\PostRequest($url, $header, $body);
 				break;
 
 			case 'PUT':
-				$request = new PSX_Http_PutRequest($url, $header, $body);
+				$request = new Http\PutRequest($url, $header, $body);
 				break;
 
 			case 'DELETE':
-				$request = new PSX_Http_DeleteRequest($url, $header, $body);
+				$request = new Http\DeleteRequest($url, $header, $body);
 				break;
 
 			default:
@@ -124,11 +135,11 @@ abstract class Amun_Api_RestTest extends PHPUnit_Framework_TestCase
 		return $this->http->request($request);
 	}
 
-	protected function assertResultSetResponse(PSX_Http_Response $response)
+	protected function assertResultSetResponse(Response $response)
 	{
 		$this->assertEquals(200, $response->getCode(), $response->getBody());
 
-		$result = PSX_Json::decode($response->getBody());
+		$result = Json::decode($response->getBody());
 
 		$this->assertEquals(true, isset($result['totalResults']), $response->getBody());
 		$this->assertEquals(true, isset($result['startIndex']), $response->getBody());
@@ -137,22 +148,22 @@ abstract class Amun_Api_RestTest extends PHPUnit_Framework_TestCase
 		//$this->assertEquals($this->table->count(), $result['totalResults']);
 	}
 
-	protected function assertPositiveResponse(PSX_Http_Response $response)
+	protected function assertPositiveResponse(Response $response)
 	{
 		$this->assertEquals(200, $response->getCode(), $response->getBody());
 
-		$resp = PSX_Json::decode($response->getBody());
+		$resp = Json::decode($response->getBody());
 
 		$this->assertEquals(true, isset($resp['success']), $response->getBody());
 		$this->assertEquals(true, isset($resp['text']), $response->getBody());
 		$this->assertEquals(true, $resp['success'], $response->getBody());
 	}
 
-	protected function assertNegativeResponse(PSX_Http_Response $response)
+	protected function assertNegativeResponse(Response $response)
 	{
 		$this->assertEquals(200, $response->getCode(), $response->getBody());
 
-		$resp = PSX_Json::decode($response->getBody());
+		$resp = Json::decode($response->getBody());
 
 		$this->assertEquals(true, isset($resp['text']), $response->getBody());
 		$this->assertEquals(true, isset($resp['success']), $response->getBody());
@@ -161,7 +172,7 @@ abstract class Amun_Api_RestTest extends PHPUnit_Framework_TestCase
 
 	protected function getLastInsertedRecord()
 	{
-		return $this->table->getRow(array_keys($this->table->getColumns()), null, $this->table->getPrimaryKey(), PSX_Sql::SORT_DESC);
+		return $this->table->getRow(array_keys($this->table->getColumns()), null, $this->table->getPrimaryKey(), Sql::SORT_DESC);
 	}
 
 	protected function hasService($serviceName)

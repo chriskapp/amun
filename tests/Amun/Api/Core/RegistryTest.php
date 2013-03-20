@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Api\Core;
+
+use Amun\Api\RestTest;
+use Amun\DataFactory;
+
 /**
  * Amun_Api_System_RegistryTest
  *
@@ -32,7 +37,7 @@
  * @version    $Revision: 637 $
  * @backupStaticAttributes disabled
  */
-class Amun_Api_System_RegistryTest extends Amun_Api_RestTest
+class RegistryTest extends RestTest
 {
 	public function getEndpoint()
 	{
@@ -41,7 +46,7 @@ class Amun_Api_System_RegistryTest extends Amun_Api_RestTest
 
 	public function getTable()
 	{
-		return Amun_Sql_Table_Registry::get('Core_Registry');
+		return DataFactory::getTable('Core_Registry');
 	}
 
 	public function testGet()

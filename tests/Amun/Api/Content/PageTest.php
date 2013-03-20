@@ -22,6 +22,16 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Api\Content;
+
+use Amun\Api\RestTest;
+use Amun\DataFactory;
+use AmunService\Content\Page;
+use AmunService\Core\Service;
+use PSX\Sql\Condition;
+use PSX\Util\Uuid;
+use PSX\DateTime;
+
 /**
  * Amun_Api_Content_PageTest
  *
@@ -32,7 +42,7 @@
  * @version    $Revision: 867 $
  * @backupStaticAttributes disabled
  */
-class Amun_Api_Content_PageTest extends Amun_Api_RestTest
+class PageTest extends RestTest
 {
 	public function getEndpoint()
 	{
@@ -41,7 +51,7 @@ class Amun_Api_Content_PageTest extends Amun_Api_RestTest
 
 	public function getTable()
 	{
-		return Amun_Sql_Table_Registry::get('Content_Page');
+		return DataFactory::getTable('Content_Page');
 	}
 
 	public function testGet()
@@ -51,11 +61,11 @@ class Amun_Api_Content_PageTest extends Amun_Api_RestTest
 
 	public function testPost()
 	{
-		$record = new AmunService_Content_Page_Record($this->table);
+		$record = $this->getTable()->getRecord();
 		$record->setParentId(1);
 		$record->setServiceId(3);
 		$record->setRightId(0);
-		$record->setStatus(AmunService_Content_Page_Record::HIDDEN);
+		$record->setStatus(Page\Record::HIDDEN);
 		$record->setLoad(15);
 		$record->setTitle('bar');
 		$record->setTemplate('page.tpl');
@@ -66,7 +76,7 @@ class Amun_Api_Content_PageTest extends Amun_Api_RestTest
 
 		$row = $this->getLastInsertedRecord();
 
-		$this->table->delete(new PSX_Sql_Condition(array('id', '=', $row['id'])));
+		$this->table->delete(new Condition(array('id', '=', $row['id'])));
 
 		unset($row['id']);
 		unset($row['globalId']);
@@ -79,17 +89,17 @@ class Amun_Api_Content_PageTest extends Amun_Api_RestTest
 
 	public function testMinimalPost()
 	{
-		$record = new AmunService_Content_Page_Record($this->table);
+		$record = $this->getTable()->getRecord();
 		$record->setParentId(1);
 		$record->setServiceId(3);
-		$record->setStatus(AmunService_Content_Page_Record::HIDDEN);
+		$record->setStatus(Page\Record::HIDDEN);
 		$record->setTitle('bar');
 
 		$this->assertPositiveResponse($this->post($record));
 
 		$row = $this->getLastInsertedRecord();
 
-		$this->table->delete(new PSX_Sql_Condition(array('id', '=', $row['id'])));
+		$this->table->delete(new Condition(array('id', '=', $row['id'])));
 
 		unset($row['id']);
 		unset($row['globalId']);
@@ -107,9 +117,9 @@ class Amun_Api_Content_PageTest extends Amun_Api_RestTest
 
 	public function testPut()
 	{
-		$globalId = PSX_Util_Uuid::nameBased(uniqid());
-		$status   = AmunService_Core_Service_Record::NORMAL;
-		$date     = date(PSX_DateTime::SQL);
+		$globalId = Uuid::nameBased(uniqid());
+		$status   = Service\Record::NORMAL;
+		$date     = date(DateTime::SQL);
 
 		$this->table->insert(array(
 
@@ -131,7 +141,7 @@ class Amun_Api_Content_PageTest extends Amun_Api_RestTest
 
 		$id = $this->sql->getLastInsertId();
 
-		$record = new AmunService_Content_Page_Record($this->table);
+		$record = $this->getTable()->getRecord();
 		$record->setId($id);
 		$record->setTitle('foo');
 		$record->setTemplate('page.tpl');
@@ -151,18 +161,18 @@ class Amun_Api_Content_PageTest extends Amun_Api_RestTest
 		$record->expire    = '';
 		$record->date      = $date;
 
-		$row = $this->table->getRow(array_keys($this->table->getColumns()), new PSX_Sql_Condition(array('id', '=', $id)));
+		$row = $this->table->getRow(array_keys($this->table->getColumns()), new Condition(array('id', '=', $id)));
 
 		$this->assertEquals($row, $record->getData());
 
-		$this->table->delete(new PSX_Sql_Condition(array('id', '=', $id)));
+		$this->table->delete(new Condition(array('id', '=', $id)));
 	}
 
 	public function testDelete()
 	{
-		$globalId = PSX_Util_Uuid::nameBased(uniqid());
-		$status   = AmunService_Core_Service_Record::NORMAL;
-		$date     = date(PSX_DateTime::SQL);
+		$globalId = Uuid::nameBased(uniqid());
+		$status   = Service\Record::NORMAL;
+		$date     = date(DateTime::SQL);
 
 		$this->table->insert(array(
 
@@ -184,12 +194,12 @@ class Amun_Api_Content_PageTest extends Amun_Api_RestTest
 
 		$id = $this->sql->getLastInsertId();
 
-		$record = new AmunService_Content_Page_Record($this->table);
+		$record = $this->getTable()->getRecord();
 		$record->setId($id);
 
 		$this->assertPositiveResponse($this->delete($record));
 
-		$row = $this->table->getRow(array_keys($this->table->getColumns()), new PSX_Sql_Condition(array('id', '=', $id)));
+		$row = $this->table->getRow(array_keys($this->table->getColumns()), new Condition(array('id', '=', $id)));
 
 		$this->assertEquals(true, empty($row));
 	}

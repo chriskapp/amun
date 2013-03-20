@@ -22,6 +22,14 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Api\User;
+
+use Amun\Api\RestTest;
+use Amun\DataFactory;
+use PSX\Sql\Condition;
+use PSX\Http\Response;
+use PSX\Json;
+
 /**
  * Amun_Api_User_ActivityTest
  *
@@ -32,7 +40,7 @@
  * @version    $Revision: 637 $
  * @backupStaticAttributes disabled
  */
-class Amun_Api_User_ActivityTest extends Amun_Api_RestTest
+class ActivityTest extends RestTest
 {
 	public function getEndpoint()
 	{
@@ -41,21 +49,21 @@ class Amun_Api_User_ActivityTest extends Amun_Api_RestTest
 
 	public function getTable()
 	{
-		return Amun_Sql_Table_Registry::get('User_Activity');
+		return DataFactory::getTable('User_Activity');
 	}
 
-	protected function assertResultSetResponse(PSX_Http_Response $response)
+	protected function assertResultSetResponse(Response $response)
 	{
 		$this->assertEquals(200, $response->getCode(), $response->getBody());
 
-		$result = PSX_Json::decode($response->getBody());
+		$result = Json::decode($response->getBody());
 
 		$this->assertEquals(true, isset($result['totalResults']), $response->getBody());
 		$this->assertEquals(true, isset($result['startIndex']), $response->getBody());
 		$this->assertEquals(true, isset($result['itemsPerPage']), $response->getBody());
 
-		$tblActivity = Amun_Sql_Table_Registry::get('User_Activity')->getName();
-		$tblAccount  = Amun_Sql_Table_Registry::get('User_Account')->getName();
+		$tblActivity = DataFactory::getTable('User_Activity')->getName();
+		$tblAccount  = DataFactory::getTable('User_Account')->getName();
 		$count       = $this->sql->getField('SELECT COUNT(*) FROM ' . $tblActivity . ' INNER JOIN ' . $tblAccount . ' ON ' . $tblActivity . '.userId = ' . $tblAccount . '.id');
 
 		$this->assertEquals($count, $result['totalResults']);
@@ -68,15 +76,14 @@ class Amun_Api_User_ActivityTest extends Amun_Api_RestTest
 
 	public function testPost()
 	{
-		$record = new AmunService_User_Activity_Record($this->table);
-
+		$record = $this->getTable()->getRecord();
 		$record->setSummary('bar');
 
 		$this->assertPositiveResponse($this->post($record));
 
 		$row = $this->getLastInsertedRecord();
 
-		$this->table->delete(new PSX_Sql_Condition(array('id', '=', $row['id'])));
+		$this->table->delete(new Condition(array('id', '=', $row['id'])));
 
 		unset($row['id']);
 		unset($row['globalId']);

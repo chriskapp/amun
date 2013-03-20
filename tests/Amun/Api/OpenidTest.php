@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Api;
+
+use Amun\DataFactory;
+use PSX\Sql\Condition;
+
 /**
  * Amun_Api_System_ConnectTest
  *
@@ -32,7 +37,7 @@
  * @version    $Revision: 637 $
  * @backupStaticAttributes disabled
  */
-class Amun_Api_OpenIdTest extends Amun_Api_RestTest
+class OpenIdTest extends RestTest
 {
 	protected function setUp()
 	{
@@ -53,7 +58,7 @@ class Amun_Api_OpenIdTest extends Amun_Api_RestTest
 
 	public function getTable()
 	{
-		return Amun_Sql_Table_Registry::get('Openid');
+		return DataFactory::getTable('Openid');
 	}
 
 	public function testGet()

@@ -22,6 +22,12 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Api\Content\Page;
+
+use Amun\Api\RestTest;
+use Amun\DataFactory;
+use PSX\Sql\Condition;
+
 /**
  * Amun_Api_Content_Page_GadgetTest
  *
@@ -32,7 +38,7 @@
  * @version    $Revision: 742 $
  * @backupStaticAttributes disabled
  */
-class Amun_Api_Content_Page_GadgetTest extends Amun_Api_RestTest
+class GadgetTest extends RestTest
 {
 	private $pageId;
 	private $gadgetId;
@@ -65,7 +71,7 @@ class Amun_Api_Content_Page_GadgetTest extends Amun_Api_RestTest
 
 	public function getTable()
 	{
-		return Amun_Sql_Table_Registry::get('Content_Page_Gadget');
+		return DataFactory::getTable('Content_Page_Gadget');
 	}
 
 	public function testGet()
@@ -75,7 +81,7 @@ class Amun_Api_Content_Page_GadgetTest extends Amun_Api_RestTest
 
 	public function testPost()
 	{
-		$record = new AmunService_Content_Page_Gadget_Record($this->table);
+		$record = $this->getTable()->getRecord();
 		$record->setPageId($this->pageId);
 		$record->setGadgetId($this->gadgetId);
 
@@ -83,7 +89,7 @@ class Amun_Api_Content_Page_GadgetTest extends Amun_Api_RestTest
 
 		$row = $this->getLastInsertedRecord();
 
-		$this->table->delete(new PSX_Sql_Condition(array('id', '=', $row['id'])));
+		$this->table->delete(new Condition(array('id', '=', $row['id'])));
 
 		unset($row['id']);
 		unset($row['sort']);

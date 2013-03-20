@@ -22,6 +22,12 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Api\User;
+
+use Amun\Api\RestTest;
+use Amun\DataFactory;
+use PSX\Sql\Condition;
+
 /**
  * Amun_Api_User_FriendTest
  *
@@ -32,7 +38,7 @@
  * @version    $Revision: 637 $
  * @backupStaticAttributes disabled
  */
-class Amun_Api_User_FriendTest extends Amun_Api_RestTest
+class FriendTest extends RestTest
 {
 	public function getEndpoint()
 	{
@@ -41,7 +47,7 @@ class Amun_Api_User_FriendTest extends Amun_Api_RestTest
 
 	public function getTable()
 	{
-		return Amun_Sql_Table_Registry::get('User_Friend');
+		return DataFactory::getTable('User_Friend');
 	}
 
 	public function testGet()

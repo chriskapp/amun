@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Api;
+
+use Amun\DataFactory;
+use PSX\Sql\Condition;
+
 /**
  * Amun_Api_Content_MediaTest
  *
@@ -32,7 +37,7 @@
  * @version    $Revision: 637 $
  * @backupStaticAttributes disabled
  */
-class Amun_Api_Content_MediaTest extends Amun_Api_RestTest
+class MediaTest extends RestTest
 {
 	public function getEndpoint()
 	{
@@ -41,7 +46,7 @@ class Amun_Api_Content_MediaTest extends Amun_Api_RestTest
 
 	public function getTable()
 	{
-		return Amun_Sql_Table_Registry::get('Media');
+		return DataFactory::getTable('Media');
 	}
 
 	public function testGet()

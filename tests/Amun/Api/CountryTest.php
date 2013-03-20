@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Api;
+
+use Amun\DataFactory;
+use PSX\Sql\Condition;
+
 /**
  * Amun_Api_System_CountryTest
  *
@@ -32,7 +37,7 @@
  * @version    $Revision: 637 $
  * @backupStaticAttributes disabled
  */
-class Amun_Api_CountryTest extends Amun_Api_RestTest
+class CountryTest extends RestTest
 {
 	public function getEndpoint()
 	{
@@ -41,7 +46,7 @@ class Amun_Api_CountryTest extends Amun_Api_RestTest
 
 	public function getTable()
 	{
-		return Amun_Sql_Table_Registry::get('Country');
+		return DataFactory::getTable('Country');
 	}
 
 	public function testGet()
@@ -51,8 +56,7 @@ class Amun_Api_CountryTest extends Amun_Api_RestTest
 
 	public function testPost()
 	{
-		$record = new AmunService_Country_Record($this->table);
-
+		$record = $this->getTable()->getRecord();
 		$record->setTitle('foobar');
 		$record->setCode('FB');
 		$record->setLongitude(10.4);
@@ -62,7 +66,7 @@ class Amun_Api_CountryTest extends Amun_Api_RestTest
 
 		$row = $this->getLastInsertedRecord();
 
-		$this->table->delete(new PSX_Sql_Condition(array('id', '=', $row['id'])));
+		$this->table->delete(new Condition(array('id', '=', $row['id'])));
 
 		unset($row['id']);
 

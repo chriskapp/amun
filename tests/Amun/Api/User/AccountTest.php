@@ -22,6 +22,13 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Api\User;
+
+use Amun\Api\RestTest;
+use Amun\DataFactory;
+use AmunService\User\Account;
+use PSX\Sql\Condition;
+
 /**
  * Amun_Api_User_AccountTest
  *
@@ -32,7 +39,7 @@
  * @version    $Revision: 637 $
  * @backupStaticAttributes disabled
  */
-class Amun_Api_User_AccountTest extends Amun_Api_RestTest
+class AccountTest extends RestTest
 {
 	public function getEndpoint()
 	{
@@ -41,7 +48,7 @@ class Amun_Api_User_AccountTest extends Amun_Api_RestTest
 
 	public function getTable()
 	{
-		return Amun_Sql_Table_Registry::get('User_Account');
+		return DataFactory::getTable('User_Account');
 	}
 
 	public function testGet()
@@ -51,10 +58,9 @@ class Amun_Api_User_AccountTest extends Amun_Api_RestTest
 
 	public function testPost()
 	{
-		$record = new AmunService_User_Account_Record($this->table);
-
+		$record = $this->getTable()->getRecord();
 		$record->setGroupId(1);
-		$record->setStatus(AmunService_User_Account_Record::NORMAL);
+		$record->setStatus(Account\Record::NORMAL);
 		$record->identity = 'foo@bar.com';
 		$record->setName('foo');
 		$record->pw = 'test123';
@@ -63,7 +69,7 @@ class Amun_Api_User_AccountTest extends Amun_Api_RestTest
 
 		$row = $this->getLastInsertedRecord();
 
-		$this->table->delete(new PSX_Sql_Condition(array('id', '=', $row['id'])));
+		$this->table->delete(new Condition(array('id', '=', $row['id'])));
 
 		unset($record->identity);
 		unset($record->pw);

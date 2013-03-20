@@ -22,6 +22,12 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Api\Content\Page;
+
+use Amun\Api\RestTest;
+use Amun\DataFactory;
+use PSX\Sql\Condition;
+
 /**
  * Amun_Api_Content_Page_RightTest
  *
@@ -32,7 +38,7 @@
  * @version    $Revision: 637 $
  * @backupStaticAttributes disabled
  */
-class Amun_Api_Content_Page_RightTest extends Amun_Api_RestTest
+class RightTest extends RestTest
 {
 	public function getEndpoint()
 	{
@@ -41,7 +47,7 @@ class Amun_Api_Content_Page_RightTest extends Amun_Api_RestTest
 
 	public function getTable()
 	{
-		return Amun_Sql_Table_Registry::get('Content_Page_Right');
+		return DataFactory::getTable('Content_Page_Right');
 	}
 
 	public function testGet()
@@ -51,7 +57,7 @@ class Amun_Api_Content_Page_RightTest extends Amun_Api_RestTest
 
 	public function testPost()
 	{
-		$record = new AmunService_Content_Page_Right_Record($this->table);
+		$record = $this->getTable()->getRecord();
 		$record->setPageId(1);
 		$record->setGroupId(1);
 		$record->setNewGroupId(2);
@@ -60,7 +66,7 @@ class Amun_Api_Content_Page_RightTest extends Amun_Api_RestTest
 
 		$row = $this->getLastInsertedRecord();
 
-		$this->table->delete(new PSX_Sql_Condition(array('id', '=', $row['id'])));
+		$this->table->delete(new Condition(array('id', '=', $row['id'])));
 
 		unset($row['id']);
 

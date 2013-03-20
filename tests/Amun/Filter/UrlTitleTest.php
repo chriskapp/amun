@@ -22,6 +22,8 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Filter;
+
 /**
  * Amun_Filter_UrlTitleTest
  *
@@ -32,7 +34,7 @@
  * @version    $Revision: 792 $
  * @backupStaticAttributes disabled
  */
-class Amun_Filter_UrlTitleTest extends PHPUnit_Framework_TestCase
+class UrlTitleTest extends \PHPUnit_Framework_TestCase
 {
 	protected function setUp()
 	{
@@ -44,7 +46,7 @@ class Amun_Filter_UrlTitleTest extends PHPUnit_Framework_TestCase
 
 	public function testApply()
 	{
-		$filter = new Amun_Filter_UrlTitle();
+		$filter = new UrlTitle();
 
 		$this->assertEquals('test', $filter->apply('TEST'));
 		$this->assertEquals('test-', $filter->apply('test '));

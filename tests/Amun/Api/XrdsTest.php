@@ -22,6 +22,13 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Api;
+
+use Amun\DataFactory;
+use PSX\Sql\Condition;
+use PSX\Url;
+use PSX\Http\GetRequest;
+
 /**
  * Amun_Api_XrdsTest
  *
@@ -32,7 +39,7 @@
  * @version    $Revision: 637 $
  * @backupStaticAttributes disabled
  */
-class Amun_Api_XrdsTest extends Amun_Api_RestTest
+class XrdsTest extends RestTest
 {
 	protected $config;
 	protected $http;
@@ -56,13 +63,13 @@ class Amun_Api_XrdsTest extends Amun_Api_RestTest
 
 	public function getTable()
 	{
-		return Amun_Sql_Table_Registry::get('Xrds');
+		return DataFactory::getTable('Xrds');
 	}
 
 	public function testGet()
 	{
-		$url      = new PSX_Url($this->getEndpoint());
-		$request  = new PSX_Http_GetRequest($url);
+		$url      = new Url($this->getEndpoint());
+		$request  = new GetRequest($url);
 		$response = $this->http->request($request);
 
 		$this->assertEquals(200, $response->getCode());
@@ -81,8 +88,8 @@ class Amun_Api_XrdsTest extends Amun_Api_RestTest
 
 	public function testXrdsLocation()
 	{
-		$url      = new PSX_Url($this->config['psx_url'] . '/');
-		$request  = new PSX_Http_GetRequest($url);
+		$url      = new Url($this->config['psx_url'] . '/');
+		$request  = new GetRequest($url);
 		$response = $this->http->request($request);
 
 		$this->assertEquals(200, $response->getCode());

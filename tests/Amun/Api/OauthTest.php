@@ -22,6 +22,12 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Api;
+
+use Amun\DataFactory;
+use AmunService\Oauth;
+use PSX\Sql\Condition;
+
 /**
  * Amun_Api_System_ApiTest
  *
@@ -32,7 +38,7 @@
  * @version    $Revision: 637 $
  * @backupStaticAttributes disabled
  */
-class Amun_Api_OauthTest extends Amun_Api_RestTest
+class OauthTest extends RestTest
 {
 	protected function setUp()
 	{
@@ -53,7 +59,7 @@ class Amun_Api_OauthTest extends Amun_Api_RestTest
 
 	public function getTable()
 	{
-		return Amun_Sql_Table_Registry::get('Oauth');
+		return DataFactory::getTable('Oauth');
 	}
 
 	public function testGet()
@@ -63,9 +69,8 @@ class Amun_Api_OauthTest extends Amun_Api_RestTest
 
 	public function testPost()
 	{
-		$record = new AmunService_Oauth_Record($this->table);
-
-		$record->setStatus(AmunService_Oauth_Record::NORMAL);
+		$record = $this->getTable()->getRecord();
+		$record->setStatus(Oauth\Record::NORMAL);
 		$record->setName('foo');
 		$record->setEmail('foo@bar.com');
 		$record->setUrl('http://google.de');
@@ -76,7 +81,7 @@ class Amun_Api_OauthTest extends Amun_Api_RestTest
 
 		$row = $this->getLastInsertedRecord();
 
-		$this->table->delete(new PSX_Sql_Condition(array('id', '=', $row['id'])));
+		$this->table->delete(new Condition(array('id', '=', $row['id'])));
 
 		unset($row['id']);
 		unset($row['consumerKey']);

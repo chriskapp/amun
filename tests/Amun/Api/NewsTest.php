@@ -22,6 +22,11 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Api;
+
+use Amun\DataFactory;
+use PSX\Sql\Condition;
+
 /**
  * Amun_Api_Service_NewsTest
  *
@@ -32,7 +37,7 @@
  * @version    $Revision: 743 $
  * @backupStaticAttributes disabled
  */
-class Amun_Api_Service_NewsTest extends Amun_Api_RestTest
+class NewsTest extends RestTest
 {
 	protected function setUp()
 	{
@@ -53,7 +58,7 @@ class Amun_Api_Service_NewsTest extends Amun_Api_RestTest
 
 	public function getTable()
 	{
-		return Amun_Sql_Table_Registry::get('News');
+		return DataFactory::getTable('News');
 	}
 
 	public function testGet()
@@ -72,7 +77,7 @@ class Amun_Api_Service_NewsTest extends Amun_Api_RestTest
 
 		$row = $this->getLastInsertedRecord();
 
-		$this->table->delete(new PSX_Sql_Condition(array('id', '=', $row['id'])));
+		$this->table->delete(new Condition(array('id', '=', $row['id'])));
 
 		unset($row['id']);
 		unset($row['globalId']);
