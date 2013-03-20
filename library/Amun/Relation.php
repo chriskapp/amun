@@ -28,7 +28,6 @@ use PSX\Http;
 use PSX\Http\PostRequest;
 use PSX\Http\Request;
 use PSX\Json;
-use PSX\Oauth;
 use PSX\Oauth\Provider\Data\Consumer;
 use PSX\Url;
 use PSX\Yadis;
@@ -61,7 +60,7 @@ class Relation
 
 		if($consumer !== null)
 		{
-			$this->oauth = new Oauth($http);
+			$this->oauth = new \PSX\Oauth($http);
 			$this->cred  = $consumer;
 		}
 	}

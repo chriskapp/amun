@@ -22,7 +22,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace AmunService\Core\Approval;
+namespace AmunService\Core\Approval\Record;
 
 use Amun\DataFactory;
 use Amun\Data\FormAbstract;
@@ -166,7 +166,7 @@ class Form extends FormAbstract
 	private function getType()
 	{
 		$types  = array();
-		$result = AmunService_Core_Approval_Record::getType();
+		$result = Record::getType();
 
 		foreach($result as $k => $v)
 		{

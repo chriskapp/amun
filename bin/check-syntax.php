@@ -13,13 +13,13 @@ define('DEBUG', isset($_SERVER['argv'][2]));
 require_once(PATH . '/library/PSX/Config.php');
 require_once(PATH . '/library/PSX/Bootstrap.php');
 
-$config = new PSX_Config(PATH . '/configuration.php');
+$config = new PSX\Config(PATH . '/configuration.php');
 $config['psx_path_cache']    = PATH . '/cache';
 $config['psx_path_library']  = PATH . '/library';
 $config['psx_path_module']   = PATH . '/module';
 $config['psx_path_template'] = PATH . '/template';
 
-$bootstrap = new PSX_Bootstrap($config);
+$bootstrap = new PSX\Bootstrap($config);
 
 // classes wich should be excluded from the class check
 $exclude = array(
@@ -37,6 +37,7 @@ try
 {
 	// container wich holds all loaded files
 	$count = checkSyntax(PSX_PATH_LIBRARY . '/Amun');
+	$count+= checkSyntax(PSX_PATH_LIBRARY . '/AmunService');
 
 	echo 'OK! Checked ' . $count . ' classes';
 }

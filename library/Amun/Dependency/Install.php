@@ -34,7 +34,6 @@ use PSX\DependencyAbstract;
 use PSX\Sql;
 use PSX\Validate;
 use PSX\Input;
-use PSX\Session;
 use PSX\Template;
 
 /**
@@ -154,7 +153,7 @@ class Install extends DependencyAbstract
 			return $this->get('session');
 		}
 
-		$session = new Session('amun_' . md5($this->config['psx_url']));
+		$session = new \PSX\Session('amun_' . md5($this->config['psx_url']));
 		$session->start();
 
 		return $this->set('session', $session);

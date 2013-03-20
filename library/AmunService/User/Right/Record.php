@@ -26,7 +26,7 @@ namespace AmunService\User\Right;
 
 use Amun\Data\RecordAbstract;
 use Amun\Exception;
-use Amun\Filter as Amun\Filter;
+use Amun\Filter as AmunFilter;
 use AmunService\Core\Registry;
 use PSX\Filter;
 
