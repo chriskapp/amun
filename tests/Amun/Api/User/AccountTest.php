@@ -26,6 +26,7 @@ namespace Amun\Api\User;
 
 use Amun\Api\RestTest;
 use Amun\DataFactory;
+use Amun\Security;
 use AmunService\User\Account;
 use PSX\Sql\Condition;
 
@@ -41,6 +42,21 @@ use PSX\Sql\Condition;
  */
 class AccountTest extends RestTest
 {
+	protected function setUp()
+	{
+		parent::setUp();
+
+		if(!$this->hasService('org.amun-project.user'))
+		{
+			$this->markTestSkipped('Service user not installed');
+		}
+	}
+
+	public function getDataSet()
+	{
+		return $this->createMySQLXMLDataSet('tests/amun.xml');
+	}
+
 	public function getEndpoint()
 	{
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/account';
@@ -67,33 +83,12 @@ class AccountTest extends RestTest
 
 		$this->assertPositiveResponse($this->post($record));
 
-		$row = $this->getLastInsertedRecord();
+		$actual = $this->table->getRow(array('groupId', 'status', 'identity', 'name', 'pw'), new Condition(array('id', '=', 1)));
+		$record->identity = sha1(Security::getSalt() . $record->identity);
+		$record->pw = sha1(Security::getSalt() . $record->pw);
+		$expect = array_map('strval', $record->getData());
 
-		$this->table->delete(new Condition(array('id', '=', $row['id'])));
-
-		unset($record->identity);
-		unset($record->pw);
-
-		unset($row['id']);
-		unset($row['globalId']);
-		unset($row['hostId']);
-		unset($row['countryId']);
-		unset($row['identity']);
-		unset($row['pw']);
-		unset($row['email']);
-		unset($row['token']);
-		unset($row['ip']);
-		unset($row['gender']);
-		unset($row['profileUrl']);
-		unset($row['thumbnailUrl']);
-		unset($row['longitude']);
-		unset($row['latitude']);
-		unset($row['timezone']);
-		unset($row['lastSeen']);
-		unset($row['updated']);
-		unset($row['date']);
-
-		$this->assertEquals($row, $record->getData());
+		$this->assertEquals($expect, $actual);
 	}
 }
 

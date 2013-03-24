@@ -40,28 +40,19 @@ use PSX\Sql\Condition;
  */
 class GadgetTest extends RestTest
 {
-	private $pageId;
-	private $gadgetId;
-
 	protected function setUp()
 	{
 		parent::setUp();
 
-		// check whether we have an page
-		$this->pageId = $this->sql->getField('SELECT id FROM ' . $this->registry['table.content_page'] . ' ORDER BY id ASC LIMIT 1');
-
-		if(empty($this->pageId))
+		if(!$this->hasService('org.amun-project.content'))
 		{
-			$this->markTestSkipped('No page available');
+			$this->markTestSkipped('Service content not installed');
 		}
+	}
 
-		// check whether we have an gadget
-		$this->gadgetId = $this->sql->getField('SELECT id FROM ' . $this->registry['table.content_gadget'] . ' ORDER BY id ASC LIMIT 1');
-
-		if(empty($this->gadgetId))
-		{
-			$this->markTestSkipped('No gadget available');
-		}
+	public function getDataSet()
+	{
+		return $this->createMySQLXMLDataSet('tests/amun.xml');
 	}
 
 	public function getEndpoint()
@@ -82,19 +73,41 @@ class GadgetTest extends RestTest
 	public function testPost()
 	{
 		$record = $this->getTable()->getRecord();
-		$record->setPageId($this->pageId);
-		$record->setGadgetId($this->gadgetId);
+		$record->setPageId(5);
+		$record->setGadgetId(1);
 
 		$this->assertPositiveResponse($this->post($record));
 
-		$row = $this->getLastInsertedRecord();
+		$actual = $this->table->getRow(array('pageId', 'gadgetId'), new Condition(array('id', '=', 2)));
+		$expect = array_map('strval', $record->getData());
 
-		$this->table->delete(new Condition(array('id', '=', $row['id'])));
+		$this->assertEquals($expect, $actual);
+	}
 
-		unset($row['id']);
-		unset($row['sort']);
+	public function testPut()
+	{
+		$record = $this->getTable()->getRecord();
+		$record->setId(1);
+		$record->setSort(8);
 
-		$this->assertEquals($row, $record->getData());
+		$this->assertPositiveResponse($this->put($record));
+
+		$actual = $this->table->getRow(array('id', 'sort'), new Condition(array('id', '=', 1)));
+		$expect = array_map('strval', $record->getData());
+
+		$this->assertEquals($expect, $actual);
+	}
+
+	public function testDelete()
+	{
+		$record = $this->getTable()->getRecord();
+		$record->setId(1);
+
+		$this->assertPositiveResponse($this->delete($record));
+
+		$actual = $this->table->getRow(array('id'), new Condition(array('id', '=', 1)));
+
+		$this->assertEquals(true, empty($actual));
 	}
 }
 

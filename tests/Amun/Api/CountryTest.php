@@ -39,6 +39,21 @@ use PSX\Sql\Condition;
  */
 class CountryTest extends RestTest
 {
+	protected function setUp()
+	{
+		parent::setUp();
+
+		if(!$this->hasService('org.amun-project.country'))
+		{
+			$this->markTestSkipped('Service country not installed');
+		}
+	}
+
+	public function getDataSet()
+	{
+		return $this->createMySQLXMLDataSet('tests/amun.xml');
+	}
+
 	public function getEndpoint()
 	{
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/country';
@@ -64,13 +79,10 @@ class CountryTest extends RestTest
 
 		$this->assertPositiveResponse($this->post($record));
 
-		$row = $this->getLastInsertedRecord();
+		$actual = $this->table->getRow(array('title', 'code', 'longitude', 'latitude'), new Condition(array('id', '=', 240)));
+		$expect = array_map('strval', $record->getData());
 
-		$this->table->delete(new Condition(array('id', '=', $row['id'])));
-
-		unset($row['id']);
-
-		$this->assertEquals($row, $record->getData());
+		$this->assertEquals($expect, $actual);
 	}
 }
 

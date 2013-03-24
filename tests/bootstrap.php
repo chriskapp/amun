@@ -37,6 +37,10 @@ function doBootstrap()
 	// set container
 	Amun\DataFactory::initInstance($container);
 
+	// set logger
+	PSX\Log::getLogger()->addHandler(new PSX\Log\Handler\File(PSX_PATH_CACHE . '/log.txt'));
+	PSX\Log::getLogger()->setLevel(PSX\Log::INFO);
+
 	// set user
 	$userId = $sql->getField('SELECT id FROM ' . $registry['table.user_account'] . ' WHERE status = ' . \AmunService\User\Account\Record::ADMINISTRATOR . ' ORDER BY id ASC LIMIT 1');
 

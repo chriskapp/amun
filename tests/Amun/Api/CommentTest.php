@@ -41,14 +41,17 @@ class CommentTest extends RestTest
 {
 	protected function setUp()
 	{
+		parent::setUp();
+
 		if(!$this->hasService('org.amun-project.comment'))
 		{
 			$this->markTestSkipped('Service comment not installed');
 		}
-		else
-		{
-			parent::setUp();
-		}
+	}
+
+	public function getDataSet()
+	{
+		return $this->createMySQLXMLDataSet('tests/amun.xml');
 	}
 
 	public function getEndpoint()
@@ -71,24 +74,15 @@ class CommentTest extends RestTest
 		$record = $this->getTable()->getRecord();
 		$record->setPageId(1);
 		$record->setRefId(1);
-		$record->text = 'foobar';
+		$record->setText('foobar');
 
 		$this->assertPositiveResponse($this->post($record));
 
-		$row = $this->getLastInsertedRecord();
-
-		$this->table->delete(new Condition(array('id', '=', $row['id'])));
-
+		$actual = $this->table->getRow(array('pageId', 'refId', 'text'), new Condition(array('id', '=', 1)));
 		$record->text = '<p>foobar </p>' . "\n";
+		$expect = array_map('strval', $record->getData());
 
-		unset($row['id']);
-		unset($row['globalId']);
-		unset($row['userId']);
-		unset($row['date']);
-
-		$row['refId'] = (integer) $row['refId'];
-
-		$this->assertEquals($row, $record->getData());
+		$this->assertEquals($expect, $actual);
 	}
 }
 

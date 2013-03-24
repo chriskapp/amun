@@ -44,6 +44,21 @@ use PSX\DateTime;
  */
 class PageTest extends RestTest
 {
+	protected function setUp()
+	{
+		parent::setUp();
+
+		if(!$this->hasService('org.amun-project.content'))
+		{
+			$this->markTestSkipped('Service content not installed');
+		}
+	}
+
+	public function getDataSet()
+	{
+		return $this->createMySQLXMLDataSet('tests/amun.xml');
+	}
+
 	public function getEndpoint()
 	{
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/page';
@@ -66,7 +81,7 @@ class PageTest extends RestTest
 		$record->setServiceId(3);
 		$record->setRightId(0);
 		$record->setStatus(Page\Record::HIDDEN);
-		$record->setLoad(15);
+		$record->setLoad(Page\Record::NAV | Page\Record::PATH | Page\Record::GADGET);
 		$record->setTitle('bar');
 		$record->setTemplate('page.tpl');
 		$record->setCache(1);
@@ -74,17 +89,10 @@ class PageTest extends RestTest
 
 		$this->assertPositiveResponse($this->post($record));
 
-		$row = $this->getLastInsertedRecord();
+		$actual = $this->table->getRow(array('parentId', 'serviceId', 'rightId', 'status', 'load', 'urlTitle', 'title', 'template', 'cache', 'expire'), new Condition(array('id', '=', 6)));
+		$expect = array_map('strval', $record->getData());
 
-		$this->table->delete(new Condition(array('id', '=', $row['id'])));
-
-		unset($row['id']);
-		unset($row['globalId']);
-		unset($row['sort']);
-		unset($row['path']);
-		unset($row['date']);
-
-		$this->assertEquals($row, $record->getData());
+		$this->assertEquals($expect, $actual);
 	}
 
 	public function testMinimalPost()
@@ -97,75 +105,25 @@ class PageTest extends RestTest
 
 		$this->assertPositiveResponse($this->post($record));
 
-		$row = $this->getLastInsertedRecord();
+		$actual = $this->table->getRow(array('parentId', 'serviceId', 'status', 'urlTitle', 'title'), new Condition(array('id', '=', 6)));
+		$expect = array_map('strval', $record->getData());
 
-		$this->table->delete(new Condition(array('id', '=', $row['id'])));
-
-		unset($row['id']);
-		unset($row['globalId']);
-		unset($row['rightId']);
-		unset($row['sort']);
-		unset($row['load']);
-		unset($row['path']);
-		unset($row['template']);
-		unset($row['cache']);
-		unset($row['expire']);
-		unset($row['date']);
-
-		$this->assertEquals($row, $record->getData());
+		$this->assertEquals($expect, $actual);
 	}
 
 	public function testPut()
 	{
-		$globalId = Uuid::nameBased(uniqid());
-		$status   = Service\Record::NORMAL;
-		$date     = date(DateTime::SQL);
-
-		$this->table->insert(array(
-
-			'parentId'  => 0,
-			'globalId'  => $globalId,
-			'serviceId' => 3,
-			'status'    => $status,
-			'load'      => 6,
-			'sort'      => 0,
-			'path'      => 'bar',
-			'urlTitle'  => 'bar',
-			'title'     => 'bar',
-			'template'  => '',
-			'cache'     => '',
-			'expire'    => '',
-			'date'      => $date,
-
-		));
-
-		$id = $this->sql->getLastInsertId();
-
 		$record = $this->getTable()->getRecord();
-		$record->setId($id);
+		$record->setId(2);
 		$record->setTitle('foo');
 		$record->setTemplate('page.tpl');
 
 		$this->assertPositiveResponse($this->put($record));
 
-		$record->parentId  = 0;
-		$record->globalId  = $globalId;
-		$record->serviceId = 3;
-		$record->rightId   = 0;
-		$record->status    = $status;
-		$record->load      = 6;
-		$record->sort      = 0;
-		$record->path      = 'foo';
-		$record->urlTitle  = 'foo';
-		$record->cache     = 0;
-		$record->expire    = '';
-		$record->date      = $date;
+		$actual = $this->table->getRow(array('id', 'urlTitle', 'title', 'template'), new Condition(array('id', '=', 2)));
+		$expect = array_map('strval', $record->getData());
 
-		$row = $this->table->getRow(array_keys($this->table->getColumns()), new Condition(array('id', '=', $id)));
-
-		$this->assertEquals($row, $record->getData());
-
-		$this->table->delete(new Condition(array('id', '=', $id)));
+		$this->assertEquals($expect, $actual);
 	}
 
 	public function testDelete()
@@ -174,34 +132,14 @@ class PageTest extends RestTest
 		$status   = Service\Record::NORMAL;
 		$date     = date(DateTime::SQL);
 
-		$this->table->insert(array(
-
-			'parentId'  => 0,
-			'globalId'  => $globalId,
-			'serviceId' => 3,
-			'status'    => $status,
-			'load'      => 6,
-			'sort'      => 0,
-			'path'      => 'bar',
-			'urlTitle'  => 'bar',
-			'title'     => 'bar',
-			'template'  => '',
-			'cache'     => '',
-			'expire'    => '',
-			'date'      => $date,
-
-		));
-
-		$id = $this->sql->getLastInsertId();
-
 		$record = $this->getTable()->getRecord();
-		$record->setId($id);
+		$record->setId(2);
 
 		$this->assertPositiveResponse($this->delete($record));
 
-		$row = $this->table->getRow(array_keys($this->table->getColumns()), new Condition(array('id', '=', $id)));
+		$actual = $this->table->getRow(array('id'), new Condition(array('id', '=', 2)));
 
-		$this->assertEquals(true, empty($row));
+		$this->assertEquals(true, empty($actual));
 	}
 }
 

@@ -42,6 +42,21 @@ use PSX\DateTime;
  */
 class GadgetTest extends RestTest
 {
+	protected function setUp()
+	{
+		parent::setUp();
+
+		if(!$this->hasService('org.amun-project.content'))
+		{
+			$this->markTestSkipped('Service content not installed');
+		}
+	}
+
+	public function getDataSet()
+	{
+		return $this->createMySQLXMLDataSet('tests/amun.xml');
+	}
+
 	public function getEndpoint()
 	{
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/gadget';
@@ -62,23 +77,17 @@ class GadgetTest extends RestTest
 		$record = $this->getTable()->getRecord();
 		$record->setName('foo');
 		$record->setTitle('bar');
-		$record->setPath('org.amun-project.page/gadget/textBox.php');
+		$record->path = '21:latestNews.php';
 		$record->setCache(1);
 		$record->setExpire('PT1H');
 
 		$this->assertPositiveResponse($this->post($record));
 
-		$row = $this->getLastInsertedRecord();
+		$actual = $this->table->getRow(array('name', 'title', 'path', 'cache', 'expire'), new Condition(array('id', '=', 2)));
+		$record->path = 'latestNews.php';
+		$expect = array_map('strval', $record->getData());
 
-		$this->table->delete(new Condition(array('id', '=', $row['id'])));
-
-		$record->globalId = $row['globalId'];
-
-		unset($row['id']);
-		unset($row['param']);
-		unset($row['date']);
-
-		$this->assertEquals($row, $record->getData());
+		$this->assertEquals($expect, $actual);
 	}
 
 	public function testMinimalPost()
@@ -86,103 +95,51 @@ class GadgetTest extends RestTest
 		$record = $this->getTable()->getRecord();
 		$record->setName('bar');
 		$record->setTitle('foo');
-		$record->setPath('org.amun-project.news/gadget/latestNews.php');
+		$record->path = '21:latestNews.php';
 
 		$this->assertPositiveResponse($this->post($record));
 
-		$row = $this->getLastInsertedRecord();
+		$actual = $this->table->getRow(array('name', 'title', 'path'), new Condition(array('id', '=', 2)));
+		$record->path = 'latestNews.php';
+		$expect = array_map('strval', $record->getData());
 
-		$this->table->delete(new Condition(array('id', '=', $row['id'])));
-
-		$record->globalId = $row['globalId'];
-		$record->cache    = $row['cache'];
-		$record->expire   = $row['expire'];
-
-		unset($row['id']);
-		unset($row['param']);
-		unset($row['date']);
-
-		$this->assertEquals($row, $record->getData());
+		$this->assertEquals($expect, $actual);
 	}
 
 	public function testWrongPathPost()
 	{
 		$record = $this->getTable()->getRecord();
-		$record->title = 'blub';
-		$record->path = 'test.php';
+		$record->title = 'bar';
+		$record->path = '21:foo.php';
 
 		$this->assertNegativeResponse($this->post($record));
 	}
 
 	public function testPut()
 	{
-		$globalId = Uuid::pseudoRandom();
-		$userId   = 1;
-		$date     = date(DateTime::SQL);
-
-		$this->table->insert(array(
-
-			'globalId' => $globalId,
-			'userId'   => $userId,
-			'title'    => 'foobar',
-			'path'     => 'org.amun-project.news/gadget/latestNews.php',
-			'date'     => $date,
-
-		));
-
-		$id = $this->sql->getLastInsertId();
-
 		$record = $this->getTable()->getRecord();
-		$record->setId($id);
-		$record->setName('foo');
-		$record->setTitle('bar');
+		$record->setId(1);
+		$record->setName('FOO');
+		$record->setTitle('Foo');
 
 		$this->assertPositiveResponse($this->put($record));
 
-		$record->globalId = $globalId;
-		$record->userId   = $userId;
-		$record->path     = 'org.amun-project.news/gadget/latestNews.php';
-		$record->param    = '';
-		$record->cache    = 0;
-		$record->expire   = '';
-		$record->date     = $date;
+		$actual = $this->table->getRow(array('id', 'name', 'title'), new Condition(array('id', '=', 1)));
+		$expect = array_map('strval', $record->getData());
 
-		$row = $this->table->getRow(array_keys($this->table->getColumns()), new Condition(array('id', '=', $id)));
-
-		$this->assertEquals($row, $record->getData());
-
-		$this->table->delete(new Condition(array('id', '=', $id)));
+		$this->assertEquals($expect, $actual);
 	}
 
 	public function testDelete()
 	{
-		$globalId = Uuid::pseudoRandom();
-		$userId   = 1;
-		$date     = date(DateTime::SQL);
-
-		$this->table->insert(array(
-
-			'globalId' => $globalId,
-			'userId'   => $userId,
-			'name'     => 'foo',
-			'title'    => 'foobar',
-			'path'     => 'org.amun-project.news/gadget/latestNews.php',
-			'cache'    => '0',
-			'expire'   => '',
-			'date'     => $date,
-
-		));
-
-		$id = $this->sql->getLastInsertId();
-
 		$record = $this->getTable()->getRecord();
-		$record->setId($id);
+		$record->setId(1);
 
 		$this->assertPositiveResponse($this->delete($record));
 
-		$row = $this->table->getRow(array_keys($this->table->getColumns()), new Condition(array('id', '=', $id)));
+		$actual = $this->table->getRow(array('id'), new Condition(array('id', '=', 1)));
 
-		$this->assertEquals(true, empty($row));
+		$this->assertEquals(true, empty($actual));
 	}
 }
 

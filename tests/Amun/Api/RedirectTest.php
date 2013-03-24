@@ -41,14 +41,17 @@ class RedirectTest extends RestTest
 {
 	protected function setUp()
 	{
+		parent::setUp();
+
 		if(!$this->hasService('org.amun-project.redirect'))
 		{
 			$this->markTestSkipped('Service redirect not installed');
 		}
-		else
-		{
-			parent::setUp();
-		}
+	}
+
+	public function getDataSet()
+	{
+		return $this->createMySQLXMLDataSet('tests/amun.xml');
 	}
 
 	public function getEndpoint()
@@ -74,16 +77,10 @@ class RedirectTest extends RestTest
 
 		$this->assertPositiveResponse($this->post($record));
 
-		$row = $this->getLastInsertedRecord();
+		$actual = $this->table->getRow(array('pageId', 'href'), new Condition(array('id', '=', 1)));
+		$expect = array_map('strval', $record->getData());
 
-		$this->table->delete(new Condition(array('id', '=', $row['id'])));
-
-		unset($row['id']);
-		unset($row['globalId']);
-		unset($row['userId']);
-		unset($row['date']);
-
-		$this->assertEquals($row, $record->getData());
+		$this->assertEquals($expect, $actual);
 	}
 }
 

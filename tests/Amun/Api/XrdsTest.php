@@ -41,19 +41,19 @@ use PSX\Http\GetRequest;
  */
 class XrdsTest extends RestTest
 {
-	protected $config;
-	protected $http;
-
 	protected function setUp()
 	{
+		parent::setUp();
+
 		if(!$this->hasService('org.amun-project.xrds'))
 		{
 			$this->markTestSkipped('Service xrds not installed');
 		}
-		else
-		{
-			parent::setUp();
-		}
+	}
+
+	public function getDataSet()
+	{
+		return $this->createMySQLXMLDataSet('tests/amun.xml');
 	}
 
 	public function getEndpoint()
@@ -78,6 +78,7 @@ class XrdsTest extends RestTest
 
 		$this->assertEquals(true, isset($xml->XRD));
 		$this->assertEquals(true, isset($xml->XRD->Service));
+		$this->assertEquals(true, count($xml->XRD->Service) > 0);
 
 		foreach($xml->XRD->Service as $service)
 		{

@@ -43,21 +43,65 @@ use InvalidArgumentException;
  * @version    $Revision: 792 $
  * @backupStaticAttributes disabled
  */
-abstract class RestTest extends \PHPUnit_Framework_TestCase
+abstract class RestTest extends \PHPUnit_Extensions_Database_TestCase
 {
+	protected static $con;
+
 	protected $config;
 	protected $sql;
 	protected $registry;
 	protected $http;
 	protected $oauth;
 
+	public function getConnection()
+	{
+		$container = getContainer();
+		$config    = $container->getConfig();
+
+		if(self::$con === null)
+		{
+			try
+			{
+				self::$con = new Sql($config['psx_sql_host'],
+					$config['psx_sql_user'],
+					$config['psx_sql_pw'],
+					$config['psx_sql_db']);
+			}
+			catch(PDOException $e)
+			{
+				$this->markTestSkipped($e->getMessage());
+			}
+		}
+
+		if($this->sql === null)
+		{
+			$this->sql = self::$con;
+
+			// create tables
+			$queries = $this->getBeforeQueries();
+
+			foreach($queries as $query)
+			{
+				$this->sql->exec($query);
+			}
+		}
+
+		return $this->createDefaultDBConnection($this->sql, $config['psx_sql_db']);
+	}
+
+	public function getBeforeQueries()
+	{
+		return array();
+	}
+
 	protected function setUp()
 	{
+		parent::setUp();
+
 		// check whether we have API credentials
 		if(HAS_CREDENTIALS)
 		{
 			$this->config   = getContainer()->getConfig();
-			$this->sql      = getContainer()->getSql();
 			$this->registry = getContainer()->getRegistry();
 			$this->http     = new Http();
 			$this->oauth    = new Oauth($this->http);
@@ -71,11 +115,15 @@ abstract class RestTest extends \PHPUnit_Framework_TestCase
 
 	protected function tearDown()
 	{
-		unset($this->table);
+		parent::setUp();
+
 		unset($this->sql);
-		unset($this->oauth);
-		unset($this->http);
+
 		unset($this->config);
+		unset($this->registry);
+		unset($this->http);
+		unset($this->oauth);
+		unset($this->table);
 	}
 
 	protected function get()
@@ -161,7 +209,7 @@ abstract class RestTest extends \PHPUnit_Framework_TestCase
 
 	protected function assertNegativeResponse(Response $response)
 	{
-		$this->assertEquals(200, $response->getCode(), $response->getBody());
+		//$this->assertEquals(200, $response->getCode(), $response->getBody());
 
 		$resp = Json::decode($response->getBody());
 
@@ -175,9 +223,17 @@ abstract class RestTest extends \PHPUnit_Framework_TestCase
 		return $this->table->getRow(array_keys($this->table->getColumns()), null, $this->table->getPrimaryKey(), Sql::SORT_DESC);
 	}
 
-	protected function hasService($serviceName)
+	protected function hasService($source)
 	{
-		return getContainer()->getRegistry()->hasService($serviceName);
+		return $this->registry->hasService($source);
+	}
+
+	protected function getServiceId($source)
+	{
+		$sql       = "SELECT `id` FROM `" . $this->registry['table.core_service'] . "` WHERE `source` = ?";
+		$serviceId = $this->sql->getField($sql, array($source));
+
+		return $serviceId;
 	}
 
 	/**

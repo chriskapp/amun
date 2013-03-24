@@ -42,14 +42,17 @@ class OauthTest extends RestTest
 {
 	protected function setUp()
 	{
+		parent::setUp();
+
 		if(!$this->hasService('org.amun-project.oauth'))
 		{
 			$this->markTestSkipped('Service oauth not installed');
 		}
-		else
-		{
-			parent::setUp();
-		}
+	}
+
+	public function getDataSet()
+	{
+		return $this->createMySQLXMLDataSet('tests/amun.xml');
 	}
 
 	public function getEndpoint()
@@ -79,17 +82,10 @@ class OauthTest extends RestTest
 
 		$this->assertPositiveResponse($this->post($record));
 
-		$row = $this->getLastInsertedRecord();
+		$actual = $this->table->getRow(array('status', 'name', 'email', 'url', 'title', 'description'), new Condition(array('id', '=', 2)));
+		$expect = array_map('strval', $record->getData());
 
-		$this->table->delete(new Condition(array('id', '=', $row['id'])));
-
-		unset($row['id']);
-		unset($row['consumerKey']);
-		unset($row['consumerSecret']);
-		unset($row['callback']);
-		unset($row['date']);
-
-		$this->assertEquals($row, $record->getData());
+		$this->assertEquals($expect, $actual);
 	}
 }
 

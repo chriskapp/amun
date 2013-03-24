@@ -39,6 +39,21 @@ use Amun\DataFactory;
  */
 class RequestTest extends RestTest
 {
+	protected function setUp()
+	{
+		parent::setUp();
+
+		if(!$this->hasService('org.amun-project.oauth'))
+		{
+			$this->markTestSkipped('Service oauth not installed');
+		}
+	}
+
+	public function getDataSet()
+	{
+		return $this->createMySQLXMLDataSet('tests/amun.xml');
+	}
+
 	public function getEndpoint()
 	{
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/oauth/request';

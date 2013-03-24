@@ -26,6 +26,7 @@ namespace Amun\Api\Core;
 
 use Amun\Api\RestTest;
 use Amun\DataFactory;
+use PSX\Sql\Condition;
 
 /**
  * Amun_Api_System_RegistryTest
@@ -39,6 +40,21 @@ use Amun\DataFactory;
  */
 class RegistryTest extends RestTest
 {
+	protected function setUp()
+	{
+		parent::setUp();
+
+		if(!$this->hasService('org.amun-project.core'))
+		{
+			$this->markTestSkipped('Service core not installed');
+		}
+	}
+
+	public function getDataSet()
+	{
+		return $this->createMySQLXMLDataSet('tests/amun.xml');
+	}
+
 	public function getEndpoint()
 	{
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/registry';
@@ -52,6 +68,37 @@ class RegistryTest extends RestTest
 	public function testGet()
 	{
 		$this->assertResultSetResponse($this->get());
+	}
+
+	public function testPost()
+	{
+		$record = $this->getTable()->getRecord();
+		$record->setName('bar');
+		$record->setValue('foo');
+
+		$this->assertNegativeResponse($this->post($record));
+	}
+
+	public function testPut()
+	{
+		$record = $this->getTable()->getRecord();
+		$record->setId(24);
+		$record->setValue('foobar');
+
+		$this->assertPositiveResponse($this->put($record));
+
+		$actual = $this->table->getRow(array('id', 'value'), new Condition(array('name', '=', 'core.title')));
+		$expect = array_map('strval', $record->getData());
+
+		$this->assertEquals($expect, $actual);
+	}
+
+	public function testDelete()
+	{
+		$record = $this->getTable()->getRecord();
+		$record->setId(24);
+
+		$this->assertNegativeResponse($this->delete($record));
 	}
 }
 

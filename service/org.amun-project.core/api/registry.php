@@ -40,14 +40,30 @@ use PSX\Data\Message;
  */
 class registry extends RestAbstract
 {
-	public function onPost()
+	/**
+	 * Insert a new record
+	 *
+	 * @httpMethod POST
+	 * @path /
+	 * @nickname updateRecord
+	 * @responseClass PSX_Data_Message
+	 */
+	public function insertRecord()
 	{
 		$msg = new Message('Create a registry record is not possible', false);
 
 		$this->setResponse($msg, null, 500);
 	}
 
-	public function onDelete()
+	/**
+	 * Delete an existing record
+	 *
+	 * @httpMethod DELETE
+	 * @path /
+	 * @nickname deleteRecord
+	 * @responseClass PSX_Data_Message
+	 */
+	public function deleteRecord()
 	{
 		$msg = new Message('Delete a registry record is not possible', false);
 

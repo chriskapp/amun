@@ -40,7 +40,15 @@ use PSX\Data\Message;
  */
 class service extends RestAbstract
 {
-	public function onPut()
+	/**
+	 * Update an existing record
+	 *
+	 * @httpMethod PUT
+	 * @path /
+	 * @nickname updateRecord
+	 * @responseClass PSX_Data_Message
+	 */
+	public function updateRecord()
 	{
 		$msg = new Message('Update a service record is not possible', false);
 
