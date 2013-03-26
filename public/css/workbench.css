@@ -1,4 +1,19 @@
 
+.wb-header
+{
+
+}
+
+.wb-header a
+{
+	color:inherit;
+}
+
+.wb-header img
+{
+	border:none;
+}
+
 .wb-navigation-item
 {
 	display:block;
@@ -10,7 +25,7 @@
 
 .wb-navigation-item-hover
 {
-	background-color:#eee;
+	background-color:#efefef;
 }
 
 .wb-icon-content

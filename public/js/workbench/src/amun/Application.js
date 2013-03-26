@@ -43,7 +43,7 @@ Ext.define('Amun.Application', {
                 layout: 'border',
                 items: [{
                     region: 'north',
-                    title: '<div style="float:left;">Workbench (<a href="' + psx_url + '">' + psx_url + '</a>)</div><div style="float:right;">Logged in as: <a href="' + user.profileUrl + '">' + user.name + '</a><img src="' + user.thumbnailUrl + '" width="16" style="float:right;margin-left:4px" /></div>',
+                    title: '<div class="wb-header"><div style="float:left;">Workbench (<a href="' + psx_url + '">' + psx_url + '</a>)</div><div style="float:right;">Logged in as: <a href="' + user.profileUrl + '">' + user.name + '</a><img src="' + user.thumbnailUrl + '" width="16" style="float:right;margin-left:4px" /></div></div>',
                     margins: '0 0 0 0',
                     border: false
                 },{
