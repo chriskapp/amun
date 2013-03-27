@@ -78,7 +78,7 @@ class NewsTest extends RestTest
 
 		$this->assertPositiveResponse($this->post($record));
 
-		$actual = $this->table->getRow(array('pageId', 'title', 'text'), new Condition(array('id', '=', 1)));
+		$actual = $this->table->getRow(array('pageId', 'urlTitle', 'title', 'text'), new Condition(array('id', '=', 1)));
 		$expect = array_map('strval', $record->getData());
 
 		$this->assertEquals($expect, $actual);

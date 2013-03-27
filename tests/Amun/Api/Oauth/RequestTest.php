@@ -22,7 +22,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Amun\Api\Core;
+namespace Amun\Api\Oauth;
 
 use Amun\Api\RestTest;
 use Amun\DataFactory;
