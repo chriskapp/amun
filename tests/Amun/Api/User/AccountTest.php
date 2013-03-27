@@ -83,7 +83,7 @@ class AccountTest extends RestTest
 
 		$this->assertPositiveResponse($this->post($record));
 
-		$actual = $this->table->getRow(array('groupId', 'status', 'identity', 'name', 'pw'), new Condition(array('id', '=', 2)));
+		$actual = $this->table->getRow(array('groupId', 'status', 'identity', 'name', 'pw'), new Condition(array('id', '=', 3)));
 		$record->identity = sha1(Security::getSalt() . $record->identity);
 		$record->pw = sha1(Security::getSalt() . $record->pw);
 		$expect = array_map('strval', $record->getData());
