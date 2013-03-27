@@ -1,10 +1,10 @@
 <?php
 
-require_once('../library/PSX/Config.php');
-require_once('../library/PSX/Bootstrap.php');
+require_once('amun/library/PSX/Config.php');
+require_once('amun/library/PSX/Bootstrap.php');
 
-$config    = new PSX_Config('../configuration.php');
-$bootstrap = new PSX_Bootstrap($config);
+$config    = new PSX\Config('amun/configuration.php');
+$bootstrap = new PSX\Bootstrap($config);
 
-echo Amun_Base::getVersion();
+echo Amun\Base::getVersion();
 
