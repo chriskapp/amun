@@ -25,8 +25,6 @@
 namespace AmunService\My\LoginHandler;
 
 use Amun\Exception;
-use PSX\OpenId;
-use PSX\Webfinger;
 use PSX\Url;
 
 /**
@@ -56,7 +54,7 @@ class Webfinger extends Openid
 
 		// @todo we should probably add here an request cache for 
 		// the lrdd template
-		$webfinger = new Webfinger($this->http);
+		$webfinger = new \PSX\Webfinger($this->http);
 		$url       = new Url('http://' . $provider);
 		$template  = $webfinger->getLrddTemplate($url);
 
@@ -76,7 +74,7 @@ class Webfinger extends Openid
 		if(!empty($profileUrl))
 		{
 			// initalize openid
-			$openid = new OpenId($this->http, $this->config['psx_url'], $this->store);
+			$openid = new \PSX\OpenId($this->http, $this->config['psx_url'], $this->store);
 			$openid->initialize($profileUrl, $callback);
 
 			return $openid;

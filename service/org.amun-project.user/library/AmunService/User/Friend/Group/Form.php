@@ -26,7 +26,7 @@ namespace AmunService\User\Friend\Group;
 
 use Amun\Data\FormAbstract;
 use Amun\DataFactory;
-use Amun\Form;
+use Amun\Form as AmunForm;
 use Amun\Form\Element\Panel;
 use Amun\Form\Element\Input;
 use Amun\Form\Element\Captcha;
@@ -45,7 +45,7 @@ class Form extends FormAbstract
 {
 	public function create()
 	{
-		$form = new Form('POST', $this->url);
+		$form = new AmunForm('POST', $this->url);
 
 
 		$panel = new Panel('group', 'Group');
@@ -77,7 +77,7 @@ class Form extends FormAbstract
 		$record = DataFactory::getTable('User_Friend_Group')->getRecord($id);
 
 
-		$form = new Form('PUT', $this->url);
+		$form = new AmunForm('PUT', $this->url);
 
 
 		$panel = new Panel('group', 'Group');
@@ -115,7 +115,7 @@ class Form extends FormAbstract
 		$record = DataFactory::getTable('User_Friend_Group')->getRecord($id);
 
 
-		$form = new Form('DELETE', $this->url);
+		$form = new AmunForm('DELETE', $this->url);
 
 
 		$panel = new Panel('group', 'Group');

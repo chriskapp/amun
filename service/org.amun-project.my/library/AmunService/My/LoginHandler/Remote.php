@@ -33,7 +33,6 @@ use PSX\Http;
 use PSX\Url;
 use PSX\Webfinger;
 use PSX\Sql\Condition;
-use PSX\OpenId;
 use PSX\OpenId\Store;
 use PSX\OpenId\Extension;
 use PSX\OpenId\ProviderAbstract;
@@ -69,7 +68,7 @@ class Remote extends Openid
 		$callback = $this->pageUrl . '/login/callback/remote';
 
 		// create an openid object
-		$openid = new OpenId($this->http, $this->config['psx_url'], $this->store);
+		$openid = new \PSX\OpenId($this->http, $this->config['psx_url'], $this->store);
 
 		// check whether identity is an url if not it is an email
 		$filter = new Filter\Url();

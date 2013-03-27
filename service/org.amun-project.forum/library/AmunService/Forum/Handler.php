@@ -32,6 +32,7 @@ use AmunService\Core\Approval;
 use PSX\DateTime;
 use PSX\Data\RecordInterface;
 use PSX\Data\ResultSet;
+use PSX\Sql;
 use PSX\Sql\Condition;
 use PSX\Sql\Join;
 
@@ -165,7 +166,7 @@ class Handler extends HandlerAbstract
 			->join(Join::INNER, DataFactory::getTable('Content_Page')
 				->select(array('path'), 'page')
 			)
-			->orderBy('sticky', PSX_Sql::SORT_DESC);
+			->orderBy('sticky', Sql::SORT_DESC);
 	}
 }
 

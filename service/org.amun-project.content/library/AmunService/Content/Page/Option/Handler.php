@@ -22,7 +22,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace AmunService\Content\Page\Gadget;
+namespace AmunService\Content\Page\Option;
 
 use Amun\DataFactory;
 use Amun\Data\HandlerAbstract;
