@@ -11,7 +11,6 @@ Ext.define('Amun.Form', {
         var me = this;
         me.addEvents('submit', 'reset');
 
-        console.log(this.form);
         var el = this.parseElements(this.form);
         el.formMethod = this.form.method;
         el.formAction = this.form.action;
