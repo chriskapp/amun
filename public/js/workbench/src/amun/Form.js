@@ -5,12 +5,16 @@ Ext.define('Amun.Form', {
     extend: 'Ext.form.Panel',
 
     formMethod: 'POST',
+    formAction: null,
 
     initComponent: function(){
         var me = this;
         me.addEvents('submit', 'reset');
 
+        console.log(this.form);
         var el = this.parseElements(this.form);
+        el.formMethod = this.form.method;
+        el.formAction = this.form.action;
         Ext.apply(me, el);
 
         me.callParent();
@@ -21,11 +25,11 @@ Ext.define('Amun.Form', {
     },
 
     getAction: function(){
-        return this.form.form.action;
+        return this.formAction;
     },
 
     getMethod: function(){
-        return this.form.form.method;
+        return this.formMethod;
     },
 
     parseElements: function(item){
