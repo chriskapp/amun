@@ -63,8 +63,15 @@ class index extends ApplicationAbstract
 				throw new Exception('Access not allowed');
 			}
 
-			$content  = $recordPipe->getContent();
+
+			// get content
 			$embedded = $this->get->embedded('boolean');
+			$content  = '';
+
+			if($recordPipe instanceof Pipe\Record)
+			{
+				$content = $recordPipe->getContent();
+			}
 
 			if(!$embedded)
 			{
