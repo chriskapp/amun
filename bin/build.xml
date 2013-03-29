@@ -27,6 +27,7 @@
 		<delete dir="${build}/.git" />
 		<delete dir="${build}/bin" />
 		<delete dir="${build}/tests" />
+		<delete file="${build}/.gitignore" />
 		<delete file="${build}/README.md" />
 		<delete file="${build}/phpunit.xml" />
 		<delete file="${build}/todo.txt" />
@@ -56,12 +57,12 @@
 	</target>
 
 	<target name="phpunit" depends="syntax-check">
-		<exec executable="phpunit.bat" failonerror="true" />
+		<exec dir="${build}" executable="phpunit.bat" failonerror="true" />
 	</target>
 
 	<target name="generate-service-config">
 		<exec dir="${bin}" executable="php" failonerror="true">
-			<arg line="generate-service-config.php *" />
+			<arg line="generate-service-config.php * amun" />
 		</exec>
 	</target>
 
