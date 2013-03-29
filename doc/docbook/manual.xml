@@ -101,42 +101,6 @@
 	</chapter>
 
 	<chapter>
-		<title>Advanced topics</title>
-		<sect1>
-			<title>Host</title>
-			<para>It is possible to connect websites running amun into a network (federated social network). All users within
-			the network only have to register at one website. Each user in the network can add other users as friend.</para>
-			<para>In order to connect a website you have to add the remote website to the system hosts. Therefore you
-			need a valid consumer key and secret of the remote host.</para>
-		</sect1>
-		<sect1>
-			<title>Approval</title>
-			<para>In order to use the approval system you have to add a record to the system approval table. I.e. if
-			you want that comments on the page id 5 should be approved before inserting you have to add the following
-			row:</para>
-			<screen>Table: amun_service_comment
-Field: pageId
-Value: 5</screen>
-			<para>That means if an record is inserted into the table "amun_service_comment" and this record has a field "pageId"
-			with the value "5" then the record is added to the approval queue. Then you can either update or delete the
-			record.</para>
-		</sect1>
-		<sect1>
-			<title>Notify</title>
-			<para>The table amun_system_notify contains a list wich class gets notified if a record is inserted, updated or deleted
-			for the specific table. Amun uses <ulink url="http://stomp.github.com">Stomp</ulink> to notify other applications about
-			events. Your stomp client has to subscribe to <command>/queue/amun</command> at the broker. I.e. if you want send a message
-			to all listeners if a news is inserted you have to add the following data:</para>
-			<screen>Priority: 0
-Table: amun_service_news
-Class: Amun_Notify_Stomp</screen>
-			<para>The news is submitted JSON encoded to all subscribers. In this way you can delegate time consuming tasks like
-			sending bulk mails, notifing users per XMPP or generating pdfs to other applications. Also almost every programming
-			language has an stomp client library. A basic implementation of an stomp listener is available in the scripts folder.</para>
-		</sect1>
-	</chapter>
-
-	<chapter>
 		<title>3rd party applications</title>
 		<para>Amun uses some 3rd party libraries and applications. Thx to all the developers
 		for making such great software!</para>
@@ -152,13 +116,13 @@ Class: Amun_Notify_Stomp</screen>
 			<para>Google Code Prettify: <ulink url="http://code.google.com/p/google-code-prettify/">http://code.google.com/p/google-code-prettify</ulink></para>
 		</listitem>
 		<listitem>
-			<para>HTMLPurifier: <ulink url="http://htmlpurifier.org">http://htmlpurifier.org</ulink></para>
-		</listitem>
-		<listitem>
 			<para>jQuery: <ulink url="http://jquery.com">http://jquery.com</ulink></para>
 		</listitem>
 		<listitem>
 			<para>PSX: <ulink url="http://phpsx.org">http://phpsx.org</ulink></para>
+		</listitem>
+		<listitem>
+			<para>Zend Mail: <ulink url="http://framework.zend.com/manual/2.0/en/modules/zend.mail.introduction.html">http://framework.zend.com/manual/2.0/en/modules/zend.mail.introduction.html</ulink></para>
 		</listitem>
 		</orderedlist>
 	</chapter>
@@ -170,13 +134,10 @@ Class: Amun_Notify_Stomp</screen>
 		<orderedlist numeration="upperroman">
 		<title>Things you can do if you have any problems with Amun</title>
 		<listitem>
-			<para>Write an email to the <ulink url="http://groups.google.com/group/phpsx">mailinglist</ulink></para>
-		</listitem>
-		<listitem>
 			<para>Join the IRC channel #phpsx on freenode</para>
 		</listitem>
 		<listitem>
-			<para>Write an issue to the <ulink url="http://code.google.com/p/amun/issues/list">bugtracker</ulink></para>
+			<para>Write an issue to the <ulink url="https://github.com/k42b3/amun/issues">bugtracker</ulink></para>
 		</listitem>
 		</orderedlist>
 	</chapter>
