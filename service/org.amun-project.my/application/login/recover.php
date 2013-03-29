@@ -28,7 +28,9 @@ use Amun\Module\ApplicationAbstract;
 use Amun\Captcha;
 use Amun\Security;
 use Amun\Exception;
+use Amun\Mail;
 use AmunService\User\Account;
+use PSX\DateTime;
 use PSX\Filter;
 
 /**
@@ -111,7 +113,7 @@ class recover extends ApplicationAbstract
 
 						);
 
-						$mail = new Amun_Mail($this->registry);
+						$mail = new Mail($this->registry);
 						$mail->send('MY_RECOVER', $account->email, $values);
 
 

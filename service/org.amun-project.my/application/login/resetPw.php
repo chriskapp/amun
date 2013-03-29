@@ -27,7 +27,9 @@ namespace my\application\login;
 use Amun\Module\ApplicationAbstract;
 use Amun\Security;
 use Amun\Mail;
+use Amun\Exception;
 use AmunService\User\Account;
+use PSX\DateTime;
 use PSX\Filter;
 
 /**
