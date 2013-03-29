@@ -1,98 +1,119 @@
 
+Ext.require('Amun.service.content.page.GadgetStore');
+
 Ext.define('Amun.service.content.page.Form', {
     extend: 'Amun.Form',
+
+    formPanel: null,
+    gadgetPanel: null,
 
     initComponent: function(){
         var me = this;
         me.callParent();
 
         // load group gadgets
-        this.loadGadgets();
+        this.gadgetPanel.getStore().load();
     },
 
     reload: function(){
         this.getForm().reset();
-
-        // load existing gadgets
-        if (this.recordId > 0) {
-            this.loadExistingGadgets();
-        }
+        this.gadgetPanel.getStore().load();
     },
 
-    loadGadgets: function(){
+    buildForm: function(form){
+        // build form
+        this.formPanel = this.parseElements(form);
+        this.formPanel.items.push({
+            xtype: 'hiddenfield',
+            cls: 'wb-form-gadgets',
+            name: 'gadgets',
+            value: ''
+        });
+        this.formPanel.region = 'center';
+
+        // build gadgets
+        this.gadgetPanel = null;
         var gadgetUri = Amun.xrds.Manager.findServiceUri('http://ns.amun-project.org/2011/amun/service/content/gadget');
         if (gadgetUri !== false) {
-            Ext.Ajax.request({
-                url: gadgetUri + '?count=1024&fields=id,name&format=json',
-                scope: this,
-                success: function(response, opts){
-                    var result = Ext.JSON.decode(response.responseText);
-                    if (result.entry.length > 0) {
-                        var items = [];
-                        for (var i = 0; i < result.entry.length; i++) {
-                            items.push({
-                                xtype: 'checkbox',
-                                boxLabel: result.entry[i].name,
-                                itemId: 'gadget_' + result.entry[i].id,
-                                name: 'gadget_' + result.entry[i].id,
-                                inputValue: result.entry[i].id,
-                                scope: this,
-                                handler: function(){
-                                    this.updateGadgets();
-                                }
-                            });
-                        }
+            var store = Ext.create('Amun.service.content.page.GadgetStore', {
+                autoLoad: false,
+                proxy: {
+                    type: 'ajax',
+                    url: gadgetUri + '?count=1024&fields=id,name&format=json',
+                    reader: {
+                        type: 'json',
+                        root: 'entry'
+                    }
+                }
+            });
 
-                        var comboGroup = [{
-                            xtype: 'hiddenfield',
-                            cls: 'wb-form-gadgets',
-                            name: 'gadgets',
-                            value: ''
-                        },{
-                            xtype: 'checkboxgroup',
-                            fieldLabel: 'Gadgets',
-                            columns: 3,
-                            items: items
-                        }];
+            store.on('load', function(el, node){
+                el.getRootNode().expand();
 
-                        this.add(comboGroup);
-                        this.updateLayout();
+                if (this.recordId > 0) {
+                    this.loadExistingGadgets();
+                }
+            }, this);
 
-                        // load existing gadgets
-                        if (this.recordId > 0) {
-                            // defer so the update layout has enough time
-                            Ext.Function.defer(function(){
-                                this.loadExistingGadgets();
-                            }, 200, this);
-                        }
-                    } else {
-                        //
+            this.gadgetPanel = Ext.create('Ext.tree.Panel', {
+                title: 'Gadgets',
+                region: 'east',
+                margins: '0 0 0 5',
+                border: false,
+                width: 200,
+                store: store,
+                hideHeaders: true,
+                useArrows: true,
+                rootVisible: false,
+                viewConfig: {
+                    plugins: {
+                        ptype: 'treeviewdragdrop',
+                        containerScroll: true
                     }
                 },
-                failure: function(response){
-                    Ext.Msg.alert('Error', response.responseText);
+                listeners: {
+                    scope: this,
+                    checkchange: function(node, checked){
+                        this.updateGadgets();
+                    },
+                    itemmove: function(node, checked){
+                        this.updateGadgets();
+                    }
                 }
             });
         }
+
+        var el = {
+            layout: 'border',
+            items: [this.formPanel, this.gadgetPanel]
+        };
+        el.formMethod = form.method;
+        el.formAction = form.action;
+
+        return el;
     },
 
     loadExistingGadgets: function(){
         var groupRightUri = Amun.xrds.Manager.findServiceUri('http://ns.amun-project.org/2011/amun/service/content/page/gadget');
         if (groupRightUri !== false) {
             Ext.Ajax.request({
-                url: groupRightUri + '?fields=id,gadgetId&count=1024&filterBy=pageId&filterOp=equals&filterValue=' + this.recordId + '&format=json',
+                url: groupRightUri + '?fields=id,gadgetId,sort&count=1024&sortBy=sort&sortOrder=ascending&filterBy=pageId&filterOp=equals&filterValue=' + this.recordId + '&format=json',
                 scope: this,
                 success: function(response, opts){
                     var result = Ext.JSON.decode(response.responseText);
                     if (result.entry.length > 0) {
-                        var checkboxGroup = this.query('checkboxgroup')[0];
                         for (var i = 0; i < result.entry.length; i++) {
-                            var gadget = checkboxGroup.getComponent('gadget_' + result.entry[i].gadgetId);
-                            if (gadget) {
-                                gadget.setValue(true);
+                            var node = this.gadgetPanel.getStore().getNodeById(result.entry[i].gadgetId);
+                            if (node) {
+                                node.set('checked', true);
+                                node.set('sort', result.entry[i].sort);
                             }
                         }
 
+                        // sort
+                        this.gadgetPanel.getStore().sort('sort', 'ASC');
+
+                        // update
                         this.updateGadgets();
                     }
                 },
@@ -105,12 +126,12 @@ Ext.define('Amun.service.content.page.Form', {
 
     updateGadgets: function(){
         var value = '';
-        var gadgets = this.query('checkbox');
-        for (var i = 0; i < gadgets.length; i++) {
-            if (gadgets[i].getRawValue()) {
-                value+= gadgets[i].getSubmitValue() + ',';
+        var rootNode = this.gadgetPanel.getStore().getRootNode();
+        rootNode.eachChild(function(node){
+            if (node.get('checked')) {
+                value+= node.get('id') + ',';
             }
-        }
+        }, this);
 
         var el = this.query('hidden[cls=wb-form-gadgets]')[0];
         el.setValue(value);

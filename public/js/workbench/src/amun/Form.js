@@ -11,9 +11,7 @@ Ext.define('Amun.Form', {
         var me = this;
         me.addEvents('submit', 'reset');
 
-        var el = this.parseElements(this.form);
-        el.formMethod = this.form.method;
-        el.formAction = this.form.action;
+        var el = this.buildForm(this.form);
         Ext.apply(me, el);
 
         me.callParent();
@@ -29,6 +27,15 @@ Ext.define('Amun.Form', {
 
     getMethod: function(){
         return this.formMethod;
+    },
+
+    buildForm: function(form){
+        // build form
+        var el = this.parseElements(form);
+        el.formMethod = form.method;
+        el.formAction = form.action;
+
+        return el;
     },
 
     parseElements: function(item){
@@ -120,6 +127,7 @@ Ext.define('Amun.Form', {
         return {
             xtype: 'fieldset',
             title: item.label,
+            collapsible: true,
             layout: 'anchor',
             items: items
         };
@@ -211,7 +219,8 @@ Ext.define('Amun.Form', {
                     name: item.ref,
                     disabled: item.disabled,
                     value: item.value,
-                    fieldLabel: item.label
+                    fieldLabel: item.label,
+                    inputType: item.type == 'password' ? 'password' : 'text'
                 };
         }
         return input;

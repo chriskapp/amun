@@ -54,6 +54,7 @@ Ext.define('Amun.Application', {
                     maxWidth: 400,
                     margins: '5 5 5 5',
                     items: [{
+                        header: false,
                         xtype: 'navigation'
                     }]
                 },{
@@ -61,6 +62,7 @@ Ext.define('Amun.Application', {
                     layout: 'fit',
                     margins: '5 5 5 0',
                     items: [{
+                        header: false,
                         xtype: 'content'
                     }]
                 }]

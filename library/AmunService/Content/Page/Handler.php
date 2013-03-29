@@ -90,11 +90,12 @@ class Handler extends HandlerAbstract
 			{
 				$handler = new Gadget\Handler($this->user);
 
-				foreach($gadgets as $gadgetId)
+				foreach($gadgets as $k => $gadgetId)
 				{
 					$gadgetRecord = DataFactory::getTable('Content_Page_Gadget')->getRecord();
-					$gadgetRecord->pageId = $record->id;
+					$gadgetRecord->pageId   = $record->id;
 					$gadgetRecord->gadgetId = $gadgetId;
+					$gadgetRecord->sort     = $k;
 
 					$handler->create($gadgetRecord);
 				}
@@ -160,11 +161,12 @@ class Handler extends HandlerAbstract
 			if(!empty($gadgets))
 			{
 				// create new gadgets
-				foreach($gadgets as $gadgetId)
+				foreach($gadgets as $k => $gadgetId)
 				{
 					$gadgetRecord = DataFactory::getTable('Content_Page_Gadget')->getRecord();
-					$gadgetRecord->pageId = $record->id;
+					$gadgetRecord->pageId   = $record->id;
 					$gadgetRecord->gadgetId = $gadgetId;
+					$gadgetRecord->sort     = $k;
 
 					$handler->create($gadgetRecord);
 				}
