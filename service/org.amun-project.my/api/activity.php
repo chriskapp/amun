@@ -30,7 +30,6 @@ use Amun\DataFactory;
 use Amun\Module\RestAbstract;
 use Amun\Sql\Table\Registry;
 use Amun\Exception;
-use PSX\Data\Exception;
 use PSX\Data\Message;
 use PSX\Data\WriterInterface;
 use PSX\Data\WriterResult;

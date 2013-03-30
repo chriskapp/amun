@@ -29,7 +29,7 @@ use Amun\Dependency;
 use Amun\Exception;
 use PSX\DateTime;
 use PSX\OpenId\ProviderAbstract;
-use PSX\OpenId\Provider\Data\Association;
+use PSX\OpenId\Provider\Association;
 use PSX\OpenId\Provider\Data\ResRequest;
 use PSX\OpenId\Provider\Data\SetupRequest;
 use PSX\Url;
