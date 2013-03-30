@@ -209,7 +209,7 @@ class index extends ApiAbstract
 
 	private function getClass($file, $ns, $src)
 	{				
-		$path  = $this->config['amun_service_path'] . '/' . $src . '/' . strtolower($file);
+		$path  = $this->config['amun_service_path'] . '/' . $src . '/' . $file;
 		$class = pathinfo($path, PATHINFO_FILENAME);
 		$subNs = str_replace('/', '\\', pathinfo($file, PATHINFO_DIRNAME));
 
