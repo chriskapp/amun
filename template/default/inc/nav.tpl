@@ -9,7 +9,7 @@
 			<?php endif; ?>
 		<?php endforeach; ?>
 	</ul>
-	<br style="clear:left;" />
+	<div class="clearfix"></div>
 </nav>
 <div class="amun-path">
 	<p>Location: <?php foreach($path as $item): ?><a href="<?php echo $item['href']; ?>"><?php echo $item['name']; ?></a> / <?php endforeach; ?></p>

@@ -96,6 +96,20 @@ div.amun-nav nav .active
 	font-weight:bold;
 }
 
+@media (max-width:480px) {
+
+	div.amun-nav nav li
+	{
+		float:none;
+	}
+
+	div.amun-nav nav ul li a
+	{
+		border-bottom:1px solid #fff;
+	}
+
+}
+
 div.amun-path
 {
 	margin-top:6px;
