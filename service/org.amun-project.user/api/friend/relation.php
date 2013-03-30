@@ -41,7 +41,7 @@ use PSX\Data\ReaderInterface;
  * @subpackage user_friend
  * @version    $Revision: 683 $
  */
-class relation extends Amun_Module_ApiAbstract
+class relation extends ApiAbstract
 {
 	public function onGet()
 	{

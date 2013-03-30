@@ -24,7 +24,7 @@
 
 namespace user\api\activity;
 
-use AmunService\User\Activity;
+use AmunService\User\Activity\Handler;
 use Amun\Module\ApiAbstract;
 use Amun\DataFactory;
 use Amun\User;
@@ -32,7 +32,7 @@ use Amun\Exception;
 use Amun\Base;
 use PSX\Atom;
 use PSX\Atom\Entry;
-use PSX\Data\Message;
+use PSX\Data;
 use PSX\Data\ReaderInterface;
 use PSX\Data\WriterInterface;
 use PSX\Data\Writer;
@@ -52,11 +52,11 @@ use PSX\Urn;
  * @subpackage user_activity
  * @version    $Revision: 880 $
  */
-class message extends Amun_Module_ApiAbstract
+class message extends ApiAbstract
 {
 	public function onGet()
 	{
-		$msg = new Message('Method not allowed', false);
+		$msg = new Data\Message('Method not allowed', false);
 
 		$this->setResponse($msg, null, 405);
 	}
@@ -95,20 +95,20 @@ class message extends Amun_Module_ApiAbstract
 				}
 
 
-				$msg = new Message('You have successful create a message', true);
+				$msg = new Data\Message('You have successful create a message', true);
 
 				$this->setResponse($msg, WriterInterface::XML);
 			}
 			catch(Exception $e)
 			{
-				$msg = new Message($e->getMessage(), false);
+				$msg = new Data\Message($e->getMessage(), false);
 
 				$this->setResponse($msg, WriterInterface::XML);
 			}
 		}
 		else
 		{
-			$msg = new Message('Access not allowed', false);
+			$msg = new Data\Message('Access not allowed', false);
 
 			$this->setResponse($msg, WriterInterface::XML, $this->user->isAnonymous() ? 401 : 403);
 		}
@@ -132,7 +132,7 @@ class message extends Amun_Module_ApiAbstract
 
 			$userId  = $this->sql->select($this->registry['table.user_account'], array('id'), $con, Sql::SELECT_FIELD);
 			$user    = new User($userId, $this->registry);
-			$handler = new Activity\Handler($user);
+			$handler = new Handler($user);
 		}
 		else
 		{
