@@ -88,7 +88,7 @@ abstract class FormAbstract extends ApiAbstract
 
 				$this->setResponse($form);
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
 				$msg = new Message($e->getMessage(), false);
 
