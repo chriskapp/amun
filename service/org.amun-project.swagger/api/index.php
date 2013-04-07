@@ -28,6 +28,7 @@ use Amun\Base;
 use Amun\Module\ApiAbstract;
 use Amun\DataFactory;
 use Amun\Exception;
+use PSX\Cache;
 use PSX\Data\Message;
 use PSX\Sql;
 use PSX\Swagger\Api;
@@ -60,10 +61,21 @@ class index extends ApiAbstract
 	{
 		try
 		{
-			$basePath    = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api';
-			$declaration = new Declaration(Base::getVersion(), $basePath, null);
+			$basePath = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api';
+			$cache    = new Cache('swagger-api-index');
 
-			$this->buildApiIndex($declaration);
+			if(($declaration = $cache->load()) === false)
+			{
+				$declaration = new Declaration(Base::getVersion(), $basePath, null);
+
+				$this->buildApiIndex($declaration);
+
+				$cache->write(serialize($declaration));
+			}
+			else
+			{
+				$declaration = unserialize($declaration);
+			}
 
 			$this->setResponse($declaration);
 		}
@@ -86,10 +98,21 @@ class index extends ApiAbstract
 		try
 		{
 			$basePath    = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api';
-			$declaration = new Declaration(Base::getVersion(), $basePath, null);
 			$serviceName = $this->getUriFragments('service');
+			$cache       = new Cache('swagger-api-detail-' . $serviceName);
 
-			$this->buildApiDetails($declaration, $serviceName);
+			if(($declaration = $cache->load()) === false)
+			{
+				$declaration = new Declaration(Base::getVersion(), $basePath, null);
+
+				$this->buildApiDetails($declaration, $serviceName);
+
+				$cache->write(serialize($declaration));
+			}
+			else
+			{
+				$declaration = unserialize($declaration);
+			}
 
 			$this->setResponse($declaration);
 		}
