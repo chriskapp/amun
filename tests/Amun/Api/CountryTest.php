@@ -79,7 +79,7 @@ class CountryTest extends RestTest
 
 		$this->assertPositiveResponse($this->post($record));
 
-		$actual = $this->table->getRow(array('title', 'code', 'longitude', 'latitude'), new Condition(array('id', '=', 240)));
+		$actual = $this->table->getRow(array('title', 'code', 'longitude', 'latitude'), new Condition(array('id', '=', 2)));
 		$expect = array_map('strval', $record->getData());
 
 		$this->assertEquals($expect, $actual);

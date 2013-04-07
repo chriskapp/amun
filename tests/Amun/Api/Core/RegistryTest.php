@@ -27,6 +27,9 @@ namespace Amun\Api\Core;
 use Amun\Api\RestTest;
 use Amun\DataFactory;
 use PSX\Sql\Condition;
+use PSX\Http\GetRequest;
+use PSX\Json;
+use PSX\Url;
 
 /**
  * Amun_Api_System_RegistryTest
@@ -99,6 +102,19 @@ class RegistryTest extends RestTest
 		$record->setId(24);
 
 		$this->assertNegativeResponse($this->delete($record));
+	}
+
+	public function testSupportedFields()
+	{
+		$url      = new Url($this->getEndpoint() . '/@supportedFields');
+		$response = $this->signedRequest('GET', $url);
+
+		$this->assertEquals(200, $response->getCode());
+
+		$fields = Json::decode($response->getBody());
+
+		$this->assertEquals(true, is_array($fields));
+		$this->assertEquals(true, is_array($fields['item']));
 	}
 }
 

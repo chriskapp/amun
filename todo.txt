@@ -1,23 +1,30 @@
 
 [FEATURES]
 
-[ ] implement http://xing.github.com/wysihtml5/ as service for page editing
-[ ] remove getSelect method from all api is now in the handler
-[ ] implement handler select methods in all applications
+[ ] the next step in the amun infrastructure is to build an packetmanager for
+    services. That means we need a host service wich offers a list of services 
+    and a client service wich can connect to an host service and install it from
+    there.
+    [ ] host service
+        Provides the APIs to browse and install existing services. The host 
+        creates an certificate and the client has to trust the cert if he wants 
+        download a service. A possibility for paid services
+    [ ] client service
+        we need a sources.list in the client so that you can discover multiple 
+        hosts. A browse overview to search existing services
+    [ ] a frontend application wich lists all available services of the host 
+        service and offers users to add a new service and download existing once
+        as file
+[ ] check and clean up not used api endpoints
+[ ] openid login activity "... created an Account" is not created
 [ ] fix explorer service
 [ ] add possibility to add dynamic content to the htmlContent class in areas
     like meta, header, footer etc. to load i.e. google analytics js. Probably
     add this to the template instead of the page and therefor we need a template
     table where the templates are defined
-[ ] add twitter and github login support
-[x] possiblity to add more meta data to a page (keywords, description)
-    [ ] A option to create a pasword protected page. This should be general so 
-        that you can protect any page with an password ... at this move we can 
-        also add a possibility to add more meta data to a page (i.e. dublincore)
-    [ ] Save page as "draft" so that its not published directly
+[ ] A option to create a pasword protected page. This should be general so 
+    that you can protect any page with an password
 [ ] improve right system probably with inheritance
-    [x] set fitting default rights for normal and anonymous user group
-        news comment add and comment add for normal users
 [ ] my service add possibility to delete (invalidate) an account
 [ ] my service add data export function where a user can export all records wich
     he made in an XML or maybe HTML format
@@ -25,7 +32,6 @@
 [ ] oauth endpoint send invalid request method header on GET at request/access
     [ ] adding oauth scope
 [ ] Implement reference input field in backend
-[ ] implement user friend stream class
 [ ] support host meta to return json and xrd / jrd
 [ ] build general achievment system where a user based on the karma value (or
     probably other conditions) gets specific achievments on the profile
@@ -37,6 +43,78 @@
     framework because its not amun specific and a well written proxy is in
     general needed
 [ ] test ostatus remote subscription interoperability
+
+
+[SERVICES]
+
+[ ] write a plugin with that you can donwload plugins from a server ... the
+    client gets a list of all plugins via an xml or json list if he want to
+    install a paticular plugin the client donwload all files in an xml format
+    and create the files and directories in the plugin dir (this is a big task)
+[ ] implement http://xing.github.com/wysihtml5/ as service for page editing
+[ ] add database backend service (like phpmyadmin)
+[ ] add tent (https://tent.io/) service wich can post and receive messages for 
+    an user maybe integrate this into my service
+[ ] write docbook plugin wich can displays docbook xml
+[ ] add CMIS API service
+[ ] add calendar service and implement repeat feature. Use webdav service to
+    offer an CalDAV api
+[ ] add faq service add "was that helpful" to each question answer pair to
+    determine whether its helpful or not and to make a gadget wich shows the
+    best questions and answers
+[ ] build api generator service wich builds based on the library classes an
+    api index where all users can comment rate etc.
+[ ] code reflection service where we have a given source folder with classes. To
+    each class we can add comments and discuss about problems, improvements, etc
+    Probably with github integration
+[ ] write a todo plugin where you can post jobs and these jobs can taken by
+    users (ticketsystem) each job should have also an priority
+[ ] create a bugtracker plugin .. where user can submit a bug. A bug can have
+    different states (new, feedback, recognized, confirmed, assigned, done,
+    closed). probably merge with todo plugin
+[ ] add pm (private message) plugin where users can post and receive messages
+    from other users. (should be hooked into the my service)
+[ ] group service where users can join a group like on myspace or facebook etc
+[/] write media plugin where users can add videos by simply add an URL into an
+    textfield. We use oEmbed to discover the video like in the gallery plugin.
+    Not needed at the moment comments are parsing oembed endpoints
+[ ] write wiki plugin
+[ ] write statistic plugin ... the plugin logs all site access etc ... maybe you
+    can add analytics key and the plugin requests the google API
+[ ] write blog plugin
+[ ] write partner plugin ... the plugin has an backlink page where all partner
+    pages must link to to get incoming links an get displayed at the partner
+    page.
+[ ] write a cronjob plugin where you can add cronjob this cronjobs are in the
+    plugin folder cron. The plugin watches whether the script was executed at a
+    time. Scripts can be clean up inactive user etc. The call it self must be
+    made by a cronjob the plugin is only for observing whether the cronjob was
+    executed or not
+[ ] write chat plugin. Should be made with AJAX someone can add a message and
+    every x seconds a script checks via XHR for a new message. (Probably using
+    websockets for this)
+[ ] write system mail plugin where the admin can send mails to all users (that
+    means if the user has provided an email address we send an email else not)
+    mail service with an api exists but we have no frontend
+[ ] write backup plugin so that it is possible to backup the complete website
+    and restore them
+[ ] create shop service (this is for the future ^^)
+[ ] build payment service. A service wich uses several payment gateways to pay
+    an amount should be used by the shop service
+
+[DONE]
+
+[x] Save page as "draft" so that its not published directly. Is done through the
+    publish date
+[x] add phpinfo backend service
+[x] add sitemap service
+[x] implement user friend stream class
+[x] remove getSelect method from all api is now in the handler
+[x] implement handler select methods in all applications
+[x] add twitter and github login support
+[x] possiblity to add more meta data to a page (keywords, description)
+[x] set fitting default rights for normal and anonymous user group
+    news comment add and comment add for normal users
 [x] installation update content help page mention oembed feature
 [x] remove my notify and contact from my service .. since its not used and we 
     would need a message queue .. this function should come in another service
@@ -82,65 +160,6 @@
     Amun_Service_News_Record to eb able to add later a namespace
 [x] Add possibility to upload media in different folders
 [x] build namespace package system i.e. org.amun.comment
-
-[SERVICES]
-
-[x] add phpinfo backend service
-[ ] add database backend service
-[ ] add tent (https://tent.io/) app wich can post and receive messages for an 
-    user maybe integrate this into my service
-[x] add sitemap service
-[ ] write docbook plugin wich can displays docbook xml
-[ ] build api generator service wich builds based on the library classes an
-    api index where all users can comment rate etc.
-[ ] add CMIS API service
-[ ] add calendar service and implement repeat feature. Use webdav service to
-    offer an CalDAV api
-[ ] add faq service add "was that helpful" to each question answer pair to
-    determine whether its helpful or not and to make a gadget wich shows the
-    best questions and answers
-[ ] code reflection service where we have a given source folder with classes. To
-    each class we can add comments and discuss about problems, improvements, etc
-    Should be helpful for any opensource project.
-[ ] write a todo plugin where you can post jobs and these jobs can taken by
-    users (ticketsystem) each job should have also an priority
-[ ] create a bugtracker plugin .. where user can submit a bug. A bug can have
-    different states (new, feedback, recognized, confirmed, assigned, done,
-    closed). probably merge with todo plugin
-[ ] add pm (private message) plugin where users can post and receive messages
-    from other users. (should be hooked into the my service)
-[ ] group service where users can join a group like on myspace or facebook etc
-[ ] write media plugin where users can add videos by simply add an URL into an
-    textfield. We use oEmbed to discover the video like in the gallery plugin.
-[ ] write wiki plugin
-[ ] write statistic plugin ... the plugin logs all site access etc ... maybe you
-    can add analytics key and the plugin requests the google API
-[ ] write a plugin with that you can donwload plugins from a server ... the
-    client gets a list of all plugins via an xml or json list if he want to
-    install a paticular plugin the client donwload all files in an xml format
-    and create the files and directories in the plugin dir (this is a big task)
-[ ] write blog plugin
-[ ] write partner plugin ... the plugin has an backlink page where all partner
-    pages must link to to get incoming links an get displayed at the partner
-    page.
-[ ] write a cronjob plugin where you can add cronjob this cronjobs are in the
-    plugin folder cron. The plugin watches whether the script was executed at a
-    time. Scripts can be clean up inactive user etc. The call it self must be
-    made by a cronjob the plugin is only for observing whether the cronjob was
-    executed or not
-[ ] write chat plugin. Should be made with AJAX someone can add a message and
-    every x seconds a script checks via XHR for a new message. (Probably using
-    websockets for this)
-[ ] write system mail plugin where the admin can send mails to all users (that
-    means if the user has provided an email address we send an email else not)
-[ ] write database plugin where user can admister the tables (like phpmyadmin
-    ... were not running out of fun for the next years xD)
-[ ] write backup plugin so that it is possible to backup the complete website
-    and restore them
-[ ] create shop plugin (this is for the future ^^)
-
-[DONE]
-
 [x] Create ant build file for building the release and docs
 [/] Implement OpenAjax_Hub_2.0 / OpenSocial gadget javascript libraries for
     gadgets

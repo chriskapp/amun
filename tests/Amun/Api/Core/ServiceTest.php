@@ -26,6 +26,9 @@ namespace Amun\Api\Core;
 
 use Amun\Api\RestTest;
 use Amun\DataFactory;
+use PSX\Http\GetRequest;
+use PSX\Json;
+use PSX\Url;
 
 /**
  * Amun_Api_Content_ServiceTest
@@ -67,6 +70,33 @@ class ServiceTest extends RestTest
 	public function testGet()
 	{
 		$this->assertResultSetResponse($this->get());
+	}
+
+	public function testSupportedFields()
+	{
+		$url      = new Url($this->getEndpoint() . '/@supportedFields');
+		$response = $this->signedRequest('GET', $url);
+
+		$this->assertEquals(200, $response->getCode());
+
+		$fields = Json::decode($response->getBody());
+
+		$this->assertEquals(true, is_array($fields));
+		$this->assertEquals(true, is_array($fields['item']));
+	}
+
+	public function testFormCreate()
+	{
+		$url      = new Url($this->getEndpoint() . '/form?method=create');
+		$response = $this->signedRequest('GET', $url);
+
+		$this->assertEquals(200, $response->getCode());
+
+		$data = Json::decode($response->getBody());
+
+		$this->assertEquals(true, is_array($data));
+		$this->assertEquals('form', $data['class']);
+		$this->assertEquals('POST', $data['method']);
 	}
 }
 

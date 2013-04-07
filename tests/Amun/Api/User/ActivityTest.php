@@ -28,7 +28,9 @@ use Amun\Api\RestTest;
 use Amun\DataFactory;
 use PSX\Sql\Condition;
 use PSX\Http\Response;
+use PSX\Http\GetRequest;
 use PSX\Json;
+use PSX\Url;
 
 /**
  * Amun_Api_User_ActivityTest
@@ -111,6 +113,33 @@ class ActivityTest extends RestTest
 		unset($row['date']);
 
 		$this->assertEquals($row, $record->getData());
+	}
+
+	public function testSupportedFields()
+	{
+		$url      = new Url($this->getEndpoint() . '/@supportedFields');
+		$response = $this->signedRequest('GET', $url);
+
+		$this->assertEquals(200, $response->getCode());
+
+		$fields = Json::decode($response->getBody());
+
+		$this->assertEquals(true, is_array($fields));
+		$this->assertEquals(true, is_array($fields['item']));
+	}
+
+	public function testFormCreate()
+	{
+		$url      = new Url($this->getEndpoint() . '/form?method=create');
+		$response = $this->signedRequest('GET', $url);
+
+		$this->assertEquals(200, $response->getCode());
+
+		$data = Json::decode($response->getBody());
+
+		$this->assertEquals(true, is_array($data));
+		$this->assertEquals('form', $data['class']);
+		$this->assertEquals('POST', $data['method']);
 	}
 }
 

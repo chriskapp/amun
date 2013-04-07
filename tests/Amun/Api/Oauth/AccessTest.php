@@ -26,6 +26,9 @@ namespace Amun\Api\Oauth;
 
 use Amun\Api\RestTest;
 use Amun\DataFactory;
+use PSX\Http\GetRequest;
+use PSX\Json;
+use PSX\Url;
 
 /**
  * Amun_Api_System_Api_AccessTest
@@ -67,6 +70,19 @@ class AccessTest extends RestTest
 	public function testGet()
 	{
 		$this->assertResultSetResponse($this->get());
+	}
+
+	public function testSupportedFields()
+	{
+		$url      = new Url($this->getEndpoint() . '/@supportedFields');
+		$response = $this->signedRequest('GET', $url);
+
+		$this->assertEquals(200, $response->getCode());
+
+		$fields = Json::decode($response->getBody());
+
+		$this->assertEquals(true, is_array($fields));
+		$this->assertEquals(true, is_array($fields['item']));
 	}
 }
 

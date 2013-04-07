@@ -151,12 +151,19 @@ abstract class RestTest extends \PHPUnit_Extensions_Database_TestCase
 		$url    = new Url($this->getEndpoint());
 		$body   = $record !== null ? Json::encode($record->getFields()) : null;
 		$header = array(
-
-			'Content-Type'  => 'application/json',
-			'Accept'        => 'application/json',
-			'Authorization' => $this->oauth->getAuthorizationHeader($url, CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET, 'HMAC-SHA1', $type),
-
+			'Content-Type' => 'application/json',
+			'Accept'       => 'application/json',
 		);
+
+		return $this->signedRequest($type, $url, $header, $body);
+	}
+
+	protected function signedRequest($type, Url $url, array $header = array(), $body = null)
+	{
+		if(!isset($header['Authorization']))
+		{
+			$header['Authorization'] = $this->oauth->getAuthorizationHeader($url, CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET, 'HMAC-SHA1', $type);
+		}
 
 		switch($type)
 		{
