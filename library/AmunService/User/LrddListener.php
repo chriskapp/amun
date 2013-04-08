@@ -51,7 +51,7 @@ class LrddListener extends ListenerAbstract
 		if($account instanceof Account\Record)
 		{
 			// subject
-			$writer->writeElement('Subject', $uri);
+			$writer->writeElement('Subject', $account->name . '@' . $this->base->getHost());
 
 			// alias
 			$writer->writeElement('Alias', $account->profileUrl);
