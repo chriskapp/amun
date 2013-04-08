@@ -48,6 +48,7 @@ class determineLoginHandler extends ApiAbstract
 	 * @httpMethod GET
 	 * @path /
 	 * @nickname needPassword
+	 * @parameter query identity string
 	 * @responseClass PSX_Data_Message
 	 */
 	public function needPassword()
