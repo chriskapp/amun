@@ -41,17 +41,20 @@ class DataFactory
 	private static $_instance;
 
 	protected $ct;
+	protected $prefix;
+
 	protected $_cache = array();
 
 	private function __construct(DependencyAbstract $ct)
 	{
-		$this->ct = $ct;
+		$this->ct     = $ct;
+		$this->prefix = $this->ct->getConfig()->offsetGet('amun_table_prefix');
 	}
 
 	public function getHandlerInstance($table)
 	{
-		$table = str_replace('_', '\\', $table);
-		$class = Registry::getClassName('\AmunService\\' . $table . '\Handler');
+		$ns    = $this->getNamespace($table);
+		$class = Registry::getClassName('\AmunService\\' . $ns . '\Handler');
 
 		if(isset($this->_cache[$class]))
 		{
@@ -70,8 +73,8 @@ class DataFactory
 
 	public function getFormInstance($table)
 	{
-		$table = str_replace('_', '\\', $table);
-		$class = Registry::getClassName('\AmunService\\' . $table . '\Form');
+		$ns    = $this->getNamespace($table);
+		$class = Registry::getClassName('\AmunService\\' . $ns . '\Form');
 
 		if(isset($this->_cache[$class]))
 		{
@@ -95,8 +98,8 @@ class DataFactory
 
 	public function getStreamInstance($table)
 	{
-		$table = str_replace('_', '\\', $table);
-		$class = Registry::getClassName('\AmunService\\' . $table . '\Stream');
+		$ns    = $this->getNamespace($table);
+		$class = Registry::getClassName('\AmunService\\' . $ns . '\Stream');
 
 		if(isset($this->_cache[$class]))
 		{
@@ -112,6 +115,19 @@ class DataFactory
 	public function getContainer()
 	{
 		return $this->ct;
+	}
+
+	protected function getNamespace($table)
+	{
+		if(substr($table, 0, strlen($this->prefix)) == $this->prefix)
+		{
+			$table = substr($table, strlen($this->prefix));
+		}
+
+		$table = strtolower($table);
+		$table = str_replace('_', '\\', $table);
+
+		return $table;
 	}
 
 	public static function getInstance()

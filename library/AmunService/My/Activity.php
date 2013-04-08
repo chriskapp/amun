@@ -30,6 +30,7 @@ use AmunService\User\Activity\Record;
 use PSX\Data\WriterResult;
 use PSX\Data\WriterInterface;
 use PSX\ActivityStream\Type;
+use PSX\DateTime;
 
 /**
  * Amun_Service_My_Activity

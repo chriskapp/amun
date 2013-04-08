@@ -171,14 +171,13 @@ class Record extends RecordAbstract
 	{
 		if(empty($this->table))
 		{
-			$stream = new Stream($this->_table);
+			$stream = DataFactory::getInstance()->getStreamInstance($this->_table->getName());
 
 			return $stream->getObject($this->id);
 		}
 		else if($this->refId > 0)
 		{
-			$class  = $this->_registry->getClassNameFromTable($this->table);
-			$stream = DataFactory::getProvider($class)->getStream();
+			$stream = DataFactory::getInstance()->getStreamInstance($this->table);
 
 			if($stream instanceof StreamAbstract)
 			{
