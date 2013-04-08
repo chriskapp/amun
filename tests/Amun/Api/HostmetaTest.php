@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: MediaTest.php 637 2012-05-01 19:58:47Z k42b3.x@googlemail.com $
+ *  $Id: XrdsTest.php 637 2012-05-01 19:58:47Z k42b3.x@googlemail.com $
  *
  * amun
  * A social content managment system based on the psx framework. For
@@ -26,12 +26,12 @@ namespace Amun\Api;
 
 use Amun\DataFactory;
 use PSX\Sql\Condition;
-use PSX\Http\GetRequest;
-use PSX\Json;
 use PSX\Url;
+use PSX\Http\GetRequest;
+use SimpleXMLElement;
 
 /**
- * Amun_Api_Content_MediaTest
+ * Amun_Api_XrdsTest
  *
  * @author     Christoph Kappestein <k42b3.x@gmail.com>
  * @license    http://www.gnu.org/licenses/gpl.html GPLv3
@@ -40,15 +40,15 @@ use PSX\Url;
  * @version    $Revision: 637 $
  * @backupStaticAttributes disabled
  */
-class MediaTest extends RestTest
+class HostmetaTest extends RestTest
 {
 	protected function setUp()
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.media'))
+		if(!$this->hasService('org.amun-project.hostmeta'))
 		{
-			$this->markTestSkipped('Service media not installed');
+			$this->markTestSkipped('Service hostmeta not installed');
 		}
 	}
 
@@ -59,44 +59,58 @@ class MediaTest extends RestTest
 
 	public function getEndpoint()
 	{
-		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/media';
+		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/hostmeta';
 	}
 
 	public function getTable()
 	{
-		return DataFactory::getTable('Media');
+		return null;
 	}
 
 	public function testGet()
 	{
-		$this->assertResultSetResponse($this->get());
-	}
-
-	public function testSupportedFields()
-	{
-		$url      = new Url($this->getEndpoint() . '/@supportedFields');
-		$response = $this->signedRequest('GET', $url);
+		$url      = new Url($this->getEndpoint());
+		$request  = new GetRequest($url);
+		$response = $this->http->request($request);
 
 		$this->assertEquals(200, $response->getCode());
 
-		$fields = Json::decode($response->getBody());
+		$xml = simplexml_load_string($response->getBody());
 
-		$this->assertEquals(true, is_array($fields));
-		$this->assertEquals(true, is_array($fields['item']));
+		$this->checkHostmetaXrd($xml);
 	}
 
-	public function testFormCreate()
+	public function testWellKnownLocation()
 	{
-		$url      = new Url($this->getEndpoint() . '/form?method=create');
-		$response = $this->signedRequest('GET', $url);
+		$url      = new Url($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . '.well-known/host-meta');
+		$request  = new GetRequest($url);
+		$response = $this->http->request($request);
 
 		$this->assertEquals(200, $response->getCode());
 
-		$data = Json::decode($response->getBody());
+		$xml = simplexml_load_string($response->getBody());
 
-		$this->assertEquals(true, is_array($data));
-		$this->assertEquals('form', $data['class']);
-		$this->assertEquals('POST', $data['method']);
+		$this->checkHostmetaXrd($xml);
+	}
+
+	protected function checkHostmetaXrd(SimpleXMLElement $xml)
+	{
+		// check subject
+		$this->assertEquals(true, isset($xml->Subject));
+		$this->assertEquals($this->config['psx_url'], (string) $xml->Subject);
+
+		// check lrdd link in hostmeta
+		$found = false;
+		foreach($xml->Link as $link)
+		{
+			if($link['rel'] == 'lrdd')
+			{
+				$this->assertEquals('application/xrd+xml', $link['type']);
+				$this->assertEquals($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/lrdd?uri={uri}', (string) $link['template']);
+				$found = true;
+			}
+		}
+		$this->assertEquals(true, $found);
 	}
 }
 

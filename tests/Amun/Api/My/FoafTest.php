@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: MediaTest.php 637 2012-05-01 19:58:47Z k42b3.x@googlemail.com $
+ *  $Id: XrdsTest.php 637 2012-05-01 19:58:47Z k42b3.x@googlemail.com $
  *
  * amun
  * A social content managment system based on the psx framework. For
@@ -26,12 +26,13 @@ namespace Amun\Api;
 
 use Amun\DataFactory;
 use PSX\Sql\Condition;
-use PSX\Http\GetRequest;
-use PSX\Json;
 use PSX\Url;
+use PSX\Http\GetRequest;
+use DOMDocument;
+use DOMElement;
 
 /**
- * Amun_Api_Content_MediaTest
+ * Amun_Api_XrdsTest
  *
  * @author     Christoph Kappestein <k42b3.x@gmail.com>
  * @license    http://www.gnu.org/licenses/gpl.html GPLv3
@@ -40,15 +41,15 @@ use PSX\Url;
  * @version    $Revision: 637 $
  * @backupStaticAttributes disabled
  */
-class MediaTest extends RestTest
+class FoafTest extends RestTest
 {
 	protected function setUp()
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.media'))
+		if(!$this->hasService('org.amun-project.my'))
 		{
-			$this->markTestSkipped('Service media not installed');
+			$this->markTestSkipped('Service my not installed');
 		}
 	}
 
@@ -59,44 +60,29 @@ class MediaTest extends RestTest
 
 	public function getEndpoint()
 	{
-		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/media';
+		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/foaf';
 	}
 
 	public function getTable()
 	{
-		return DataFactory::getTable('Media');
+		return null;
 	}
 
 	public function testGet()
 	{
-		$this->assertResultSetResponse($this->get());
-	}
-
-	public function testSupportedFields()
-	{
-		$url      = new Url($this->getEndpoint() . '/@supportedFields');
+		$url      = new Url($this->getEndpoint());
 		$response = $this->signedRequest('GET', $url);
 
 		$this->assertEquals(200, $response->getCode());
 
-		$fields = Json::decode($response->getBody());
+		$dom = new DOMDocument();
+		$dom->loadXML($response->getBody());
 
-		$this->assertEquals(true, is_array($fields));
-		$this->assertEquals(true, is_array($fields['item']));
-	}
+		$persons = $dom->getElementsByTagNameNS('http://xmlns.com/foaf/0.1/', 'Person');
+		$person  = $persons->item(0);
 
-	public function testFormCreate()
-	{
-		$url      = new Url($this->getEndpoint() . '/form?method=create');
-		$response = $this->signedRequest('GET', $url);
-
-		$this->assertEquals(200, $response->getCode());
-
-		$data = Json::decode($response->getBody());
-
-		$this->assertEquals(true, is_array($data));
-		$this->assertEquals('form', $data['class']);
-		$this->assertEquals('POST', $data['method']);
+		$this->assertEquals(true, $person instanceof DOMElement);
+		$this->assertEquals(getContainer()->getUser()->name, $person->getElementsByTagName('name')->item(0)->nodeValue);
 	}
 }
 

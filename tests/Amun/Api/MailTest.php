@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: NewsTest.php 743 2012-06-26 19:31:26Z k42b3.x@googlemail.com $
+ *  $Id: PageTest.php 743 2012-06-26 19:31:26Z k42b3.x@googlemail.com $
  *
  * amun
  * A social content managment system based on the psx framework. For
@@ -31,7 +31,7 @@ use PSX\Json;
 use PSX\Url;
 
 /**
- * Amun_Api_Service_NewsTest
+ * Amun_Api_Service_PageTest
  *
  * @author     Christoph Kappestein <k42b3.x@gmail.com>
  * @license    http://www.gnu.org/licenses/gpl.html GPLv3
@@ -40,15 +40,15 @@ use PSX\Url;
  * @version    $Revision: 743 $
  * @backupStaticAttributes disabled
  */
-class NewsTest extends RestTest
+class MailTest extends RestTest
 {
 	protected function setUp()
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.news'))
+		if(!$this->hasService('org.amun-project.mail'))
 		{
-			$this->markTestSkipped('Service news not installed');
+			$this->markTestSkipped('Service mail not installed');
 		}
 	}
 
@@ -59,12 +59,12 @@ class NewsTest extends RestTest
 
 	public function getEndpoint()
 	{
-		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/news';
+		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/mail';
 	}
 
 	public function getTable()
 	{
-		return DataFactory::getTable('News');
+		return DataFactory::getTable('Mail');
 	}
 
 	public function testGet()
@@ -75,13 +75,16 @@ class NewsTest extends RestTest
 	public function testPost()
 	{
 		$record = $this->getTable()->getRecord();
-		$record->setPageId(1);
-		$record->setTitle('foobar');
-		$record->setText('<p>bar</p>');
+		$record->setName('MY_FOO');
+		$record->setFrom('noreply@127.0.0.1');
+		$record->setSubject('foobar');
+		$record->setText('Hello {foo} and {bar}');
+		$record->setHtml('Hello {foo} and {bar}');
+		$record->setValues('foo;bar');
 
 		$this->assertPositiveResponse($this->post($record));
 
-		$actual = $this->table->getRow(array('pageId', 'urlTitle', 'title', 'text'), new Condition(array('id', '=', 1)));
+		$actual = $this->table->getRow(array('name', 'from', 'subject', 'text', 'html', 'values'), new Condition(array('id', '=', 4)));
 		$expect = array_map('strval', $record->getData());
 
 		$this->assertEquals($expect, $actual);

@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: NewsTest.php 743 2012-06-26 19:31:26Z k42b3.x@googlemail.com $
+ *  $Id: PageTest.php 743 2012-06-26 19:31:26Z k42b3.x@googlemail.com $
  *
  * amun
  * A social content managment system based on the psx framework. For
@@ -31,7 +31,7 @@ use PSX\Json;
 use PSX\Url;
 
 /**
- * Amun_Api_Service_NewsTest
+ * Amun_Api_Service_PageTest
  *
  * @author     Christoph Kappestein <k42b3.x@gmail.com>
  * @license    http://www.gnu.org/licenses/gpl.html GPLv3
@@ -40,15 +40,15 @@ use PSX\Url;
  * @version    $Revision: 743 $
  * @backupStaticAttributes disabled
  */
-class NewsTest extends RestTest
+class FileTest extends RestTest
 {
 	protected function setUp()
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.news'))
+		if(!$this->hasService('org.amun-project.file'))
 		{
-			$this->markTestSkipped('Service news not installed');
+			$this->markTestSkipped('Service file not installed');
 		}
 	}
 
@@ -59,12 +59,12 @@ class NewsTest extends RestTest
 
 	public function getEndpoint()
 	{
-		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/news';
+		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/file';
 	}
 
 	public function getTable()
 	{
-		return DataFactory::getTable('News');
+		return DataFactory::getTable('File');
 	}
 
 	public function testGet()
@@ -76,12 +76,12 @@ class NewsTest extends RestTest
 	{
 		$record = $this->getTable()->getRecord();
 		$record->setPageId(1);
-		$record->setTitle('foobar');
-		$record->setText('<p>bar</p>');
+		$record->setContentType('text/plain');
+		$record->setContent('foobar');
 
 		$this->assertPositiveResponse($this->post($record));
 
-		$actual = $this->table->getRow(array('pageId', 'urlTitle', 'title', 'text'), new Condition(array('id', '=', 1)));
+		$actual = $this->table->getRow(array('pageId', 'contentType', 'content'), new Condition(array('id', '=', 1)));
 		$expect = array_map('strval', $record->getData());
 
 		$this->assertEquals($expect, $actual);
