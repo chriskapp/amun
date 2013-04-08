@@ -83,8 +83,8 @@ class people extends RestAbstract
 					$params['sortBy'], 
 					$params['sortOrder'], 
 					$con,
-					PSX_Sql::FETCH_OBJECT, 
-					'AmunService_My_People', 
+					Sql::FETCH_OBJECT, 
+					'\AmunService\My\People', 
 					array(DataFactory::getTable('User_Friend')));
 
 				$this->setResponse($resultSet);
