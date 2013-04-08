@@ -85,7 +85,7 @@ class activity extends RestAbstract
 					$params['sortOrder'], 
 					$this->getRequestCondition(),
 					Sql::FETCH_OBJECT, 
-					'AmunService_My_Activity', 
+					'\AmunService\My\Activity', 
 					array(DataFactory::getTable('User_Activity')));
 
 				$this->setResponse($resultSet);
