@@ -1480,6 +1480,17 @@ You can login with the new password at:
 	</row>
 	</table_data>
 	<table_data name="amun_media">
+	<row>
+		<field name="id">1</field>
+		<field name="globalId">49dcfea7-dff2-5f0a-9662-2eac8b827f8d</field>
+		<field name="rightId">77</field>
+		<field name="name">foo.jpg</field>
+		<field name="path">foo.jpg</field>
+		<field name="type">image</field>
+		<field name="size">385083</field>
+		<field name="mimeType">image/jpeg</field>
+		<field name="date">2013-04-08 20:12:39</field>
+	</row>
 	</table_data>
 	<table_data name="amun_my_attempt">
 	</table_data>
