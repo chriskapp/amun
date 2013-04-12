@@ -191,15 +191,22 @@ SQL;
 
 			$access = $this->sql->getRow($sql, array($row['requestApiId'], $row['requestUserId']));
 
-			if($access['accessAllowed'] === '1')
+			if(!empty($access))
 			{
-				$this->accessId = $access['accessId'];
+				if($access['accessAllowed'] === '1')
+				{
+					$this->accessId = $access['accessId'];
 
-				return $row;
+					return $row;
+				}
+				else
+				{
+					throw new Exception('Access was rejected');
+				}
 			}
 			else
 			{
-				throw new Exception('Access was rejected');
+				throw new Exception('No access available');
 			}
 		}
 		else
