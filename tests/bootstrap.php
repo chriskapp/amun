@@ -25,14 +25,15 @@
 require_once('library/PSX/Config.php');
 require_once('library/PSX/Bootstrap.php');
 
+// defines the user id under wich the tests gets executed
+define('USER_ID', 1);
+
+
 doBootstrap();
 
 function doBootstrap()
 {
 	$container = getContainer();
-	$config    = $container->getConfig();
-	$sql       = $container->getSql();
-	$registry  = $container->getRegistry();
 
 	// set container
 	Amun\DataFactory::initInstance($container);
@@ -40,67 +41,6 @@ function doBootstrap()
 	// set logger
 	PSX\Log::getLogger()->addHandler(new PSX\Log\Handler\File(PSX_PATH_CACHE . '/log.txt'));
 	PSX\Log::getLogger()->setLevel(PSX\Log::INFO);
-
-	// set user
-	$userId = $sql->getField('SELECT id FROM ' . $registry['table.user_account'] . ' WHERE status = ' . \AmunService\User\Account\Record::ADMINISTRATOR . ' ORDER BY id ASC LIMIT 1');
-
-	// get API credentials
-	$consumerKey    = '';
-	$consumerSecret = '';
-	$token          = '';
-	$tokenSecret    = '';
-	$hasCredentials = false;
-
-	$api = $sql->getRow('SELECT id, consumerKey, consumerSecret FROM ' . $registry['table.oauth'] . ' ORDER BY id ASC LIMIT 1');
-
-	if(!empty($api))
-	{
-		$consumerKey    = $api['consumerKey'];
-		$consumerSecret = $api['consumerSecret'];
-
-		$req = $sql->getRow('SELECT token, tokenSecret FROM ' . $registry['table.oauth_request'] . ' WHERE apiId = ' . $api['id'] . ' AND status = ' . \AmunService\Oauth\Record::ACCESS. ' LIMIT 1');
-
-		if(!empty($req))
-		{
-			$token       = $req['token'];
-			$tokenSecret = $req['tokenSecret'];
-		}
-		else
-		{
-			$status      = \AmunService\Oauth\Record::ACCESS;
-			$token       = sha1(uniqid());
-			$tokenSecret = sha1(uniqid());
-			$timestamp   = time();
-
-			$query = <<<SQL
-INSERT INTO 
-	`amun_oauth_request`
-SET
-	`apiId` = {$api['id']}, 
-	`userId` = {$userId}, 
-	`status` = {$status}, 
-	`ip` = '127.0.0.1', 
-	`nonce` = '4460f8e54130cb1a', 
-	`callback` = 'oob', 
-	`token` = '{$token}', 
-	`tokenSecret` = '{$tokenSecret}', 
-	`verifier` = '8f28b3b18a6eabb92854cd937397b042', 
-	`timestamp` = '{$timestamp}', 
-	`expire` = 'P6M',
-	`date` = NOW()
-SQL;
-
-			$sql->query($query);
-		}
-
-		$hasCredentials = true;
-	}
-
-	define('CONSUMER_KEY', $consumerKey);
-	define('CONSUMER_SECRET', $consumerSecret);
-	define('TOKEN', $token);
-	define('TOKEN_SECRET', $tokenSecret);
-	define('HAS_CREDENTIALS', $hasCredentials);
 }
 
 function getContainer()
@@ -121,10 +61,8 @@ function getContainer()
 		$bootstrap->addIncludePath('tests');
 
 		$container = new Amun\Dependency\Script($config, array(
-			'script.userId' => 1,
+			'script.userId' => USER_ID,
 		));
-
-		echo 'Execute tests as user: ' . $container->getUser()->name . '' . PHP_EOL;
 	}
 
 	return $container;

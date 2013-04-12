@@ -36,7 +36,7 @@ use PSX\Http\GetRequest;
  * @version    $Revision: 743 $
  * @backupStaticAttributes disabled
  */
-class AssetTest extends RestTest
+class AssetTest extends ApiTest
 {
 	protected function setUp()
 	{
@@ -48,19 +48,9 @@ class AssetTest extends RestTest
 		}
 	}
 
-	public function getDataSet()
-	{
-		return $this->createMySQLXMLDataSet('tests/amun.xml');
-	}
-
 	public function getEndpoint()
 	{
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/asset';
-	}
-
-	public function getTable()
-	{
-		return null;
 	}
 
 	public function testGetJs()

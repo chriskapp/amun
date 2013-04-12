@@ -29,6 +29,7 @@ use Amun\DataFactory;
 use PSX\Http\GetRequest;
 use PSX\Json;
 use PSX\Url;
+use PSX\Sql\Condition;
 
 /**
  * Amun_Api_System_Api_AccessTest
@@ -52,11 +53,6 @@ class AccessTest extends RestTest
 		}
 	}
 
-	public function getDataSet()
-	{
-		return $this->createMySQLXMLDataSet('tests/amun.xml');
-	}
-
 	public function getEndpoint()
 	{
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/oauth/access';
@@ -70,6 +66,37 @@ class AccessTest extends RestTest
 	public function testGet()
 	{
 		$this->assertResultSetResponse($this->get());
+	}
+
+	public function testPost()
+	{
+		$record = $this->getTable()->getRecord();
+		$record->setApiId(1);
+		$record->setAllowed(1);
+
+		$this->assertNegativeResponse($this->post($record));
+	}
+
+	public function testPut()
+	{
+		$record = $this->getTable()->getRecord();
+		$record->setId(1);
+		$record->setApiId(1);
+		$record->setAllowed(0);
+
+		$this->assertNegativeResponse($this->put($record));
+	}
+
+	public function testDelete()
+	{
+		$record = $this->getTable()->getRecord();
+		$record->setId(1);
+
+		$this->assertPositiveResponse($this->delete($record));
+
+		$actual = $this->table->getRow(array('id'), new Condition(array('id', '=', 1)));
+
+		$this->assertEquals(true, empty($actual));
 	}
 
 	public function testSupportedFields()

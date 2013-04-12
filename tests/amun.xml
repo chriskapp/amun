@@ -2,11 +2,20 @@
 <mysqldump xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 <database name="amun_dev">
 	<table_data name="amun_comment">
+	<row>
+		<field name="id">1</field>
+		<field name="globalId">7a834452-14df-5724-b00e-e165b974e61b</field>
+		<field name="pageId">7</field>
+		<field name="userId">1</field>
+		<field name="refId">1</field>
+		<field name="text">&lt;p&gt;foobar &lt;/p&gt;</field>
+		<field name="date">2013-04-12 21:12:52</field>
+	</row>
 	</table_data>
 	<table_data name="amun_content_gadget">
 	<row>
 		<field name="id">1</field>
-		<field name="globalId">68be5b95-0254-5113-9dd5-5955b1fb2dae</field>
+		<field name="globalId">52a73a5c-d95d-5013-aee4-47d3ee75d712</field>
 		<field name="serviceId">21</field>
 		<field name="rightId">0</field>
 		<field name="type">ajax</field>
@@ -16,34 +25,34 @@
 		<field name="param" xsi:nil="true" />
 		<field name="cache">0</field>
 		<field name="expire"></field>
-		<field name="date">2013-03-24 19:22:28</field>
+		<field name="date">2013-04-12 20:53:17</field>
 	</row>
 	</table_data>
 	<table_data name="amun_content_page">
 	<row>
 		<field name="id">1</field>
 		<field name="parentId">0</field>
-		<field name="globalId">b931eedb-eeb1-53e5-b22c-c0319ddb9ec2</field>
+		<field name="globalId">5aa63a03-b140-59b4-922a-a3e91b5266fe</field>
 		<field name="serviceId">19</field>
 		<field name="rightId">0</field>
 		<field name="status">2</field>
 		<field name="load">3</field>
 		<field name="sort">0</field>
 		<field name="path"></field>
-		<field name="urlTitle">foo</field>
-		<field name="title">foo</field>
+		<field name="urlTitle">test</field>
+		<field name="title">test</field>
 		<field name="template"></field>
 		<field name="description"></field>
 		<field name="keywords"></field>
 		<field name="cache">0</field>
 		<field name="expire"></field>
 		<field name="publishDate">0000-00-00 00:00:00</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">2</field>
 		<field name="parentId">1</field>
-		<field name="globalId">5a8b37bd-1014-58dc-8ee6-6611125a195d</field>
+		<field name="globalId">1b20fc55-32bf-5eca-9dd9-9f54f3552844</field>
 		<field name="serviceId">19</field>
 		<field name="rightId">0</field>
 		<field name="status">1</field>
@@ -58,12 +67,12 @@
 		<field name="cache">0</field>
 		<field name="expire"></field>
 		<field name="publishDate">0000-00-00 00:00:00</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">3</field>
 		<field name="parentId">1</field>
-		<field name="globalId">22dd4c49-975c-5a30-b774-47af07533f89</field>
+		<field name="globalId">2eb1e5f8-0bb4-58f2-b889-954d18c7163a</field>
 		<field name="serviceId">17</field>
 		<field name="rightId">0</field>
 		<field name="status">2</field>
@@ -78,12 +87,12 @@
 		<field name="cache">0</field>
 		<field name="expire"></field>
 		<field name="publishDate">0000-00-00 00:00:00</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">4</field>
 		<field name="parentId">1</field>
-		<field name="globalId">dac1dda4-f5c8-514d-8aa3-393c76cf83f5</field>
+		<field name="globalId">a0cf04e4-a229-5f79-b22f-f1d047c73a00</field>
 		<field name="serviceId">18</field>
 		<field name="rightId">0</field>
 		<field name="status">2</field>
@@ -98,12 +107,12 @@
 		<field name="cache">0</field>
 		<field name="expire"></field>
 		<field name="publishDate">0000-00-00 00:00:00</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">5</field>
 		<field name="parentId">1</field>
-		<field name="globalId">da6856d6-d927-549a-a116-67e6299a349b</field>
+		<field name="globalId">9b87cd28-07f9-5e33-b11f-f44116ecd64b</field>
 		<field name="serviceId">19</field>
 		<field name="rightId">0</field>
 		<field name="status">2</field>
@@ -118,7 +127,107 @@
 		<field name="cache">0</field>
 		<field name="expire"></field>
 		<field name="publishDate">0000-00-00 00:00:00</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
+	</row>
+	<row>
+		<field name="id">6</field>
+		<field name="parentId">1</field>
+		<field name="globalId">c2f0b0d0-31a2-5b65-a55e-e97b0f4ce5da</field>
+		<field name="serviceId">22</field>
+		<field name="rightId">0</field>
+		<field name="status">1</field>
+		<field name="load">3</field>
+		<field name="sort">0</field>
+		<field name="path">file</field>
+		<field name="urlTitle">file</field>
+		<field name="title">File</field>
+		<field name="template"></field>
+		<field name="description"></field>
+		<field name="keywords"></field>
+		<field name="cache">0</field>
+		<field name="expire"></field>
+		<field name="publishDate">0000-00-00 00:00:00</field>
+		<field name="date">2013-04-12 20:51:47</field>
+	</row>
+	<row>
+		<field name="id">7</field>
+		<field name="parentId">1</field>
+		<field name="globalId">eef15285-adac-5465-a88f-fa461ff967c4</field>
+		<field name="serviceId">21</field>
+		<field name="rightId">0</field>
+		<field name="status">1</field>
+		<field name="load">3</field>
+		<field name="sort">0</field>
+		<field name="path">news</field>
+		<field name="urlTitle">news</field>
+		<field name="title">News</field>
+		<field name="template"></field>
+		<field name="description"></field>
+		<field name="keywords"></field>
+		<field name="cache">0</field>
+		<field name="expire"></field>
+		<field name="publishDate">0000-00-00 00:00:00</field>
+		<field name="date">2013-04-12 20:51:59</field>
+	</row>
+	<row>
+		<field name="id">8</field>
+		<field name="parentId">1</field>
+		<field name="globalId">a2c1f1ff-2831-5638-9ff9-9617d1a5dc0a</field>
+		<field name="serviceId">23</field>
+		<field name="rightId">0</field>
+		<field name="status">1</field>
+		<field name="load">3</field>
+		<field name="sort">0</field>
+		<field name="path">php</field>
+		<field name="urlTitle">php</field>
+		<field name="title">Php</field>
+		<field name="template"></field>
+		<field name="description"></field>
+		<field name="keywords"></field>
+		<field name="cache">0</field>
+		<field name="expire"></field>
+		<field name="publishDate">0000-00-00 00:00:00</field>
+		<field name="date">2013-04-12 20:52:09</field>
+	</row>
+	<row>
+		<field name="id">9</field>
+		<field name="parentId">1</field>
+		<field name="globalId">da47434a-2f57-5bcf-a222-271246d8d9a9</field>
+		<field name="serviceId">25</field>
+		<field name="rightId">0</field>
+		<field name="status">1</field>
+		<field name="load">3</field>
+		<field name="sort">0</field>
+		<field name="path">pipe</field>
+		<field name="urlTitle">pipe</field>
+		<field name="title">Pipe</field>
+		<field name="template"></field>
+		<field name="description"></field>
+		<field name="keywords"></field>
+		<field name="cache">0</field>
+		<field name="expire"></field>
+		<field name="publishDate">0000-00-00 00:00:00</field>
+		<field name="date">2013-04-12 20:52:21</field>
+	</row>
+	<row>
+		<field name="id">10</field>
+		<field name="parentId">1</field>
+		<field name="globalId">1fd58c0f-d0da-56f8-8dd8-80035d4bdc71</field>
+		<field name="serviceId">24</field>
+		<field name="rightId">0</field>
+		<field name="status">1</field>
+		<field name="load">3</field>
+		<field name="sort">0</field>
+		<field name="path">redirect</field>
+		<field name="urlTitle">redirect</field>
+		<field name="title">Redirect</field>
+		<field name="template"></field>
+		<field name="description"></field>
+		<field name="keywords"></field>
+		<field name="cache">0</field>
+		<field name="expire"></field>
+		<field name="publishDate">0000-00-00 00:00:00</field>
+		<field name="date">2013-04-12 20:52:34</field>
 	</row>
 	</table_data>
 	<table_data name="amun_content_page_gadget">
@@ -396,7 +505,7 @@
 		<field name="name">core.title</field>
 		<field name="type">STRING</field>
 		<field name="class" xsi:nil="true" />
-		<field name="value">foo</field>
+		<field name="value">test</field>
 	</row>
 	<row>
 		<field name="id">25</field>
@@ -452,7 +561,7 @@
 		<field name="name">core.install_date</field>
 		<field name="type">STRING</field>
 		<field name="class" xsi:nil="true" />
-		<field name="value">2013-03-24 18:49:16</field>
+		<field name="value">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">33</field>
@@ -706,7 +815,7 @@
 		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
 		<field name="license">GPLv3</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-03-24 18:49:12</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">2</field>
@@ -720,7 +829,7 @@
 		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
 		<field name="license">GPLv3</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-03-24 18:49:12</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">3</field>
@@ -734,7 +843,7 @@
 		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
 		<field name="license">GPLv3</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-03-24 18:49:12</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">4</field>
@@ -748,7 +857,7 @@
 		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
 		<field name="license">GPLv3</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-03-24 18:49:12</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">5</field>
@@ -762,7 +871,7 @@
 		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
 		<field name="license">GPLv3</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-03-24 18:49:12</field>
+		<field name="date">2013-04-12 20:51:04</field>
 	</row>
 	<row>
 		<field name="id">6</field>
@@ -776,7 +885,7 @@
 		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
 		<field name="license">GPLv3</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-03-24 18:49:13</field>
+		<field name="date">2013-04-12 20:51:05</field>
 	</row>
 	<row>
 		<field name="id">7</field>
@@ -790,7 +899,7 @@
 		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
 		<field name="license">GPLv3</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-03-24 18:49:13</field>
+		<field name="date">2013-04-12 20:51:06</field>
 	</row>
 	<row>
 		<field name="id">8</field>
@@ -804,7 +913,7 @@
 		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
 		<field name="license">GPLv3</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-03-24 18:49:13</field>
+		<field name="date">2013-04-12 20:51:06</field>
 	</row>
 	<row>
 		<field name="id">9</field>
@@ -818,7 +927,7 @@
 		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
 		<field name="license">GPLv3</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-03-24 18:49:13</field>
+		<field name="date">2013-04-12 20:51:06</field>
 	</row>
 	<row>
 		<field name="id">10</field>
@@ -832,7 +941,7 @@
 		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
 		<field name="license">GPLv3</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-03-24 18:49:14</field>
+		<field name="date">2013-04-12 20:51:06</field>
 	</row>
 	<row>
 		<field name="id">11</field>
@@ -846,7 +955,7 @@
 		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
 		<field name="license">GPLv3</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-03-24 18:49:14</field>
+		<field name="date">2013-04-12 20:51:07</field>
 	</row>
 	<row>
 		<field name="id">12</field>
@@ -860,7 +969,7 @@
 		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
 		<field name="license">GPLv3</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-03-24 18:49:14</field>
+		<field name="date">2013-04-12 20:51:07</field>
 	</row>
 	<row>
 		<field name="id">13</field>
@@ -874,7 +983,7 @@
 		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
 		<field name="license">GPLv3</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-03-24 18:49:14</field>
+		<field name="date">2013-04-12 20:51:07</field>
 	</row>
 	<row>
 		<field name="id">14</field>
@@ -888,7 +997,7 @@
 		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
 		<field name="license">GPLv3</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-03-24 18:49:14</field>
+		<field name="date">2013-04-12 20:51:07</field>
 	</row>
 	<row>
 		<field name="id">15</field>
@@ -902,7 +1011,7 @@
 		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
 		<field name="license">GPLv3</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-03-24 18:49:14</field>
+		<field name="date">2013-04-12 20:51:07</field>
 	</row>
 	<row>
 		<field name="id">16</field>
@@ -916,7 +1025,7 @@
 		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
 		<field name="license">GPLv3</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-03-24 18:49:15</field>
+		<field name="date">2013-04-12 20:51:08</field>
 	</row>
 	<row>
 		<field name="id">17</field>
@@ -930,7 +1039,7 @@
 		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
 		<field name="license">GPLv3</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-03-24 18:49:15</field>
+		<field name="date">2013-04-12 20:51:08</field>
 	</row>
 	<row>
 		<field name="id">18</field>
@@ -944,7 +1053,7 @@
 		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
 		<field name="license">GPLv3</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-03-24 18:49:15</field>
+		<field name="date">2013-04-12 20:51:08</field>
 	</row>
 	<row>
 		<field name="id">19</field>
@@ -958,7 +1067,7 @@
 		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
 		<field name="license">GPLv3</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-03-24 18:49:15</field>
+		<field name="date">2013-04-12 20:51:09</field>
 	</row>
 	<row>
 		<field name="id">20</field>
@@ -972,7 +1081,7 @@
 		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
 		<field name="license">GPLv3</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-03-24 18:49:15</field>
+		<field name="date">2013-04-12 20:51:09</field>
 	</row>
 	<row>
 		<field name="id">21</field>
@@ -986,7 +1095,7 @@
 		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
 		<field name="license">GPLv3</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-03-24 18:49:15</field>
+		<field name="date">2013-04-12 20:51:09</field>
 	</row>
 	<row>
 		<field name="id">22</field>
@@ -1000,7 +1109,7 @@
 		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
 		<field name="license">GPLv3</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:09</field>
 	</row>
 	<row>
 		<field name="id">23</field>
@@ -1014,7 +1123,7 @@
 		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
 		<field name="license">GPLv3</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:09</field>
 	</row>
 	<row>
 		<field name="id">24</field>
@@ -1028,7 +1137,7 @@
 		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
 		<field name="license">GPLv3</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">25</field>
@@ -1042,7 +1151,7 @@
 		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
 		<field name="license">GPLv3</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	</table_data>
 	<table_data name="amun_core_service_option">
@@ -1057,6 +1166,15 @@
 	</row>
 	</table_data>
 	<table_data name="amun_file">
+	<row>
+		<field name="id">1</field>
+		<field name="globalId">e72e963b-7c34-5a39-8bb8-825213c99ade</field>
+		<field name="pageId">6</field>
+		<field name="userId">1</field>
+		<field name="contentType">text/plain</field>
+		<field name="content">foobar</field>
+		<field name="date">2013-04-12 20:54:02</field>
+	</row>
 	</table_data>
 	<table_data name="amun_log">
 	<row>
@@ -1065,7 +1183,7 @@
 		<field name="refId">1</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_core_service</field>
-		<field name="date">2013-03-24 18:49:12</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">2</field>
@@ -1073,7 +1191,7 @@
 		<field name="refId">2</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_core_service</field>
-		<field name="date">2013-03-24 18:49:12</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">3</field>
@@ -1081,7 +1199,7 @@
 		<field name="refId">3</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_core_service</field>
-		<field name="date">2013-03-24 18:49:12</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">4</field>
@@ -1089,7 +1207,7 @@
 		<field name="refId">4</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_core_service</field>
-		<field name="date">2013-03-24 18:49:12</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">5</field>
@@ -1097,7 +1215,7 @@
 		<field name="refId">5</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_core_service</field>
-		<field name="date">2013-03-24 18:49:13</field>
+		<field name="date">2013-04-12 20:51:04</field>
 	</row>
 	<row>
 		<field name="id">6</field>
@@ -1105,7 +1223,7 @@
 		<field name="refId">6</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_core_service</field>
-		<field name="date">2013-03-24 18:49:13</field>
+		<field name="date">2013-04-12 20:51:06</field>
 	</row>
 	<row>
 		<field name="id">7</field>
@@ -1113,7 +1231,7 @@
 		<field name="refId">7</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_core_service</field>
-		<field name="date">2013-03-24 18:49:13</field>
+		<field name="date">2013-04-12 20:51:06</field>
 	</row>
 	<row>
 		<field name="id">8</field>
@@ -1121,7 +1239,7 @@
 		<field name="refId">8</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_core_service</field>
-		<field name="date">2013-03-24 18:49:13</field>
+		<field name="date">2013-04-12 20:51:06</field>
 	</row>
 	<row>
 		<field name="id">9</field>
@@ -1129,7 +1247,7 @@
 		<field name="refId">9</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_core_service</field>
-		<field name="date">2013-03-24 18:49:14</field>
+		<field name="date">2013-04-12 20:51:06</field>
 	</row>
 	<row>
 		<field name="id">10</field>
@@ -1137,7 +1255,7 @@
 		<field name="refId">10</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_core_service</field>
-		<field name="date">2013-03-24 18:49:14</field>
+		<field name="date">2013-04-12 20:51:07</field>
 	</row>
 	<row>
 		<field name="id">11</field>
@@ -1145,7 +1263,7 @@
 		<field name="refId">11</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_core_service</field>
-		<field name="date">2013-03-24 18:49:14</field>
+		<field name="date">2013-04-12 20:51:07</field>
 	</row>
 	<row>
 		<field name="id">12</field>
@@ -1153,7 +1271,7 @@
 		<field name="refId">12</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_core_service</field>
-		<field name="date">2013-03-24 18:49:14</field>
+		<field name="date">2013-04-12 20:51:07</field>
 	</row>
 	<row>
 		<field name="id">13</field>
@@ -1161,7 +1279,7 @@
 		<field name="refId">13</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_core_service</field>
-		<field name="date">2013-03-24 18:49:14</field>
+		<field name="date">2013-04-12 20:51:07</field>
 	</row>
 	<row>
 		<field name="id">14</field>
@@ -1169,7 +1287,7 @@
 		<field name="refId">14</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_core_service</field>
-		<field name="date">2013-03-24 18:49:14</field>
+		<field name="date">2013-04-12 20:51:07</field>
 	</row>
 	<row>
 		<field name="id">15</field>
@@ -1177,7 +1295,7 @@
 		<field name="refId">15</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_core_service</field>
-		<field name="date">2013-03-24 18:49:14</field>
+		<field name="date">2013-04-12 20:51:07</field>
 	</row>
 	<row>
 		<field name="id">16</field>
@@ -1185,7 +1303,7 @@
 		<field name="refId">16</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_core_service</field>
-		<field name="date">2013-03-24 18:49:15</field>
+		<field name="date">2013-04-12 20:51:08</field>
 	</row>
 	<row>
 		<field name="id">17</field>
@@ -1193,7 +1311,7 @@
 		<field name="refId">1</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_mail</field>
-		<field name="date">2013-03-24 18:49:15</field>
+		<field name="date">2013-04-12 20:51:08</field>
 	</row>
 	<row>
 		<field name="id">18</field>
@@ -1201,7 +1319,7 @@
 		<field name="refId">2</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_mail</field>
-		<field name="date">2013-03-24 18:49:15</field>
+		<field name="date">2013-04-12 20:51:08</field>
 	</row>
 	<row>
 		<field name="id">19</field>
@@ -1209,7 +1327,7 @@
 		<field name="refId">3</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_mail</field>
-		<field name="date">2013-03-24 18:49:15</field>
+		<field name="date">2013-04-12 20:51:08</field>
 	</row>
 	<row>
 		<field name="id">20</field>
@@ -1217,7 +1335,7 @@
 		<field name="refId">17</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_core_service</field>
-		<field name="date">2013-03-24 18:49:15</field>
+		<field name="date">2013-04-12 20:51:08</field>
 	</row>
 	<row>
 		<field name="id">21</field>
@@ -1225,7 +1343,7 @@
 		<field name="refId">18</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_core_service</field>
-		<field name="date">2013-03-24 18:49:15</field>
+		<field name="date">2013-04-12 20:51:08</field>
 	</row>
 	<row>
 		<field name="id">22</field>
@@ -1233,7 +1351,7 @@
 		<field name="refId">19</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_core_service</field>
-		<field name="date">2013-03-24 18:49:15</field>
+		<field name="date">2013-04-12 20:51:09</field>
 	</row>
 	<row>
 		<field name="id">23</field>
@@ -1241,7 +1359,7 @@
 		<field name="refId">20</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_core_service</field>
-		<field name="date">2013-03-24 18:49:15</field>
+		<field name="date">2013-04-12 20:51:09</field>
 	</row>
 	<row>
 		<field name="id">24</field>
@@ -1249,7 +1367,7 @@
 		<field name="refId">21</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_core_service</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:09</field>
 	</row>
 	<row>
 		<field name="id">25</field>
@@ -1257,7 +1375,7 @@
 		<field name="refId">22</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_core_service</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:09</field>
 	</row>
 	<row>
 		<field name="id">26</field>
@@ -1265,7 +1383,7 @@
 		<field name="refId">23</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_core_service</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">27</field>
@@ -1273,7 +1391,7 @@
 		<field name="refId">24</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_core_service</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">28</field>
@@ -1281,7 +1399,7 @@
 		<field name="refId">25</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_core_service</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">29</field>
@@ -1289,7 +1407,7 @@
 		<field name="refId">1</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_user_account</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">30</field>
@@ -1297,103 +1415,215 @@
 		<field name="refId">1</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_user_activity</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">31</field>
 		<field name="userId">1</field>
-		<field name="refId">2</field>
+		<field name="refId">1</field>
 		<field name="type">INSERT</field>
-		<field name="table">amun_user_group</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="table">amun_oauth</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">32</field>
 		<field name="userId">1</field>
-		<field name="refId">3</field>
+		<field name="refId">2</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_user_group</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">33</field>
 		<field name="userId">1</field>
-		<field name="refId">2</field>
+		<field name="refId">3</field>
 		<field name="type">INSERT</field>
-		<field name="table">amun_user_account</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="table">amun_user_group</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">34</field>
+		<field name="userId">1</field>
+		<field name="refId">2</field>
+		<field name="type">INSERT</field>
+		<field name="table">amun_user_account</field>
+		<field name="date">2013-04-12 20:51:10</field>
+	</row>
+	<row>
+		<field name="id">35</field>
 		<field name="userId">2</field>
 		<field name="refId">2</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_user_activity</field>
-		<field name="date">2013-03-24 18:49:16</field>
-	</row>
-	<row>
-		<field name="id">35</field>
-		<field name="userId">1</field>
-		<field name="refId">1</field>
-		<field name="type">INSERT</field>
-		<field name="table">amun_content_page</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">36</field>
 		<field name="userId">1</field>
-		<field name="refId">2</field>
+		<field name="refId">1</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_content_page</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">37</field>
 		<field name="userId">1</field>
-		<field name="refId">3</field>
+		<field name="refId">2</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_content_page</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">38</field>
 		<field name="userId">1</field>
-		<field name="refId">4</field>
+		<field name="refId">3</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_content_page</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">39</field>
 		<field name="userId">1</field>
-		<field name="refId">5</field>
+		<field name="refId">4</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_content_page</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">40</field>
 		<field name="userId">1</field>
-		<field name="refId">1</field>
+		<field name="refId">5</field>
 		<field name="type">INSERT</field>
-		<field name="table">amun_page</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="table">amun_content_page</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">41</field>
 		<field name="userId">1</field>
-		<field name="refId">2</field>
+		<field name="refId">1</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_page</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">42</field>
 		<field name="userId">1</field>
+		<field name="refId">2</field>
+		<field name="type">INSERT</field>
+		<field name="table">amun_page</field>
+		<field name="date">2013-04-12 20:51:10</field>
+	</row>
+	<row>
+		<field name="id">43</field>
+		<field name="userId">1</field>
 		<field name="refId">3</field>
 		<field name="type">INSERT</field>
 		<field name="table">amun_page</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
+	</row>
+	<row>
+		<field name="id">44</field>
+		<field name="userId">1</field>
+		<field name="refId">6</field>
+		<field name="type">INSERT</field>
+		<field name="table">amun_content_page</field>
+		<field name="date">2013-04-12 20:51:47</field>
+	</row>
+	<row>
+		<field name="id">45</field>
+		<field name="userId">1</field>
+		<field name="refId">7</field>
+		<field name="type">INSERT</field>
+		<field name="table">amun_content_page</field>
+		<field name="date">2013-04-12 20:51:59</field>
+	</row>
+	<row>
+		<field name="id">46</field>
+		<field name="userId">1</field>
+		<field name="refId">8</field>
+		<field name="type">INSERT</field>
+		<field name="table">amun_content_page</field>
+		<field name="date">2013-04-12 20:52:09</field>
+	</row>
+	<row>
+		<field name="id">47</field>
+		<field name="userId">1</field>
+		<field name="refId">9</field>
+		<field name="type">INSERT</field>
+		<field name="table">amun_content_page</field>
+		<field name="date">2013-04-12 20:52:21</field>
+	</row>
+	<row>
+		<field name="id">48</field>
+		<field name="userId">1</field>
+		<field name="refId">10</field>
+		<field name="type">INSERT</field>
+		<field name="table">amun_content_page</field>
+		<field name="date">2013-04-12 20:52:34</field>
+	</row>
+	<row>
+		<field name="id">49</field>
+		<field name="userId">1</field>
+		<field name="refId">1</field>
+		<field name="type">INSERT</field>
+		<field name="table">amun_media</field>
+		<field name="date">2013-04-12 20:52:58</field>
+	</row>
+	<row>
+		<field name="id">50</field>
+		<field name="userId">1</field>
+		<field name="refId">1</field>
+		<field name="type">INSERT</field>
+		<field name="table">amun_content_gadget</field>
+		<field name="date">2013-04-12 20:53:17</field>
+	</row>
+	<row>
+		<field name="id">51</field>
+		<field name="userId">1</field>
+		<field name="refId">1</field>
+		<field name="type">INSERT</field>
+		<field name="table">amun_file</field>
+		<field name="date">2013-04-12 20:54:02</field>
+	</row>
+	<row>
+		<field name="id">52</field>
+		<field name="userId">1</field>
+		<field name="refId">1</field>
+		<field name="type">INSERT</field>
+		<field name="table">amun_news</field>
+		<field name="date">2013-04-12 20:54:19</field>
+	</row>
+	<row>
+		<field name="id">53</field>
+		<field name="userId">1</field>
+		<field name="refId">3</field>
+		<field name="type">INSERT</field>
+		<field name="table">amun_user_activity</field>
+		<field name="date">2013-04-12 20:54:19</field>
+	</row>
+	<row>
+		<field name="id">54</field>
+		<field name="userId">1</field>
+		<field name="refId">1</field>
+		<field name="type">INSERT</field>
+		<field name="table">amun_php</field>
+		<field name="date">2013-04-12 20:54:42</field>
+	</row>
+	<row>
+		<field name="id">55</field>
+		<field name="userId">1</field>
+		<field name="refId">1</field>
+		<field name="type">INSERT</field>
+		<field name="table">amun_pipe</field>
+		<field name="date">2013-04-12 20:54:52</field>
+	</row>
+	<row>
+		<field name="id">56</field>
+		<field name="userId">1</field>
+		<field name="refId">1</field>
+		<field name="type">INSERT</field>
+		<field name="table">amun_redirect</field>
+		<field name="date">2013-04-12 20:55:48</field>
 	</row>
 	</table_data>
 	<table_data name="amun_mail">
@@ -1482,19 +1712,30 @@ You can login with the new password at:
 	<table_data name="amun_media">
 	<row>
 		<field name="id">1</field>
-		<field name="globalId">49dcfea7-dff2-5f0a-9662-2eac8b827f8d</field>
+		<field name="globalId">0f52d88e-ac8f-5aad-8004-4c2169eef2f4</field>
 		<field name="rightId">77</field>
-		<field name="name">foo.jpg</field>
-		<field name="path">foo.jpg</field>
+		<field name="name">paris_2.jpg</field>
+		<field name="path">paris_2.jpg</field>
 		<field name="type">image</field>
-		<field name="size">385083</field>
+		<field name="size">221693</field>
 		<field name="mimeType">image/jpeg</field>
-		<field name="date">2013-04-08 20:12:39</field>
+		<field name="date">2013-04-12 20:52:58</field>
 	</row>
 	</table_data>
 	<table_data name="amun_my_attempt">
 	</table_data>
 	<table_data name="amun_news">
+	<row>
+		<field name="id">1</field>
+		<field name="globalId">f46f108a-3c2b-5cda-855f-f63ea190b9e6</field>
+		<field name="pageId">7</field>
+		<field name="userId">1</field>
+		<field name="urlTitle">foobar</field>
+		<field name="title">foobar</field>
+		<field name="text">&lt;p&gt;content &lt;/p&gt;
+</field>
+		<field name="date">2013-04-12 20:54:19</field>
+	</row>
 	</table_data>
 	<table_data name="amun_oauth">
 	<row>
@@ -1505,10 +1746,10 @@ You can login with the new password at:
 		<field name="url">http://127.0.0.1/projects/amun/public</field>
 		<field name="title">System</field>
 		<field name="description">Default system API to access amun</field>
-		<field name="consumerKey">bb8abd70c6f3a070e51cfce2aecb0777e22a05eb</field>
-		<field name="consumerSecret">461df96dabd25483ce79259fb6376743565b924c</field>
+		<field name="consumerKey">c419e3a6ff4079fad1ce61a153b6551ab405409c</field>
+		<field name="consumerSecret">e40fe562de6b4c3970684e2c597824ec91edf9d4</field>
 		<field name="callback"></field>
-		<field name="date">2013-03-18 22:01:34</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	</table_data>
 	<table_data name="amun_oauth_access">
@@ -2348,26 +2589,26 @@ You can login with the new password at:
 	<table_data name="amun_page">
 	<row>
 		<field name="id">1</field>
-		<field name="globalId">efd92193-7307-5f11-9dd3-3470c0e2f142</field>
+		<field name="globalId">f6a9fc77-27a4-5a48-9228-8dd911485427</field>
 		<field name="pageId">1</field>
 		<field name="userId">1</field>
 		<field name="content">&lt;h1&gt;It works!&lt;/h1&gt;
 &lt;p&gt;This is the default web page for this server.&lt;/p&gt;
 &lt;p&gt;The web server software is running but no content has been added, yet.&lt;/p&gt;</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">2</field>
-		<field name="globalId">841188b1-f12e-545d-b66a-a4e1c9eede79</field>
+		<field name="globalId">65c981c6-b65b-54a7-b88c-c75f6cb9bc2b</field>
 		<field name="pageId">2</field>
 		<field name="userId">1</field>
 		<field name="content">&lt;h1&gt;Lorem ipsum dolor sit amet&lt;/h1&gt;
 &lt;p&gt;consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.&lt;/p&gt;</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">3</field>
-		<field name="globalId">601a2fb1-5ab7-5b25-8771-15575e7a4668</field>
+		<field name="globalId">c8220a4f-70de-5ddf-bffc-c1b4c094a1c5</field>
 		<field name="pageId">5</field>
 		<field name="userId">1</field>
 		<field name="content">&lt;h3&gt;Mentions&lt;/h3&gt;
@@ -2467,51 +2708,77 @@ tempor invidunt ut labore
 &lt;h3&gt;Restrictions&lt;/h3&gt;
 &lt;p&gt;Note all the formating capabilities depends on the html tags wich are allowed for your user group. Website administrators can insert any kind of html tags where anonymous user can use only a small subset inorder to prevent misuse.&lt;/p&gt;
 </field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	</table_data>
 	<table_data name="amun_php">
+	<row>
+		<field name="id">1</field>
+		<field name="globalId">25c0ee81-0259-57cb-b330-088af988010f</field>
+		<field name="pageId">8</field>
+		<field name="userId">1</field>
+		<field name="content">
+echo $_SERVER['REMOTE_ADDR'];</field>
+		<field name="date">2013-04-12 20:54:42</field>
+	</row>
 	</table_data>
 	<table_data name="amun_pipe">
+	<row>
+		<field name="id">1</field>
+		<field name="globalId">5bc21e8d-137a-5127-b997-79b38865e80e</field>
+		<field name="pageId">9</field>
+		<field name="userId">1</field>
+		<field name="mediaId">1</field>
+		<field name="processor">passthru</field>
+		<field name="date">2013-04-12 20:54:52</field>
+	</row>
 	</table_data>
 	<table_data name="amun_redirect">
+	<row>
+		<field name="id">1</field>
+		<field name="globalId">7d999670-b906-595f-944c-c32af2a46c8f</field>
+		<field name="pageId">10</field>
+		<field name="userId">1</field>
+		<field name="href">http://localhost</field>
+		<field name="date">2013-04-12 20:55:48</field>
+	</row>
 	</table_data>
 	<table_data name="amun_user_account">
 	<row>
 		<field name="id">1</field>
-		<field name="globalId">13c09254-3306-5c66-b220-06a1a84e73d9</field>
+		<field name="globalId">8499868f-4213-529f-bff8-89c8cd9b6fd4</field>
 		<field name="groupId">1</field>
 		<field name="hostId">0</field>
 		<field name="countryId">1</field>
 		<field name="status">5</field>
 		<field name="identity">60f0054d051b6e8792b6df64968693f60dbb5ef3</field>
-		<field name="name">foo</field>
+		<field name="name">test</field>
 		<field name="pw">cf8e508e08ad778f9c471f4fd6d0c93c79938e84</field>
 		<field name="email">test@test.com</field>
-		<field name="token">d13ee07ddeb827f000b509cd1cfacab98cc6024e</field>
+		<field name="token">e1c61f2775c7be6b7be08831817928afa46a60a3</field>
 		<field name="ip">127.0.0.1</field>
 		<field name="gender">undisclosed</field>
-		<field name="profileUrl">http://127.0.0.1/projects/amun/public/index.php/profile/foo</field>
+		<field name="profileUrl">http://127.0.0.1/projects/amun/public/index.php/profile/test</field>
 		<field name="thumbnailUrl">http://www.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?d=http%3A%2F%2F127.0.0.1%2Fprojects%2Famun%2Fpublic%2Fimg%2Favatar%2Fno_image.png&amp;s=48</field>
 		<field name="longitude">0</field>
 		<field name="latitude">0</field>
 		<field name="timezone">UTC</field>
-		<field name="lastSeen">2013-03-24 18:49:16</field>
-		<field name="updated">2013-03-24 18:49:16</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="lastSeen">2013-04-12 20:55:58</field>
+		<field name="updated">2013-04-12 20:51:10</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">2</field>
-		<field name="globalId">159ceded-4bb0-5281-8221-1c55e7d83d63</field>
+		<field name="globalId">3059e82f-e408-5567-900b-b554ac386fb3</field>
 		<field name="groupId">3</field>
 		<field name="hostId">0</field>
 		<field name="countryId">1</field>
 		<field name="status">2</field>
 		<field name="identity">a5b1ec08b2eef7741eacd969c7a17c7c0097439f</field>
 		<field name="name">Anonymous</field>
-		<field name="pw">49ead524646eaa2ed1bf2740dcd3a5ee65a3d89c</field>
+		<field name="pw">c3cfe7665e0071c17a3aeb3cac58601586863dee</field>
 		<field name="email" xsi:nil="true" />
-		<field name="token">3b0775539b086b1ee3d461f36c3307756cc71343</field>
+		<field name="token">00a8ba2ce22463426d80130017f91b4e0171379f</field>
 		<field name="ip">127.0.0.1</field>
 		<field name="gender">undisclosed</field>
 		<field name="profileUrl">http://127.0.0.1/projects/amun/public/index.php/profile/Anonymous</field>
@@ -2519,27 +2786,27 @@ tempor invidunt ut labore
 		<field name="longitude">0</field>
 		<field name="latitude">0</field>
 		<field name="timezone">UTC</field>
-		<field name="lastSeen">2013-03-24 18:49:18</field>
-		<field name="updated">2013-03-24 18:49:16</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="lastSeen">2013-04-12 20:51:34</field>
+		<field name="updated">2013-04-12 20:51:10</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	</table_data>
 	<table_data name="amun_user_activity">
 	<row>
 		<field name="id">1</field>
-		<field name="globalId">8ca653f7-866d-5d6c-b88b-b657bc57706e</field>
+		<field name="globalId">4354b228-7315-5d6a-8662-249559c0ad78</field>
 		<field name="parentId">0</field>
 		<field name="userId">1</field>
 		<field name="refId">1</field>
 		<field name="table">amun_user_account</field>
 		<field name="scope">0</field>
 		<field name="verb">join</field>
-		<field name="summary">foo has created an account</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="summary">test has created an account</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">2</field>
-		<field name="globalId">f0d9181f-49c2-528b-b226-63f3dbb949c4</field>
+		<field name="globalId">b3c6df5f-f3f2-5440-affb-b31264c44bb1</field>
 		<field name="parentId">0</field>
 		<field name="userId">2</field>
 		<field name="refId">2</field>
@@ -2547,7 +2814,22 @@ tempor invidunt ut labore
 		<field name="scope">0</field>
 		<field name="verb">join</field>
 		<field name="summary">Anonymous has created an account</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
+	</row>
+	<row>
+		<field name="id">3</field>
+		<field name="globalId">76000200-41ca-58f3-bbb0-09bd16bda9d1</field>
+		<field name="parentId">0</field>
+		<field name="userId">1</field>
+		<field name="refId">1</field>
+		<field name="table">amun_news</field>
+		<field name="scope">0</field>
+		<field name="verb">add</field>
+		<field name="summary">
+&lt;p&gt;&lt;a href=&quot;http://127.0.0.1/projects/amun/public/index.php/profile/test&quot;&gt;test&lt;/a&gt; has created a &lt;a href=&quot;http://127.0.0.1/projects/amun/public/index.php/news/view?id=1&quot;&gt;news&lt;/a&gt;&lt;/p&gt;&lt;blockquote&gt;content 
+&lt;/blockquote&gt;
+</field>
+		<field name="date">2013-04-12 20:54:19</field>
 	</row>
 	</table_data>
 	<table_data name="amun_user_activity_receiver">
@@ -2556,14 +2838,21 @@ tempor invidunt ut labore
 		<field name="status">1</field>
 		<field name="activityId">1</field>
 		<field name="userId">1</field>
-		<field name="date">2013-03-24 19:49:16</field>
+		<field name="date">2013-04-12 22:51:10</field>
 	</row>
 	<row>
 		<field name="id">2</field>
 		<field name="status">1</field>
 		<field name="activityId">2</field>
 		<field name="userId">2</field>
-		<field name="date">2013-03-24 19:49:16</field>
+		<field name="date">2013-04-12 22:51:10</field>
+	</row>
+	<row>
+		<field name="id">3</field>
+		<field name="status">1</field>
+		<field name="activityId">3</field>
+		<field name="userId">1</field>
+		<field name="date">2013-04-12 22:54:19</field>
 	</row>
 	</table_data>
 	<table_data name="amun_user_activity_template">
@@ -2595,7 +2884,7 @@ tempor invidunt ut labore
 		<field name="groupId">0</field>
 		<field name="userId">1</field>
 		<field name="friendId">1</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">2</field>
@@ -2603,7 +2892,7 @@ tempor invidunt ut labore
 		<field name="groupId">0</field>
 		<field name="userId">2</field>
 		<field name="friendId">2</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	</table_data>
 	<table_data name="amun_user_friend_group">
@@ -2612,17 +2901,17 @@ tempor invidunt ut labore
 	<row>
 		<field name="id">1</field>
 		<field name="title">Administrator</field>
-		<field name="date">2013-03-24 19:49:16</field>
+		<field name="date">2013-04-12 22:51:10</field>
 	</row>
 	<row>
 		<field name="id">2</field>
 		<field name="title">Normal</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	<row>
 		<field name="id">3</field>
 		<field name="title">Anonymous</field>
-		<field name="date">2013-03-24 18:49:16</field>
+		<field name="date">2013-04-12 20:51:10</field>
 	</row>
 	</table_data>
 	<table_data name="amun_user_group_right">

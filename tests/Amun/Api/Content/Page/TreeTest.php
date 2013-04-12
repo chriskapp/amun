@@ -24,7 +24,7 @@
 
 namespace Amun\Api\Content\Page;
 
-use Amun\Api\RestTest;
+use Amun\Api\ApiTest;
 use Amun\DataFactory;
 use PSX\Sql\Condition;
 use PSX\Http\GetRequest;
@@ -41,7 +41,7 @@ use PSX\Url;
  * @version    $Revision: 742 $
  * @backupStaticAttributes disabled
  */
-class TreeTest extends RestTest
+class TreeTest extends ApiTest
 {
 	protected function setUp()
 	{
@@ -53,19 +53,9 @@ class TreeTest extends RestTest
 		}
 	}
 
-	public function getDataSet()
-	{
-		return $this->createMySQLXMLDataSet('tests/amun.xml');
-	}
-
 	public function getEndpoint()
 	{
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/page/tree';
-	}
-
-	public function getTable()
-	{
-		return null;
 	}
 
 	public function testGet()

@@ -55,11 +55,6 @@ class AccountTest extends RestTest
 		}
 	}
 
-	public function getDataSet()
-	{
-		return $this->createMySQLXMLDataSet('tests/amun.xml');
-	}
-
 	public function getEndpoint()
 	{
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/account';
@@ -92,6 +87,38 @@ class AccountTest extends RestTest
 		$expect = array_map('strval', $record->getData());
 
 		$this->assertEquals($expect, $actual);
+	}
+
+	public function testPut()
+	{
+		$record = $this->getTable()->getRecord();
+		$record->setId(1);
+		$record->setGroupId(1);
+		$record->setStatus(Account\Record::NORMAL);
+		$record->identity = 'foo@bar.com';
+		$record->setName('bar');
+		$record->pw = 'foo123';
+
+		$this->assertPositiveResponse($this->put($record));
+
+		$actual = $this->table->getRow(array('id', 'apiId', 'allowed'), new Condition(array('id', '=', 1)));
+		$record->identity = sha1(Security::getSalt() . $record->identity);
+		$record->pw = sha1(Security::getSalt() . $record->pw);
+		$expect = array_map('strval', $record->getData());
+
+		$this->assertEquals($expect, $actual);
+	}
+
+	public function testDelete()
+	{
+		$record = $this->getTable()->getRecord();
+		$record->setId(1);
+
+		$this->assertPositiveResponse($this->delete($record));
+
+		$actual = $this->table->getRow(array('id'), new Condition(array('id', '=', 1)));
+
+		$this->assertEquals(true, empty($actual));
 	}
 
 	public function testSupportedFields()

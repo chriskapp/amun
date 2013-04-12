@@ -53,11 +53,6 @@ class RegistryTest extends RestTest
 		}
 	}
 
-	public function getDataSet()
-	{
-		return $this->createMySQLXMLDataSet('tests/amun.xml');
-	}
-
 	public function getEndpoint()
 	{
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/registry';

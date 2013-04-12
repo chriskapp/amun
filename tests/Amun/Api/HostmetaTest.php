@@ -40,7 +40,7 @@ use SimpleXMLElement;
  * @version    $Revision: 637 $
  * @backupStaticAttributes disabled
  */
-class HostmetaTest extends RestTest
+class HostmetaTest extends ApiTest
 {
 	protected function setUp()
 	{
@@ -52,19 +52,9 @@ class HostmetaTest extends RestTest
 		}
 	}
 
-	public function getDataSet()
-	{
-		return $this->createMySQLXMLDataSet('tests/amun.xml');
-	}
-
 	public function getEndpoint()
 	{
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/hostmeta';
-	}
-
-	public function getTable()
-	{
-		return null;
 	}
 
 	public function testGet()

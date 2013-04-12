@@ -53,11 +53,6 @@ class RightTest extends RestTest
 		}
 	}
 
-	public function getDataSet()
-	{
-		return $this->createMySQLXMLDataSet('tests/amun.xml');
-	}
-
 	public function getEndpoint()
 	{
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/group/right';
@@ -71,6 +66,47 @@ class RightTest extends RestTest
 	public function testGet()
 	{
 		$this->assertResultSetResponse($this->get());
+	}
+
+	public function testPost()
+	{
+		$record = $this->getTable()->getRecord();
+		$record->setGroupId(1);
+		$record->setRightId(1);
+
+		$this->assertPositiveResponse($this->post($record));
+
+		$actual = $this->table->getRow(array('groupId', 'rightId'), new Condition(array('id', '=', 197)));
+		$expect = array_map('strval', $record->getData());
+
+		$this->assertEquals($expect, $actual);
+	}
+
+	public function testPut()
+	{
+		$record = $this->getTable()->getRecord();
+		$record->setId(1);
+		$record->setGroupId(1);
+		$record->setRightId(1);
+
+		$this->assertPositiveResponse($this->put($record));
+
+		$actual = $this->table->getRow(array('id', 'groupId', 'rightId'), new Condition(array('id', '=', 1)));
+		$expect = array_map('strval', $record->getData());
+
+		$this->assertEquals($expect, $actual);
+	}
+
+	public function testDelete()
+	{
+		$record = $this->getTable()->getRecord();
+		$record->setId(1);
+
+		$this->assertPositiveResponse($this->delete($record));
+
+		$actual = $this->table->getRow(array('id'), new Condition(array('id', '=', 1)));
+
+		$this->assertEquals(true, empty($actual));
 	}
 
 	public function testSupportedFields()

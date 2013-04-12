@@ -24,7 +24,7 @@
 
 namespace Amun\Api\Oauth;
 
-use Amun\Api\RestTest;
+use Amun\Api\ApiTest;
 use Amun\DataFactory;
 use Amun\Security;
 use AmunService\Oauth;
@@ -42,7 +42,7 @@ use PSX\Sql\Condition;
  * @version    $Revision: 637 $
  * @backupStaticAttributes disabled
  */
-class EndpointTest extends RestTest
+class EndpointTest extends ApiTest
 {
 	protected function setUp()
 	{
@@ -54,19 +54,9 @@ class EndpointTest extends RestTest
 		}
 	}
 
-	public function getDataSet()
-	{
-		return $this->createMySQLXMLDataSet('tests/amun.xml');
-	}
-
 	public function getEndpoint()
 	{
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/oauth';
-	}
-
-	public function getTable()
-	{
-		return DataFactory::getTable('Oauth');
 	}
 
 	public function testRequest()
@@ -90,7 +80,7 @@ class EndpointTest extends RestTest
 		$this->assertEquals(true, !empty($requestUri), 'Could not find http://oauth.net/core/1.0/endpoint/request in xrds');
 
 		// get request token
-		$response = $this->oauth->requestToken(new Url($requestUri), CONSUMER_KEY, CONSUMER_SECRET);
+		$response = $this->oauth->requestToken(new Url($requestUri), $this->consumerKey, $this->consumerSecret);
 
 		$this->assertEquals(true, strlen($response->getToken()) > 4, $this->http->getResponse());
 		$this->assertEquals(true, strlen($response->getTokenSecret()) > 4, $this->http->getResponse());
@@ -126,7 +116,7 @@ class EndpointTest extends RestTest
 		$this->assertEquals(true, !empty($accessUri), 'Could not find http://oauth.net/core/1.0/endpoint/access in xrds');
 
 		// get access token
-		$response = $this->oauth->accessToken(new Url($accessUri), CONSUMER_KEY, CONSUMER_SECRET, $token, $tokenSecret, $verifier);
+		$response = $this->oauth->accessToken(new Url($accessUri), $this->consumerKey, $this->consumerSecret, $token, $tokenSecret, $verifier);
 
 		$this->assertEquals(true, strlen($response->getToken()) > 4, $this->http->getResponse());
 		$this->assertEquals(true, strlen($response->getTokenSecret()) > 4, $this->http->getResponse());

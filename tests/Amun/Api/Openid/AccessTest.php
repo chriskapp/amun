@@ -52,11 +52,6 @@ class AccessTest extends RestTest
 		}
 	}
 
-	public function getDataSet()
-	{
-		return $this->createMySQLXMLDataSet('tests/amun.xml');
-	}
-
 	public function getEndpoint()
 	{
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/openid/access';
@@ -70,6 +65,32 @@ class AccessTest extends RestTest
 	public function testGet()
 	{
 		$this->assertResultSetResponse($this->get());
+	}
+
+	public function testPost()
+	{
+		$response = $this->signedRequest('POST', $this->getEndpoint());
+
+		$this->assertEquals(500, $response->getCode());
+	}
+
+	public function testPut()
+	{
+		$response = $this->signedRequest('PUT', $this->getEndpoint());
+
+		$this->assertEquals(500, $response->getCode());
+	}
+
+	public function testDelete()
+	{
+		$record = $this->getTable()->getRecord();
+		$record->setId(1);
+
+		$this->assertPositiveResponse($this->delete($record));
+
+		$actual = $this->table->getRow(array('id'), new Condition(array('id', '=', 1)));
+
+		$this->assertEquals(true, empty($actual));
 	}
 
 	public function testSupportedFields()

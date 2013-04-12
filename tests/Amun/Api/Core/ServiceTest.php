@@ -52,11 +52,6 @@ class ServiceTest extends RestTest
 		}
 	}
 
-	public function getDataSet()
-	{
-		return $this->createMySQLXMLDataSet('tests/amun.xml');
-	}
-
 	public function getEndpoint()
 	{
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/service';
@@ -70,6 +65,21 @@ class ServiceTest extends RestTest
 	public function testGet()
 	{
 		$this->assertResultSetResponse($this->get());
+	}
+
+	public function testPost()
+	{
+		$this->markTestIncomplete();
+	}
+
+	public function testPut()
+	{
+		$this->markTestIncomplete();
+	}
+
+	public function testDelete()
+	{
+		$this->markTestIncomplete();
 	}
 
 	public function testSupportedFields()

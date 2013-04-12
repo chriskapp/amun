@@ -39,7 +39,7 @@ use PSX\Http\GetRequest;
  * @version    $Revision: 637 $
  * @backupStaticAttributes disabled
  */
-class XrdsTest extends RestTest
+class XrdsTest extends ApiTest
 {
 	protected function setUp()
 	{
@@ -51,19 +51,9 @@ class XrdsTest extends RestTest
 		}
 	}
 
-	public function getDataSet()
-	{
-		return $this->createMySQLXMLDataSet('tests/amun.xml');
-	}
-
 	public function getEndpoint()
 	{
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/xrds';
-	}
-
-	public function getTable()
-	{
-		return DataFactory::getTable('Xrds');
 	}
 
 	public function testGet()

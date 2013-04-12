@@ -22,9 +22,9 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Amun\Api;
+namespace Amun\Api\My;
 
-use Amun\DataFactory;
+use Amun\Api\ApiTest;
 use PSX\Sql\Condition;
 use PSX\Url;
 use PSX\Http\GetRequest;
@@ -41,7 +41,7 @@ use DOMElement;
  * @version    $Revision: 637 $
  * @backupStaticAttributes disabled
  */
-class FoafTest extends RestTest
+class FoafTest extends ApiTest
 {
 	protected function setUp()
 	{
@@ -53,19 +53,9 @@ class FoafTest extends RestTest
 		}
 	}
 
-	public function getDataSet()
-	{
-		return $this->createMySQLXMLDataSet('tests/amun.xml');
-	}
-
 	public function getEndpoint()
 	{
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/foaf';
-	}
-
-	public function getTable()
-	{
-		return null;
 	}
 
 	public function testGet()

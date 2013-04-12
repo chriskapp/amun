@@ -26,9 +26,11 @@ namespace Amun\Api\Oauth;
 
 use Amun\Api\RestTest;
 use Amun\DataFactory;
+use AmunService\Oauth;
 use PSX\Http\GetRequest;
 use PSX\Json;
 use PSX\Url;
+use PSX\Sql\Condition;
 
 /**
  * Amun_Api_System_Api_RequestTest
@@ -52,11 +54,6 @@ class RequestTest extends RestTest
 		}
 	}
 
-	public function getDataSet()
-	{
-		return $this->createMySQLXMLDataSet('tests/amun.xml');
-	}
-
 	public function getEndpoint()
 	{
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/oauth/request';
@@ -70,6 +67,53 @@ class RequestTest extends RestTest
 	public function testGet()
 	{
 		$this->assertResultSetResponse($this->get());
+	}
+
+	public function testPost()
+	{
+		$record = $this->getTable()->getRecord();
+		$record->setApiId(1);
+		$record->setStatus(Oauth\Record::ACCESS);
+		$record->setIp('127.0.0.1');
+		$record->setNonce(uniqid());
+		$record->setCallback('oob');
+		$record->setToken(sha1(uniqid()));
+		$record->setTokenSecret(sha1(uniqid()));
+		$record->setVerifier(md5(uniqid()));
+		$record->setTimestamp(time());
+		$record->setExpire('P1M');
+
+		$this->assertNegativeResponse($this->post($record));
+	}
+
+	public function testPut()
+	{
+		$record = $this->getTable()->getRecord();
+		$record->setId(1);
+		$record->setApiId(1);
+		$record->setStatus(Oauth\Record::ACCESS);
+		$record->setIp('127.0.0.1');
+		$record->setNonce(uniqid());
+		$record->setCallback('oob');
+		$record->setToken(sha1(uniqid()));
+		$record->setTokenSecret(sha1(uniqid()));
+		$record->setVerifier(md5(uniqid()));
+		$record->setTimestamp(time());
+		$record->setExpire('P2M');
+
+		$this->assertNegativeResponse($this->put($record));
+	}
+
+	public function testDelete()
+	{
+		$record = $this->getTable()->getRecord();
+		$record->setId(1);
+
+		$this->assertPositiveResponse($this->delete($record));
+
+		$actual = $this->table->getRow(array('id'), new Condition(array('id', '=', 1)));
+
+		$this->assertEquals(true, empty($actual));
 	}
 
 	public function testSupportedFields()

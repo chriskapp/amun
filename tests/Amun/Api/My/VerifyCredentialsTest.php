@@ -22,9 +22,9 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Amun\Api;
+namespace Amun\Api\My;
 
-use Amun\DataFactory;
+use Amun\Api\ApiTest;
 use PSX\Sql\Condition;
 use PSX\Url;
 use PSX\Http\GetRequest;
@@ -39,7 +39,7 @@ use PSX\Http\GetRequest;
  * @version    $Revision: 637 $
  * @backupStaticAttributes disabled
  */
-class VerifyCredentialsTest extends RestTest
+class VerifyCredentialsTest extends ApiTest
 {
 	protected function setUp()
 	{
@@ -51,19 +51,9 @@ class VerifyCredentialsTest extends RestTest
 		}
 	}
 
-	public function getDataSet()
-	{
-		return $this->createMySQLXMLDataSet('tests/amun.xml');
-	}
-
 	public function getEndpoint()
 	{
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/verifyCredentials';
-	}
-
-	public function getTable()
-	{
-		return null;
 	}
 
 	public function testGet()
