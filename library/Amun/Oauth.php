@@ -199,12 +199,12 @@ SQL;
 			}
 			else
 			{
-				throw new PSX_Oauth_Exception('Access was rejected');
+				throw new Exception('Access was rejected');
 			}
 		}
 		else
 		{
-			throw new PSX_Oauth_Exception('Invalid request');
+			throw new Exception('Invalid request');
 		}
 	}
 
