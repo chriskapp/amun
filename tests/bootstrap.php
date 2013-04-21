@@ -34,6 +34,7 @@ doBootstrap();
 function doBootstrap()
 {
 	$container = getContainer();
+	$bootstrap = new PSX\Bootstrap($container->getConfig());
 
 	// set container
 	Amun\DataFactory::initInstance($container);

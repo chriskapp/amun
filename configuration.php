@@ -39,6 +39,7 @@ $config = array(
 	'psx_gzip'                => false,
 	'psx_debug'               => true,
 	'psx_autoload'            => false,
+	'psx_include_path'        => false,
 
 	'psx_module_default'      => '',
 	'psx_module_input'        => isset($_GET['x']) ? $_GET['x'] : (isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : (isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : '')),
@@ -56,7 +57,7 @@ $config = array(
 	'psx_template_default'    => false,
 
 	'psx_path_cache'          => '../cache',
-	'psx_path_library'        => null,
+	'psx_path_library'        => '../library',
 	'psx_path_module'         => '../module',
 	'psx_path_template'       => '../template',
 
