@@ -1,0 +1,25 @@
+{
+  "name": "amun/amun",
+  "description": "Amun CMS",
+  "keywords": ["cms", "social", "rest", "api", "oauth", "openid"],
+  "homepage": "http://amun-project.org",
+  "type": "cms",
+  "license": "GPLv3",
+  "authors": [
+    {
+      "name": "Christoph Kappestein",
+      "email": "k42b3.x@gmail.com",
+      "homepage": "http://k42b3.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.3",
+    "psx/psx": "0.5.*",
+    "zendframework/zend-mail": "2.1.*"
+  },
+  "autoload": {
+    "psr-0": {
+      "Amun": "library/"
+    }
+  }
+}
