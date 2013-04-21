@@ -56,10 +56,6 @@ function getContainer()
 		$config['psx_path_module']   = 'module';
 		$config['psx_path_template'] = 'template';
 
-		// bootstrap
-		$bootstrap = new PSX\Bootstrap($config);
-		$bootstrap->addIncludePath('tests');
-
 		$container = new Amun\Dependency\Script($config, array(
 			'script.userId' => USER_ID,
 		));
