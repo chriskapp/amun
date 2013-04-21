@@ -1,4 +1,7 @@
 
+0.4.1 beta
+* Using composer as dependency manager
+
 0.4 beta
 * Added ExtJs based backend as default
 * Removed htmlpurifier using now the html library of psx
