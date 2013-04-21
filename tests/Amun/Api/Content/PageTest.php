@@ -87,7 +87,7 @@ class PageTest extends RestTest
 
 		$this->assertPositiveResponse($this->post($record));
 
-		$actual = $this->table->getRow(array('parentId', 'serviceId', 'rightId', 'status', 'load', 'urlTitle', 'title', 'template', 'cache', 'expire'), new Condition(array('id', '=', 6)));
+		$actual = $this->table->getRow(array('parentId', 'serviceId', 'rightId', 'status', 'load', 'urlTitle', 'title', 'template', 'cache', 'expire'), new Condition(array('id', '=', 11)));
 		$expect = array_map('strval', $record->getData());
 
 		$this->assertEquals($expect, $actual);
@@ -103,7 +103,7 @@ class PageTest extends RestTest
 
 		$this->assertPositiveResponse($this->post($record));
 
-		$actual = $this->table->getRow(array('parentId', 'serviceId', 'status', 'urlTitle', 'title'), new Condition(array('id', '=', 6)));
+		$actual = $this->table->getRow(array('parentId', 'serviceId', 'status', 'urlTitle', 'title'), new Condition(array('id', '=', 11)));
 		$expect = array_map('strval', $record->getData());
 
 		$this->assertEquals($expect, $actual);
@@ -126,10 +126,6 @@ class PageTest extends RestTest
 
 	public function testDelete()
 	{
-		$globalId = Uuid::nameBased(uniqid());
-		$status   = Service\Record::NORMAL;
-		$date     = date(DateTime::SQL);
-
 		$record = $this->getTable()->getRecord();
 		$record->setId(2);
 

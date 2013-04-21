@@ -172,8 +172,13 @@ SQL;
 		unset($this->oauth);
 	}
 
-	protected function signedRequest($type, Url $url, array $header = array(), $body = null)
+	protected function signedRequest($type, $url, array $header = array(), $body = null)
 	{
+		if(!$url instanceof Url)
+		{
+			$url = new Url($url);
+		}
+
 		if(!isset($header['Authorization']) && !$this->user->isAnonymous())
 		{
 			$header['Authorization'] = $this->oauth->getAuthorizationHeader($url, $this->consumerKey, $this->consumerSecret, $this->token, $this->tokenSecret, 'HMAC-SHA1', $type);

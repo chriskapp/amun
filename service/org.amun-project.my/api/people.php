@@ -104,21 +104,45 @@ class people extends RestAbstract
 		}
 	}
 
-	public function onPost()
+	/**
+	 * Insert a new record
+	 *
+	 * @httpMethod POST
+	 * @path /
+	 * @nickname insertRecord
+	 * @responseClass PSX_Data_Message
+	 */
+	public function insertRecord()
 	{
 		$msg = new Message('Create a person record is not possible', false);
 
 		$this->setResponse($msg, null, 500);
 	}
 
-	public function onPut()
+	/**
+	 * Update an existing record
+	 *
+	 * @httpMethod PUT
+	 * @path /
+	 * @nickname updateRecord
+	 * @responseClass PSX_Data_Message
+	 */
+	public function updateRecord()
 	{
 		$msg = new Message('Update a person record is not possible', false);
 
 		$this->setResponse($msg, null, 500);
 	}
 
-	public function onDelete()
+	/**
+	 * Delete an existing record
+	 *
+	 * @httpMethod DELETE
+	 * @path /
+	 * @nickname deleteRecord
+	 * @responseClass PSX_Data_Message
+	 */
+	public function deleteRecord()
 	{
 		$msg = new Message('Delete a person record is not possible', false);
 

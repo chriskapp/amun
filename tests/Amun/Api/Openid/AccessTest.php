@@ -71,14 +71,14 @@ class AccessTest extends RestTest
 	{
 		$response = $this->signedRequest('POST', $this->getEndpoint());
 
-		$this->assertEquals(500, $response->getCode());
+		$this->assertEquals(500, $response->getCode(), $response->getBody());
 	}
 
 	public function testPut()
 	{
 		$response = $this->signedRequest('PUT', $this->getEndpoint());
 
-		$this->assertEquals(500, $response->getCode());
+		$this->assertEquals(500, $response->getCode(), $response->getBody());
 	}
 
 	public function testDelete()
