@@ -22,7 +22,8 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once('../vendor/autoload.php');
+$loader = require_once('vendor/autoload.php');
+$loader->add('Amun', 'tests');
 
 // defines the user id under wich the tests gets executed
 define('USER_ID', 1);
