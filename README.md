@@ -20,3 +20,6 @@ content in standard formats like JSON, XML and Atom.
 * Active messaging integration with STOMP
 * Javascript and CSS concatenation to optimize page load
 * User group and right managment
+
+
+[![Build Status](https://travis-ci.org/k42b3/amun.png)](https://travis-ci.org/k42b3/amun)
