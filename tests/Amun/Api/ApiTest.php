@@ -44,6 +44,10 @@ use InvalidArgumentException;
  */
 abstract class ApiTest extends \PHPUnit_Extensions_Database_TestCase
 {
+	const ONLINE  = 0x1;
+	const OFFLINE = 0x2;
+
+	protected static $serverRunning;
 	protected static $con;
 
 	protected $config;
@@ -107,8 +111,30 @@ abstract class ApiTest extends \PHPUnit_Extensions_Database_TestCase
 
 	protected function setUp()
 	{
+		// check whether webserver is started
+		if(self::$serverRunning === null)
+		{
+			$response = @file_get_contents('http://127.0.0.1');
+
+			if(!empty($response))
+			{
+				self::$serverRunning = self::ONLINE;
+			}
+			else
+			{
+				self::$serverRunning = self::OFFLINE;
+			}
+		}
+
+		if(self::$serverRunning === self::OFFLINE)
+		{
+			$this->markTestSkipped('Webserver not available');
+		}
+
+		// call parent
 		parent::setUp();
 
+		// get api credentials
 		$this->config   = getContainer()->getConfig();
 		$this->registry = getContainer()->getRegistry();
 		$this->user     = getContainer()->getUser();
@@ -162,7 +188,7 @@ SQL;
 
 	protected function tearDown()
 	{
-		parent::setUp();
+		parent::tearDown();
 
 		unset($this->config);
 		unset($this->sql);

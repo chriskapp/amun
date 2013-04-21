@@ -2758,7 +2758,7 @@ echo $_SERVER['REMOTE_ADDR'];</field>
 		<field name="token">e1c61f2775c7be6b7be08831817928afa46a60a3</field>
 		<field name="ip">127.0.0.1</field>
 		<field name="gender">undisclosed</field>
-		<field name="profileUrl">http://127.0.0.1/projects/amun/public/index.php/profile/test</field>
+		<field name="profileUrl">http://127.0.0.1/index.php/profile/test</field>
 		<field name="thumbnailUrl">http://www.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?d=http%3A%2F%2F127.0.0.1%2Fprojects%2Famun%2Fpublic%2Fimg%2Favatar%2Fno_image.png&amp;s=48</field>
 		<field name="longitude">0</field>
 		<field name="latitude">0</field>

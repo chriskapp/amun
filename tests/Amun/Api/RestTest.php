@@ -56,7 +56,7 @@ abstract class RestTest extends ApiTest
 
 	protected function tearDown()
 	{
-		parent::setUp();
+		parent::tearDown();
 
 		unset($this->table);
 	}
