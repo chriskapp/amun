@@ -28,9 +28,16 @@
 		<delete dir="${build}/bin" />
 		<delete dir="${build}/tests" />
 		<delete file="${build}/.gitignore" />
-		<delete file="${build}/README.md" />
+		<delete file="${build}/.travis.yml" />
 		<delete file="${build}/phpunit.xml" />
+		<delete file="${build}/README.md" />
 		<delete file="${build}/todo.txt" />
+		<!-- delete beta services -->
+		<delete includeemptydirs="true">
+			<fileset dir="${build}/service">
+				<include name="**/org.amun-project.beta.*/**" />
+			</fileset>
+		</delete>
 	</target>
 
 	<!-- install dependencies -->
@@ -56,7 +63,7 @@
 	<target name="phpunit" depends="syntax-check">
 		<!-- start server -->
 		<exec dir="${build}" executable="php" spawn="true">
-			<arg line="-S 127.0.0.1:80 -t public" />
+			<arg line="-S 127.0.0.1:80" />
 		</exec>
 		<!-- run tests -->
 		<exec dir="${build}" executable="phpunit.bat" failonerror="true" />
