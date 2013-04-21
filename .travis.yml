@@ -6,6 +6,7 @@ before_script:
   - mysql -e 'create database amun_dev;'
   - pear channel-discover pear.phpunit.de
   - pear install phpunit/DbUnit
+  - composer install
   - sh tests/start-webserver.sh
 env:
   - DB=mysql
