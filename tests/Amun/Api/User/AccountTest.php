@@ -97,11 +97,11 @@ class AccountTest extends RestTest
 		$record->setStatus(Account\Record::NORMAL);
 		$record->identity = 'foo@bar.com';
 		$record->setName('bar');
-		$record->pw = 'foo123';
+		$record->pw = 'test123';
 
 		$this->assertPositiveResponse($this->put($record));
 
-		$actual = $this->table->getRow(array('id', 'apiId', 'allowed'), new Condition(array('id', '=', 1)));
+		$actual = $this->table->getRow(array('id', 'groupId', 'status', 'identity', 'name', 'pw'), new Condition(array('id', '=', 1)));
 		$record->identity = sha1(Security::getSalt() . $record->identity);
 		$record->pw = sha1(Security::getSalt() . $record->pw);
 		$expect = array_map('strval', $record->getData());

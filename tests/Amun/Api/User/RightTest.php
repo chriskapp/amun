@@ -91,7 +91,7 @@ class RightTest extends RestTest
 
 		$this->assertPositiveResponse($this->put($record));
 
-		$actual = $this->table->getRow(array('name', 'description'), new Condition(array('id', '=', 1)));
+		$actual = $this->table->getRow(array('id', 'name', 'description'), new Condition(array('id', '=', 1)));
 		$expect = array_map('strval', $record->getData());
 
 		$this->assertEquals($expect, $actual);

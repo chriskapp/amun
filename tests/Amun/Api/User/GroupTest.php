@@ -74,15 +74,16 @@ class GroupTest extends RestTest
 
 		$record = $this->getTable()->getRecord();
 		$record->setTitle('foo');
-		$record->setRights(implode(',', $rightIds));
+		$record->rights = implode(',', $rightIds);
 
 		$this->assertPositiveResponse($this->post($record));
 
 		$actual = $this->table->getRow(array('title'), new Condition(array('id', '=', 4)));
+		unset($record->rights);
 		$expect = array_map('strval', $record->getData());
 
 		$this->assertEquals($expect, $actual);
-		$this->assertEquals($rightIds, $this->table->getCol('id', new Condition(array('groupId', '=', 4))));
+		$this->assertEquals($rightIds, DataFactory::getTable('User_Group_Right')->getCol('rightId', new Condition(array('groupId', '=', 4))));
 	}
 
 	public function testPut()
@@ -92,15 +93,16 @@ class GroupTest extends RestTest
 		$record = $this->getTable()->getRecord();
 		$record->setId(1);
 		$record->setTitle('foobar');
-		$record->setRights(implode(',', $rightIds));
+		$record->rights = implode(',', $rightIds);
 
 		$this->assertPositiveResponse($this->put($record));
 
 		$actual = $this->table->getRow(array('id', 'title'), new Condition(array('id', '=', 1)));
+		unset($record->rights);
 		$expect = array_map('strval', $record->getData());
 
 		$this->assertEquals($expect, $actual);
-		$this->assertEquals($rightIds, $this->table->getCol('id', new Condition(array('groupId', '=', 4))));
+		$this->assertEquals($rightIds, DataFactory::getTable('User_Group_Right')->getCol('rightId', new Condition(array('groupId', '=', 1))));
 	}
 
 	public function testDelete()

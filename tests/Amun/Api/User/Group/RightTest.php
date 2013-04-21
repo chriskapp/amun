@@ -71,8 +71,8 @@ class RightTest extends RestTest
 	public function testPost()
 	{
 		$record = $this->getTable()->getRecord();
-		$record->setGroupId(1);
-		$record->setRightId(1);
+		$record->setGroupId(2);
+		$record->setRightId(8);
 
 		$this->assertPositiveResponse($this->post($record));
 

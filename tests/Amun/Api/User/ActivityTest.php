@@ -93,7 +93,7 @@ class ActivityTest extends RestTest
 
 		$this->assertPositiveResponse($this->post($record));
 
-		$actual = $this->table->getRow(array('summary'), new Condition(array('id', '=', 3)));
+		$actual = $this->table->getRow(array('summary'), new Condition(array('id', '=', 4)));
 		$expect = array_map('strval', $record->getData());
 
 		$this->assertEquals($expect, $actual);
@@ -102,6 +102,7 @@ class ActivityTest extends RestTest
 	public function testPut()
 	{
 		$record = $this->getTable()->getRecord();
+		$record->setId(1);
 		$record->setSummary('foobar');
 
 		$this->assertPositiveResponse($this->put($record));

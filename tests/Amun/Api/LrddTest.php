@@ -76,7 +76,7 @@ class LrddTest extends ApiTest
 	public function testGetAcct()
 	{
 		$url      = new Url($this->getEndpoint());
-		$url->addParam('uri', 'acct:foo@foo.com');
+		$url->addParam('uri', 'acct:test@localhost.com');
 		$request  = new GetRequest($url);
 		$response = $this->http->request($request);
 
@@ -86,8 +86,8 @@ class LrddTest extends ApiTest
 
 		// check subject
 		$host = parse_url($this->config['psx_url'], PHP_URL_HOST);
-		$this->assertEquals(true, isset($xml->Subject));
-		$this->assertEquals('foo@' . $host, (string) $xml->Subject);
+		$this->assertEquals(true, isset($xml->Subject), $response->getBody());
+		$this->assertEquals('test@' . $host, (string) $xml->Subject, $response->getBody());
 
 		// check profile link
 		$found = false;
@@ -96,7 +96,7 @@ class LrddTest extends ApiTest
 			if($link['rel'] == 'profile')
 			{
 				$this->assertEquals('text/html', $link['type']);
-				$this->assertEquals($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'profile/foo', $link['href']);
+				$this->assertEquals($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'profile/test', $link['href']);
 				$found = true;
 			}
 		}
