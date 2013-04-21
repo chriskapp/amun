@@ -10,8 +10,7 @@ define('PATH', $_SERVER['argv'][1]);
 define('DEBUG', isset($_SERVER['argv'][2]));
 
 
-require_once(PATH . '/library/PSX/Config.php');
-require_once(PATH . '/library/PSX/Bootstrap.php');
+require_once('amun/vendor/autoload.php');
 
 $config = new PSX\Config(PATH . '/configuration.php');
 $config['psx_path_cache']    = PATH . '/cache';

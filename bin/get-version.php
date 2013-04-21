@@ -1,7 +1,6 @@
 <?php
 
-require_once('amun/library/PSX/Config.php');
-require_once('amun/library/PSX/Bootstrap.php');
+require_once('amun/vendor/autoload.php');
 
 $config    = new PSX\Config('amun/configuration.php');
 $bootstrap = new PSX\Bootstrap($config);
