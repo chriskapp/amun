@@ -22,8 +22,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once('library/PSX/Config.php');
-require_once('library/PSX/Bootstrap.php');
+require_once('../vendor/autoload.php');
 
 // defines the user id under wich the tests gets executed
 define('USER_ID', 1);
