@@ -35,12 +35,9 @@
 
 	<!-- install dependencies -->
 	<target name="install-dependencies">
-		<copy todir="${build}/library">
-			<fileset dir="${library}">
-				<include name="PSX/**" />
-				<include name="Zend/**" />
-			</fileset>
-		</copy>
+		<exec dir="${build}" executable="composer.bat" failonerror="true">
+			<arg line="install" />
+		</exec>
 	</target>
 
 	<target name="get-version">
@@ -57,7 +54,16 @@
 	</target>
 
 	<target name="phpunit" depends="syntax-check">
+		<!-- start server -->
+		<exec dir="${build}" executable="php" spawn="true">
+			<arg line="-S 127.0.0.1:80 -t public" />
+		</exec>
+		<!-- run tests -->
 		<exec dir="${build}" executable="phpunit.bat" failonerror="true" />
+		<!-- clean temp files from test -->
+		<delete>
+			<fileset dir="${build}/cache" />
+		</delete>
 	</target>
 
 	<target name="generate-service-config">
