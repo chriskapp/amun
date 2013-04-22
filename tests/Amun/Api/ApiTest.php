@@ -207,7 +207,12 @@ SQL;
 
 		if(!isset($header['Authorization']) && !$this->user->isAnonymous())
 		{
-			$header['Authorization'] = $this->oauth->getAuthorizationHeader($url, $this->consumerKey, $this->consumerSecret, $this->token, $this->tokenSecret, 'HMAC-SHA1', $type);
+			// remove port
+			$authUrl = clone $url;
+			$authUrl->setPort(null);
+
+			// add oauth header
+			$header['Authorization'] = $this->oauth->getAuthorizationHeader($authUrl, $this->consumerKey, $this->consumerSecret, $this->token, $this->tokenSecret, 'HMAC-SHA1', $type);
 		}
 
 		switch($type)

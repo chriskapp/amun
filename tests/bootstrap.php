@@ -57,6 +57,11 @@ function getContainer()
 		$config['psx_path_module']   = 'module';
 		$config['psx_path_template'] = 'template';
 
+		// set port for tests
+		$url = new PSX\Url($config['psx_url']);
+		$url->setPort(8080);
+		$config['psx_url'] = (string) $url;
+
 		$container = new Amun\Dependency\Script($config, array(
 			'script.userId' => USER_ID,
 		));
