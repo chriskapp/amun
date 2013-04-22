@@ -1,6 +1,7 @@
 
 0.4.1 beta
 * Using composer as dependency manager
+* Improved tests
 
 0.4 beta
 * Added ExtJs based backend as default
