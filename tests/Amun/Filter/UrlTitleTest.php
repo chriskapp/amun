@@ -36,14 +36,6 @@ namespace Amun\Filter;
  */
 class UrlTitleTest extends \PHPUnit_Framework_TestCase
 {
-	protected function setUp()
-	{
-	}
-
-	protected function tearDown()
-	{
-	}
-
 	public function testApply()
 	{
 		$filter = new UrlTitle();
