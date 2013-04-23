@@ -27,7 +27,9 @@ namespace content\api\page;
 use Amun\Module\ApiAbstract;
 use Amun\Exception;
 use PSX\Data\Message;
+use PSX\Data\ResultSet;
 use PSX\Data\Record;
+use PSX\Data\RecordAbstract;
 
 /**
  * tree
@@ -59,6 +61,56 @@ class tree extends ApiAbstract
 				$this->setResponse(new Record('tree', array($this->buildTreeArray())));
 			}
 			catch(Exception $e)
+			{
+				$msg = new Message($e->getMessage(), false);
+
+				$this->setResponse($msg);
+			}
+		}
+		else
+		{
+			$msg = new Message('Access not allowed', false);
+
+			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
+		}
+	}
+
+	/**
+	 * Reorder pages
+	 *
+	 * @httpMethod PUT
+	 * @path /
+	 * @nickname reorderPage
+	 * @responseClass PSX_Data_Message
+	 */
+	public function reorderPage()
+	{
+		if($this->user->hasRight('content_page_edit'))
+		{
+			try
+			{
+				$handler  = $this->getHandler('Content_Page');
+				$result   = $this->getRequest();
+				$data     = (array) $result->getData();
+				$messages = array();
+
+				if(isset($data['entry']))
+				{
+					foreach($data['entry'] as $k => $entry)
+					{
+						$page = $handler->getRecord();
+						$page->setId($entry['id']);
+						$page->setSort($entry['sort']);
+
+						$handler->update($page);
+					}
+				}
+
+				$msg = new Message('You have successful reordered pages', true);
+
+				$this->setResponse($msg);
+			}
+			catch(\Exception $e)
 			{
 				$msg = new Message($e->getMessage(), false);
 

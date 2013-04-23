@@ -51,9 +51,66 @@ Ext.define('Amun.service.content.page.Grid', {
             border: false,
             width: 200,
             store: store,
+            viewConfig: {
+                plugins: {
+                    ptype: 'treeviewdragdrop',
+                    containerScroll: true,
+                },
+                listeners: {
+                    beforedrop: function(node, data, dropRec, dropPosition) {
+                        return data.records.length == 1 && dropPosition != 'append';
+                    }
+                }
+            },
             hideHeaders: true,
             useArrows: true,
             rootVisible: false
+        });
+
+        this.tree.on('itemmove', function(el, oldParent, newParent, index, eOpts){
+            var n = this.getStore().getNodeById(newParent.get('id'));
+            if (n) {
+                var data = [];
+                var i = 0;
+                n.eachChild(function(el){
+                    data.push({
+                        id: el.get('id'),
+                        sort: i
+                    });
+                    i++;
+                });
+                if (data.length > 0) {
+                    var params = {
+                        entry: data
+                    };
+                    // save sort
+                    var uri = Amun.xrds.Manager.findServiceUri('http://ns.amun-project.org/2011/amun/service/content/page');
+                    Ext.Ajax.request({
+                        url: uri + '/tree?format=json',
+                        method: 'POST',
+                        headers: {
+                            'X-HTTP-Method-Override': 'PUT',
+                            'Accept': 'application/json'
+                        },
+                        jsonData: params,
+                        scope: this,
+                        success: function(response, opts) {
+                            try {
+                                var result = Ext.JSON.decode(response.responseText);
+                                if (result.success == true) {
+                                    // successful
+                                    return;
+                                }
+                            } catch(e) {
+                            }
+                            this.getStore().load();
+                        },
+                        failure: function(response, opts) {
+                            this.getStore().load();
+                        }
+                    });
+                }
+            }
         });
 
         this.tree.on('celldblclick', function(el, td, index, rec){
