@@ -203,7 +203,7 @@ abstract class HandlerAbstract implements HandlerInterface
 	}
 
 	/**
-	 * Returns a new record if the $id is not defined ot an existing record
+	 * Returns a new record if the $id is not defined else an existing record
 	 *
 	 * @param integer $id
 	 * @return PSX_Data_RecordInterface
