@@ -40,8 +40,6 @@ use PSX\Sql;
  */
 abstract class HandlerTest extends \PHPUnit_Extensions_Database_TestCase
 {
-	protected static $con;
-
 	protected $config;
 	protected $sql;
 	protected $registry;
@@ -49,30 +47,7 @@ abstract class HandlerTest extends \PHPUnit_Extensions_Database_TestCase
 
 	public function getConnection()
 	{
-		$container = getContainer();
-		$config    = $container->getConfig();
-
-		if(self::$con === null)
-		{
-			try
-			{
-				self::$con = new Sql($config['psx_sql_host'],
-					$config['psx_sql_user'],
-					$config['psx_sql_pw'],
-					$config['psx_sql_db']);
-			}
-			catch(PDOException $e)
-			{
-				$this->markTestSkipped($e->getMessage());
-			}
-		}
-
-		if($this->sql === null)
-		{
-			$this->sql = self::$con;
-		}
-
-		return $this->createDefaultDBConnection($this->sql, $config['psx_sql_db']);
+		return $this->createDefaultDBConnection(getContainer()->getSql(), getContainer()->getConfig()->offsetGet('psx_sql_db'));
 	}
 
 	public function getDataSet()
@@ -85,6 +60,7 @@ abstract class HandlerTest extends \PHPUnit_Extensions_Database_TestCase
 		parent::setUp();
 
 		$this->config   = getContainer()->getConfig();
+		$this->sql      = getContainer()->getSql();
 		$this->registry = getContainer()->getRegistry();
 		$this->user     = getContainer()->getUser();
 	}
