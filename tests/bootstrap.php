@@ -42,6 +42,24 @@ function doBootstrap()
 	// set logger
 	PSX\Log::getLogger()->addHandler(new PSX\Log\Handler\File(PSX_PATH_CACHE . '/log.txt'));
 	PSX\Log::getLogger()->setLevel(PSX\Log::INFO);
+
+	// check whether http server is available
+	$config   = $container->getConfig();
+	$response = @file_get_contents($config['psx_url']);
+	$server   = false;
+
+	if(!empty($response) && strpos($response, 'http-equiv="X-XRDS-Location"') !== false)
+	{
+		echo 'Found webserver and amun instance at ' . $config['psx_url'] . "\n";
+		$server = true;
+	}
+	else
+	{
+		echo 'Webserver not running or amun instance not available at ' . $config['psx_url'] . "\n";
+		$server = false;
+	}
+
+	define('HTTP_SERVER', $server);
 }
 
 function getContainer()

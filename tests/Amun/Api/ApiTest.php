@@ -99,26 +99,7 @@ abstract class ApiTest extends \PHPUnit_Extensions_Database_TestCase
 	protected function setUp()
 	{
 		// check whether webserver is started
-		if(self::$serverRunning === null)
-		{
-			$config = getContainer()->getConfig();
-			$parts  = parse_url($config['psx_url']);
-			$host   = $parts['host'];
-			$port   = isset($parts['port']) ? ':' . $parts['port'] : '';
-
-			$response = @file_get_contents('http://' . $host . $port);
-
-			if(!empty($response))
-			{
-				self::$serverRunning = self::ONLINE;
-			}
-			else
-			{
-				self::$serverRunning = self::OFFLINE;
-			}
-		}
-
-		if(self::$serverRunning === self::OFFLINE)
+		if(!HTTP_SERVER)
 		{
 			$this->markTestSkipped('Webserver not available');
 		}
