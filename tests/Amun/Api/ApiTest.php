@@ -101,7 +101,12 @@ abstract class ApiTest extends \PHPUnit_Extensions_Database_TestCase
 		// check whether webserver is started
 		if(self::$serverRunning === null)
 		{
-			$response = @file_get_contents('http://127.0.0.1');
+			$config = getContainer()->getConfig();
+			$parts  = parse_url($config['psx_url']);
+			$host   = $parts['host'];
+			$port   = isset($parts['port']) ? ':' . $parts['port'] : '';
+
+			$response = @file_get_contents('http://' . $host . $port);
 
 			if(!empty($response))
 			{
