@@ -61,10 +61,6 @@
 	</target>
 
 	<target name="phpunit" depends="syntax-check">
-		<!-- start server -->
-		<exec dir="${build}" executable="php" spawn="true">
-			<arg line="-S 0.0.0.0:8000" />
-		</exec>
 		<!-- run tests -->
 		<exec dir="${build}" executable="phpunit.bat" failonerror="true" />
 		<!-- clean temp files from test -->

@@ -1,5 +1,6 @@
 
 0.4.1 beta
+* Backend added page drag n drop reorder
 * Using composer as dependency manager
 * Improved tests
 

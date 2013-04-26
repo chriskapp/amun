@@ -1,6 +1,12 @@
 
 [FEATURES]
 
+[ ] add api bulk operations by accepting resultset in an post. We could use
+    annotations to declare the object type in array problem is that we need to
+    pass an table into the contructor of an record
+[ ] implement content page sort api to reorder pages
+[ ] Implement reference input field in backend
+[ ] implement page option 
 [ ] the next step in the amun infrastructure is to build an packetmanager for
     services. That means we need a host service wich offers a list of services 
     and a client service wich can connect to an host service and install it from
@@ -28,10 +34,8 @@
 [ ] my service add possibility to delete (invalidate) an account
 [ ] my service add data export function where a user can export all records wich
     he made in an XML or maybe HTML format
-[ ] implement content page sort api to reorder pages
 [ ] oauth endpoint send invalid request method header on GET at request/access
     [ ] adding oauth scope
-[ ] Implement reference input field in backend
 [ ] support host meta to return json and xrd / jrd
 [ ] build general achievment system where a user based on the karma value (or
     probably other conditions) gets specific achievments on the profile

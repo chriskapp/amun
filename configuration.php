@@ -33,7 +33,7 @@ $config = array(
 	'amun_salt'               => '4ec656bfdee95a3596e31c3d36e49dda',
 
 	// psx
-	'psx_url'                 => 'http://localhost:8000/public',
+	'psx_url'                 => 'http://127.0.0.1/public',
 	'psx_dispatch'            => 'index.php/',
 	'psx_timezone'            => 'Europe/Berlin',
 	'psx_gzip'                => false,
