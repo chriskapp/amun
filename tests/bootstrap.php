@@ -56,6 +56,7 @@ function doBootstrap()
 	else
 	{
 		echo 'Webserver not running or amun instance not available at ' . $config['psx_url'] . "\n";
+		echo 'Received: ' . substr($response, 0, 1024) . '...' . "\n";
 		$server = false;
 	}
 

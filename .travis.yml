@@ -8,7 +8,8 @@ before_script:
   - pear channel-discover pear.phpunit.de
   - pear install phpunit/DbUnit
   - composer install
-  - php -S 0.0.0.0:8000 &
+  - phpenv rehash
+  - php -S 127.0.0.1:8000 &
   - sleep 4
 env:
   - DB=mysql
