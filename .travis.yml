@@ -8,9 +8,7 @@ before_script:
   - pear channel-discover pear.phpunit.de
   - pear install phpunit/DbUnit
   - composer install
-  - sudo sudo php -S 0.0.0.0:80 &
+  - sudo php -S 0.0.0.0:80 &
   - sleep 4
-after_script:
-  - df
 env:
   - DB=mysql
