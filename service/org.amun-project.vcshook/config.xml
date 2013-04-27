@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="b5754b37a89a38ea3b08cc65a1e29e96b015623d">
+  <status>system</status>
+  <name>vcshook</name>
+  <description>Gateway to receive commits from different version control system services like github, googleproject</description>
+  <path>/vcshook</path>
+  <namespace>vcshook</namespace>
+  <type>http://ns.amun-project.org/2011/amun/service/vcshook</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <source>
+    <provider>http://amun-project.org</provider>
+  </source>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/vcshook</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/vcshook/author</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/author</uri>
+    </service>
+  </api>
+  <activity>
+    <template type="INSERT" verb="add" table="vcshook_commit" path=""><![CDATA[
+<p><a href="{user.profileUrl}">{user.name}</a> has commited</p><blockquote>{record.message}</blockquote>
+]]></template>
+  </activity>
+  <permissions>
+    <perm name="view" description="Vcshook View"/>
+    <perm name="add" description="Vcshook Add"/>
+    <perm name="edit" description="Vcshook Edit"/>
+    <perm name="delete" description="Vcshook Delete"/>
+    <perm name="author_view" description="Vcshook Author View"/>
+    <perm name="author_add" description="Vcshook Author Add"/>
+    <perm name="author_edit" description="Vcshook Author Edit"/>
+    <perm name="author_delete" description="Vcshook Author Delete"/>
+  </permissions>
+  <registry>
+    <table name="vcshook"/>
+    <table name="vcshook_commit"/>
+    <table name="vcshook_author"/>
+  </registry>
+  <event>
+    <publisher name="vcshook.commit" description="Notifies if a commit was made"/>
+    <listener name="vcshook.commit" class="\AmunService\Vcshook\CommitListener"/>
+  </event>
+  <library>
+    <dir name="AmunService">
+      <dir name="Vcshook">
+        <dir name="Author">
+          <file name="Form.php" md5="a1ae4feaf94713fd9e5ad891a656d9d9"/>
+          <file name="Handler.php" md5="fffd33111a6b17b0467cd7bf591c46f8"/>
+          <file name="Record.php" md5="c0488b9586bea827cf2f51d04cc643c9"/>
+          <file name="Table.php" md5="54a29a715281cf3683c8994a5e7b3f91"/>
+        </dir>
+        <dir name="Commit">
+          <file name="Handler.php" md5="5458ca1d4e680f7d72c8a164090794c2"/>
+          <file name="Record.php" md5="d774f281a69dae10699d408f2084c716"/>
+          <file name="Table.php" md5="9f0da9c4ee453ee0e1ae6d5f074ee07d"/>
+        </dir>
+        <file name="CommitListener.php" md5="f433e3ec859f2ce80c73850c8afffde6"/>
+        <file name="Form.php" md5="b1ad558076a95af8890b95704ec6669f"/>
+        <file name="Handler.php" md5="4ad5ceba10de7a913984693a81e4203a"/>
+        <file name="Project.php" md5="3575f8747c0942ff1d348693ef509c85"/>
+        <file name="Record.php" md5="519f32ea46ba5f10fad411bfeff00045"/>
+        <file name="Revision.php" md5="2560513df0b8a553fc366ebb275fc1df"/>
+        <file name="Table.php" md5="bc9bbc88f0e67d62a3bfceddc752f64b"/>
+        <dir name="Type">
+          <file name="Github.php" md5="21256f8c905849ef7459e975c8ba9111"/>
+          <file name="Googleproject.php" md5="761fe349f974679c8724826693d4656c"/>
+        </dir>
+        <file name="TypeAbstract.php" md5="fad412e7b4d4f1470e18bf4980ab5885"/>
+      </dir>
+    </dir>
+  </library>
+  <database>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.vcshook}` (
+  `id` INT(10) NOT NULL AUTO_INCREMENT,
+  `globalId` VARCHAR(36) NOT NULL,
+  `userId` INT(10) NOT NULL,
+  `type` ENUM('github', 'googleproject') NOT NULL,
+  `url` VARCHAR(32) NOT NULL,
+  `secret` VARCHAR(40) NOT NULL,
+  `date` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `globalId` (`globalId`),
+  UNIQUE KEY `url` (`secret`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.vcshook_commit}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `globalId` VARCHAR(36),
+  `projectId` INT(10),
+  `authorId` INT(10),
+  `url` VARCHAR(256),
+  `message` VARCHAR(512),
+  `commitDate` DATETIME,
+  `date` DATETIME,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `globalId` (`globalId`),
+  UNIQUE KEY `url` (`url`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.vcshook_author}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `userId` INT(10),
+  `name` VARCHAR(32),
+  `date` DATETIME,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+  </database>
+</service>
