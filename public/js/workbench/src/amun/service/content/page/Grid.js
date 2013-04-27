@@ -54,10 +54,10 @@ Ext.define('Amun.service.content.page.Grid', {
             viewConfig: {
                 plugins: {
                     ptype: 'treeviewdragdrop',
-                    containerScroll: true,
+                    containerScroll: true
                 },
                 listeners: {
-                    beforedrop: function(node, data, dropRec, dropPosition) {
+                    beforedrop: function(node, data, overModel, dropPosition) {
                         return data.records.length == 1 && dropPosition != 'append';
                     }
                 }
