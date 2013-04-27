@@ -45,10 +45,13 @@ function doBootstrap()
 
 	// check whether http server is available
 	$config   = $container->getConfig();
-	$response = @file_get_contents($config['psx_url']);
+	$http     = new PSX\Http();
+	$request  = new PSX\Http\GetRequest($config['psx_url'] . '/');
+	$response = $http->request($request);
+	$body     = $response->getBody();
 	$server   = false;
 
-	if(!empty($response) && strpos($response, 'http-equiv="X-XRDS-Location"') !== false)
+	if($response->getCode() == 200 && !empty($body) && strpos($body, 'http-equiv="X-XRDS-Location"') !== false)
 	{
 		echo 'Found webserver and amun instance at ' . $config['psx_url'] . "\n";
 		$server = true;
@@ -56,7 +59,7 @@ function doBootstrap()
 	else
 	{
 		echo 'Webserver not running or amun instance not available at ' . $config['psx_url'] . "\n";
-		echo 'Received: ' . substr($response, 0, 1024) . '...' . "\n";
+		echo $body . "\n";
 		$server = false;
 	}
 
