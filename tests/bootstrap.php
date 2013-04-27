@@ -44,23 +44,29 @@ function doBootstrap()
 	PSX\Log::getLogger()->setLevel(PSX\Log::INFO);
 
 	// check whether http server is available
-	$config   = $container->getConfig();
-	$http     = new PSX\Http();
-	$request  = new PSX\Http\GetRequest($config['psx_url'] . '/');
-	$response = $http->request($request);
-	$body     = $response->getBody();
-	$server   = false;
+	$server = false;
+	try
+	{
+		$config   = $container->getConfig();
+		$http     = new PSX\Http();
+		$request  = new PSX\Http\GetRequest($config['psx_url'] . '/');
+		$response = $http->request($request);
+		$body     = $response->getBody();
 
-	if($response->getCode() == 200 && !empty($body) && strpos($body, 'http-equiv="X-XRDS-Location"') !== false)
-	{
-		echo 'Found webserver and amun instance at ' . $config['psx_url'] . "\n";
-		$server = true;
+		if($response->getCode() == 200 && !empty($body) && strpos($body, 'http-equiv="X-XRDS-Location"') !== false)
+		{
+			echo 'Found webserver and amun instance at ' . $config['psx_url'] . "\n";
+			$server = true;
+		}
+		else
+		{
+			echo 'Webserver not running or amun instance not available at ' . $config['psx_url'] . "\n";
+			echo $body . "\n";
+		}
 	}
-	else
+	catch(Exception $e)
 	{
-		echo 'Webserver not running or amun instance not available at ' . $config['psx_url'] . "\n";
-		echo $body . "\n";
-		$server = false;
+		echo 'Webserver not running: ' . $e->getMessage() . "\n";
 	}
 
 	define('HTTP_SERVER', $server);
