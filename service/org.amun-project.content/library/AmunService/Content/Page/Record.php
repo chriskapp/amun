@@ -269,10 +269,19 @@ class Record extends RecordAbstract
 
 	public function setGadgets($gadgets)
 	{
-		$gadgets = array_map('intval', explode(',', $gadgets));
-		$con     = new Condition(array('id', 'IN', $gadgets));
+		$ids = implode(',', array_map('intval', explode(',', $gadgets)));
+		$sql = <<<SQL
+SELECT
+	`id`
+FROM
+	{$this->_registry['table.content_gadget']}
+WHERE
+	`id` IN ({$ids})
+ORDER BY
+	FIND_IN_SET(`id`, '{$ids}') ASC
+SQL;
 
-		$this->gadgets = DataFactory::getTable('Content_Gadget')->getCol('id', $con);
+		$this->gadgets = $this->_sql->getCol($sql);
 	}
 
 	public function getId()

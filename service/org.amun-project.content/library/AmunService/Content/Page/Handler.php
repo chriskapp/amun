@@ -90,11 +90,12 @@ class Handler extends HandlerAbstract
 			{
 				$handler = new Gadget\Handler($this->user);
 
-				foreach($gadgets as $gadgetId)
+				foreach($gadgets as $k => $gadgetId)
 				{
 					$gadgetRecord = DataFactory::getTable('Content_Page_Gadget')->getRecord();
-					$gadgetRecord->pageId = $record->id;
+					$gadgetRecord->pageId   = $record->id;
 					$gadgetRecord->gadgetId = $gadgetId;
+					$gadgetRecord->sort     = $k;
 
 					$handler->create($gadgetRecord);
 				}
@@ -119,12 +120,12 @@ class Handler extends HandlerAbstract
 			$con = new Condition(array('id', '=', $record->id));
 
 
-			$sql = 'SELECT parentId, urlTitle FROM ' . $this->table->getName() . ' WHERE id = ' . $record->id;
+			// get parent id and url title because the values are probably not 
+			// set
+			$row = $this->table->getRow(array('parentId', 'urlTitle'), new Condition(array('id', '=', $record->id)));
 
-			$row = $this->sql->getRow($sql);
 
-
-			// if parent change rebuild path
+			// if parent has changed rebuild path
 			if(isset($record->parentId) && $row['parentId'] != $record->parentId)
 			{
 				$this->reparentPath($record);
@@ -160,11 +161,12 @@ class Handler extends HandlerAbstract
 			if(!empty($gadgets))
 			{
 				// create new gadgets
-				foreach($gadgets as $gadgetId)
+				foreach($gadgets as $k => $gadgetId)
 				{
 					$gadgetRecord = DataFactory::getTable('Content_Page_Gadget')->getRecord();
-					$gadgetRecord->pageId = $record->id;
+					$gadgetRecord->pageId   = $record->id;
 					$gadgetRecord->gadgetId = $gadgetId;
+					$gadgetRecord->sort     = $k;
 
 					$handler->create($gadgetRecord);
 				}
@@ -235,10 +237,10 @@ SELECT
 FROM 
 	{$this->registry['table.content_page']} `page`
 WHERE 
-	`page`.`id` = {$record->parentId}
+	`page`.`id` = ?
 SQL;
 
-			$path = $this->sql->getField($sql);
+			$path = $this->sql->getField($sql, array($record->parentId));
 
 			if(!empty($path))
 			{
@@ -263,15 +265,15 @@ SELECT
 FROM 
 	{$this->registry['table.content_page']} `page`
 WHERE 
-	`page`.`id` = {$record->id}
+	`page`.`id` = ?
 SQL;
 
-		$row = $this->sql->getRow($sql);
+		$row = $this->sql->getRow($sql, array($record->id));
 
 		if(!empty($row))
 		{
-			$path    = $row['path'];
-			$len     = strlen($path) + 1;
+			$path    = $row['path'] . '%';
+			$len     = strlen($path);
 			$part    = substr($path, 0, strrpos($path, '/'));
 			$newPath = (!empty($part) ? $part . '/' : '') . $record->urlTitle;
 
@@ -279,16 +281,16 @@ SQL;
 UPDATE 
 	{$this->registry['table.content_page']} 
 SET
-	`path` = CONCAT('{$newPath}', SUBSTRING(`path`, {$len}))
+	`path` = CONCAT(?, SUBSTRING(`path`, ?))
 WHERE 
-	`path` LIKE '{$path}%'
+	`path` LIKE ?
 SQL;
 
-			$this->sql->query($sql);
+			$this->sql->execute($sql, array($newPath, $len, $path));
 		}
 	}
 
-	public function reparentPath(RecordInterface $record)
+	private function reparentPath(RecordInterface $record)
 	{
 		$sql = <<<SQL
 SELECT
@@ -297,10 +299,10 @@ SELECT
 FROM 
 	{$this->registry['table.content_page']} `page`
 WHERE 
-	`page`.`id` = {$record->parentId}
+	`page`.`id` = ?
 SQL;
 
-		$parent = $this->sql->getRow($sql);
+		$parent = $this->sql->getRow($sql, array($record->parentId));
 
 		if(!empty($parent))
 		{
@@ -311,10 +313,10 @@ SELECT
 FROM 
 	{$this->registry['table.content_page']} `page`
 WHERE 
-	`page`.`id` = {$record->id}
+	`page`.`id` = ?
 SQL;
 
-			$row = $this->sql->getRow($sql);
+			$row = $this->sql->getRow($sql, array($record->id));
 
 			// check whether the new parent was parent of this node
 			if(substr($parent['path'], 0, strlen($row['path'])) == $row['path'])
@@ -324,20 +326,20 @@ SQL;
 
 			if(!empty($row))
 			{
-				$path    = $row['path'];
-				$len     = strlen($path) + 1;
+				$path    = $row['path'] . '%';
+				$len     = strlen($path);
 				$newPath = (!empty($parent['path']) ? $parent['path'] . '/' : '') . $row['urlTitle'];
 
 				$sql = <<<SQL
 UPDATE 
 	{$this->registry['table.content_page']} 
 SET
-	`path` = CONCAT('{$newPath}', SUBSTRING(`path`, {$len}))
+	`path` = CONCAT(?, SUBSTRING(`path`, ?))
 WHERE 
-	`path` LIKE '{$path}%'
+	`path` LIKE ?
 SQL;
 
-				$this->sql->query($sql);
+				$this->sql->execute($sql, array($newPath, $len, $path));
 			}
 		}
 	}
