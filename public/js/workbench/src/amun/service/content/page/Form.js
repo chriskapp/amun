@@ -42,7 +42,9 @@ Ext.define('Amun.service.content.page.Form', {
                     url: gadgetUri + '?count=1024&fields=id,name&format=json',
                     reader: {
                         type: 'json',
-                        root: 'entry'
+                        root: 'entry',
+                        idProperty: 'id',
+                        totalProperty: 'totalResults'
                     }
                 }
             });
@@ -85,6 +87,7 @@ Ext.define('Amun.service.content.page.Form', {
 
         var el = {
             layout: 'border',
+            border: false,
             items: [this.formPanel, this.gadgetPanel]
         };
         el.formMethod = form.method;
