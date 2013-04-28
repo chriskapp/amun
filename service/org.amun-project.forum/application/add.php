@@ -67,6 +67,8 @@ class add extends ApplicationAbstract
 
 <div id="form"></div>
 
+<div id="preview" class="amun-preview"></div>
+
 <p><span class="small">Please read the <a href="{$helpUrl}">help</a> howto properly format your content before submitting.</small></p>
 
 <script type="text/javascript">

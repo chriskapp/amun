@@ -82,111 +82,79 @@
 
 
 		this.getContainerId = function(){
-
 			return containerId;
-
 		}
 
 		this.getData = function(){
-
 			return data;
-
 		}
 
 		this.setData = function(newData){
-
 			data = newData;
-
 		}
 
 		this.getContentType = function(){
-
 			return contentType;
-
 		}
 
 		this.setContentType = function(newContentType){
-
 			contentType = newContentType
-
 		}
 
 		this.setProcessData = function(newProcessData){
-
 			processData = newProcessData
-
 		}
 
 		this.onSuccess = function(callback){
-
 			successCallback = callback;
-
 		}
 
 		this.onError = function(callback){
-
 			errorCallback = callback;
-
 		}
 
 		this.beforeSubmit = function(callback){
-
 			beforeSubmitCallback = callback;
-
 		}
 
 		this.afterSubmit = function(callback){
-
 			afterSubmitCallback = callback;
-
 		}
 
 		this.request = function(url, requestMethod, data){
-
 			// set data
 			this.setData(data);
 
 			// call before submit
-			if(beforeSubmitCallback)
-			{
+			if (beforeSubmitCallback) {
 				beforeSubmitCallback.call(self);
 			}
 
 			// get the request method
-			switch(requestMethod)
-			{
+			switch (requestMethod) {
 				case 'GET':
-
 					method = 'GET';
 					overrideMethod = 'GET';
-
 					break;
 
 				case 'POST':
-
 					method = 'POST';
 					overrideMethod = 'POST';
-
 					break;
 
 				case 'PUT':
-
 					method = 'POST';
 					overrideMethod = 'PUT';
-
 					break;
 
 				case 'DELETE':
-
 					method = 'POST';
 					overrideMethod = 'DELETE';
-
 					break;
 			}
 
 			// construct the ajax request
 			$.ajax({
-
 				type: method,
 				url: url,
 				contentType: contentType,
@@ -194,77 +162,55 @@
 				processData: processData,
 				dataType: 'json',
 				beforeSend: function(xhr){
-
 					xhr.setRequestHeader('X-Http-Method-Override', overrideMethod);
 					xhr.setRequestHeader('Accept', 'application/json');
-
 				},
 				error: function(xhr, status, e){
-
 					var message = JSON.parse(xhr.responseText);
 					var text;
 
-					if(typeof(message.text) != 'undefined')
-					{
+					if (typeof(message.text) != 'undefined') {
 						text = message.text;
-					}
-					else if(status != null)
-					{
+					} else if(status != null) {
 						text = status;
-					}
-					else
-					{
+					} else {
 						text = 'An unknown error occured';
 					}
 
-					if(errorCallback)
-					{
+					if (errorCallback) {
 						errorCallback.call(self, text);
 					}
 
-					if(afterSubmitCallback)
-					{
+					if (afterSubmitCallback) {
 						afterSubmitCallback.call(self);
 					}
-
 				},
 				success: function(data, status, xhr){
-
-					if(data.success)
-					{
-						if(successCallback)
-						{
+					if (data.success) {
+						if (successCallback) {
 							successCallback.call(self, data.text);
 						}
-					}
-					else
-					{
-						if(errorCallback)
-						{
+					} else {
+						if (errorCallback) {
 							errorCallback.call(self, data.text);
 						}
 					}
 
-					if(afterSubmitCallback)
-					{
+					if (afterSubmitCallback) {
 						afterSubmitCallback.call(self);
 					}
-
 				}
-
 			});
 
 		}
 
 		// if cId is set assign the submit handler
-		if(cId)
-		{
+		if (cId) {
 			// remove before added listener
 			$('#' + cId).unbind('submit');
 
 			// add submit listener
 			$('#' + cId).submit(function(){
-
 				// get request method
 				var method = $(this).attr('method').toUpperCase();
 
@@ -278,16 +224,13 @@
 				var arr = $(this).serializeArray();
 				var fields = {};
 
-				for(var i = 0; i < arr.length; i++)
-				{
+				for (var i = 0; i < arr.length; i++) {
 					fields[arr[i].name] = arr[i].value;
 				}
 
 				// if we have an ace editor
-				if(typeof amun.store.editors != 'undefined')
-				{
-					for(var k in amun.store.editors)
-					{
+				if (typeof amun.store.editors != 'undefined') {
+					for (var k in amun.store.editors) {
 						var editor = amun.store.editors[k];
 						var v = editor.getSession().getValue();
 
@@ -298,49 +241,40 @@
 				// handle data according to the enctype
 				var data;
 
-				switch(enctype)
-				{
+				switch (enctype) {
 					case 'multipart/form-data':
-
 						// data
 						data = new FormData();
 
-						for(var key in fields)
-						{
+						for (var key in fields) {
 							data.append(key, fields[key]);
 						}
 
 						// add file uploads
-						for(var key in amun.store.files)
-						{
+						for (var key in amun.store.files) {
 							data.append(key, amun.store.files[key]);
 						}
 
 						// settings
 						self.setContentType(false);
 						self.setProcessData(false);
-
 						break;
 
 					case 'application/json':
-
 						// data
 						data = JSON.stringify(fields);
 
 						// settings
 						self.setContentType('application/json');
-
 						break;
 
 					default:
 					case 'application/x-www-form-urlencoded':
-
 						// data
 						data = fields;
 
 						// settings
 						self.setContentType('application/x-www-form-urlencoded');
-
 						break;
 				}
 
@@ -370,7 +304,9 @@
 
 		var self = this;
 		var containerId;
+		var formUrl;
 		var lastFile;
+		var buttons = [];
 
 		var action;
 		var method;
@@ -379,50 +315,44 @@
 		var loadCallback;
 		var errorCallback;
 
-
 		this.getContainerId = function(){
-
 			return containerId;
-
 		}
 
 		this.onLoad = function(callback){
-
 			loadCallback = callback;
-
 		}
 
 		this.onError = function(callback){
-
 			errorCallback = callback;
-
 		}
 
 		this.transform = function(form){
-
 			$('#' + this.getContainerId()).html(self.parseElements(form));
 
 			// add file change listener if enctype multipart/form-data
-			if(form.enctype == 'multipart/form-data')
-			{
+			if (form.enctype == 'multipart/form-data') {
 				$('#' + this.getContainerId()).find('input[type="file"]').each(function(){
-
 					$(this).change(self.handleFileUpload);
-
 				});
 			}
 
-			if(loadCallback)
-			{
+			if (loadCallback) {
 				loadCallback.call(self, form.ref);
 			}
 
 		}
 
+		this.addButton = function(name, callback){
+			buttons.push({
+				name: name,
+				callback: callback
+			});
+		};
+
 		this.parseElements = function(item){
 
-			if(typeof(item['success']) != 'undefined' && item['success'] == false)
-			{
+			if (typeof(item['success']) != 'undefined' && item['success'] == false) {
 				var p = document.createElement('p');
 				p.setAttribute('class', 'alert alert-notice');
 				p.appendChild(document.createTextNode(item.text));
@@ -430,43 +360,54 @@
 				return p;
 			}
 
-			switch(item['class'])
-			{
+			switch (item['class']) {
 				case 'form':
-
 					var form = document.createElement('form');
 					form.setAttribute('id', item.ref);
 					form.setAttribute('method', item.method);
 					form.setAttribute('action', item.action);
 					form.setAttribute('enctype', item.enctype);
 
-					for(var i = 0; i < item.item.children.item.length; i++)
-					{
+					for (var i = 0; i < item.item.children.item.length; i++) {
 						form.appendChild(this.parseElements(item.item.children.item[i]));
 					}
 
-					var p = document.createElement('p');
+					var p = document.createElement('div');
+					p.setAttribute('class', 'form-actions');
+
 					var input = document.createElement('input');
 					input.setAttribute('class', 'btn btn-primary');
 					input.setAttribute('type', 'submit');
 					input.setAttribute('value', 'Submit');
 
 					p.appendChild(input);
+
+					// add buttons
+					if (buttons.length > 0) {
+						for (var i = 0; i < buttons.length; i++) {
+							var input = document.createElement('input');
+							input.setAttribute('class', 'btn');
+							input.setAttribute('type', 'button');
+							input.setAttribute('value', buttons[i].name);
+							input.addEventListener('click', buttons[i].callback, false);
+
+							p.appendChild(input);
+						}
+					}
+
 					form.appendChild(p);
 
 					return form;
 					break;
 
 				case 'panel':
-
 					var fieldset = document.createElement('fieldset');
 					var legend = document.createElement('legend');
 					legend.appendChild(document.createTextNode(item.label));
 
 					fieldset.appendChild(legend);
 
-					for(var i = 0; i < item.children.item.length; i++)
-					{
+					for (var i = 0; i < item.children.item.length; i++) {
 						fieldset.appendChild(this.parseElements(item.children.item[i]));
 					}
 
@@ -474,7 +415,6 @@
 					break;
 
 				case 'captcha':
-
 					var p = document.createElement('p');
 
 					var label = document.createElement('label');
@@ -483,6 +423,7 @@
 
 					var img = document.createElement('img');
 					img.setAttribute('src', item.src);
+					img.setAttribute('style', 'margin-bottom:4px');
 					img.setAttribute('alt', 'Captcha');
 
 					var input = document.createElement('input');
@@ -491,10 +432,14 @@
 					input.setAttribute('id', item.ref);
 					input.setAttribute('value', item.value || '');
 
-					if(item.disabled)
-					{
+					if (item.disabled) {
 						input.setAttribute('disabled', 'disabled');
 					}
+
+					p.appendChild(label);
+					p.appendChild(img);
+					p.appendChild(document.createElement('br'));
+					p.appendChild(input);
 
 					return p;
 					break;
@@ -504,7 +449,6 @@
 					break;
 
 				case 'reference':
-
 					var p = document.createElement('p');
 
 					var label = document.createElement('label');
@@ -517,36 +461,33 @@
 					input.setAttribute('id', item.ref);
 					input.setAttribute('value', item.value || '');
 
-					if(item.disabled)
-					{
+					if (item.disabled) {
 						input.setAttribute('disabled', 'disabled');
 					}
+
+					p.appendChild(label);
+					p.appendChild(input);
 
 					return p;
 					break;
 
 				case 'input':
-
 					var input = document.createElement('input');
 					input.setAttribute('type', item.type);
 					input.setAttribute('name', item.ref);
 					input.setAttribute('id', item.ref);
 					input.setAttribute('value', item.value || '');
 
-					if(item.disabled)
-					{
+					if (item.disabled) {
 						input.setAttribute('disabled', 'disabled');
 					}
 
-					switch(item.type)
-					{
+					switch (item.type) {
 						case 'hidden':
-
 							return input;
 							break;
 
 						default:
-
 							var p = document.createElement('p');
 
 							var label = document.createElement('label');
@@ -559,11 +500,9 @@
 							return p;
 							break;
 					}
-
 					break;
 
 				case 'select':
-
 					var p = document.createElement('p');
 
 					var label = document.createElement('label');
@@ -574,21 +513,17 @@
 					select.setAttribute('name', item.ref);
 					select.setAttribute('id', item.ref);
 
-					if(item.disabled)
-					{
+					if (item.disabled) {
 						select.setAttribute('disabled', 'disabled');
 					}
 
-					if(typeof item.children.item != 'undefined')
-					{
-						for(var j = 0; j < item.children.item.length; j++)
-						{
+					if (typeof item.children.item != 'undefined') {
+						for (var j = 0; j < item.children.item.length; j++) {
 							var opt = item.children.item[j];
 							var option = document.createElement('option');
 							option.setAttribute('value', opt.value);
 
-							if(item.value == opt.value)
-							{
+							if (item.value == opt.value) {
 								option.setAttribute('selected', 'selected');
 							}
 
@@ -604,7 +539,6 @@
 					break;
 
 				case 'textarea':
-
 					var p = document.createElement('p');
 
 					var label = document.createElement('label');
@@ -615,8 +549,7 @@
 					textarea.setAttribute('name', item.ref);
 					textarea.setAttribute('id', item.ref);
 
-					if(item.disabled)
-					{
+					if (item.disabled) {
 						textarea.setAttribute('disabled', 'disabled');
 					}
 
@@ -628,62 +561,45 @@
 					return p;
 					break;
 			}
-
 		}
 
 		this.handleFileUpload = function(event){
-
 			var files = event.target.files;
-
-			for(var i = 0; i < files.length; i++)
-			{
+			for (var i = 0; i < files.length; i++) {
 				var name = $(this).attr('name');
 				var file = files[i];
 
 				amun.store.files[name] = file;
 			}
-
 		}
 
-
-		containerId = cId;
-
-		$.ajax({
-
-			type: 'GET',
-			url: url,
-			dataType: 'json',
-			beforeSend: function(xhr){
-
-				xhr.setRequestHeader('Accept', 'application/json');
-
-			},
-			error: function(xhr, status, e){
-
-				if(errorCallback)
-				{
-					errorCallback.call(self, e);
-				}
-
-			},
-			success: function(data, status, xhr){
-
-				if(typeof data.success != 'undefined' && !data.success)
-				{
-					if(errorCallback)
-					{
-						errorCallback.call(self, data.text);
+		this.load = function(){
+			$.ajax({
+				type: 'GET',
+				url: formUrl,
+				dataType: 'json',
+				beforeSend: function(xhr){
+					xhr.setRequestHeader('Accept', 'application/json');
+				},
+				error: function(xhr, status, e){
+					if (errorCallback) {
+						errorCallback.call(self, e);
+					}
+				},
+				success: function(data, status, xhr){
+					if (typeof data.success != 'undefined' && !data.success) {
+						if (errorCallback) {
+							errorCallback.call(self, data.text);
+						}
+					} else {
+						self.transform(data);
 					}
 				}
-				else
-				{
-					self.transform(data);
-				}
+			});
+		}
 
-			}
-
-		});
-
+		containerId = cId;
+		formUrl = url;
 	}
 
 	/**

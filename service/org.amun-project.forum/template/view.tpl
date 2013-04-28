@@ -59,6 +59,7 @@
 		<?php if($user->hasRight('forum_comment_add')): ?>
 			<div id="response"></div>
 			<div id="form"></div>
+			<div id="preview" class="amun-preview"></div>
 
 			<script type="text/javascript">
 			amun.services.forum.loadCommentForm("form", <?php echo '"' . $formUrl . '"'; ?>);

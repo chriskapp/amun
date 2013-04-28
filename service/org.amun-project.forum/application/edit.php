@@ -71,6 +71,8 @@ class edit extends ApplicationAbstract
 
 <div id="form"></div>
 
+<div id="preview" class="amun-preview"></div>
+
 <script type="text/javascript">
 amun.services.forum.loadForm("form", "{$url}");
 </script>

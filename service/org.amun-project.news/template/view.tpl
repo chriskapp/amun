@@ -57,6 +57,7 @@
 	<?php if($user->hasRight('news_comment_add')): ?>
 		<div id="response"></div>
 		<div id="form"></div>
+		<div id="preview" class="amun-preview"></div>
 
 		<script type="text/javascript">
 		amun.services.news.loadCommentForm("form", <?php echo '"' . $formUrl . '"'; ?>);

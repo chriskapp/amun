@@ -65,6 +65,8 @@ class add extends ApplicationAbstract
 
 <div id="form"></div>
 
+<div id="preview" class="amun-preview"></div>
+
 <script type="text/javascript">
 amun.services.news.loadForm("form", "{$url}");
 </script>
