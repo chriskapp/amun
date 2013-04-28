@@ -73,6 +73,12 @@ Ext.define('Workbench.controller.Navigation', {
         },{
             title: 'Explorer',
             type: 'http://ns.amun-project.org/2011/amun/service/explorer'
+        },{
+            title: 'VCS Hooks',
+            type: 'http://ns.amun-project.org/2011/amun/service/vcshook'
+        },{
+            title: '┗ Authors',
+            type: 'http://ns.amun-project.org/2011/amun/service/vcshook/author'
         }]);
 
         // services
