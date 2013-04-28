@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="d9394a24c510e9bac1dd17a5c60df913c08e03f6">
+  <status>system</status>
+  <name>marketplace</name>
+  <description>Server to provide services for other amun user. The core service can be used to download services from an marketplace</description>
+  <path>/marketplace</path>
+  <namespace>marketplace</namespace>
+  <type>http://ns.amun-project.org/2011/amun/service/marketplace</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <provider>http://amun-project.org</provider>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/marketplace</type>
+      <uri>/</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/marketplace/get</type>
+      <uri>/get</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Marketplace view"/>
+    <perm name="add" description="Marketplace add"/>
+    <perm name="edit" description="Marketplace edit"/>
+    <perm name="delete" description="Marketplace delete"/>
+  </permissions>
+  <registry>
+    <table name="marketplace"/>
+  </registry>
+  <event>
+    <listener name="vcshook.commit" class="\AmunService\Marketplace\CommitListener"/>
+  </event>
+  <library>
+    <dir name="AmunService">
+      <dir name="Marketplace">
+        <file name="Handler.php" md5="64c61009d8d442957d420d2fcd08d3c7"/>
+        <file name="Record.php" md5="b2f59b26a6503b2cdcb16745737dc7c5"/>
+        <file name="Table.php" md5="5d3cb8f06d4433549026b1c7261b1721"/>
+      </dir>
+    </dir>
+  </library>
+  <database>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.marketplace}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `globalId` varchar(36) NOT NULL,
+  `status` int(10) NOT NULL,
+  `source` varchar(128) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `description` text NOT NULL,
+  `link` varchar(256) NOT NULL,
+  `author` varchar(256) NOT NULL,
+  `license` varchar(256) NOT NULL,
+  `version` varchar(16) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `source` (`source`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;]]></query>
+  </database>
+</service>
