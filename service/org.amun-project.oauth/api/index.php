@@ -63,7 +63,7 @@ class index extends RestAbstract
 
 				$writer = $writer->getWriter();
 				$writer->setConfig($title, $id, $updated);
-				$writer->setGenerator('amun ' . Amun_Base::getVersion());
+				$writer->setGenerator('amun ' . Base::getVersion());
 
 				if(!empty($this->config['amun_hub']))
 				{
