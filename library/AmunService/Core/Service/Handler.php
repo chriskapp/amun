@@ -33,6 +33,7 @@ use AmunService\Core\Approval;
 use AmunService\Core\Service;
 use PSX\DateTime;
 use PSX\Data\RecordInterface;
+use PSX\Url;
 use PSX\Sql;
 use PSX\Sql\Condition;
 use PSX\Sql\Join;
@@ -135,6 +136,10 @@ class Handler extends HandlerAbstract
 			{
 				throw new Exception('Missing fields in config');
 			}
+
+
+			// get provider id
+			$record->providerId = $this->getProviderId();
 
 
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
@@ -298,6 +303,55 @@ class Handler extends HandlerAbstract
 				}
 			}
 		}
+	}
+
+	private function getProviderId()
+	{
+		$rootElement = $this->serviceConfig->documentElement;
+		$providerId  = 0;
+
+		for($i = 0; $i < $rootElement->childNodes->length; $i++)
+		{
+			$node = $rootElement->childNodes->item($i);
+
+			if($node instanceof DOMElement && $node->nodeName == 'provider')
+			{
+				$src = $node->nodeValue;
+
+				Log::info('Found provider ' . $src);
+
+				try
+				{
+					$url = new Url($src);
+					$con = new Condition(array('url', '=', $src));
+					$id  = DataFactory::getTable('Core_Service_Provider')->getField('id', $con);
+
+					if(empty($id))
+					{
+						DataFactory::getTable('Core_Service_Provider')->insert(array(
+							'url'  => $src,
+							'date' => date(DateTime::SQL),
+						));
+
+						$providerId = $this->sql->getLastInsertId();
+
+						Log::info('Added new provider ' . $src . ' (' . $providerId . ')');
+					}
+					else
+					{
+						$providerId = $id;
+					}
+
+					break;
+				}
+				catch(\Exception $e)
+				{
+					Log::error($e->getMessage());
+				}
+			}
+		}
+
+		return $providerId;
 	}
 
 	private function parsePharFiles(Service\Record $record)
