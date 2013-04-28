@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="169829b218de1c451e504c75ff614ad65f8cd3ef">
+<service xmlns="http://amun-project.org" signature="7dc9343ed8347ee80130a00688199e5b21ff13ff">
   <status>system</status>
   <name>content</name>
   <description>Basic service wich handles pages and gadgets</description>
@@ -10,6 +10,7 @@
   <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
   <license>GPLv3</license>
   <version>0.0.1</version>
+  <provider>http://amun-project.org</provider>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/content/gadget</type>
@@ -45,6 +46,7 @@
     <perm name="page_add" description="Content Page add"/>
     <perm name="page_edit" description="Content Page edit"/>
     <perm name="page_delete" description="Content Page delete"/>
+    <perm name="page_preview" description="Content Page preview"/>
     <perm name="page_gadget_view" description="Content Page Gadget view"/>
     <perm name="page_gadget_add" description="Content Page Gadget add"/>
     <perm name="page_gadget_edit" description="Content Page Gadget edit"/>
@@ -92,14 +94,14 @@
             <file name="Record.php" md5="545af303f2d73b88115f05c67bc1c894"/>
             <file name="Table.php" md5="d8f9499b17e52117882aef2ea319e449"/>
           </dir>
-          <file name="Handler.php" md5="7df632fc1bc181e65eaa376709684a02"/>
+          <file name="Handler.php" md5="73c8113bf5f20f300e0bd32a29aec419"/>
           <dir name="Option">
             <file name="Form.php" md5="dc6ba3b9d9cea2041dc42c52b6e51a67"/>
             <file name="Handler.php" md5="0348ce8e85b63f75048ffe63b00b6ab8"/>
             <file name="Record.php" md5="3f5a2b3119b201978c4e475f989e8999"/>
             <file name="Table.php" md5="721d4609e38984ba512525f6756e7c5c"/>
           </dir>
-          <file name="Record.php" md5="a00f021b21ca2ff06d0fd8e92dd04b01"/>
+          <file name="Record.php" md5="c99c1c9b160616e1f54fcc6f7463c0d4"/>
           <file name="Table.php" md5="850f1f0a194bfac536001ccc76ff6ed4"/>
         </dir>
       </dir>

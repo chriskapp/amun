@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="26482cc010a85430f209ff1dca3b5c05af94e68d">
+<service xmlns="http://amun-project.org" signature="aca4142c30f956d6d77995ccccb848d6cd0a710a">
   <status>system</status>
   <name>user</name>
   <description>Basic service wich handles user groups and rights</description>
@@ -10,6 +10,7 @@
   <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
   <license>GPLv3</license>
   <version>0.0.1</version>
+  <provider>http://amun-project.org</provider>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/user/account</type>
@@ -113,7 +114,7 @@
   <library>
     <dir name="AmunService">
       <dir name="User">
-        <file name="LrddListener.php" md5="d0bf5404f86f3fa58a8fac25feadca3d"/>
+        <file name="LrddListener.php" md5="7a616e156406ff02e04ca64e93572fd9"/>
         <dir name="Account">
           <dir name="Filter">
             <file name="Email.php" md5="f1853e34bdf6fbd7c48b61ad8f7d09ac"/>
@@ -145,7 +146,7 @@
             <file name="Record.php" md5="e726cde473e1839c3b3dd9136a61b750"/>
             <file name="Table.php" md5="5ddc70df95dc380c5282aa1e9b4eecc4"/>
           </dir>
-          <file name="Record.php" md5="ea00cab092a85ac376ec4822da7c6d3d"/>
+          <file name="Record.php" md5="2515246b6536cda7bdac9bcdee277aea"/>
           <file name="RecordListener.php" md5="b44a642f6d11ea87e3ed8741f966c2e7"/>
           <file name="Stream.php" md5="43c400711ac4c30a765e682a44075043"/>
           <file name="Table.php" md5="a5b7221be578e4ea1b2a4e17a2f0fa4c"/>

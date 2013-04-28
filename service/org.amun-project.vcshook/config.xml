@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="b5754b37a89a38ea3b08cc65a1e29e96b015623d">
+<service xmlns="http://amun-project.org" signature="5652b8a1aebdc24236b5efeeef5b3941df943f9e">
   <status>system</status>
   <name>vcshook</name>
   <description>Gateway to receive commits from different version control system services like github, googleproject</description>
@@ -10,9 +10,7 @@
   <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
   <license>GPLv3</license>
   <version>0.0.1</version>
-  <source>
-    <provider>http://amun-project.org</provider>
-  </source>
+  <provider>http://amun-project.org</provider>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/vcshook</type>

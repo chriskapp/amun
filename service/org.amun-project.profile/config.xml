@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="1748460ab7454c9a0c642c8755ef75cae8907654">
+<service xmlns="http://amun-project.org" signature="8fa1080d905eca41e0ef685361e37002186a0ecb">
   <status>normal</status>
   <name>profile</name>
   <description>Displays the activities of an user and the option to add the user as friend</description>
@@ -10,6 +10,7 @@
   <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
   <license>GPLv3</license>
   <version>0.0.1</version>
+  <provider>http://amun-project.org</provider>
   <permissions>
     <perm name="view" description="Profile View"/>
   </permissions>

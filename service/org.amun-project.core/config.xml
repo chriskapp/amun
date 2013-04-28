@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="e30d8e4a9d9ccfb025e4580efb0b0a509e6ab1f5">
+<service xmlns="http://amun-project.org" signature="b415fadd502743feac2322c58b3f4fc43b988213">
   <status>system</status>
   <name>core</name>
   <description>Contains the core functionalities of amun</description>
@@ -10,6 +10,7 @@
   <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
   <license>GPLv3</license>
   <version>0.0.1</version>
+  <provider>http://amun-project.org</provider>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/core/service</type>
@@ -50,6 +51,10 @@
     <perm name="service_add" description="Core Service add"/>
     <perm name="service_edit" description="Core Service edit"/>
     <perm name="service_delete" description="Core Service delete"/>
+    <perm name="service_provider_view" description="Core Service Provider view"/>
+    <perm name="service_provider_add" description="Core Service Provider add"/>
+    <perm name="service_provider_edit" description="Core Service Provider edit"/>
+    <perm name="service_provider_delete" description="Core Service Provider delete"/>
     <perm name="approval_view" description="Core Approval view"/>
     <perm name="approval_add" description="Core Approval add"/>
     <perm name="approval_edit" description="Core Approval edit"/>
@@ -70,6 +75,7 @@
   <registry>
     <table name="core_service"/>
     <table name="core_service_option"/>
+    <table name="core_service_provider"/>
     <table name="core_approval"/>
     <table name="core_approval_record"/>
     <table name="core_assoc"/>
@@ -148,7 +154,7 @@
             <file name="Status.php" md5="89820bd0909a905f07fd755df7faac65"/>
           </dir>
           <file name="Form.php" md5="06d9521cf3faceb67a73e4f9ff29bfc2"/>
-          <file name="Handler.php" md5="37a3a46c4aa379f726babb21e4ee4d0a"/>
+          <file name="Handler.php" md5="438fcc92f0c7f00eb1169b066f2e1940"/>
           <dir name="Option">
             <file name="ConfigListener.php" md5="6f4712d4f0c39a30ec3dc5c524eb34f8"/>
             <file name="Record.php" md5="eeb08d7b2d2c088c81212152a4635b7b"/>
@@ -183,6 +189,12 @@
   `name` varchar(64) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=ascii;]]></query>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_service_provider}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `url` varchar(256) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;]]></query>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_approval}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `table` varchar(64) NOT NULL,
