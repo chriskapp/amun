@@ -72,7 +72,17 @@ class ReCaptcha implements ProviderInterface
 
 			$response = $http->request($request);
 
-			return strcmp(trim($response->getBody()), 'true') == 0;
+			if(strcmp(trim($response->getBody()), 'true') == 0)
+			{
+				unset($_SESSION['amun_recaptcha_challenge']);
+				unset($_SESSION['captcha_verified']);
+
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 		else
 		{

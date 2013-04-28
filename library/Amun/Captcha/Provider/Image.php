@@ -58,7 +58,17 @@ class Image implements ProviderInterface
 
 		if(!empty($captchaResult) && !empty($result))
 		{
-			return strcmp($captchaResult, $result) == 0;
+			if(strcmp($captchaResult, $result) == 0)
+			{
+				unset($_SESSION['amun_captcha_result']);
+				unset($_SESSION['captcha_verified']);
+
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 		else
 		{
