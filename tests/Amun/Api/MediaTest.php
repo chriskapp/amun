@@ -57,9 +57,9 @@ class MediaTest extends RestTest
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/media';
 	}
 
-	public function getTable()
+	public function getHandler()
 	{
-		return DataFactory::getTable('Media');
+		return DataFactory::get('Media');
 	}
 
 	public function testGet()

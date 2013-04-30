@@ -1,5 +1,6 @@
 
 0.4.1 beta
+* Added vcshook service to consume commit webhooks from github, googleproject
 * Backend added page drag n drop reorder
 * Using composer as dependency manager
 * Improved tests

@@ -93,6 +93,16 @@ class Handler extends HandlerAbstract
 			}
 		}
 
+		if($mode == Sql::FETCH_OBJECT && $class === null)
+		{
+			$class = $this->getClassName();
+		}
+
+		if($mode == Sql::FETCH_OBJECT && empty($args))
+		{
+			$args = $this->getClassArgs();
+		}
+
 		$totalResults = $select->getTotalResults();
 		$entries      = $select->getAll($mode, $class, $args);
 		$resultSet    = new ResultSet($totalResults, $startIndex, $count, $entries);
@@ -135,6 +145,16 @@ class Handler extends HandlerAbstract
 			{
 				$select->where($row[0], $row[1], $row[2]);
 			}
+		}
+
+		if($mode == Sql::FETCH_OBJECT && $class === null)
+		{
+			$class = $this->getClassName();
+		}
+
+		if($mode == Sql::FETCH_OBJECT && empty($args))
+		{
+			$args = $this->getClassArgs();
 		}
 
 		$totalResults = $select->getTotalResults();
@@ -414,9 +434,9 @@ SQL;
 
 			if(empty($friendId))
 			{
-				$handler = new Account\Handler($this->user);
+				$handler = DataFactory::get('User_Account', $this->user);
 
-				$account = DataFactory::getTable('User_Account')->getRecord();
+				$account = $handler->getRecord();
 				$account->globalId = $profile['id'];
 				$account->setGroupId($this->registry['core.default_user_group']);
 				$account->setHostId($row['hostId']);

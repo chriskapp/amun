@@ -86,7 +86,7 @@ class activity extends RestAbstract
 					$this->getRequestCondition(),
 					Sql::FETCH_OBJECT, 
 					'\AmunService\My\Activity', 
-					array(DataFactory::getTable('User_Activity')));
+					array(DataFactory::getTable('User_Activity'), $this->getContainer()));
 
 				$this->setResponse($resultSet);
 			}

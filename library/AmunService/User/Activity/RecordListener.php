@@ -74,13 +74,14 @@ class RecordListener extends ListenerAbstract
 		if($type == RecordAbstract::INSERT)
 		{
 			// insert activity
-			$activity          = DataFactory::getTable('User_Activity')->getRecord();
+			$handler = DataFactory::get('User_Activity', new User($record->id, $this->registry));
+
+			$activity          = $handler->getRecord();
 			$activity->refId   = $record->id;
 			$activity->table   = $table->getName();
 			$activity->verb    = 'join';
 			$activity->summary = $record->name . ' has created an account';
 
-			$handler = new Handler(new User($record->id, $this->registry));
 			$handler->create($activity);
 		}
 	}
@@ -97,24 +98,26 @@ class RecordListener extends ListenerAbstract
 			else if($record->status == Friend\Record::NORMAL)
 			{
 				// insert activity for user who has accepted the friend request
-				$activity          = DataFactory::getTable('User_Activity')->getRecord();
+				$handler = DataFactory::get('User_Activity', $this->user);
+
+				$activity = $handler->getRecord();
 				$activity->refId   = $record->id;
 				$activity->table   = $table->getName();
 				$activity->verb    = 'make-friend';
 				$activity->summary = '<a href="' . $record->getUser()->profileUrl . '">' . $record->getUser()->name . '</a> and <a href="' . $record->getFriend()->profileUrl . '">' . $record->getFriend()->name . '</a> are now friends';
 
-				$handler = new Handler($this->user);
 				$handler->create($activity);
 
 				// insert activity for user who has requested the friendship
 				/*
-				$activity          = DataFactory::getTable('User_Activity')->getRecord();
+				$handler = DataFactory::get('User_Activity', $this->user);
+
+				$activity          = $handler->getRecord();
 				$activity->refId   = $record->id;
 				$activity->table   = $table->getName();
 				$activity->verb    = 'make-friend';
 				$activity->summary = '<a href="' . $record->getFriend()->profileUrl . '">' . $record->getFriend()->name . '</a> and <a href="' . $record->getUser()->profileUrl . '">' . $record->getUser()->name . '</a> are now friends';
 
-				$handler = new Handler(new User($record->getFriend()->id, $this->registry));
 				$handler->create($activity);
 				*/
 			}
@@ -144,13 +147,14 @@ SQL;
 			$objectUrl = $this->getObjectUrl($record, $this->substituteVars($record, $row['path']));
 
 			// insert activity
-			$activity          = DataFactory::getTable('User_Activity')->getRecord();
+			$handler = DataFactory::get('User_Activity', $this->user);
+
+			$activity          = $handler->getRecord();
 			$activity->refId   = $record->id;
 			$activity->table   = $table->getName();
 			$activity->verb    = $row['verb'];
 			$activity->summary = $this->substituteVars($record, $row['summary'], $objectUrl);
 
-			$handler = new Handler($this->user);
 			$handler->create($activity);
 		}
 	}

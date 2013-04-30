@@ -59,9 +59,9 @@ class ActivityTest extends RestTest
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/activity';
 	}
 
-	public function getTable()
+	public function getHandler()
 	{
-		return DataFactory::getTable('User_Activity');
+		return DataFactory::get('User_Activity');
 	}
 
 	protected function assertResultSetResponse(Response $response)
@@ -88,7 +88,7 @@ class ActivityTest extends RestTest
 
 	public function testPost()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setSummary('bar');
 
 		$this->assertPositiveResponse($this->post($record));
@@ -101,7 +101,7 @@ class ActivityTest extends RestTest
 
 	public function testPut()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(1);
 		$record->setSummary('foobar');
 
@@ -115,7 +115,7 @@ class ActivityTest extends RestTest
 
 	public function testDelete()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(1);
 
 		$this->assertPositiveResponse($this->delete($record));

@@ -1,26 +1,35 @@
 
 [FEATURES]
 
+[ ] extend navigation to show a dropdown if child pages ar available
 [ ] add api bulk operations by accepting resultset in an post. We could use
     annotations to declare the object type in array problem is that we need to
     pass an table into the contructor of an record
-[ ] implement content page sort api to reorder pages
 [ ] Implement reference input field in backend
 [ ] implement page option 
 [ ] the next step in the amun infrastructure is to build an packetmanager for
     services. That means we need a host service wich offers a list of services 
     and a client service wich can connect to an host service and install it from
     there.
-    [ ] host service
+    [x] host service
         Provides the APIs to browse and install existing services. The host 
         creates an certificate and the client has to trust the cert if he wants 
         download a service. A possibility for paid services
-    [ ] client service
+    [x] client service
         we need a sources.list in the client so that you can discover multiple 
         hosts. A browse overview to search existing services
+    [ ] option for a client to add a provider
+    [ ] option to update a service. We send an json map with all md5 hashes to
+        the server and receive the files wich have changed as zip. We extract
+        them in the service folder and replace the old files. We need probably
+        a way to execute sql queries when updating
     [ ] a frontend application wich lists all available services of the host 
         service and offers users to add a new service and download existing once
         as file
+    [ ] before installing a service we should display an overview what the 
+        service actually does i.e. wich queries gets executed, registry entries
+        created etc. Probably analyze the query and display an info message
+        if the service truncates, drops or deletes
 [ ] check and clean up not used api endpoints
 [ ] openid login activity "... created an Account" is not created
 [ ] fix explorer service
@@ -47,6 +56,8 @@
     framework because its not amun specific and a well written proxy is in
     general needed
 [ ] test ostatus remote subscription interoperability
+[x] add api to preview render an markdown text
+[x] implement content page sort api to reorder pages
 
 
 [SERVICES]

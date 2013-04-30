@@ -85,7 +85,7 @@ class people extends RestAbstract
 					$con,
 					Sql::FETCH_OBJECT, 
 					'\AmunService\My\People', 
-					array(DataFactory::getTable('User_Friend')));
+					array(DataFactory::getTable('User_Friend'), $this->getContainer()));
 
 				$this->setResponse($resultSet);
 			}

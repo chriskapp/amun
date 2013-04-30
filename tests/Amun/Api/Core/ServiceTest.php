@@ -57,9 +57,9 @@ class ServiceTest extends RestTest
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/service';
 	}
 
-	public function getTable()
+	public function getHandler()
 	{
-		return DataFactory::getTable('Core_Service');
+		return DataFactory::get('Core_Service');
 	}
 
 	public function testGet()

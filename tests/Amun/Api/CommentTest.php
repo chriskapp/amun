@@ -57,9 +57,9 @@ class CommentTest extends RestTest
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/comment';
 	}
 
-	public function getTable()
+	public function getHandler()
 	{
-		return DataFactory::getTable('Comment');
+		return DataFactory::get('Comment');
 	}
 
 	public function testGet()
@@ -69,7 +69,7 @@ class CommentTest extends RestTest
 
 	public function testPost()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setPageId(1);
 		$record->setRefId(1);
 		$record->setText('foobar');
@@ -85,7 +85,7 @@ class CommentTest extends RestTest
 
 	public function testPut()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(1);
 		$record->setPageId(2);
 		$record->setRefId(2);
@@ -101,7 +101,7 @@ class CommentTest extends RestTest
 
 	public function testDelete()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(1);
 
 		$this->assertPositiveResponse($this->delete($record));

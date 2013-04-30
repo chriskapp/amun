@@ -62,9 +62,9 @@ class PageTest extends RestTest
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/page';
 	}
 
-	public function getTable()
+	public function getHandler()
 	{
-		return DataFactory::getTable('Content_Page');
+		return DataFactory::get('Content_Page');
 	}
 
 	public function testGet()
@@ -74,7 +74,7 @@ class PageTest extends RestTest
 
 	public function testPost()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setParentId(1);
 		$record->setServiceId(3);
 		$record->setRightId(0);
@@ -95,7 +95,7 @@ class PageTest extends RestTest
 
 	public function testMinimalPost()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setParentId(1);
 		$record->setServiceId(3);
 		$record->setStatus(Page\Record::HIDDEN);
@@ -111,7 +111,7 @@ class PageTest extends RestTest
 
 	public function testPut()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(2);
 		$record->setTitle('foo');
 		$record->setTemplate('page.tpl');
@@ -126,7 +126,7 @@ class PageTest extends RestTest
 
 	public function testDelete()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(2);
 
 		$this->assertPositiveResponse($this->delete($record));

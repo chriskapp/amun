@@ -51,7 +51,7 @@ class DataFactory
 		$this->prefix = $this->ct->getConfig()->offsetGet('amun_table_prefix');
 	}
 
-	public function getHandlerInstance($table)
+	public function getHandlerInstance($table, User $user = null)
 	{
 		$ns    = $this->getNamespace($table);
 		$class = Registry::getClassName('\AmunService\\' . $ns . '\Handler');
@@ -63,7 +63,7 @@ class DataFactory
 
 		if(class_exists($class))
 		{
-			return $this->_cache[$class] = new $class($this->ct->getUser());
+			return $this->_cache[$class] = new $class($this->ct, $user);
 		}
 		else
 		{
@@ -88,7 +88,7 @@ class DataFactory
 
 			$apiEndpoint = $config['psx_url'] . '/' . $config['psx_dispatch'] . 'api/' . $path;
 
-			return $this->_cache[$class] = new $class($apiEndpoint);
+			return $this->_cache[$class] = new $class($this->ct, $apiEndpoint);
 		}
 		else
 		{
@@ -138,6 +138,11 @@ class DataFactory
 	public static function initInstance(DependencyAbstract $ct)
 	{
 		return self::$_instance = new self($ct);
+	}
+
+	public static function get($table, User $user = null)
+	{
+		return self::getInstance()->getHandlerInstance($table, $user);
 	}
 
 	public static function getTable($table)

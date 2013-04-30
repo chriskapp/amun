@@ -58,9 +58,9 @@ class RegistryTest extends RestTest
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/registry';
 	}
 
-	public function getTable()
+	public function getHandler()
 	{
-		return DataFactory::getTable('Core_Registry');
+		return DataFactory::get('Core_Registry');
 	}
 
 	public function testGet()
@@ -70,7 +70,7 @@ class RegistryTest extends RestTest
 
 	public function testPost()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setName('bar');
 		$record->setValue('foo');
 
@@ -79,7 +79,7 @@ class RegistryTest extends RestTest
 
 	public function testPut()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(24);
 		$record->setValue('foobar');
 
@@ -93,7 +93,7 @@ class RegistryTest extends RestTest
 
 	public function testDelete()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(24);
 
 		$this->assertNegativeResponse($this->delete($record));

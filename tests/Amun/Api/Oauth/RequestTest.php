@@ -59,9 +59,9 @@ class RequestTest extends RestTest
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/oauth/request';
 	}
 
-	public function getTable()
+	public function getHandler()
 	{
-		return DataFactory::getTable('Oauth_Request');
+		return DataFactory::get('Oauth_Request');
 	}
 
 	public function testGet()
@@ -71,7 +71,7 @@ class RequestTest extends RestTest
 
 	public function testPost()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setApiId(1);
 		$record->setStatus(Oauth\Record::ACCESS);
 		$record->setIp('127.0.0.1');
@@ -88,7 +88,7 @@ class RequestTest extends RestTest
 
 	public function testPut()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(1);
 		$record->setApiId(1);
 		$record->setStatus(Oauth\Record::ACCESS);
@@ -106,7 +106,7 @@ class RequestTest extends RestTest
 
 	public function testDelete()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(1);
 
 		$this->assertPositiveResponse($this->delete($record));

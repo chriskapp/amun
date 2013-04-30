@@ -88,6 +88,16 @@ class Handler extends HandlerAbstract
 			}
 		}
 
+		if($mode == Sql::FETCH_OBJECT && $class === null)
+		{
+			$class = $this->getClassName();
+		}
+
+		if($mode == Sql::FETCH_OBJECT && empty($args))
+		{
+			$args = $this->getClassArgs();
+		}
+
 		$totalResults = $select->getTotalResults();
 		$entries      = $select->getAll($mode, $class, $args);
 		$resultSet    = new ResultSet($totalResults, $startIndex, $count, $entries);
@@ -131,6 +141,16 @@ class Handler extends HandlerAbstract
 			{
 				$select->where($row[0], $row[1], $row[2]);
 			}
+		}
+
+		if($mode == Sql::FETCH_OBJECT && $class === null)
+		{
+			$class = $this->getClassName();
+		}
+
+		if($mode == Sql::FETCH_OBJECT && empty($args))
+		{
+			$args = $this->getClassArgs();
 		}
 
 		$totalResults = $select->getTotalResults();

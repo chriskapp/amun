@@ -57,9 +57,9 @@ class RedirectTest extends RestTest
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/redirect';
 	}
 
-	public function getTable()
+	public function getHandler()
 	{
-		return DataFactory::getTable('Redirect');
+		return DataFactory::get('Redirect');
 	}
 
 	public function testGet()
@@ -69,7 +69,7 @@ class RedirectTest extends RestTest
 
 	public function testPost()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setPageId(1);
 		$record->setHref('http://google.de');
 
@@ -83,7 +83,7 @@ class RedirectTest extends RestTest
 
 	public function testPut()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(1);
 		$record->setPageId(1);
 		$record->setHref('http://google.de');
@@ -98,7 +98,7 @@ class RedirectTest extends RestTest
 
 	public function testDelete()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(1);
 
 		$this->assertPositiveResponse($this->delete($record));

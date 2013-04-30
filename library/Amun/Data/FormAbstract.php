@@ -24,6 +24,7 @@
 
 namespace Amun\Data;
 
+use Amun\Dependency;
 use Amun\DataFactory;
 
 /**
@@ -38,6 +39,7 @@ use Amun\DataFactory;
  */
 abstract class FormAbstract
 {
+	protected $ct;
 	protected $base;
 	protected $config;
 	protected $sql;
@@ -45,10 +47,9 @@ abstract class FormAbstract
 	protected $user;
 	protected $url;
 
-	public function __construct($url = null)
+	public function __construct(Dependency\Request $ct, $url = null)
 	{
-		$ct = DataFactory::getInstance()->getContainer();
-
+		$this->ct       = $ct;
 		$this->base     = $ct->getBase();
 		$this->config   = $ct->getConfig();
 		$this->sql      = $ct->getSql();

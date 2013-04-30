@@ -75,7 +75,9 @@ class ConfigListener extends ListenerAbstract
 
 						if($text instanceof DOMElement && $html instanceof DOMElement)
 						{
-							$record = DataFactory::getTable('Mail')->getRecord();
+							$handler = DataFactory::get('Mail', $this->user);
+
+							$record = $handler->getRecord();
 							$record->setName($name);
 							$record->setFrom($from);
 							$record->setSubject($subject);
@@ -83,7 +85,6 @@ class ConfigListener extends ListenerAbstract
 							$record->setText($text->nodeValue);
 							$record->setHtml($html->nodeValue);
 
-							$handler = new Handler($this->user);
 							$handler->create($record);
 						}
 					}

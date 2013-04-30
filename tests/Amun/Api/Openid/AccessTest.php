@@ -57,9 +57,9 @@ class AccessTest extends RestTest
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/openid/access';
 	}
 
-	public function getTable()
+	public function getHandler()
 	{
-		return DataFactory::getTable('Openid_Access');
+		return DataFactory::get('Openid_Access');
 	}
 
 	public function testGet()
@@ -84,7 +84,7 @@ class AccessTest extends RestTest
 	public function testDelete()
 	{
 		/*
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(1);
 
 		$this->assertPositiveResponse($this->delete($record));

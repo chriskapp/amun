@@ -57,9 +57,9 @@ class PipeTest extends RestTest
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/pipe';
 	}
 
-	public function getTable()
+	public function getHandler()
 	{
-		return DataFactory::getTable('Pipe');
+		return DataFactory::get('Pipe');
 	}
 
 	public function testGet()
@@ -69,7 +69,7 @@ class PipeTest extends RestTest
 
 	public function testPost()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setPageId(1);
 		$record->setMediaId(1);
 
@@ -83,7 +83,7 @@ class PipeTest extends RestTest
 
 	public function testPut()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(1);
 		$record->setPageId(1);
 		$record->setMediaId(1);
@@ -98,7 +98,7 @@ class PipeTest extends RestTest
 
 	public function testDelete()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(1);
 
 		$this->assertPositiveResponse($this->delete($record));

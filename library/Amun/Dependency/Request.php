@@ -114,7 +114,7 @@ class Request extends DependencyAbstract
 			return $this->get('event');
 		}
 
-		return $this->set('event', Event::initInstance($this->getRegistry()));
+		return $this->set('event', Event::initInstance($this));
 	}
 
 	public function getValidate()

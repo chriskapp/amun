@@ -24,6 +24,7 @@
 
 namespace Amun\Data;
 
+use Amun\Dependency;
 use Amun\DataFactory;
 use Amun\User;
 
@@ -39,6 +40,7 @@ use Amun\User;
  */
 abstract class ListenerAbstract
 {
+	protected $ct;
 	protected $base;
 	protected $config;
 	protected $sql;
@@ -46,10 +48,9 @@ abstract class ListenerAbstract
 	protected $event;
 	protected $user;
 
-	public function __construct(User $user = null)
+	public function __construct(Dependency\Request $ct, User $user = null)
 	{
-		$ct = DataFactory::getInstance()->getContainer();
-
+		$this->ct       = $ct;
 		$this->base     = $ct->getBase();
 		$this->config   = $ct->getConfig();
 		$this->sql      = $ct->getSql();

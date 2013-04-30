@@ -60,9 +60,9 @@ class GadgetTest extends RestTest
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/content/gadget';
 	}
 
-	public function getTable()
+	public function getHandler()
 	{
-		return DataFactory::getTable('Content_Gadget');
+		return DataFactory::get('Content_Gadget');
 	}
 
 	public function testGet()
@@ -72,7 +72,7 @@ class GadgetTest extends RestTest
 
 	public function testPost()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setName('foo');
 		$record->setTitle('bar');
 		$record->path = '21:latestNews.php';
@@ -90,7 +90,7 @@ class GadgetTest extends RestTest
 
 	public function testMinimalPost()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setName('bar');
 		$record->setTitle('foo');
 		$record->path = '21:latestNews.php';
@@ -106,7 +106,7 @@ class GadgetTest extends RestTest
 
 	public function testWrongPathPost()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->title = 'bar';
 		$record->path = '21:foo.php';
 
@@ -115,7 +115,7 @@ class GadgetTest extends RestTest
 
 	public function testPut()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(1);
 		$record->setName('FOO');
 		$record->setTitle('Foo');
@@ -130,7 +130,7 @@ class GadgetTest extends RestTest
 
 	public function testDelete()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(1);
 
 		$this->assertPositiveResponse($this->delete($record));

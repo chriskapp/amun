@@ -57,9 +57,9 @@ class CountryTest extends RestTest
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/country';
 	}
 
-	public function getTable()
+	public function getHandler()
 	{
-		return DataFactory::getTable('Country');
+		return DataFactory::get('Country');
 	}
 
 	public function testGet()
@@ -69,7 +69,7 @@ class CountryTest extends RestTest
 
 	public function testPost()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setTitle('foobar');
 		$record->setCode('FB');
 		$record->setLongitude(10.4);
@@ -85,7 +85,7 @@ class CountryTest extends RestTest
 
 	public function testPut()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(1);
 		$record->setTitle('foobar');
 		$record->setCode('FB');
@@ -102,7 +102,7 @@ class CountryTest extends RestTest
 
 	public function testDelete()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(1);
 
 		$this->assertPositiveResponse($this->delete($record));

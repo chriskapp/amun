@@ -58,9 +58,9 @@ class RightTest extends RestTest
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/group/right';
 	}
 
-	public function getTable()
+	public function getHandler()
 	{
-		return DataFactory::getTable('User_Group_Right');
+		return DataFactory::get('User_Group_Right');
 	}
 
 	public function testGet()
@@ -70,7 +70,7 @@ class RightTest extends RestTest
 
 	public function testPost()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setGroupId(2);
 		$record->setRightId(8);
 
@@ -84,7 +84,7 @@ class RightTest extends RestTest
 
 	public function testPut()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(1);
 		$record->setGroupId(1);
 		$record->setRightId(1);
@@ -99,7 +99,7 @@ class RightTest extends RestTest
 
 	public function testDelete()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(1);
 
 		$this->assertPositiveResponse($this->delete($record));

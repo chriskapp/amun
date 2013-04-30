@@ -58,9 +58,9 @@ class AccessTest extends RestTest
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/oauth/access';
 	}
 
-	public function getTable()
+	public function getHandler()
 	{
-		return DataFactory::getTable('Oauth_Access');
+		return DataFactory::get('Oauth_Access');
 	}
 
 	public function testGet()
@@ -70,7 +70,7 @@ class AccessTest extends RestTest
 
 	public function testPost()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setApiId(1);
 		$record->setAllowed(1);
 
@@ -79,7 +79,7 @@ class AccessTest extends RestTest
 
 	public function testPut()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(1);
 		$record->setApiId(1);
 		$record->setAllowed(0);
@@ -89,7 +89,7 @@ class AccessTest extends RestTest
 
 	public function testDelete()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(1);
 
 		$this->assertPositiveResponse($this->delete($record));

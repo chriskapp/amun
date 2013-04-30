@@ -107,7 +107,7 @@ class Form extends FormAbstract
 
 	public function update($id)
 	{
-		$record = DataFactory::getTable('Mail')->getRecord($id);
+		$record = DataFactory::get('Mail')->getRecord($id);
 
 
 		$form = new AmunForm('PUT', $this->url);

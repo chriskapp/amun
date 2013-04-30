@@ -59,7 +59,7 @@ class verifyCredentials extends ApiAbstract
 				->select(array('id', 'groupId', 'status', 'name', 'gender', 'profileUrl', 'thumbnailUrl', 'timezone', 'updated', 'date'))
 				->where('id', '=', $this->user->id);
 
-			$account = $select->getRow(Sql::FETCH_OBJECT, '\AmunService\My\Credentials', array($select->getTable(), $this->user));
+			$account = $select->getRow(Sql::FETCH_OBJECT, '\AmunService\My\Credentials', array($select->getTable(), $this->getContainer()));
 
 			$this->setResponse($account);
 		}

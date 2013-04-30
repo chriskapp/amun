@@ -60,9 +60,9 @@ class AccountTest extends RestTest
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/account';
 	}
 
-	public function getTable()
+	public function getHandler()
 	{
-		return DataFactory::getTable('User_Account');
+		return DataFactory::get('User_Account');
 	}
 
 	public function testGet()
@@ -72,7 +72,7 @@ class AccountTest extends RestTest
 
 	public function testPost()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setGroupId(1);
 		$record->setStatus(Account\Record::NORMAL);
 		$record->identity = 'bar@bar.com';
@@ -91,7 +91,7 @@ class AccountTest extends RestTest
 
 	public function testPut()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(1);
 		$record->setGroupId(1);
 		$record->setStatus(Account\Record::NORMAL);
@@ -111,7 +111,7 @@ class AccountTest extends RestTest
 
 	public function testDelete()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(1);
 
 		$this->assertPositiveResponse($this->delete($record));

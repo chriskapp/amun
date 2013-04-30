@@ -44,12 +44,13 @@ class RecordListener extends ListenerAbstract
 {
 	public function notify($type, TableInterface $table, RecordInterface $record)
 	{
-		$log = DataFactory::getTable('Log')->getRecord();
+		$handler = DataFactory::get('Log', $this->user);
+
+		$log = $handler->getRecord();
 		$log->setRefId(isset($record->id) ? $record->id : 0);
 		$log->setType(RecordAbstract::getType($type));
 		$log->setTable($table->getName());
 
-		$handler = new Handler($this->user);
 		$handler->create($log);
 	}
 }

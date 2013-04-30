@@ -41,16 +41,18 @@ class Event
 {
 	protected static $_instance;
 
+	private $ct;
 	private $config;
 	private $sql;
 	private $registry;
 	private $user;
 
-	public function __construct(Registry $registry)
+	public function __construct(Dependency\Request $ct)
 	{
-		$this->config   = $registry->getConfig();
-		$this->sql      = $registry->getSql();
-		$this->registry = $registry;
+		$this->ct       = $ct;
+		$this->config   = $ct->getConfig();
+		$this->sql      = $ct->getSql();
+		$this->registry = $ct->getRegistry();
 	}
 
 	/**
@@ -125,7 +127,7 @@ SQL;
 			try
 			{
 				$method = $listener->getMethod('notify');
-				$obj    = $listener->newInstance($user);
+				$obj    = $listener->newInstance($this->ct, $user);
 				$resp   = $method->invokeArgs($obj, $args);
 
 				if($resp === false)
@@ -149,9 +151,9 @@ SQL;
 		}
 	}
 
-	public static function initInstance(Registry $registry)
+	public static function initInstance(Dependency\Request $ct)
 	{
-		return self::$_instance = new self($registry);
+		return self::$_instance = new self($ct);
 	}
 
 	public static function getInstance()

@@ -3,3 +3,4 @@ library/Sabre
 library/Zend
 library/vendor
 service/webdav/library/Sabre
+configuration.php

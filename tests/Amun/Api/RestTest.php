@@ -31,6 +31,7 @@ use PSX\Oauth;
 use PSX\Url;
 use PSX\Json;
 use PSX\Sql;
+use PSX\Sql\TableInterface;
 use InvalidArgumentException;
 
 /**
@@ -45,19 +46,22 @@ use InvalidArgumentException;
  */
 abstract class RestTest extends ApiTest
 {
+	protected $handler;
 	protected $table;
 
 	protected function setUp()
 	{
 		parent::setUp();
 
-		$this->table = $this->getTable();
+		$this->handler = $this->getHandler();
+		$this->table   = $this->handler->getTable();
 	}
 
 	protected function tearDown()
 	{
 		parent::tearDown();
 
+		unset($this->handler);
 		unset($this->table);
 	}
 
@@ -106,11 +110,11 @@ abstract class RestTest extends ApiTest
 	abstract public function getEndpoint();
 
 	/**
-	 * Returns the table on wich the endpoint operates
+	 * Returns the handler on wich the API operates
 	 *
-	 * @return Amun_Sql_TableAbstract
+	 * @return \PSX\Data\HandlerInterface
 	 */
-	abstract public function getTable();
+	abstract public function getHandler();
 
 	abstract public function testGet();
 	abstract public function testPost();

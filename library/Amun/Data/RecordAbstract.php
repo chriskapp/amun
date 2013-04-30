@@ -24,6 +24,7 @@
 
 namespace Amun\Data;
 
+use Amun\Dependency;
 use Amun\DataFactory;
 use Amun\Sql\TableInterface;
 use PSX\Data\Record\TableAbstract;
@@ -53,17 +54,15 @@ abstract class RecordAbstract extends TableAbstract
 
 	public $captcha;
 
-	public function __construct(TableInterface $table)
+	public function __construct(TableInterface $table, Dependency\Request $ct)
 	{
-		$ct = DataFactory::getInstance()->getContainer();
-
+		$this->_table    = $table;
 		$this->_base     = $ct->getBase();
 		$this->_config   = $ct->getConfig();
 		$this->_sql      = $ct->getSql();
 		$this->_registry = $ct->getRegistry();
 		$this->_validate = $ct->getValidate();
 		$this->_user     = $ct->getUser();
-		$this->_table    = $table;
 	}
 
 	public function setCaptcha($captcha)

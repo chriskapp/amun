@@ -69,11 +69,11 @@ class Handler extends HandlerAbstract
 
 			if(!empty($rights))
 			{
-				$handler = new Right\Handler($this->user);
+				$handler = DataFactory::get('User_Group_Right', $this->user);
 
 				foreach($rights as $rightId)
 				{
-					$rightRecord = DataFactory::getTable('User_Group_Right')->getRecord();
+					$rightRecord = $handler->getRecord();
 					$rightRecord->groupId = $record->id;
 					$rightRecord->rightId = $rightId;
 
@@ -104,14 +104,14 @@ class Handler extends HandlerAbstract
 
 			// update rights if available
 			$rights    = isset($record->rights) ? $record->rights : null;
-			$handler   = new Right\Handler($this->user);
+			$handler   = DataFactory::get('User_Group_Right', $this->user);
 			$con       = new Condition(array('groupId', '=', $record->id));
 			$oldRights = DataFactory::getTable('User_Group_Right')->getCol('id', $con);
 
 			// delete old rights
 			foreach($oldRights as $id)
 			{
-				$rightRecord = DataFactory::getTable('User_Group_Right')->getRecord();
+				$rightRecord = $handler->getRecord();
 				$rightRecord->id = $id;
 
 				$handler->delete($rightRecord);
@@ -122,7 +122,7 @@ class Handler extends HandlerAbstract
 				// create new rights
 				foreach($rights as $rightId)
 				{
-					$rightRecord = DataFactory::getTable('User_Group_Right')->getRecord();
+					$rightRecord = $handler->getRecord();
 					$rightRecord->groupId = $record->id;
 					$rightRecord->rightId = $rightId;
 
@@ -152,13 +152,13 @@ class Handler extends HandlerAbstract
 
 
 			// delete assigned rights
-			$handler   = new Right\Handler($this->user);
+			$handler = DataFactory::get('User_Group_Right', $this->user);
 			$con       = new Condition(array('groupId', '=', $record->id));
 			$oldRights = DataFactory::getTable('User_Group_Right')->getCol('id', $con);
 
 			foreach($oldRights as $id)
 			{
-				$rightRecord = DataFactory::getTable('User_Group_Right')->getRecord();
+				$rightRecord = $handler->getRecord();
 				$rightRecord->id = $id;
 
 				$handler->delete($rightRecord);

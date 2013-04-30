@@ -43,7 +43,7 @@ class HandlerTest extends \Amun\HandlerTest
 		$handler = $this->getHandler('Content_Page');
 
 		// create foo under home page
-		$record = $handler->getTable()->getRecord();
+		$record = $handler->getRecord();
 		$record->setParentId(2);
 		$record->setServiceId(19);
 		$record->setStatus(\AmunService\Content\Page\Record::NORMAL);
@@ -58,7 +58,7 @@ class HandlerTest extends \Amun\HandlerTest
 		$this->assertEquals('home/foo', $row['path']);
 
 		// create two sub pages under foo
-		$record = $handler->getTable()->getRecord();
+		$record = $handler->getRecord();
 		$record->setParentId(11);
 		$record->setServiceId(19);
 		$record->setStatus(\AmunService\Content\Page\Record::NORMAL);
@@ -66,7 +66,7 @@ class HandlerTest extends \Amun\HandlerTest
 
 		$this->getHandler('Content_Page')->create($record);
 
-		$record = $handler->getTable()->getRecord();
+		$record = $handler->getRecord();
 		$record->setParentId(11);
 		$record->setServiceId(19);
 		$record->setStatus(\AmunService\Content\Page\Record::NORMAL);
@@ -91,7 +91,7 @@ class HandlerTest extends \Amun\HandlerTest
 		$handler = $this->getHandler('Content_Page');
 
 		// create two sub pages under home
-		$record = $handler->getTable()->getRecord();
+		$record = $handler->getRecord();
 		$record->setParentId(2);
 		$record->setServiceId(19);
 		$record->setStatus(\AmunService\Content\Page\Record::NORMAL);
@@ -99,7 +99,7 @@ class HandlerTest extends \Amun\HandlerTest
 
 		$this->getHandler('Content_Page')->create($record);
 
-		$record = $handler->getTable()->getRecord();
+		$record = $handler->getRecord();
 		$record->setParentId(2);
 		$record->setServiceId(19);
 		$record->setStatus(\AmunService\Content\Page\Record::NORMAL);
@@ -108,7 +108,7 @@ class HandlerTest extends \Amun\HandlerTest
 		$this->getHandler('Content_Page')->create($record);
 
 		// move bar page to another parent
-		$record = $handler->getTable()->getRecord();
+		$record = $handler->getRecord();
 		$record->setId(11);
 		$record->setParentId(7);
 
@@ -136,7 +136,7 @@ class HandlerTest extends \Amun\HandlerTest
 		$handler = $this->getHandler('Content_Page');
 
 		// create two sub pages under home
-		$record = $handler->getTable()->getRecord();
+		$record = $handler->getRecord();
 		$record->setParentId(2);
 		$record->setServiceId(19);
 		$record->setStatus(\AmunService\Content\Page\Record::NORMAL);
@@ -144,7 +144,7 @@ class HandlerTest extends \Amun\HandlerTest
 
 		$this->getHandler('Content_Page')->create($record);
 
-		$record = $handler->getTable()->getRecord();
+		$record = $handler->getRecord();
 		$record->setParentId(2);
 		$record->setServiceId(19);
 		$record->setStatus(\AmunService\Content\Page\Record::NORMAL);
@@ -153,7 +153,7 @@ class HandlerTest extends \Amun\HandlerTest
 		$this->getHandler('Content_Page')->create($record);
 
 		// rename home
-		$record = $handler->getTable()->getRecord();
+		$record = $handler->getRecord();
 		$record->setId(2);
 		$record->setTitle('test');
 

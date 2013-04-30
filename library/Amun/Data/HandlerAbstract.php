@@ -24,6 +24,7 @@
 
 namespace Amun\Data;
 
+use Amun\Dependency;
 use Amun\DataFactory;
 use Amun\Exception;
 use Amun\User;
@@ -63,31 +64,27 @@ use PSX\Sql\Condition;
  * @package    Amun_Data
  * @version    $Revision: 877 $
  */
-abstract class HandlerAbstract implements HandlerInterface
+abstract class HandlerAbstract extends \PSX\Data\HandlerAbstract
 {
+	protected $ct;
 	protected $base;
 	protected $config;
 	protected $sql;
 	protected $registry;
 	protected $event;
-	protected $table;
 	protected $user;
 
-	protected $ignoreApprovement = false;
-
-	protected $_select;
-
-	public function __construct(User $user = null)
+	public function __construct(Dependency\Request $ct, User $user = null)
 	{
-		$ct = DataFactory::getInstance()->getContainer();
-
+		$this->ct       = $ct;
 		$this->base     = $ct->getBase();
 		$this->config   = $ct->getConfig();
 		$this->sql      = $ct->getSql();
 		$this->registry = $ct->getRegistry();
 		$this->event    = $ct->getEvent();
-		$this->table    = $this->getTableInstance();
 		$this->user     = $user === null ? $ct->getUser() : $user;
+
+		parent::__construct($this->getTableInstance());
 	}
 
 	public function getTable()
@@ -100,200 +97,17 @@ abstract class HandlerAbstract implements HandlerInterface
 		return $this->user;
 	}
 
-	public function getAll(array $fields, $startIndex = 0, $count = 16, $sortBy = null, $sortOrder = null, Condition $con = null, $mode = 0, $class = null, array $args = array())
+	public function getClassName()
 	{
-		$startIndex = $startIndex !== null ? (integer) $startIndex : 0;
-		$count      = !empty($count)       ? (integer) $count      : 16;
-		$sortBy     = $sortBy     !== null ? $sortBy               : $this->table->getPrimaryKey();
-		$sortOrder  = $sortOrder  !== null ? (integer) $sortOrder  : Sql::SORT_DESC;
+		$className = get_class($this);
+		$className = substr($className, 0, -8); // remove _Handler
 
-		$select = $this->getSelect();
-		$fields = array_intersect($fields, $select->getSupportedFields());
-
-		if(!empty($fields))
-		{
-			$select->setColumns($fields);
-		}
-
-		$select->orderBy($sortBy, $sortOrder)
-			->limit($startIndex, $count);
-
-		if($con !== null && $con->hasCondition())
-		{
-			$values = $con->toArray();
-
-			foreach($values as $row)
-			{
-				$select->where($row[0], $row[1], $row[2]);
-			}
-		}
-
-		return $select->getAll($mode, $class, $args);
+		return $className . '\\Record';
 	}
 
-	/**
-	 * Returns an row as associatve array or record object 
-	 *
-	 * @return array|PSX_Data_RecordInterface
-	 */
-	public function getById($id, array $fields = array(), $mode = 0, $class = null, array $args = array())
+	protected function getClassArgs()
 	{
-		$select = $this->getSelect();
-		$fields = array_intersect($fields, $select->getSupportedFields());
-
-		if(!empty($fields))
-		{
-			$select->setColumns($fields);
-		}
-
-		return $select->where('id', '=', $id)
-			->getRow($mode, $class, $args);
-	}
-
-	/**
-	 * Returns an resultset wich can easily displayed on an html page with a 
-	 * pagination or exported as XML or JSON for an API
-	 *
-	 * @return PSX_Data_ResultSet
-	 */
-	public function getResultSet(array $fields, $startIndex = 0, $count = 16, $sortBy = null, $sortOrder = null, Condition $con = null, $mode = 0, $class = null, array $args = array())
-	{
-		$startIndex = $startIndex !== null ? (integer) $startIndex : 0;
-		$count      = !empty($count)       ? (integer) $count      : 16;
-		$sortOrder  = $sortOrder  !== null ? (strcasecmp($sortOrder, 'ascending') == 0 ? Sql::SORT_ASC : Sql::SORT_DESC) : null;
-
-		$totalResults = $this->getCount($con);
-		$entries      = $this->getAll($fields, $startIndex, $count, $sortBy, $sortOrder, $con, $mode, $class, $args);
-		$resultSet    = new ResultSet($totalResults, $startIndex, $count, $entries);
-
-		return $resultSet;
-	}
-
-	/**
-	 * Returns an array wich contains all columns wich are supported by the 
-	 * default select
-	 *
-	 * @return array
-	 */
-	public function getSupportedFields()
-	{
-		return $this->getSelect()->getSupportedFields();
-	}
-
-	/**
-	 * Returns the count of rows regarding to the condition
-	 *
-	 * @return integer
-	 */
-	public function getCount(Condition $con = null)
-	{
-		$select = $this->getSelect();
-
-		if($con !== null && $con->hasCondition())
-		{
-			$values = $con->toArray();
-
-			foreach($values as $row)
-			{
-				$select->where($row[0], $row[1], $row[2]);
-			}
-		}
-
-		return $select->getTotalResults();
-	}
-
-	/**
-	 * Returns a new record if the $id is not defined else an existing record
-	 *
-	 * @param integer $id
-	 * @return PSX_Data_RecordInterface
-	 */
-	public function getRecord($id = null)
-	{
-		return $this->table->getRecord($id);
-	}
-
-	/**
-	 * Returns whether the record needs to be approved
-	 *
-	 * @param PSX_Data_RecordInterface $record
-	 * @return boolean
-	 */
-	public function hasApproval(RecordInterface $record)
-	{
-		if($this->ignoreApprovement === false)
-		{
-			$sql = <<<SQL
-SELECT
-	`approval`.`field` AS `approvalField`,
-	`approval`.`value` AS `approvalValue`
-FROM 
-	{$this->registry['table.core_approval']} `approval`
-WHERE 
-	`approval`.`table` LIKE "{$this->table->getName()}"
-SQL;
-
-			$result = $this->sql->getAll($sql);
-
-			foreach($result as $row)
-			{
-				$field = $row['approvalField'];
-
-				if(empty($field))
-				{
-					return true;
-				}
-
-				if(isset($record->$field) && $record->$field == $row['approvalValue'])
-				{
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * Inserts an record for approval
-	 *
-	 * @param integer $type
-	 * @param PSX_Data_RecordInterface $record
-	 * @return void
-	 */
-	public function approveRecord($type, RecordInterface $record)
-	{
-		$type = Record::getType($type);
-
-		if($type !== false)
-		{
-			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
-
-			$this->sql->insert($this->registry['table.core_approval_record'], array(
-
-				'userId' => $this->user->id,
-				'type'   => $type,
-				'table'  => $this->table->getName(),
-				'record' => serialize($record->getFields()),
-				'date'   => $date->format(DateTime::SQL),
-
-			));
-		}
-		else
-		{
-			throw new Exception('Invalid approve record type');
-		}
-	}
-
-	/**
-	 * Sets whether the handler should ignore approvement
-	 *
-	 * @param boolean $approvement
-	 * @return void
-	 */
-	public function setIgnoreApprovement($approvement)
-	{
-		$this->ignoreApprovement = (boolean) $approvement;
+		return array($this->table, $this->ct);
 	}
 
 	/**
@@ -382,6 +196,11 @@ SQL;
 		return $this->getRightName() . '_delete';
 	}
 
+	/**
+	 * Returns the right name of this handler
+	 *
+	 * @return string
+	 */
 	protected function getRightName()
 	{
 		$className = get_class($this);
@@ -402,22 +221,11 @@ SQL;
 	{
 		$className = get_class($this);
 		$className = substr($className, 0, -8); // remove _Handler
-		$className = substr($className, 12); // remove AmunService_
-		$tableName = $this->registry->getTableName($className);
+		$className = $className . '\\Table';
 
-		if($tableName !== false)
+		if(class_exists($className))
 		{
-			$tableName = str_replace('_', '\\', $tableName);
-			$class     = Registry::getClassName('\AmunService\\' . $tableName . '\Table');
-
-			if(class_exists($class))
-			{
-				return new $class($this->registry);
-			}
-			else
-			{
-				throw new Exception('Table "' . $tableName . '" does not exist');
-			}
+			return new $className($this->registry);
 		}
 		else
 		{

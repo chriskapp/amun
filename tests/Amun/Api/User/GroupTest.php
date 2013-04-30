@@ -58,9 +58,9 @@ class GroupTest extends RestTest
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/group';
 	}
 
-	public function getTable()
+	public function getHandler()
 	{
-		return DataFactory::getTable('User_Group');
+		return DataFactory::get('User_Group');
 	}
 
 	public function testGet()
@@ -72,7 +72,7 @@ class GroupTest extends RestTest
 	{
 		$rightIds = array(1,2,3,4,5,6,7,8);
 
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setTitle('foo');
 		$record->rights = implode(',', $rightIds);
 
@@ -90,7 +90,7 @@ class GroupTest extends RestTest
 	{
 		$rightIds = array(1,2,3,4);
 
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(1);
 		$record->setTitle('foobar');
 		$record->rights = implode(',', $rightIds);
@@ -107,7 +107,7 @@ class GroupTest extends RestTest
 
 	public function testDelete()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(1);
 
 		$this->assertPositiveResponse($this->delete($record));

@@ -58,9 +58,9 @@ class FriendTest extends RestTest
 		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/friend';
 	}
 
-	public function getTable()
+	public function getHandler()
 	{
-		return DataFactory::getTable('User_Friend');
+		return DataFactory::get('User_Friend');
 	}
 
 	public function testGet()
@@ -70,7 +70,7 @@ class FriendTest extends RestTest
 
 	public function testPost()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setFriendId(2);
 
 		$this->assertPositiveResponse($this->post($record));
@@ -83,7 +83,7 @@ class FriendTest extends RestTest
 
 	public function testPut()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(1);
 		$record->setFriendId(2);
 
@@ -97,7 +97,7 @@ class FriendTest extends RestTest
 
 	public function testDelete()
 	{
-		$record = $this->getTable()->getRecord();
+		$record = $this->getHandler()->getRecord();
 		$record->setId(1);
 
 		$this->assertPositiveResponse($this->delete($record));
