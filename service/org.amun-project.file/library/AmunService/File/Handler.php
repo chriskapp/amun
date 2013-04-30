@@ -25,13 +25,14 @@
 namespace AmunService\File;
 
 use Amun\DataFactory;
-use Amun\Data\HandlerAbstract;
+use Amun\Data\ApproveHandlerAbstract;
 use Amun\Data\RecordAbstract;
 use Amun\Exception;
 use AmunService\Core\Approval;
 use PSX\DateTime;
 use PSX\Data\RecordInterface;
 use PSX\Data\ResultSet;
+use PSX\Sql;
 use PSX\Sql\Condition;
 use PSX\Sql\Join;
 
@@ -45,10 +46,20 @@ use PSX\Sql\Join;
  * @package    Amun_Service_Page
  * @version    $Revision: 880 $
  */
-class Handler extends HandlerAbstract
+class Handler extends ApproveHandlerAbstract
 {
 	public function getByPageId($pageId, $mode = 0, $class = null, array $args = array())
 	{
+		if($mode == Sql::FETCH_OBJECT && $class === null)
+		{
+			$class = $this->getClassName();
+		}
+
+		if($mode == Sql::FETCH_OBJECT && empty($args))
+		{
+			$args = $this->getClassArgs();
+		}
+
 		return $this->table
 				->select(array('contentType', 'content', 'date'))
 				->where('pageId', '=', $pageId)

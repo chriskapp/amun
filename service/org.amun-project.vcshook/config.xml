@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="5652b8a1aebdc24236b5efeeef5b3941df943f9e">
+<service xmlns="http://amun-project.org" signature="ff77ace049e3725bbc8d3d4e64eb1c8dbb523eb6">
   <status>system</status>
   <name>vcshook</name>
   <description>Gateway to receive commits from different version control system services like github, googleproject</description>
@@ -51,7 +51,7 @@
     <dir name="AmunService">
       <dir name="Vcshook">
         <dir name="Author">
-          <file name="Form.php" md5="a1ae4feaf94713fd9e5ad891a656d9d9"/>
+          <file name="Form.php" md5="dad4f6ef20c5a1ff51c4e3992edc68b1"/>
           <file name="Handler.php" md5="fffd33111a6b17b0467cd7bf591c46f8"/>
           <file name="Record.php" md5="c0488b9586bea827cf2f51d04cc643c9"/>
           <file name="Table.php" md5="54a29a715281cf3683c8994a5e7b3f91"/>
@@ -61,8 +61,8 @@
           <file name="Record.php" md5="d774f281a69dae10699d408f2084c716"/>
           <file name="Table.php" md5="9f0da9c4ee453ee0e1ae6d5f074ee07d"/>
         </dir>
-        <file name="CommitListener.php" md5="f433e3ec859f2ce80c73850c8afffde6"/>
-        <file name="Form.php" md5="b1ad558076a95af8890b95704ec6669f"/>
+        <file name="CommitListener.php" md5="e86706ee707533ead61ab4e6cd13de07"/>
+        <file name="Form.php" md5="c71cd10906c415671d661c60e4952657"/>
         <file name="Handler.php" md5="4ad5ceba10de7a913984693a81e4203a"/>
         <file name="Project.php" md5="3575f8747c0942ff1d348693ef509c85"/>
         <file name="Record.php" md5="519f32ea46ba5f10fad411bfeff00045"/>

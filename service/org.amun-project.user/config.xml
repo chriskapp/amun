@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="aca4142c30f956d6d77995ccccb848d6cd0a710a">
+<service xmlns="http://amun-project.org" signature="5f1951ceb935bf2f5e3c282481135ee0b872715b">
   <status>system</status>
   <name>user</name>
   <description>Basic service wich handles user groups and rights</description>
@@ -114,7 +114,7 @@
   <library>
     <dir name="AmunService">
       <dir name="User">
-        <file name="LrddListener.php" md5="7a616e156406ff02e04ca64e93572fd9"/>
+        <file name="LrddListener.php" md5="e931d5484a8f469829adecc726147e7a"/>
         <dir name="Account">
           <dir name="Filter">
             <file name="Email.php" md5="f1853e34bdf6fbd7c48b61ad8f7d09ac"/>
@@ -125,8 +125,8 @@
             <file name="Status.php" md5="dea91b0a99d00aecd1f44b08c741bb43"/>
             <file name="Timezone.php" md5="a6c190c65c83c7fc54848d6da62035d3"/>
           </dir>
-          <file name="Form.php" md5="f250a8fcdf984b740f2838563b0dfe0c"/>
-          <file name="Handler.php" md5="9ae5823a8062ed0a831467bb8709322d"/>
+          <file name="Form.php" md5="3cdd6ba025cb0ec03685d9ee4ad851c3"/>
+          <file name="Handler.php" md5="6e020706a9d0bcfee73727c11448fe39"/>
           <file name="Record.php" md5="da204614b9d66d6fb35478def5706ebc"/>
           <file name="Stream.php" md5="a25bc2dd2a294496d6114d538ab4453b"/>
           <file name="Table.php" md5="f3c1a68517ba07c9bcb1276d7c1c3049"/>
@@ -136,8 +136,8 @@
           <dir name="Filter">
             <file name="Verb.php" md5="5e3c38ab718df77feb9b3fa7bddb9c7c"/>
           </dir>
-          <file name="Form.php" md5="92055375ce115dce7df5763fc0f8dccc"/>
-          <file name="Handler.php" md5="c9b77d5c5340ae072b610d22b35573bc"/>
+          <file name="Form.php" md5="abf85bab6236f607cc37eef9bb5fc1e2"/>
+          <file name="Handler.php" md5="d7abc7009b093d11067706f2072df7f4"/>
           <dir name="Receiver">
             <dir name="Filter">
               <file name="Status.php" md5="90c8b62870c5c9646f1f0306d04ecbff"/>
@@ -147,7 +147,7 @@
             <file name="Table.php" md5="5ddc70df95dc380c5282aa1e9b4eecc4"/>
           </dir>
           <file name="Record.php" md5="2515246b6536cda7bdac9bcdee277aea"/>
-          <file name="RecordListener.php" md5="b44a642f6d11ea87e3ed8741f966c2e7"/>
+          <file name="RecordListener.php" md5="6cfde920da9f14d514f413eb0cb27f44"/>
           <file name="Stream.php" md5="43c400711ac4c30a765e682a44075043"/>
           <file name="Table.php" md5="a5b7221be578e4ea1b2a4e17a2f0fa4c"/>
         </dir>
@@ -155,25 +155,25 @@
           <dir name="Filter">
             <file name="Status.php" md5="273f0dbe55f74a35dd562e6cd9e227a0"/>
           </dir>
-          <file name="Form.php" md5="57a241b91a81f74f57fe66e88199a7c2"/>
+          <file name="Form.php" md5="cf162e3e7883144ecfd2d0a5445b8967"/>
           <dir name="Group">
-            <file name="Form.php" md5="7375877e3b40da03ab79508be423928f"/>
+            <file name="Form.php" md5="4d819608748416b00c5890da343795e9"/>
             <file name="Handler.php" md5="c2e60c1a5f1b7d8f544cefc0106209e7"/>
             <file name="Record.php" md5="227829231250d05f4b7fdb059cce1077"/>
             <file name="Table.php" md5="941e1059d1c7ae176f5eaae57d18eefd"/>
           </dir>
-          <file name="Handler.php" md5="abab9524b2acd430eb2afd56bc6aa92e"/>
+          <file name="Handler.php" md5="3c692aadb9d9b5da6883021a7eb07b3a"/>
           <file name="Record.php" md5="636b7fbbd301e21f775a233fd34bbba0"/>
           <file name="Relation.php" md5="54442e94b51ce612215aba026c8dfd29"/>
           <file name="Table.php" md5="db7c85ae5dc08af93797b20ecd325679"/>
           <file name="Stream.php" md5="30cbe6cc3f9c3945b2f47d2afe0586c8"/>
         </dir>
         <dir name="Group">
-          <file name="Form.php" md5="5c2346d006b79b3a26bac6faa2b45f8e"/>
-          <file name="Handler.php" md5="04de3da53d12570e3979a92f294b8933"/>
+          <file name="Form.php" md5="ca2b9d523589e9d5c09a24d402757e6b"/>
+          <file name="Handler.php" md5="1b6c5f59cdee2d24130a74329b3fba79"/>
           <file name="Record.php" md5="f5825c6e54b3199de553ed8e32022e0c"/>
           <dir name="Right">
-            <file name="Form.php" md5="15e520cc8616c8645ae63a251bfab45d"/>
+            <file name="Form.php" md5="511e2d7c325f3b2791dcfbf42668aa78"/>
             <file name="Handler.php" md5="6560a9de410be5dd3cdd587c8775f4a0"/>
             <file name="Record.php" md5="63cc7be0f8ae941afbedee85076e3e80"/>
             <file name="Table.php" md5="16d5798339db5b6c09f63987edfedb7b"/>
@@ -182,7 +182,7 @@
         </dir>
         <dir name="Right">
           <file name="ConfigListener.php" md5="deb028f73eb26de51bdafd899f905914"/>
-          <file name="Form.php" md5="7b6ab651a746229b0266da2fa9f95a6e"/>
+          <file name="Form.php" md5="5820007f6fac4ede9daa198631ced452"/>
           <file name="Handler.php" md5="2ca7f576c0f7d7509de5fc16931e657c"/>
           <file name="Record.php" md5="789335573c06a6ac4fb3de13f425c567"/>
           <file name="Table.php" md5="ba3386ef42da223b9d6a4e9da2d4b683"/>

@@ -53,7 +53,7 @@ class CommitListener extends ListenerAbstract
 			$user = $this->user;
 		}
 
-		$handler = new Commit\Handler($user);
+		$handler = DataFactory::get('Vcshook_Commit', $user);
 		$handler->create($record);
 	}
 }

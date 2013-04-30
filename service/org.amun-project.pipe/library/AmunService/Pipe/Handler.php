@@ -25,7 +25,7 @@
 namespace AmunService\Pipe;
 
 use Amun\DataFactory;
-use Amun\Data\HandlerAbstract;
+use Amun\Data\ApproveHandlerAbstract;
 use Amun\Data\RecordAbstract;
 use Amun\Exception;
 use Amun\Security;
@@ -47,10 +47,20 @@ use PSX\Sql\Join;
  * @package    Amun_Service_Pipe
  * @version    $Revision: 683 $
  */
-class Handler extends HandlerAbstract
+class Handler extends ApproveHandlerAbstract
 {
 	public function getByPageId($pageId, $mode = 0, $class = null, array $args = array())
 	{
+		if($mode == Sql::FETCH_OBJECT && $class === null)
+		{
+			$class = $this->getClassName();
+		}
+
+		if($mode == Sql::FETCH_OBJECT && empty($args))
+		{
+			$args = $this->getClassArgs();
+		}
+
 		return $this->table
 			->select(array('id', 'processor', 'date'))
 			->join(Join::INNER, DataFactory::getTable('Media')

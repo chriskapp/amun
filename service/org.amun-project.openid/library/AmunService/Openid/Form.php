@@ -61,7 +61,7 @@ class Form extends FormAbstract
 
 	public function delete($id)
 	{
-		$record = DataFactory::getTable('Openid')->getRecord($id);
+		$record = DataFactory::get('Openid')->getRecord($id);
 
 
 		$form = new AmunForm('DELETE', $this->url);

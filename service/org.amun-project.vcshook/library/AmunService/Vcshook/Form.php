@@ -79,7 +79,7 @@ class Form extends FormAbstract
 
 	public function update($id)
 	{
-		$record = DataFactory::getTable('Vcshook')->getRecord($id);
+		$record = DataFactory::get('Vcshook')->getRecord($id);
 
 
 		$form = new AmunForm('PUT', $this->url);
@@ -131,7 +131,7 @@ class Form extends FormAbstract
 
 	public function delete($id)
 	{
-		$record = DataFactory::getTable('Vcshook')->getRecord($id);
+		$record = DataFactory::get('Vcshook')->getRecord($id);
 
 
 		$form = new AmunForm('DELETE', $this->url);

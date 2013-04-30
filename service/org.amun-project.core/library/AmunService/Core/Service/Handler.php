@@ -196,6 +196,10 @@ class Handler extends HandlerAbstract
 			}
 
 
+			// check whether services exist wich depend on this service
+			// @todo
+
+
 			// delete options
 			$this->sql->delete($this->registry['table.core_service_option'], $con);
 

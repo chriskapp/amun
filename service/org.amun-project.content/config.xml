@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="7dc9343ed8347ee80130a00688199e5b21ff13ff">
+<service xmlns="http://amun-project.org" signature="793b03acd53b11af8b0dc18aee10d36ada866f38">
   <status>system</status>
   <name>content</name>
   <description>Basic service wich handles pages and gadgets</description>
@@ -73,12 +73,12 @@
           <dir name="Filter">
             <file name="Path.php" md5="8d49f739a379993bfc356a58c9879864"/>
           </dir>
-          <file name="Form.php" md5="09ee6c57f848d5b2d5d52bf29bd98511"/>
+          <file name="Form.php" md5="50f0d5992b4fde52c6728a4546137196"/>
           <file name="Handler.php" md5="eed3854d34e60bf31ca70a02a699dc2f"/>
           <file name="Record.php" md5="6fce5bc1bcbc959b334665049e22339e"/>
           <file name="Table.php" md5="560e481251c6a9e18909cc213fd42b15"/>
         </dir>
-        <file name="LrddListener.php" md5="c21c4da3a68c2229a4bfd774a552d9ca"/>
+        <file name="LrddListener.php" md5="ec31e0e8b7d390b911c7c4d74d68224c"/>
         <dir name="Page">
           <dir name="Filter">
             <file name="Load.php" md5="098541889862c3e4ed03e7ca6314658e"/>
@@ -87,16 +87,16 @@
             <file name="Template.php" md5="b19b5c15c412f74cf1537943fbb15c7a"/>
             <file name="TitleExists.php" md5="1ee3306fd1046bca7db96582241b57a7"/>
           </dir>
-          <file name="Form.php" md5="94fb4b3b81e21f853e441fa6e1bbf6f0"/>
+          <file name="Form.php" md5="fad1e05769c9f33fcc7dba225bdd3903"/>
           <dir name="Gadget">
-            <file name="Form.php" md5="8453386b9c290bfebcd68509d6f44602"/>
+            <file name="Form.php" md5="4ed37ff2d780c69f497c655d09fcbdb2"/>
             <file name="Handler.php" md5="ce455bf8900369b2abecf18e85696685"/>
             <file name="Record.php" md5="545af303f2d73b88115f05c67bc1c894"/>
             <file name="Table.php" md5="d8f9499b17e52117882aef2ea319e449"/>
           </dir>
-          <file name="Handler.php" md5="73c8113bf5f20f300e0bd32a29aec419"/>
+          <file name="Handler.php" md5="4087191548ea85209e85d8c2c1d7c84e"/>
           <dir name="Option">
-            <file name="Form.php" md5="dc6ba3b9d9cea2041dc42c52b6e51a67"/>
+            <file name="Form.php" md5="63faf8cdfc82c195f6b23af6584c57eb"/>
             <file name="Handler.php" md5="0348ce8e85b63f75048ffe63b00b6ab8"/>
             <file name="Record.php" md5="3f5a2b3119b201978c4e475f989e8999"/>
             <file name="Table.php" md5="721d4609e38984ba512525f6756e7c5c"/>

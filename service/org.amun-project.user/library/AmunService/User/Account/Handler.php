@@ -52,30 +52,50 @@ use PSX\Data\RecordInterface;
  */
 class Handler extends HandlerAbstract
 {
+	public function getByName($name)
+	{
+		$class = $this->getClassName();
+		$args  = $this->getClassArgs();
+
+		return DataFactory::getTable('User_Account')
+			->select(array('id', 'globalId', 'name', 'profileUrl', 'timezone', 'date'))
+			->where('name', '=', $name)
+			->getRow(Sql::FETCH_OBJECT, $class, $args);
+	}
+
 	public function getByIdentity($identity)
 	{
+		$class = $this->getClassName();
+		$args  = $this->getClassArgs();
+
 		return DataFactory::getTable('User_Account')
 			->select(array('id', 'status', 'name', 'email'))
 			->where('identity', '=', $identity)
-			->getRow(Sql::FETCH_OBJECT);
+			->getRow(Sql::FETCH_OBJECT, $class, $args);
 	}
 
 	public function getRecoverByToken($token)
 	{
+		$class = $this->getClassName();
+		$args  = $this->getClassArgs();
+
 		return DataFactory::getTable('User_Account')
 			->select(array('id', 'name', 'ip', 'email', 'date'))
 			->where('token', '=', $token)
 			->where('status', '=', Record::RECOVER)
-			->getRow(Sql::FETCH_OBJECT);
+			->getRow(Sql::FETCH_OBJECT, $class, $args);
 	}
 
 	public function getNotActivatedByToken($token)
 	{
+		$class = $this->getClassName();
+		$args  = $this->getClassArgs();
+
 		return DataFactory::getTable('User_Account')
 			->select(array('id', 'ip', 'date'))
 			->where('token', '=', $token)
 			->where('status', '=', Record::NOT_ACTIVATED)
-			->getRow(Sql::FETCH_OBJECT);
+			->getRow(Sql::FETCH_OBJECT, $class, $args);
 	}
 
 	public function create(RecordInterface $record)

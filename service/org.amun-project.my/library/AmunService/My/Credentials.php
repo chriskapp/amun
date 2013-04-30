@@ -26,6 +26,7 @@ namespace AmunService\My;
 
 use Amun\Sql\TableInterface;
 use Amun\User;
+use Amun\Dependency;
 use AmunService\User\Account\Record;
 use PSX\DateTime;
 
@@ -41,15 +42,6 @@ use PSX\DateTime;
  */
 class Credentials extends Record
 {
-	protected $_user;
-
-	public function __construct(TableInterface $table, User $user)
-	{
-		parent::__construct($table);
-
-		$this->_user = $user;
-	}
-
 	public function getName()
 	{
 		return 'credentials';

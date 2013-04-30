@@ -78,33 +78,15 @@ class LrddListener extends ListenerAbstract
 	{
 		$filter = new Filter\Url();
 
-		if($filter->apply($uri) === true)
+		if($filter->apply($uri) === true && (substr($uri, 0, 7) == 'http://' || substr($uri, 0, 8) == 'https://'))
 		{
 			// remove base url
 			$uri = substr($uri, strlen($this->config['psx_url'] . '/' . $this->config['psx_dispatch']));
 			$uri = trim($uri, '/');
 
 			// get page
-			$sql = "SELECT
-						`page`.`id`
-					FROM
-						" . $this->registry['table.content_page'] . " `page`
-					INNER JOIN
-						" . $this->registry['table.core_service'] . " `service`
-					ON
-						`page`.`serviceId` = `service`.`id`
-					WHERE
-						`page`.`path` LIKE SUBSTRING(?, 1, CHAR_LENGTH(`page`.`path`))
-					ORDER BY
-						CHAR_LENGTH(`page`.`path`) DESC
-					LIMIT 1";
-
-			$pageId = $this->sql->getField($sql, array($uri));
-
-			if(!empty($pageId))
-			{
-				return DataFactory::getTable('Content_Page')->getRecord($pageId);
-			}
+			$handler = DataFactory::get('Content_Page');
+			return $handler->getByPath($uri);
 		}
 	}
 }

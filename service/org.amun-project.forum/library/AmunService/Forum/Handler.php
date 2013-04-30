@@ -25,7 +25,7 @@
 namespace AmunService\Forum;
 
 use Amun\DataFactory;
-use Amun\Data\HandlerAbstract;
+use Amun\Data\ApproveHandlerAbstract;
 use Amun\Data\RecordAbstract;
 use Amun\Exception;
 use AmunService\Core\Approval;
@@ -46,7 +46,7 @@ use PSX\Sql\Join;
  * @package    Amun_Service_Forum
  * @version    $Revision: 880 $
  */
-class Handler extends HandlerAbstract
+class Handler extends ApproveHandlerAbstract
 {
 	public function create(RecordInterface $record)
 	{

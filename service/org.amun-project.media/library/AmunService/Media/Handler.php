@@ -56,6 +56,16 @@ class Handler extends HandlerAbstract
 
 	public function getByGlobalId($globalId, $mode = 0, $class = null, array $args = array())
 	{
+		if($mode == Sql::FETCH_OBJECT && $class === null)
+		{
+			$class = $this->getClassName();
+		}
+
+		if($mode == Sql::FETCH_OBJECT && empty($args))
+		{
+			$args = $this->getClassArgs();
+		}
+
 		return $this->getSelect()
 			->where('globalId', '=', $globalId)
 			->getRow($mode, $class, $args);

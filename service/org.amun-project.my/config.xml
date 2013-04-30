@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="0ce2061021ba0e4ab2fe5a63a2243912555ccf4d">
+<service xmlns="http://amun-project.org" signature="e565c5b0ea9787d12ccb9569c5f9616df307f8d5">
   <status>normal</status>
   <name>my</name>
   <description>Service wich offers a login and social activities for a user</description>
@@ -124,21 +124,21 @@ You can login with the new password at:
       <dir name="My">
         <file name="Activity.php" md5="0f46128d2a69494089286caf452aa7a0"/>
         <file name="Attempt.php" md5="43f5ddcc9c44c067cbaac420fd5bbce5"/>
-        <file name="Credentials.php" md5="e431e09c84e175042e32e6978bdc4e3d"/>
+        <file name="Credentials.php" md5="6d6ee93e9a3b46f914c366a1aa1cc7fe"/>
         <file name="FriendsAbstract.php" md5="abb3d3c89f55b39f14805765d80afb75"/>
         <dir name="Login">
           <file name="InvalidPasswordException.php" md5="1b49b52c76c93f3b3f2f00c241ddfadf"/>
         </dir>
         <dir name="LoginHandler">
           <file name="CallbackInterface.php" md5="404b4d171017eaf3534d46071ff7be66"/>
-          <file name="Facebook.php" md5="8e80115248f3e95ae659b895875a226f"/>
-          <file name="Github.php" md5="78addc970e123b5d5587d0a0f15e08c3"/>
+          <file name="Facebook.php" md5="3d00fed42bd834bbaeb74063026f14e1"/>
+          <file name="Github.php" md5="25c3b6029f0df0392d340c7482295475"/>
           <file name="Google.php" md5="ad724f98d8d03ba534c186d0a1d4a374"/>
-          <file name="Ldap.php" md5="36442cf5b5522236101faf61152f50d2"/>
-          <file name="Openid.php" md5="cf7bdd7f273340dc44ccc5e157f7db63"/>
-          <file name="Remote.php" md5="64b6652789190ed183c208e48c16e471"/>
+          <file name="Ldap.php" md5="58c359a3ad605973a3b74627b6689c8a"/>
+          <file name="Openid.php" md5="3b6d368537933c73ae841d1a9591a9e3"/>
+          <file name="Remote.php" md5="5572374256df8d0cc82b55c745626f80"/>
           <file name="System.php" md5="90445a66cfc18e616d2cf389533d8dfe"/>
-          <file name="Twitter.php" md5="ce85c014ca501b22d50441979d218024"/>
+          <file name="Twitter.php" md5="0534b7feb48a00cb276bb8d51d488064"/>
           <file name="Webfinger.php" md5="c5314bae6332e0fca24512256595ac19"/>
           <file name="Yahoo.php" md5="081a5e6bebbb8c68f45e7833ba0bb707"/>
         </dir>

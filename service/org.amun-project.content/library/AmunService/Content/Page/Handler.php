@@ -31,6 +31,7 @@ use Amun\DataFactory;
 use AmunService\Content\Page\Gadget;
 use PSX\Data\RecordInterface;
 use PSX\DateTime;
+use PSX\Sql;
 use PSX\Sql\Condition;
 use PSX\Sql\Join;
 
@@ -46,6 +47,28 @@ use PSX\Sql\Join;
  */
 class Handler extends HandlerAbstract
 {
+	public function getByPath($path)
+	{
+		$class = $this->getClassName();
+		$args  = $this->getClassArgs();
+
+		$sql = "SELECT
+					`page`.*
+				FROM
+					" . $this->registry['table.content_page'] . " `page`
+				INNER JOIN
+					" . $this->registry['table.core_service'] . " `service`
+				ON
+					`page`.`serviceId` = `service`.`id`
+				WHERE
+					`page`.`path` LIKE SUBSTRING(?, 1, CHAR_LENGTH(`page`.`path`))
+				ORDER BY
+					CHAR_LENGTH(`page`.`path`) DESC
+				LIMIT 1";
+
+		return $this->sql->getRow($sql, array($path), Sql::FETCH_OBJECT, $class, $args);
+	}
+
 	public function create(RecordInterface $record)
 	{
 		if($record->hasFields('parentId', 'serviceId', 'status', 'urlTitle', 'title'))
@@ -88,11 +111,11 @@ class Handler extends HandlerAbstract
 
 			if(!empty($gadgets))
 			{
-				$handler = new Gadget\Handler($this->user);
+				$handler = DataFactory::get('Gadget_Handler', $this->user);
 
 				foreach($gadgets as $k => $gadgetId)
 				{
-					$gadgetRecord = DataFactory::getTable('Content_Page_Gadget')->getRecord();
+					$gadgetRecord = $handler->getRecord();
 					$gadgetRecord->pageId   = $record->id;
 					$gadgetRecord->gadgetId = $gadgetId;
 					$gadgetRecord->sort     = $k;
@@ -145,14 +168,14 @@ class Handler extends HandlerAbstract
 
 			// update gadgets if available
 			$gadgets    = isset($record->gadgets) ? $record->gadgets : null;
-			$handler    = new Gadget\Handler($this->user);
+			$handler    = DataFactory::get('Content_Page_Gadget', $this->user);
 			$con        = new Condition(array('pageId', '=', $record->id));
 			$oldGadgets = DataFactory::getTable('Content_Page_Gadget')->getCol('id', $con);
 
 			// delete old gadgets
 			foreach($oldGadgets as $id)
 			{
-				$gadgetRecord = DataFactory::getTable('Content_Page_Gadget')->getRecord();
+				$gadgetRecord = $handler->getRecord();
 				$gadgetRecord->id = $id;
 
 				$handler->delete($gadgetRecord);
@@ -163,7 +186,7 @@ class Handler extends HandlerAbstract
 				// create new gadgets
 				foreach($gadgets as $k => $gadgetId)
 				{
-					$gadgetRecord = DataFactory::getTable('Content_Page_Gadget')->getRecord();
+					$gadgetRecord = $handler->getRecord();
 					$gadgetRecord->pageId   = $record->id;
 					$gadgetRecord->gadgetId = $gadgetId;
 					$gadgetRecord->sort     = $k;
@@ -197,13 +220,13 @@ class Handler extends HandlerAbstract
 
 
 			// delete assigned gadgets
-			$handler    = new Gadget\Handler($this->user);
+			$handler    = DataFactory::get('Content_Page_Gadget', $this->user);
 			$con        = new Condition(array('pageId', '=', $record->id));
 			$oldGadgets = DataFactory::getTable('Content_Page_Gadget')->getCol('id', $con);
 
 			foreach($oldGadgets as $id)
 			{
-				$gadgetRecord = DataFactory::getTable('Content_Page_Gadget')->getRecord();
+				$gadgetRecord = $handler->getRecord();
 				$gadgetRecord->id = $id;
 
 				$handler->delete($gadgetRecord);

@@ -129,9 +129,9 @@ class Ldap extends LoginHandlerAbstract
 					$name = $this->normalizeName($name);
 
 					// create user account
-					$handler = new Account\Handler($this->user);
+					$handler = DataFactory::get('User_Account', $this->user);
 
-					$account = DataFactory::getTable('User_Account')->getRecord();
+					$account = $handler->getRecord();
 					$account->setGroupId($this->registry['core.default_user_group']);
 					$account->setStatus(Account\Record::NORMAL);
 					$account->setIdentity($identity);

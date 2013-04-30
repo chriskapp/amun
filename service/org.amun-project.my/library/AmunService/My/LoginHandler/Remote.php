@@ -213,9 +213,9 @@ class Remote extends Openid
 					$name = $this->normalizeName($acc['name']);
 
 					// create user account
-					$handler = new Account\Handler($this->user);
+					$handler = DataFactory::get('User_Account', $this->user);
 
-					$account = DataFactory::getTable('User_Account')->getRecord();
+					$account = $handler->getRecord();
 					$account->setGlobalId($globalId);
 					$account->setGroupId($this->registry['core.default_user_group']);
 					$account->setHostId($hostId);

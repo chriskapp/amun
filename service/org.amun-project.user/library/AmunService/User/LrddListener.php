@@ -121,24 +121,17 @@ class LrddListener extends ListenerAbstract
 
 	protected function getAccount($uri)
 	{
-		if(substr($uri, 0, 5) == 'acct:')
+		$filter = new Filter\Email();
+		$email  = substr($uri, 5);
+
+		if($filter->apply($email) === true && substr($uri, 0, 5) == 'acct:')
 		{
-			$filter = new Filter\Email();
-			$email  = substr($uri, 5);
+			// split mail
+			list($name, $host) = explode('@', $email);
 
-			if($filter->apply($email) === true)
-			{
-				// split mail
-				list($name, $host) = explode('@', $email);
-
-				// get account record
-				$account = DataFactory::getTable('User_Account')
-					->select(array('id', 'globalId', 'name', 'profileUrl', 'timezone', 'date'))
-					->where('name', '=', $name)
-					->getRow(Sql::FETCH_OBJECT);
-
-				return $account;
-			}
+			// get account record
+			$handler = DataFactory::get('User_Account');
+			return $handler->getByName($name);
 		}
 	}
 }
