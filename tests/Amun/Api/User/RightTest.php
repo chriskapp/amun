@@ -76,7 +76,9 @@ class RightTest extends RestTest
 
 		$this->assertPositiveResponse($this->post($record));
 
-		$actual = $this->table->getRow(array('name', 'description'), new Condition(array('id', '=', 154)));
+		$lastInsertId = (integer) $this->sql->getField('SELECT MAX(`id`) FROM amun_user_right');
+
+		$actual = $this->table->getRow(array('name', 'description'), new Condition(array('id', '=', $lastInsertId)));
 		$expect = array_map('strval', $record->getData());
 
 		$this->assertEquals($expect, $actual);
