@@ -61,7 +61,8 @@ Ext.define('Amun.service.core.service.Form', {
                 emptyText: 'Select a provider ...',
                 selectOnFocus: true,
                 width: 200,
-                indent: true
+                indent: true,
+                disabled: true // not complete implemented
             });
 
             this.providerSearch = {            

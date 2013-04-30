@@ -32,15 +32,19 @@ Ext.require('Amun.Form');
 Ext.require('Amun.Grid');
 Ext.require('Amun.ColumnConfig');
 
-Ext.require('Amun.service.core.service.Form');
-
 Ext.require('Amun.service.content.page.Form');
 Ext.require('Amun.service.content.page.Grid');
+
+Ext.require('Amun.service.core.registry.Grid');
+Ext.require('Amun.service.core.service.Form');
+Ext.require('Amun.service.core.service.Grid');
 
 Ext.require('Amun.service.user.group.Form');
 Ext.require('Amun.service.user.group.Grid');
 
 Ext.require('Amun.service.explorer.Grid');
+
+Ext.require('Amun.service.mail.Grid');
 
 // start application
 Ext.application({
