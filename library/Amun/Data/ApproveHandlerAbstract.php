@@ -31,24 +31,8 @@ use PSX\Data\RecordInterface;
 use PSX\DateTime;
 
 /**
- * The data handler class offers a general concept of handling data. It 
- * abstracts all SQL handling from the API and application parts. The data
- * handler knows where and who wants to insert data. It can be used to CRUD
- * records. Here an example howto simply create a new record
- * <code>
- * $handler = $this->getHandler();
- *
- * $record = $handler->getRecord();
- * $record->setTitle('foor');
- * $record->setText('<p>bar</p>');
- *
- * $handler->create($record);
- * </code>
- *
- * And here an example howto read specific fields
- * <code>
- * $result = $this->getHandler()->getAll(array('id', 'title'));
- * </code>
+ * Handler wich has the ability to check whether a record needs approval. If yes
+ * the record could be added to a queue instead of inserting
  *
  * @author     Christoph Kappestein <k42b3.x@gmail.com>
  * @license    http://www.gnu.org/licenses/gpl.html GPLv3
