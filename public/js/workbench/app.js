@@ -28,9 +28,7 @@ Ext.Loader.setConfig({
     }
 });
 
-Ext.require('Amun.Form');
-Ext.require('Amun.Grid');
-Ext.require('Amun.ColumnConfig');
+Ext.require('Amun.form.Form');
 
 Ext.require('Amun.service.content.page.Form');
 Ext.require('Amun.service.content.page.Grid');
@@ -45,6 +43,9 @@ Ext.require('Amun.service.user.group.Grid');
 Ext.require('Amun.service.explorer.Grid');
 
 Ext.require('Amun.service.mail.Grid');
+
+Ext.require('Amun.ColumnConfig');
+Ext.require('Amun.Grid');
 
 // start application
 Ext.application({

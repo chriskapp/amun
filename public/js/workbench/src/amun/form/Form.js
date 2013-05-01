@@ -1,7 +1,7 @@
 
-Ext.require('Amun.Editor');
+Ext.require('Amun.form.Editor');
 
-Ext.define('Amun.Form', {
+Ext.define('Amun.form.Form', {
     extend: 'Ext.form.Panel',
 
     formMethod: 'POST',
@@ -30,12 +30,18 @@ Ext.define('Amun.Form', {
     },
 
     buildForm: function(form){
-        // build form
-        var el = this.parseElements(form);
-        el.formMethod = form.method;
-        el.formAction = form.action;
+        return this.parseElements(form);
+    },
 
-        return el;
+    buildChildren: function(item){
+        // build items
+        var items = [];
+        if (item.children && item.children.item && item.children.item.length > 0) {
+            for (var i = 0; i < item.children.item.length; i++) {
+                items.push(this.parseElements(item.children.item[i]));
+            }
+        }
+        return items;
     },
 
     parseElements: function(item){
@@ -50,6 +56,10 @@ Ext.define('Amun.Form', {
         switch (item['class']) {
             case 'form':
                 return this.onForm(item);
+                break;
+
+            case 'tabbedPane':
+                return this.onTabPanel(item);
                 break;
 
             case 'panel':
@@ -83,21 +93,15 @@ Ext.define('Amun.Form', {
     },
 
     onForm: function(item){
-        // build items
-        var items = [];
-        for (var i = 0; i < item.item.children.item.length; i++) {
-            items.push(this.parseElements(item.item.children.item[i]));
-        }
-
         // create form panel
         return {
+            formMethod: item.method,
+            formAction: item.action,
             url: item.action,
             cls: 'wb-content-form',
-            layout: 'anchor',
-            items: items,
-            autoScroll: true,
-            bodyStyle: 'padding:5px 5px 0',
+            items: [this.parseElements(item.item)],
             border: false,
+            region: 'center',
             buttons: [{
                 text: 'Reset',
                 scope: this,
@@ -112,25 +116,27 @@ Ext.define('Amun.Form', {
                 handler: function(){
                     this.fireEvent('submit', this);
                 }
-            }],
+            }]
         };
     },
 
-    onPanel: function(item){
-        // build items
-        var items = [];
-        for (var i = 0; i < item.children.item.length; i++) {
-            items.push(this.parseElements(item.children.item[i]));
-        }
-
-        // create fieldset
-        return {
-            xtype: 'fieldset',
+    onTabPanel: function(item){
+        // create tab pane
+        return Ext.create('Ext.tab.Panel', {
             title: item.label,
-            collapsible: true,
-            layout: 'anchor',
-            items: items
-        };
+            border: false,
+            items: this.buildChildren(item)
+        });
+    },
+
+    onPanel: function(item){
+        // create fieldset
+        return Ext.create('Ext.panel.Panel', {
+            title: item.label,
+            border: false,
+            bodyPadding: 5,
+            items: this.buildChildren(item)
+        });
     },
 
     onCaptcha: function(item){
@@ -151,23 +157,33 @@ Ext.define('Amun.Form', {
     },
 
     onReference: function(item){
-        /*
-        var val = item.value ? item.value : '';
-        var disabled = item.disabled ? 'disabled="disabled"' : '';
+        // build store
+        var store = Ext.create('Ext.data.Store', {
+            fields: [item.valueField, item.labelField],
+            autoLoad: true,
+            proxy: {
+                type: 'ajax',
+                url: item.src + '?fields=' + item.valueField + ',' + item.labelField + '&format=json',
+                reader: {
+                    type: 'json',
+                    root: 'entry',
+                    idProperty: 'id',
+                    totalProperty: 'totalResults'
+                }
+            }
+        });
 
-        html+= '<p>';
-        html+= '<label for="' + item.ref + '">' + item.label + '</label>';
-        html+= '<input type="text" name="' + item.ref + '" id="' + item.ref + '" value="' + val + '" ' + disabled + ' />';
-        html+= '</p>';
-        */
-
-        return {
-            xtype: 'textfield',
+        // create combobox
+        return Ext.create('Ext.form.ComboBox', {
             name: item.ref,
             disabled: item.disabled,
+            fieldLabel: item.label,
+            store: store,
             value: item.value,
-            fieldLabel: item.label
-        };
+            queryMode: 'remote',
+            displayField: item.labelField,
+            valueField: item.valueField
+        });
     },
 
     onInput: function(item){
@@ -243,7 +259,7 @@ Ext.define('Amun.Form', {
 
         var store = Ext.create('Ext.data.Store', {
             fields: ['value', 'name'],
-            data : data
+            data: data
         });
 
         // create combobox

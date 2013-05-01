@@ -1,6 +1,6 @@
 
 Ext.define('Amun.service.core.service.Form', {
-    extend: 'Amun.Form',
+    extend: 'Amun.form.Form',
 
     formPanel: null,
     loadingPanel: null,

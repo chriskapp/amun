@@ -1,6 +1,6 @@
 
 Ext.define('Amun.service.user.group.Form', {
-    extend: 'Amun.Form',
+    extend: 'Amun.form.Form',
 
     initComponent: function(){
         var me = this;
@@ -36,6 +36,7 @@ Ext.define('Amun.service.user.group.Form', {
                                 itemId: 'right_' + result.entry[i].id,
                                 name: 'right_' + result.entry[i].id,
                                 inputValue: result.entry[i].id,
+                                width: 200,
                                 scope: this,
                                 handler: function(){
                                     this.updateRights();
@@ -52,6 +53,7 @@ Ext.define('Amun.service.user.group.Form', {
                             xtype: 'checkboxgroup',
                             fieldLabel: 'Rights',
                             columns: 3,
+                            style: 'margin-left:5px',
                             items: items
                         }];
 

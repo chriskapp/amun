@@ -2,7 +2,7 @@
 Ext.require('Amun.service.content.page.GadgetStore');
 
 Ext.define('Amun.service.content.page.Form', {
-    extend: 'Amun.Form',
+    extend: 'Amun.form.Form',
 
     formPanel: null,
     gadgetPanel: null,
@@ -29,7 +29,6 @@ Ext.define('Amun.service.content.page.Form', {
             name: 'gadgets',
             value: ''
         });
-        this.formPanel.region = 'center';
 
         // build gadgets
         this.gadgetPanel = null;

@@ -175,12 +175,20 @@ Ext.define('Amun.Grid', {
             if (extClass != null) {
                 form = Ext.create(className, {
                     recordId: this.getSelectedRecordId(),
-                    form: result
+                    form: result,
+                    fieldDefaults: {
+                        labelWidth: 120,
+                        width: 340
+                    }
                 });
             } else {
-                form = Ext.create('Amun.Form', {
+                form = Ext.create('Amun.form.Form', {
                     recordId: this.getSelectedRecordId(),
-                    form: result
+                    form: result,
+                    fieldDefaults: {
+                        labelWidth: 120,
+                        width: 340
+                    }
                 });
             }
 
@@ -240,7 +248,7 @@ Ext.define('Amun.Grid', {
             closeAction: 'hide',
             width: 800,
             height: 600,
-            resizeable: false,
+            resizable: false,
             layout: 'fit',
             items: [panel]
         });

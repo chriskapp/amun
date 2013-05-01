@@ -1,5 +1,5 @@
 
-Ext.define('Amun.Editor', {
+Ext.define('Amun.form.Editor', {
     extend: 'Ext.form.field.Text',
 
     alias: 'widget.aceeditor',
