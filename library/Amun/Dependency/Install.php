@@ -46,7 +46,7 @@ use PSX\Template;
  * @package    Amun_Dependency
  * @version    $Revision: 818 $
  */
-class Install extends DependencyAbstract
+class Install extends Request
 {
 	public function setup()
 	{
@@ -65,30 +65,6 @@ class Install extends DependencyAbstract
 		$this->getUser();
 	}
 
-	public function getBase()
-	{
-		if($this->has('base'))
-		{
-			return $this->get('base');
-		}
-
-		return $this->set('base', new Base($this->config));
-	}
-
-	public function getSql()
-	{
-		if($this->has('sql'))
-		{
-			return $this->get('sql');
-		}
-
-		return $this->set('sql', new Sql($this->config['psx_sql_host'],
-			$this->config['psx_sql_user'],
-			$this->config['psx_sql_pw'],
-			$this->config['psx_sql_db'])
-		);
-	}
-
 	public function getRegistry()
 	{
 		if($this->has('registry'))
@@ -104,46 +80,6 @@ class Install extends DependencyAbstract
 		{
 			return $this->set('registry', new \RegistryNoDb($this->getConfig(), $this->getSql()));
 		}
-	}
-
-	public function getEvent()
-	{
-		if($this->has('event'))
-		{
-			return $this->get('event');
-		}
-
-		return $this->set('event', Event::initInstance($this->getRegistry()));
-	}
-
-	public function getValidate()
-	{
-		if($this->has('validate'))
-		{
-			return $this->get('validate');
-		}
-
-		return $this->set('validate', new Validate());
-	}
-
-	public function getGet()
-	{
-		if($this->has('get'))
-		{
-			return $this->get('get');
-		}
-
-		return $this->set('get', new Input\Get($this->getValidate()));
-	}
-
-	public function getPost()
-	{
-		if($this->has('post'))
-		{
-			return $this->get('post');
-		}
-
-		return $this->set('post', new Input\Post($this->getValidate()));
 	}
 
 	public function getSession()

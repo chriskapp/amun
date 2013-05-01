@@ -1,7 +1,6 @@
 
 [FEATURES]
 
-[ ] fix installer
 [ ] build backend for approval system
 [ ] extend navigation to show a dropdown if child pages ar available
 [ ] add api bulk operations by accepting resultset in an post. We could use
@@ -57,6 +56,7 @@
     framework because its not amun specific and a well written proxy is in
     general needed
 [ ] test ostatus remote subscription interoperability
+[x] fix installer
 [x] added modal window to add or edit records on the website
 [x] Implement reference input field in backend
 [x] add api to preview render an markdown text

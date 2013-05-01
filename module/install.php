@@ -351,14 +351,14 @@ SQL;
 
 			if($count == 0)
 			{
-				$handler = new Service\Handler($this->user);
+				$handler = new Service\Handler($this->getContainer(), $this->user);
 				$errors  = array();
 
 				foreach($this->services as $source)
 				{
 					try
 					{
-						$service = DataFactory::getTable('Core_Service')->getRecord();
+						$service = $handler->getRecord();
 						$service->setSource($source);
 
 						$handler->create($service);
@@ -553,9 +553,9 @@ SQL;
 
 			if($count == 0)
 			{
-				$handler = new Account\Handler($this->user);
+				$handler = new Account\Handler($this->getContainer(), $this->user);
 
-				$account = DataFactory::getTable('User_Account')->getRecord();
+				$account = $handler->getRecord();
 				$account->setGroupId(1);
 				$account->setStatus(Account\Record::ADMINISTRATOR);
 				$account->setIdentity($email);
@@ -603,9 +603,9 @@ SQL;
 
 
 				// insert api
-				$handler = new Oauth\Handler($this->user);
+				$handler = new Oauth\Handler($this->getContainer(), $this->user);
 
-				$api = DataFactory::getTable('Oauth')->getRecord();
+				$api = $handler->getRecord();
 				$api->setStatus(Oauth\Record::NORMAL);
 				$api->setName('System');
 				$api->setEmail($email);
@@ -661,11 +661,11 @@ SQL;
 
 			if($count == 1)
 			{
-				$handler = new Group\Handler($this->user);
+				$handler = new Group\Handler($this->getContainer(), $this->user);
 
 
 				// normal group
-				$group = DataFactory::getTable('User_Group')->getRecord();
+				$group = $handler->getRecord();
 				$group->setTitle('Normal');
 
 				$handler->create($group);
@@ -704,7 +704,7 @@ SQL;
 
 
 				// anonymous group
-				$group = DataFactory::getTable('User_Group')->getRecord();
+				$group = $handler->getRecord();
 				$group->setTitle('Anonymous');
 
 				$handler->create($group);
@@ -733,10 +733,10 @@ SQL;
 
 			if($count == 1)
 			{
-				$handler = new Account\Handler($this->user);
+				$handler = new Account\Handler($this->getContainer(), $this->user);
 
 				// anonymous
-				$record = DataFactory::getTable('User_Account')->getRecord();
+				$record = $handler->getRecord();
 				$record->setGroupId(3);
 				$record->setStatus(Account\Record::ANONYMOUS);
 				$record->setIdentity('anonymous@anonymous.com');
@@ -764,10 +764,10 @@ SQL;
 
 			if($count == 0)
 			{
-				$handler = new ContentPage\Handler($this->user);
+				$handler = new ContentPage\Handler($this->getContainer(), $this->user);
 
 				// root
-				$record = DataFactory::getTable('Content_Page')->getRecord();
+				$record = $handler->getRecord();
 				$record->setParentId(0);
 				$record->setServiceId($servicePageId);
 				$record->setStatus(ContentPage\Record::HIDDEN);
@@ -778,7 +778,7 @@ SQL;
 
 
 				// home
-				$record = DataFactory::getTable('Content_Page')->getRecord();
+				$record = $handler->getRecord();
 				$record->setParentId(1);
 				$record->setServiceId($servicePageId);
 				$record->setStatus(ContentPage\Record::NORMAL);
@@ -789,7 +789,7 @@ SQL;
 
 
 				// my
-				$record = DataFactory::getTable('Content_Page')->getRecord();
+				$record = $handler->getRecord();
 				$record->setParentId(1);
 				$record->setServiceId($serviceMyId);
 				$record->setStatus(ContentPage\Record::HIDDEN);
@@ -800,7 +800,7 @@ SQL;
 
 
 				// profile
-				$record = DataFactory::getTable('Content_Page')->getRecord();
+				$record = $handler->getRecord();
 				$record->setParentId(1);
 				$record->setServiceId($serviceProfileId);
 				$record->setStatus(ContentPage\Record::HIDDEN);
@@ -811,7 +811,7 @@ SQL;
 
 
 				// help
-				$record = DataFactory::getTable('Content_Page')->getRecord();
+				$record = $handler->getRecord();
 				$record->setParentId(1);
 				$record->setServiceId($servicePageId);
 				$record->setStatus(ContentPage\Record::HIDDEN);
@@ -827,7 +827,7 @@ SQL;
 
 			if($count == 0)
 			{
-				$handler = new Page\Handler($this->user);
+				$handler = new Page\Handler($this->getContainer(), $this->user);
 
 				// root
 				$content = <<<TEXT
@@ -836,7 +836,7 @@ SQL;
 <p>The web server software is running but no content has been added, yet.</p>
 TEXT;
 
-				$record = DataFactory::getTable('Page')->getRecord();
+				$record = $handler->getRecord();
 				$record->setPageId(1);
 				$record->setContent($content);
 
@@ -849,7 +849,7 @@ TEXT;
 <p>consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
 TEXT;
 
-				$record = DataFactory::getTable('Page')->getRecord();
+				$record = $handler->getRecord();
 				$record->setPageId(2);
 				$record->setContent($content);
 
@@ -957,7 +957,7 @@ tempor invidunt ut labore
 
 TEXT;
 
-				$record = DataFactory::getTable('Page')->getRecord();
+				$record = $handler->getRecord();
 				$record->setPageId(5);
 				$record->setContent($content);
 
