@@ -253,6 +253,7 @@ SQL;
 			$q[] = <<<SQL
 CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_service']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
+  `providerId` int(10) NOT NULL DEFAULT '0',
   `status` int(10) NOT NULL,
   `source` varchar(128) NOT NULL,
   `name` varchar(32) NOT NULL,

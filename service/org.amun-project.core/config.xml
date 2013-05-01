@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="10bf64e5385b9bf3dfd548d59bd512440437bdb4">
+<service xmlns="http://amun-project.org" signature="1e89ad82944e1f6edb0db6cd9e7c0a0fdde267fa">
   <status>system</status>
   <name>core</name>
   <description>Contains the core functionalities of amun</description>
@@ -169,6 +169,7 @@
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_service}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
+  `providerId` int(10) NOT NULL DEFAULT '0',
   `status` int(10) NOT NULL,
   `source` varchar(128) NOT NULL,
   `name` varchar(32) NOT NULL,
