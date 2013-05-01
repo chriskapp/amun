@@ -57,8 +57,7 @@ class Record extends RecordAbstract
 	protected $_page;
 	protected $_user;
 	protected $_date;
-	protected $_replyCount;
-	protected $_lastReply;
+	protected $_replyDate;
 
 	public function setId($id)
 	{
@@ -201,37 +200,6 @@ class Record extends RecordAbstract
 		return $this->_date;
 	}
 
-	public function getReplyCount()
-	{
-		if($this->_replyCount === null)
-		{
-			$this->_replyCount = DataFactory::getTable('Comment')
-				->select()
-				->where('pageId', '=', $this->pageId)
-				->where('refId', '=', $this->id)
-				->getTotalResults();
-		}
-
-		return $this->_replyCount;
-	}
-
-	public function getLastReply()
-	{
-		if($this->_lastReply === null)
-		{
-			$this->_lastReply = DataFactory::getTable('Comment')
-				->select(array('id', 'sticky', 'closed', 'pageId', 'title', 'url', 'date'))
-				->join(Join::INNER, DataFactory::getTable('User_Account')
-					->select(array('name', 'profileUrl'), 'author')
-				)
-				->where('pageId', '=', $this->pageId)
-				->where('refId', '=', $this->id)
-				->getRow(Sql::FETCH_OBJECT);
-		}
-
-		return $this->_lastReply;
-	}
-
 	public function getUrl()
 	{
 		return $this->_config['psx_url'] . '/' . $this->_config['psx_dispatch'] . $this->pagePath . '/view/' . $this->id . '/' . $this->urlTitle;
@@ -245,6 +213,16 @@ class Record extends RecordAbstract
 	public function isClosed()
 	{
 		return (boolean) $this->closed;
+	}
+
+	public function getReplyDate()
+	{
+		if($this->_replyDate === null)
+		{
+			$this->_replyDate = new DateTime($this->replyDate, $this->_registry['core.default_timezone']);
+		}
+
+		return $this->_replyDate;
 	}
 
 	public function export(WriterResult $result)

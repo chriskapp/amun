@@ -44,6 +44,7 @@ class Table extends TableAbstract
 
 			'pageId' => $this->registry['table.content_page'],
 			'userId' => $this->registry['table.user_account'],
+			'replyUserId' => $this->registry['table.user_account'],
 
 		);
 	}
@@ -67,6 +68,9 @@ class Table extends TableAbstract
 			'title' => self::TYPE_VARCHAR | 128,
 			'text' => self::TYPE_LONGTEXT,
 			'date' => self::TYPE_DATETIME,
+			'replyUserId' => self::TYPE_INT | 10,
+			'replyCount' => self::TYPE_INT | 10,
+			'replyDate' => self::TYPE_DATETIME,
 
 		);
 	}

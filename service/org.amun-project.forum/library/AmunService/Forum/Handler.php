@@ -48,6 +48,52 @@ use PSX\Sql\Join;
  */
 class Handler extends ApproveHandlerAbstract
 {
+	public function getThreadsByPageId($pageId)
+	{
+		$sql = <<<SQL
+SELECT
+	`forum`.`id`,
+	`forum`.`sticky`,
+	`forum`.`closed`,
+	`forum`.`pageId`,
+	`forum`.`title`,
+	`forum`.`url`,
+	`forum`.`date`,
+	`author`.`name` AS `authorName`,
+	`author`.`profileUrl` AS `authorProfileUrl`,
+	(SELECT 
+		COUNT(`id`) 
+	FROM 
+		{$this->registry['table.comment']} `comment`
+	WHERE 
+		`comment`.`pageId` = ?
+	AND
+		`comment`.`refId` = `forum`.`id`) AS `replyCount`,
+	(SELECT 
+		COUNT(`id`) 
+	FROM 
+		{$this->registry['table.comment']} `comment`
+	INNER JOIN
+		{$this->registry['table.user_account']} `commentAuthor`
+		ON ``
+	WHERE 
+		`comment`.`pageId` = ?
+	AND
+		`comment`.`refId` = `forum`.`id`) AS `lastReply`
+FROM
+	{$this->registry['table.forum']} `forum`
+INNER JOIN
+	{$this->registry['table.user_account']} `author`
+	ON `userId` = `author`.`id`
+WHERE
+	`forum`.`pageId` = ?
+ORDER BY
+	`forum`.`sticky` DESC, `forum`.`id` DESC
+SQL;
+
+
+	}
+
 	public function create(RecordInterface $record)
 	{
 		if($record->hasFields('pageId', 'urlTitle', 'title', 'text'))
@@ -159,15 +205,16 @@ class Handler extends ApproveHandlerAbstract
 	protected function getDefaultSelect()
 	{
 		return $this->table
-			->select(array('id', 'globalId', 'pageId', 'userId', 'sticky', 'closed', 'urlTitle', 'title', 'text', 'date'))
+			->select(array('id', 'globalId', 'pageId', 'userId', 'sticky', 'closed', 'urlTitle', 'title', 'text', 'date', 'replyUserId', 'replyCount', 'replyDate'))
 			->join(Join::INNER, DataFactory::getTable('User_Account')
 				->select(array('name', 'profileUrl'), 'author')
 			)
 			->join(Join::INNER, DataFactory::getTable('Content_Page')
 				->select(array('path'), 'page')
 			)
+			->join(Join::LEFT, DataFactory::getTable('User_Account')
+				->select(array('name', 'profileUrl'), 'reply')
+			, 'n:1', 'replyUserId')
 			->orderBy('sticky', Sql::SORT_DESC);
 	}
 }
-
-
