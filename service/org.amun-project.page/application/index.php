@@ -26,6 +26,7 @@ namespace page\application;
 
 use Amun\Exception;
 use Amun\Module\ApplicationAbstract;
+use AmunService\Page\Record;
 use PSX\Sql;
 
 /**
@@ -55,12 +56,23 @@ class index extends ApplicationAbstract
 			$this->template->assign('recordPage', $recordPage);
 
 			// options
+			if($recordPage instanceof Record)
+			{
+				$url = $this->service->getApiEndpoint() . '/form?format=json&method=update&id=' . $recordPage->id;
+			}
+			else
+			{
+				$url = $this->service->getApiEndpoint() . '/form?format=json&method=create&pageId=' . $this->page->id;
+			}
+
 			$this->setOptions(array(
-				array('page_edit', 'Edit', $this->page->url . '/edit' . (!empty($recordPage) ? '?id=' . $recordPage->id : ''))
+				array('page_edit', 'Edit', 'javascript:amun.services.page.showForm(\'' . $url . '\')')
 			));
 
 			// template
 			$this->htmlCss->add('page');
+			$this->htmlJs->add('page');
+			$this->htmlJs->add('ace');
 			$this->htmlJs->add('bootstrap');
 			$this->htmlJs->add('prettify');
 		}

@@ -27,7 +27,7 @@ namespace php\application;
 use Amun\Module\ApplicationAbstract;
 use Amun\Option;
 use Amun\Exception;
-use AmunService\Php;
+use AmunService\Php\Record;
 use PSX\Sql;
 
 /**
@@ -72,8 +72,17 @@ class index extends ApplicationAbstract
 
 
 			// options
+			if($recordPhp instanceof Record)
+			{
+				$url = $this->service->getApiEndpoint() . '/form?format=json&method=update&id=' . $recordPhp->id;
+			}
+			else
+			{
+				$url = $this->service->getApiEndpoint() . '/form?format=json&method=create&pageId=' . $this->page->id;
+			}
+
 			$options = new Option(__CLASS__, $this->registry, $this->user, $this->page);
-			$options->add('php_edit', 'Edit', $this->page->url . '/edit' . (!empty($recordPhp) ? '?id=' . $recordPhp->id : ''));
+			$options->add('php_edit', 'Edit', 'javascript:amun.services.php.showForm(\'' . $url . '\')');
 			$options->load(array($this->page));
 
 			$this->template->assign('options', $options);
@@ -83,7 +92,7 @@ class index extends ApplicationAbstract
 			$phpResponse = null;
 			$phpError    = null;
 
-			if($recordPhp instanceof Php\Record)
+			if($recordPhp instanceof Record)
 			{
 				ob_start();
 
@@ -113,6 +122,9 @@ class index extends ApplicationAbstract
 
 			// template
 			$this->htmlCss->add('php');
+			$this->htmlJs->add('php');
+			$this->htmlJs->add('ace');
+			$this->htmlJs->add('bootstrap');
 			$this->htmlJs->add('prettify');
 		}
 		else

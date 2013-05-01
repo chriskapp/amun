@@ -50,12 +50,12 @@ class latestUser extends GadgetAbstract
 		$count = $this->args->get('count', 10);
 
 		// get latest user
-		$result = DataFactory::getTable('User_Account')
-			->select(array('id', 'name', 'thumbnailUrl', 'profileUrl', 'date'))
-			->orderBy('date', Sql::SORT_DESC)
-			->limit($count)
-			->getAll(Sql::FETCH_OBJECT);
-
+		$handler = DataFactory::get('User_Account');
+		$result  = $handler->getAll(array('id', 
+			'name', 
+			'thumbnailUrl', 
+			'profileUrl', 
+			'date'), 0, $count, 'id', Sql::SORT_DESC, null, Sql::FETCH_OBJECT);
 
 		$this->display($result);
 	}

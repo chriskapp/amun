@@ -1,70 +1,38 @@
 
 amun.services.news = {
 
-	loadForm: function(cId, url){
-		var form = new amun.form(cId, url);
-
-		form.addButton('Preview', function(){
+	showForm: function(url){
+		var win = new amun.window(url);
+		win.addButton('Preview', 'btn', function(){
 			// if we have an ace editor
-			for (var k in amun.store.editors) {
-				var editor = amun.store.editors[k];
+			var editors = this.getClient().getEditors();
+			for (var k in editors) {
+				var editor = editors[k];
 				var value = editor.getSession().getValue();
 
 				$.post(amun.config.url + 'api/content/page/render?markdown=1', value, function(resp){
-					$('#preview').html(resp).fadeIn();
+					$('#amun-form-window-preview').html(resp).fadeIn();
 				});
 			}
 		});
-
-		form.onError(function(msg){
-			$('#response').html('<div class="alert alert-error">' + msg + '</div>');
+		win.beforeShow(function(){
+			$('#amun-form-window-preview').css('display', 'none');
 		});
-
-		form.onLoad(function(cId){
-			var client = new amun.client(cId);
-
-			client.beforeSubmit(function(){
-				$('#' + this.getContainerId() + ' input[type=submit]').attr('disabled', 'disabled');
-			});
-
-			client.afterSubmit(function(){
-				$('#' + this.getContainerId() + ' input[type=submit]').removeAttr('disabled');
-			});
-
-			client.onSuccess(function(msg){
-				location = amun.util.getParentLocation();
-			});
-
-			client.onError(function(msg){
-				$('#response').html('<div class="alert alert-error">' + msg + '</div>');
-			});
-
-			// transform textarea
-			$('#' + cId + ' textarea').each(function(){
-				var ref = $(this).attr('id');
-
-				$(this).replaceWith('<div style="height:400px;"><div id="' + ref + '" title="' + ref + '" style="position:absolute;width:920px;height:400px;margin:0 auto;border:1px solid #666;">' + $(this).html() + '</div></div>');
-
-				var editor = ace.edit(ref);
-				editor.setTheme("ace/theme/eclipse");
-
-				var mode = require("ace/mode/html").Mode;
-				editor.getSession().setMode(new mode());
-
-				amun.store.editors[ref] = editor;
-			});
+		win.onSuccess(function(){
+			setTimeout('location.reload()', 600);
 		});
-
-		form.load();
+		win.show();
 	},
 
 	loadCommentForm: function(cId, url){
 		var form = new amun.form(cId, url);
+		var client;
 
-		form.addButton('Preview', function(){
+		form.addButton('Preview', 'btn', function(){
 			// if we have an ace editor
-			for (var k in amun.store.editors) {
-				var editor = amun.store.editors[k];
+			var editors = client.getEditors();
+			for (var k in editors) {
+				var editor = editors[k];
 				var value = editor.getSession().getValue();
 
 				$.post(amun.config.url + 'api/content/page/render?markdown=1&oembed=1', value, function(resp){
@@ -78,7 +46,7 @@ amun.services.news = {
 		});
 
 		form.onLoad(function(cId){
-			var client = new amun.client(cId);
+			client = new amun.client(cId);
 
 			client.beforeSubmit(function(){
 				$('#' + this.getContainerId() + ' input[type=submit]').attr('disabled', 'disabled');
@@ -93,8 +61,9 @@ amun.services.news = {
 				$('#preview').fadeOut();
 
 				// clear textfield
-				for (var ref in amun.store.editors) {
-					amun.store.editors[ref].getSession().getDocument().setValue('');
+				var editors = client.getEditors();
+				for (var ref in editors) {
+					editors[ref].getSession().getDocument().setValue('');
 				}
 
 				// append new post
@@ -130,8 +99,9 @@ amun.services.news = {
 			// transform textarea
 			$('#' + cId + ' textarea').each(function(){
 				var ref = $(this).attr('id');
+				var name = $(this).attr('name');
 
-				$(this).replaceWith('<div style="height:240px;"><div id="' + ref + '" title="' + ref + '" style="position:absolute;width:550px;height:230px;margin:0 auto;border:1px solid #666;">' + $(this).html() + '</div></div>');
+				$(this).replaceWith('<div style="height:240px;"><div id="' + ref + '" title="' + ref + '" data-name="' + name + '" style="position:absolute;width:550px;height:230px;margin:0 auto;border:1px solid #666;">' + $(this).html() + '</div></div>');
 
 				var editor = ace.edit(ref);
 				editor.setTheme("ace/theme/eclipse");
@@ -139,7 +109,7 @@ amun.services.news = {
 				var mode = require("ace/mode/markdown").Mode;
 				editor.getSession().setMode(new mode());
 
-				amun.store.editors[ref] = editor;
+				client.addEditor(ref, editor);
 			});
 
 		});

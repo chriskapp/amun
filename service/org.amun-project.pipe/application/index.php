@@ -27,7 +27,7 @@ namespace pipe\application;
 use Amun\Module\ApplicationAbstract;
 use Amun\Exception;
 use Amun\Option;
-use AmunService\Pipe;
+use AmunService\Pipe\Record;
 use PSX\Sql;
 
 /**
@@ -58,7 +58,7 @@ class index extends ApplicationAbstract
 
 
 			// check whether user has the media right
-			if($recordPipe instanceof Pipe\Record && (!empty($recordPipe->mediaRightId) && !$this->user->hasRightId($recordPipe->mediaRightId)))
+			if($recordPipe instanceof Record && (!empty($recordPipe->mediaRightId) && !$this->user->hasRightId($recordPipe->mediaRightId)))
 			{
 				throw new Exception('Access not allowed');
 			}
@@ -68,7 +68,7 @@ class index extends ApplicationAbstract
 			$embedded = $this->get->embedded('boolean');
 			$content  = '';
 
-			if($recordPipe instanceof Pipe\Record)
+			if($recordPipe instanceof Record)
 			{
 				$content = $recordPipe->getContent();
 			}
@@ -85,8 +85,17 @@ class index extends ApplicationAbstract
 
 
 			// options
+			if($recordPipe instanceof Record)
+			{
+				$url = $this->service->getApiEndpoint() . '/form?format=json&method=update&id=' . $recordPipe->id;
+			}
+			else
+			{
+				$url = $this->service->getApiEndpoint() . '/form?format=json&method=create&pageId=' . $this->page->id;
+			}
+
 			$options = new Option(__CLASS__, $this->registry, $this->user, $this->page);
-			$options->add('pipe_edit', 'Edit', $this->page->url . '/edit' . (!empty($recordPipe) ? '?id=' . $recordPipe->id : ''));
+			$options->add('pipe_edit', 'Edit', 'javascript:amun.services.pipe.showForm(\'' . $url . '\')');
 			$options->load(array($this->page));
 
 			$this->template->assign('options', $options);
@@ -94,6 +103,8 @@ class index extends ApplicationAbstract
 
 			// template
 			$this->htmlCss->add('pipe');
+			$this->htmlJs->add('pipe');
+			$this->htmlJs->add('ace');
 			$this->htmlJs->add('bootstrap');
 			$this->htmlJs->add('prettify');
 

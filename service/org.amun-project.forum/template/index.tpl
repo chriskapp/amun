@@ -35,14 +35,13 @@
 				on <time datetime="<?php echo $record->getDate()->format(DateTime::ATOM); ?>"><?php echo $record->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></time>
 			</p>
 		</td>
-		<td><?php echo $record->getReplyCount(); ?></td>
+		<td><?php echo $record->replyCount; ?></td>
 		<td>
-			<?php $lastReply = $record->getLastReply(); ?>
-			<?php if(!empty($lastReply)): ?>
+			<?php if(!empty($record->replyName)): ?>
 			<div class="amun-service-forum-entry-lastcomment">
-				by <a href="<?php echo $lastReply->authorProfileUrl; ?>"><?php echo $lastReply->authorName; ?></a>
+				by <a href="<?php echo $record->replyProfileUrl; ?>"><?php echo $record->replyName; ?></a>
 				<br />
-				on <time datetime="<?php echo $lastReply->getDate()->format(DateTime::ATOM); ?>"><?php echo $lastReply->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></time>
+				on <time datetime="<?php echo $record->getReplyDate()->format(DateTime::ATOM); ?>"><?php echo $record->getReplyDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></time>
 			</div>
 			<?php else: ?>
 			-

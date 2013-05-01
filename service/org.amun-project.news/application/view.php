@@ -79,8 +79,10 @@ class view extends ApplicationAbstract
 			$this->path->add($recordNews->title, $this->page->url . '/view?id=' . $this->id);
 
 			// options
+			$url = $this->service->getApiEndpoint() . '/form?format=json&method=update&id=' . $this->id;
+
 			$this->setOptions(array(
-				array('news_edit', 'Edit', $this->page->url . '/edit?id=' . $this->id)
+				array('news_edit', 'Edit', 'javascript:amun.services.news.showForm(\'' . $url . '\')')
 			));
 
 			// form url
@@ -91,10 +93,10 @@ class view extends ApplicationAbstract
 			// template
 			$this->htmlCss->add('news');
 			$this->htmlCss->add('comment');
-			$this->htmlJs->add('amun');
 			$this->htmlJs->add('news');
-			$this->htmlJs->add('prettify');
 			$this->htmlJs->add('ace');
+			$this->htmlJs->add('bootstrap');
+			$this->htmlJs->add('prettify');
 		}
 		else
 		{

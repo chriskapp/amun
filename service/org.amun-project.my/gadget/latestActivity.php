@@ -28,6 +28,7 @@ use Amun\Module\GadgetAbstract;
 use Amun\DataFactory;
 use PSX\DateTime;
 use PSX\Sql;
+use PSX\Sql\Condition;
 use PSX\Sql\Join;
 
 /**
@@ -51,16 +52,18 @@ class latestActivity extends GadgetAbstract
 	{
 		$count = $this->args->get('count', 8);
 
+		// condition
+		$con = new Condition(array('scope', '=', 0));
+
 		// get activities
-		$result = DataFactory::getTable('User_Activity')
-			->select(array('id', 'scope', 'summary', 'date'))
-			->join(Join::INNER, DataFactory::getTable('User_Account')
-				->select(array('id', 'name', 'thumbnailUrl'), 'author')
-			)
-			->where('scope', '=', 0)
-			->orderBy('date', Sql::SORT_DESC)
-			->limit($count)
-			->getAll();
+		$handler = DataFactory::get('User_Activity');
+		$result  = $handler->getAll(array('id', 
+			'scope', 
+			'summary', 
+			'date', 
+			'authorId', 
+			'authorName', 
+			'authorThumbnailUrl'), 0, $count, 'date', Sql::SORT_DESC, $con);
 
 		$this->display($result);
 	}

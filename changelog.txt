@@ -1,5 +1,7 @@
 
 0.4.1 beta
+* Added modal window to add or edit content at the frontend
+* Improved extjs backend
 * Added vcshook service to consume commit webhooks from github, googleproject
 * Backend added page drag n drop reorder
 * Using composer as dependency manager

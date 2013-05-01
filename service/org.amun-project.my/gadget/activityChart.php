@@ -28,8 +28,8 @@ use Amun\Module\GadgetAbstract;
 use Amun\DataFactory;
 use DateInterval;
 use PSX\DateTime;
-use PSX\DateTime;
 use PSX\Sql;
+use PSX\Sql\Condition;
 
 /**
  * activityChart
@@ -58,12 +58,20 @@ class activityChart extends GadgetAbstract
 
 		$act = array();
 
+		// condition
+		$con = new Condition();
+		$con->add('scope', '=', 0);
+		$con->add('date', '>=', $past->format(DateTime::SQL));
 
-		$result = DataFactory::getTable('User_Activity')
-			->select(array('date'))
-			->where('date', '>=', $past->format(DateTime::SQL))
-			->orderBy('date', Sql::SORT_ASC)
-			->getAll();
+		// get activities
+		$handler = DataFactory::get('User_Activity');
+		$result  = $handler->getAll(array('id', 
+			'scope', 
+			'summary', 
+			'date', 
+			'authorId', 
+			'authorName', 
+			'authorThumbnailUrl'), 0, 64, 'date', Sql::SORT_ASC, $con);
 
 		foreach($result as $row)
 		{

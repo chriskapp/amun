@@ -1,11 +1,11 @@
 
 [FEATURES]
 
+[ ] build backend for approval system
 [ ] extend navigation to show a dropdown if child pages ar available
 [ ] add api bulk operations by accepting resultset in an post. We could use
     annotations to declare the object type in array problem is that we need to
-    pass an table into the contructor of an record
-[ ] Implement reference input field in backend
+    pass an table into the contructor of an record and also the di container
 [ ] implement page option 
 [ ] the next step in the amun infrastructure is to build an packetmanager for
     services. That means we need a host service wich offers a list of services 
@@ -56,6 +56,8 @@
     framework because its not amun specific and a well written proxy is in
     general needed
 [ ] test ostatus remote subscription interoperability
+[x] added modal window to add or edit records on the website
+[x] Implement reference input field in backend
 [x] add api to preview render an markdown text
 [x] implement content page sort api to reorder pages
 

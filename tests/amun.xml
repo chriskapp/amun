@@ -3423,6 +3423,11 @@ echo $_SERVER['REMOTE_ADDR'];</field>
 		<field name="groupId">1</field>
 		<field name="rightId">157</field>
 	</row>
+	<row>
+		<field name="id">201</field>
+		<field name="groupId">1</field>
+		<field name="rightId">158</field>
+	</row>
 	</table_data>
 	<table_data name="amun_user_right">
 	<row>
@@ -4366,6 +4371,12 @@ echo $_SERVER['REMOTE_ADDR'];</field>
 		<field name="serviceId">6</field>
 		<field name="name">core_service_provider_delete</field>
 		<field name="description">Core Service Provider delete</field>
+	</row>
+	<row>
+		<field name="id">158</field>
+		<field name="serviceId">16</field>
+		<field name="name">content_page_preview</field>
+		<field name="description">Content Page preview</field>
 	</row>
 	</table_data>
 	<table_data name="amun_xrds">

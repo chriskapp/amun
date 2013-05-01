@@ -58,25 +58,22 @@ class archive extends GadgetAbstract
 
 		$sql = <<<SQL
 SELECT
-
 	`news`.`id`                      AS `newsId`,
 	COUNT(`news`.`id`)               AS `newsCount`,
 	MONTHNAME(`news`.`date`)         AS `newsMonthname`,
 	DATE_FORMAT(`news`.`date`, '%m') AS `newsMonth`,
 	YEAR(`news`.`date`)              AS `newsYear`,
 	`page`.`path`                    AS `pagePath`
-
-	FROM {$this->registry['table.news']} `news`
-
-		INNER JOIN {$this->registry['table.content_page']} `page`
-
-		ON `news`.`pageId` = `page`.`id`
-
-			{$con}
-
-			GROUP BY `newsMonth`
-
-				ORDER BY `news`.`date` DESC
+FROM 
+	{$this->registry['table.news']} `news`
+INNER JOIN 
+	{$this->registry['table.content_page']} `page`
+	ON `news`.`pageId` = `page`.`id`
+{$con}
+GROUP BY 
+	`newsMonth`
+ORDER BY 
+	`news`.`date` DESC
 SQL;
 
 		$result = $this->sql->getAll($sql);

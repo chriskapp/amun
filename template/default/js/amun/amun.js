@@ -72,6 +72,7 @@
 		var target;
 		var contentType = 'application/x-www-form-urlencoded';
 		var data = {};
+		var editors = {};
 		var processData = true;
 		var containerId = cId;
 
@@ -91,6 +92,14 @@
 
 		this.setData = function(newData){
 			data = newData;
+		}
+
+		this.addEditor = function(ref, editor){
+			editors[ref] = editor;
+		}
+
+		this.getEditors = function(){
+			return editors;
 		}
 
 		this.getContentType = function(){
@@ -229,13 +238,10 @@
 				}
 
 				// if we have an ace editor
-				if (typeof amun.store.editors != 'undefined') {
-					for (var k in amun.store.editors) {
-						var editor = amun.store.editors[k];
-						var v = editor.getSession().getValue();
-
-						fields[k] = v;
-					}
+				for (var k in editors) {
+					var value = editors[k].getSession().getValue();
+					var name = $('#' + k).data('name');
+					fields[name] = value;
 				}
 
 				// handle data according to the enctype
@@ -306,14 +312,17 @@
 		var containerId;
 		var formUrl;
 		var lastFile;
-		var buttons = [];
 
 		var action;
 		var method;
 		var id;
+		var ns = '';
 
 		var loadCallback;
 		var errorCallback;
+
+		var buttons = [];
+		var showButtons = true;
 
 		this.getContainerId = function(){
 			return containerId;
@@ -327,6 +336,22 @@
 			errorCallback = callback;
 		}
 
+		this.addButton = function(name, cssClass, callback){
+			buttons.push({
+				name: name,
+				class: cssClass,
+				callback: callback
+			});
+		}
+
+		this.displayButtons = function(value){
+			showButtons = Boolean(value);
+		}
+
+		this.setNamespace = function(namespace){
+			ns = namespace + '-';
+		}
+
 		this.transform = function(form){
 			$('#' + this.getContainerId()).html(self.parseElements(form));
 
@@ -338,17 +363,10 @@
 			}
 
 			if (loadCallback) {
-				loadCallback.call(self, form.ref);
+				loadCallback.call(self, ns + form.ref);
 			}
 
 		}
-
-		this.addButton = function(name, callback){
-			buttons.push({
-				name: name,
-				callback: callback
-			});
-		};
 
 		this.parseElements = function(item){
 
@@ -363,7 +381,7 @@
 			switch (item['class']) {
 				case 'form':
 					var form = document.createElement('form');
-					form.setAttribute('id', item.ref);
+					form.setAttribute('id', ns + item.ref);
 					form.setAttribute('method', item.method);
 					form.setAttribute('action', item.action);
 					form.setAttribute('enctype', item.enctype);
@@ -372,30 +390,32 @@
 						form.appendChild(this.parseElements(item.item.children.item[i]));
 					}
 
-					var p = document.createElement('div');
-					p.setAttribute('class', 'form-actions');
-
-					var input = document.createElement('input');
-					input.setAttribute('class', 'btn btn-primary');
-					input.setAttribute('type', 'submit');
-					input.setAttribute('value', 'Submit');
-
-					p.appendChild(input);
-
 					// add buttons
-					if (buttons.length > 0) {
-						for (var i = 0; i < buttons.length; i++) {
-							var input = document.createElement('input');
-							input.setAttribute('class', 'btn');
-							input.setAttribute('type', 'button');
-							input.setAttribute('value', buttons[i].name);
-							input.addEventListener('click', buttons[i].callback, false);
+					if (showButtons) {
+						var div = document.createElement('div');
+						div.setAttribute('class', 'form-actions');
 
-							p.appendChild(input);
+						var input = document.createElement('input');
+						input.setAttribute('class', 'btn btn-primary');
+						input.setAttribute('type', 'submit');
+						input.setAttribute('value', 'Submit');
+
+						div.appendChild(input);
+
+						if (buttons.length > 0) {
+							for (var i = 0; i < buttons.length; i++) {
+								var input = document.createElement('input');
+								input.setAttribute('class', buttons[i].class);
+								input.setAttribute('type', 'button');
+								input.setAttribute('value', buttons[i].name);
+								input.addEventListener('click', buttons[i].callback, false);
+
+								div.appendChild(input);
+							}
 						}
-					}
 
-					form.appendChild(p);
+						form.appendChild(div);
+					}
 
 					return form;
 					break;
@@ -429,7 +449,7 @@
 					var input = document.createElement('input');
 					input.setAttribute('type', 'text');
 					input.setAttribute('name', item.ref);
-					input.setAttribute('id', item.ref);
+					input.setAttribute('id', ns + item.ref);
 					input.setAttribute('value', item.value || '');
 
 					if (item.disabled) {
@@ -458,7 +478,7 @@
 					var input = document.createElement('input');
 					input.setAttribute('type', 'text');
 					input.setAttribute('name', item.ref);
-					input.setAttribute('id', item.ref);
+					input.setAttribute('id', ns + item.ref);
 					input.setAttribute('value', item.value || '');
 
 					if (item.disabled) {
@@ -475,7 +495,7 @@
 					var input = document.createElement('input');
 					input.setAttribute('type', item.type);
 					input.setAttribute('name', item.ref);
-					input.setAttribute('id', item.ref);
+					input.setAttribute('id', ns + item.ref);
 					input.setAttribute('value', item.value || '');
 
 					if (item.disabled) {
@@ -511,7 +531,7 @@
 
 					var select = document.createElement('select');
 					select.setAttribute('name', item.ref);
-					select.setAttribute('id', item.ref);
+					select.setAttribute('id', ns + item.ref);
 
 					if (item.disabled) {
 						select.setAttribute('disabled', 'disabled');
@@ -547,7 +567,7 @@
 
 					var textarea = document.createElement('textarea');
 					textarea.setAttribute('name', item.ref);
-					textarea.setAttribute('id', item.ref);
+					textarea.setAttribute('id', ns + item.ref);
 
 					if (item.disabled) {
 						textarea.setAttribute('disabled', 'disabled');
@@ -600,6 +620,139 @@
 
 		containerId = cId;
 		formUrl = url;
+	}
+
+	/**
+	 * Shows an form in an modal dialog
+	 */
+	amun.window = function(formUrl){
+
+		var self = this;
+		var url = formUrl;
+		var buttons = [];
+		var form;
+		var client;
+
+		var beforeShowCallback;
+		var successCallback;
+		var errorCallback;
+
+		this.addButton = function(name, cssClass, callback){
+			buttons.push({
+				name: name,
+				class: cssClass,
+				callback: callback
+			});
+		}
+
+		this.beforeShow = function(callback){
+			beforeShowCallback = callback;
+		}
+
+		this.onSuccess = function(callback){
+			successCallback = callback;
+		}
+
+		this.onError = function(callback){
+			errorCallback = callback;
+		}
+
+		this.getForm = function(){
+			return form;
+		}
+
+		this.getClient = function(){
+			return client;
+		}
+
+		this.show = function(){
+			// add close button
+			this.addButton('Close', 'btn', function(){
+				$('#amun-form-window').modal('hide');
+			});
+
+			// add buttons
+			$('#amun-form-window-buttons').html('');
+			var btns = buttons;
+			btns.reverse();
+			for (var i = 0; i < btns.length; i++) {
+				var btn = document.createElement('button');
+				btn.setAttribute('class', btns[i].class);
+				btn.appendChild(document.createTextNode(btns[i].name));
+				btn.addEventListener('click', btns[i].callback.bind(this), false);
+
+				$('#amun-form-window-buttons').append(btn);
+			}
+
+			// on show event
+			$('#amun-form-window').on('show', function(){
+				form = new amun.form('amun-form-window-form', url);
+
+				form.onError(function(msg){
+					$('#amun-form-window-response').html('<div class="alert alert-error">' + msg + '</div>');
+				});
+
+				form.onLoad(function(cId){
+					client = new amun.client(cId);
+
+					client.beforeSubmit(function(){
+						$('#' + this.getContainerId() + ' input[type=submit]').attr('disabled', 'disabled');
+					});
+
+					client.afterSubmit(function(){
+						$('#' + this.getContainerId() + ' input[type=submit]').removeAttr('disabled');
+					});
+
+					client.onSuccess(function(msg){
+						$('#amun-form-window-response').html('<div class="alert alert-success">' + msg + '</div>');
+
+						if (successCallback) {
+							successCallback.call(self);
+						}
+					});
+
+					client.onError(function(msg){
+						$('#amun-form-window-response').html('<div class="alert alert-error">' + msg + '</div>');
+
+						if (errorCallback) {
+							errorCallback.call(self);
+						}
+					});
+
+					// transform textarea
+					$('#' + cId + ' textarea').each(function(){
+						var ref = $(this).attr('id');
+						var name = $(this).attr('name');
+
+						$(this).replaceWith('<div style="height:320px;"><div id="' + ref + '" title="' + ref + '" data-name="' + name + '" style="position:relative;width:740px;height:320px;border:1px solid #666;">' + $(this).html() + '</div></div>');
+
+						var editor = ace.edit(ref);
+						editor.setTheme("ace/theme/eclipse");
+
+						var mode = require("ace/mode/html").Mode;
+						editor.getSession().setMode(new mode());
+
+						client.addEditor(ref, editor);
+					});
+				});
+
+				form.setNamespace('afw');
+				form.displayButtons(false);
+				form.load();
+			});
+
+			if (beforeShowCallback) {
+				beforeShowCallback.call(self);
+			}
+
+			// show window
+			$('#amun-form-window').modal('show');
+		}
+
+		// add submit buttons
+		this.addButton('Save', 'btn btn-primary', function(){
+			$('#amun-form-window').find('form').submit();
+		});
 	}
 
 	/**

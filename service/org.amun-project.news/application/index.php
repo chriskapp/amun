@@ -61,12 +61,17 @@ class index extends ApplicationAbstract
 			$this->template->assign('resultNews', $resultNews);
 
 			// options
+			$url = $this->service->getApiEndpoint() . '/form?format=json&method=create&pageId=' . $this->page->id;
+
 			$this->setOptions(array(
-				array('news_add', 'Add', $this->page->url . '/add')
+				array('news_add', 'Add', 'javascript:amun.services.news.showForm(\'' . $url . '\')')
 			));
 
 			// template
 			$this->htmlCss->add('news');
+			$this->htmlJs->add('news');
+			$this->htmlJs->add('ace');
+			$this->htmlJs->add('bootstrap');
 			$this->htmlJs->add('prettify');
 			$this->htmlContent->add(Html\Content::META, Writer\Atom::link($this->page->title, $this->service->getApiEndpoint() . '?format=atom&filterBy=pageId&filterOp=equals&filterValue=' . $this->page->id));
 		}

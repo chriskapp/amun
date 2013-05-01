@@ -47,20 +47,18 @@ class userMap extends GadgetAbstract
 		$chd  = array();
 		$sql  = <<<SQL
 SELECT
-
 	`country`.`id`,
 	`country`.`code`,
 	COUNT(`country`.`id`) AS `count`
-
-	FROM {$this->registry['table.user_account']} `account`
-
-		INNER JOIN {$this->registry['table.country']} `country`
-
-			ON `account`.`countryId` = `country`.`id`
-
-			GROUP BY `account`.`countryId`
-
-				ORDER BY `account`.`id` ASC
+FROM 
+	{$this->registry['table.user_account']} `account`
+INNER JOIN 
+	{$this->registry['table.country']} `country`
+	ON `account`.`countryId` = `country`.`id`
+GROUP BY 
+	`account`.`countryId`
+ORDER BY 
+	`account`.`id` ASC
 SQL;
 
 		$result = $this->sql->getAll($sql);

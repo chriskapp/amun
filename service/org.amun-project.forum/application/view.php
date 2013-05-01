@@ -74,8 +74,10 @@ class view extends ApplicationAbstract
 			$this->path->add($recordForum->title, $this->page->url . '/view?id=' . $this->id);
 
 			// options
+			$url = $this->service->getApiEndpoint() . '/form?format=json&method=update&id=' . $this->id;
+
 			$options = array();
-			$options[] = array('forum_edit', 'Edit', $this->page->url . '/edit?id=' . $this->id);
+			$options[] = array('forum_edit', 'Edit', 'javascript:amun.services.forum.showForm(\'' . $url . '\')');
 
 			if($recordForum->isSticky())
 			{
@@ -105,10 +107,10 @@ class view extends ApplicationAbstract
 			// template
 			$this->htmlCss->add('forum');
 			$this->htmlCss->add('comment');
-			$this->htmlJs->add('amun');
 			$this->htmlJs->add('forum');
-			$this->htmlJs->add('prettify');
 			$this->htmlJs->add('ace');
+			$this->htmlJs->add('bootstrap');
+			$this->htmlJs->add('prettify');
 		}
 		else
 		{

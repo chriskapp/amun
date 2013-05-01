@@ -28,6 +28,7 @@ use Amun\Module\GadgetAbstract;
 use Amun\DataFactory;
 use PSX\DateTime;
 use PSX\Sql;
+use PSX\Sql\Condition;
 use PSX\Sql\Join;
 
 /**
@@ -54,24 +55,23 @@ class latestNews extends GadgetAbstract
 		$pageId = $this->args->get('pageId', 0);
 		$count  = $this->args->get('count', 8);
 
-		// get latest news
-		$select = DataFactory::getTable('News')
-			->select(array('id', 'urlTitle', 'title', 'date'))
-			->join(Join::INNER, DataFactory::getTable('User_Account')
-				->select(array('id', 'name', 'profileUrl'), 'author')
-			)
-			->join(Join::INNER, DataFactory::getTable('Content_Page')
-				->select(array('path'), 'page')
-			);
-
+		// condition
+		$con = null;
 		if(!empty($pageId))
 		{
-			$select->where('pageId', '=', $pageId);
+			$con = new Condition(array('pageId', '=', $pageId));
 		}
 
-		$result = $select->orderBy('date', Sql::SORT_DESC)
-			->limit($count)
-			->getAll(Sql::FETCH_OBJECT);
+		// get latest news		
+		$handler = DataFactory::get('News');
+		$result  = $handler->getAll(array('id', 
+			'urlTitle', 
+			'title', 
+			'date', 
+			'authorId', 
+			'authorName', 
+			'authorProfileUrl', 
+			'pagePath'), 0, $count, 'date', Sql::SORT_DESC, $con, Sql::FETCH_OBJECT);
 
 		$this->display($result);
 	}

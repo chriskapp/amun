@@ -42,12 +42,16 @@
   <registry>
     <table name="forum"/>
   </registry>
+  <event>
+    <listener name="core.record_change" class="\AmunService\Forum\RecordListener"/>
+  </event>
   <library>
     <dir name="AmunService">
       <dir name="Forum">
         <file name="Form.php" md5="31003c1b75dcab00e4e44b8ce65d736b"/>
         <file name="Handler.php" md5="49d6a7093cb920e75bcbf7e714348c9a"/>
         <file name="Record.php" md5="16138f7823cff7ffa8ff42abb6c1c34b"/>
+        <file name="RecordListener.php" md5="16138f7823cff7ffa8ff42abb6c1c34b"/>
         <file name="Table.php" md5="b7ae5090c8341aa687bb17e85da404ba"/>
       </dir>
     </dir>
@@ -64,6 +68,9 @@
   `title` VARCHAR(128) NOT NULL,
   `text` LONGTEXT NOT NULL,
   `date` DATETIME NOT NULL,
+  `replyCount` int(10) NOT NULL DEFAULT '0',
+  `replyUserId` int(10) DEFAULT NULL,
+  `replyDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
