@@ -47,6 +47,23 @@ use PSX\Sql\Join;
  */
 class Handler extends ApproveHandlerAbstract
 {
+	public function getByPageId($pageId, $mode = 0, $class = null, array $args = array())
+	{
+		if($mode == Sql::FETCH_OBJECT && $class === null)
+		{
+			$class = $this->getClassName();
+		}
+
+		if($mode == Sql::FETCH_OBJECT && empty($args))
+		{
+			$args = $this->getClassArgs();
+		}
+
+		return $this->getSelect()
+			->where('pageId', '=', $pageId)
+			->getRow($mode, $class, $args);
+	}
+
 	public function create(RecordInterface $record)
 	{
 		if($record->hasFields('pageId', 'refId', 'text'))
