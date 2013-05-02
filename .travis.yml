@@ -8,7 +8,7 @@ before_script:
   - pear channel-discover pear.phpunit.de
   - pear install phpunit/DbUnit
   - composer self-update
-  - composer install
+  - composer install --no-interaction --quiet
   - phpenv rehash
   - php -S 127.0.0.1:8000 &
   - sleep 4
