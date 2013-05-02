@@ -49,6 +49,7 @@ if (system.args.length >= 3) {
 var SUCCESS = 0x1;
 var FAILURE = 0x2;
 var NEXT = 0x3;
+var SKIP = 0x4;
 
 var cases = [];
 var result = [];
@@ -171,6 +172,7 @@ function completeTest(){
 	var failureCount = 0;
 	var out = new Writer();
 
+	out.print("\n");
 	out.print('TesTee 0.0.1 by Christoph Kappestein' + "\n");
 	out.print("\n");
 
@@ -181,6 +183,8 @@ function completeTest(){
 		} else if(result[i].code == FAILURE) {
 			failureCount++;
 			out.print('F');
+		} else if(result[i].code == SKIP) {
+			out.print('S');
 		}
 		if (i > 0 && i % 40 == 0) {
 			out.print("\n");
@@ -269,7 +273,7 @@ function runNextTest(){
 		}
 		if (status !== 'success') {
 			addResult({
-				code: FAILURE,
+				code: SKIP,
 				message: 'Unable to access network'
 			});
 			nextTestCase();
