@@ -693,7 +693,7 @@ CREATE TABLE `amun_media` (
 
 LOCK TABLES `amun_media` WRITE;
 /*!40000 ALTER TABLE `amun_media` DISABLE KEYS */;
-INSERT INTO `amun_media` VALUES (1,'0f52d88e-ac8f-5aad-8004-4c2169eef2f4',77,'paris_2.jpg','paris_2.jpg','image',221693,'image/jpeg','2013-04-12 20:52:58');
+INSERT INTO `amun_media` VALUES (1,'0f52d88e-ac8f-5aad-8004-4c2169eef2f4',77,'empty','empty','text',0,'text/plain','2013-04-12 20:52:58');
 /*!40000 ALTER TABLE `amun_media` ENABLE KEYS */;
 UNLOCK TABLES;
 

@@ -1318,11 +1318,11 @@ You can login with the new password at:
 		<field name="id">1</field>
 		<field name="globalId">0f52d88e-ac8f-5aad-8004-4c2169eef2f4</field>
 		<field name="rightId">77</field>
-		<field name="name">paris_2.jpg</field>
-		<field name="path">paris_2.jpg</field>
-		<field name="type">image</field>
-		<field name="size">221693</field>
-		<field name="mimeType">image/jpeg</field>
+		<field name="name">empty</field>
+		<field name="path">empty</field>
+		<field name="type">text</field>
+		<field name="size">0</field>
+		<field name="mimeType">text/plain</field>
 		<field name="date">2013-04-12 20:52:58</field>
 	</row>
 	</table_data>
