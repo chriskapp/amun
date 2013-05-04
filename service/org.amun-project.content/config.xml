@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="793b03acd53b11af8b0dc18aee10d36ada866f38">
+<service xmlns="http://amun-project.org" signature="4ab67b42c256addf71823f41a922f5222bb36c91">
   <status>system</status>
   <name>content</name>
   <description>Basic service wich handles pages and gadgets</description>
@@ -78,7 +78,7 @@
           <file name="Record.php" md5="6fce5bc1bcbc959b334665049e22339e"/>
           <file name="Table.php" md5="560e481251c6a9e18909cc213fd42b15"/>
         </dir>
-        <file name="LrddListener.php" md5="ec31e0e8b7d390b911c7c4d74d68224c"/>
+        <file name="LrddListener.php" md5="559407ad85178490463613d5c4eab84e"/>
         <dir name="Page">
           <dir name="Filter">
             <file name="Load.php" md5="098541889862c3e4ed03e7ca6314658e"/>
@@ -94,7 +94,7 @@
             <file name="Record.php" md5="545af303f2d73b88115f05c67bc1c894"/>
             <file name="Table.php" md5="d8f9499b17e52117882aef2ea319e449"/>
           </dir>
-          <file name="Handler.php" md5="4087191548ea85209e85d8c2c1d7c84e"/>
+          <file name="Handler.php" md5="00c47ad92918613b9ed56dc91a51a7da"/>
           <dir name="Option">
             <file name="Form.php" md5="63faf8cdfc82c195f6b23af6584c57eb"/>
             <file name="Handler.php" md5="0348ce8e85b63f75048ffe63b00b6ab8"/>

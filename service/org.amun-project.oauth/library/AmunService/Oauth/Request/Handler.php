@@ -48,14 +48,6 @@ use PSX\Sql\Join;
  */
 class Handler extends HandlerAbstract
 {
-	public function getByToken($token)
-	{
-		return DataFactory::getTable('Oauth_Request')
-			->select(array('apiId', 'status', 'callback', 'token', 'expire', 'date'))
-			->where('token', '=', $token)
-			->getRow();
-	}
-
 	public function create(RecordInterface $record)
 	{
 		throw new Exception('Requests can not created');

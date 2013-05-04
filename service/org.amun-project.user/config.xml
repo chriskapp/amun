@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="5f1951ceb935bf2f5e3c282481135ee0b872715b">
+<service xmlns="http://amun-project.org" signature="93714f15efb8777984c3a18c3421e4743d7405aa">
   <status>system</status>
   <name>user</name>
   <description>Basic service wich handles user groups and rights</description>
@@ -114,7 +114,7 @@
   <library>
     <dir name="AmunService">
       <dir name="User">
-        <file name="LrddListener.php" md5="e931d5484a8f469829adecc726147e7a"/>
+        <file name="LrddListener.php" md5="df169e55a05ebadd0f5b48fb9103583e"/>
         <dir name="Account">
           <dir name="Filter">
             <file name="Email.php" md5="f1853e34bdf6fbd7c48b61ad8f7d09ac"/>
@@ -126,7 +126,7 @@
             <file name="Timezone.php" md5="a6c190c65c83c7fc54848d6da62035d3"/>
           </dir>
           <file name="Form.php" md5="3cdd6ba025cb0ec03685d9ee4ad851c3"/>
-          <file name="Handler.php" md5="6e020706a9d0bcfee73727c11448fe39"/>
+          <file name="Handler.php" md5="5997b417a25816999b59656ae1ece3f6"/>
           <file name="Record.php" md5="da204614b9d66d6fb35478def5706ebc"/>
           <file name="Stream.php" md5="a25bc2dd2a294496d6114d538ab4453b"/>
           <file name="Table.php" md5="f3c1a68517ba07c9bcb1276d7c1c3049"/>
@@ -174,7 +174,7 @@
           <file name="Record.php" md5="f5825c6e54b3199de553ed8e32022e0c"/>
           <dir name="Right">
             <file name="Form.php" md5="511e2d7c325f3b2791dcfbf42668aa78"/>
-            <file name="Handler.php" md5="6560a9de410be5dd3cdd587c8775f4a0"/>
+            <file name="Handler.php" md5="748336f43be1b1cbc9934146456299eb"/>
             <file name="Record.php" md5="63cc7be0f8ae941afbedee85076e3e80"/>
             <file name="Table.php" md5="16d5798339db5b6c09f63987edfedb7b"/>
           </dir>

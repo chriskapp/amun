@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="1b99c83004a6ff56792bd2aab9f11c0307fd0605">
+<service xmlns="http://amun-project.org" signature="815ea38fc719782040795aca27edc130bee7f0b2">
   <status>system</status>
   <name>openid</name>
   <description>Provides an OpenID provider implementation</description>
@@ -59,7 +59,7 @@
           <file name="Status.php" md5="4adb23cce4aeb4488f637c487c1f6222"/>
         </dir>
         <file name="Form.php" md5="db60fa9d0294ff0e47682d2faea0cccb"/>
-        <file name="Handler.php" md5="e1509a5cfac3af5b75cfac0918ad767e"/>
+        <file name="Handler.php" md5="8c3e101a902ffbf36603ec51d574e1c2"/>
         <file name="Record.php" md5="a4b9caa30d9e5088881e61548d2c5183"/>
         <file name="Table.php" md5="98b70789a9340b2dcb2552382997a144"/>
       </dir>

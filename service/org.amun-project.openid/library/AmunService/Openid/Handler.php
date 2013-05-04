@@ -49,14 +49,6 @@ use PSX\Sql\Join;
  */
 class Handler extends HandlerAbstract
 {
-	public function getByConsumerKey($consumerKey)
-	{
-		return DataFactory::getTable('Openid')
-			->select(array('id', 'consumerKey'))
-			->where('consumerKey', '=', $consumerKey)
-			->getRow();
-	}
-
 	public function getStatus($userId, $assocId)
 	{
 		return (integer) DataFactory::getTable('Openid')

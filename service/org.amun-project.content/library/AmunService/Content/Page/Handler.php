@@ -47,7 +47,7 @@ use PSX\Sql\Join;
  */
 class Handler extends HandlerAbstract
 {
-	public function getByPath($path)
+	public function getOneByPath($path)
 	{
 		$class = $this->getClassName();
 		$args  = $this->getClassArgs();

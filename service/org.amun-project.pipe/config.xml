@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="128df795dbef1d78bafff62f98ad724b7cf5a8f0">
+<service xmlns="http://amun-project.org" signature="cddc93b636eeb73204e975d93a0cf0ab86860485">
   <status>normal</status>
   <name>pipe</name>
   <description>Service wich redirects the content of an media item to an page</description>
@@ -34,7 +34,7 @@
     <dir name="AmunService">
       <dir name="Pipe">
         <file name="Form.php" md5="29c8947d6d811fd59e956968205f19d2"/>
-        <file name="Handler.php" md5="d4f7b3346ab54122511812319af00282"/>
+        <file name="Handler.php" md5="8837119df0f1f4f0cae9d6ae0c67b698"/>
         <dir name="Processor">
           <file name="Exec.php" md5="166d7ce2b6ea893b72c4350a50484520"/>
           <file name="Highlite.php" md5="cc62aadbe7fb026b422a1d7a63ec93fc"/>
