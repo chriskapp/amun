@@ -61,7 +61,7 @@ class Handler extends HandlerAbstract
 			->where('id', '=', $applicationId)
 			->where('authorId', '=', $userId)
 			->where('allowed', '=', 1)
-			->getRow(Sql::FETCH_OBJECT);
+			->getRow(Sql::FETCH_OBJECT, $this->getClassName(), $this->getClassArgs());
 	}
 
 	public function isAllowed($apiId, $userId)
@@ -98,7 +98,7 @@ WHERE
 	`accessId` = ?
 SQL;
 
-		$this->sql->query($sql, array($accessId));
+		$this->sql->execute($sql, array($accessId));
 
 		// create sql query
 		$parts = array();
@@ -119,7 +119,7 @@ VALUES
 	{$sql}
 SQL;
 
-			$this->sql->query($sql);
+			$this->sql->execute($sql);
 		}
 	}
 

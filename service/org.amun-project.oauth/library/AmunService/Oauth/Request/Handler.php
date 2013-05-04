@@ -85,7 +85,7 @@ class Handler extends HandlerAbstract
 			->join(Join::INNER, DataFactory::getTable('Oauth')
 				->select(array('id', 'title'), 'api')
 			)
-			->join(Join::INNER, DataFactory::getTable('User_Account')
+			->join(Join::LEFT, DataFactory::getTable('User_Account')
 				->select(array('name', 'profileUrl'), 'author')
 			);
 	}
