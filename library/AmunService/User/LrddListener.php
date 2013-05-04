@@ -131,7 +131,7 @@ class LrddListener extends ListenerAbstract
 
 			// get account record
 			$handler = DataFactory::get('User_Account');
-			return $handler->getByName($name);
+			return $handler->getOneByName($name, array(), Sql::FETCH_OBJECT);
 		}
 	}
 }

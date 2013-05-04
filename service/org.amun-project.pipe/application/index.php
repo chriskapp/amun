@@ -52,7 +52,7 @@ class index extends ApplicationAbstract
 		if($this->user->hasRight('pipe_view'))
 		{
 			// load pipe
-			$recordPipe = $this->getHandler()->getByPageId($this->page->id, Sql::FETCH_OBJECT);
+			$recordPipe = $this->getHandler()->getOneByPageId($this->page->id, array(), Sql::FETCH_OBJECT);
 
 			$this->template->assign('recordPipe', $recordPipe);
 

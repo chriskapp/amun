@@ -59,7 +59,7 @@ class relation extends ApiAbstract
 				$relation = new Friend\Relation();
 				$relation->import($this->getRequest(ReaderInterface::FORM));
 
-				$handler = new Friend\Handler($this->user);
+				$handler = $this->getHandler('User_Friend');
 
 
 				// check if anonymous

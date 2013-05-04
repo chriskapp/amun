@@ -51,7 +51,7 @@ class index extends ApplicationAbstract
 		if($this->user->hasRight('page_view'))
 		{
 			// load page
-			$recordPage = $this->getHandler()->getByPageId($this->page->id, Sql::FETCH_OBJECT);
+			$recordPage = $this->getHandler()->getOneByPageId($this->page->id, array(), Sql::FETCH_OBJECT);
 
 			$this->template->assign('recordPage', $recordPage);
 

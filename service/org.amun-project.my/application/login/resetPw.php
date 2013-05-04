@@ -65,7 +65,8 @@ class resetPw extends ApplicationAbstract
 
 			if($token !== false)
 			{
-				$account = $this->getHandler('User_Account')->getRecoverByToken($token);
+				$handler = $this->getHandler('User_Account');
+				$account = $handler->getRecoverByToken($token);
 
 				if($account instanceof Account\Record)
 				{
@@ -79,7 +80,6 @@ class resetPw extends ApplicationAbstract
 							$account->setStatus(Account\Record::NORMAL);
 							$account->setPw($pw);
 
-							$handler = new Account\Handler($this->user);
 							$handler->update($account);
 
 							// send mail

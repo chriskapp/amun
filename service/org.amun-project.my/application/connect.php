@@ -323,7 +323,7 @@ class connect extends ApplicationAbstract
 	private function handleOauthExt()
 	{
 		$consumerKey = isset($this->oauth['consumer']) ? $this->oauth['consumer'] : null;
-		$row         = $this->getHandler('Openid')->getByConsumerKey($consumerKey);
+		$row         = $this->getHandler('Openid')->getOneByConsumerKey($consumerKey);
 
 		if(!empty($row))
 		{

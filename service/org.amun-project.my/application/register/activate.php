@@ -65,7 +65,8 @@ class activate extends ApplicationAbstract
 
 			if($token !== false)
 			{
-				$account = $this->getHandler('User_Account')->getNotActivatedByToken($token);
+				$handler = $this->getHandler('User_Account');
+				$account = $handler->getNotActivatedByToken($token);
 
 				if($account instanceof Account\Record)
 				{
@@ -83,7 +84,6 @@ class activate extends ApplicationAbstract
 						{
 							$account->setStatus(Account\Record::NORMAL);
 
-							$handler = new Account\Handler($this->user);
 							$handler->update($account);
 
 

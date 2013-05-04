@@ -45,7 +45,7 @@ class index extends ApplicationAbstract
 	{
 		if($this->user->hasRight('file_view'))
 		{
-			$file = $this->getHandler()->getByPageId($this->page->id);
+			$file = $this->getHandler()->getOneByPageId($this->page->id);
 
 			if(!empty($file))
 			{

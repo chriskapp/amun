@@ -106,7 +106,7 @@ class view extends ApplicationAbstract
 
 	private function getNews()
 	{
-		$result = $this->getHandler()->getById($this->id, 
+		$result = $this->getHandler()->getOneById($this->id, 
 			array(), 
 			Sql::FETCH_OBJECT);
 

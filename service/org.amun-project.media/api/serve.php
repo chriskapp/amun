@@ -59,11 +59,11 @@ class serve extends ApiAbstract
 
 			if(strlen($mediaId) == 36)
 			{
-				$media = $this->getHandler()->getByGlobalId($mediaId);
+				$media = $this->getHandler()->getOneByGlobalId($mediaId);
 			}
 			else
 			{
-				$media = $this->getHandler()->getById($mediaId);
+				$media = $this->getHandler()->getOneById($mediaId);
 			}
 
 			// get media item

@@ -84,7 +84,7 @@ class auth extends ApplicationAbstract
 				if(!empty($oauthToken))
 				{
 					// check token
-					$row = $this->getHandler('Oauth_Request')->getByToken($oauthToken);
+					$row = $this->getHandler('Oauth_Request')->getOneByToken($oauthToken);
 
 					if(!empty($row))
 					{
@@ -92,6 +92,13 @@ class auth extends ApplicationAbstract
 
 						// assign api id
 						$this->apiId = $row['apiId'];
+
+						// check token status so if a token has access status we
+						// can not access this page
+						if(!in_array($row['status'], array(Oauth\Record::TEMPORARY, Oauth\Record::APPROVED))
+						{
+							throw new Exception('The token was already approved');
+						}
 
 						// check expire
 						$now  = new DateTime('NOW', $this->registry['core.default_timezone']);
@@ -137,7 +144,7 @@ class auth extends ApplicationAbstract
 					}
 
 					// request consumer informations
-					$row = $this->getHandler('Oauth')->getById($this->apiId, array('url', 'title', 'description'));
+					$row = $this->getHandler('Oauth')->getOneById($this->apiId, array('url', 'title', 'description'));
 
 					if(!empty($row))
 					{
@@ -180,7 +187,7 @@ class auth extends ApplicationAbstract
 
 		if($token !== false)
 		{
-			$row = $this->getHandler('Oauth_Request')->getByToken($token);
+			$row = $this->getHandler('Oauth_Request')->getOneByToken($token);
 
 			if(!empty($row))
 			{

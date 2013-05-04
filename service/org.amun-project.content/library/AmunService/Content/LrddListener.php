@@ -86,7 +86,7 @@ class LrddListener extends ListenerAbstract
 
 			// get page
 			$handler = DataFactory::get('Content_Page');
-			return $handler->getByPath($uri);
+			return $handler->getOneByPath($uri);
 		}
 	}
 }

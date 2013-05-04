@@ -44,7 +44,7 @@ class index extends ApplicationAbstract
 	{
 		if($this->user->hasRight('redirect_view'))
 		{
-			$redirect = $this->getHandler()->getByPageId($this->page->id);
+			$redirect = $this->getHandler()->getOneByPageId($this->page->id);
 
 			if(!empty($redirect))
 			{

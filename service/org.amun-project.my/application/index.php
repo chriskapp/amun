@@ -53,7 +53,7 @@ class index extends MyAbstract
 		parent::onLoad();
 
 		// get user details
-		$account = $this->getHandler('User_Account')->getById($this->user->id, 
+		$account = $this->getHandler('User_Account')->getOneById($this->user->id, 
 			array('id', 'status', 'name', 'gender', 'thumbnailUrl', 'timezone', 'updated', 'date', 'countryTitle'),
 			Sql::FETCH_OBJECT);
 

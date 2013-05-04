@@ -80,7 +80,8 @@ class recover extends ApplicationAbstract
 
 			if(!$this->validate->hasError())
 			{
-				$account = $this->getHandler('User_Account')->getByIdentity(sha1(Security::getSalt() . $email));
+				$handler = $this->getHandler('User_Account');
+				$account = $handler->getOneByIdentity(sha1(Security::getSalt() . $email));
 
 				if($account instanceof Account\Record)
 				{
@@ -99,7 +100,6 @@ class recover extends ApplicationAbstract
 						$account->setStatus(Account\Record::RECOVER);
 						$account->setToken($token);
 
-						$handler = new Account\Handler($this->user);
 						$handler->update($account);
 
 						// send mail

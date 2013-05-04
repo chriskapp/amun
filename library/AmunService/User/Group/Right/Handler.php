@@ -48,17 +48,6 @@ use PSX\Sql\Join;
  */
 class Handler extends HandlerAbstract
 {
-	public function getByGroupId($groupId)
-	{
-		return DataFactory::getTable('User_Group_Right')
-			->select(array('rightId'))
-			->join(Join::INNER, DataFactory::getTable('User_Right')
-				->select(array('name', 'description'), 'right')
-			)
-			->where('groupId', '=', $groupId)
-			->getAll();
-	}
-
 	public function create(RecordInterface $record)
 	{
 		if($record->hasFields('groupId', 'rightId'))

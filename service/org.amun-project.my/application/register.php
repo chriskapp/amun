@@ -104,7 +104,7 @@ class register extends ApplicationAbstract
 				}
 
 				// create account record
-				$handler = new Account\Handler($this->user);
+				$handler = $this->getHandler('User_Account');
 
 				$account = $handler->getRecord();
 				$account->setGroupId($this->registry['core.default_user_group']);

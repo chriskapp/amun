@@ -35,6 +35,7 @@ use AmunService\User\Account;
 use PSX\Html\Paging;
 use PSX\Url;
 use PSX\Sql;
+use PSX\Sql\Condition;
 use PSX\Sql\Join;
 use PSX\Data\Writer;
 
@@ -123,38 +124,46 @@ class index extends ApplicationAbstract
 	{
 		// get user id
 		$userName = $this->getUriFragments('userName');
+		$con      = null;
 
 		if(!empty($userName))
 		{
 			if(strpos($userName, ':') !== false)
 			{
-				$column = 'globalId';
+				$con = new Condition(array('globalId', '=', $userName));
 			}
 			else if(intval($userName) > 0)
 			{
-				$column = 'id';
+				$con = new Condition(array('id', '=', $userName));
 			}
 			else
 			{
-				$column = 'name';
+				$con = new Condition(array('name', '=', $userName));
 			}
+		}
+
+		if($con !== null)
+		{
+			$handler = $this->getHandler('User_Account');
+			$record  = $handler->getOneBy($con, array('id', 
+				'globalId', 
+				'status', 
+				'name', 
+				'gender', 
+				'timezone', 
+				'updated', 
+				'date', 
+				'thumbnailUrl', 
+				'profileUrl', 
+				'groupTitle', 
+				'countryTitle'), Sql::FETCH_OBJECT);
+
+			return $record;
 		}
 		else
 		{
-			throw new Exception('No user given');
+			throw new Exception('Invalid user name');
 		}
-
-
-		return DataFactory::getTable('User_Account')
-			->select(array('id', 'status', 'name', 'gender', 'timezone', 'updated', 'date', 'thumbnailUrl', 'profileUrl'))
-			->join(Join::INNER, DataFactory::getTable('User_Group')
-				->select(array('title'), 'group')
-			)
-			->join(Join::INNER, DataFactory::getTable('Country')
-				->select(array('title'), 'country')
-			)
-			->where($column, '=', $userName)
-			->getRow(Sql::FETCH_OBJECT);
 	}
 
 	private function getActivities(Account\Record $account)

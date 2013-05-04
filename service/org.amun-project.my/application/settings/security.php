@@ -75,16 +75,15 @@ class security extends SettingsAbstract
 					throw new Exception('Passwords doesnt match');
 				}
 
-				$user = $this->getHandler()->getById($this->user->id, 
-					array('id'), 
+				$handler = $this->getHandler('User_Account');
+				$user    = $handler->getOneById($this->user->id, 
+					array('id', 'pw'), 
 					Sql::FETCH_OBJECT
 				);
 
 				if(strcmp($currentPw, $user->pw) === 0)
 				{
 					$user->setPw($newPw);
-
-					$handler = new Account\Handler($this->user);
 					$handler->update($user);
 
 					$this->template->assign('success', true);
