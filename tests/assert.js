@@ -12,6 +12,12 @@ var AssertException = function(message){
 	this.message = message;
 };
 
+var AssetWaitFor = {
+	query: null,
+	callback: null,
+	interval: null
+};
+
 var Assert = {
 	SUCCESS: 0x1,
 	FAILURE: 0x2,
@@ -38,7 +44,44 @@ var Assert = {
 			code: this.FAILURE,
 			message: message
 		});
+	},
+
+	/**
+	 * At the moment we have no MutationObserver in phantomjs therefor we use
+	 * this hack to wait for an element to occur. If phantomjs updates the 
+	 * webkit version we can change here the code without changing the tests
+	 */
+	waitFor: function(selector, callback){
+		if (AssetWaitFor.query === null) {
+			AssetWaitFor.query = selector;
+			AssetWaitFor.callback = callback;
+			AssetWaitFor.interval = setInterval(function(){
+				var el = document.body.querySelector(AssetWaitFor.query);
+				if (el !== null) {
+					var callback = AssetWaitFor.callback;
+
+					// clear
+					Assert.clearWaitFor();
+
+					// call callback
+					callback();
+				}
+			}, 100);
+		} else {
+			throw ('Wait for selector "' + AssetWaitFor.query + '" to occur');
+		}
+	},
+
+	clearWaitFor: function(){
+		// clear interval
+		clearInterval(AssetWaitFor.interval);
+
+		// reset
+		AssetWaitFor.query = null;
+		AssetWaitFor.callback = null;
+		AssetWaitFor.interval = null;
 	}
+
 };
 
 Assert.contains = function(expectedValue, array){

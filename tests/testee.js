@@ -6,13 +6,18 @@
  * <code>
  * testCase('http://127.0.0.1/foo.htm', {
  *
- * 	testFoo: function(){
- * 		Assert.exists(".foo");
- * 	}
- *
  * 	testBar: function(){
  *  	Assert.equals('foo', document.getElementById('identity').value;
- *  }
+ *
+ * 		document.getElementById('identity').value = 'test@test.com';
+ * 		document.getElementById('pw').value = 'test123';
+ * 		document.getElementsByTagName('form')[0].submit();
+ *  },
+ *
+ * 	testFoo: function(){
+ * 		Assert.exists(".login-success");
+ * 		Assert.triggerNext();
+ * 	}
  *
  * });
  * </code>
@@ -21,10 +26,11 @@
  * is evaluated. The scope of the function is the js enviroment of the website
  * so you can access i.e. window or dom element. The assert.js is injected into
  * every webpage wich offers assertion methods and handels the reporting of the
- * results. 
+ * results. The next test method is trigger either through an page load i.e.
+ * an form submit or an call to the method Assert.triggerNext()
  *
- * If you declare for every url an test case you can be sure that there are no 
- * js errors since the test fails if the js on the page is not valid.
+ * If you declare for every url an test case you can be sure that there are at 
+ * least no js errors since the test fails if the js on the page is not valid.
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
@@ -61,7 +67,7 @@ var currentTest;
 var loading = false;
 var goNext = true;
 var inTest = false;
-var debug = false;
+var debug = true;
 var interval;
 
 /**
@@ -269,6 +275,10 @@ function runNextTest(){
 			message: message,
 			trace: traceAsString
 		});
+		if (inTest) {
+			inTest = false;
+			triggerNextTestMethod();
+		}
 	};
 	page.onCallback = function(result){
 		if (debug) {
