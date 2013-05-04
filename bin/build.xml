@@ -67,6 +67,10 @@
 		<delete>
 			<fileset dir="${build}/cache" />
 		</delete>
+		<!-- run js tests -->
+		<exec dir="${build}" executable="phantomjs" failonerror="true">
+			<arg line="tests/testee.js tests/frontend http://127.0.0.1/projects/amun/public/index.php/" />
+		</exec>
 	</target>
 
 	<target name="generate-service-config">
