@@ -95,7 +95,7 @@ class auth extends ApplicationAbstract
 
 						// check token status so if a token has access status we
 						// can not access this page
-						if(!in_array($row['status'], array(Oauth\Record::TEMPORARY, Oauth\Record::APPROVED))
+						if(!in_array($row['status'], array(Oauth\Record::TEMPORARY, Oauth\Record::APPROVED)))
 						{
 							throw new Exception('The token was already approved');
 						}

@@ -45,18 +45,21 @@ abstract class RecordAbstract extends TableAbstract
 	const UPDATE = 0x2;
 	const DELETE = 0x3;
 
+	protected $_table;
+	protected $_ct;
 	protected $_base;
 	protected $_config;
 	protected $_sql;
 	protected $_registry;
 	protected $_validate;
-	protected $_table;
+	protected $_user;
 
 	public $captcha;
 
 	public function __construct(TableInterface $table, Dependency\Request $ct)
 	{
 		$this->_table    = $table;
+		$this->_ct       = $ct;
 		$this->_base     = $ct->getBase();
 		$this->_config   = $ct->getConfig();
 		$this->_sql      = $ct->getSql();

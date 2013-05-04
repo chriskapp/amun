@@ -79,7 +79,7 @@
 					<time datetime="<?php echo $activity->getDate()->format(DateTime::ATOM); ?>"><?php echo $activity->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></time>
 				</p>
 				<div class="amun-service-my-activity-entry-comments" id="activity-comments-<?php echo $activity->id; ?>">
-					<?php foreach($activity->getComments() as $comment): ?>
+					<?php foreach($comments as $comment): ?>
 					<div class="amun-service-my-activity-entry" id="activity-<?php echo $comment->id; ?>">
 						<img class="pull-left" src="<?php echo $comment->authorThumbnailUrl; ?>" alt="avatar" width="48" height="48" />
 						<h4><a href="<?php echo $comment->authorProfileUrl; ?>"><?php echo $comment->authorName; ?></a></h4>
