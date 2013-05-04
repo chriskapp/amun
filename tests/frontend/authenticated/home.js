@@ -9,9 +9,9 @@ testCase('home', {
 		Assert.triggerNext();
 	},
 
-	testPageEdit: function(){
+	testPageEdit: function(baseUrl){
 		// call show form
-		amun.services.page.showForm('http://127.0.0.1/projects/amun/public/index.php/api/page/form?format=json&method=update&id=1');
+		amun.services.page.showForm(baseUrl + 'api/page/form?format=json&method=update&id=1');
 
 		// wait for the form
 		Assert.waitFor('#amun-form-window-form form', function(){

@@ -67,7 +67,7 @@ var currentTest;
 var loading = false;
 var goNext = true;
 var inTest = false;
-var debug = true;
+var debug = false;
 var interval;
 
 /**
@@ -339,7 +339,7 @@ function runNextTest(){
 								}
 								inTest = true;
 								goNext = false;
-								page.evaluate(currentTestCase.testCase[method]);
+								page.evaluate(currentTestCase.testCase[method], baseUrl);
 							}
 							k++;
 						}
