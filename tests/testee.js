@@ -40,6 +40,7 @@ var version = '0.0.2';
 var cases = [];
 var result = [];
 var out;
+var page;
 var i = 0;
 var j = 0;
 var currentTestCase;
@@ -243,8 +244,12 @@ function triggerNextTestMethod()
 }
 
 function runNextTest(){
+	// close page
+	if (page != null) {
+		page.close();
+	}
 	// create page
-	var page = webpage.create();
+	page = webpage.create();
 	page.onError = function(msg, trace){
 		if (debug) {
 			Logger.log('ERROR', msg);
