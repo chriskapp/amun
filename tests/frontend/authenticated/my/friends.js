@@ -1,5 +1,5 @@
 
-testCase('news', {
+testCase('my/friends', {
 
 	view: function(){
 		Assert.object(window.amun.user);

@@ -98,7 +98,7 @@ Assert.equalsXmlStructure = function(expected, actual){
 
 Assert.exists = function(cssSelector){
 	if (document.body.querySelector(cssSelector) === null) {
-		throw ('Selector "' + cssSelector + '" does not match"');
+		throw ('Selector "' + cssSelector + '" does not match');
 	} else {
 		this.addSuccess();
 	}

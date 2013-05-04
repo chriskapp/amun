@@ -59,6 +59,8 @@ var j = 0;
 var currentTestCase;
 var currentTest;
 var loading = false;
+var goNext = true;
+var inTest = false;
 var debug = false;
 var interval;
 
@@ -96,8 +98,22 @@ var Writer = function(){
 function scanTestDir(path){
 	var count = 0;
 	var files = fs.list(path);
+	// search for _ini.js wich will gets executed first
 	for (var i = 0; i < files.length; i++) {
-		if (files[i].charAt(0) != '.') {
+		if (files[i] == '_ini.js') {
+			var item = path + '/' + files[i];
+			if (fs.isFile(item)) {
+				if (debug) {
+					console.log('[INJECT] ' + item);
+				}
+				phantom.injectJs(item);
+				count++;
+			}
+		}
+	}
+	// add all files
+	for (var i = 0; i < files.length; i++) {
+		if (files[i].charAt(0) != '.' && files[i] != '_ini.js') {
 			var item = path + '/' + files[i];
 			if (fs.isDirectory(item)) {
 				count+= scanTestDir(item);
@@ -217,6 +233,22 @@ function completeTest(){
 	}
 }
 
+function triggerNextTestMethod()
+{
+	j++;
+	goNext = true;
+
+	// check whether we have the last test case
+	var k = 0;
+	for (var method in currentTestCase.testCase) {
+		k++;
+	}
+	if (k == j) {
+		clearInterval(interval);
+		nextTestCase();
+	}
+}
+
 function runNextTest(){
 	// create page
 	var page = webpage.create();
@@ -243,7 +275,7 @@ function runNextTest(){
 			console.log('[CALLBACK] ' + JSON.stringify(result));
 		}
 		if (result.code && result.code == NEXT) {
-			j++;
+			triggerNextTestMethod();
 		} else {
 			addResult(result);
 		}
@@ -258,8 +290,11 @@ function runNextTest(){
 		if (debug) {
 			console.log('[LOAD_FINISHED]');
 		}
-		j++;
 		loading = false;
+		if (inTest) {
+			inTest = false;
+			triggerNextTestMethod();
+		}
 	};
 	page.onInitialized = function(){
 		if (debug) {
@@ -284,7 +319,7 @@ function runNextTest(){
 					var k = 0;
 					for (var method in currentTestCase.testCase) {
 						if (typeof currentTestCase.testCase[method] === 'function'){
-							if (k == j) {
+							if (k == j && goNext) {
 								currentTest = {
 									url: baseUrl + currentTestCase.url,
 									method: method
@@ -292,15 +327,12 @@ function runNextTest(){
 								if (debug) {
 									console.log('[RUN_TEST_METHOD] ' + method);
 								}
-								loading = true;
+								inTest = true;
+								goNext = false;
 								page.evaluate(currentTestCase.testCase[method]);
 							}
 							k++;
 						}
-					}
-					if (k - 1 == j) {
-						clearInterval(interval);
-						nextTestCase();
 					}
 				}
 			}, 100);
