@@ -32,6 +32,7 @@ use Amun\Mail;
 use AmunService\User\Account;
 use PSX\DateTime;
 use PSX\Filter;
+use PSX\Sql;
 
 /**
  * recover
@@ -81,7 +82,7 @@ class recover extends ApplicationAbstract
 			if(!$this->validate->hasError())
 			{
 				$handler = $this->getHandler('User_Account');
-				$account = $handler->getOneByIdentity(sha1(Security::getSalt() . $email));
+				$account = $handler->getOneByIdentity(sha1(Security::getSalt() . $email), array(), Sql::FETCH_OBJECT);
 
 				if($account instanceof Account\Record)
 				{
