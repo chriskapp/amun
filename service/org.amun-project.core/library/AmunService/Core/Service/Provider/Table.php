@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Option.php 635 2012-05-01 19:46:37Z k42b3.x@googlemail.com $
+ *  $Id: Table.php 635 2012-05-01 19:46:37Z k42b3.x@googlemail.com $
  *
  * amun
  * A social content managment system based on the psx framework. For
@@ -24,22 +24,10 @@
 
 namespace AmunService\Core\Service\Provider;
 
-use Amun\DataFactory;
-use Amun\Data\HandlerAbstract;
-use Amun\Data\RecordAbstract;
-use Amun\Exception;
-use Amun\Filter as AmunFilter;
-use Amun\Util;
-use AmunService\Core\Service\Filter as ServiceFilter;
-use PSX\Data\WriterInterface;
-use PSX\Data\WriterResult;
-use PSX\DateTime;
-use PSX\Filter;
-use PSX\Util\Markdown;
-use PSX\Url;
+use Amun\Sql\TableAbstract;
 
 /**
- * AmunService_Core_Content_Service_Option
+ * AmunService_Core_Content_Service_Option_Table
  *
  * @author     Christoph Kappestein <k42b3.x@gmail.com>
  * @license    http://www.gnu.org/licenses/gpl.html GPLv3
@@ -48,33 +36,27 @@ use PSX\Url;
  * @package    Amun_Content_Service
  * @version    $Revision: 635 $
  */
-class Record extends RecordAbstract
+class Table extends TableAbstract
 {
-	public function setId($id)
+	public function getConnections()
 	{
-		$id = $this->_validate->apply($id, 'integer', array(new AmunFilter\Id($this->_table)), 'id', 'Id');
-
-		if(!$this->_validate->hasError())
-		{
-			$this->id = $id;
-		}
-		else
-		{
-			throw new Exception($this->_validate->getLastError());
-		}
+		return array();
 	}
 
-	public function setUrl($url)
+	public function getName()
 	{
-		$url = $this->_validate->apply($url, 'integer', array(new Filter\Length(2, 256), new Filter\Url()), 'url', 'Url');
+		return $this->registry['table.core_service_provider'];
+	}
 
-		if(!$this->_validate->hasError())
-		{
-			$this->url = $url;
-		}
-		else
-		{
-			throw new Exception($this->_validate->getLastError());
-		}
+	public function getColumns()
+	{
+		return array(
+
+			'id' => self::TYPE_INT | 11 | self::PRIMARY_KEY,
+			'url' => self::TYPE_VARCHAR | 256,
+			'date' => self::TYPE_DATETIME,
+
+		);
 	}
 }
+
