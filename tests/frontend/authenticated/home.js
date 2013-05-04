@@ -11,7 +11,7 @@ testCase('home', {
 
 	testPageEdit: function(baseUrl){
 		// call show form
-		amun.services.page.showForm(baseUrl + 'api/page/form?format=json&method=update&id=1');
+		amun.services.page.showForm(baseUrl + 'api/page/form?format=json&method=update&id=2');
 
 		// wait for the form
 		Assert.waitFor('#amun-form-window-form form', function(){

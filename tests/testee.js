@@ -1,36 +1,8 @@
 /**
- * testee
+ * TesTee
  *
- * Simple testing framework to run js tests within phantomjs. It uses a simple
- * format to declare a test case:
- * <code>
- * testCase('http://127.0.0.1/foo.htm', {
- *
- * 	testBar: function(){
- *  	Assert.equals('foo', document.getElementById('identity').value;
- *
- * 		document.getElementById('identity').value = 'test@test.com';
- * 		document.getElementById('pw').value = 'test123';
- * 		document.getElementsByTagName('form')[0].submit();
- *  },
- *
- * 	testFoo: function(){
- * 		Assert.exists(".login-success");
- * 		Assert.triggerNext();
- * 	}
- *
- * });
- * </code>
- *
- * For each test case a webpage is created for the given url. Then each function
- * is evaluated. The scope of the function is the js enviroment of the website
- * so you can access i.e. window or dom element. The assert.js is injected into
- * every webpage wich offers assertion methods and handels the reporting of the
- * results. The next test method is trigger either through an page load i.e.
- * an form submit or an call to the method Assert.triggerNext()
- *
- * If you declare for every url an test case you can be sure that there are at 
- * least no js errors since the test fails if the js on the page is not valid.
+ * A simple testing framework to run js tests within phantomjs without depending
+ * on any specific webserver.
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
@@ -51,12 +23,20 @@ if (system.args.length >= 3) {
 	baseUrl = system.args[2];
 }
 
+var debug = false;
+for (var i = 0; i < system.args.length; i++) {
+	if (system.args[i] == '--debug') {
+		debug = true;
+	}
+}
+
 // message constants
 var SUCCESS = 0x1;
 var FAILURE = 0x2;
 var NEXT = 0x3;
 var SKIP = 0x4;
 
+var version = '0.0.2';
 var cases = [];
 var result = [];
 var out;
@@ -67,7 +47,6 @@ var currentTest;
 var loading = false;
 var goNext = true;
 var inTest = false;
-var debug = false;
 var interval;
 
 /**
@@ -95,6 +74,14 @@ var Writer = function(){
 	}
 }
 
+var Logger = {
+	log: function(type, msg){
+		var date = new Date();
+		var msg = typeof msg !== 'undefined' ? "\n" + msg : '';
+		console.log('[' + date.getMinutes() + ':' + date.getSeconds() + '.' + date.getMilliseconds() + '] ' + type + msg);
+	}
+}
+
 /**
  * Scans and includes all js files in an given folder. The file should add an
  * test case through test testCase() method
@@ -110,7 +97,7 @@ function scanTestDir(path){
 			var item = path + '/' + files[i];
 			if (fs.isFile(item)) {
 				if (debug) {
-					console.log('[INJECT] ' + item);
+					Logger.log('INJECT', item);
 				}
 				phantom.injectJs(item);
 				count++;
@@ -126,7 +113,7 @@ function scanTestDir(path){
 			}
 			if (fs.isFile(item) && files[i].indexOf('.js') != -1) {
 				if (debug) {
-					console.log('[INJECT] ' + item);
+					Logger.log('INJECT', item);
 				}
 				phantom.injectJs(item);
 				count++;
@@ -174,7 +161,7 @@ function nextTestCase(){
 		i++;
 
 		if (debug) {
-			console.log('[RUN_TEST] ' + currentTestCase.url);
+			Logger.log('RUN_TEST', currentTestCase.url);
 		}
 
 		// execute next test
@@ -195,7 +182,7 @@ function completeTest(){
 	var out = new Writer();
 
 	out.print("\n");
-	out.print('TesTee 0.0.1 by Christoph Kappestein' + "\n");
+	out.print('TesTee ' + version + ' by Christoph Kappestein' + "\n");
 	out.print("\n");
 
 	for (var i = 0; i < result.length; i++) {
@@ -260,7 +247,7 @@ function runNextTest(){
 	var page = webpage.create();
 	page.onError = function(msg, trace){
 		if (debug) {
-			console.log('[ERROR] ' + msg);
+			Logger.log('ERROR', msg);
 		}
 		var traceAsString = '';
 		for (var i = 0; i < trace.length; i++) {
@@ -282,7 +269,7 @@ function runNextTest(){
 	};
 	page.onCallback = function(result){
 		if (debug) {
-			console.log('[CALLBACK] ' + JSON.stringify(result));
+			Logger.log('CALLBACK', JSON.stringify(result));
 		}
 		if (result.code && result.code == NEXT) {
 			triggerNextTestMethod();
@@ -292,13 +279,13 @@ function runNextTest(){
 	};
 	page.onLoadStarted = function(){
 		if (debug) {
-			console.log('[LOAD_STARTED]');
+			Logger.log('LOAD_STARTED');
 		}
 		loading = true;
 	};
 	page.onLoadFinished = function(){
 		if (debug) {
-			console.log('[LOAD_FINISHED]');
+			Logger.log('LOAD_FINISHED');
 		}
 		loading = false;
 		if (inTest) {
@@ -308,13 +295,18 @@ function runNextTest(){
 	};
 	page.onInitialized = function(){
 		if (debug) {
-			console.log('[INITIALIZED]');
+			Logger.log('INITIALIZED');
 		}
 		page.injectJs('./assert.js');
 	};
+	page.onNavigationRequested = function(url, type, willNavigate, main){
+		if (debug) {
+			Logger.log('REQUEST', url);
+		}
+	}
 	page.open(encodeURI(baseUrl + currentTestCase.url), function(status){
 		if (debug) {
-			console.log('[OPEN] ' + status);
+			Logger.log('OPEN', status);
 		}
 		if (status !== 'success') {
 			addResult({
@@ -335,7 +327,7 @@ function runNextTest(){
 									method: method
 								};
 								if (debug) {
-									console.log('[RUN_TEST_METHOD] ' + method);
+									Logger.log('RUN_METHOD', method);
 								}
 								inTest = true;
 								goNext = false;

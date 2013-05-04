@@ -1,8 +1,8 @@
 /**
- * testee
+ * TesTee
  *
- * This file is part of testee. A simple testing framework to run js tests 
- * within phantomjs.
+ * A simple testing framework to run js tests within phantomjs without depending
+ * on any specific webserver.
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
@@ -12,7 +12,11 @@ var AssertException = function(message){
 	this.message = message;
 };
 
-var AssetWaitFor = {
+var AssertWaitFor = {
+	timeout: 12000, // timeout after 12 seconds
+	wait: 100, // how often to check the query in ms
+
+	count: 0,
 	query: null,
 	callback: null,
 	interval: null
@@ -52,34 +56,46 @@ var Assert = {
 	 * webkit version we can change here the code without changing the tests
 	 */
 	waitFor: function(selector, callback){
-		if (AssetWaitFor.query === null) {
-			AssetWaitFor.query = selector;
-			AssetWaitFor.callback = callback;
-			AssetWaitFor.interval = setInterval(function(){
-				var el = document.body.querySelector(AssetWaitFor.query);
+		if (AssertWaitFor.query === null) {
+			AssertWaitFor.query = selector;
+			AssertWaitFor.callback = callback;
+			AssertWaitFor.interval = setInterval(function(){
+				var el = document.body.querySelector(AssertWaitFor.query);
 				if (el !== null) {
-					var callback = AssetWaitFor.callback;
+					var callback = AssertWaitFor.callback;
 
 					// clear
 					Assert.clearWaitFor();
 
 					// call callback
 					callback();
+				} else {
+					AssertWaitFor.count++;
+					// check timeout
+					if (AssertWaitFor.count * AssertWaitFor.wait > AssertWaitFor.timeout) {
+						var query = AssertWaitFor.query;
+
+						// clear
+						Assert.clearWaitFor();
+
+						throw ('Timeout selector "' + query + '" does not occur after ' + (AssertWaitFor.timeout / 1000) + ' seconds');
+					}
 				}
-			}, 100);
+			}, AssertWaitFor.wait);
 		} else {
-			throw ('Wait for selector "' + AssetWaitFor.query + '" to occur');
+			throw ('Wait for selector "' + AssertWaitFor.query + '" to occur');
 		}
 	},
 
 	clearWaitFor: function(){
 		// clear interval
-		clearInterval(AssetWaitFor.interval);
+		clearInterval(AssertWaitFor.interval);
 
 		// reset
-		AssetWaitFor.query = null;
-		AssetWaitFor.callback = null;
-		AssetWaitFor.interval = null;
+		AssertWaitFor.count = 0;
+		AssertWaitFor.query = null;
+		AssertWaitFor.callback = null;
+		AssertWaitFor.interval = null;
 	}
 
 };
