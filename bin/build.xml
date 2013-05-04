@@ -20,6 +20,8 @@
 	<!-- clone the repository -->
 	<target name="git-clone">
 		<git-clone uri="https://github.com/k42b3/amun.git" dest="${build}" />
+		<!-- change config -->
+		<replace file="${build}/configuration.php" token="http://127.0.0.1:8000/public" value="http://127.0.0.1/projects/amun/public" />
 	</target>
 
 	<!-- removes all files wich are not needed in the release -->
@@ -79,14 +81,17 @@
 		</exec>
 	</target>
 
-	<target name="build-init" depends="git-clone,install-dependencies,get-version,phpunit">
-	</target>
-
-	<target name="build-release" depends="build-init,clean-git,generate-service-config">
+	<target name="compress" depends="get-version">
 		<tar destfile="${bin}/amun_${version}.tar" basedir="${build}" />
 		<gzip destfile="${bin}/amun_${version}.tar.gz" src="${bin}/amun_${version}.tar" />
 		<delete file="${bin}/amun_${version}.tar" />
 		<zip destfile="${bin}/amun_${version}.zip" basedir="${build}" />
+	</target>
+
+	<target name="build-init" depends="git-clone,install-dependencies,get-version,phpunit">
+	</target>
+
+	<target name="build-release" depends="build-init,clean-git,generate-service-config,compress">
 	</target>
 
 	<target name="build-all" depends="clean,build-release" />
