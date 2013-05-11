@@ -339,7 +339,7 @@
 		this.addButton = function(name, cssClass, callback){
 			buttons.push({
 				name: name,
-				class: cssClass,
+				cssClass: cssClass,
 				callback: callback
 			});
 		}
@@ -405,7 +405,7 @@
 						if (buttons.length > 0) {
 							for (var i = 0; i < buttons.length; i++) {
 								var input = document.createElement('input');
-								input.setAttribute('class', buttons[i].class);
+								input.setAttribute('class', buttons[i].cssClass);
 								input.setAttribute('type', 'button');
 								input.setAttribute('value', buttons[i].name);
 								input.addEventListener('click', buttons[i].callback, false);
@@ -640,7 +640,7 @@
 		this.addButton = function(name, cssClass, callback){
 			buttons.push({
 				name: name,
-				class: cssClass,
+				cssClass: cssClass,
 				callback: callback
 			});
 		}
@@ -677,7 +677,7 @@
 			btns.reverse();
 			for (var i = 0; i < btns.length; i++) {
 				var btn = document.createElement('button');
-				btn.setAttribute('class', btns[i].class);
+				btn.setAttribute('class', btns[i].cssClass);
 				btn.appendChild(document.createTextNode(btns[i].name));
 				btn.addEventListener('click', btns[i].callback.bind(this), false);
 
