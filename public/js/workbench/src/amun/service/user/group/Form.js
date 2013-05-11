@@ -4,6 +4,7 @@ Ext.define('Amun.service.user.group.Form', {
 
     initComponent: function(){
         var me = this;
+        me.autoScroll = true;
         me.callParent();
 
         // load group rights
