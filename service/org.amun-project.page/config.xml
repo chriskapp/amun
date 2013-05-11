@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="a7e42c815dc6f1118ecf5652f6d265e2650c07f4">
+<service xmlns="http://amun-project.org" signature="d1e77e07e50df5aa423d363ab9e7b7177f993aa9">
   <status>normal</status>
   <name>page</name>
   <description>Basic service to make a page wich can be edited</description>
@@ -33,10 +33,10 @@
   <library>
     <dir name="AmunService">
       <dir name="Page">
-        <file name="Form.php" md5="0ae2ebd5aeb54c64830a54b6a4652ea9"/>
-        <file name="Handler.php" md5="1fefc818d2c820497c4aa6b752074b48"/>
-        <file name="Record.php" md5="78248d512cd386fa99b174e3ce84a940"/>
-        <file name="Table.php" md5="86f30e278b1b108c86d969fa89b52770"/>
+        <file name="Form.php" md5="363481c1ab5cec53f65cfd95323ba563"/>
+        <file name="Handler.php" md5="ff879146d971748ccf3b79d311b96b60"/>
+        <file name="Record.php" md5="b54db9e3e548d1635bfee4b83ef7d2df"/>
+        <file name="Table.php" md5="594192b4d3e4d3ca3c33b4366e4a6cfd"/>
       </dir>
     </dir>
   </library>

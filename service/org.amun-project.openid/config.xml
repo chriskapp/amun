@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="815ea38fc719782040795aca27edc130bee7f0b2">
+<service xmlns="http://amun-project.org" signature="19f4c8602723b2874f33a985ab0dd1701d449718">
   <status>system</status>
   <name>openid</name>
   <description>Provides an OpenID provider implementation</description>
@@ -47,21 +47,21 @@
     <dir name="AmunService">
       <dir name="Openid">
         <dir name="Access">
-          <file name="Form.php" md5="c3b13f6e7c05e24a6ba7411c368fc7b8"/>
-          <file name="Handler.php" md5="16510bcb90a5bc26a112dcf5b2170947"/>
-          <file name="Record.php" md5="d7661f604ed933cd7e5aa7813eadf43f"/>
-          <file name="Table.php" md5="bf0cca4ff8a70bab128f02763e721c5d"/>
+          <file name="Form.php" md5="5bbe33b4223d51e340d3f553d2003b9a"/>
+          <file name="Handler.php" md5="9f3d7574dfd45f02710705f93c2db490"/>
+          <file name="Record.php" md5="f4b1c937c79cbe351caf51865fb74bee"/>
+          <file name="Table.php" md5="8ddeca95226e9311bfb80b08a589f814"/>
         </dir>
         <dir name="Assoc">
-          <file name="Table.php" md5="d24320063549f391afe5a0254f0a258a"/>
+          <file name="Table.php" md5="7b62869354c137554522d5cb5f2122c4"/>
         </dir>
         <dir name="Filter">
-          <file name="Status.php" md5="4adb23cce4aeb4488f637c487c1f6222"/>
+          <file name="Status.php" md5="9780dc0676a20b378a4ce37c2b42c958"/>
         </dir>
-        <file name="Form.php" md5="db60fa9d0294ff0e47682d2faea0cccb"/>
-        <file name="Handler.php" md5="8c3e101a902ffbf36603ec51d574e1c2"/>
-        <file name="Record.php" md5="a4b9caa30d9e5088881e61548d2c5183"/>
-        <file name="Table.php" md5="98b70789a9340b2dcb2552382997a144"/>
+        <file name="Form.php" md5="7b5b443edff62cd5f66df64e1de1938f"/>
+        <file name="Handler.php" md5="fde08d946a2e6e927944845861da4d1e"/>
+        <file name="Record.php" md5="76c85539709a02f896b4fd2cd7bdfd89"/>
+        <file name="Table.php" md5="c866802b67122e11269b4382ded1de19"/>
       </dir>
     </dir>
   </library>

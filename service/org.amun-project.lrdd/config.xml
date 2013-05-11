@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="fde9ac36d383f5bef16db7ec9d739d1597ad3bdf">
+<service xmlns="http://amun-project.org" signature="b9be16f32dd9de2407b8c0d50b1015d26d230ec0">
   <status>system</status>
   <name>lrdd</name>
   <description>Provides an LRDD endpoint to discover details about a page or person</description>
@@ -27,7 +27,7 @@
   <library>
     <dir name="AmunService">
       <dir name="Lrdd">
-        <file name="HostmetaListener.php" md5="4136805b9c313db53061f9076a537dec"/>
+        <file name="HostmetaListener.php" md5="ad2bbfb6b79fcbb78982466beebc6bfa"/>
       </dir>
     </dir>
   </library>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="ff77ace049e3725bbc8d3d4e64eb1c8dbb523eb6">
+<service xmlns="http://amun-project.org" signature="8404a2db7198c7247fd6c5ce77f8b6ee5aecfeaa">
   <status>system</status>
   <name>vcshook</name>
   <description>Gateway to receive commits from different version control system services like github, googleproject</description>
@@ -51,28 +51,28 @@
     <dir name="AmunService">
       <dir name="Vcshook">
         <dir name="Author">
-          <file name="Form.php" md5="dad4f6ef20c5a1ff51c4e3992edc68b1"/>
-          <file name="Handler.php" md5="fffd33111a6b17b0467cd7bf591c46f8"/>
-          <file name="Record.php" md5="c0488b9586bea827cf2f51d04cc643c9"/>
-          <file name="Table.php" md5="54a29a715281cf3683c8994a5e7b3f91"/>
+          <file name="Form.php" md5="0531ab5fb24a688efaa6a0c1d5c94981"/>
+          <file name="Handler.php" md5="89000426f32e51fd4039d95cd901506f"/>
+          <file name="Record.php" md5="efc0dccc21307840fc60d886c6f1b083"/>
+          <file name="Table.php" md5="d5054f3d3f5f4883dce717f49dc56108"/>
         </dir>
         <dir name="Commit">
-          <file name="Handler.php" md5="5458ca1d4e680f7d72c8a164090794c2"/>
-          <file name="Record.php" md5="d774f281a69dae10699d408f2084c716"/>
-          <file name="Table.php" md5="9f0da9c4ee453ee0e1ae6d5f074ee07d"/>
+          <file name="Handler.php" md5="64296aa92714e4bd7a7626458194d874"/>
+          <file name="Record.php" md5="036fbeebc2073c9028cfa26de79ccaa2"/>
+          <file name="Table.php" md5="20ed7dddc177cf3f871084a03e23b825"/>
         </dir>
-        <file name="CommitListener.php" md5="e86706ee707533ead61ab4e6cd13de07"/>
-        <file name="Form.php" md5="c71cd10906c415671d661c60e4952657"/>
-        <file name="Handler.php" md5="4ad5ceba10de7a913984693a81e4203a"/>
-        <file name="Project.php" md5="3575f8747c0942ff1d348693ef509c85"/>
-        <file name="Record.php" md5="519f32ea46ba5f10fad411bfeff00045"/>
-        <file name="Revision.php" md5="2560513df0b8a553fc366ebb275fc1df"/>
-        <file name="Table.php" md5="bc9bbc88f0e67d62a3bfceddc752f64b"/>
+        <file name="CommitListener.php" md5="6e47e8e9c1457e8d891f5d8f5c87c33f"/>
+        <file name="Form.php" md5="afefded15092253cb1bc6ddcf01f055d"/>
+        <file name="Handler.php" md5="5cd5121198e5477d7d318162f80aab61"/>
+        <file name="Project.php" md5="544105a646ba316d8d0e5b8998f92361"/>
+        <file name="Record.php" md5="18089e89af25f3f4af9815d4d3e73848"/>
+        <file name="Revision.php" md5="e2ee8474d5376942e43b138037627f96"/>
+        <file name="Table.php" md5="31f638db0534043c0ba49eb1aba2966f"/>
         <dir name="Type">
-          <file name="Github.php" md5="21256f8c905849ef7459e975c8ba9111"/>
-          <file name="Googleproject.php" md5="761fe349f974679c8724826693d4656c"/>
+          <file name="Github.php" md5="a2fefc90dc4a3ecbf031325f2e8c5f91"/>
+          <file name="Googleproject.php" md5="04cd20a1646fce5df3b9223386f8667d"/>
         </dir>
-        <file name="TypeAbstract.php" md5="fad412e7b4d4f1470e18bf4980ab5885"/>
+        <file name="TypeAbstract.php" md5="808837e163a89146510e9852e1292461"/>
       </dir>
     </dir>
   </library>

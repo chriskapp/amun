@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="483772bf5967972671272a4c79ff3561ef668829">
+<service xmlns="http://amun-project.org" signature="66407f4f19d662d44d1a5d5a7a43e38e4224a142">
   <status>system</status>
   <name>mail</name>
   <description>A service to manage mail templates wich can be used by other services</description>
@@ -33,17 +33,17 @@
   <library>
     <dir name="Amun">
       <dir name="Mail">
-        <file name="SenderInterface.php" md5="286a8ef050c1c899b27a4e1957ef8366"/>
+        <file name="SenderInterface.php" md5="b68ae0a6dde955cc272ad878373c82e5"/>
       </dir>
     </dir>
     <dir name="AmunService">
       <dir name="Mail">
-        <file name="Form.php" md5="c5a5b35294fa9ab1a71c2495eb698196"/>
-        <file name="Handler.php" md5="c708f0b464ee6d5cbcf69e393bda8e59"/>
-        <file name="ConfigListener.php" md5="395c0e2d5de196c18ad40e1d170ad389"/>
-        <file name="Record.php" md5="5bd424227f8fda21552ac7b08372c291"/>
-        <file name="Sender.php" md5="c996dbf086d727f7297eb044df9ab56c"/>
-        <file name="Table.php" md5="63e8611748669a5625455719a215b220"/>
+        <file name="Form.php" md5="8a8980efa4a3a048cb71535b27ffb353"/>
+        <file name="Handler.php" md5="eb9f4d8db84c12a9492aadef6d10fd5f"/>
+        <file name="ConfigListener.php" md5="dc7f949e5985a3768f1d56fea2fd02e2"/>
+        <file name="Record.php" md5="e28440010eccfedc8de333a98f654cfc"/>
+        <file name="Sender.php" md5="29e767cbd5ccf9af36ca285e32bd9a4e"/>
+        <file name="Table.php" md5="3135a680e2597fd53db572975132d7ee"/>
       </dir>
     </dir>
   </library>
