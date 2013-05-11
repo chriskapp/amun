@@ -27,7 +27,7 @@ namespace my\application;
 use AmunService\My\FriendsAbstract;
 use AmunService\User\Friend;
 use Amun\Html;
-use PSX\Data\Writer;
+use PSX\Atom;
 use PSX\Sql;
 use PSX\Url;
 use PSX\Html\Paging;
@@ -66,7 +66,7 @@ class friends extends FriendsAbstract
 		$this->htmlCss->add('my');
 		$this->htmlJs->add('amun');
 		$this->htmlJs->add('my');
-		$this->htmlContent->add(Html\Content::META, Writer\Atom::link($this->page->title, $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/friend?format=atom&filterBy=authorId&filterOp=equals&filterValue=' . $this->user->id));
+		$this->htmlContent->add(Html\Content::META, Atom\Writer::link($this->page->title, $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/friend?format=atom&filterBy=authorId&filterOp=equals&filterValue=' . $this->user->id));
 	}
 
 	private function getFriends()

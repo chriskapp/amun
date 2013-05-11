@@ -27,10 +27,10 @@ namespace news\application;
 use Amun\Exception;
 use Amun\Module\ApplicationAbstract;
 use Amun\Html;
+use PSX\Atom;
 use PSX\DateTime;
 use PSX\Sql;
 use PSX\Url;
-use PSX\Data\Writer;
 use PSX\Html\Paging;
 use DateInterval;
 
@@ -73,7 +73,7 @@ class index extends ApplicationAbstract
 			$this->htmlJs->add('ace');
 			$this->htmlJs->add('bootstrap');
 			$this->htmlJs->add('prettify');
-			$this->htmlContent->add(Html\Content::META, Writer\Atom::link($this->page->title, $this->service->getApiEndpoint() . '?format=atom&filterBy=pageId&filterOp=equals&filterValue=' . $this->page->id));
+			$this->htmlContent->add(Html\Content::META, Atom\Writer::link($this->page->title, $this->service->getApiEndpoint() . '?format=atom&filterBy=pageId&filterOp=equals&filterValue=' . $this->page->id));
 		}
 		else
 		{

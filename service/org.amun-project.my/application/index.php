@@ -28,7 +28,7 @@ use Amun\Html;
 use AmunService\My\MyAbstract;
 use AmunService\User\Account;
 use AmunService\User\Activity\Receiver;
-use PSX\Data\Writer;
+use PSX\Atom;
 use PSX\DateTime;
 use PSX\Sql;
 use PSX\Url;
@@ -93,7 +93,7 @@ class index extends MyAbstract
 		$this->htmlCss->add('my');
 		$this->htmlJs->add('amun');
 		$this->htmlJs->add('my');
-		$this->htmlContent->add(Html\Content::META, Writer\Atom::link($this->page->title, $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/activity/' . $this->user->name . '?format=atom'));
+		$this->htmlContent->add(Html\Content::META, Atom\Writer::link($this->page->title, $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/activity/' . $this->user->name . '?format=atom'));
 	}
 
 	private function getActivities()

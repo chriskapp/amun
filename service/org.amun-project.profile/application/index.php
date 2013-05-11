@@ -32,12 +32,12 @@ use Amun\Base;
 use Amun\Html;
 use AmunService\Pipe;
 use AmunService\User\Account;
+use PSX\Atom;
 use PSX\Html\Paging;
 use PSX\Url;
 use PSX\Sql;
 use PSX\Sql\Condition;
 use PSX\Sql\Join;
-use PSX\Data\Writer;
 
 /**
  * index
@@ -107,7 +107,7 @@ class index extends ApplicationAbstract
 			$this->htmlCss->add('profile');
 			$this->htmlJs->add('amun');
 			$this->htmlJs->add('profile');
-			$this->htmlContent->add(Html\Content::META, Writer\Atom::link('Activity', $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/activity/' . $account->id . '?format=atom'));
+			$this->htmlContent->add(Html\Content::META, Atom\Writer::link('Activity', $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/activity/' . $account->id . '?format=atom'));
 			$this->htmlContent->add(Html\Content::META, '<link rel="alternate" type="application/stream+json" href="' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/activity/' . $account->id . '?format=json" />');
 			$this->htmlContent->add(Html\Content::META, '<link rel="meta" type="application/rdf+xml" title="FOAF" href="' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/foaf/' . $account->name . '" />');
 			$this->htmlContent->add(Html\Content::META, '<link rel="profile" type="html/text" href="' . $account->profileUrl . '" />');
