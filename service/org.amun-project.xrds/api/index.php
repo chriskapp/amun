@@ -31,6 +31,7 @@ use PSX\Data\Message;
 use PSX\Sql;
 use PSX\Sql\Join;
 use XMLWriter;
+use PSX\Xrds\Writer;
 
 /**
  * xrds
@@ -59,16 +60,7 @@ class index extends ApiAbstract
 	{
 		try
 		{
-			header('Content-type: application/xrds+xml');
-
-			$this->writer = new XMLWriter();
-			$this->writer->openURI('php://output');
-			$this->writer->setIndent(true);
-			$this->writer->startDocument('1.0', 'UTF-8');
-
-			$this->writer->startElementNs('xrds', 'XRDS', 'xri://$xrds');
-			$this->writer->writeAttribute('xmlns', 'xri://$xrd*($v*2.0)');
-			$this->writer->startElement('XRD');
+			$this->writer = new Writer();
 
 			$result   = $this->getHandler('Xrds_Type')->getAll(array(), 0, 1024);
 			$baseUrl  = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'];
@@ -90,25 +82,13 @@ class index extends ApiAbstract
 
 			foreach($services as $service)
 			{
-				$this->writer->startElement('Service');
+				$uri      = $baseUrl . 'api' . $service['endpoint'];
+				$priority = $service['priority'] > 0 ? floatval($service['priority']) : null;
 
-				if(!empty($service['priority']))
-				{
-					$this->writer->writeAttribute('priority', $service['priority']);
-				}
-
-				foreach($service['types'] as $type)
-				{
-					$this->writer->writeElement('Type', $type);
-				}
-
-				$this->writer->writeElement('URI', $baseUrl . 'api' . $service['endpoint']);
-
-				$this->writer->endElement();
+				$this->writer->addService($uri, $service['types'], $priority);
 			}
 
-			$this->writer->endElement();
-			$this->writer->endDocument();
+			$this->writer->output();
 		}
 		catch(\Exception $e)
 		{
