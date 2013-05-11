@@ -28,7 +28,8 @@ use Amun\Module\ApiAbstract;
 use Amun\Exception;
 use PSX\DateTime;
 use PSX\Data\Message;
-use XMLWriter;
+use PSX\Url;
+use PSX\Sitemap\Writer;
 
 /**
  * index
@@ -61,19 +62,11 @@ class index extends ApiAbstract
 			{
 				header('Content-type: text/xml');
 
-				$this->writer = new XMLWriter();
-				$this->writer->openURI('php://output');
-				$this->writer->setIndent(true);
-				$this->writer->startDocument('1.0', 'UTF-8');
+				$this->writer = new Writer();
 
-				$this->writer->startElement('urlset');
-				$this->writer->writeAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
 				$this->generateSitemap();
-				$this->writer->endElement();
 
-				$this->writer->endElement();
-				$this->writer->endDocument();
-				$this->writer->flush();
+				$this->writer->output();
 			}
 			catch(\Exception $e)
 			{
@@ -136,15 +129,9 @@ SQL;
 		{
 			$date = new DateTime($row['date']);
 			$url  = empty($row['path']) ? $this->config['psx_url'] : $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $row['path'];
+			$url  = new Url($url);
 
-			$this->writer->startElement('url');
-			$this->writer->writeElement('loc', $url);
-			$this->writer->writeElement('lastmod', $date->format(DateTime::W3C));
-			/*
-			$this->writer->writeElement('changefreq', '');
-			$this->writer->writeElement('priority', '');
-			*/
-			$this->writer->endElement();
+			$this->writer->addUrl($url, $date);
 		}
 	}
 }
