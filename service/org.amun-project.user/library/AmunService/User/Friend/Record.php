@@ -26,6 +26,7 @@ use Amun\Data\RecordAbstract;
 use Amun\DataFactory;
 use Amun\Exception;
 use Amun\Filter;
+use PSX\ActivityStream;
 use PSX\DateTime;
 use PSX\Data\WriterResult;
 use PSX\Data\WriterInterface;
@@ -140,13 +141,10 @@ class Record extends RecordAbstract
 		{
 			case WriterInterface::JSON:
 			case WriterInterface::XML:
-
 				return parent::export($result);
-
 				break;
 
 			case WriterInterface::ATOM:
-
 				$entry = $result->getWriter()->createEntry();
 
 				$entry->setTitle($this->friendName);
@@ -156,13 +154,35 @@ class Record extends RecordAbstract
 				$entry->addLink($this->friendProfileUrl, 'alternate', 'text/html');
 
 				return $entry;
+				break;
 
+			case WriterInterface::JAS:
+				$image = new ActivityStream\MediaLink();
+				$image->setUrl($this->authorThumbnailUrl);
+
+				$actor = new ActivityStream\Object();
+				$actor->setObjectType('person');
+				$actor->setDisplayName($this->authorName);
+				$actor->setUrl($this->authorProfileUrl);
+				$actor->setImage($image);
+
+				$object = new ActivityStream\Object();
+				$object->setObjectType('person');
+				$object->setId('urn:uuid:' . $this->friendGlobalId);
+				$object->setDisplayName($this->friendName);
+				$object->setUrl($this->friendProfileUrl);
+				$object->setPublished($this->getDate());
+
+				$activity = new ActivityStream\Activity();
+				$activity->setActor($actor);
+				$activity->setVerb('make-friend');
+				$activity->setObject($object);
+
+				return $activity;
 				break;
 
 			default:
-
 				throw new Exception('Writer is not supported');
-
 				break;
 		}
 	}

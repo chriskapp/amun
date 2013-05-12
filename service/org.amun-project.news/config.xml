@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="e0524d8cb23b1903f19692ce5c3f863179cd1afb">
+<service xmlns="http://amun-project.org" signature="f278f8b63e8efaf4e7cde4d3207b52c36b7baa0e">
   <status>normal</status>
   <name>news</name>
   <description>Implementation of an News system. It is possible to post news and users can comment each entry</description>
@@ -45,8 +45,7 @@
       <dir name="News">
         <file name="Form.php" md5="e1ba1960360a76d9facd13388f79128a"/>
         <file name="Handler.php" md5="55da87f2c57f5fe159afef04bfd5610a"/>
-        <file name="Record.php" md5="2e29961174541f03951d8988599e00b1"/>
-        <file name="Stream.php" md5="63326c48512fcc164bac849fcb7c857f"/>
+        <file name="Record.php" md5="aa360b3725bb8c8fee7e9ddc80cd3502"/>
         <file name="Table.php" md5="3cfbe39789f98527fb1cb27d3b5d6d2b"/>
       </dir>
     </dir>

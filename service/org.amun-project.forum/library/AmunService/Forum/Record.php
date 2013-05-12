@@ -226,13 +226,10 @@ class Record extends RecordAbstract
 		{
 			case WriterInterface::JSON:
 			case WriterInterface::XML:
-
 				return parent::export($result);
-
 				break;
 
 			case WriterInterface::ATOM:
-
 				$entry = $result->getWriter()->createEntry();
 
 				$entry->setTitle($this->title);
@@ -243,13 +240,36 @@ class Record extends RecordAbstract
 				$entry->setContent($this->text, 'html');
 
 				return $entry;
+				break;
 
+			case WriterInterface::JAS:
+				$image = new ActivityStream\MediaLink();
+				$image->setUrl($this->authorThumbnailUrl);
+
+				$actor = new ActivityStream\Object();
+				$actor->setObjectType('person');
+				$actor->setDisplayName($this->authorName);
+				$actor->setUrl($this->authorProfileUrl);
+				$actor->setImage($image);
+
+				$object = new ActivityStream\Object();
+				$object->setObjectType('article');
+				$object->setId('urn:uuid:' . $this->globalId);
+				$object->setDisplayName($this->title);
+				$object->setUrl($this->getUrl());
+				$object->setPublished($this->getDate());
+				$object->setContent($this->text);
+
+				$activity = new ActivityStream\Activity();
+				$activity->setActor($actor);
+				$activity->setVerb('post');
+				$activity->setObject($object);
+
+				return $activity;
 				break;
 
 			default:
-
 				throw new Exception('Writer is not supported');
-
 				break;
 		}
 	}

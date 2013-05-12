@@ -189,13 +189,10 @@ class Record extends RecordAbstract
 		{
 			case WriterInterface::JSON:
 			case WriterInterface::XML:
-
 				return parent::export($result);
-
 				break;
 
 			case WriterInterface::ATOM:
-
 				$entry = $result->getWriter()->createEntry();
 
 				$entry->setTitle(Util::stripAndTruncateHtml($this->summary));
@@ -217,13 +214,10 @@ class Record extends RecordAbstract
 				}
 
 				return $entry;
-
 				break;
 
 			default:
-
 				throw new Exception('Writer is not supported');
-
 				break;
 		}
 	}

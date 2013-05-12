@@ -334,6 +334,7 @@ abstract class RestAbstract extends ApiAbstract
 
 		switch($format)
 		{
+			case 'jas':
 			case 'atom':
 				return Sql::FETCH_OBJECT;
 				break;

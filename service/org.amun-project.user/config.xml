@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="d28ef09d43179bc3ed3d50b4ed931820846ce449">
+<service xmlns="http://amun-project.org" signature="584f3a1887f0f87407a889bcf165c9d9ddecbaf8">
   <status>system</status>
   <name>user</name>
   <description>Basic service wich handles user groups and rights</description>
@@ -127,8 +127,7 @@
           </dir>
           <file name="Form.php" md5="6c6e67e90af38b0e4e58e68db120e981"/>
           <file name="Handler.php" md5="48da3b345a4724f4a84f9c383e967cbb"/>
-          <file name="Record.php" md5="4aba87a99590fee6ecddc70aaaf37982"/>
-          <file name="Stream.php" md5="4cd8c60c714caeefef2b2f26489beecf"/>
+          <file name="Record.php" md5="fa2371eccf3c8362d61411bdc0c85563"/>
           <file name="Table.php" md5="e4ef66469cf0aaa79c21cd6313dc2c52"/>
         </dir>
         <dir name="Activity">
@@ -146,10 +145,8 @@
             <file name="Record.php" md5="6694a46ce418ce5a1e1c74a0c2f86753"/>
             <file name="Table.php" md5="fbcadb5e4543223769a2e7f261966cd9"/>
           </dir>
-          <file name="Record.php" md5="970393557079f0705921430641918847"/>
+          <file name="Record.php" md5="bb226f3c62f29bf83a47055eedfc77a5"/>
           <file name="RecordListener.php" md5="342756c13097edf0db46280d67664e0a"/>
-          <file name="Stream.php" md5="73eb592d561b046ed6cd082b1141be8d"/>
-          <file name="StreamAbstract.php" md5="bf55901025aed6727e7e5dade0dc40d8"/>
           <file name="Table.php" md5="7c3471912dceb7fd9678cf39ad5628bb"/>
         </dir>
         <dir name="Friend">
@@ -164,10 +161,9 @@
             <file name="Table.php" md5="6c6bdf767e4c3d2fb157cc0ec795655c"/>
           </dir>
           <file name="Handler.php" md5="d84f484e8f18adb512e09fea3692880a"/>
-          <file name="Record.php" md5="1d8e16f8ee88ab6bb201500da1f9fa02"/>
+          <file name="Record.php" md5="464cd4f7e1c2f193a30936cc59d20097"/>
           <file name="Relation.php" md5="629205d6cd79bcff6f4e9072a60f4387"/>
           <file name="Table.php" md5="47dda351151e7e07c055a8928608098c"/>
-          <file name="Stream.php" md5="1f920cbb42d2eedd61f7cd884ab2dcae"/>
         </dir>
         <dir name="Group">
           <file name="Form.php" md5="262b684202499c668219bff04a84ecd1"/>

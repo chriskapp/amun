@@ -28,6 +28,7 @@ use Amun\Data\RecordAbstract;
 use Amun\Exception;
 use Amun\Filter as AmunFilter;
 use Amun\Util;
+use PSX\ActivityStream;
 use PSX\Data\WriterInterface;
 use PSX\Data\WriterResult;
 use PSX\DateTime;
@@ -160,13 +161,10 @@ class Record extends RecordAbstract
 		{
 			case WriterInterface::JSON:
 			case WriterInterface::XML:
-
 				return parent::export($result);
-
 				break;
 
 			case WriterInterface::ATOM:
-
 				$entry = $result->getWriter()->createEntry();
 
 				$entry->setTitle(Util::stripAndTruncateHtml($this->text));
@@ -176,13 +174,35 @@ class Record extends RecordAbstract
 				$entry->setContent($this->text, 'html');
 
 				return $entry;
+				break;
 
+			case WriterInterface::JAS:
+				$image = new ActivityStream\MediaLink();
+				$image->setUrl($this->authorThumbnailUrl);
+
+				$actor = new ActivityStream\Object();
+				$actor->setObjectType('person');
+				$actor->setDisplayName($this->authorName);
+				$actor->setUrl($this->authorProfileUrl);
+				$actor->setImage($image);
+
+				$object = new ActivityStream\Object();
+				$object->setObjectType('comment');
+				$object->setId('urn:uuid:' . $this->globalId);
+				$object->setDisplayName(Util::stripAndTruncateHtml($this->text));
+				$object->setPublished($this->getDate());
+				$object->setContent($this->text);
+
+				$activity = new ActivityStream\Activity();
+				$activity->setActor($actor);
+				$activity->setVerb('post');
+				$activity->setObject($object);
+
+				return $activity;
 				break;
 
 			default:
-
 				throw new Exception('Writer is not supported');
-
 				break;
 		}
 	}

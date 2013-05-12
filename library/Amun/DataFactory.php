@@ -91,22 +91,6 @@ class DataFactory
 		}
 	}
 
-	public function getStreamInstance($table)
-	{
-		$ns    = $this->getNamespace($table);
-		$class = Registry::getClassName('\AmunService\\' . $ns . '\Stream');
-
-		if(isset($this->_cache[$class]))
-		{
-			return $this->_cache[$class];
-		}
-
-		if(class_exists($class))
-		{
-			return $this->_cache[$class] = new $class($this->getHandlerInstance($table)->getTable());
-		}
-	}
-
 	public function getContainer()
 	{
 		return $this->ct;

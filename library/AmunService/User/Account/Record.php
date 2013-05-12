@@ -404,13 +404,10 @@ SQL;
 		{
 			case WriterInterface::JSON:
 			case WriterInterface::XML:
-
 				return parent::export($result);
-
 				break;
 
 			case WriterInterface::ATOM:
-
 				$entry = $result->getWriter()->createEntry();
 
 				$entry->setTitle($this->name);
@@ -421,13 +418,10 @@ SQL;
 				$entry->setContent($this, 'application/xml');
 
 				return $entry;
-
 				break;
 
 			default:
-
 				throw new Exception('Writer is not supported');
-
 				break;
 		}
 	}
