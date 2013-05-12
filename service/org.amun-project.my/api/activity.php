@@ -150,10 +150,9 @@ class activity extends RestAbstract
 		{
 			case WriterInterface::ATOM:
 
-				$account = DataFactory::getTable('User_Account')
-					->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated'))
-					->where('id', '=', $this->userId)
-					->getRow(Sql::FETCH_OBJECT);
+				$account = $this->getHandler('User_Account')->getOneById($this->userId, 
+					array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated'), 
+					Sql::FETCH_OBJECT);
 
 				if($account instanceof Account\Record)
 				{
