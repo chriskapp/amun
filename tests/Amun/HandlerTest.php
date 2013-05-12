@@ -1,12 +1,10 @@
 <?php
 /*
- *  $Id: UrlTitleTest.php 792 2012-07-08 02:59:37Z k42b3.x@googlemail.com $
- *
  * amun
  * A social content managment system based on the psx framework. For
  * the current version and informations visit <http://amun.phpsx.org>
  *
- * Copyright (c) 2010-2012 Christoph Kappestein <k42b3.x@gmail.com>
+ * Copyright (c) 2010-2013 Christoph Kappestein <k42b3.x@gmail.com>
  *
  * This file is part of amun. amun is free software: you can
  * redistribute it and/or modify it under the terms of the
@@ -29,13 +27,11 @@ use PDOException;
 use PSX\Sql;
 
 /**
- * Amun_Filter_UrlTitleTest
+ * HandlerTest
  *
- * @author     Christoph Kappestein <k42b3.x@gmail.com>
- * @license    http://www.gnu.org/licenses/gpl.html GPLv3
- * @link       http://amun.phpsx.org
- * @category   tests
- * @version    $Revision: 792 $
+ * @author  Christoph Kappestein <k42b3.x@gmail.com>
+ * @license http://www.gnu.org/licenses/gpl.html GPLv3
+ * @link    http://amun.phpsx.org
  * @backupStaticAttributes disabled
  */
 abstract class HandlerTest extends \PHPUnit_Extensions_Database_TestCase

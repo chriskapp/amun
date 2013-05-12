@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="d9394a24c510e9bac1dd17a5c60df913c08e03f6">
+<service xmlns="http://amun-project.org" signature="48cd84089b17612da1f7d51b056ab517b3378d96">
   <status>system</status>
   <name>marketplace</name>
   <description>Server to provide services for other amun user. The core service can be used to download services from an marketplace</description>
@@ -36,9 +36,9 @@
   <library>
     <dir name="AmunService">
       <dir name="Marketplace">
-        <file name="Handler.php" md5="64c61009d8d442957d420d2fcd08d3c7"/>
-        <file name="Record.php" md5="b2f59b26a6503b2cdcb16745737dc7c5"/>
-        <file name="Table.php" md5="5d3cb8f06d4433549026b1c7261b1721"/>
+        <file name="Handler.php" md5="7b13843341a41fbb3847c783725c431d"/>
+        <file name="Record.php" md5="337a714a0ca21a891539dbcbbcff0585"/>
+        <file name="Table.php" md5="5546030dd9bc97c9942e4d6c23da6832"/>
       </dir>
     </dir>
   </library>
