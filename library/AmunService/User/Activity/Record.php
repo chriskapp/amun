@@ -162,27 +162,6 @@ class Record extends RecordAbstract
 			->getAll(Sql::FETCH_OBJECT, '\AmunService\User\Activity\Record', array($this->_table, $this->_ct));
 	}
 
-	public function getObject()
-	{
-		if(empty($this->table))
-		{
-			$stream = DataFactory::getInstance()->getStreamInstance($this->_table->getName());
-
-			return $stream->getObject($this->id);
-		}
-		else if($this->refId > 0)
-		{
-			$stream = DataFactory::getInstance()->getStreamInstance($this->table);
-
-			if($stream instanceof StreamAbstract)
-			{
-				return $stream->getObject($this->refId);
-			}
-		}
-
-		return null;
-	}
-
 	public function export(WriterResult $result)
 	{
 		switch($result->getType())

@@ -151,31 +151,4 @@ SQL;
 	{
 		return $this->load & Record::GADGET;
 	}
-
-	public static function getUrl(Registry $registry, $pageId)
-	{
-		$id   = intval($pageId);
-		$stmt = <<<SQL
-SELECT
-	`page`.`path`
-FROM 
-	{$registry['table.content_page']} `page`
-WHERE 
-	`page`.`id` = {$id}
-SQL;
-
-		$row = $registry->getSql()->getRow($stmt);
-
-		if(!empty($row))
-		{
-			$config = $registry->getConfig();
-			$url    = $config['psx_url'] . '/' . $config['psx_dispatch'] . $row['path'];
-		}
-		else
-		{
-			throw new Exception('Invalid page id');
-		}
-
-		return $url;
-	}
 }
