@@ -55,10 +55,9 @@ class Table extends TableAbstract
 			'globalId' => self::TYPE_VARCHAR | 36,
 			'parentId' => self::TYPE_INT | 10,
 			'userId' => self::TYPE_INT | 10,
-			'refId' => self::TYPE_INT | 10,
-			'table' => self::TYPE_VARCHAR | 32,
 			'scope' => self::TYPE_INT | 10,
 			'verb' => self::TYPE_ENUM,
+			'object' => self::TYPE_TEXT,
 			'summary' => self::TYPE_TEXT,
 			'date' => self::TYPE_DATETIME,
 

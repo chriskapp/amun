@@ -72,10 +72,8 @@ class RecordListener extends ListenerAbstract
 			$handler = DataFactory::get('User_Activity', new User($record->id, $this->registry));
 
 			$activity          = $handler->getRecord();
-			$activity->refId   = $record->id;
-			$activity->table   = $table->getName();
 			$activity->verb    = 'join';
-			$activity->summary = $record->name . ' has created an account';
+			$activity->summary = '<p>' . $record->name . ' has created an account</p>';
 
 			$handler->create($activity);
 		}
@@ -95,26 +93,11 @@ class RecordListener extends ListenerAbstract
 				// insert activity for user who has accepted the friend request
 				$handler = DataFactory::get('User_Activity', $this->user);
 
-				$activity = $handler->getRecord();
-				$activity->refId   = $record->id;
-				$activity->table   = $table->getName();
-				$activity->verb    = 'make-friend';
-				$activity->summary = '<a href="' . $record->getUser()->profileUrl . '">' . $record->getUser()->name . '</a> and <a href="' . $record->getFriend()->profileUrl . '">' . $record->getFriend()->name . '</a> are now friends';
-
-				$handler->create($activity);
-
-				// insert activity for user who has requested the friendship
-				/*
-				$handler = DataFactory::get('User_Activity', $this->user);
-
 				$activity          = $handler->getRecord();
-				$activity->refId   = $record->id;
-				$activity->table   = $table->getName();
 				$activity->verb    = 'make-friend';
-				$activity->summary = '<a href="' . $record->getFriend()->profileUrl . '">' . $record->getFriend()->name . '</a> and <a href="' . $record->getUser()->profileUrl . '">' . $record->getUser()->name . '</a> are now friends';
+				$activity->summary = '<p><a href="' . $record->getUser()->profileUrl . '">' . $record->getUser()->name . '</a> and <a href="' . $record->getFriend()->profileUrl . '">' . $record->getFriend()->name . '</a> are now friends</p>';
 
 				$handler->create($activity);
-				*/
 			}
 		}
 	}
@@ -139,22 +122,35 @@ SQL;
 
 		if(!empty($row))
 		{
-			$objectUrl = $this->getObjectUrl($record, $this->substituteVars($record, $row['path']));
+			// get object
+			$className = $this->registry->getClassNameFromTable($table->getName());
+			$handler   = DataFactory::get($className, $this->user);
+			$object    = $handler->get($record->id, array('*'));
+
+			// build object url
+			if(isset($object['pagePath']) && !empty($row['path']))
+			{
+				$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $object['pagePath'] . '/' . $row['path'];
+				$url = $this->substituteVars($object, $url);
+			}
+			else
+			{
+				$url = '#';
+			}
 
 			// insert activity
 			$handler = DataFactory::get('User_Activity', $this->user);
 
 			$activity          = $handler->getRecord();
-			$activity->refId   = $record->id;
-			$activity->table   = $table->getName();
 			$activity->verb    = $row['verb'];
-			$activity->summary = $this->substituteVars($record, $row['summary'], $objectUrl);
+			$activity->object  = json_encode($object);
+			$activity->summary = $this->substituteVars($object, $row['summary'], $url);
 
 			$handler->create($activity);
 		}
 	}
 
-	private function substituteVars(RecordInterface $record, $content, $url = null)
+	private function substituteVars(array $record, $content, $url = null)
 	{
 		// object fields
 		if($url !== null && strpos($content, '{object.url') !== false)
@@ -181,41 +177,17 @@ SQL;
 		// record fields
 		if(strpos($content, '{record.') !== false)
 		{
-			$fields = $record->getFields();
-
-			foreach($fields as $k => $v)
+			foreach($record as $k => $v)
 			{
 				$key = '{record.' . $k . '}';
 
 				if(strpos($content, $key) !== false)
 				{
-					$v = strip_tags($v);
-					$v = strlen($v) > 256 ? substr($v, 0, 253) . '...' : $v;
-
 					$content = str_replace($key, $v, $content);
 				}
 			}
 		}
 
 		return $content;
-	}
-
-	private function getObjectUrl(RecordInterface $record, $path = null)
-	{
-		if(isset($record->pageId))
-		{
-			$url = Page::getUrl($this->registry, $record->pageId);
-
-			if(!empty($path))
-			{
-				$url.= '/' . $path;
-			}
-
-			return $url;
-		}
-		else
-		{
-			return '#';
-		}
 	}
 }
