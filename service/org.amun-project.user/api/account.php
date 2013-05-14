@@ -43,11 +43,6 @@ class account extends RestAbstract
 		return parent::getHandler($table === null ? 'User_Account' : $table);
 	}
 
-	protected function getRestrictedFields()
-	{
-		return array('pw', 'email', 'token', 'ip');
-	}
-
 	protected function isOwner(RecordAbstract $record)
 	{
 		return $this->getHandler()->isOwner($record, 'id');
@@ -76,5 +71,10 @@ class account extends RestAbstract
 
 				break;
 		}
+	}
+
+	protected function getRestrictedFields()
+	{
+		return array('identity', 'pw', 'email', 'token', 'ip');
 	}
 }

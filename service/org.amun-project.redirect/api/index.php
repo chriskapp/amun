@@ -63,5 +63,10 @@ class index extends RestAbstract
 				break;
 		}
 	}
+
+	protected function getRestrictedFields()
+	{
+		return array('authorIdentity', 'authorPw', 'authorEmail', 'authorToken', 'authorIp');
+	}
 }
 

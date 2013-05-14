@@ -33,4 +33,8 @@ use Amun\Module\RestAbstract;
  */
 class index extends RestAbstract
 {
+	protected function getRestrictedFields()
+	{
+		return array('authorIdentity', 'authorPw', 'authorEmail', 'authorToken', 'authorIp');
+	}
 }

@@ -66,4 +66,9 @@ class friend extends RestAbstract
 				break;
 		}
 	}
+
+	protected function getRestrictedFields()
+	{
+		return array('authorIdentity', 'authorPw', 'authorEmail', 'authorToken', 'authorIp', 'friendIdentity', 'friendPw', 'friendEmail', 'friendToken', 'friendIp');
+	}
 }

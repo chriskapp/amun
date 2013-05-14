@@ -104,7 +104,8 @@ abstract class RestAbstract extends ApiAbstract
 		{
 			try
 			{
-				$array = new ArrayList($this->getHandler()->getSupportedFields());
+				$fields = array_values(array_diff($this->getHandler()->getSupportedFields(), $this->getRestrictedFields()));
+				$array  = new ArrayList($fields);
 
 				$this->setResponse($array);
 			}
