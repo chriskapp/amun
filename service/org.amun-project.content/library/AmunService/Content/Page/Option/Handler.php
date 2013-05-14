@@ -105,9 +105,6 @@ class Handler extends HandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'name', 'href'))
-			->join(Join::INNER, DataFactory::getTable('Core_Service_Option')
-				->select(array('name'), 'option')
-			)
 			->join(Join::INNER, DataFactory::getTable('Content_Page')
 				->select(array('id', 'title'), 'page')
 			);
