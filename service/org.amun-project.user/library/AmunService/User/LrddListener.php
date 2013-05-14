@@ -63,12 +63,6 @@ class LrddListener extends ListenerAbstract
 			$writer->text($account->name);
 			$writer->endElement();
 
-			// timezone
-			$writer->startElement('Property');
-			$writer->writeAttribute('type', 'http://ns.amun-project.org/2011/meta/timezone');
-			$writer->text($account->timezone);
-			$writer->endElement();
-
 			// date
 			$writer->startElement('Property');
 			$writer->writeAttribute('type', 'http://ns.amun-project.org/2011/meta/date');
