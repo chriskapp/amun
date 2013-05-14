@@ -2305,8 +2305,6 @@ echo $_SERVER['REMOTE_ADDR'];</field>
 		<field name="globalId">4354b228-7315-5d6a-8662-249559c0ad78</field>
 		<field name="parentId">0</field>
 		<field name="userId">1</field>
-		<field name="refId">1</field>
-		<field name="table">amun_user_account</field>
 		<field name="scope">0</field>
 		<field name="verb">join</field>
 		<field name="summary">test has created an account</field>
@@ -2317,8 +2315,6 @@ echo $_SERVER['REMOTE_ADDR'];</field>
 		<field name="globalId">b3c6df5f-f3f2-5440-affb-b31264c44bb1</field>
 		<field name="parentId">0</field>
 		<field name="userId">2</field>
-		<field name="refId">2</field>
-		<field name="table">amun_user_account</field>
 		<field name="scope">0</field>
 		<field name="verb">join</field>
 		<field name="summary">Anonymous has created an account</field>
@@ -2329,8 +2325,6 @@ echo $_SERVER['REMOTE_ADDR'];</field>
 		<field name="globalId">76000200-41ca-58f3-bbb0-09bd16bda9d1</field>
 		<field name="parentId">0</field>
 		<field name="userId">1</field>
-		<field name="refId">1</field>
-		<field name="table">amun_news</field>
 		<field name="scope">0</field>
 		<field name="verb">add</field>
 		<field name="summary">
