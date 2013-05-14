@@ -132,7 +132,7 @@ class Handler extends ApproveHandlerAbstract
 	protected function getDefaultSelect()
 	{
 		return $this->table
-			->select(array('id', 'globalId', 'pageId', 'mediaId', 'date'))
+			->select(array('id', 'globalId', 'pageId', 'mediaId', 'processor', 'date'))
 			->join(Join::INNER, DataFactory::getTable('User_Account')
 				->select(array('name', 'profileUrl'), 'author')
 			)
