@@ -1140,10 +1140,9 @@ CREATE TABLE `amun_user_activity` (
   `globalId` varchar(36) NOT NULL,
   `parentId` int(10) NOT NULL DEFAULT '0',
   `userId` int(10) NOT NULL,
-  `refId` int(10) NOT NULL DEFAULT '0',
-  `table` varchar(32) DEFAULT NULL,
   `scope` int(10) NOT NULL DEFAULT '0',
   `verb` enum('post','add','cancel','checkin','delete','favorite','follow','give','ignore','invite','join','leave','like','make-friend','play','receive','remove','remove-friend','request-friend','rsvp-maybe','rsvp-no','rsvp-yes','save','share','stop-following','tag','unfavorite','unlike','unsave','update') NOT NULL,
+  `object` text NOT NULL,
   `summary` text NOT NULL,
   `date` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -1157,7 +1156,7 @@ CREATE TABLE `amun_user_activity` (
 
 LOCK TABLES `amun_user_activity` WRITE;
 /*!40000 ALTER TABLE `amun_user_activity` DISABLE KEYS */;
-INSERT INTO `amun_user_activity` VALUES (1,'4354b228-7315-5d6a-8662-249559c0ad78',0,1,1,'amun_user_account',0,'join','test has created an account','2013-04-12 20:51:10'),(2,'b3c6df5f-f3f2-5440-affb-b31264c44bb1',0,2,2,'amun_user_account',0,'join','Anonymous has created an account','2013-04-12 20:51:10'),(3,'76000200-41ca-58f3-bbb0-09bd16bda9d1',0,1,1,'amun_news',0,'add','\n<p><a href=\"http://127.0.0.1/projects/amun/public/index.php/profile/test\">test</a> has created a <a href=\"http://127.0.0.1/projects/amun/public/index.php/news/view?id=1\">news</a></p><blockquote>content \n</blockquote>\n','2013-04-12 20:54:19');
+INSERT INTO `amun_user_activity` (`id`, `globalId`, `parentId`, `userId`, `scope`, `verb`, `object`, `summary`, `date`) VALUES (1, '4354b228-7315-5d6a-8662-249559c0ad78', 0, 1, 0, 'join', '', 'test has created an account', '2013-04-12 20:51:10'),(2, 'b3c6df5f-f3f2-5440-affb-b31264c44bb1', 0, 2, 0, 'join', '', 'Anonymous has created an account', '2013-04-12 20:51:10'),(3, '76000200-41ca-58f3-bbb0-09bd16bda9d1', 0, 1, 0, 'add', '', '\n<p><a href="http://127.0.0.1/projects/amun/public/index.php/profile/test">test</a> has created a <a href="http://127.0.0.1/projects/amun/public/index.php/news/view?id=1">news</a></p><blockquote>content \n</blockquote>\n', '2013-04-12 20:54:19');
 /*!40000 ALTER TABLE `amun_user_activity` ENABLE KEYS */;
 UNLOCK TABLES;
 

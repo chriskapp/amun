@@ -1,8 +1,6 @@
 
 [FEATURES]
 
-[ ] fix activity stream handling
-[ ] fix api field default selection (restricted field authorPw etc.)
 [ ] build backend for approval system
 [ ] extend navigation to show a dropdown if child pages ar available
 [ ] add api bulk operations by accepting resultset in an post. We could use
@@ -32,6 +30,7 @@
         service actually does i.e. wich queries gets executed, registry entries
         created etc. Probably analyze the query and display an info message
         if the service truncates, drops or deletes
+    [ ] test service remote download and implement update possibility
 [ ] check and clean up not used api endpoints
 [ ] openid login activity "... created an Account" is not created
 [ ] fix explorer service
@@ -58,6 +57,8 @@
     framework because its not amun specific and a well written proxy is in
     general needed
 [ ] test ostatus remote subscription interoperability
+[x] fix activity stream handling
+[x] fix api field default selection (restricted field authorPw etc.)
 [x] fix installer
 [x] added modal window to add or edit records on the website
 [x] Implement reference input field in backend
