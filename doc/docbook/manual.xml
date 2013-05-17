@@ -3,8 +3,6 @@
 <book lang="en">
 	<bookinfo>
 		<title>Amun manual</title>
-		<releaseinfo>$Revision: 839 $</releaseinfo>
-		<pubdate>$Date: 2012-04-07 01:25:13 +0200 (Sa, 07. Apr 2012) $</pubdate>
 		<abstract>
 			<para>This is the offical manual of Amun.</para>
 		</abstract>
@@ -34,23 +32,23 @@
 			</sect2>
 			<sect2>
 				<title>Edit config</title>
-				<para>First open the file configuration.php with you favorite editor. The config
-				is an simple associative array with [key] > [value] pairs. Goto the key "psx_url"
-				and change the value to your domain. Note do not use a trailing slash. Goto
-				the "sql_*" keys and enter your connection datas. Also it is recommended to change
+				<para>Open the file configuration.php and change the key "psx_url"
+				to your domain. Note do not use a trailing slash. Also enter your 
+				connection data at the "sql_*" keys. It is recommended to change
 				the "amun_salt" parameter to another random string.</para>
 			</sect2>
 		</sect1>
 		<sect1>
 			<title>Run installer</title>
-			<para>Now you can point your browser to http://[server]/[path]/public/install.php
-			and run the install script. Enter all your data and click on install. Note the
-			install script is based on javascript. If the installation was succesful you can goto the main
-			page and login with your admin account.</para>
+			<para>Point your browser to http://[server]/[path]/public/install.php
+			and run the install script. Enter the data and click on install. Note the
+			install script is based on javascript. If the installation was succesful 
+			you can goto the main page and login with your admin account.</para>
 		</sect1>
 		<sect1>
 			<title>Clean up</title>
-			<para>It is highly recommended that you delete the files wich are used by the install script.</para>
+			<para>It is highly recommended that you delete the files wich are used by the 
+			install script.</para>
 			<orderedlist numeration="upperroman">
 			<title>Files that are used by the installation</title>
 			<listitem>
@@ -71,7 +69,7 @@
 		<para>In order to manage Amun you need an client wich connects to the Amun API.
 		By default amun offers a workbench wich offers basic functionallity to configure and control
 		amun. The endpoint url is at "index.php/workbench". You can find a list of
-		available backends at the <ulink url="http://amun.phpsx.org/index.php/amun/backend.htm">website</ulink>.</para>
+		available backends at the <ulink url="http://amun-project.org/">website</ulink>.</para>
 	</chapter>
 
 	<chapter>

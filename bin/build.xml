@@ -29,11 +29,15 @@
 		<delete dir="${build}/.git" />
 		<delete dir="${build}/bin" />
 		<delete dir="${build}/tests" />
+		<delete dir="${build}/doc/docbook" />
+		<delete dir="${build}/doc/xsl" />
 		<delete file="${build}/.gitignore" />
 		<delete file="${build}/.travis.yml" />
 		<delete file="${build}/phpunit.xml" />
 		<delete file="${build}/README.md" />
 		<delete file="${build}/todo.txt" />
+		<delete file="${build}/doc/amun.xsl" />
+		<delete file="${build}/doc/distributed_network.html" />
 		<!-- delete beta services -->
 		<delete includeemptydirs="true">
 			<fileset dir="${build}/service">
@@ -103,7 +107,7 @@
 	<target name="clean-doc">
 		<delete>
 			<fileset dir="${doc}">
-				<include name="dev.html" />
+				<include name="development.html" />
 				<include name="distributed_network.html" />
 				<include name="gplv3.html" />
 				<include name="manual.html" />

@@ -10,8 +10,6 @@
 				<email>christoph.kappestein@gmail.com</email>
 			</author>
 		</authorgroup>
-		<releaseinfo>$Revision: 784 $</releaseinfo>
-		<pubdate>$Date: 2012-04-07 01:25:13 +0200 (Sa, 07. Apr 2012) $</pubdate>
 		<abstract>
 			<para>This document describes a way for creating a distributed social network. It makes it possible to connect websites together
 			into one network. In the following an example of two connected websites. A user from website "foo" can login into website "bar"
