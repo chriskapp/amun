@@ -1,0 +1,348 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Amun development</title><meta name="generator" content="DocBook XSL Stylesheets V1.77.1"><meta name="description" content="This documentation explains howto start developing on Amun."><link href="default.css" type="text/css" rel="stylesheet"><script src="default.js" type="text/javascript"></script><script type="text/javascript">
+	  $(document).ready(function(){
+	    prettyPrint();
+	  });
+	  </script></head><body><div class="container"><div lang="en" class="book"><div class="titlepage"><div><div><h1 class="title"><a name="d54e1"></a>Amun development</h1></div><div><div class="abstract"><p class="title"><b>Abstract</b></p><p>This documentation explains howto start developing on Amun.</p></div></div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="chapter"><a href="#d54e8">1. Introduction</a></span></dt><dt><span class="chapter"><a href="#services">2. Services</a></span></dt><dd><dl><dt><span class="sect1"><a href="#d54e22">2.1. API</a></span></dt><dt><span class="sect1"><a href="#d54e30">2.2. Application</a></span></dt><dt><span class="sect1"><a href="#d54e35">2.3. Gadget</a></span></dt></dl></dd><dt><span class="chapter"><a href="#data-handling">3. Data handling</a></span></dt><dd><dl><dt><span class="sect1"><a href="#d54e49">3.1. Record</a></span></dt><dt><span class="sect1"><a href="#d54e56">3.2. Table</a></span></dt><dt><span class="sect1"><a href="#d54e68">3.3. Handler</a></span></dt></dl></dd><dt><span class="chapter"><a href="#event-handling">4. Event handling</a></span></dt><dt><span class="chapter"><a href="#d54e82">5. Coding standard</a></span></dt><dd><dl><dt><span class="sect1"><a href="#d54e86">5.1. PHP</a></span></dt><dd><dl><dt><span class="sect2"><a href="#d54e90">5.1.1. Indenting and line length</a></span></dt><dt><span class="sect2"><a href="#d54e99">5.1.2. Control Structures</a></span></dt><dt><span class="sect2"><a href="#d54e131">5.1.3. Function calls</a></span></dt><dt><span class="sect2"><a href="#d54e138">5.1.4. Class definitions</a></span></dt><dt><span class="sect2"><a href="#d54e145">5.1.5. SQL queries</a></span></dt><dt><span class="sect2"><a href="#d54e152">5.1.6. E_STRICT-compatible code</a></span></dt></dl></dd><dt><span class="sect1"><a href="#d54e157">5.2. Javascript</a></span></dt><dt><span class="sect1"><a href="#d54e162">5.3. Template</a></span></dt></dl></dd><dt><span class="chapter"><a href="#d54e167">6. How setup a development enviroment</a></span></dt><dd><dl><dt><span class="sect1"><a href="#d54e172">6.1. Checkout the repository</a></span></dt><dt><span class="sect1"><a href="#d54e179">6.2. Install dependencies</a></span></dt><dt><span class="sect1"><a href="#d54e186">6.3. Install amun</a></span></dt></dl></dd><dt><span class="chapter"><a href="#d54e191">7. Hello world service</a></span></dt><dd><dl><dt><span class="sect1"><a href="#d54e196">7.1. File structure</a></span></dt><dt><span class="sect1"><a href="#d54e203">7.2. Build config.xml</a></span></dt><dt><span class="sect1"><a href="#d54e212">7.3. Start coding</a></span></dt><dt><span class="sect1"><a href="#d54e221">7.4. Installation</a></span></dt></dl></dd><dt><span class="chapter"><a href="#d54e226">8. API</a></span></dt><dd><dl><dt><span class="sect1"><a href="#d54e231">8.1. Overview</a></span></dt><dt><span class="sect1"><a href="#d54e259">8.2. Workflow</a></span></dt><dd><dl><dt><span class="sect2"><a href="#d54e264">8.2.1. Request Token</a></span></dt><dt><span class="sect2"><a href="#d54e271">8.2.2. Responds Unauthorized Request Token</a></span></dt><dt><span class="sect2"><a href="#d54e278">8.2.3. Redirect user to Amun</a></span></dt><dt><span class="sect2"><a href="#d54e285">8.2.4. Logs in and grant / deny request</a></span></dt><dt><span class="sect2"><a href="#d54e290">8.2.5. Redirect with authorized request token</a></span></dt><dt><span class="sect2"><a href="#d54e297">8.2.6. Request an access token</a></span></dt><dt><span class="sect2"><a href="#d54e304">8.2.7. Responds Access Token</a></span></dt><dt><span class="sect2"><a href="#d54e311">8.2.8. Request data with Access Token</a></span></dt><dt><span class="sect2"><a href="#d54e318">8.2.9. Response with data</a></span></dt><dt><span class="sect2"><a href="#d54e326">8.2.10. Defined types</a></span></dt></dl></dd><dt><span class="sect1"><a href="#d54e371">8.3. Security</a></span></dt></dl></dd><dt><span class="glossary"><a href="#d54e376">Glossary</a></span></dt></dl></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="d54e8"></a>Chapter&nbsp;1.&nbsp;Introduction</h1></div></div></div><p>This documentation is intended for developers who want start writing their own services
+		or want to extend Amun.</p></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="services"></a>Chapter&nbsp;2.&nbsp;Services</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="sect1"><a href="#d54e22">2.1. API</a></span></dt><dt><span class="sect1"><a href="#d54e30">2.2. Application</a></span></dt><dt><span class="sect1"><a href="#d54e35">2.3. Gadget</a></span></dt></dl></div><p>Services are a concept in amun wich can be seen as plugins. Each service has an config.xml
+		file wich contains some meta informations about the service, the md5 hash of all files and optional
+		sql statments wich will be executed on installation. To provide a basic security each config.xml contains
+		also an signature wich is the sha1 hmac hash of the complete xml document using the secret:</p><pre class="screen">d6b0c93c6f9b0a7917fdb402298ac692bf25fab8</pre><p>A service can register a listener to the "core.service_install" event in order to extend
+		the config.xml vocabular. I.e. if the mail service is installed the config can contain an mail
+		template. Installation of the service succeeds only if the signature is valid.</p><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d54e22"></a>2.1.&nbsp;API</h2></div></div></div><p>In Amun every functionallity is provided via an RESTful API so in order to CRUD (Create, Receive,
+			Update, Delete) data you have to define an REST endpoint. All actions such as insert, update and delete 
+			data will be handled by amun if the corrosponding data classes exist. Please see the chapter 
+			<a class="link" href="#data-handling" title="Chapter&nbsp;3.&nbsp;Data handling">data handling</a> for more informations.</p></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d54e30"></a>2.2.&nbsp;Application</h2></div></div></div><p>The application is the web-frontend of the service. If a page is loaded the application 
+			of the service is called.</p></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d54e35"></a>2.3.&nbsp;Gadget</h2></div></div></div><p>Gadgets are normally displayed in a sidebar on the website. A gadget can be loaded via ajax or
+			inline.</p></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="data-handling"></a>Chapter&nbsp;3.&nbsp;Data handling</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="sect1"><a href="#d54e49">3.1. Record</a></span></dt><dt><span class="sect1"><a href="#d54e56">3.2. Table</a></span></dt><dt><span class="sect1"><a href="#d54e68">3.3. Handler</a></span></dt></dl></div><p>If you create a service you should create for each table the following class structure.</p><pre class="screen">Vendor/
+	News/
+		Record.php
+		Table.php
+		Handler.php
+</pre><p>With this structure you can easily create an REST API wich serves the default selection
+		of the handler. With the endpoint it is also possible to CRUD record of the table. Note you have
+		to implement the setter methods in the record class in order to set values through the API.
+		The following sections explain more detailed the responsibilities of each class.</p><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d54e49"></a>3.1.&nbsp;Record</h2></div></div></div><p>A record represents an row of an table. It must extend the class Amun\Data\RecordAbstract.
+			The record is a data object wich is used to create or receive entries from a database. Here an example
+			howto create a new record.</p><pre class="programlisting prettyprint">
+$news = DataFactory::get('Vendor_News')-&gt;getRecord();
+$news-&gt;setPageId(1);
+$news-&gt;setTitle('Foobar');
+$news-&gt;setText('&lt;p&gt;lorem ipsum&lt;/p&gt;');
+</pre></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d54e56"></a>3.2.&nbsp;Table</h2></div></div></div><p>The Table class represents an database table. It must extend the class Amun\Sql\TableAbstract.
+			It contains all informations about the table what columns are available and how they are connected
+			to other tables. The table class is used by the handler to CRUD (Create, Receive, Update and Delete) 
+			records on the table. Here an example howto receive a list of Vendor_News records.</p><pre class="programlisting prettyprint">
+$result = DataFactory::get('Vendor_News')
+	-&gt;select(array('id', 'title', 'url', 'text', 'date'))
+	-&gt;join(Join::INNER, DataFactory::get('User_Account')
+		-&gt;select(array('name', 'profileUrl'), 'author')
+	)
+	-&gt;where('pageId', '=', $this-&gt;page-&gt;id)
+	-&gt;orderBy('date', Sql::SORT_DESC)
+	-&gt;getAll(Sql::FETCH_OBJECT);</pre><p>We use the DataFactory class to get the table class. By default the getAll() method
+			returns an associative array. If you use the <code class="constant">Sql::FETCH_OBJECT</code> constant you will
+			get an array of Vendor\News\Record records.</p></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d54e68"></a>3.3.&nbsp;Handler</h2></div></div></div><p>The handler class offers some basic selection methods like getAll(), getBy*(), getOneBy*()
+			and get() to retrieve records. Each selection method can return either an array or objects. 
+			Also it is possible to create, update or delete records. Here some examples howto use a handler
+			class.</p><pre class="programlisting prettyprint">
+$handler = DataFactory::get('Vendor_News');
+
+// select row
+$row = $handler-&gt;getById(1, array('pageId', 'title'));
+
+echo $row['title'];
+
+$object = $handler-&gt;getById(1, array('pageId', 'title'), Sql::FETCH_OBJECT);
+
+echo $object-&gt;title; // Vendor_News_Record
+
+// select all
+$result = $handler-&gt;getAll(array('pageId', 'title'))
+
+foreach($result as $row)
+{
+	echo $row['title'] . "\n";
+}
+
+// create record
+$news = $handler-&gt;getRecord();
+$news-&gt;setPageId(1);
+$news-&gt;setTitle('Foobar');
+$news-&gt;setText('&lt;p&gt;lorem ipsum&lt;/p&gt;');
+
+$handler-&gt;create($news);
+</pre></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="event-handling"></a>Chapter&nbsp;4.&nbsp;Event handling</h1></div></div></div><p>Services can publish or listen to events. I.e. the lrdd service publishs an "lrdd.resource_discovery"
+		event and other services can register to this event in order to anwser an request. The following config entry shows 
+		how a service can listen or publish an event</p><pre class="screen">
+&lt;event&gt;
+	&lt;listener name="[EventName]" class="[\Class\Path]" /&gt;
+	&lt;publisher name="[EventName]" description="[Description]" /&gt;
+&lt;/event&gt;
+</pre></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="d54e82"></a>Chapter&nbsp;5.&nbsp;Coding standard</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="sect1"><a href="#d54e86">5.1. PHP</a></span></dt><dd><dl><dt><span class="sect2"><a href="#d54e90">5.1.1. Indenting and line length</a></span></dt><dt><span class="sect2"><a href="#d54e99">5.1.2. Control Structures</a></span></dt><dt><span class="sect2"><a href="#d54e131">5.1.3. Function calls</a></span></dt><dt><span class="sect2"><a href="#d54e138">5.1.4. Class definitions</a></span></dt><dt><span class="sect2"><a href="#d54e145">5.1.5. SQL queries</a></span></dt><dt><span class="sect2"><a href="#d54e152">5.1.6. E_STRICT-compatible code</a></span></dt></dl></dd><dt><span class="sect1"><a href="#d54e157">5.2. Javascript</a></span></dt><dt><span class="sect1"><a href="#d54e162">5.3. Template</a></span></dt></dl></div><p></p><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d54e86"></a>5.1.&nbsp;PHP</h2></div></div></div><p></p><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="d54e90"></a>5.1.1.&nbsp;Indenting and line length</h3></div></div></div><p>Use leading tabs to ident your code and spaces to format them if necessary. That
+				means you should only use tabs to the first sign after that use only spaces. This has
+				the advantage that your code is good readable in any editor even if the tabs are
+				displayed in different lengths. Here an example how it looks.</p><pre class="programlisting prettyprint">&lt;?php
+function foobar()
+{
+	$hello = 'foo';
+	$bar   = 'world';
+}
+</pre><p>We have used one tab to indent each variable. To indent the equal
+				sign of $bar to the same width as above we use only white spaces not tabs.
+				You should setup your editor that trailing spaces are removed on save and that
+				you can see leading tabs and trailing spaces.</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="d54e99"></a>5.1.2.&nbsp;Control Structures</h3></div></div></div><p>The following examples show you howto format control structures correct.</p><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="d54e104"></a>5.1.2.1.&nbsp;If</h4></div></div></div><pre class="programlisting prettyprint">&lt;?php
+if($x !== false || $y &gt;= 0)
+{
+	echo 'action 1';
+}
+else
+{
+	echo 'action 2';
+}
+</pre></div><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="d54e109"></a>5.1.2.2.&nbsp;Ternary operation</h4></div></div></div><pre class="programlisting prettyprint">&lt;?php
+$foo = ($bar &gt; 10) ? true : false;
+
+$bar = ($x &lt; 10) ? '&amp;lt;' : (($x &gt; 10) ? '&amp;gt;' : '=');
+</pre></div><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="d54e114"></a>5.1.2.3.&nbsp;Switch</h4></div></div></div><pre class="programlisting prettyprint">&lt;?php
+switch($foo)
+{
+	case 'foo':
+		echo 'action 1';
+		break;
+
+	default:
+		echo 'action 2';
+		break;
+}
+</pre></div><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="d54e119"></a>5.1.2.4.&nbsp;While</h4></div></div></div><pre class="programlisting prettyprint">&lt;?php
+$i = 1;
+
+while(true)
+{
+	if($i &gt; 10)
+	{
+		break;
+	}
+	else
+	{
+		echo 'action ' . $i . "\n";
+
+		$i++;
+	}
+}
+</pre><pre class="programlisting prettyprint">&lt;?php
+do
+{
+	echo 'action 1';
+}
+while(false);
+</pre></div><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="d54e126"></a>5.1.2.5.&nbsp;For</h4></div></div></div><pre class="programlisting prettyprint">&lt;?php
+for($i = 0; $i &lt; 10; $i++)
+{
+	echo 'action ' . $i;
+}
+</pre></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="d54e131"></a>5.1.3.&nbsp;Function calls</h3></div></div></div><p>The following examples show you howto call functions correct.</p><pre class="programlisting prettyprint">&lt;?php
+$foo = bar($val, $ue);
+
+$bar = $this-&gt;foo($an, $oth, $er, null);
+</pre></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="d54e138"></a>5.1.4.&nbsp;Class definitions</h3></div></div></div><p>Here an example howto create a class with a proper document block. Note because
+				Amun needs PHP &gt; 5.3 you should always define the visibility of the method with
+				"public", "protected" or "private".</p><pre class="programlisting prettyprint">&lt;?php
+/**
+ * [description]
+ *
+ * @author  [author_name] &lt;[author_email]&gt;
+ * @license [license_url] [license_name]
+ * @link    [url]
+ */
+class index extends Amun_ApplicationAbstract
+{
+	public function onLoad()
+	{
+		echo 'some content';
+	}
+}
+</pre></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="d54e145"></a>5.1.5.&nbsp;SQL queries</h3></div></div></div><p>If you make an SQL query you should always use the HEREDOC syntax to
+				declare the SQL query. This increases the readability and therefore the code
+				is easier to maintain. The following examples shows howto make an proper SQL
+				select.</p><pre class="programlisting prettyprint">&lt;?php
+class index extends Amun_ApplicationAbstract
+{
+	public function onLoad()
+	{
+		$foos = array();
+		$sql  = &lt;&lt;&lt;SQL
+SELECT
+	bar.id,
+	bar.title,
+	bar.date
+FROM 
+	tbl_bar bar
+WHERE 
+	bar.id &gt; 10
+AND 
+	bar.id &lt; 100
+ORDER BY 
+	bar.id DESC
+LIMIT 
+	0, 10
+SQL;
+
+		$result = $this-&gt;sql-&gt;getAll($sql);
+
+		foreach($result as $row)
+		{
+			array_push($foos, array(
+
+				'title' =&gt; $row['title'],
+				'date'  =&gt; date('r', $row['date']),
+
+			));
+		}
+	}
+}
+</pre></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="d54e152"></a>5.1.6.&nbsp;E_STRICT-compatible code</h3></div></div></div><p>All code should be developed under E_ALL | E_STRICT wich is default if you are
+				in debug mode. That means that you code must not produce any error or warning on
+				this error level.</p></div></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d54e157"></a>5.2.&nbsp;Javascript</h2></div></div></div><p>@todo</p></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d54e162"></a>5.3.&nbsp;Template</h2></div></div></div><p>@todo</p></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="d54e167"></a>Chapter&nbsp;6.&nbsp;How setup a development enviroment</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="sect1"><a href="#d54e172">6.1. Checkout the repository</a></span></dt><dt><span class="sect1"><a href="#d54e179">6.2. Install dependencies</a></span></dt><dt><span class="sect1"><a href="#d54e186">6.3. Install amun</a></span></dt></dl></div><p>Amun uses other applications to work but all these "3rd party applications" are not included in the
+		GIT repositiory. Because of that you have to setup a little development enviroment to start working on Amun. 
+		You need A local HTTP server with PHP, a GIT client and a texteditor.</p><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d54e172"></a>6.1.&nbsp;Checkout the repository</h2></div></div></div><p>First you have to create a folder where you want checkout Amun. This folder should
+			be in /var/www folder of your server where it can be accessed via the browser. Goto
+			your directoy and checkout the latest version of Amun with:</p><pre class="screen">git clone https://github.com/k42b3/amun.git .</pre></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d54e179"></a>6.2.&nbsp;Install dependencies</h2></div></div></div><p>Amun uses composer to manage the dependencies. Use the following command to install all
+			dependenig libraries</p><pre class="screen">composer install</pre></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d54e186"></a>6.3.&nbsp;Install amun</h2></div></div></div><p>You should install Amun though the /install.php script. More informations howto install Amun at 
+			the manual.</p></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="d54e191"></a>Chapter&nbsp;7.&nbsp;Hello world service</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="sect1"><a href="#d54e196">7.1. File structure</a></span></dt><dt><span class="sect1"><a href="#d54e203">7.2. Build config.xml</a></span></dt><dt><span class="sect1"><a href="#d54e212">7.3. Start coding</a></span></dt><dt><span class="sect1"><a href="#d54e221">7.4. Installation</a></span></dt></dl></div><p>This chapter describes step by step howto write a "Hello World" service.</p><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d54e196"></a>7.1.&nbsp;File structure</h2></div></div></div><p>You have todo is to create a folder in service folder. The folder must have the name of the service. 
+			In our example we take "world". In this folder we create a file called "config.xml" and a folder
+			application containing a file "index.php". You should now have the following
+			structure in your service folder.</p><pre class="screen">service /
+	world /
+		application /
+			index.php
+		config.xml</pre></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d54e203"></a>7.2.&nbsp;Build config.xml</h2></div></div></div><p>Open the file config.xml with you favorite editor and insert the following content.</p><pre class="programlisting prettyprint">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;service xmlns="http://amun-project.org" signature=""&gt;
+  &lt;status&gt;normal&lt;/status&gt;
+  &lt;name&gt;world&lt;/name&gt;
+  &lt;type&gt;http://ns.amun-project.org/2011/amun/service/world&lt;/type&gt;
+  &lt;link&gt;http://phpsx.org&lt;/link&gt;
+  &lt;author&gt;Your Name&lt;/author&gt;
+  &lt;license&gt;GPLv3&lt;/license&gt;
+  &lt;version&gt;0.0.1&lt;/version&gt;
+  &lt;permissions&gt;
+    &lt;perm name="view" description="World View"/&gt;
+  &lt;/permissions&gt;
+&lt;/service&gt;</pre><p>These are the basic informations about your service wich will be inserted
+			into the service table. Each service should have at least one view right.
+			If the user has the right the page is shown in the navigation else not.</p></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d54e212"></a>7.3.&nbsp;Start coding</h2></div></div></div><p>Now open the file application/index.php and write the following code to it</p><pre class="programlisting prettyprint">&lt;?php
+
+use Amun\Exception;
+use Amun\Module\ApplicationAbstract;
+
+class index extends ApplicationAbstract
+{
+	public function onLoad()
+	{
+		if($this-&gt;user-&gt;hasRight('world_view'))
+		{
+			echo '&lt;h1&gt;Hello World&lt;/h1&gt;';
+		}
+		else
+		{
+			throw new Exception('Access denied');
+		}
+	}
+}
+</pre><p>Each file of a service wich you want access must have a class wich has the same
+			name as the file. The output wich is generated by the class will be inserted into the
+			template. We first check whether the user has the right to view the template if
+			yes we output "Hello World" else we show an message that the user has not the right to
+			view it.</p></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d54e221"></a>7.4.&nbsp;Installation</h2></div></div></div><p>To install the service goto the backend and select the option System / Service.
+			Select the "world" service and install it. If the service was installed successful
+			you can create a new page at Content / Page wich uses the "world" service. Now you have
+			to set the rights in your user group. Goto User / Group and select the user group
+			wich you want give the right to view this application. If anything works you should
+			now see the service at the frontend.</p></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="d54e226"></a>Chapter&nbsp;8.&nbsp;API</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="sect1"><a href="#d54e231">8.1. Overview</a></span></dt><dt><span class="sect1"><a href="#d54e259">8.2. Workflow</a></span></dt><dd><dl><dt><span class="sect2"><a href="#d54e264">8.2.1. Request Token</a></span></dt><dt><span class="sect2"><a href="#d54e271">8.2.2. Responds Unauthorized Request Token</a></span></dt><dt><span class="sect2"><a href="#d54e278">8.2.3. Redirect user to Amun</a></span></dt><dt><span class="sect2"><a href="#d54e285">8.2.4. Logs in and grant / deny request</a></span></dt><dt><span class="sect2"><a href="#d54e290">8.2.5. Redirect with authorized request token</a></span></dt><dt><span class="sect2"><a href="#d54e297">8.2.6. Request an access token</a></span></dt><dt><span class="sect2"><a href="#d54e304">8.2.7. Responds Access Token</a></span></dt><dt><span class="sect2"><a href="#d54e311">8.2.8. Request data with Access Token</a></span></dt><dt><span class="sect2"><a href="#d54e318">8.2.9. Response with data</a></span></dt><dt><span class="sect2"><a href="#d54e326">8.2.10. Defined types</a></span></dt></dl></dd><dt><span class="sect1"><a href="#d54e371">8.3. Security</a></span></dt></dl></div><p>Amun uses Oauth to access the API. The following examples show the workflow howto
+		grant an application access.</p><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d54e231"></a>8.1.&nbsp;Overview</h2></div></div></div><p>To connect through the API you need an API key and secret. In the administrator section
+			you can create a new API consumer under System / Api. In Amun we have the followign endpoints:</p><div class="orderedlist"><p class="title"><b>OAuth endpoints</b></p><ol class="orderedlist" type="I"><li class="listitem"><p>Request Token:</p><p>[psx_url]/index.php/api/oauth/endpoint/request</p></li><li class="listitem"><p>Authorize:</p><p>[psx_url]/index.php/api/oauth/endpoint/authorization</p></li><li class="listitem"><p>Access Token:</p><p>[psx_url]/index.php/api/oauth/endpoint/access</p></li></ol></div><p>If you have an consumer key and secret you can connect to the API like defined in the
+			<a class="ulink" href="http://tools.ietf.org/html/rfc5849" target="_top">OAuth specification</a>.</p></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d54e259"></a>8.2.&nbsp;Workflow</h2></div></div></div><p>If its not other mentioned this implementation follows the specification of OAuth 1.0.
+			This section describes how you can access a protected resource via the API. Note for
+			better reading I have break long lines. If a line is indented with one space it was broken by the
+			line above and should be seen as it where in the same line. If you need a oauth consumer
+			implementation take a look at the PSX framework (http://phpsx.org) and see the oauth library.</p><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="d54e264"></a>8.2.1.&nbsp;Request Token</h3></div></div></div><p>The web application requests an request token.</p><pre class="programlisting prettyprint">GET /index.php/api/oauth/endpoint/request HTTP/1.1
+Host: 127.0.0.1
+Authorization: OAuth,
+ oauth_consumer_key="[key]",
+ oauth_signature_method="HMAC-SHA1",
+ oauth_signature="[signature]",
+ oauth_timestamp="[timestamp]",
+ oauth_nonce="[nonce]",
+ oauth_version="1.0"</pre></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="d54e271"></a>8.2.2.&nbsp;Responds Unauthorized Request Token</h3></div></div></div><p>On success Amun respond with an token and token secret. Note you can request max
+				5 valid tokens per IP.</p><pre class="programlisting prettyprint">HTTP/1.1 200 OK
+
+oauth_token=[token]&amp;
+oauth_token_secret=[token_secret]&amp;
+oauth_callback_confirmed=true&amp;
+x_oauth_expire=[expire]</pre></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="d54e278"></a>8.2.3.&nbsp;Redirect user to Amun</h3></div></div></div><p>Your application should now redirect the user to Amun to authorize the request token.
+				You must use the obtained request token in your request</p><pre class="programlisting prettyprint">GET /api/oauth/endpoint/authorization?oauth_token=[token] HTTP/1.1
+Host: 127.0.0.1</pre></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="d54e285"></a>8.2.4.&nbsp;Logs in and grant / deny request</h3></div></div></div><p>The user must login and "Allow" or "Deny" the request for the web application. It is
+				also possible to allow the application only a specific subset of the rights from the user.</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="d54e290"></a>8.2.5.&nbsp;Redirect with authorized request token</h3></div></div></div><p>If the user has "Allow" or "Deny" the request Amun redirects the user back to the callback.
+				Note the callback must be from the same host as the url defined in the backend. If the request
+				was denied the GET variable x_oauth_error is set.</p><pre class="programlisting prettyprint">Accepted:
+GET [callback]?oauth_token=[token]&amp;oauth_verifier=[verifier] HTTP/1.1
+
+Denied:
+GET [callback]?x_oauth_error=[msg] HTTP/1.1</pre></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="d54e297"></a>8.2.6.&nbsp;Request an access token</h3></div></div></div><p>Now we have all informations to get an access token. Note the expire time of your request
+				token must be valid to exchange the token.</p><pre class="programlisting prettyprint">GET /index.php/api/oauth/endpoint/access HTTP/1.1
+Host: 127.0.0.1
+Authorization: OAuth,
+ oauth_consumer_key="[key]",
+ oauth_token="[token]",
+ oauth_signature_method="HMAC-SHA1",
+ oauth_signature="[signature]",
+ oauth_timestamp="[timestamp]",
+ oauth_nonce="[nonce]",
+ oauth_version="1.0",
+ oauth_verifier="[verifier]"</pre></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="d54e304"></a>8.2.7.&nbsp;Responds Access Token</h3></div></div></div><p>If all parameters are valid Amun respond with an access token and secret. You can use
+				the token [expire] seconds to access the API.</p><pre class="programlisting prettyprint">HTTP/1.1 200 OK
+
+oauth_token=[token]&amp;oauth_token_secret=[token_secret]&amp;x_oauth_expire=[expire]</pre></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="d54e311"></a>8.2.8.&nbsp;Request data with Access Token</h3></div></div></div><p>Here an example how you can access the API with an access token</p><pre class="programlisting prettyprint">GET /index.php/api/news HTTP/1.1
+Host: 127.0.0.1
+Accept: application/xml
+Authorization: OAuth,
+ oauth_consumer_key="[key]",
+ oauth_token="[token]",
+ oauth_signature_method="HMAC-SHA1",
+ oauth_signature="[signature]",
+ oauth_timestamp="[timestamp]",
+ oauth_nonce="[nonce]",
+ oauth_version="1.0"</pre></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="d54e318"></a>8.2.9.&nbsp;Response with data</h3></div></div></div><p>We get the latest entries from the news service</p><pre class="programlisting prettyprint">HTTP/1.1 200 OK
+
+&lt;resultset&gt;
+	&lt;startIndex&gt;1&lt;/startIndex&gt;
+	&lt;itemsPerPage&gt;1&lt;/itemsPerPage&gt;
+	&lt;totalResults&gt;1&lt;/totalResults&gt;
+	&lt;entry&gt;
+		&lt;id&gt;1&lt;/id&gt;
+		&lt;user&gt;foo&lt;/user&gt;
+		&lt;title&gt;some headline&lt;/title&gt;
+		&lt;text&gt;and here a really great description&lt;/text&gt;
+		&lt;date&gt;Mon, 16 Nov 2009 12:56:11 +0100&lt;/date&gt;
+	&lt;/entry&gt;
+&lt;/resultset&gt;</pre></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="d54e326"></a>8.2.10.&nbsp;Defined types</h3></div></div></div><p>In the description we use variables like [key] etc. In this section all variable are explained.</p><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="d54e331"></a>8.2.10.1.&nbsp;Key</h4></div></div></div><p>This is the public consumer key of the user. You get an consumer key and secret if you register
+					an new application at the backend at System / Api. You can also take a look at the "amun_oauth" table.</p></div><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="d54e336"></a>8.2.10.2.&nbsp;Token / Token secret</h4></div></div></div><p>You get the token and token secret as response from an request to the "request token" endpoint.
+					This is usually http://[host]/index.php/api/oauth/endpoint/request. The value is a string
+					with random hex characters. The string is 40 signs long i.e. 0864dc856a34e4590125836e4151d521</p></div><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="d54e341"></a>8.2.10.3.&nbsp;Signature</h4></div></div></div><p>The signature is for verifing the request. Amun follows the specification except that
+					you use as Normalize Request Parameters (http://oauth.net/core/1.0a#sig_norm_param) only the
+					OAuth header parameters. More informations about signing a request at
+					http://oauth.net/core/1.0a#signing_process</p></div><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="d54e346"></a>8.2.10.4.&nbsp;Timestamp</h4></div></div></div><p>The timestamp is expressed in the number of seconds since January 1, 1970 00:00:00 GMT
+					i.e. 1258369873</p></div><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="d54e351"></a>8.2.10.5.&nbsp;Nonce</h4></div></div></div><p>The nonce is a string with random hex characters. The string must be 16 signs long
+					i.e. d4a35e7181e370e4</p></div><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="d54e356"></a>8.2.10.6.&nbsp;Verifier</h4></div></div></div><p>The verfier is to get sure that only application can request an access token that have
+					previously gets user authorization. The value is a string with random hex characters. The string
+					is 32 signs long i.e. dc66d622d793e0af0e3bcc639fecbb65</p></div><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="d54e361"></a>8.2.10.7.&nbsp;Expire</h4></div></div></div><p>The seconds howlong you can use a token. I.e. if you obtain a request token and x_oauth_expire
+					is 900 you have 15 minutes to exchange your request token for an access token.</p></div><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="d54e366"></a>8.2.10.8.&nbsp;Callback</h4></div></div></div><p>The callback is defined either at registration or when you obtain an request token (with the
+					oauth_callback parameter). If both are present amun uses the callback from the request token.
+					Note the callback must have the same host as the web application url defined on registration.</p></div></div></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d54e371"></a>8.3.&nbsp;Security</h2></div></div></div><p>When you use the API you should keep in mind that you can never trust an API user. This
+			is because you cant get sure that the key and secret is used only by the trusted user. In example
+			if the user uses the API key and secret in an desktop application someone can sniff the key and
+			secret or if the user uses the API key and secret in an javascript application. There are many
+			possibilities how someone can get the API key and secret of a user. The conclusion should be that
+			the assigend user to the API should only have the rights wich are necessary. If you allow a user to
+			Create Update or Delete data you must get sure that this user is reliable because else someone can
+			create automatic scripts that delete all data or insert spam.</p></div></div><div class="glossary"><div class="titlepage"><div><div><h1 class="title"><a name="d54e376"></a>Glossary</h1></div></div></div><p>This glossary contains additional related specifications.</p><div class="glossdiv"><h3 class="title">A</h3><dl><dt>Activity Streams</dt><dd><p>http://activitystrea.ms/specs/</p></dd><dt>ATOM</dt><dd><p>http://tools.ietf.org/html/rfc4287</p></dd></dl></div><div class="glossdiv"><h3 class="title">C</h3><dl><dt>CMIS</dt><dd><p>http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=cmis</p></dd></dl></div><div class="glossdiv"><h3 class="title">F</h3><dl><dt>FOAF</dt><dd><p>http://xmlns.com/foaf/spec/</p></dd></dl></div><div class="glossdiv"><h3 class="title">H</h3><dl><dt>Host Metadata</dt><dd><p>http://tools.ietf.org/html/draft-hammer-hostmeta-16</p></dd><dt>HTTP</dt><dd><p>http://tools.ietf.org/html/rfc2616</p></dd><dt>HTML5</dt><dd><p>http://www.w3.org/TR/html5/</p></dd></dl></div><div class="glossdiv"><h3 class="title">J</h3><dl><dt>Javascript</dt><dd><p>http://www.ecma-international.org/publications/standards/Ecma-262.htm</p></dd></dl></div><div class="glossdiv"><h3 class="title">L</h3><dl><dt>LRDD</dt><dd><p>http://tools.ietf.org/html/draft-hammer-discovery-05</p></dd></dl></div><div class="glossdiv"><h3 class="title">M</h3><dl><dt>MySQL</dt><dd><p>http://dev.mysql.com/doc/</p></dd></dl></div><div class="glossdiv"><h3 class="title">O</h3><dl><dt>OAuth</dt><dd><p>http://tools.ietf.org/html/rfc5849</p></dd><dt>OpenID</dt><dd><p>http://openid.net/specs/openid-authentication-2_0.html</p></dd><dt>OpenSocial</dt><dd><p>http://www.opensocial.org/Technical-Resources/</p></dd><dt>OpenSearch</dt><dd><p>http://www.opensearch.org/Specifications/OpenSearch/1.1/Draft_4</p></dd></dl></div><div class="glossdiv"><h3 class="title">P</h3><dl><dt>PHP</dt><dd><p>http://www.php.net/manual/en/</p></dd><dt>Portable Contacts</dt><dd><p>http://portablecontacts.net/draft-spec.html</p></dd><dt>PSX</dt><dd><p>http://phpsx.org</p></dd></dl></div><div class="glossdiv"><h3 class="title">R</h3><dl><dt>RSS</dt><dd><p>http://www.rssboard.org/rss-specification</p></dd></dl></div><div class="glossdiv"><h3 class="title">W</h3><dl><dt>WebFinger</dt><dd><p>http://code.google.com/p/webfinger/</p></dd></dl></div><div class="glossdiv"><h3 class="title">X</h3><dl><dt>XML</dt><dd><p>http://www.w3.org/TR/xml/</p></dd></dl></div></div></div></div></body></html>
