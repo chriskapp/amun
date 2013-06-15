@@ -40,6 +40,10 @@ abstract class ApiAbstract extends Oauth
 	protected $sessionId;
 	protected $userId;
 
+	protected $get;
+	protected $registry;
+	protected $service;
+
 	public function __construct(Location $location, Base $base, $basePath, array $uriFragments)
 	{
 		parent::__construct($location, $base, $basePath, $uriFragments);
@@ -74,9 +78,17 @@ abstract class ApiAbstract extends Oauth
 		$this->userId      = $this->claimedUserId;
 	}
 
+	public function onLoad()
+	{
+		// dependencies
+		$this->get      = $this->getInputGet();
+		$this->registry = $this->getRegistry();
+		$this->service  = $this->getService();
+	}
+
 	protected function getHandler($table = null)
 	{
-		return $this->dataFactory->getHandlerInstance($table === null ? $this->service->namespace : $table);
+		return $this->getDataFactory()->getHandlerInstance($table === null ? $this->service->getNamespace() : $table);
 	}
 }
 

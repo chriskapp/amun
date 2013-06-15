@@ -55,12 +55,12 @@ abstract class RecordAbstract extends TableAbstract
 	{
 		$this->_table    = $table;
 		$this->_ct       = $ct;
-		$this->_base     = $ct->getBase();
-		$this->_config   = $ct->getConfig();
-		$this->_sql      = $ct->getSql();
-		$this->_registry = $ct->getRegistry();
-		$this->_validate = $ct->getValidate();
-		$this->_user     = $ct->getUser();
+		$this->_base     = $ct->get('base');
+		$this->_config   = $ct->get('config');
+		$this->_sql      = $ct->get('sql');
+		$this->_registry = $ct->get('registry');
+		$this->_validate = $ct->get('validate');
+		$this->_user     = $ct->get('user');
 	}
 
 	public function setCaptcha($captcha)

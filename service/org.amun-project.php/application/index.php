@@ -60,7 +60,7 @@ class index extends ApplicationAbstract
 		if($this->user->hasRight('php_view'))
 		{
 			// load php
-			$recordPhp = $this->getHandler()->getOneByPageId($this->page->id, array(), Sql::FETCH_OBJECT);
+			$recordPhp = $this->getHandler()->getOneByPageId($this->page->getId(), array(), Sql::FETCH_OBJECT);
 
 			$this->template->assign('recordPhp', $recordPhp);
 
@@ -72,7 +72,7 @@ class index extends ApplicationAbstract
 			}
 			else
 			{
-				$url = $this->service->getApiEndpoint() . '/form?format=json&method=create&pageId=' . $this->page->id;
+				$url = $this->service->getApiEndpoint() . '/form?format=json&method=create&pageId=' . $this->page->getId();
 			}
 
 			$options = new Option(__CLASS__, $this->registry, $this->user, $this->page);

@@ -164,7 +164,7 @@ class Handler extends HandlerAbstract
 				$record->globalId = $this->base->getUUID('user:activity:' . $record->summary . ':' . uniqid());
 			}
 
-			$record->userId = $this->user->id;
+			$record->userId = $this->user->getId();
 			$record->verb   = isset($record->verb) ? $record->verb : 'post';
 
 			if(!isset($record->date))
@@ -281,13 +281,13 @@ INSERT INTO
 	FROM
 		{$this->registry['table.user_friend']} `friend`
 	WHERE
-		`friend`.`userId` = {$this->user->id}
+		`friend`.`userId` = {$this->user->getId()}
 SQL;
 
 			if($scope > 0)
 			{
 				$sql.= ' AND
-							(`friend`.`friendId` = ' . $this->user->id . ' OR `friend`.`groupId` = ' . $scope . ')';
+							(`friend`.`friendId` = ' . $this->user->getId() . ' OR `friend`.`groupId` = ' . $scope . ')';
 			}
 
 			$this->sql->query($sql);

@@ -37,9 +37,11 @@ class index extends ApplicationAbstract
 {
 	public function onLoad()
 	{
+		parent::onLoad();
+
 		if($this->user->hasRight('file_view'))
 		{
-			$file = $this->getHandler()->getOneByPageId($this->page->id);
+			$file = $this->getHandler()->getOneByPageId($this->page->getId());
 
 			if(!empty($file))
 			{

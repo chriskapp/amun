@@ -32,7 +32,7 @@
 			<h3><a href="<?php echo $record->getUrl(); ?>"><?php echo $record->isSticky() ? '<strong>' . $record->title . '</strong>' : $record->title; ?></a></h3>
 			<p class="muted">
 				by <a href="<?php echo $record->authorProfileUrl; ?>"><?php echo $record->authorName; ?></a>
-				on <time datetime="<?php echo $record->getDate()->format(DateTime::ATOM); ?>"><?php echo $record->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></time>
+				on <time datetime="<?php echo $record->getDate()->format(DateTime::ATOM); ?>"><?php echo $record->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></time>
 			</p>
 		</td>
 		<td><?php echo $record->replyCount; ?></td>
@@ -41,7 +41,7 @@
 			<div class="amun-service-forum-entry-lastcomment">
 				by <a href="<?php echo $record->replyProfileUrl; ?>"><?php echo $record->replyName; ?></a>
 				<br />
-				on <time datetime="<?php echo $record->getReplyDate()->format(DateTime::ATOM); ?>"><?php echo $record->getReplyDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></time>
+				on <time datetime="<?php echo $record->getReplyDate()->format(DateTime::ATOM); ?>"><?php echo $record->getReplyDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></time>
 			</div>
 			<?php else: ?>
 			-

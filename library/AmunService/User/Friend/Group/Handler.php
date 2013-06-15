@@ -47,7 +47,7 @@ class Handler extends HandlerAbstract
 	{
 		if($record->hasFields('title'))
 		{
-			$con = new Condition(array('userId', '=', $this->user->id));
+			$con = new Condition(array('userId', '=', $this->user->getId()));
 
 			if($this->table->count($con) > $this->registry['my.max_group_count'])
 			{
@@ -55,7 +55,7 @@ class Handler extends HandlerAbstract
 			}
 
 
-			$record->userId = $this->user->id;
+			$record->userId = $this->user->getId();
 
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
@@ -104,7 +104,7 @@ class Handler extends HandlerAbstract
 		{
 			// move all friends to uncategorized
 			$con = new Condition();
-			$con->add('userId', '=', $this->user->id);
+			$con->add('userId', '=', $this->user->getId());
 			$con->add('groupId', '=', $record->id);
 
 			$this->sql->update($this->registry['table.user_friend'], array('groupId' => 0), $con);

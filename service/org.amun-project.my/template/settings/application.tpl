@@ -44,7 +44,7 @@
 		<?php foreach($applications as $application): ?>
 		<tr>
 			<td><a href="application/settings?appId=<?php echo $application->id; ?>"><?php echo $application->apiTitle; ?></a></td>
-			<td><?php echo $application->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></td>
+			<td><?php echo $application->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></td>
 			<td><input class="btn" type="button" onclick="amun.services.my.applicationsRevokeAccess(<?php echo $application->id . ',\'' . $accessUrl . '\''; ?>, this)" value="Revoke" /></td>
 		</tr>
 		<?php endforeach; ?>

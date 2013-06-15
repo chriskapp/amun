@@ -169,7 +169,8 @@ SQL;
 
 				if(strpos($content, $key) !== false)
 				{
-					$content = str_replace($key, $this->user->$v, $content);
+					$method  = 'get' . ucfirst($v);
+					$content = str_replace($key, $this->user->$method(), $content);
 				}
 			}
 		}

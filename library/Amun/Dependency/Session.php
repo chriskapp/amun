@@ -47,21 +47,8 @@ class Session extends Request
 		parent::__construct($config);
 	}
 
-	public function setup()
-	{
-		parent::setup();
-
-		$this->getSession();
-		$this->getUser();
-	}
-
 	public function getSession()
 	{
-		if($this->has('session'))
-		{
-			return $this->get('session');
-		}
-
 		$session = new \PSX\Session($this->sessionName);
 
 		if($this->sessionId !== null)
@@ -71,21 +58,16 @@ class Session extends Request
 
 		$session->start();
 
-		return $this->set('session', $session);
+		return $session;
 	}
 
 	public function getUser()
 	{
-		if($this->has('user'))
-		{
-			return $this->get('user');
-		}
-
 		if($this->userId === null)
 		{
-			$this->userId = User::getId($this->getSession(), $this->getRegistry());
+			$this->userId = User::findUserId($this->get('session'), $this->get('registry'));
 		}
 
-		return $this->set('user', new User($this->userId, $this->getRegistry()));
+		return new User($this->userId, $this->get('registry'));
 	}
 }

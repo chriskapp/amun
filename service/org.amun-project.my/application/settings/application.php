@@ -41,8 +41,8 @@ class application extends SettingsAbstract
 		parent::onLoad();
 
 		// add path
-		$this->path->add('Settings', $this->page->url . '/settings');
-		$this->path->add('Application', $this->page->url . '/settings/application');
+		$this->path->add('Settings', $this->page->getUrl() . '/settings');
+		$this->path->add('Application', $this->page->getUrl() . '/settings/application');
 
 		// load allowed applications
 		$applications = $this->getApplications();

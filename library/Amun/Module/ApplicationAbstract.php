@@ -41,57 +41,84 @@ use PSX\Sql\Condition;
  */
 abstract class ApplicationAbstract extends ViewAbstract
 {
+	protected $user;
+	protected $page;
+	protected $service;
+	protected $navigation;
+	protected $path;
+	protected $gadgetContainer;
+
 	public function onLoad()
 	{
 		// set xrds location header
 		header('X-XRDS-Location: ' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/xrds');
 
-		if(!empty($this->page->id))
+		// dependencies
+		$this->get      = $this->getInputGet();
+		$this->post     = $this->getInputPost();
+		$this->registry = $this->getRegistry();
+		$this->user     = $this->getUser();
+		$this->page     = $this->getPage();
+		$this->service  = $this->getService();
+
+		// template dependencies
+		$this->htmlJs      = $this->getHtmlJs();
+		$this->htmlCss     = $this->getHtmlCss();
+		$this->htmlContent = $this->getHtmlContent();
+		$this->template    = $this->getTemplate();
+
+		// load nav
+		if($this->page->hasNav())
 		{
-			// load nav
-			if($this->page->hasNav())
-			{
-				$this->navigation->load();
-			}
-
-			// load path
-			if($this->page->hasPath())
-			{
-				$this->path->load();
-			}
-
-			// load gadgets
-			if($this->page->hasGadget())
-			{
-				$this->gadgetContainer->load($this->loader, $this->page, $this->htmlCss);
-			}
-
-			// set application template path
-			$this->template->setDir($this->config['amun_service_path'] . '/' . $this->page->application . '/template');
-
-			// add meta tags
-			$this->loadMetaTags();
-
-			// add default css
-			$this->htmlCss->add('default');
-			$this->htmlJs->add('amun');
+			$this->navigation = $this->getNavigation();
+			$this->navigation->load();
 		}
-		else
+
+		// load path
+		if($this->page->hasPath())
 		{
-			throw new Exception('Invalid page');
+			$this->path = $this->getPath();
+			$this->path->load();
 		}
+
+		// load gadgets
+		if($this->page->hasGadget())
+		{
+			$this->gadgetContainer = $this->getGadgetContainer();
+			$this->gadgetContainer->load($this->getLoader(), $this->page, $this->htmlCss);
+		}
+
+		// set application template path
+		$this->template->setDir($this->config['amun_service_path'] . '/' . $this->page->getApplication() . '/template');
+
+		// add meta tags
+		$this->loadMetaTags();
+
+		// add default css
+		$this->htmlCss->add('default');
+		$this->htmlJs->add('amun');
 	}
 
 	public function processResponse($content)
 	{
+		// assign default template vars
+		$this->template->assign('registry', $this->registry);
+		$this->template->assign('user', $this->user);
+		$this->template->assign('page', $this->page);
+		$this->template->assign('navigation', $this->navigation);
+		$this->template->assign('path', $this->path);
+		$this->template->assign('gadget', $this->gadgetContainer);
+		$this->template->assign('htmlJs', $this->htmlJs);
+		$this->template->assign('htmlCss', $this->htmlCss);
+		$this->template->assign('htmlContent', $this->htmlContent);
+
+		// transform
 		if(empty($content))
 		{
 			// if we havent set an template file 
-			$file = $this->template->getFile();
-
-			if(empty($file))
+			if(!$this->template->hasFile())
 			{
-				$file = substr(get_class($this), strlen($this->service->namespace) + 13);
+				$file = substr(get_class($this), strlen($this->service->getNamespace()) + 13);
 				$file = str_replace('\\', '/', $file);
 
 				$this->template->set($file . '.tpl');
@@ -111,9 +138,10 @@ abstract class ApplicationAbstract extends ViewAbstract
 		$this->template->assign('content', $response);
 		$this->template->setDir(PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir']);
 
-		if(!empty($this->page->template))
+		$template = $this->page->getTemplate();
+		if(!empty($template))
 		{
-			$this->template->set($this->page->template);
+			$this->template->set($template);
 		}
 		else
 		{
@@ -134,24 +162,27 @@ abstract class ApplicationAbstract extends ViewAbstract
 
 	protected function getHandler($table = null)
 	{
-		return $this->dataFactory->getHandlerInstance($table === null ? $this->service->namespace : $table);
+		return $this->getDataFactory()->getHandlerInstance($table === null ? $this->service->getNamespace() : $table);
 	}
 
 	protected function loadMetaTags()
 	{
-		if(!empty($this->page->description))
+		$description = $this->page->getDescription();
+		if(!empty($description))
 		{
-			$this->htmlContent->add(Html\Content::META, '<meta name="description" content="' . $this->page->description . '" />');
+			$this->htmlContent->add(Html\Content::META, '<meta name="description" content="' . $description . '" />');
 		}
 
-		if(!empty($this->page->keywords))
+		$keywords = $this->page->getKeywords();
+		if(!empty($keywords))
 		{
-			$this->htmlContent->add(Html\Content::META, '<meta name="keywords" content="' . $this->page->keywords . '" />');
+			$this->htmlContent->add(Html\Content::META, '<meta name="keywords" content="' . $keywords . '" />');
 		}
 
-		if($this->page->publishDate != '0000-00-00 00:00:00')
+		$publishDate = $this->page->getPublishDate();
+		if(!empty($publishDate) && $publishDate != '0000-00-00 00:00:00')
 		{
-			$publishDate = new DateTime($this->page->publishDate);
+			$publishDate = new DateTime($publishDate);
 
 			$this->htmlContent->add(Html\Content::META, '<meta name="date" content="' . $publishDate->format(DateTime::ATOM) . '" />');
 		}

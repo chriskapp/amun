@@ -19,7 +19,7 @@
 			by
 			<a href="<?php echo $record->authorProfileUrl; ?>" rel="author"><?php echo $record->authorName; ?></a>
 			on
-			<time datetime="<?php echo $record->getDate()->format(DateTime::ATOM); ?>"><?php echo $record->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></time>
+			<time datetime="<?php echo $record->getDate()->format(DateTime::ATOM); ?>"><?php echo $record->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></time>
 		</p>
 		<div class="amun-service-news-text"><?php echo $record->text; ?></div>
 	</div>

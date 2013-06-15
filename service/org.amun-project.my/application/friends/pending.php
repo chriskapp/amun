@@ -41,8 +41,8 @@ class pending extends FriendsAbstract
 		parent::onLoad();
 
 		// add path
-		$this->path->add('Friends', $this->page->url . '/friends');
-		$this->path->add('Request', $this->page->url . '/friends/request');
+		$this->path->add('Friends', $this->page->getUrl() . '/friends');
+		$this->path->add('Request', $this->page->getUrl() . '/friends/request');
 
 		// get requests
 		$requests = $this->getRequests();

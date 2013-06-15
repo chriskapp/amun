@@ -61,9 +61,9 @@ class auth extends ApplicationAbstract
 		// the login form
 		if($this->user->isAnonymous())
 		{
-			$self = $this->page->url . '/auth?oauth_token=' . $oauthToken;
+			$self = $this->page->getUrl() . '/auth?oauth_token=' . $oauthToken;
 
-			header('Location: ' . $this->page->url . '/login?redirect=' . urlencode($self));
+			header('Location: ' . $this->page->getUrl() . '/login?redirect=' . urlencode($self));
 
 			exit;
 		}
@@ -71,7 +71,7 @@ class auth extends ApplicationAbstract
 		if($this->user->hasRight('my_view'))
 		{
 			// add path
-			$this->path->add('Auth', $this->page->url . '/auth');
+			$this->path->add('Auth', $this->page->getUrl() . '/auth');
 
 			try
 			{

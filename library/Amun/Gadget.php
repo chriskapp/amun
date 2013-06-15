@@ -33,23 +33,23 @@ use Amun\Gadget\Args;
  */
 class Gadget
 {
-	public $id;
-	public $serviceId;
-	public $type;
-	public $name;
-	public $title;
-	public $path;
-	public $cache;
-	public $expire;
-	public $param;
+	protected $id;
+	protected $serviceId;
+	protected $type;
+	protected $name;
+	protected $title;
+	protected $path;
+	protected $cache;
+	protected $expire;
+	protected $param;
 
-	public $applicationPath;
+	protected $applicationPath;
 
-	private $config;
-	private $sql;
-	private $registry;
-	private $user;
-	private $body;
+	protected $config;
+	protected $sql;
+	protected $registry;
+	protected $user;
+	protected $body;
 
 	public function __construct($gadgetId, Registry $registry, User $user)
 	{
@@ -109,9 +109,19 @@ SQL;
 		}
 	}
 
+	public function getId()
+	{
+		return $this->id;
+	}
+
 	public function getServiceId()
 	{
 		return $this->serviceId;
+	}
+
+	public function getType()
+	{
+		return $this->type;
 	}
 
 	public function getName()
@@ -122,6 +132,36 @@ SQL;
 	public function getTitle()
 	{
 		return $this->title;
+	}
+
+	public function getPath()
+	{
+		return $this->path;
+	}
+
+	public function getParam()
+	{
+		return $this->param;
+	}
+
+	public function hasCache()
+	{
+		return (boolean) $this->cache;
+	}
+
+	public function getExpire()
+	{
+		if(!empty($this->expire))
+		{
+			return new DateInterval($this->expire);
+		}
+
+		return null;
+	}
+
+	public function getDate()
+	{
+		return $this->date;
 	}
 
 	/**

@@ -61,7 +61,7 @@ class connect extends ApplicationAbstract
 		if($this->user->hasRight('my_view'))
 		{
 			// add path
-			$this->path->add('Connect', $this->page->url . '/connect');
+			$this->path->add('Connect', $this->page->getUrl() . '/connect');
 
 			// check whether connection was started
 			$this->request = isset($_SESSION['amun_openid_request']) ? $_SESSION['amun_openid_request'] : null;

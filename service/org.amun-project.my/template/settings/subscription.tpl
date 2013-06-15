@@ -42,7 +42,7 @@
 		<?php foreach($subscriptions as $subscription): ?>
 		<tr>
 			<td><a href="<?php echo $subscription->topic; ?>"><div style="overflow:hidden;width:380px;"><?php echo $subscription->topic; ?></div></a></td>
-			<td><?php echo $subscription->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></td>
+			<td><?php echo $subscription->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></td>
 			<td><input type="button" onclick="amun.services.my.subscriptionsRemove(<?php echo $subscription->id . ',\'' . $subscriptionUrl . '\''; ?>, this)" value="Remove" /></td>
 		</tr>
 		<?php endforeach; ?>

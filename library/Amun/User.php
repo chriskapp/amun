@@ -42,20 +42,20 @@ use PSX\Sql\Condition;
  */
 class User
 {
-	public $id;
-	public $groupId;
-	public $hostId;
-	public $countryId;
-	public $status;
-	public $name;
-	public $profileUrl;
-	public $thumbnailUrl;
-	public $timezone;
-	public $updated;
-	public $date;
-	public $group;
+	protected $id;
+	protected $groupId;
+	protected $hostId;
+	protected $countryId;
+	protected $status;
+	protected $name;
+	protected $profileUrl;
+	protected $thumbnailUrl;
+	protected $timezone;
+	protected $updated;
+	protected $date;
+	protected $group;
 
-	private $rights = array();
+	protected $rights = array();
 
 	protected $config;
 	protected $sql;
@@ -140,6 +140,66 @@ SQL;
 		{
 			throw new Exception('Unknown user id');
 		}
+	}
+
+	public function getId()
+	{
+		return $this->id;
+	}
+
+	public function getGroupId()
+	{
+		return $this->groupId;
+	}
+
+	public function getHostId()
+	{
+		return $this->hostId;
+	}
+
+	public function getGroup()
+	{
+		return $this->group;
+	}
+
+	public function getCountryId()
+	{
+		return $this->countryId;
+	}
+
+	public function getStatus()
+	{
+		return $this->status;
+	}
+
+	public function getName()
+	{
+		return $this->name;
+	}
+
+	public function getEmail()
+	{
+		return $this->email;
+	}
+
+	public function getProfileUrl()
+	{
+		return $this->profileUrl;
+	}
+
+	public function getThumbnailUrl()
+	{
+		return $this->thumbnailUrl;
+	}
+
+	public function getUpdated()
+	{
+		return $this->updated;
+	}
+
+	public function getDate()
+	{
+		return $this->date;
 	}
 
 	public function getConfig()
@@ -373,7 +433,7 @@ SQL;
 		return $count > 0;
 	}
 
-	public static function getId(Session $session, Registry $registry)
+	public static function findUserId(Session $session, Registry $registry)
 	{
 		$id       = $session->get('amun_id');
 		$lastSeen = $session->get('amun_t');

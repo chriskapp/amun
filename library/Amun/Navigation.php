@@ -34,13 +34,13 @@ use AmunService\Content\Page\Record;
  */
 class Navigation extends ArrayObject
 {
-	private $config;
-	private $sql;
-	private $registry;
-	private $user;
-	private $page;
+	protected $config;
+	protected $sql;
+	protected $registry;
+	protected $user;
+	protected $page;
 
-	private $nav = array();
+	protected $nav = array();
 
 	public function __construct(Registry $registry, User $user, Page $page)
 	{
@@ -94,6 +94,7 @@ SQL;
 					$this->append(array(
 
 						'title'    => $name,
+						'urlTitle' => $row['pageUrlTitle'],
 						'href'     => $href,
 						'selected' => $selected,
 
@@ -105,6 +106,7 @@ SQL;
 				$this->append(array(
 
 					'title'    => $name,
+					'urlTitle' => $row['pageUrlTitle'],
 					'href'     => $href,
 					'selected' => $selected,
 

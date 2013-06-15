@@ -43,20 +43,8 @@ class Script extends Request
 		parent::__construct($config);
 	}
 
-	public function setup()
-	{
-		parent::setup();
-
-		$this->getUser();
-	}
-
 	public function getUser()
 	{
-		if($this->has('user'))
-		{
-			return $this->get('user');
-		}
-
-		return $this->set('user', new User($this->userId, $this->getRegistry()));
+		return new User($this->userId, $this->get('registry'));
 	}
 }

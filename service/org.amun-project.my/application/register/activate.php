@@ -44,8 +44,8 @@ class activate extends ApplicationAbstract
 		parent::onLoad();
 
 		// add path
-		$this->path->add('Register', $this->page->url . '/register');
-		$this->path->add('Activate', $this->page->url . '/register/activate');
+		$this->path->add('Register', $this->page->getUrl() . '/register');
+		$this->path->add('Activate', $this->page->getUrl() . '/register/activate');
 
 		// template
 		$this->htmlCss->add('my');

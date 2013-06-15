@@ -51,7 +51,7 @@ class register extends ApplicationAbstract
 			$this->template->assign('captcha', $captcha);
 
 			// add path
-			$this->path->add('Register', $this->page->url . '/register');
+			$this->path->add('Register', $this->page->getUrl() . '/register');
 
 			// template
 			$this->htmlCss->add('my');
@@ -121,7 +121,7 @@ class register extends ApplicationAbstract
 						'account.name'     => $account->name,
 						'account.identity' => $identity,
 						'host.name'        => $this->base->getHost(),
-						'register.link'    => $this->page->url . '/register/activate?token=' . $account->token,
+						'register.link'    => $this->page->getUrl() . '/register/activate?token=' . $account->token,
 						'register.date'    => $date->format($this->registry['core.format_date']),
 
 					);

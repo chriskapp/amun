@@ -21,7 +21,7 @@
 			<dd><?php echo $account->getKarma(); ?></dd>
 
 			<dt>Registered on</dt>
-			<dd><?php echo $account->getDate()->setTimezone($user->timezone)->format('Y-m-d'); ?></dd>
+			<dd><?php echo $account->getDate()->setTimezone($user->getTimezone())->format('Y-m-d'); ?></dd>
 
 			<?php if($account->gender != 'undisclosed'): ?>
 			<dt>Gender</dt>
@@ -48,7 +48,7 @@
 			<div class="amun-service-profile-activity-summary"><?php echo $activity->summary; ?></div>
 			<p class="muted">
 				created on
-				<time datetime="<?php echo $activity->getDate()->format(DateTime::ATOM); ?>"><?php echo $activity->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></time>
+				<time datetime="<?php echo $activity->getDate()->format(DateTime::ATOM); ?>"><?php echo $activity->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></time>
 			</p>
 		</div>
 		<div class="clearfix"></div>

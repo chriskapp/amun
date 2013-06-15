@@ -17,7 +17,7 @@
 				by
 				<a href="<?php echo $recordPipe->authorProfileUrl; ?>" rel="author"><?php echo $recordPipe->authorName; ?></a>
 				last modified on
-				<time datetime="<?php echo $recordPipe->getDate()->format(DateTime::ATOM); ?>"><?php echo $recordPipe->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></time>
+				<time datetime="<?php echo $recordPipe->getDate()->format(DateTime::ATOM); ?>"><?php echo $recordPipe->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></time>
 			</p>
 		</div>
 	<?php endif; ?>

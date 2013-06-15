@@ -31,9 +31,9 @@ namespace Amun;
  */
 class Mail
 {
-	private $config;
-	private $sql;
-	private $registry;
+	protected $config;
+	protected $sql;
+	protected $registry;
 
 	public function __construct(Registry $registry)
 	{

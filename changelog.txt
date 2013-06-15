@@ -1,4 +1,7 @@
 
+0.4.2 beta
+* 
+
 0.4.1 beta
 * Added modal window to add or edit content at the frontend
 * Improved extjs backend

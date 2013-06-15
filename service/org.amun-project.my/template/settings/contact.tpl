@@ -47,7 +47,7 @@
 			<?php else: ?>
 			<td><div style="overflow:hidden;width:380px;" data-type="<?php echo $contact->type; ?>"><?php echo $contact->getValue(); ?></div></td>
 			<?php endif; ?>
-			<td><?php echo $contact->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></td>
+			<td><?php echo $contact->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></td>
 			<td><input type="button" onclick="amun.services.my.contactsRemove(<?php echo $contact->id . ',\'' . $contactUrl . '\''; ?>, this)" value="Remove" /></td>
 		</tr>
 		<?php endforeach; ?>

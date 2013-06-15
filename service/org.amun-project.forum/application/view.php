@@ -65,7 +65,7 @@ class view extends ApplicationAbstract
 			$this->template->assign('resultComments', $resultComments);
 
 			// add path
-			$this->path->add($recordForum->title, $this->page->url . '/view?id=' . $this->id);
+			$this->path->add($recordForum->title, $this->page->getUrl() . '/view?id=' . $this->id);
 
 			// options
 			$url = $this->service->getApiEndpoint() . '/form?format=json&method=update&id=' . $this->id;
@@ -94,7 +94,7 @@ class view extends ApplicationAbstract
 			$this->setOptions($options);
 
 			// form url
-			$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/comment/form?format=json&method=create&pageId=' . $this->page->id . '&refId=' . $this->id;
+			$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/comment/form?format=json&method=create&pageId=' . $this->page->getId() . '&refId=' . $this->id;
 
 			$this->template->assign('formUrl', $url);
 
@@ -129,7 +129,7 @@ class view extends ApplicationAbstract
 		if(empty($this->title) || $this->title != $result->urlTitle)
 		{
 			Base::setResponseCode(301);
-			header('Location: ' . $this->page->url . '/view/' . $result->id . '/' . $result->urlTitle);
+			header('Location: ' . $this->page->getUrl() . '/view/' . $result->id . '/' . $result->urlTitle);
 		}
 
 		return $result;
@@ -138,7 +138,7 @@ class view extends ApplicationAbstract
 	private function getComments()
 	{
 		$con = new Condition();
-		$con->add('pageId', '=', $this->page->id);
+		$con->add('pageId', '=', $this->page->getId());
 		$con->add('refId', '=', $this->id);
 
 		$url   = new Url($this->base->getSelf());

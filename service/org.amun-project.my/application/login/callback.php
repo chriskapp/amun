@@ -60,7 +60,7 @@ class callback extends ApplicationAbstract
 
 		if($handler instanceof CallbackInterface)
 		{
-			$handler->setPageUrl($this->page->url);
+			$handler->setPageUrl($this->page->getUrl());
 			$handler->callback();
 		}
 	}

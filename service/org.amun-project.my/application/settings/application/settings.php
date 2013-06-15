@@ -43,8 +43,8 @@ class settings extends SettingsAbstract
 		parent::onLoad();
 
 		// add path
-		$this->path->add('Settings', $this->page->url . '/settings');
-		$this->path->add('Application', $this->page->url . '/settings/application');
+		$this->path->add('Settings', $this->page->getUrl() . '/settings');
+		$this->path->add('Application', $this->page->getUrl() . '/settings/application');
 
 		// load application
 		$this->application = $this->getHandler('Oauth_Access')->getAllowedApplication(
@@ -55,7 +55,7 @@ class settings extends SettingsAbstract
 		if($this->application instanceof Access\Record)
 		{
 			// add path
-			$this->path->add($this->application->apiTitle, $this->page->url . '/settings/application/settings?appId=' . $this->application->id);
+			$this->path->add($this->application->apiTitle, $this->page->getUrl() . '/settings/application/settings?appId=' . $this->application->id);
 
 			// get app rights
 			$appRights = $this->application->getRights();
@@ -107,7 +107,7 @@ class settings extends SettingsAbstract
 		}
 
 		// redirect
-		header('Location: ' . $this->page->url . '/settings/application/settings?appId=' . $this->application->id . '#expand-rights');
+		header('Location: ' . $this->page->getUrl() . '/settings/application/settings?appId=' . $this->application->id . '#expand-rights');
 		exit;
 	}
 }

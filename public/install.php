@@ -31,11 +31,8 @@ ob_start('responseProcess');
 
 try
 {
-	// initialize base class
-	$container = new PSX\Dependency\Request($config);
-
 	// load module
-	$module = loadModule($container);
+	$module = loadModule($config);
 
 	// get output
 	$content = ob_get_contents();
@@ -66,11 +63,21 @@ catch(Exception $e)
 <html>
 <head>
 	<title>Exception</title>
+	<link href="{$config['psx_url']}/css/bootstrap.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="{$config['psx_url']}/{$config['psx_dispatch']}api/asset/css?services=default" type="text/css" media="screen, projection" />
 </head>
 <body>
-	<h1>Internal Server Error</h1>
-	<p>{$message}</p>
-	<p><pre>{$trace}</pre></p>
+	<header class="amun-header">
+		<div class="container">
+			<h1><a href="{$config['psx_url']}">{$title}</a></h1>
+		</div>
+	</header>
+	<div class="amun-body">
+		<div class="container">
+			<p>{$message}</p>
+			<p><pre class="prettyprint">{$trace}</pre></p>
+		</div>
+	</div>
 </body>
 </html>
 HTML;
@@ -112,16 +119,16 @@ function responseProcess($content)
 }
 
 /**
- * loadModule
- *
  * Loads the requested module depending on the psx_module_input field from the
  * config
  *
- * @return PSX_ModuleAbstract
+ * @return PSX\ModuleAbstract
  */
-function loadModule(PSX\DependencyAbstract $container)
+function loadModule(PSX\Config $config)
 {
-	$config  = $container->getConfig();
+	$base    = new PSX\Base($config);
+	$loader  = new PSX\Loader($base);
+
 	$default = $config['psx_module_default'];
 	$input   = $config['psx_module_input'];
 	$length  = $config['psx_module_input_length'];
@@ -148,5 +155,7 @@ function loadModule(PSX\DependencyAbstract $container)
 		}
 	}
 
-	return $container->getLoader()->load($x);
+	return $loader->load($x);
 }
+
+

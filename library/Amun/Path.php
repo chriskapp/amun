@@ -33,12 +33,12 @@ use ArrayObject;
  */
 class Path extends ArrayObject
 {
-	private $config;
-	private $sql;
-	private $registry;
-	private $page;
+	protected $config;
+	protected $sql;
+	protected $registry;
+	protected $page;
 
-	private $path = array();
+	protected $path = array();
 
 	public function __construct(Registry $registry, Page $page)
 	{
@@ -60,7 +60,7 @@ SELECT
 FROM 
 	{$this->registry['table.content_page']} `page`
 WHERE 
-	SUBSTRING('{$this->page->path}', 1, LENGTH(`path`)) LIKE `path`
+	SUBSTRING('{$this->page->getPath()}', 1, LENGTH(`path`)) LIKE `path`
 ORDER BY 
 	LENGTH(`path`) ASC
 SQL;

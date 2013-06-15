@@ -38,7 +38,7 @@ class settings extends SettingsAbstract
 		parent::onLoad();
 
 		// add path
-		$this->path->add('Settings', $this->page->url . '/settings');
+		$this->path->add('Settings', $this->page->getUrl() . '/settings');
 
 		// url
 		$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/account/form?format=json&method=update&id=' . $this->user->id;

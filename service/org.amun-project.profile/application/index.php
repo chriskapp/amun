@@ -74,7 +74,7 @@ class index extends ApplicationAbstract
 
 
 			// add path
-			$this->path->add($account->name, $this->page->url . '/' . $account->name);
+			$this->path->add($account->name, $this->page->getUrl() . '/' . $account->name);
 
 
 			// get activities

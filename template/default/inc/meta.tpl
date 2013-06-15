@@ -1,5 +1,5 @@
 
-<title><?php echo $registry['core.title']; ?> / <?php echo $page->title; ?></title>
+<title><?php echo $registry['core.title']; ?> / <?php echo $page->getTitle(); ?></title>
 <meta charset="UTF-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta http-equiv="X-XRDS-Location" content="<?php echo $url; ?>api/meta/xrds" />
@@ -7,10 +7,10 @@
 <script type="text/javascript">
 var amun = {};
 amun.user = {
-	id: <?php echo $user->id; ?>,
-	name: '<?php echo $user->name; ?>',
-	thumbnailUrl: '<?php echo $user->thumbnailUrl; ?>',
-	profileUrl: '<?php echo $user->profileUrl; ?>'
+	id: <?php echo $user->getId(); ?>,
+	name: '<?php echo $user->getName(); ?>',
+	thumbnailUrl: '<?php echo $user->getThumbnailUrl(); ?>',
+	profileUrl: '<?php echo $user->getProfileUrl(); ?>'
 };
 
 amun.config = {

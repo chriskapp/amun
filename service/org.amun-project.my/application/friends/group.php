@@ -41,8 +41,8 @@ class group extends FriendsAbstract
 		parent::onLoad();
 
 		// add path
-		$this->path->add('Friends', $this->page->url . '/friends');
-		$this->path->add('Groups', $this->page->url . '/friends/group');
+		$this->path->add('Friends', $this->page->getUrl() . '/friends');
+		$this->path->add('Groups', $this->page->getUrl() . '/friends/group');
 
 		// get groups
 		$groups = $this->getGroups();

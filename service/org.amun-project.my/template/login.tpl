@@ -56,7 +56,7 @@
 
 		<div class="help-block amun-service-my-login-form-help">
 			<br />
-			<small><a href="<?php echo $page->url . '/login/recover'; ?>">Can't access your account?</a></small>
+			<small><a href="<?php echo $page->getUrl() . '/login/recover'; ?>">Can't access your account?</a></small>
 		</div>
 
 	</div>

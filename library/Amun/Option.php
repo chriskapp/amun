@@ -33,16 +33,14 @@ use RecursiveArrayIterator;
  */
 class Option extends RecursiveArrayIterator
 {
-	private $options;
+	protected $options;
 
-	private $optionName;
-	private $config;
-	private $sql;
-	private $registry;
-	private $user;
-	private $page;
-
-	private $objects;
+	protected $optionName;
+	protected $config;
+	protected $sql;
+	protected $registry;
+	protected $user;
+	protected $page;
 
 	public function __construct($optionName, Registry $registry, User $user, Page $page)
 	{
@@ -89,9 +87,9 @@ INNER JOIN
 	{$this->registry['table.content_page']} `page`
 	ON `pageOption`.`destPageId` = `page`.`id`
 WHERE 
-	`serviceOption`.`serviceId` = {$this->page->serviceId}
+	`serviceOption`.`serviceId` = {$this->page->getServiceId()}
 AND
-	`pageOption`.`srcPageId` = {$this->page->id}
+	`pageOption`.`srcPageId` = {$this->page->getId()}
 AND 
 	`serviceOption`.`name` = ?
 SQL;

@@ -22,6 +22,7 @@
 
 namespace Amun;
 
+use DateInterval;
 use AmunService\Content\Page\Record;
 
 /**
@@ -33,32 +34,30 @@ use AmunService\Content\Page\Record;
  */
 class Page
 {
-	public $id;
-	public $parentId;
-	public $serviceId;
-	public $rightId;
-	public $status;
-	public $load;
-	public $application;
-	public $path;
-	public $urlTitle;
-	public $title;
-	public $template;
-	public $description;
-	public $keywords;
-	public $cache;
-	public $expire;
-	public $module;
-	public $publishDate;
-	public $date;
+	protected $id;
+	protected $parentId;
+	protected $serviceId;
+	protected $rightId;
+	protected $status;
+	protected $load;
+	protected $path;
+	protected $urlTitle;
+	protected $title;
+	protected $template;
+	protected $description;
+	protected $keywords;
+	protected $cache;
+	protected $expire;
+	protected $publishDate;
+	protected $date;
 
-	public $applicationPath;
-	public $url;
+	protected $application;
+	protected $url;
 
-	private $config;
-	private $sql;
-	private $registry;
-	private $user;
+	protected $config;
+	protected $sql;
+	protected $registry;
+	protected $user;
 
 	public function __construct($pageId, Registry $registry, User $user)
 	{
@@ -66,7 +65,6 @@ class Page
 		$this->sql      = $registry->getSql();
 		$this->registry = $registry;
 		$this->user     = $user;
-
 
 		$status = Record::NORMAL;
 		$sql    = <<<SQL
@@ -111,7 +109,7 @@ SQL;
 			$this->serviceId   = $row['pageServiceId'];
 			$this->rightId     = $row['pageRightId'];
 			$this->status      = $row['pageStatus'];
-			$this->load        = (integer) $row['pageLoad'];
+			$this->load        = $row['pageLoad'];
 			$this->path        = $row['pagePath'];
 			$this->urlTitle    = $row['pageUrlTitle'];
 			$this->title       = $row['pageTitle'];
@@ -132,23 +130,113 @@ SQL;
 		}
 	}
 
+	public function getId()
+	{
+		return $this->id;
+	}
+
+	public function getParentId()
+	{
+		return $this->parentId;
+	}
+
 	public function getServiceId()
 	{
 		return $this->serviceId;
 	}
 
+	public function getRightId()
+	{
+		return $this->rightId;
+	}
+
+	public function getStatus()
+	{
+		return $this->status;
+	}
+
+	public function getLoad()
+	{
+		return (integer) $this->load;
+	}
+
+	public function getPath()
+	{
+		return $this->path;
+	}
+
+	public function getUrlTitle()
+	{
+		return $this->urlTitle;
+	}
+
+	public function getTitle()
+	{
+		return $this->title;
+	}
+
+	public function getTemplate()
+	{
+		return $this->template;
+	}
+
+	public function getDescription()
+	{
+		return $this->description;
+	}
+
+	public function getKeywords()
+	{
+		return $this->keywords;
+	}
+
+	public function hasCache()
+	{
+		return (boolean) $this->cache;
+	}
+
+	public function getExpire()
+	{
+		if(!empty($this->expire))
+		{
+			return new DateInterval($this->expire);
+		}
+
+		return null;
+	}
+
+	public function getPublishDate()
+	{
+		return $this->publishDate;
+	}
+
+	public function getDate()
+	{
+		return $this->date;
+	}
+
+	public function getApplication()
+	{
+		return $this->application;
+	}
+
+	public function getUrl()
+	{
+		return $this->url;
+	}
+
 	public function hasNav()
 	{
-		return $this->load & Record::NAV;
+		return $this->getLoad() & Record::NAV;
 	}
 
 	public function hasPath()
 	{
-		return $this->load & Record::PATH;
+		return $this->getLoad() & Record::PATH;
 	}
 
 	public function hasGadget()
 	{
-		return $this->load & Record::GADGET;
+		return $this->getLoad() & Record::GADGET;
 	}
 }

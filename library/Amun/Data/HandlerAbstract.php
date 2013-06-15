@@ -72,12 +72,12 @@ abstract class HandlerAbstract extends \PSX\Data\HandlerAbstract
 	public function __construct(Dependency\Request $ct, User $user = null)
 	{
 		$this->ct       = $ct;
-		$this->base     = $ct->getBase();
-		$this->config   = $ct->getConfig();
-		$this->sql      = $ct->getSql();
-		$this->registry = $ct->getRegistry();
-		$this->event    = $ct->getEvent();
-		$this->user     = $user === null ? $ct->getUser() : $user;
+		$this->base     = $ct->get('base');
+		$this->config   = $ct->get('config');
+		$this->sql      = $ct->get('sql');
+		$this->registry = $ct->get('registry');
+		$this->event    = $ct->get('event');
+		$this->user     = $user === null ? $ct->get('user') : $user;
 
 		parent::__construct($this->getTableInstance());
 	}

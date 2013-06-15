@@ -49,47 +49,24 @@ class Api extends Session
 		parent::__construct($config, $params);
 	}
 
-	public function setup()
-	{
-		parent::setup();
-
-		$this->getService();
-		$this->getDataFactory();
-	}
-
 	public function getUser()
 	{
-		if($this->has('user'))
-		{
-			return $this->get('user');
-		}
-
 		if($this->userId === null)
 		{
-			$this->userId = User::getId($this->getSession(), $this->getRegistry());
+			$this->userId = User::findUserId($this->get('session'), $this->get('registry'));
 		}
 
-		return $this->set('user', new User($this->userId, $this->getRegistry(), $this->accessId));
+		return new User($this->userId, $this->get('registry'), $this->accessId);
 	}
 
 	public function getService()
 	{
-		if($this->has('service'))
-		{
-			return $this->get('service');
-		}
-
-		return $this->set('service', new Service($this->serviceId, $this->getRegistry()));
+		return new Service($this->serviceId, $this->get('registry'));
 	}
 
 	public function getDataFactory()
 	{
-		if($this->has('dataFactory'))
-		{
-			return $this->get('dataFactory');
-		}
-
-		return $this->set('dataFactory', DataFactory::initInstance($this));
+		return DataFactory::initInstance($this);
 	}
 }
 

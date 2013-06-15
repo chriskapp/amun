@@ -44,7 +44,7 @@
 		<tr>
 		<td>
 			<div style="width:440px;overflow:hidden;white-space:nowrap;"><a href="http://<?php echo $connection->returnTo; ?>"><?php echo $connection->returnTo; ?></a></div></td>
-			<td><?php echo $connection->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></td>
+			<td><?php echo $connection->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></td>
 			<td><input type="button" onclick="amun.services.my.connectionsRevokeAccess(<?php echo $connection->id . ',\'' . $accessUrl . '\''; ?>, this)" value="Revoke" /></td>
 		</tr>
 		<?php endforeach; ?>

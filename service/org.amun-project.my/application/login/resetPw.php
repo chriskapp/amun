@@ -44,8 +44,8 @@ class resetPw extends ApplicationAbstract
 		parent::onLoad();
 
 		// add path
-		$this->path->add('Login', $this->page->url . '/login');
-		$this->path->add('Reset Password', $this->page->url . '/login/resetPw');
+		$this->path->add('Login', $this->page->getUrl() . '/login');
+		$this->path->add('Reset Password', $this->page->getUrl() . '/login/resetPw');
 
 		// template
 		$this->htmlCss->add('my');
@@ -82,7 +82,7 @@ class resetPw extends ApplicationAbstract
 								'account.name' => $account->name,
 								'account.pw'   => $pw,
 								'host.name'    => $this->base->getHost(),
-								'recover.link' => $this->page->url . '/login',
+								'recover.link' => $this->page->getUrl() . '/login',
 								'recover.date' => $date->format($this->registry['core.format_date']),
 
 							);

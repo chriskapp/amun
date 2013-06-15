@@ -44,7 +44,7 @@ class friends extends FriendsAbstract
 		parent::onLoad();
 
 		// add path
-		$this->path->add('Friends', $this->page->url . '/friends');
+		$this->path->add('Friends', $this->page->getUrl() . '/friends');
 
 		// get friends
 		$friends = $this->getFriends();
@@ -60,7 +60,7 @@ class friends extends FriendsAbstract
 		$this->htmlCss->add('my');
 		$this->htmlJs->add('amun');
 		$this->htmlJs->add('my');
-		$this->htmlContent->add(Html\Content::META, Atom\Writer::link($this->page->title, $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/friend?format=atom&filterBy=authorId&filterOp=equals&filterValue=' . $this->user->id));
+		$this->htmlContent->add(Html\Content::META, Atom\Writer::link($this->page->getTitle(), $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/friend?format=atom&filterBy=authorId&filterOp=equals&filterValue=' . $this->user->id));
 	}
 
 	private function getFriends()

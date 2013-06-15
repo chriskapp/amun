@@ -42,89 +42,47 @@ use PSX\Template;
  */
 class Install extends Request
 {
-	public function setup()
-	{
-		parent::setup();
-
-		$this->getSql();
-		$this->getValidate();
-		$this->getGet();
-		$this->getPost();
-		$this->getSession();
-		$this->getDataFactory();
-		$this->getTemplate();
-
-		$this->getEvent();
-		$this->getRegistry();
-		$this->getUser();
-	}
-
 	public function getRegistry()
 	{
-		if($this->has('registry'))
-		{
-			return $this->get('registry');
-		}
-
 		try
 		{
-			return $this->set('registry', Registry::initInstance($this->getConfig(), $this->getSql()));
+			return Registry::initInstance($this->config, $this->get('sql'));
 		}
 		catch(\Exception $e)
 		{
-			return $this->set('registry', new \RegistryNoDb($this->getConfig(), $this->getSql()));
+			return new \RegistryNoDb($this->config, $this->get('sql'));
 		}
 	}
 
 	public function getSession()
 	{
-		if($this->has('session'))
-		{
-			return $this->get('session');
-		}
-
 		$session = new \PSX\Session('amun_' . md5($this->config['psx_url']));
 		$session->start();
 
-		return $this->set('session', $session);
+		return $session;
 	}
 
 	public function getDataFactory()
 	{
-		if($this->has('dataFactory'))
-		{
-			return $this->get('dataFactory');
-		}
-
-		return $this->set('dataFactory', DataFactory::initInstance($this));
+		return DataFactory::initInstance($this);
 	}
 
 	public function getUser()
 	{
-		if($this->has('user'))
-		{
-			return $this->get('user');
-		}
-
 		try
 		{
-			$userId = User::getId($this->getSession(), $this->getRegistry());
+			$userId = User::findUserId($this->get('session'), $this->get('registry'));
 
-			return $this->set('user', new User($userId, $this->getRegistry()));
+			return new User($userId, $this->get('registry'));
 		}
 		catch(\Exception $e)
 		{
-			return $this->set('user', new \UserNoDb($this->getRegistry()));
+			return new \UserNoDb($this->get('registry'));
 		}
 	}
 
 	public function getTemplate()
 	{
-		if($this->has('template'))
-		{
-			return $this->get('template');
-		}
-
-		return $this->set('template', new Template($this->config));
+		return new Template($this->config);
 	}
 }

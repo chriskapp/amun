@@ -65,19 +65,19 @@ abstract class FriendsAbstract extends MyAbstract
 
 		// options
 		$friends = new Option('friends', $this->registry, $this->user, $this->page);
-		$friends->add('my_view', 'Friends', $this->page->url . '/friends');
+		$friends->add('my_view', 'Friends', $this->page->getUrl() . '/friends');
 
 		if($requestCount > 0)
 		{
-			$friends->add('my_view', 'Request (' . $requestCount . ')', $this->page->url . '/friends/request');
+			$friends->add('my_view', 'Request (' . $requestCount . ')', $this->page->getUrl() . '/friends/request');
 		}
 
 		if($pendingCount > 0)
 		{
-			$friends->add('my_view', 'Pending (' . $pendingCount . ')', $this->page->url . '/friends/pending');
+			$friends->add('my_view', 'Pending (' . $pendingCount . ')', $this->page->getUrl() . '/friends/pending');
 		}
 
-		$friends->add('my_view', 'Groups', $this->page->url . '/friends/group');
+		$friends->add('my_view', 'Groups', $this->page->getUrl() . '/friends/group');
 		$friends->load(array($this->page));
 
 		$this->template->assign('optionsFriends', $friends);

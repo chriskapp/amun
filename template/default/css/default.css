@@ -228,15 +228,6 @@ h2
 	clear:both;
 }
 
-.amun-preview
-{
-	display:none;
-	margin:0px;
-	padding:2px;
-	color:#333;
-	border:2px dotted #ccc;
-}
-
 .form-actions input
 {
 	margin-right:4px;
@@ -277,4 +268,13 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 #amun-form-window .modal-body label
 {
 	color:#333;
+}
+
+.amun-preview
+{
+	display:none;
+	margin:0px;
+	padding:2px;
+	color:#333;
+	border:2px dotted #ccc;
 }

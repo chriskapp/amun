@@ -58,7 +58,7 @@ class Form extends FormAbstract
 		$panel->add($status);
 
 
-		$userId = new Input('userId', 'User', $this->user->name);
+		$userId = new Input('userId', 'User', $this->user->getName());
 		$userId->setType('text');
 		$userId->setDisabled(true);
 

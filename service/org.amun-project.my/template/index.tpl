@@ -21,7 +21,7 @@
 			<dd><?php echo $account->getKarma(); ?></dd>
 
 			<dt>Registered on</dt>
-			<dd><?php echo $account->getDate()->setTimezone($user->timezone)->format('Y-m-d'); ?></dd>
+			<dd><?php echo $account->getDate()->setTimezone($user->getTimezone())->format('Y-m-d'); ?></dd>
 
 			<?php if($account->gender != 'undisclosed'): ?>
 			<dt>Gender</dt>
@@ -76,7 +76,7 @@
 			<?php if(!empty($comments)): ?>
 				<p class="muted">
 					created on
-					<time datetime="<?php echo $activity->getDate()->format(DateTime::ATOM); ?>"><?php echo $activity->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></time>
+					<time datetime="<?php echo $activity->getDate()->format(DateTime::ATOM); ?>"><?php echo $activity->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></time>
 				</p>
 				<div class="amun-service-my-activity-entry-comments" id="activity-comments-<?php echo $activity->id; ?>">
 					<?php foreach($comments as $comment): ?>
@@ -86,7 +86,7 @@
 						<div class="amun-service-my-activity-summary"><?php echo $comment->summary; ?></div>
 						<p class="muted">
 							created on
-							<time datetime="<?php echo $comment->getDate()->format(DateTime::ATOM); ?>"><?php echo $comment->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></time>
+							<time datetime="<?php echo $comment->getDate()->format(DateTime::ATOM); ?>"><?php echo $comment->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></time>
 						</p>
 					</div>
 					<?php endforeach; ?>
@@ -108,7 +108,7 @@
 				<p class="muted">
 					<a href="#" onclick="$('#activity-reply-<?php echo $activity->id; ?>').fadeToggle();return false;">Comment</a>
 					created on
-					<time datetime="<?php echo $activity->getDate()->format(DateTime::ATOM); ?>"><?php echo $activity->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></time>
+					<time datetime="<?php echo $activity->getDate()->format(DateTime::ATOM); ?>"><?php echo $activity->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></time>
 				</p>
 				<div class="amun-service-my-activity-entry-comments" id="activity-comments-<?php echo $activity->id; ?>">
 				</div>

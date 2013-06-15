@@ -51,134 +51,54 @@ class Application extends Session
 		parent::__construct($config, $params);
 	}
 
-	public function setup()
-	{
-		parent::setup();
-
-		$this->getPage();
-		$this->getService();
-		$this->getDataFactory();
-		$this->getNavigation();
-		$this->getPath();
-		$this->getGadgetContainer();
-		$this->getHtmlJs();
-		$this->getHtmlCss();
-		$this->getHtmlContent();
-		$this->getTemplate();
-	}
-
 	public function getPage()
 	{
-		if($this->has('page'))
-		{
-			return $this->get('page');
-		}
-
-		return $this->set('page', new Page($this->pageId, $this->getRegistry(), $this->getUser()));
+		return new Page($this->pageId, $this->get('registry'), $this->get('user'));
 	}
 
 	public function getService()
 	{
-		if($this->has('service'))
-		{
-			return $this->get('service');
-		}
-
-		return $this->set('service', new Service($this->getPage()->getServiceId(), $this->getRegistry()));
+		return new Service($this->get('page')->getServiceId(), $this->get('registry'));
 	}
 
 	public function getDataFactory()
 	{
-		if($this->has('dataFactory'))
-		{
-			return $this->get('dataFactory');
-		}
-
-		return $this->set('dataFactory', DataFactory::initInstance($this));
+		return DataFactory::initInstance($this);
 	}
 
 	public function getNavigation()
 	{
-		if($this->has('navigation'))
-		{
-			return $this->get('navigation');
-		}
-
-		return $this->set('navigation', new Navigation($this->getRegistry(), $this->getUser(), $this->getPage()));
+		return new Navigation($this->get('registry'), $this->get('user'), $this->get('page'));
 	}
 
 	public function getPath()
 	{
-		if($this->has('path'))
-		{
-			return $this->get('path');
-		}
-
-		return $this->set('path', new Path($this->getRegistry(), $this->getPage()));
+		return new Path($this->get('registry'), $this->get('page'));
 	}
 
 	public function getGadgetContainer()
 	{
-		if($this->has('gadgetContainer'))
-		{
-			return $this->get('gadgetContainer');
-		}
-
-		return $this->set('gadgetContainer', new Container($this->getRegistry(), $this->getUser()));
+		return new Container($this->get('registry'), $this->get('user'));
 	}
 
 	public function getHtmlJs()
 	{
-		if($this->has('htmlJs'))
-		{
-			return $this->get('htmlJs');
-		}
-
-		return $this->set('htmlJs', new Html\Js($this->config));
+		return new Html\Js($this->get('config'));
 	}
 
 	public function getHtmlCss()
 	{
-		if($this->has('htmlCss'))
-		{
-			return $this->get('htmlCss');
-		}
-
-		return $this->set('htmlCss', new Html\Css($this->config));
+		return new Html\Css($this->get('config'));
 	}
 
 	public function getHtmlContent()
 	{
-		if($this->has('htmlContent'))
-		{
-			return $this->get('htmlContent');
-		}
-
-		return $this->set('htmlContent', new Html\Content());
+		return new Html\Content();
 	}
 
 	public function getTemplate()
 	{
-		if($this->has('template'))
-		{
-			return $this->get('template');
-		}
-
-		$template = new Template($this->config);
-
-		// assign default template vars
-		$template->assign('sql', $this->getSql());
-		$template->assign('registry', $this->getRegistry());
-		$template->assign('user', $this->getUser());
-		$template->assign('page', $this->getPage());
-		$template->assign('navigation', $this->getNavigation());
-		$template->assign('path', $this->getPath());
-		$template->assign('gadget', $this->getGadgetContainer());
-		$template->assign('htmlJs', $this->getHtmlJs());
-		$template->assign('htmlCss', $this->getHtmlCss());
-		$template->assign('htmlContent', $this->getHtmlContent());
-
-		return $this->set('template', $template);
+		return new Template();
 	}
 }
 

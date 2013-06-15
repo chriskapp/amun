@@ -25,142 +25,15 @@ require_once('../vendor/autoload.php');
 
 $config    = new PSX\Config('../configuration.php');
 $bootstrap = new PSX\Bootstrap($config);
+$base      = new PSX\Base($config);
+$loader    = new PSX\Loader($base);
 
-ob_start('responseProcess');
+// configure loader
+$container = new Amun\Dependency\Request($config);
+$loader->addRoute('/.well-known/host-meta', 'api/hostmeta');
+$loader->setLocationFinder(new Amun\Loader\LocationFinder($container->get('registry')));
 
-try
-{
-	// initialize dependencies
-	$container = new Amun\Dependency\Request($config);
+$dispatch  = new PSX\Dispatch($config, $loader);
+$response  = $dispatch->route($base->getRequest());
 
-	// load module
-	$module = loadModule($container);
-
-	// get output
-	$content = ob_get_contents();
-
-	// proccess response
-	$response = $module->processResponse($content);
-}
-catch(Exception $e)
-{
-	$code    = isset(PSX\Http::$codes[$e->getCode()]) ? $e->getCode() : 500;
-	$accept  = PSX\Base::getRequestHeader('Accept');
-	$message = $e->getMessage();
-	$trace   = '';
-
-	if($config['psx_debug'] === true)
-	{
-		$message.= ' in ' . $e->getFile() . ' on line ' . $e->getLine();
-		$trace   = $e->getTraceAsString();
-	}
-
-	// build response
-	if(strpos($accept, 'text/html') !== false)
-	{
-		PSX\Base::setResponseCode(200);
-		header('Content-type: text/html');
-
-		// get title
-		$title = $container->getRegistry()->offsetGet('core.title');
-
-		$response = <<<HTML
-<html>
-<head>
-	<title>Exception</title>
-	<link href="{$config['psx_url']}/css/bootstrap.min.css" rel="stylesheet" />
-	<link rel="stylesheet" href="{$config['psx_url']}/{$config['psx_dispatch']}api/asset/css?services=default" type="text/css" media="screen, projection" />
-</head>
-<body>
-	<header class="amun-header">
-		<div class="container">
-			<h1><a href="{$config['psx_url']}">{$title}</a></h1>
-		</div>
-	</header>
-	<div class="amun-body">
-		<div class="container">
-			<p>{$message}</p>
-			<p><pre class="prettyprint">{$trace}</pre></p>
-		</div>
-	</div>
-</body>
-</html>
-HTML;
-	}
-	else
-	{
-		PSX\Base::setResponseCode($code);
-		header('Content-type: text/plain');
-
-		$response = $message . "\n" . $trace;
-	}
-
-	// logging
-	PSX\Log::error($e->getMessage() . "\n" . 'Stack trace:' . "\n" . $e->getTraceAsString() . "\n");
-}
-
-ob_end_clean();
-
-echo $response;
-
-/**
- * responseProcess
- *
- * Callback function wich is called by the ob_start() function. This function
- * handles errors wich are not cought by the ErrorException handler.
- *
- * @return string
- */
-function responseProcess($content)
-{
-	$lastError = error_get_last();
-
-	if($lastError)
-	{
-		return $lastError['message'] . ' in ' . $lastError['file'] . ' on line ' . $lastError['line'] . "\n";
-	}
-
-	return $content;
-}
-
-/**
- * loadModule
- *
- * Loads the requested module depending on the psx_module_input field from the
- * config
- *
- * @return PSX_ModuleAbstract
- */
-function loadModule(PSX\DependencyAbstract $container)
-{
-	$config  = $container->getConfig();
-	$default = $config['psx_module_default'];
-	$input   = $config['psx_module_input'];
-	$length  = $config['psx_module_input_length'];
-
-	if(!empty($input))
-	{
-		$x = $input;
-	}
-	else
-	{
-		$x = $default;
-	}
-
-	if(strpos($x, '..') !== false)
-	{
-		throw new PSX\Exception('Invalid signs in input');
-	}
-
-	if($length != 0)
-	{
-		if(strlen($x) > $length)
-		{
-			throw new PSX\Exception('Max length of input is ' . $length, 414);
-		}
-	}
-
-	return $container->getLoader()->load($x);
-}
-
-
+echo $response->getBody();

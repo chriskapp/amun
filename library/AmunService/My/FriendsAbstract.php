@@ -42,7 +42,7 @@ abstract class FriendsAbstract extends MyAbstract
 
 		// friend request count
 		$con = new Condition();
-		$con->add('friendId', '=', $this->user->id);
+		$con->add('friendId', '=', $this->user->getId());
 		$con->add('status', '=', Friend\Record::REQUEST);
 
 		$requestCount = $this->sql->count($this->registry['table.user_friend'], $con);
@@ -51,7 +51,7 @@ abstract class FriendsAbstract extends MyAbstract
 
 		// pending count
 		$con = new Condition();
-		$con->add('userId', '=', $this->user->id);
+		$con->add('userId', '=', $this->user->getId());
 		$con->add('status', '=', Friend\Record::REQUEST);
 
 		$pendingCount = $this->sql->count($this->registry['table.user_friend'], $con);
@@ -87,7 +87,7 @@ abstract class FriendsAbstract extends MyAbstract
 	{
 		return DataFactory::getTable('User_Friend_Group')
 			->select(array('id', 'title', 'date'))
-			->where('userId', '=', $this->user->id)
+			->where('userId', '=', $this->user->getId())
 			->getAll();
 	}
 }

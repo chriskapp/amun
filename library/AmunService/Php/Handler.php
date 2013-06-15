@@ -49,7 +49,7 @@ class Handler extends ApproveHandlerAbstract
 		if($record->hasFields('pageId', 'content'))
 		{
 			$record->globalId = $this->base->getUUID('service:php:' . $record->pageId . ':' . uniqid());
-			$record->userId   = $this->user->id;
+			$record->userId   = $this->user->getId();
 
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 

@@ -45,8 +45,8 @@ class security extends SettingsAbstract
 		parent::onLoad();
 
 		// add path
-		$this->path->add('Settings', $this->page->url . '/settings');
-		$this->path->add('Security', $this->page->url . '/settings/security');
+		$this->path->add('Settings', $this->page->getUrl() . '/settings');
+		$this->path->add('Security', $this->page->getUrl() . '/settings/security');
 
 		// template
 		$this->htmlCss->add('my');

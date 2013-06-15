@@ -19,9 +19,9 @@
 			<?php endforeach; ?>
 			<li class="nav-header">Groups</li>
 			<?php foreach($groupList as $group): ?>
-			<li><a href="<?php echo $page->url . '/friends?filterBy=groupId&filterOp=equals&filterValue=' . $group['id']; ?>"><?php echo $group['title']; ?></a></li>
+			<li><a href="<?php echo $page->getUrl() . '/friends?filterBy=groupId&filterOp=equals&filterValue=' . $group['id']; ?>"><?php echo $group['title']; ?></a></li>
 			<?php endforeach; ?>
-			<li><a href="<?php echo $page->url . '/friends?filterBy=groupId&filterOp=equals&filterValue=0'; ?>">Uncategorized</a></li>
+			<li><a href="<?php echo $page->getUrl() . '/friends?filterBy=groupId&filterOp=equals&filterValue=0'; ?>">Uncategorized</a></li>
 		</ul>
 	</div>
 
@@ -48,7 +48,7 @@
 		<tr>
 			<td><img src="<?php echo $request->friendThumbnailUrl; ?>" width="48" height="48" /></td>
 			<td><h4><a href="<?php echo $request->friendProfileUrl; ?>"><?php echo $request->friendName; ?></a></h4></td>
-			<td><?php echo $request->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></td>
+			<td><?php echo $request->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></td>
 			<td>
 				<input class="btn" type="button" onclick="amun.services.my.friendsCancelRelation(<?php echo $request->id . ',\'' . $pendingUrl . '\''; ?>, this)" value="Cancel" />
 			</td>

@@ -19,9 +19,9 @@
 			<?php endforeach; ?>
 			<li class="nav-header">Groups</li>
 			<?php foreach($groupList as $group): ?>
-			<li><a href="<?php echo $page->url . '/friends?filterBy=groupId&filterOp=equals&filterValue=' . $group['id']; ?>"><?php echo $group['title']; ?></a></li>
+			<li><a href="<?php echo $page->getUrl() . '/friends?filterBy=groupId&filterOp=equals&filterValue=' . $group['id']; ?>"><?php echo $group['title']; ?></a></li>
 			<?php endforeach; ?>
-			<li><a href="<?php echo $page->url . '/friends?filterBy=groupId&filterOp=equals&filterValue=0'; ?>">Uncategorized</a></li>
+			<li><a href="<?php echo $page->getUrl() . '/friends?filterBy=groupId&filterOp=equals&filterValue=0'; ?>">Uncategorized</a></li>
 		</ul>
 	</div>
 
@@ -45,7 +45,7 @@
 		<?php foreach($groups as $group): ?>
 		<tr>
 			<td><?php echo $group->title; ?></td>
-			<td><?php echo $group->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></td>
+			<td><?php echo $group->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></td>
 			<td>
 				<input class="btn" type="button" onclick="amun.services.my.friendsGroupRemove(<?php echo $group->id . ',\'' . $groupUrl . '\''; ?>, this)" value="Remove" />
 			</td>

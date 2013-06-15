@@ -55,7 +55,7 @@ class index extends ApplicationAbstract
 			$this->template->assign('resultNews', $resultNews);
 
 			// options
-			$url = $this->service->getApiEndpoint() . '/form?format=json&method=create&pageId=' . $this->page->id;
+			$url = $this->service->getApiEndpoint() . '/form?format=json&method=create&pageId=' . $this->page->getId();
 
 			$this->setOptions(array(
 				array('news_add', 'Add', 'javascript:amun.services.news.showForm(\'' . $url . '\')')
@@ -67,7 +67,7 @@ class index extends ApplicationAbstract
 			$this->htmlJs->add('ace');
 			$this->htmlJs->add('bootstrap');
 			$this->htmlJs->add('prettify');
-			$this->htmlContent->add(Html\Content::META, Atom\Writer::link($this->page->title, $this->service->getApiEndpoint() . '?format=atom&filterBy=pageId&filterOp=equals&filterValue=' . $this->page->id));
+			$this->htmlContent->add(Html\Content::META, Atom\Writer::link($this->page->getTitle(), $this->service->getApiEndpoint() . '?format=atom&filterBy=pageId&filterOp=equals&filterValue=' . $this->page->getId()));
 		}
 		else
 		{
@@ -87,7 +87,7 @@ class index extends ApplicationAbstract
 	private function getNews()
 	{
 		$con = $this->getRequestCondition();
-		$con->add('pageId', '=', $this->page->id);
+		$con->add('pageId', '=', $this->page->getId());
 
 		// archive
 		$year  = (integer) $this->getUriFragments('year');

@@ -45,43 +45,23 @@ class Gadget extends Session
 		parent::__construct($config, $params);
 	}
 
-	public function setup()
-	{
-		parent::setup();
-
-		$this->getGadget();
-		$this->getArgs();
-		$this->getService();
-		$this->getDataFactory();
-	}
-
 	public function getGadget()
 	{
-		return $this->set('gadget', new AmunGadget($this->gadgetId, $this->getRegistry(), $this->getUser()));
+		return new AmunGadget($this->gadgetId, $this->get('registry'), $this->get('user'));
 	}
 
 	public function getArgs()
 	{
-		return $this->set('args', $this->getGadget()->getArgs());		
+		return $this->$this->get('gadget')->getArgs();
 	}
 
 	public function getService()
 	{
-		if($this->has('service'))
-		{
-			return $this->get('service');
-		}
-
-		return $this->set('service', new Service($this->getGadget()->getServiceId(), $this->getRegistry()));
+		return new Service($this->get('gadget')->getServiceId(), $this->get('registry'));
 	}
 
 	public function getDataFactory()
 	{
-		if($this->has('dataFactory'))
-		{
-			return $this->get('dataFactory');
-		}
-
-		return $this->set('dataFactory', DataFactory::initInstance($this));
+		return DataFactory::initInstance($this);
 	}
 }

@@ -45,9 +45,9 @@ class Event
 	public function __construct(Dependency\Request $ct)
 	{
 		$this->ct       = $ct;
-		$this->config   = $ct->getConfig();
-		$this->sql      = $ct->getSql();
-		$this->registry = $ct->getRegistry();
+		$this->config   = $ct->get('config');
+		$this->sql      = $ct->get('sql');
+		$this->registry = $ct->get('registry');
 	}
 
 	/**

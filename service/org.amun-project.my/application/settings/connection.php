@@ -41,8 +41,8 @@ class connection extends SettingsAbstract
 		parent::onLoad();
 
 		// add path
-		$this->path->add('Settings', $this->page->url . '/settings');
-		$this->path->add('Connection', $this->page->url . '/settings/connection');
+		$this->path->add('Settings', $this->page->getUrl() . '/settings');
+		$this->path->add('Connection', $this->page->getUrl() . '/settings/connection');
 
 		// load allowed applications
 		$connections = $this->getConnections();

@@ -31,6 +31,7 @@ use PSX\Loader;
 use PSX\Sql;
 use PSX\Validate;
 use PSX\Input;
+use PSX\Config;
 
 /**
  * Request
@@ -41,103 +42,43 @@ use PSX\Input;
  */
 class Request extends DependencyAbstract
 {
-	public function setup()
+	public function __construct(Config $config)
 	{
-		parent::setup();
-
-		$this->getSql();
-		$this->getRegistry();
-		$this->getEvent();
-		$this->getValidate();
-		$this->getGet();
-		$this->getPost();
-	}
-
-	public function getBase()
-	{
-		if($this->has('base'))
-		{
-			return $this->get('base');
-		}
-
-		return $this->set('base', new Base($this->config));
-	}
-
-	public function getLoader()
-	{
-		if($this->has('loader'))
-		{
-			return $this->get('loader');
-		}
-
-		$loader = new Loader($this->getBase());
-		$loader->setLocationFinder(new LocationFinder($this->getRegistry()));
-		$loader->addRoute('/.well-known/host-meta', 'api/hostmeta');
-
-		return $this->set('loader', $loader);
+		parent::__construct($config);
 	}
 
 	public function getSql()
 	{
-		if($this->has('sql'))
-		{
-			return $this->get('sql');
-		}
+		$config = $this->get('config');
 
-		return $this->set('sql', new Sql($this->config['psx_sql_host'],
-			$this->config['psx_sql_user'],
-			$this->config['psx_sql_pw'],
-			$this->config['psx_sql_db'])
-		);
+		return new Sql($config['psx_sql_host'],
+			$config['psx_sql_user'],
+			$config['psx_sql_pw'],
+			$config['psx_sql_db']);
 	}
 
 	public function getRegistry()
 	{
-		if($this->has('registry'))
-		{
-			return $this->get('registry');
-		}
-
-		return $this->set('registry', Registry::initInstance($this->getConfig(), $this->getSql()));
+		return Registry::initInstance($this->get('config'), $this->get('sql'));
 	}
 
 	public function getEvent()
 	{
-		if($this->has('event'))
-		{
-			return $this->get('event');
-		}
-
-		return $this->set('event', Event::initInstance($this));
+		return Event::initInstance($this);
 	}
 
 	public function getValidate()
 	{
-		if($this->has('validate'))
-		{
-			return $this->get('validate');
-		}
-
-		return $this->set('validate', new Validate());
+		return new Validate();
 	}
 
-	public function getGet()
+	public function getInputGet()
 	{
-		if($this->has('get'))
-		{
-			return $this->get('get');
-		}
-
-		return $this->set('get', new Input\Get($this->getValidate()));
+		return new Input\Get($this->get('validate'));
 	}
 
-	public function getPost()
+	public function getInputPost()
 	{
-		if($this->has('post'))
-		{
-			return $this->get('post');
-		}
-
-		return $this->set('post', new Input\Post($this->getValidate()));
+		return new Input\Post($this->get('validate'));
 	}
 }

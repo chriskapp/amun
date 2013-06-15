@@ -46,8 +46,8 @@ class recover extends ApplicationAbstract
 		parent::onLoad();
 
 		// add path
-		$this->path->add('Login', $this->page->url . '/login');
-		$this->path->add('Recover', $this->page->url . '/login/recover');
+		$this->path->add('Login', $this->page->getUrl() . '/login');
+		$this->path->add('Recover', $this->page->getUrl() . '/login/recover');
 
 		// captcha
 		$captcha = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha';
@@ -88,7 +88,7 @@ class recover extends ApplicationAbstract
 					if(!empty($account->email))
 					{
 						$token = Security::generateToken();
-						$link  = $this->page->url . '/login/resetPw?token=' . $token;
+						$link  = $this->page->getUrl() . '/login/resetPw?token=' . $token;
 						$date  = new DateTime('NOW', $this->registry['core.default_timezone']);
 
 						// update status
@@ -103,7 +103,7 @@ class recover extends ApplicationAbstract
 							'account.name' => $account->name,
 							'host.name'    => $this->base->getHost(),
 							'recover.ip'   => $_SERVER['REMOTE_ADDR'],
-							'recover.link' => $this->page->url . '/login/resetPw?token=' . $token,
+							'recover.link' => $this->page->getUrl() . '/login/resetPw?token=' . $token,
 							'recover.date' => $date->format($this->registry['core.format_date']),
 
 						);

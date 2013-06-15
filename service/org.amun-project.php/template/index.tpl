@@ -19,7 +19,7 @@
 				by
 				<a href="<?php echo $recordPhp->authorProfileUrl; ?>" rel="author"><?php echo $recordPhp->authorName; ?></a>
 				last modified on
-				<time datetime="<?php echo $recordPhp->getDate()->format(DateTime::ATOM); ?>"><?php echo $recordPhp->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></time>
+				<time datetime="<?php echo $recordPhp->getDate()->format(DateTime::ATOM); ?>"><?php echo $recordPhp->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></time>
 			</span>
 		</div>
 	<?php endif; ?>

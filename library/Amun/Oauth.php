@@ -54,9 +54,9 @@ class Oauth extends ProviderAbstract
 
 		$container = new Dependency\Request($this->base->getConfig());
 
-		$this->config   = $container->getConfig();
-		$this->sql      = $container->getSql();
-		$this->registry = $container->getRegistry();
+		$this->config   = $container->get('config');
+		$this->sql      = $container->get('sql');
+		$this->registry = $container->get('registry');
 	}
 
 	public function doAuthentication()

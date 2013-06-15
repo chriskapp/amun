@@ -33,24 +33,22 @@ use AmunService\Core\Service\Record;
  */
 class Service
 {
-	public $id;
-	public $status;
-	public $source;
-	public $name;
-	public $path;
-	public $namespace;
-	public $type;
-	public $link;
-	public $author;
-	public $license;
-	public $version;
-	public $date;
+	protected $id;
+	protected $status;
+	protected $source;
+	protected $name;
+	protected $path;
+	protected $namespace;
+	protected $type;
+	protected $link;
+	protected $author;
+	protected $license;
+	protected $version;
+	protected $date;
 
-	private $config;
-	private $sql;
-	private $registry;
-
-	private $_description;
+	protected $config;
+	protected $sql;
+	protected $registry;
 
 	public function __construct($id, Registry $registry)
 	{
@@ -94,6 +92,46 @@ SQL;
 		{
 			throw new Exception('Invalid service');
 		}
+	}
+
+	public function getId()
+	{
+		return $this->id;
+	}
+
+	public function getStatus()
+	{
+		return $this->status;
+	}
+
+	public function getSource()
+	{
+		return $this->source;
+	}
+
+	public function getName()
+	{
+		return $this->name;
+	}
+
+	public function getNamespace()
+	{
+		return $this->namespace;
+	}
+
+	public function getType()
+	{
+		return $this->type;
+	}
+
+	public function getVersion()
+	{
+		return $this->version;
+	}
+
+	public function getDate()
+	{
+		return $this->date;
 	}
 
 	public function getApiEndpoint()

@@ -45,11 +45,11 @@ abstract class FormAbstract
 	public function __construct(Dependency\Request $ct, $url = null)
 	{
 		$this->ct       = $ct;
-		$this->base     = $ct->getBase();
-		$this->config   = $ct->getConfig();
-		$this->sql      = $ct->getSql();
-		$this->registry = $ct->getRegistry();
-		$this->user     = $ct->getUser();
+		$this->base     = $ct->get('base');
+		$this->config   = $ct->get('config');
+		$this->sql      = $ct->get('sql');
+		$this->registry = $ct->get('registry');
+		$this->user     = $ct->get('user');
 		$this->url      = $url;
 	}
 }

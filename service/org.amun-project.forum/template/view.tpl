@@ -19,7 +19,7 @@
 			by
 			<a href="<?php echo $recordForum->authorProfileUrl; ?>" rel="author"><?php echo $recordForum->authorName; ?></a>
 			on
-			<time datetime="<?php echo $recordForum->getDate()->format(DateTime::ATOM); ?>"><?php echo $recordForum->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></time>
+			<time datetime="<?php echo $recordForum->getDate()->format(DateTime::ATOM); ?>"><?php echo $recordForum->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></time>
 		</p>
 		<div class="amun-service-forum-text"><?php echo $recordForum->text; ?></div>
 	</div>
@@ -34,7 +34,7 @@
 				by
 				<a href="<?php echo $record->authorProfileUrl; ?>" rel="author"><?php echo $record->authorName; ?></a>
 				on
-				<time datetime="<?php echo $record->getDate()->format(DateTime::ATOM); ?>"><?php echo $record->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></time>
+				<time datetime="<?php echo $record->getDate()->format(DateTime::ATOM); ?>"><?php echo $record->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></time>
 			</span>
 			<div class="amun-service-comment-text"><?php echo $record->text; ?></div>
 		</div>

@@ -1,6 +1,11 @@
 
 [FEATURES]
 
+[ ] remove window dialog from footer since css from the footer is applied on the 
+    window
+[ ] add loading animation to user group right save
+[ ] clean up handler selection methods
+[ ] fix php_view right .. php code is returned by the api
 [ ] build backend for approval system
 [ ] extend navigation to show a dropdown if child pages ar available
 [ ] add api bulk operations by accepting resultset in an post. We could use

@@ -55,7 +55,7 @@ class login extends ApplicationAbstract
 			$this->template->assign('redirect', $this->getRedirect($this->get));
 
 			// add path
-			$this->path->add('Login', $this->page->url . '/login');
+			$this->path->add('Login', $this->page->getUrl() . '/login');
 
 			// check login attempts
 			$this->attempt = new Attempt($this->registry);
@@ -87,7 +87,7 @@ class login extends ApplicationAbstract
 	{
 		if($this->post->register('string', array(), null, null, false))
 		{
-			header('Location: ' . $this->page->url . '/register');
+			header('Location: ' . $this->page->getUrl() . '/register');
 			exit;
 		}
 
@@ -121,7 +121,7 @@ class login extends ApplicationAbstract
 
 				if($handler instanceof LoginHandlerAbstract && $handler->isValid($identity))
 				{
-					$handler->setPageUrl($this->page->url);
+					$handler->setPageUrl($this->page->getUrl());
 
 					if($handler->hasPassword() && empty($pw))
 					{

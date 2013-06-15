@@ -44,7 +44,7 @@
 		<tr>
 			<td><?php echo $notification->serviceTitle; ?></td>
 			<td><?php echo $notification->contactValue; ?></td>
-			<td><?php echo $notification->getDate()->setTimezone($user->timezone)->format($registry['core.format_datetime']); ?></td>
+			<td><?php echo $notification->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></td>
 			<td><input type="button" onclick="amun.services.my.notificationsRemove(<?php echo $notification->id . ',\'' . $notifyUrl . '\''; ?>, this)" value="Remove" /></td>
 		</tr>
 		<?php endforeach; ?>

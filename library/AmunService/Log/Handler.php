@@ -47,7 +47,7 @@ class Handler extends HandlerAbstract
 	{
 		if($record->hasFields('refId', 'type', 'table'))
 		{
-			$record->userId = $this->user->id;
+			$record->userId = $this->user->getId();
 
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 

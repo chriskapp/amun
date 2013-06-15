@@ -45,7 +45,7 @@ abstract class GadgetAbstract extends ViewAbstract
 
 	protected function getHandler($table = null)
 	{
-		return $this->dataFactory->getHandlerInstance($table === null ? $this->service->namespace : $table);
+		return $this->getDataFactory()->getHandlerInstance($table === null ? $this->service->namespace : $table);
 	}
 }
 

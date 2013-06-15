@@ -163,11 +163,11 @@ class Handler extends HandlerAbstract
 	{
 		if($record->hasFields('friendId'))
 		{
-			$record->userId = $this->user->id;
+			$record->userId = $this->user->getId();
 
 
 			// check id
-			if($this->user->id == $record->friendId)
+			if($this->user->getId() == $record->friendId)
 			{
 				throw new Exception('You can not establish a relation to yourself');
 			}
@@ -197,7 +197,7 @@ class Handler extends HandlerAbstract
 			{
 				$con = new Condition();
 				$con->add('userId', '=', $record->friendId);
-				$con->add('friendId', '=', $this->user->id);
+				$con->add('friendId', '=', $this->user->getId());
 
 				$this->table->update(array(
 
@@ -498,7 +498,7 @@ SQL;
 
 				'status'   => Record::NORMAL,
 				'userId'   => $row['accountId'],
-				'friendId' => $this->user->id,
+				'friendId' => $this->user->getId(),
 				'date'     => $date->format(DateTime::SQL),
 
 			));
@@ -506,7 +506,7 @@ SQL;
 
 			// update status
 			$con = new Condition();
-			$con->add('userId', '=', $this->user->id);
+			$con->add('userId', '=', $this->user->getId());
 			$con->add('friendId', '=', $row['accountId']);
 
 			$this->table->update(array(

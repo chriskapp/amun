@@ -50,11 +50,11 @@ abstract class FormAbstract extends ApiAbstract
 	 */
 	public function doForm()
 	{
-		if($this->user->hasRight($this->service->namespace . '_view'))
+		if($this->user->hasRight($this->service->getNamespace() . '_view'))
 		{
 			try
 			{
-				$this->method = $this->get->method('string');
+				$this->method = $this->getInputGet()->method('string');
 				$this->form   = $this->getForm();
 
 				if($this->form === null)

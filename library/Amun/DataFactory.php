@@ -43,7 +43,7 @@ class DataFactory
 	private function __construct(DependencyAbstract $ct)
 	{
 		$this->ct     = $ct;
-		$this->prefix = $this->ct->getConfig()->offsetGet('amun_table_prefix');
+		$this->prefix = $this->ct->get('config')->offsetGet('amun_table_prefix');
 	}
 
 	public function getHandlerInstance($table, User $user = null)

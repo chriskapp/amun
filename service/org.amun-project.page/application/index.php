@@ -45,7 +45,7 @@ class index extends ApplicationAbstract
 		if($this->user->hasRight('page_view'))
 		{
 			// load page
-			$recordPage = $this->getHandler()->getOneByPageId($this->page->id, array(), Sql::FETCH_OBJECT);
+			$recordPage = $this->getHandler()->getOneByPageId($this->page->getId(), array(), Sql::FETCH_OBJECT);
 
 			$this->template->assign('recordPage', $recordPage);
 
@@ -56,7 +56,7 @@ class index extends ApplicationAbstract
 			}
 			else
 			{
-				$url = $this->service->getApiEndpoint() . '/form?format=json&method=create&pageId=' . $this->page->id;
+				$url = $this->service->getApiEndpoint() . '/form?format=json&method=create&pageId=' . $this->page->getId();
 			}
 
 			$this->setOptions(array(
