@@ -57,7 +57,7 @@ class latestNews extends GadgetAbstract
 		}
 
 		// get latest news		
-		$handler = DataFactory::get('News');
+		$handler = $this->hm->getHandler('News');
 		$result  = $handler->getAll(array('id', 
 			'urlTitle', 
 			'title', 

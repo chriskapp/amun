@@ -47,7 +47,7 @@ class index extends MyAbstract
 		parent::onLoad();
 
 		// get user details
-		$account = $this->getHandler('User\Account')->getOneById($this->user->id, 
+		$account = $this->getHandler('User\Account')->getOneById($this->user->getId(), 
 			array('id', 'status', 'name', 'gender', 'thumbnailUrl', 'timezone', 'updated', 'date', 'countryTitle'),
 			Sql::FETCH_OBJECT);
 
@@ -72,7 +72,7 @@ class index extends MyAbstract
 			16, 
 			'id', 
 			Sql::SORT_DESC, 
-			new Condition(array('userId', '=', $this->user->id)));
+			new Condition(array('userId', '=', $this->user->getId())));
 
 		$this->template->assign('groups', $groups);
 
@@ -98,7 +98,7 @@ class index extends MyAbstract
 		$count = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
 		$count = $count > 16 ? 16 : $count;
 
-		$result = $this->getHandler('User_Activity')->getPrivateResultSet($this->user->id,
+		$result = $this->getHandler('User_Activity')->getPrivateResultSet($this->user->getId(),
 			array(),
 			$url->getParam('startIndex'), 
 			$count, 

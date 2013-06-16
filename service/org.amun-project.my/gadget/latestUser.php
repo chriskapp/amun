@@ -45,7 +45,7 @@ class latestUser extends GadgetAbstract
 		$count = $this->args->get('count', 10);
 
 		// get latest user
-		$handler = DataFactory::get('User_Account');
+		$handler = $this->hm->getHandler('User_Account');
 		$result  = $handler->getAll(array('id', 
 			'name', 
 			'thumbnailUrl', 

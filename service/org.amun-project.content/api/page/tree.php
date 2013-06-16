@@ -138,7 +138,7 @@ SELECT
 		ORDER BY `depth`, `page`.`parentId`, `page`.`sort` ASC
 SQL;
 
-		$result = $this->sql->getAll($sql);
+		$result = $this->getSql()->getAll($sql);
 		$tree   = array();
 
 		foreach($result as $row)

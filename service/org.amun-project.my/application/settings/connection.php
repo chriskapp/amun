@@ -63,7 +63,7 @@ class connection extends SettingsAbstract
 	public function getConnections()
 	{
 		$con = $this->getRequestCondition();
-		$con->add('userId', '=', $this->user->id);
+		$con->add('userId', '=', $this->user->getId());
 
 		$url   = new Url($this->base->getSelf());
 		$count = $url->getParam('count') > 0 ? $url->getParam('count') : 8;

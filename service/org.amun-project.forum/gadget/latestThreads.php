@@ -52,12 +52,12 @@ class latestThreads extends GadgetAbstract
 		$this->htmlCss->add('forum');
 
 		// get latest thread
-		$select = DataFactory::getTable('Forum')
+		$select = $this->hm->getTable('Forum')
 			->select(array('id', 'urlTitle', 'title', 'date'))
-			->join(Join::INNER, DataFactory::getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('User_Account')
 				->select(array('id', 'name', 'profileUrl'), 'author')
 			)
-			->join(Join::INNER, DataFactory::getTable('Content_Page')
+			->join(Join::INNER, $this->hm->getTable('Content_Page')
 				->select(array('path'), 'page')
 			);
 

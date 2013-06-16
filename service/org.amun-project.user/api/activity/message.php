@@ -144,7 +144,7 @@ class message extends ApiAbstract
 			$urn   = new Urn($ref);
 
 			$con   = new Condition(array('globalId', '=', $urn->getNss()));
-			$refId = DataFactory::getTable('User_Activity')->getField('id', $con);
+			$refId = $this->hm->getTable('User_Activity')->getField('id', $con);
 
 			if(empty($refId))
 			{
@@ -152,7 +152,7 @@ class message extends ApiAbstract
 			}
 		}
 
-		$activity           = DataFactory::getTable('User_Activity')->getRecord();
+		$activity           = $this->hm->getTable('User_Activity')->getRecord();
 		$activity->globalId = $globalId;
 		$activity->parentId = $refId;
 		$activity->table    = 'amun_user_activity';

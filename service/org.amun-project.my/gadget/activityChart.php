@@ -59,7 +59,7 @@ class activityChart extends GadgetAbstract
 		$con->add('date', '>=', $past->format(DateTime::SQL));
 
 		// get activities
-		$handler = DataFactory::get('User_Activity');
+		$handler = $this->hm->getHandler('User_Activity');
 		$result  = $handler->getAll(array('id', 
 			'scope', 
 			'summary', 

@@ -197,7 +197,7 @@ SQL;
 		// count connect requests
 		/*
 		$maxCount = 5;
-		$con      = new PSX_Sql_Condition(array('userId', '=', $this->user->id), array('status', '=', AmunService_Oauth_Record::TEMPORARY));
+		$con      = new PSX_Sql_Condition(array('userId', '=', $this->user->getId()), array('status', '=', AmunService_Oauth_Record::TEMPORARY));
 		$count    = $this->sql->count($this->registry['table.oauth_request'], $con);
 
 		if($count > $maxCount)

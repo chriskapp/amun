@@ -49,9 +49,9 @@ class verifyCredentials extends ApiAbstract
 	{
 		try
 		{
-			$select = DataFactory::getTable('User_Account')
+			$select = $this->hm->getTable('User_Account')
 				->select(array('id', 'groupId', 'status', 'name', 'gender', 'profileUrl', 'thumbnailUrl', 'timezone', 'updated', 'date'))
-				->where('id', '=', $this->user->id);
+				->where('id', '=', $this->user->getId());
 
 			$account = $select->getRow(Sql::FETCH_OBJECT, '\AmunService\My\Credentials', array($select->getTable(), $this->getContainer()));
 

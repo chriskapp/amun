@@ -119,10 +119,10 @@ class foaf extends ApiAbstract
 		else
 		{
 			$col = 'id';
-			$val = $this->user->id;
+			$val = $this->user->getId();
 		}
 
-		$account = DataFactory::getTable('User_Account')
+		$account = $this->hm->getTable('User_Account')
 			->select(array('id', 'globalId', 'name', 'gender', 'profileUrl', 'thumbnailUrl'))
 			->where($col, '=', $val)
 			->getRow();
@@ -139,14 +139,14 @@ class foaf extends ApiAbstract
 
 	private function getFriends($userId)
 	{
-		return DataFactory::getTable('User_Friend')
+		return $this->hm->getTable('User_Friend')
 			->select(array('id', 'status', 'date'))
-			->join(Join::INNER, DataFactory::getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('User_Account')
 				->select(array('id', 'globalId', 'name'), 'author'),
 				'n:1',
 				'userId'
 			)
-			->join(Join::INNER, DataFactory::getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('User_Account')
 				->select(array('id', 'globalId', 'name', 'gender', 'profileUrl', 'thumbnailUrl'), 'friend'),
 				'n:1',
 				'friendId'

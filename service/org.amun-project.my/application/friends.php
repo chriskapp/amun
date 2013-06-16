@@ -60,13 +60,13 @@ class friends extends FriendsAbstract
 		$this->htmlCss->add('my');
 		$this->htmlJs->add('amun');
 		$this->htmlJs->add('my');
-		$this->htmlContent->add(Html\Content::META, Atom\Writer::link($this->page->getTitle(), $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/friend?format=atom&filterBy=authorId&filterOp=equals&filterValue=' . $this->user->id));
+		$this->htmlContent->add(Html\Content::META, Atom\Writer::link($this->page->getTitle(), $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/friend?format=atom&filterBy=authorId&filterOp=equals&filterValue=' . $this->user->getId()));
 	}
 
 	private function getFriends()
 	{
 		$con = $this->getRequestCondition();
-		$con->add('authorId', '=', $this->user->id);
+		$con->add('authorId', '=', $this->user->getId());
 		$con->add('status', '=', Friend\Record::NORMAL);
 
 		// search

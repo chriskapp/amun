@@ -75,7 +75,7 @@ class get extends ApiAbstract
 	{
 		// check whether we have this source
 		$con    = new Condition(array('source', '=', $source));
-		$source = DataFactory::getTable('Marketplace')->getField('source', $con);
+		$source = $this->hm->getTable('Marketplace')->getField('source', $con);
 
 		if(!empty($source))
 		{

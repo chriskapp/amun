@@ -63,7 +63,7 @@ class application extends SettingsAbstract
 	public function getApplications()
 	{
 		$con = $this->getRequestCondition();
-		$con->add('authorId', '=', $this->user->id);
+		$con->add('authorId', '=', $this->user->getId());
 		$con->add('allowed', '=', 1);
 
 		$url   = new Url($this->base->getSelf());

@@ -60,11 +60,11 @@ class people extends RestAbstract
 
 				if(!empty($userId))
 				{
-					$this->userId = $userId == '@me' ? $this->user->id : intval($userId);
+					$this->userId = $userId == '@me' ? $this->user->getId() : intval($userId);
 				}
 				else
 				{
-					$this->userId = $this->user->id;
+					$this->userId = $this->user->getId();
 				}
 
 				$params = $this->getRequestParams();
@@ -79,7 +79,7 @@ class people extends RestAbstract
 					$con,
 					Sql::FETCH_OBJECT, 
 					'\AmunService\My\People', 
-					array(DataFactory::getTable('User_Friend'), $this->getContainer()));
+					array($this->hm->getTable('User_Friend'), $this->getContainer()));
 
 				$this->setResponse($resultSet);
 			}

@@ -51,7 +51,7 @@ class latestActivity extends GadgetAbstract
 		$con = new Condition(array('scope', '=', 0));
 
 		// get activities
-		$handler = DataFactory::get('User_Activity');
+		$handler = $this->hm->getHandler('User_Activity');
 		$result  = $handler->getAll(array('id', 
 			'scope', 
 			'summary', 

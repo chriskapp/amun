@@ -49,7 +49,7 @@ class settings extends SettingsAbstract
 		// load application
 		$this->application = $this->getHandler('Oauth_Access')->getAllowedApplication(
 			$this->get->appId('integer'),
-			$this->user->id
+			$this->user->getId()
 		);
 
 		if($this->application instanceof Access\Record)

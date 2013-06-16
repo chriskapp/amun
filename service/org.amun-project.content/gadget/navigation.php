@@ -48,7 +48,7 @@ class navigation extends GadgetAbstract
 		$tabs   = $this->args->get('tabs', false);
 
 		// get pages
-		$result = DataFactory::getTable('Content_Page')
+		$result = $this->hm->getTable('Content_Page')
 			->select(array('id', 'rightId', 'urlTitle', 'title', 'path'))
 			->where('parentId', '=', $pageId)
 			->where('status', '=', Page\Record::NORMAL)

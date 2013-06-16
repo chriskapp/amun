@@ -153,7 +153,7 @@ class discover extends ApiAbstract
 	{
 		// check whether we have this provider
 		$con = new Condition(array('url', '=', $url->__toString()));
-		$id  = DataFactory::getTable('Core_Service_Provider')->getField('id', $con);
+		$id  = $this->hm->getTable('Core_Service_Provider')->getField('id', $con);
 
 		if(!empty($id))
 		{

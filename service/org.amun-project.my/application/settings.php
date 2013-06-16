@@ -41,7 +41,7 @@ class settings extends SettingsAbstract
 		$this->path->add('Settings', $this->page->getUrl() . '/settings');
 
 		// url
-		$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/account/form?format=json&method=update&id=' . $this->user->id;
+		$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/user/account/form?format=json&method=update&id=' . $this->user->getId();
 
 		$this->template->assign('formUrl', $url);
 

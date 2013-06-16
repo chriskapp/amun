@@ -109,7 +109,7 @@ class connect extends ApplicationAbstract
 			$this->assoc = $this->getAssociation();
 
 			// check whether access is already allowed or denied
-			$status = $this->getHandler('Openid')->getStatus($this->user->id, $this->assoc['id']);
+			$status = $this->getHandler('Openid')->getStatus($this->user->getId(), $this->assoc['id']);
 
 			if($status === Openid\Record::APPROVED)
 			{
@@ -187,7 +187,7 @@ class connect extends ApplicationAbstract
 		$now  = new DateTime('NOW', $this->registry['core.default_timezone']);
 		$data = array(
 
-			'userId'        => $this->user->id,
+			'userId'        => $this->user->getId(),
 			'assocId'       => $this->assoc['id'],
 			'claimedId'     => $this->claimedId,
 			'identity'      => $this->identity,
@@ -202,7 +202,7 @@ class connect extends ApplicationAbstract
 			$data['status'] = Openid\Record::APPROVED;
 		}
 
-		DataFactory::getTable('Openid')->replace($data);
+		$this->hm->getTable('Openid')->replace($data);
 
 		// redirect to rp
 		$redirect->redirect($this->assoc['secret'], $this->assoc['assocType']);
@@ -226,7 +226,7 @@ class connect extends ApplicationAbstract
 		$now   = new DateTime('NOW', $this->registry['core.default_timezone']);
 		$data  = array(
 
-			'userId'        => $this->user->id,
+			'userId'        => $this->user->getId(),
 			'assocId'       => $this->assoc['id'],
 			'claimedId'     => $this->claimedId,
 			'identity'      => $this->identity,
@@ -241,7 +241,7 @@ class connect extends ApplicationAbstract
 			$data['status'] = Openid\Record::DENIED;
 		}
 
-		DataFactory::getTable('Openid')->replace($data);
+		$this->hm->getTable('Openid')->replace($data);
 
 		// cancel request
 		$this->returnTo->addParam('openid.ns', ProviderAbstract::NS);
@@ -255,7 +255,7 @@ class connect extends ApplicationAbstract
 	{
 		if(!empty($this->assocHandle))
 		{
-			$row = DataFactory::getTable('Openid_Assoc')
+			$row = $this->hm->getTable('Openid_Assoc')
 				->select(array('id', 'assocHandle', 'assocType', 'sessionType', 'secret', 'expires', 'date'))
 				->where('assocHandle', '=', $this->assocHandle)
 				->getRow();
@@ -328,7 +328,7 @@ class connect extends ApplicationAbstract
 			$this->sql->insert($this->registry['table.oauth_request'], array(
 
 				'apiId'       => $row['id'],
-				'userId'      => $this->user->id,
+				'userId'      => $this->user->getId(),
 				'status'      => Oauth\Record::APPROVED,
 				'ip'          => $_SERVER['REMOTE_ADDR'],
 				'nonce'       => Security::generateToken(16),
@@ -346,7 +346,7 @@ class connect extends ApplicationAbstract
 			$this->sql->replace($this->registry['table.oauth_access'], array(
 
 				'apiId'   => $row['id'],
-				'userId'  => $this->user->id,
+				'userId'  => $this->user->getId(),
 				'allowed' => 1,
 				'date'    => $date->format(DateTime::SQL),
 

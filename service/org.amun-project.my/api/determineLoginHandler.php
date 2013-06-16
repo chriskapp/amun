@@ -53,7 +53,7 @@ class determineLoginHandler extends ApiAbstract
 
 		foreach($handles as $key)
 		{
-			$handler = LoginHandlerFactory::factory($key);
+			$handler = LoginHandlerFactory::factory($key, $this->container);
 
 			if($handler instanceof LoginHandlerAbstract && $handler->isValid($identity))
 			{

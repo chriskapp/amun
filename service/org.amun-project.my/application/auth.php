@@ -103,7 +103,7 @@ class auth extends ApplicationAbstract
 						{
 							$con = new Condition(array('token', '=', $oauthToken));
 
-							DataFactory::getTable('Oauth_Request')->delete($con);
+							$this->hm->getTable('Oauth_Request')->delete($con);
 
 							throw new Exception('The token is expired');
 						}
@@ -151,7 +151,7 @@ class auth extends ApplicationAbstract
 					}
 
 					// check whether access is already allowed
-					if($this->getHandler('Oauth_Access')->isAllowed($this->apiId, $this->user->id))
+					if($this->getHandler('Oauth_Access')->isAllowed($this->apiId, $this->user->getId()))
 					{
 						$this->allowAccess($token, $callback);
 					}
@@ -224,7 +224,7 @@ class auth extends ApplicationAbstract
 		$this->sql->replace($this->registry['table.oauth_access'], array(
 
 			'apiId'   => $this->apiId,
-			'userId'  => $this->user->id,
+			'userId'  => $this->user->getId(),
 			'allowed' => 1,
 			'date'    => $now->format(DateTime::SQL),
 
@@ -240,7 +240,7 @@ class auth extends ApplicationAbstract
 
 		$this->sql->update($this->registry['table.oauth_request'], array(
 
-			'userId'   => $this->user->id,
+			'userId'   => $this->user->getId(),
 			'status'   => Oauth\Record::APPROVED,
 			'verifier' => $verifier,
 
@@ -272,7 +272,7 @@ class auth extends ApplicationAbstract
 		$this->sql->replace($this->registry['table.oauth_access'], array(
 
 			'apiId'   => $this->apiId,
-			'userId'  => $this->user->id,
+			'userId'  => $this->user->getId(),
 			'allowed' => 0,
 			'date'    => $now->format(DateTime::SQL),
 

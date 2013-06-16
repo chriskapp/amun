@@ -70,7 +70,7 @@ class security extends SettingsAbstract
 				}
 
 				$handler = $this->getHandler('User_Account');
-				$user    = $handler->getOneById($this->user->id, 
+				$user    = $handler->getOneById($this->user->getId(), 
 					array('id', 'pw'), 
 					Sql::FETCH_OBJECT
 				);

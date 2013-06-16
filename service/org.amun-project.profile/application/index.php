@@ -89,7 +89,7 @@ class index extends ApplicationAbstract
 
 			if(!$this->user->isAnonymous() && !$this->user->hasFriend($account))
 			{
-				$options->add('profile_view', 'Add as friend', 'javascript:amun.services.profile.friendshipRequest(' . $this->user->id . ', ' . $account->id . ', \'' . $url . '\', this)');
+				$options->add('profile_view', 'Add as friend', 'javascript:amun.services.profile.friendshipRequest(' . $this->user->getId() . ', ' . $account->id . ', \'' . $url . '\', this)');
 			}
 
 			$options->load(array($this->page, $account));

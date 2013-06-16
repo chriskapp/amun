@@ -62,11 +62,11 @@ class activity extends RestAbstract
 
 				if(!empty($userId))
 				{
-					$this->userId = $userId == '@me' ? $this->user->id : intval($userId);
+					$this->userId = $userId == '@me' ? $this->user->getId() : intval($userId);
 				}
 				else
 				{
-					$this->userId = $this->user->id;
+					$this->userId = $this->user->getId();
 				}
 
 				$params    = $this->getRequestParams();
@@ -80,7 +80,7 @@ class activity extends RestAbstract
 					$this->getRequestCondition(),
 					Sql::FETCH_OBJECT, 
 					'\AmunService\My\Activity', 
-					array(DataFactory::getTable('User_Activity'), $this->getContainer()));
+					array($this->hm->getTable('User_Activity'), $this->getContainer()));
 
 				$this->setResponse($resultSet);
 			}
