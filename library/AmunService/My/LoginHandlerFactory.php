@@ -36,7 +36,7 @@ class LoginHandlerFactory
 	 *
 	 * @return AmunService_My_LoginHandlerAbstract
 	 */
-	public static function factory($handler)
+	public static function factory($handler, $container)
 	{
 		$handler = strtolower($handler);
 
@@ -53,7 +53,7 @@ class LoginHandlerFactory
 			case 'webfinger':
 			case 'yahoo':
 				$class = '\AmunService\My\LoginHandler\\' . ucfirst($handler);
-				return new $class();
+				return new $class($container);
 				break;
 		}
 	}

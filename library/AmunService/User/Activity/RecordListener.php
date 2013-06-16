@@ -69,7 +69,7 @@ class RecordListener extends ListenerAbstract
 		if($type == RecordAbstract::INSERT)
 		{
 			// insert activity
-			$handler = DataFactory::get('User_Activity', new User($record->id, $this->registry));
+			$handler = $this->hm->getHandler('User_Activity', new User($record->id, $this->registry));
 
 			$activity          = $handler->getRecord();
 			$activity->verb    = 'join';
@@ -91,7 +91,7 @@ class RecordListener extends ListenerAbstract
 			else if($record->status == Friend\Record::NORMAL)
 			{
 				// insert activity for user who has accepted the friend request
-				$handler = DataFactory::get('User_Activity', $this->user);
+				$handler = $this->hm->getHandler('User_Activity', $this->user);
 
 				$activity          = $handler->getRecord();
 				$activity->verb    = 'make-friend';
@@ -124,7 +124,7 @@ SQL;
 		{
 			// get object
 			$className = $this->registry->getClassNameFromTable($table->getName());
-			$handler   = DataFactory::get($className, $this->user);
+			$handler   = $this->hm->getHandler($className, $this->user);
 			$object    = $handler->get($record->id, array('*'));
 
 			// build object url
@@ -139,7 +139,7 @@ SQL;
 			}
 
 			// insert activity
-			$handler = DataFactory::get('User_Activity', $this->user);
+			$handler = $this->hm->getHandler('User_Activity', $this->user);
 
 			$activity          = $handler->getRecord();
 			$activity->verb    = $row['verb'];

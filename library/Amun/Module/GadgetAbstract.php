@@ -34,18 +34,35 @@ use PSX\Module\ViewAbstract;
  */
 abstract class GadgetAbstract extends ViewAbstract
 {
-	public function getDependencies()
-	{
-		$ct = new Dependency\Gadget($this->base->getConfig(), array(
-			'gadget.id' => $this->location->getServiceId()
-		));
+	protected $get;
+	protected $post;
+	protected $registry;
+	protected $session;
+	protected $user;
+	protected $gadget;
 
-		return $ct;
+	protected $hm;
+
+	public function onLoad()
+	{
+		// set parameters
+		$this->container->setParameter('gadget.id', $this->location->getServiceId());
+
+		// dependencies
+		$this->get      = $this->getInputGet();
+		$this->post     = $this->getInputPost();
+		$this->registry = $this->getRegistry();
+		$this->session  = $this->getSession();
+		$this->user     = $this->getUser();
+		$this->gadget   = $this->getGadget();
+
+		// manager
+		$this->hm = $this->getHandlerManager();
 	}
 
-	protected function getHandler($table = null)
+	protected function getHandler($name = null)
 	{
-		return $this->getDataFactory()->getHandlerInstance($table === null ? $this->service->namespace : $table);
+		return $this->hm->getHandler($name === null ? $this->service->getNamespace() : $name);
 	}
 }
 

@@ -55,7 +55,7 @@ class Record extends RecordAbstract
 
 	public function setAccessId($accessId)
 	{
-		$accessId = $this->_validate->apply($accessId, 'integer', array(new Filter\Id(DataFactory::getTable('Oauth_Access'))), 'accessId', 'Access Id');
+		$accessId = $this->_validate->apply($accessId, 'integer', array(new Filter\Id($this->_hm->getTable('Oauth_Access'))), 'accessId', 'Access Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -69,7 +69,7 @@ class Record extends RecordAbstract
 
 	public function setRightId($rightId)
 	{
-		$rightId = $this->_validate->apply($rightId, 'integer', array(new Filter\Id(DataFactory::getTable('User_Right'))), 'rightId', 'Right Id');
+		$rightId = $this->_validate->apply($rightId, 'integer', array(new Filter\Id($this->_hm->getTable('User_Right'))), 'rightId', 'Right Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -85,7 +85,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_access === null)
 		{
-			$this->_access = DataFactory::getTable('Oauth_Access')->getRecord($this->accessId);
+			$this->_access = $this->_hm->getHandler('Oauth_Access')->getRecord($this->accessId);
 		}
 
 		return $this->_access;
@@ -95,7 +95,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_right === null)
 		{
-			$this->_right = DataFactory::getTable('User_Right')->getRecord($this->rightId);
+			$this->_right = $this->_hm->getHandler('User_Right')->getRecord($this->rightId);
 		}
 
 		return $this->_right;

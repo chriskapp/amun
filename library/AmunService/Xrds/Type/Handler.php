@@ -104,7 +104,7 @@ class Handler extends HandlerAbstract
 	{
 		return $this->table
 			->select(array('apiId', 'type'))
-			->join(Join::INNER, DataFactory::getTable('Xrds')
+			->join(Join::INNER, $this->hm->getTable('Xrds')
 				->select(array('priority', 'endpoint'), 'api')
 			)
 			->orderBy('apiId', Sql::SORT_ASC);

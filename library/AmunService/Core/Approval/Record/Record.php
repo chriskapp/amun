@@ -105,7 +105,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_user === null)
 		{
-			$this->_user = DataFactory::getTable('User_Account')->getRecord($this->userId);
+			$this->_user = $this->_hm->getHandler('User_Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;

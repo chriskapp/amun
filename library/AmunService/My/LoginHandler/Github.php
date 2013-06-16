@@ -54,11 +54,11 @@ class Github extends LoginHandlerAbstract implements CallbackInterface
 	protected $http;
 	protected $oauth;
 
-	public function __construct()
+	public function __construct($container)
 	{
-		parent::__construct();
+		parent::__construct($container);
 
-		$this->http  = new Http();
+		$this->http  = $container->get('http');
 		$this->oauth = new Oauth2();
 	}
 
@@ -112,7 +112,7 @@ class Github extends LoginHandlerAbstract implements CallbackInterface
 
 			$identity = $acc['id'];	
 			$con      = new Condition(array('identity', '=', sha1(Security::getSalt() . $identity)));
-			$userId   = DataFactory::getTable('User_Account')->getField('id', $con);
+			$userId   = $this->hm->getTable('User_Account')->getField('id', $con);
 
 			if(empty($userId))
 			{
@@ -131,7 +131,7 @@ class Github extends LoginHandlerAbstract implements CallbackInterface
 				$name = $this->normalizeName($acc['name']);
 
 				// create user account
-				$handler = DataFactory::get('User_Account', $this->user);
+				$handler = $this->hm->getHandler('User_Account', $this->user);
 
 				$account = $handler->getRecord();
 				$account->setGroupId($this->registry['core.default_user_group']);

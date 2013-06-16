@@ -35,22 +35,24 @@ use Amun\User;
  */
 abstract class ListenerAbstract
 {
-	protected $ct;
+	protected $container;
 	protected $base;
 	protected $config;
 	protected $sql;
 	protected $registry;
 	protected $event;
+	protected $hm;
 	protected $user;
 
-	public function __construct(Dependency\Request $ct, User $user = null)
+	public function __construct($container, User $user = null)
 	{
-		$this->ct       = $ct;
-		$this->base     = $ct->get('base');
-		$this->config   = $ct->get('config');
-		$this->sql      = $ct->get('sql');
-		$this->registry = $ct->get('registry');
-		$this->event    = $ct->get('event');
-		$this->user     = $user !== null ? $user : $ct->get('user');
+		$this->container = $container;
+		$this->base      = $container->get('base');
+		$this->config    = $container->get('config');
+		$this->sql       = $container->get('sql');
+		$this->registry  = $container->get('registry');
+		$this->event     = $container->get('event');
+		$this->hm        = $container->get('handlerManager');
+		$this->user      = $user !== null ? $user : $container->get('user');
 	}
 }

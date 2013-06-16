@@ -22,9 +22,11 @@
 
 namespace Amun\Module;
 
+use Amun\Base;
 use Amun\Oauth;
 use Amun\Dependency;
-use Amun\Base;
+use Amun\Dispatch\RequestFilter\OauthAuthentication;
+use Amun\User;
 use PSX\Loader\Location;
 
 /**
@@ -34,61 +36,62 @@ use PSX\Loader\Location;
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-abstract class ApiAbstract extends Oauth
+abstract class ApiAbstract extends \PSX\Module\ApiAbstract
 {
-	protected $sessionName;
-	protected $sessionId;
-	protected $userId;
-
 	protected $get;
+	protected $user;
 	protected $registry;
 	protected $service;
 
-	public function __construct(Location $location, Base $base, $basePath, array $uriFragments)
+	protected $hm;
+
+	public function getRequestFilter()
 	{
-		parent::__construct($location, $base, $basePath, $uriFragments);
+		$con    = $this->getContainer();
+		$config = $this->config;
+		$oauth  = new OauthAuthentication($this->getRegistry());
 
-		// if the authorization header is set follow the oauth
-		// authentication process else assign the user from the session
-		$authorization = Base::getRequestHeader('Authorization');
+		$oauth->onSuccess(function($userId) use ($con, $config){
+			$con->setParameter('session.name', 'amun-api-' . md5($config['psx_url']));
+			$con->setParameter('user.id', $userId);
+		});
 
-		if($authorization !== false)
-		{
-			$this->doAuthentication();
-		}
-	}
+		$oauth->onMissing(function(){
+		});
 
-	public function getDependencies()
-	{
-		$ct = new Dependency\Api($this->base->getConfig(), array(
-			'session.name'   => $this->sessionName,
-			'session.userId' => $this->userId,
-			'session.id'     => $this->requestToken,
-			'api.serviceId'  => $this->location->getServiceId(),
-			'api.requestId'  => $this->requestId,
-			'api.accessId'   => $this->accessId,
-		));
-
-		return $ct;
-	}
-
-	public function onAuthenticated()
-	{
-		$this->sessionName = 'amun_api_' . md5($this->config['psx_url']);
-		$this->userId      = $this->claimedUserId;
+		return array($oauth);
 	}
 
 	public function onLoad()
 	{
+		// set parameters
+		if(!$this->container->hasParameter('session.name'))
+		{
+			$this->container->setParameter('session.name', 'amun-' . md5($this->config['psx_url']));
+		}
+
+		if(!$this->container->hasParameter('user.id'))
+		{
+			$this->container->setParameter('user.id', User::findUserId($this->getSession(), $this->getRegistry()));
+		}
+
+		$this->container->setParameter('service.id', $this->location->getServiceId());
+
 		// dependencies
 		$this->get      = $this->getInputGet();
+		$this->post     = $this->getInputPost();
 		$this->registry = $this->getRegistry();
+		$this->session  = $this->getSession();
+		$this->user     = $this->getUser();
 		$this->service  = $this->getService();
+
+		// manager
+		$this->hm = $this->getHandlerManager();
 	}
 
-	protected function getHandler($table = null)
+	protected function getHandler($name = null)
 	{
-		return $this->getDataFactory()->getHandlerInstance($table === null ? $this->service->getNamespace() : $table);
+		return $this->hm->getHandler($name === null ? $this->service->getNamespace() : $name);
 	}
 }
 

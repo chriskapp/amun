@@ -70,7 +70,7 @@ class view extends ApplicationAbstract
 			$this->template->assign('resultComments', $resultComments);
 
 			// add path
-			$this->path->add($recordNews->title, $this->page->getUrl() . '/view?id=' . $this->getId());
+			$this->path->add($recordNews->title, $this->page->getUrl() . '/view/' . $recordNews->id . '/' . $recordNews->urlTitle);
 
 			// options
 			$url = $this->service->getApiEndpoint() . '/form?format=json&method=update&id=' . $this->id;

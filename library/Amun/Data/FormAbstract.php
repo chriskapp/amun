@@ -23,7 +23,6 @@
 namespace Amun\Data;
 
 use Amun\Dependency;
-use Amun\DataFactory;
 
 /**
  * FormAbstract
@@ -34,22 +33,24 @@ use Amun\DataFactory;
  */
 abstract class FormAbstract
 {
-	protected $ct;
+	protected $container;
 	protected $base;
 	protected $config;
 	protected $sql;
 	protected $registry;
+	protected $hm;
 	protected $user;
 	protected $url;
 
-	public function __construct(Dependency\Request $ct, $url = null)
+	public function __construct($container, $url = null)
 	{
-		$this->ct       = $ct;
-		$this->base     = $ct->get('base');
-		$this->config   = $ct->get('config');
-		$this->sql      = $ct->get('sql');
-		$this->registry = $ct->get('registry');
-		$this->user     = $ct->get('user');
-		$this->url      = $url;
+		$this->container = $container;
+		$this->base      = $container->get('base');
+		$this->config    = $container->get('config');
+		$this->sql       = $container->get('sql');
+		$this->registry  = $container->get('registry');
+		$this->hm        = $container->get('handlerManager');
+		$this->user      = $container->get('user');
+		$this->url       = $url;
 	}
 }

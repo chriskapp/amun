@@ -63,7 +63,7 @@ class Html extends FilterAbstract implements ElementListenerInterface, TextListe
 		$this->config = $config;
 		$this->user   = $user;
 
-		switch($this->user->status)
+		switch($this->user->getStatus())
 		{
 			case Record::ADMINISTRATOR:
 				$this->collection = new Collection\FullTrusted();

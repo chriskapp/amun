@@ -117,7 +117,7 @@ class login extends ApplicationAbstract
 
 			foreach($handles as $handler)
 			{
-				$handler = LoginHandlerFactory::factory($handler);
+				$handler = LoginHandlerFactory::factory($handler, $this->container);
 
 				if($handler instanceof LoginHandlerAbstract && $handler->isValid($identity))
 				{

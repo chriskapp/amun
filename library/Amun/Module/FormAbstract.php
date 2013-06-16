@@ -35,8 +35,17 @@ use PSX\Data\Message;
  */
 abstract class FormAbstract extends ApiAbstract
 {
+	protected $fm;
+
 	protected $method;
 	protected $form;
+
+	public function onLoad()
+	{
+		parent::onLoad();
+
+		$this->fm = $this->getFormManager();
+	}
 
 	/**
 	 * Returns an form to create, update or delete an record
@@ -113,8 +122,8 @@ abstract class FormAbstract extends ApiAbstract
 		return $this->form->delete($this->get->id('integer'));
 	}
 
-	protected function getForm($table = null)
+	protected function getForm($name = null)
 	{
-		return $this->dataFactory->getFormInstance($table === null ? $this->service->namespace : $table);
+		return $this->fm->getForm($name === null ? $this->service->getNamespace() : $name);
 	}
 }

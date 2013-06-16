@@ -295,7 +295,7 @@ class Handler extends HandlerAbstract
 				if(!$this->registry->hasService($source))
 				{
 					// try to install required services
-					$service = DataFactory::getTable('Core_Service')->getRecord();
+					$service = $this->hm->getTable('Core_Service')->getRecord();
 					$service->setSource($source);
 
 					$this->create($service);
@@ -323,11 +323,11 @@ class Handler extends HandlerAbstract
 				{
 					$url = new Url($src);
 					$con = new Condition(array('url', '=', $src));
-					$id  = DataFactory::getTable('Core_Service_Provider')->getField('id', $con);
+					$id  = $this->hm->getTable('Core_Service_Provider')->getField('id', $con);
 
 					if(empty($id))
 					{
-						DataFactory::getTable('Core_Service_Provider')->insert(array(
+						$this->hm->getTable('Core_Service_Provider')->insert(array(
 							'url'  => $src,
 							'date' => date(DateTime::SQL),
 						));

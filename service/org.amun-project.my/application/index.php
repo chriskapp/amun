@@ -47,7 +47,7 @@ class index extends MyAbstract
 		parent::onLoad();
 
 		// get user details
-		$account = $this->getHandler('User_Account')->getOneById($this->user->id, 
+		$account = $this->getHandler('User\Account')->getOneById($this->user->id, 
 			array('id', 'status', 'name', 'gender', 'thumbnailUrl', 'timezone', 'updated', 'date', 'countryTitle'),
 			Sql::FETCH_OBJECT);
 
@@ -67,7 +67,7 @@ class index extends MyAbstract
 		$this->template->assign('activities', $activities);
 
 		// load groups
-		$groups = $this->getHandler('User_Friend_Group')->getAll(array(), 
+		$groups = $this->getHandler('User\Friend\Group')->getAll(array(), 
 			0, 
 			16, 
 			'id', 

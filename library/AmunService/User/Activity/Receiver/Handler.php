@@ -112,10 +112,10 @@ class Handler extends HandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'status', 'activityId', 'userId', 'date'))
-			->join(Join::INNER, DataFactory::getTable('User_Activity')
+			->join(Join::INNER, $this->hm->getTable('User_Activity')
 				->select(array('id', 'status', 'verb', 'summary', 'date'), 'activity')
 			)
-			->join(Join::INNER, DataFactory::getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('User_Account')
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			);
 	}

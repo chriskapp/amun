@@ -34,7 +34,11 @@ use Amun\Exception;
  */
 class index extends ApplicationAbstract
 {
-	public function onLoad()
+	/**
+	 * @httpMethod GET
+	 * @path /
+	 */
+	public function doIndex()
 	{
 		if($this->user->hasRight('redirect_view'))
 		{

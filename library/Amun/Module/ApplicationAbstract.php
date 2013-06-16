@@ -26,6 +26,7 @@ use Amun\Dependency;
 use Amun\Exception;
 use Amun\Html;
 use Amun\Option;
+use Amun\User;
 use PSX\Base;
 use PSX\DateTime;
 use PSX\Loader\Location;
@@ -41,15 +42,33 @@ use PSX\Sql\Condition;
  */
 abstract class ApplicationAbstract extends ViewAbstract
 {
+	protected $get;
+	protected $post;
+	protected $registry;
+	protected $session;
 	protected $user;
 	protected $page;
 	protected $service;
+	protected $template;
+
+	protected $hm;
+
 	protected $navigation;
 	protected $path;
 	protected $gadgetContainer;
 
+	protected $htmlJs;
+	protected $htmlCss;
+	protected $htmlContent;
+
 	public function onLoad()
 	{
+		// set parameters
+		$this->container->setParameter('session.name', 'amun-' . md5($this->config['psx_url']));
+		$this->container->setParameter('user.id', User::findUserId($this->getSession(), $this->getRegistry()));
+		$this->container->setParameter('page.id', $this->location->getServiceId());
+		$this->container->setParameter('service.id', $this->getPage()->getServiceId());
+
 		// set xrds location header
 		header('X-XRDS-Location: ' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/xrds');
 
@@ -57,15 +76,14 @@ abstract class ApplicationAbstract extends ViewAbstract
 		$this->get      = $this->getInputGet();
 		$this->post     = $this->getInputPost();
 		$this->registry = $this->getRegistry();
+		$this->session  = $this->getSession();
 		$this->user     = $this->getUser();
 		$this->page     = $this->getPage();
 		$this->service  = $this->getService();
+		$this->template = $this->getTemplate();
 
-		// template dependencies
-		$this->htmlJs      = $this->getHtmlJs();
-		$this->htmlCss     = $this->getHtmlCss();
-		$this->htmlContent = $this->getHtmlContent();
-		$this->template    = $this->getTemplate();
+		// manager
+		$this->hm = $this->getHandlerManager();
 
 		// load nav
 		if($this->page->hasNav())
@@ -88,6 +106,11 @@ abstract class ApplicationAbstract extends ViewAbstract
 			$this->gadgetContainer->load($this->getLoader(), $this->page, $this->htmlCss);
 		}
 
+		// template dependencies
+		$this->htmlJs      = $this->getHtmlJs();
+		$this->htmlCss     = $this->getHtmlCss();
+		$this->htmlContent = $this->getHtmlContent();
+
 		// set application template path
 		$this->template->setDir($this->config['amun_service_path'] . '/' . $this->page->getApplication() . '/template');
 
@@ -102,6 +125,17 @@ abstract class ApplicationAbstract extends ViewAbstract
 	public function processResponse($content)
 	{
 		// assign default template vars
+		$config = $this->getConfig();
+		$self   = isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING']) ? $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'] : $_SERVER['PHP_SELF'];
+		$url    = $config['psx_url'] . '/' . $config['psx_dispatch'];
+		$base   = parse_url($config['psx_url'], PHP_URL_PATH);
+
+		$this->template->assign('config', $config);
+		$this->template->assign('self', htmlspecialchars($self));
+		$this->template->assign('url', $url);
+		$this->template->assign('location', $this->config['amun_service_path'] . '/' . $this->page->getApplication() . '/template');
+		$this->template->assign('base', $base);
+
 		$this->template->assign('registry', $this->registry);
 		$this->template->assign('user', $this->user);
 		$this->template->assign('page', $this->page);
@@ -151,20 +185,6 @@ abstract class ApplicationAbstract extends ViewAbstract
 		return parent::processResponse(null);
 	}
 
-	public function getDependencies()
-	{
-		$ct = new Dependency\Application($this->base->getConfig(), array(
-			'application.pageId' => $this->location->getServiceId()
-		));
-
-		return $ct;
-	}
-
-	protected function getHandler($table = null)
-	{
-		return $this->getDataFactory()->getHandlerInstance($table === null ? $this->service->getNamespace() : $table);
-	}
-
 	protected function loadMetaTags()
 	{
 		$description = $this->page->getDescription();
@@ -210,7 +230,12 @@ abstract class ApplicationAbstract extends ViewAbstract
 		$options->load(array($this->page));
 
 		$this->template->assign('options', $options);
-	} 
+	}
+
+	protected function getHandler($name = null)
+	{
+		return $this->hm->getHandler($name === null ? $this->service->getNamespace() : $name);
+	}
 
 	protected function getRequestCondition()
 	{

@@ -101,8 +101,6 @@ class index extends ApplicationAbstract
 			$this->htmlJs->add('ace');
 			$this->htmlJs->add('bootstrap');
 			$this->htmlJs->add('prettify');
-
-			$this->template->set(__CLASS__ . '.tpl');
 		}
 		else
 		{

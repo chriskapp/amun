@@ -23,7 +23,6 @@
 namespace Amun\Data;
 
 use Amun\Dependency;
-use Amun\DataFactory;
 use Amun\Exception;
 use Amun\User;
 use Amun\Registry;
@@ -61,23 +60,25 @@ use PSX\Sql\Condition;
  */
 abstract class HandlerAbstract extends \PSX\Data\HandlerAbstract
 {
-	protected $ct;
+	protected $container;
 	protected $base;
 	protected $config;
 	protected $sql;
 	protected $registry;
 	protected $event;
+	protected $hm;
 	protected $user;
 
-	public function __construct(Dependency\Request $ct, User $user = null)
+	public function __construct($container, User $user = null)
 	{
-		$this->ct       = $ct;
-		$this->base     = $ct->get('base');
-		$this->config   = $ct->get('config');
-		$this->sql      = $ct->get('sql');
-		$this->registry = $ct->get('registry');
-		$this->event    = $ct->get('event');
-		$this->user     = $user === null ? $ct->get('user') : $user;
+		$this->container = $container;
+		$this->base      = $container->get('base');
+		$this->config    = $container->get('config');
+		$this->sql       = $container->get('sql');
+		$this->registry  = $container->get('registry');
+		$this->event     = $container->get('event');
+		$this->hm        = $container->get('handlerManager');
+		$this->user      = $user === null ? $container->get('user') : $user;
 
 		parent::__construct($this->getTableInstance());
 	}
@@ -102,7 +103,7 @@ abstract class HandlerAbstract extends \PSX\Data\HandlerAbstract
 
 	protected function getClassArgs()
 	{
-		return array($this->table, $this->ct);
+		return array($this->table, $this->container);
 	}
 
 	/**

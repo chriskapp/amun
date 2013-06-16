@@ -107,10 +107,10 @@ class Handler extends HandlerAbstract
 	{
 		return $this->table
 			->select(array('id'))
-			->join(Join::INNER, DataFactory::getTable('User_Group')
+			->join(Join::INNER, $this->hm->getTable('User_Group')
 				->select(array('title'), 'group')
 			)
-			->join(Join::INNER, DataFactory::getTable('User_Right')
+			->join(Join::INNER, $this->hm->getTable('User_Right')
 				->select(array('name'), 'right')
 			);
 	}

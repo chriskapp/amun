@@ -77,10 +77,10 @@ class Handler extends HandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'status', 'ip', 'callback', 'expire', 'date'))
-			->join(Join::INNER, DataFactory::getTable('Oauth')
+			->join(Join::INNER, $this->hm->getTable('Oauth')
 				->select(array('id', 'title'), 'api')
 			)
-			->join(Join::LEFT, DataFactory::getTable('User_Account')
+			->join(Join::LEFT, $this->hm->getTable('User_Account')
 				->select(array('name', 'profileUrl'), 'author')
 			);
 	}

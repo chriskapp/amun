@@ -34,20 +34,18 @@ use ReflectionException;
  */
 class Event
 {
-	protected static $_instance;
+	protected $container;
+	protected $config;
+	protected $sql;
+	protected $registry;
+	protected $user;
 
-	private $ct;
-	private $config;
-	private $sql;
-	private $registry;
-	private $user;
-
-	public function __construct(Dependency\Request $ct)
+	public function __construct($container)
 	{
-		$this->ct       = $ct;
-		$this->config   = $ct->get('config');
-		$this->sql      = $ct->get('sql');
-		$this->registry = $ct->get('registry');
+		$this->container = $container;
+		$this->config    = $container->get('config');
+		$this->sql       = $container->get('sql');
+		$this->registry  = $container->get('registry');
 	}
 
 	/**
@@ -122,7 +120,7 @@ SQL;
 			try
 			{
 				$method = $listener->getMethod('notify');
-				$obj    = $listener->newInstance($this->ct, $user);
+				$obj    = $listener->newInstance($this->container, $user);
 				$resp   = $method->invokeArgs($obj, $args);
 
 				if($resp === false)
@@ -144,16 +142,6 @@ SQL;
 				}
 			}
 		}
-	}
-
-	public static function initInstance(Dependency\Request $ct)
-	{
-		return self::$_instance = new self($ct);
-	}
-
-	public static function getInstance()
-	{
-		return self::$_instance;
 	}
 }
 

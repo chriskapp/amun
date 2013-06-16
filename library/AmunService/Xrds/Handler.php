@@ -108,7 +108,7 @@ class Handler extends HandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'serviceId', 'priority', 'endpoint'))
-			->join(Join::INNER, DataFactory::getTable('Core_Service')
+			->join(Join::INNER, $this->hm->getTable('Core_Service')
 				->select(array('name'), 'service')
 			);
 	}

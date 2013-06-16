@@ -41,26 +41,28 @@ abstract class RecordAbstract extends TableAbstract
 	const DELETE = 0x3;
 
 	protected $_table;
-	protected $_ct;
+	protected $_container;
 	protected $_base;
 	protected $_config;
 	protected $_sql;
 	protected $_registry;
 	protected $_validate;
+	protected $_hm;
 	protected $_user;
 
 	public $captcha;
 
-	public function __construct(TableInterface $table, Dependency\Request $ct)
+	public function __construct(TableInterface $table, $container)
 	{
-		$this->_table    = $table;
-		$this->_ct       = $ct;
-		$this->_base     = $ct->get('base');
-		$this->_config   = $ct->get('config');
-		$this->_sql      = $ct->get('sql');
-		$this->_registry = $ct->get('registry');
-		$this->_validate = $ct->get('validate');
-		$this->_user     = $ct->get('user');
+		$this->_table     = $table;
+		$this->_container = $container;
+		$this->_base      = $container->get('base');
+		$this->_config    = $container->get('config');
+		$this->_sql       = $container->get('sql');
+		$this->_registry  = $container->get('registry');
+		$this->_validate  = $container->get('validate');
+		$this->_hm        = $container->get('handlerManager');
+		$this->_user      = $container->get('user');
 	}
 
 	public function setCaptcha($captcha)

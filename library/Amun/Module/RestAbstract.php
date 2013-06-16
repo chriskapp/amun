@@ -287,67 +287,6 @@ abstract class RestAbstract extends ApiAbstract
 		}
 	}
 
-	protected function getRequestCondition()
-	{
-		$con          = new Condition();
-		$params       = $this->getRequestParams();
-		$filterBy     = $params['filterBy'];
-		$filterOp     = $params['filterOp'];
-		$filterValue  = $params['filterValue'];
-		$updatedSince = $params['updatedSince'];
-
-		if(!empty($filterBy) && !empty($filterOp) && !empty($filterValue))
-		{
-			switch($filterOp)
-			{
-				case 'contains':
-					$con->add($filterBy, 'LIKE', '%' . $filterValue . '%');
-					break;
-
-				case 'equals':
-					$con->add($filterBy, '=', $filterValue);
-					break;
-
-				case 'startsWith':
-					$con->add($filterBy, 'LIKE', $filterValue . '%');
-					break;
-
-				case 'present':
-					$con->add($filterBy, 'IS NOT', 'NULL', 'AND');
-					$con->add($filterBy, 'NOT LIKE', '');
-					break;
-			}
-		}
-
-		if(!empty($updatedSince))
-		{
-			$datetime = new DateTime($updatedSince);
-
-			$con->add('date', '>', $datetime->format(DateTime::SQL));
-		}
-
-		return $con;
-	}
-
-	protected function getMode()
-	{
-		$format = isset($_GET['format']) ? $_GET['format'] : null;
-
-		switch($format)
-		{
-			case 'jas':
-			case 'atom':
-				return Sql::FETCH_OBJECT;
-				break;
-
-			case 'xml':
-			case 'json':
-			default:
-				return Sql::FETCH_ASSOC;
-				break;
-		}
-	}
-
 	protected function getRequestParams()
 	{
 		$params = parent::getRequestParams();

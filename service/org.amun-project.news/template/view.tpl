@@ -63,7 +63,7 @@
 		amun.services.news.loadCommentForm("form", <?php echo '"' . $formUrl . '"'; ?>);
 		</script>
 
-		<p class="muted">Please read the <a href="<?php echo $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'help.htm'; ?>">help</a> howto properly format your content before submitting.</p>
+		<p class="muted">Please read the <a href="<?php echo $config['psx_url'] . '/' . $config['psx_dispatch'] . 'help'; ?>">help</a> howto properly format your content before submitting.</p>
 	<?php else: ?>
 		<?php if($user->isAnonymous()): ?>
 			<p>You must be logged in to post a comment.</p>

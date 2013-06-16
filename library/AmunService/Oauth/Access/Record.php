@@ -65,7 +65,7 @@ class Record extends RecordAbstract
 
 	public function setApiId($apiId)
 	{
-		$apiId = $this->_validate->apply($apiId, 'integer', array(new AmunFilter\Id(DataFactory::getTable('Oauth'))), 'apiId', 'Api Id');
+		$apiId = $this->_validate->apply($apiId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('Oauth'))), 'apiId', 'Api Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -91,7 +91,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_api === null)
 		{
-			$this->_api = DataFactory::getTable('Oauth')->getRecord($this->apiId);
+			$this->_api = $this->_hm->getHandler('Oauth')->getRecord($this->apiId);
 		}
 
 		return $this->_api;
@@ -101,7 +101,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_user === null)
 		{
-			$this->_user = DataFactory::getTable('User_Account')->getRecord($this->userId);
+			$this->_user = $this->_hm->getHandler('User_Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;
@@ -123,7 +123,7 @@ class Record extends RecordAbstract
 		{
 			$con = new Condition(array('accessId', '=', $this->id));
 
-			$this->_rights = DataFactory::getTable('Oauth_Access_Right')->getCol('rightId', $con);
+			$this->_rights = $this->_hm->getTable('Oauth_Access_Right')->getCol('rightId', $con);
 		}
 
 		return $this->_rights;
