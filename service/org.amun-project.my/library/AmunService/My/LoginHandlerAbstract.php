@@ -43,17 +43,16 @@ abstract class LoginHandlerAbstract
 
 	protected $pageUrl;
 
-	public function __construct()
+	public function __construct($container)
 	{
-		$ct = DataFactory::getInstance()->getContainer();
-
-		$this->base     = $ct->getBase();
-		$this->config   = $ct->getConfig();
-		$this->sql      = $ct->getSql();
-		$this->session  = $ct->getSession();
-		$this->registry = $ct->getRegistry();
-		$this->event    = $ct->getEvent();
-		$this->user     = $ct->getUser();
+		$this->base     = $container->get('base');
+		$this->config   = $container->get('config');
+		$this->sql      = $container->get('sql');
+		$this->session  = $container->get('session');
+		$this->registry = $container->get('registry');
+		$this->event    = $container->get('event');
+		$this->hm       = $container->get('handlerManager');
+		$this->user     = $container->get('user');
 	}
 
 	/**

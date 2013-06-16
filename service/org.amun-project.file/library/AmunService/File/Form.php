@@ -97,7 +97,7 @@ class Form extends FormAbstract
 
 	public function update($id)
 	{
-		$record = DataFactory::get('File')->getRecord($id);
+		$record = $this->hm->getHandler('File')->getRecord($id);
 
 
 		$form = new AmunForm('PUT', $this->url);
@@ -140,7 +140,7 @@ class Form extends FormAbstract
 
 	public function delete($id)
 	{
-		$record = DataFactory::get('File')->getRecord($id);
+		$record = $this->hm->getHandler('File')->getRecord($id);
 
 
 		$form = new AmunForm('PUT', $this->url);

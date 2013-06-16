@@ -46,7 +46,7 @@ class Handler extends HandlerAbstract
 {
 	public function getStatus($userId, $assocId)
 	{
-		return (integer) DataFactory::getTable('Openid')
+		return (integer) $this->hm->getTable('Openid')
 			->select(array('status'))
 			->where('userId', '=', $userId)
 			->where('assocId', '=', $assocId)
@@ -87,7 +87,7 @@ class Handler extends HandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'userId', 'status', 'claimedId', 'returnTo', 'date'))
-			->join(Join::INNER, DataFactory::getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('User_Account')
 				->select(array('name', 'profileUrl'), 'author')
 			);
 	}

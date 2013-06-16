@@ -56,11 +56,11 @@ class Handler extends HandlerAbstract
 
 		$select = $this->table
 			->select(array('id', 'parentId', 'status', 'verb', 'summary', 'date'))
-			->join(Join::INNER, DataFactory::getTable('User_Activity_Receiver')
+			->join(Join::INNER, $this->hm->getTable('User_Activity_Receiver')
 				->select(array('id', 'status', 'activityId', 'userId', 'date'), 'receiver'),
 				'1:n'
 			)
-			->join(Join::INNER, DataFactory::getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('User_Account')
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			)
 			->where('receiverUserId', '=', $userId)
@@ -107,11 +107,11 @@ class Handler extends HandlerAbstract
 		$sortBy     = $sortBy     !== null ? $sortBy               : 'date';
 		$sortOrder  = $sortOrder  !== null ? (integer) $sortOrder  : Sql::SORT_DESC;
 
-		$select = DataFactory::getTable('User_Activity_Receiver')
+		$select = $this->hm->getTable('User_Activity_Receiver')
 			->select(array('id', 'status', 'activityId', 'userId', 'date'), 'receiver')
-			->join(Join::INNER, DataFactory::getTable('User_Activity')
+			->join(Join::INNER, $this->hm->getTable('User_Activity')
 				->select(array('id', 'globalId', 'parentId', 'userId', 'refId', 'table', 'status', 'scope', 'verb', 'summary', 'date'))
-				->join(Join::INNER, DataFactory::getTable('User_Account')
+				->join(Join::INNER, $this->hm->getTable('User_Account')
 					->select(array('globalId', 'name', 'profileUrl', 'thumbnailUrl'), 'author')
 				)
 			)
@@ -164,7 +164,7 @@ class Handler extends HandlerAbstract
 				$record->globalId = $this->base->getUUID('user:activity:' . $record->summary . ':' . uniqid());
 			}
 
-			$record->userId = $this->user->id;
+			$record->userId = $this->user->getId();
 			$record->verb   = isset($record->verb) ? $record->verb : 'post';
 
 			if(!isset($record->date))
@@ -241,7 +241,7 @@ class Handler extends HandlerAbstract
 
 		if($verb instanceof DOMElement)
 		{
-			$activity = DataFactory::getTable('User_Activity')->getRecord();
+			$activity = $this->hm->getTable('User_Activity')->getRecord();
 			$activity->setVerb($verb->nodeValue);
 			$activity->setSummary($entry->content);
 			$activity->table = 'amun_user_activity';
@@ -258,7 +258,7 @@ class Handler extends HandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'globalId', 'parentId', 'userId', 'title', 'summary', 'date'))
-			->join(Join::INNER, DataFactory::getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('User_Account')
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			);
 	}
@@ -281,13 +281,13 @@ INSERT INTO
 	FROM
 		{$this->registry['table.user_friend']} `friend`
 	WHERE
-		`friend`.`userId` = {$this->user->id}
+		`friend`.`userId` = {$this->user->getId()}
 SQL;
 
 			if($scope > 0)
 			{
 				$sql.= ' AND
-							(`friend`.`friendId` = ' . $this->user->id . ' OR `friend`.`groupId` = ' . $scope . ')';
+							(`friend`.`friendId` = ' . $this->user->getId() . ' OR `friend`.`groupId` = ' . $scope . ')';
 			}
 
 			$this->sql->query($sql);

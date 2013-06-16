@@ -106,7 +106,7 @@ class Handler extends HandlerAbstract
 
 			if(!empty($gadgets))
 			{
-				$handler = DataFactory::get('Gadget_Handler', $this->user);
+				$handler = $this->hm->getHandler('Gadget_Handler', $this->user);
 
 				foreach($gadgets as $k => $gadgetId)
 				{
@@ -163,9 +163,9 @@ class Handler extends HandlerAbstract
 
 			// update gadgets if available
 			$gadgets    = isset($record->gadgets) ? $record->gadgets : null;
-			$handler    = DataFactory::get('Content_Page_Gadget', $this->user);
+			$handler    = $this->hm->getHandler('Content_Page_Gadget', $this->user);
 			$con        = new Condition(array('pageId', '=', $record->id));
-			$oldGadgets = DataFactory::getTable('Content_Page_Gadget')->getCol('id', $con);
+			$oldGadgets = $this->hm->getTable('Content_Page_Gadget')->getCol('id', $con);
 
 			// delete old gadgets
 			foreach($oldGadgets as $id)
@@ -215,9 +215,9 @@ class Handler extends HandlerAbstract
 
 
 			// delete assigned gadgets
-			$handler    = DataFactory::get('Content_Page_Gadget', $this->user);
+			$handler    = $this->hm->getHandler('Content_Page_Gadget', $this->user);
 			$con        = new Condition(array('pageId', '=', $record->id));
-			$oldGadgets = DataFactory::getTable('Content_Page_Gadget')->getCol('id', $con);
+			$oldGadgets = $this->hm->getTable('Content_Page_Gadget')->getCol('id', $con);
 
 			foreach($oldGadgets as $id)
 			{
@@ -240,7 +240,7 @@ class Handler extends HandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'parentId', 'globalId', 'status', 'load', 'path', 'title', 'template', 'date'))
-			->join(Join::INNER, DataFactory::getTable('Core_Service')
+			->join(Join::INNER, $this->hm->getTable('Core_Service')
 				->select(array('id', 'type'), 'service')
 			);
 	}

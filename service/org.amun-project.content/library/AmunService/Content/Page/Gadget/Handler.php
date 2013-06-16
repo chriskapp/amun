@@ -105,10 +105,10 @@ class Handler extends HandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'sort'))
-			->join(Join::INNER, DataFactory::getTable('Content_Page')
+			->join(Join::INNER, $this->hm->getTable('Content_Page')
 				->select(array('id', 'title'), 'page')
 			)
-			->join(Join::INNER, DataFactory::getTable('Content_Gadget')
+			->join(Join::INNER, $this->hm->getTable('Content_Gadget')
 				->select(array('id', 'title'), 'gadget')
 			);
 	}

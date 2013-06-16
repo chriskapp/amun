@@ -66,7 +66,7 @@ class Record extends RecordAbstract
 
 	public function setProjectId($projectId)
 	{
-		$projectId = $this->_validate->apply($projectId, 'integer', array(new Id(DataFactory::getTable('Vcshook'))), 'projectId', 'Project Id');
+		$projectId = $this->_validate->apply($projectId, 'integer', array(new Id($this->_hm->getTable('Vcshook'))), 'projectId', 'Project Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -154,7 +154,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_project === null)
 		{
-			$this->_project = DataFactory::getTable('Vcshook')->getRecord($this->projectId);
+			$this->_project = $this->_hm->getHandler('Vcshook')->getRecord($this->projectId);
 		}
 
 		return $this->_project;
@@ -164,7 +164,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_author === null)
 		{
-			$this->_author = DataFactory::getTable('Vcshook_Author')->getRecord($this->authorId);
+			$this->_author = $this->_hm->getHandler('Vcshook_Author')->getRecord($this->authorId);
 		}
 
 		return $this->_author;

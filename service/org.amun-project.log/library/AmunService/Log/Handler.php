@@ -47,7 +47,7 @@ class Handler extends HandlerAbstract
 	{
 		if($record->hasFields('refId', 'type', 'table'))
 		{
-			$record->userId = $this->user->id;
+			$record->userId = $this->user->getId();
 
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
@@ -116,7 +116,7 @@ class Handler extends HandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'userId', 'refId', 'type', 'table', 'date'))
-			->join(Join::INNER, DataFactory::getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('User_Account')
 				->select(array('name', 'profileUrl'), 'author')
 			);
 	}

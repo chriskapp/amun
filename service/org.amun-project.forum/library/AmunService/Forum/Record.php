@@ -70,7 +70,7 @@ class Record extends RecordAbstract
 
 	public function setPageId($pageId)
 	{
-		$pageId = $this->_validate->apply($pageId, 'integer', array(new AmunFilter\Id(DataFactory::getTable('Content_Page'))), 'pageId', 'Page Id');
+		$pageId = $this->_validate->apply($pageId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('Content_Page'))), 'pageId', 'Page Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -164,7 +164,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_page === null)
 		{
-			$this->_page = DataFactory::getTable('Content_Page')->getRecord($this->pageId);
+			$this->_page = $this->_hm->getHandler('Content_Page')->getRecord($this->pageId);
 		}
 
 		return $this->_page;
@@ -174,7 +174,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_user === null)
 		{
-			$this->_user = DataFactory::getTable('User_Account')->getRecord($this->userId);
+			$this->_user = $this->_hm->getHandler('User_Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;

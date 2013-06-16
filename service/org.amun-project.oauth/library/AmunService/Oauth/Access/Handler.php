@@ -45,12 +45,12 @@ class Handler extends HandlerAbstract
 {
 	public function getAllowedApplication($applicationId, $userId)
 	{
-		return DataFactory::getTable('Oauth_Access')
+		return $this->hm->getTable('Oauth_Access')
 			->select(array('id', 'date'))
-			->join(Join::INNER, DataFactory::getTable('Oauth')
+			->join(Join::INNER, $this->hm->getTable('Oauth')
 				->select(array('id', 'status', 'url', 'title', 'description'), 'api')
 			)
-			->join(Join::INNER, DataFactory::getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('User_Account')
 				->select(array('id', 'name'), 'author')
 			)
 			->where('id', '=', $applicationId)
@@ -61,7 +61,7 @@ class Handler extends HandlerAbstract
 
 	public function isAllowed($apiId, $userId)
 	{
-		return DataFactory::getTable('Oauth_Access')
+		return $this->hm->getTable('Oauth_Access')
 			->select(array('allowed'))
 			->where('apiId', '=', $apiId)
 			->where('userId', '=', $userId)
@@ -139,7 +139,7 @@ SQL;
 
 			$con = new Condition(array('accessId', '=', $record->id));
 
-			DataFactory::getTable('Oauth_Access_Right')->delete($con);
+			$this->hm->getTable('Oauth_Access_Right')->delete($con);
 
 
 			$this->notify(RecordAbstract::DELETE, $record);
@@ -157,10 +157,10 @@ SQL;
 	{
 		return $this->table
 			->select(array('id', 'userId', 'allowed', 'date'))
-			->join(Join::INNER, DataFactory::getTable('Oauth')
+			->join(Join::INNER, $this->hm->getTable('Oauth')
 				->select(array('id', 'title'), 'api')
 			)
-			->join(Join::INNER, DataFactory::getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('User_Account')
 				->select(array('name', 'profileUrl'), 'author')
 			);
 	}

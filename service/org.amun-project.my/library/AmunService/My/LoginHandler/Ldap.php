@@ -49,9 +49,9 @@ class Ldap extends LoginHandlerAbstract
 
 	protected $res;
 
-	public function __construct()
+	public function __construct($container)
 	{
-		parent::__construct();
+		parent::__construct($container);
 
 		$this->res = ldap_connect(self::LDAP_HOST);
 
@@ -109,7 +109,7 @@ class Ldap extends LoginHandlerAbstract
 			{
 				$identity = $mail;
 				$con      = new Condition(array('identity', '=', sha1(Security::getSalt() . $identity)));
-				$userId   = DataFactory::getTable('User_Account')->getField('id', $con);
+				$userId   = $this->hm->getTable('User_Account')->getField('id', $con);
 
 				if(empty($userId))
 				{
@@ -124,7 +124,7 @@ class Ldap extends LoginHandlerAbstract
 					$name = $this->normalizeName($name);
 
 					// create user account
-					$handler = DataFactory::get('User_Account', $this->user);
+					$handler = $this->hm->getHandler('User_Account', $this->user);
 
 					$account = $handler->getRecord();
 					$account->setGroupId($this->registry['core.default_user_group']);

@@ -58,7 +58,7 @@ class Form extends FormAbstract
 		$panel->add($status);
 
 
-		$userId = new Input('userId', 'User', $this->user->name);
+		$userId = new Input('userId', 'User', $this->user->getName());
 		$userId->setType('text');
 		$userId->setDisabled(true);
 
@@ -95,7 +95,7 @@ class Form extends FormAbstract
 
 	public function delete($id)
 	{
-		$record = DataFactory::get('User_Friend')->getRecord($id);
+		$record = $this->hm->getHandler('User_Friend')->getRecord($id);
 
 
 		$form = new AmunForm('DELETE', $this->url);

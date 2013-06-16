@@ -42,7 +42,7 @@ abstract class FriendsAbstract extends MyAbstract
 
 		// friend request count
 		$con = new Condition();
-		$con->add('friendId', '=', $this->user->id);
+		$con->add('friendId', '=', $this->user->getId());
 		$con->add('status', '=', Friend\Record::REQUEST);
 
 		$requestCount = $this->sql->count($this->registry['table.user_friend'], $con);
@@ -51,7 +51,7 @@ abstract class FriendsAbstract extends MyAbstract
 
 		// pending count
 		$con = new Condition();
-		$con->add('userId', '=', $this->user->id);
+		$con->add('userId', '=', $this->user->getId());
 		$con->add('status', '=', Friend\Record::REQUEST);
 
 		$pendingCount = $this->sql->count($this->registry['table.user_friend'], $con);
@@ -65,19 +65,19 @@ abstract class FriendsAbstract extends MyAbstract
 
 		// options
 		$friends = new Option('friends', $this->registry, $this->user, $this->page);
-		$friends->add('my_view', 'Friends', $this->page->getUrl() . '/friends');
+		$friends->add('my_view', 'Friends', $this->page->url . '/friends');
 
 		if($requestCount > 0)
 		{
-			$friends->add('my_view', 'Request (' . $requestCount . ')', $this->page->getUrl() . '/friends/request');
+			$friends->add('my_view', 'Request (' . $requestCount . ')', $this->page->url . '/friends/request');
 		}
 
 		if($pendingCount > 0)
 		{
-			$friends->add('my_view', 'Pending (' . $pendingCount . ')', $this->page->getUrl() . '/friends/pending');
+			$friends->add('my_view', 'Pending (' . $pendingCount . ')', $this->page->url . '/friends/pending');
 		}
 
-		$friends->add('my_view', 'Groups', $this->page->getUrl() . '/friends/group');
+		$friends->add('my_view', 'Groups', $this->page->url . '/friends/group');
 		$friends->load(array($this->page));
 
 		$this->template->assign('optionsFriends', $friends);
@@ -85,9 +85,9 @@ abstract class FriendsAbstract extends MyAbstract
 
 	private function getGroups()
 	{
-		return DataFactory::getTable('User_Friend_Group')
+		return $this->hm->getTable('User_Friend_Group')
 			->select(array('id', 'title', 'date'))
-			->where('userId', '=', $this->user->id)
+			->where('userId', '=', $this->user->getId())
 			->getAll();
 	}
 }

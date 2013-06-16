@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="9a3579d842e3601b3344be441e22428251746369">
+<service xmlns="http://amun-project.org" signature="06784236e5e564c1dbdcebc1fa35bdecf0132ac0">
   <status>normal</status>
   <name>file</name>
   <description>Service to make a raw page wich can be edited. It is possible to define the content type and content of each page</description>
@@ -30,9 +30,9 @@
   <library>
     <dir name="AmunService">
       <dir name="File">
-        <file name="Form.php" md5="545877e731030d1d59046a92f2857701"/>
-        <file name="Handler.php" md5="5222c1bbc20d10da9949f554a39b5649"/>
-        <file name="Record.php" md5="ce9d0e7f5677941efa9b29c2142a18eb"/>
+        <file name="Form.php" md5="8fbf91db34f324fdd045aa40a9608146"/>
+        <file name="Handler.php" md5="9abfb0e49d751551fb854b8ea4359c19"/>
+        <file name="Record.php" md5="2eed2f0647bf9a6d1ceb8b763886fa21"/>
         <file name="Table.php" md5="78d9700e5ab094247293cfe9d74f5d87"/>
       </dir>
     </dir>

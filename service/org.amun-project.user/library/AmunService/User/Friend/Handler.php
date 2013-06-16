@@ -60,12 +60,12 @@ class Handler extends HandlerAbstract
 
 		$select = $this->table
 			->select(array('id', 'status', 'date'))
-			->join(Join::INNER, DataFactory::getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('User_Account')
 				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'author'),
 				'n:1',
 				'userId'
 			)
-			->join(Join::INNER, DataFactory::getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('User_Account')
 				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'friend'),
 				'n:1',
 				'friendId'
@@ -114,12 +114,12 @@ class Handler extends HandlerAbstract
 
 		$select = $this->table
 			->select(array('id', 'status', 'date'))
-			->join(Join::INNER, DataFactory::getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('User_Account')
 				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'author'),
 				'n:1',
 				'userId'
 			)
-			->join(Join::INNER, DataFactory::getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('User_Account')
 				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'friend'),
 				'n:1',
 				'friendId'
@@ -163,11 +163,11 @@ class Handler extends HandlerAbstract
 	{
 		if($record->hasFields('friendId'))
 		{
-			$record->userId = $this->user->id;
+			$record->userId = $this->user->getId();
 
 
 			// check id
-			if($this->user->id == $record->friendId)
+			if($this->user->getId() == $record->friendId)
 			{
 				throw new Exception('You can not establish a relation to yourself');
 			}
@@ -197,7 +197,7 @@ class Handler extends HandlerAbstract
 			{
 				$con = new Condition();
 				$con->add('userId', '=', $record->friendId);
-				$con->add('friendId', '=', $this->user->id);
+				$con->add('friendId', '=', $this->user->getId());
 
 				$this->table->update(array(
 
@@ -301,12 +301,12 @@ class Handler extends HandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'status', 'date'))
-			->join(Join::INNER, DataFactory::getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('User_Account')
 				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'author'),
 				'n:1',
 				'userId'
 			)
-			->join(Join::INNER, DataFactory::getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('User_Account')
 				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'friend'),
 				'n:1',
 				'friendId'
@@ -429,7 +429,7 @@ SQL;
 
 			if(empty($friendId))
 			{
-				$handler = DataFactory::get('User_Account', $this->user);
+				$handler = $this->hm->getHandler('User_Account', $this->user);
 
 				$account = $handler->getRecord();
 				$account->globalId = $profile['id'];
@@ -446,7 +446,7 @@ SQL;
 
 
 			// create relation
-			$friend = DataFactory::getTable('User_Friend')->getRecord();
+			$friend = $this->hm->getTable('User_Friend')->getRecord();
 			$friend->friendId = $friendId;
 
 			return $this->create($friend);
@@ -498,7 +498,7 @@ SQL;
 
 				'status'   => Record::NORMAL,
 				'userId'   => $row['accountId'],
-				'friendId' => $this->user->id,
+				'friendId' => $this->user->getId(),
 				'date'     => $date->format(DateTime::SQL),
 
 			));
@@ -506,7 +506,7 @@ SQL;
 
 			// update status
 			$con = new Condition();
-			$con->add('userId', '=', $this->user->id);
+			$con->add('userId', '=', $this->user->getId());
 			$con->add('friendId', '=', $row['accountId']);
 
 			$this->table->update(array(

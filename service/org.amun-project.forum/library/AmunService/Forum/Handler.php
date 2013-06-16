@@ -94,7 +94,7 @@ SQL;
 		if($record->hasFields('pageId', 'urlTitle', 'title', 'text'))
 		{
 			$record->globalId = $this->base->getUUID('service:forum:' . $record->pageId . ':' . uniqid());
-			$record->userId   = $this->user->id;
+			$record->userId   = $this->user->getId();
 
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
@@ -201,13 +201,13 @@ SQL;
 	{
 		return $this->table
 			->select(array('id', 'globalId', 'pageId', 'userId', 'sticky', 'closed', 'urlTitle', 'title', 'text', 'date', 'replyUserId', 'replyCount', 'replyDate'))
-			->join(Join::INNER, DataFactory::getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('User_Account')
 				->select(array('name', 'profileUrl'), 'author')
 			)
-			->join(Join::INNER, DataFactory::getTable('Content_Page')
+			->join(Join::INNER, $this->hm->getTable('Content_Page')
 				->select(array('path'), 'page')
 			)
-			->join(Join::LEFT, DataFactory::getTable('User_Account')
+			->join(Join::LEFT, $this->hm->getTable('User_Account')
 				->select(array('name', 'profileUrl'), 'reply')
 			, 'n:1', 'replyUserId')
 			->orderBy('sticky', Sql::SORT_DESC);

@@ -110,7 +110,7 @@ class Handler extends HandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'globalId', 'url', 'message', 'commitDate', 'date'))
-			->join(Join::INNER, DataFactory::get('Vcshook_Author')
+			->join(Join::INNER, $this->hm->get('Vcshook_Author')
 				->select(array('id', 'name'), 'author')
 			);
 	}

@@ -54,7 +54,7 @@ class Record extends RecordAbstract
 
 	public function setApiId($apiId)
 	{
-		$apiId = $this->_validate->apply($apiId, 'integer', array(new Filter\Id(DataFactory::getTable('Xrds'))), 'apiId', 'Api Id');
+		$apiId = $this->_validate->apply($apiId, 'integer', array(new Filter\Id($this->_hm->getTable('Xrds'))), 'apiId', 'Api Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -80,7 +80,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_api === null)
 		{
-			$this->_api = DataFactory::getTable('Xrds')->getRecord($this->apiId);
+			$this->_api = $this->_hm->getHandler('Xrds')->getRecord($this->apiId);
 		}
 
 		return $this->_api;

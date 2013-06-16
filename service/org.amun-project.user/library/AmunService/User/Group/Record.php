@@ -83,7 +83,7 @@ class Record extends RecordAbstract
 		$rights = array_map('intval', explode(',', $rights));
 		$con    = new Condition(array('id', 'IN', $rights));
 
-		$this->rights = DataFactory::getTable('User_Right')->getCol('id', $con);
+		$this->rights = $this->_hm->getTable('User_Right')->getCol('id', $con);
 	}
 
 	public function getId()

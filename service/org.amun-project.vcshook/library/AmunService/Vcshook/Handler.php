@@ -45,7 +45,7 @@ class Handler extends HandlerAbstract
 		if($record->hasFields('url', 'type'))
 		{
 			$record->globalId = $this->base->getUUID('vcshook:' . uniqid());
-			$record->userId   = $this->user->id;
+			$record->userId   = $this->user->getId();
 			$record->secret   = Security::generateToken(40);
 
 

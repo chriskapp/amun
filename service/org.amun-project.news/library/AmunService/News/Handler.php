@@ -47,7 +47,7 @@ class Handler extends ApproveHandlerAbstract
 		if($record->hasFields('pageId', 'urlTitle', 'title', 'text'))
 		{
 			$record->globalId = $this->base->getUUID('service:news:' . $record->pageId . ':' . uniqid());
-			$record->userId   = $this->user->id;
+			$record->userId   = $this->user->getId();
 
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
@@ -131,10 +131,10 @@ class Handler extends ApproveHandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'globalId', 'pageId', 'userId', 'urlTitle', 'title', 'text', 'date'))
-			->join(Join::INNER, DataFactory::getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('User_Account')
 				->select(array('name', 'profileUrl'), 'author')
 			)
-			->join(Join::INNER, DataFactory::getTable('Content_Page')
+			->join(Join::INNER, $this->hm->getTable('Content_Page')
 				->select(array('path'), 'page')
 			);
 	}

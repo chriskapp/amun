@@ -56,7 +56,7 @@ class System extends LoginHandlerAbstract
 
 		if(!empty($password))
 		{
-			$row = DataFactory::getTable('User_Account')
+			$row = $this->hm->getTable('User_Account')
 				->select(array('id', 'status', 'pw'))
 				->where('identity', '=', $identity)
 				->getRow();

@@ -47,11 +47,11 @@ class Openid extends LoginHandlerAbstract implements CallbackInterface
 	protected $http;
 	protected $store;
 
-	public function __construct()
+	public function __construct($container)
 	{
-		parent::__construct();
+		parent::__construct($container);
 
-		$this->http  = new Http();
+		$this->http  = $container->get('http');
 		$this->store = new Store\Sql($this->sql, $this->registry['table.core_assoc']);
 	}
 
@@ -140,7 +140,7 @@ class Openid extends LoginHandlerAbstract implements CallbackInterface
 				// check whether user is already registered
 				$data   = $openid->getData();
 				$con    = new Condition(array('identity', '=', sha1(Security::getSalt() . $openid->getIdentifier())));
-				$userId = DataFactory::getTable('User_Account')->getField('id', $con);
+				$userId = $this->hm->getTable('User_Account')->getField('id', $con);
 
 				if(empty($userId))
 				{
@@ -167,7 +167,7 @@ class Openid extends LoginHandlerAbstract implements CallbackInterface
 					$name = $this->normalizeName($acc['name']);
 
 					// create user account
-					$handler = DataFactory::get('User_Account', $this->user);
+					$handler = $this->hm->getHandler('User_Account', $this->user);
 
 					$account = $handler->getRecord();
 					$account->setGroupId($this->registry['core.default_user_group']);

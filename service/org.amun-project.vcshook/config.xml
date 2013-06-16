@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="8404a2db7198c7247fd6c5ce77f8b6ee5aecfeaa">
+<service xmlns="http://amun-project.org" signature="7d76511bfc1ac5bed23bcd3bcf89121bdcc6ad24">
   <status>system</status>
   <name>vcshook</name>
   <description>Gateway to receive commits from different version control system services like github, googleproject</description>
@@ -51,21 +51,21 @@
     <dir name="AmunService">
       <dir name="Vcshook">
         <dir name="Author">
-          <file name="Form.php" md5="0531ab5fb24a688efaa6a0c1d5c94981"/>
+          <file name="Form.php" md5="bbe275cba2b4ec9066a59edad42be4ae"/>
           <file name="Handler.php" md5="89000426f32e51fd4039d95cd901506f"/>
-          <file name="Record.php" md5="efc0dccc21307840fc60d886c6f1b083"/>
+          <file name="Record.php" md5="9493c0ce6afcd37c1f9903cb8fc4d4a6"/>
           <file name="Table.php" md5="d5054f3d3f5f4883dce717f49dc56108"/>
         </dir>
         <dir name="Commit">
-          <file name="Handler.php" md5="64296aa92714e4bd7a7626458194d874"/>
-          <file name="Record.php" md5="036fbeebc2073c9028cfa26de79ccaa2"/>
+          <file name="Handler.php" md5="8bb39ddb33151fd7e0f7c4d1840487d4"/>
+          <file name="Record.php" md5="faf11d04063947d9caad7bcc51fb8973"/>
           <file name="Table.php" md5="20ed7dddc177cf3f871084a03e23b825"/>
         </dir>
-        <file name="CommitListener.php" md5="6e47e8e9c1457e8d891f5d8f5c87c33f"/>
-        <file name="Form.php" md5="afefded15092253cb1bc6ddcf01f055d"/>
-        <file name="Handler.php" md5="5cd5121198e5477d7d318162f80aab61"/>
+        <file name="CommitListener.php" md5="6bc9452f42c47548a80327b48d28e4c8"/>
+        <file name="Form.php" md5="ca2ee3891bb8d5c95e4159b5e5dc8d1e"/>
+        <file name="Handler.php" md5="ec4e8d030adf34fc1bfe758b91db073a"/>
         <file name="Project.php" md5="544105a646ba316d8d0e5b8998f92361"/>
-        <file name="Record.php" md5="18089e89af25f3f4af9815d4d3e73848"/>
+        <file name="Record.php" md5="43bf8596dab1abdd16a389041c93f43f"/>
         <file name="Revision.php" md5="e2ee8474d5376942e43b138037627f96"/>
         <file name="Table.php" md5="31f638db0534043c0ba49eb1aba2966f"/>
         <dir name="Type">

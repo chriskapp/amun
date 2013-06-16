@@ -49,7 +49,7 @@ class Handler extends ApproveHandlerAbstract
 		if($record->hasFields('pageId', 'mediaId'))
 		{
 			$record->globalId = $this->base->getUUID('service:pipe:' . $record->pageId . ':' . uniqid());
-			$record->userId   = $this->user->id;
+			$record->userId   = $this->user->getId();
 
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
@@ -132,14 +132,14 @@ class Handler extends ApproveHandlerAbstract
 	protected function getDefaultSelect()
 	{
 		return $this->table
-			->select(array('id', 'globalId', 'pageId', 'mediaId', 'date'))
-			->join(Join::INNER, DataFactory::getTable('User_Account')
+			->select(array('id', 'globalId', 'pageId', 'mediaId', 'processor', 'date'))
+			->join(Join::INNER, $this->hm->getTable('User_Account')
 				->select(array('name', 'profileUrl'), 'author')
 			)
-			->join(Join::INNER, DataFactory::getTable('Content_Page')
+			->join(Join::INNER, $this->hm->getTable('Content_Page')
 				->select(array('path'), 'page')
 			)
-			->join(Join::INNER, DataFactory::getTable('Media')
+			->join(Join::INNER, $this->hm->getTable('Media')
 				->select(array('path'), 'media')
 			);
 	}

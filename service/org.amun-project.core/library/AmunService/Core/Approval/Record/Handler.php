@@ -65,7 +65,7 @@ SQL;
 			if(!empty($data) && is_array($data))
 			{
 				$class   = $this->registry->getClassNameFromTable($row['recordTable']);
-				$handler = DataFactory::getProvider($class)->getHandler();
+				$handler = $this->hm->getHandler($class);
 
 				if($handler instanceof HandlerAbstract)
 				{
@@ -137,7 +137,7 @@ SQL;
 	{
 		return $this->table
 			->select(array('id', 'userId', 'type', 'table', 'record', 'date'))
-			->join(Join::INNER, DataFactory::getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('User_Account')
 				->select(array('name', 'profileUrl'), 'author')
 			);
 	}

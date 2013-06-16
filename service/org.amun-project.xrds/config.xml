@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="77b13ad5d8b7d486251ae12a56dfe1c546e18e11">
+<service xmlns="http://amun-project.org" signature="bf137f59c9c5fd8435f788b2af0f85e119a0d9aa">
   <status>system</status>
   <name>xrds</name>
   <description>Provides an xrds endpoint to discover all APIs</description>
@@ -31,12 +31,12 @@
     <dir name="AmunService">
       <dir name="Xrds">
         <file name="ConfigListener.php" md5="8dada98c66e297cfd2b5e684a15fb8e2"/>
-        <file name="Handler.php" md5="bdfb41128dc2a4d9cb03560fd3e3ba59"/>
-        <file name="Record.php" md5="22ac0adcaf32b9f4ec820436b3acca1a"/>
+        <file name="Handler.php" md5="4665aee968b65ee7819d1d754f8c08f8"/>
+        <file name="Record.php" md5="141862f96b6fe40ded7ca4ca83244a72"/>
         <file name="Table.php" md5="8daf45137b53870a40a6b42235bed2f3"/>
         <dir name="Type">
-          <file name="Handler.php" md5="228968ce606b1368eddb07988ceb4f68"/>
-          <file name="Record.php" md5="b76692d2330e6384d3203319e5ccecf3"/>
+          <file name="Handler.php" md5="c5a0224260eaee229df06a8e42967b25"/>
+          <file name="Record.php" md5="9049f36a73174ac7fe8c442843a408d4"/>
           <file name="Table.php" md5="2a58f62e4163234b1f0a13fc5cd38d7b"/>
         </dir>
       </dir>

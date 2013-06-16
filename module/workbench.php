@@ -33,14 +33,8 @@ use PSX\Template;
  */
 class workbench extends ViewAbstract
 {
-	public function getDependencies()
-	{
-		return new Dependency\Session($this->base->getConfig());
-	}
-
 	public function onLoad()
 	{
-		$this->template = new Template($this->config);
-		$this->template->set('system/workbench.tpl');
+		$this->getTemplate()->set('system/workbench.tpl');
 	}
 }

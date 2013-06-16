@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="82fa87692e76c3c3932909c1cdd9dd5edc406a92">
+<service xmlns="http://amun-project.org" signature="d771d800a5289eb6ce381ffe2167df56bddd83ce">
   <status>normal</status>
   <name>my</name>
   <description>Service wich offers a login and social activities for a user</description>
@@ -125,25 +125,25 @@ You can login with the new password at:
         <file name="Activity.php" md5="260a6892ebaa8054dc3bc13b175ebace"/>
         <file name="Attempt.php" md5="104c57a2e18d17f68aa0f03c9e01977f"/>
         <file name="Credentials.php" md5="d0345d7ec707b6a7d828f4c44d282c05"/>
-        <file name="FriendsAbstract.php" md5="e50cd658a031e1366e37be54549e371e"/>
+        <file name="FriendsAbstract.php" md5="0c23909fca6732dce40cbf2f83134d93"/>
         <dir name="Login">
           <file name="InvalidPasswordException.php" md5="a642461f2775c2c56433ebce6d4662b9"/>
         </dir>
         <dir name="LoginHandler">
           <file name="CallbackInterface.php" md5="278a8689e65dcbfdae52e22a0bd0f9ea"/>
-          <file name="Facebook.php" md5="6ef82d6d823040034230b5a90f9360ba"/>
-          <file name="Github.php" md5="20946c66e607d2220c4dbb7be9ad61d2"/>
+          <file name="Facebook.php" md5="5a82e23cece0a04749c2bd624b812292"/>
+          <file name="Github.php" md5="93f7f29b788be906ed60d5a268e2665f"/>
           <file name="Google.php" md5="84268c526b9ae27192587c0eb78932cd"/>
-          <file name="Ldap.php" md5="d95840494800cedde361f8aa6bb9260d"/>
-          <file name="Openid.php" md5="dc20fd4a0c922f004585484d3a723395"/>
-          <file name="Remote.php" md5="e583a7b1ae840bd85bed1466e30308dd"/>
-          <file name="System.php" md5="9db763b4e6cfaf59d847575c173c351c"/>
-          <file name="Twitter.php" md5="bd604d71ab29b4d21f85d28f8a0c9b51"/>
+          <file name="Ldap.php" md5="1afc9107165cc8d510dbe0d17e6b92dc"/>
+          <file name="Openid.php" md5="3bd95b6af2648715f5c240da3664f3a5"/>
+          <file name="Remote.php" md5="90644f2170bdfb83103144b168ef22bc"/>
+          <file name="System.php" md5="08ad220c646b7554f4e49b79211f43fc"/>
+          <file name="Twitter.php" md5="10f2638c2d342d5e7cd13ad98c0cad2a"/>
           <file name="Webfinger.php" md5="4cde3453858fa59fcf73561844854228"/>
           <file name="Yahoo.php" md5="1e815916e2bc2db67f11870be6f6a211"/>
         </dir>
-        <file name="LoginHandlerAbstract.php" md5="96ddc9f24d4747933ce291973850ac28"/>
-        <file name="LoginHandlerFactory.php" md5="8ff62e0de8c51db92b5f75975650a8ef"/>
+        <file name="LoginHandlerAbstract.php" md5="d17642d98dc1e00e2b5f61fa85db24fa"/>
+        <file name="LoginHandlerFactory.php" md5="29a0339c577965cb714261c078b263be"/>
         <file name="MyAbstract.php" md5="282d88714b7dca24fa323b9c78a59bba"/>
         <file name="People.php" md5="95ab22f771e7f336062d099ea9786879"/>
         <file name="SettingsAbstract.php" md5="a89956553d6ba44bfb372ca17190125c"/>

@@ -119,7 +119,7 @@ class LrddListener extends ListenerAbstract
 			list($name, $host) = explode('@', $email);
 
 			// get account record
-			$handler = DataFactory::get('User_Account');
+			$handler = $this->hm->getHandler('User_Account');
 			return $handler->getOneByName($name, array(), Sql::FETCH_OBJECT);
 		}
 	}
