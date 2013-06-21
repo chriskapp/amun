@@ -24,9 +24,10 @@ namespace AmunService\User\Right;
 
 use Amun\Data\ListenerAbstract;
 use AmunService\Core\Service;
-use PSX\Log;
 use DOMDocument;
 use DOMElement;
+use Monolog\Logger;
+use PSX\Log;
 
 /**
  * ConfigListener
@@ -37,13 +38,13 @@ use DOMElement;
  */
 class ConfigListener extends ListenerAbstract
 {
-	public function notify(Service\Record $record, DOMDocument $config)
+	public function notify(Service\Record $record, DOMDocument $config, Logger $logger)
 	{
 		$permissions = $config->getElementsByTagName('permissions')->item(0);
 
 		if($permissions !== null)
 		{
-			Log::info('Create user permissions');
+			$logger->info('Create user permissions');
 
 			try
 			{
@@ -74,14 +75,14 @@ class ConfigListener extends ListenerAbstract
 								'description' => $desc,
 							));
 
-							Log::info('> Created permission "' . $name . '"');
+							$logger->info('> Created permission "' . $name . '"');
 						}
 					}
 				}
 			}
 			catch(\Exception $e)
 			{
-				Log::error($e->getMessage());
+				$logger->error($e->getMessage());
 			}
 		}
 	}

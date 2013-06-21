@@ -23,6 +23,7 @@
 namespace Amun\Filter;
 
 use Amun\Security;
+use PSX\Config;
 use PSX\FilterAbstract;
 
 /**
@@ -34,9 +35,16 @@ use PSX\FilterAbstract;
  */
 class Salt extends FilterAbstract
 {
+	protected $config;
+
+	public function __construct(Config $config)
+	{
+		$this->config = $config;
+	}
+
 	public function apply($value)
 	{
-		return sha1(Security::getSalt() . $value);
+		return sha1($this->config['amun_salt'] . $value);
 	}
 }
 

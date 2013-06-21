@@ -34,11 +34,18 @@ use PSX\FilterAbstract;
  */
 class Pw extends FilterAbstract
 {
+	protected $security;
+
+	public function __construct(Security $security)
+	{
+		$this->security = $security;
+	}
+
 	public function apply($value)
 	{
 		$len = strlen($value);
 
-		if($len < Security::getMinPwLength() || $len > Security::getMaxPwLength())
+		if($len < $this->security->getMinPwLength() || $len > $this->security->getMaxPwLength())
 		{
 			return false;
 		}
@@ -70,17 +77,17 @@ class Pw extends FilterAbstract
 			}
 
 			# verify complexity
-			if($alpha < Security::getPwAlphaCount())
+			if($alpha < $this->security->getPwAlphaCount())
 			{
 				return false;
 			}
 
-			if($numeric < Security::getPwNumericCount())
+			if($numeric < $this->security->getPwNumericCount())
 			{
 				return false;
 			}
 
-			if($special < Security::getPwSpecialCount())
+			if($special < $this->security->getPwSpecialCount())
 			{
 				return false;
 			}
@@ -91,7 +98,7 @@ class Pw extends FilterAbstract
 
 	public function getErrorMsg()
 	{
-		return '%s must have at least ' . Security::getPwAlphaCount() . ' alpha, ' . Security::getPwNumericCount() . ' numeric and ' . Security::getPwSpecialCount() . ' special signs';
+		return '%s must have at least ' . $this->security->getPwAlphaCount() . ' alpha, ' . $this->security->getPwNumericCount() . ' numeric and ' . $this->security->getPwSpecialCount() . ' special signs';
 	}
 }
 

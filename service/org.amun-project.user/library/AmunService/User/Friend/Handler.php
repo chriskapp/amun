@@ -424,12 +424,13 @@ SQL;
 
 
 			// create remote user if not exists
-			$con      = new Condition(array('identity', '=', sha1(Security::getSalt() . $identity)));
+			$con      = new Condition(array('identity', '=', sha1($this->config['amun_salt'] . $identity)));
 			$friendId = $this->sql->select($this->registry['table.user_account'], array('id'), $con, Sql::SELECT_FIELD);
 
 			if(empty($friendId))
 			{
-				$handler = $this->hm->getHandler('User_Account', $this->user);
+				$security = new Security($this->registry);
+				$handler  = $this->hm->getHandler('User_Account', $this->user);
 
 				$account = $handler->getRecord();
 				$account->globalId = $profile['id'];
@@ -438,7 +439,7 @@ SQL;
 				$account->setStatus(Account\Record::REMOTE);
 				$account->setIdentity($identity);
 				$account->setName($profile['name']);
-				$account->setPw(Security::generatePw());
+				$account->setPw($security->generatePw());
 
 				$account  = $handler->create($account);
 				$friendId = $account->id;

@@ -40,7 +40,7 @@ use PSX\Loader;
 use PSX\Session;
 
 /**
- * Session
+ * Container
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3

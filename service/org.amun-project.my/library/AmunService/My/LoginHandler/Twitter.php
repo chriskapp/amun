@@ -136,7 +136,7 @@ class Twitter extends LoginHandlerAbstract implements CallbackInterface
 			}
 
 			$identity = $acc['screen_name'] . '@twitter.com';	
-			$con      = new Condition(array('identity', '=', sha1(Security::getSalt() . $identity)));
+			$con      = new Condition(array('identity', '=', sha1($this->config['amun_salt'] . $identity)));
 			$userId   = $this->hm->getTable('User_Account')->getField('id', $con);
 
 			if(empty($userId))
@@ -152,14 +152,15 @@ class Twitter extends LoginHandlerAbstract implements CallbackInterface
 				$name = $this->normalizeName($acc['screen_name']);
 
 				// create user account
-				$handler = $this->hm->getHandler('User_Account', $this->user);
+				$security = new Security($this->registry);
+				$handler  = $this->hm->getHandler('User_Account', $this->user);
 
 				$account = $handler->getRecord();
 				$account->setGroupId($this->registry['core.default_user_group']);
 				$account->setStatus(Account\Record::NORMAL);
 				$account->setIdentity($identity);
 				$account->setName($name);
-				$account->setPw(Security::generatePw());
+				$account->setPw($security->generatePw());
 
 				$account->profileUrl   = 'https://twitter.com/' . $acc['screen_name'];
 				$account->thumbnailUrl = isset($acc['profile_image_url']) ? $acc['profile_image_url'] : null;

@@ -27,6 +27,7 @@ use Amun\Data\HandlerAbstract;
 use Amun\Data\RecordAbstract;
 use Amun\Exception;
 use AmunService\Core\Approval;
+use Monolog\Logger;
 use PSX\DateTime;
 use PSX\Data\RecordInterface;
 use PSX\Data\ResultSet;
@@ -182,14 +183,14 @@ class Handler extends HandlerAbstract
 	 *
 	 * @return void
 	 */
-	public function import($path, $rightId = null)
+	public function import($path, $rightId = null, Logger $logger)
 	{
 		if(!is_dir($path))
 		{
 			throw new Exception('Path is not a valid dir');
 		}
 
-		Log::info('Scan ' . $path);
+		$logger->info('Scan ' . $path);
 
 		$files = scandir($path);
 		$count = 0;
@@ -230,16 +231,16 @@ class Handler extends HandlerAbstract
 
 							$count++;
 						}
-						catch(Exception $e)
+						catch(\Exception $e)
 						{
-							Log::error($e->getMessage());
+							$logger->error($e->getMessage());
 						}
 					}
 				}
 			}
 		}
 
-		Log::info('Imported ' . $count . ' files');
+		$logger->info('Imported ' . $count . ' files');
 	}
 
 	protected function getDefaultSelect()

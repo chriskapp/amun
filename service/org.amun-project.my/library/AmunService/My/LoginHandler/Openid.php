@@ -139,7 +139,7 @@ class Openid extends LoginHandlerAbstract implements CallbackInterface
 			{
 				// check whether user is already registered
 				$data   = $openid->getData();
-				$con    = new Condition(array('identity', '=', sha1(Security::getSalt() . $openid->getIdentifier())));
+				$con    = new Condition(array('identity', '=', sha1($this->config['amun_salt'] . $openid->getIdentifier())));
 				$userId = $this->hm->getTable('User_Account')->getField('id', $con);
 
 				if(empty($userId))
@@ -167,14 +167,15 @@ class Openid extends LoginHandlerAbstract implements CallbackInterface
 					$name = $this->normalizeName($acc['name']);
 
 					// create user account
-					$handler = $this->hm->getHandler('User_Account', $this->user);
+					$security = new Security($this->registry);
+					$handler  = $this->hm->getHandler('User_Account', $this->user);
 
 					$account = $handler->getRecord();
 					$account->setGroupId($this->registry['core.default_user_group']);
 					$account->setStatus(Account\Record::NORMAL);
 					$account->setIdentity($identity);
 					$account->setName($name);
-					$account->setPw(Security::generatePw());
+					$account->setPw($security->generatePw());
 					$account->setGender($acc['gender']);
 					$account->setTimezone($acc['timezone']);
 

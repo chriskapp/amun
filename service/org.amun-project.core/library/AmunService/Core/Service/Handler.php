@@ -29,18 +29,19 @@ use Amun\Data\RecordAbstract;
 use Amun\Exception;
 use AmunService\Core\Approval;
 use AmunService\Core\Service;
+use DOMDocument;
+use DOMElement;
+use DOMNodeList;
+use DOMNode;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use PharData;
 use PSX\DateTime;
 use PSX\Data\RecordInterface;
 use PSX\Url;
 use PSX\Sql;
 use PSX\Sql\Condition;
 use PSX\Sql\Join;
-use PSX\Log;
-use PharData;
-use DOMDocument;
-use DOMElement;
-use DOMNodeList;
-use DOMNode;
 use ReflectionClass;
 
 /**
@@ -54,10 +55,11 @@ class Handler extends HandlerAbstract
 {
 	const SECRET = 'd6b0c93c6f9b0a7917fdb402298ac692bf25fab8';
 
-	private $serviceId;
-	private $serviceConfig;
+	protected $logger;
+	protected $serviceId;
+	protected $serviceConfig;
 
-	private $ids = array();
+	protected $ids = array();
 
 	public function create(RecordInterface $record)
 	{
@@ -73,10 +75,10 @@ class Handler extends HandlerAbstract
 			// set logger if in debug mode
 			if($this->config['psx_debug'] === true)
 			{
-				Log::getLogger()->setHandler(new Log\Handler\File(PSX_PATH_CACHE . '/log.txt'));
-				Log::getLogger()->setLevel(Log::ALL);
+				$this->logger = new Logger('amun');
+				$this->logger->pushHandler(new StreamHandler(PSX_PATH_CACHE . '/install.log', Logger::INFO));
 
-				Log::info('Start installation of service ' . $record->source);
+				$this->logger->info('Start installation of service ' . $record->source);
 			}
 
 
@@ -158,7 +160,7 @@ class Handler extends HandlerAbstract
 			$this->parseDatabase($record);
 
 			// notify listener
-			$this->event->notifyListener('core.service_install', array($record, $this->serviceConfig));
+			$this->event->notifyListener('core.service_install', array($record, $this->serviceConfig, $this->logger));
 
 
 			$this->notify(RecordAbstract::INSERT, $record);
@@ -317,7 +319,7 @@ class Handler extends HandlerAbstract
 			{
 				$src = $node->nodeValue;
 
-				Log::info('Found provider ' . $src);
+				$this->logger->info('Found provider ' . $src);
 
 				try
 				{
@@ -334,7 +336,7 @@ class Handler extends HandlerAbstract
 
 						$providerId = $this->sql->getLastInsertId();
 
-						Log::info('Added new provider ' . $src . ' (' . $providerId . ')');
+						$this->logger->info('Added new provider ' . $src . ' (' . $providerId . ')');
 					}
 					else
 					{
@@ -345,7 +347,7 @@ class Handler extends HandlerAbstract
 				}
 				catch(\Exception $e)
 				{
-					Log::error($e->getMessage());
+					$this->logger->error($e->getMessage());
 				}
 			}
 		}
@@ -362,13 +364,13 @@ class Handler extends HandlerAbstract
 		{
 			if(is_dir(PSX_PATH_LIBRARY))
 			{
-				Log::info('Copy library files');
+				$this->logger->info('Copy library files');
 
 				$this->copyFiles('phar://' . $this->config['amun_service_path'] . '/' . $record->source . '/library', PSX_PATH_LIBRARY, $library->item(0));
 			}
 			else
 			{
-				Log::info('Library path is not an folder');
+				$this->logger->info('Library path is not an folder');
 			}
 		}
 	}
@@ -386,14 +388,14 @@ class Handler extends HandlerAbstract
 
 				if(is_dir($srcDir))
 				{
-					Log::info('Copy library files');
+					$this->logger->info('Copy library files');
 
 					$this->copyFiles($srcDir, PSX_PATH_LIBRARY, $library->item(0));
 				}
 			}
 			else
 			{
-				Log::info('Library path is not an folder');
+				$this->logger->info('Library path is not an folder');
 			}
 		}
 	}
@@ -404,7 +406,7 @@ class Handler extends HandlerAbstract
 
 		if($event !== null)
 		{
-			Log::info('Create events');
+			$this->logger->info('Create events');
 
 			$events = $event->childNodes;
 
@@ -435,7 +437,7 @@ class Handler extends HandlerAbstract
 								'description' => $description,
 							));
 
-							Log::info('> Created publisher event "' . $name . '"');
+							$this->logger->info('> Created publisher event "' . $name . '"');
 						}
 					}
 
@@ -467,7 +469,7 @@ class Handler extends HandlerAbstract
 									'class'    => $class->getName(),
 								));
 
-								Log::info('> Added event listener "' . $name . '" to event ' . $eventId);
+								$this->logger->info('> Added event listener "' . $name . '" to event ' . $eventId);
 							}
 							else
 							{
@@ -482,7 +484,7 @@ class Handler extends HandlerAbstract
 				}
 				catch(\Exception $e)
 				{
-					Log::error($e->getMessage());
+					$this->logger->error($e->getMessage());
 				}
 			}
 		}
@@ -494,7 +496,7 @@ class Handler extends HandlerAbstract
 
 		if($registry !== null)
 		{
-			Log::info('Create registry entries');
+			$this->logger->info('Create registry entries');
 
 			$params = $registry->childNodes;
 
@@ -540,7 +542,7 @@ class Handler extends HandlerAbstract
 							'class' => $class,
 						));
 
-						Log::info('> Created registry entry "' . $name . '" = "' . $value . '"');
+						$this->logger->info('> Created registry entry "' . $name . '" = "' . $value . '"');
 					}
 					else if($param->nodeName == 'table')
 					{
@@ -562,12 +564,12 @@ class Handler extends HandlerAbstract
 							'type'  => 'STRING',
 						));
 
-						Log::info('> Created registry entry "' . $name . '" = "' . $value . '"');
+						$this->logger->info('> Created registry entry "' . $name . '" = "' . $value . '"');
 					}
 				}
 				catch(\Exception $e)
 				{
-					Log::error($e->getMessage());
+					$this->logger->error($e->getMessage());
 				}
 			}
 
@@ -582,7 +584,7 @@ class Handler extends HandlerAbstract
 
 		if($database !== null)
 		{
-			Log::info('Execute sql queries');
+			$this->logger->info('Execute sql queries');
 
 			try
 			{
@@ -590,7 +592,7 @@ class Handler extends HandlerAbstract
 			}
 			catch(\Exception $e)
 			{
-				Log::error($e->getMessage());
+				$this->logger->error($e->getMessage());
 			}
 		}
 	}
@@ -610,7 +612,7 @@ class Handler extends HandlerAbstract
 			{
 				$sql = $this->substituteVars($query->nodeValue, $record);
 
-				Log::info('> ' . $sql);
+				$this->logger->info('> ' . $sql);
 
 				$this->sql->query($sql);
 
@@ -715,7 +717,7 @@ class Handler extends HandlerAbstract
 				throw new Exception('Could not create folder ' . $dest);
 			}
 
-			Log::info('A ' . $dest);
+			$this->logger->info('A ' . $dest);
 		}
 
 		for($i = 0; $i < $el->childNodes->length; $i++)
@@ -748,7 +750,7 @@ class Handler extends HandlerAbstract
 					{
 						file_put_contents($destFile, file_get_contents($srcFile));
 
-						Log::info('A ' . $destFile);
+						$this->logger->info('A ' . $destFile);
 					}
 					else
 					{

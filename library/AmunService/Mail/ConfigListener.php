@@ -25,9 +25,10 @@ namespace AmunService\Mail;
 use Amun\Data\ListenerAbstract;
 use Amun\DataFactory;
 use AmunService\Core\Service;
-use PSX\Log;
 use DOMDocument;
 use DOMElement;
+use Monolog\Logger;
+use PSX\Log;
 
 /**
  * Adds the option to insert an mail template to the service config
@@ -38,13 +39,13 @@ use DOMElement;
  */
 class ConfigListener extends ListenerAbstract
 {
-	public function notify(Service\Record $record, DOMDocument $config)
+	public function notify(Service\Record $record, DOMDocument $config, Logger $logger)
 	{
 		$mail = $config->getElementsByTagName('mail')->item(0);
 
 		if($mail !== null)
 		{
-			Log::info('Create mail');
+			$logger->info('Create mail');
 
 			try
 			{
@@ -87,7 +88,7 @@ class ConfigListener extends ListenerAbstract
 			}
 			catch(\Exception $e)
 			{
-				Log::error($e->getMessage());
+				$logger->error($e->getMessage());
 			}
 		}
 	}

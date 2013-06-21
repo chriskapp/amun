@@ -111,7 +111,7 @@ class Facebook extends LoginHandlerAbstract implements CallbackInterface
 			}
 
 			$identity = $acc['id'];	
-			$con      = new Condition(array('identity', '=', sha1(Security::getSalt() . $identity)));
+			$con      = new Condition(array('identity', '=', sha1($this->config['amun_salt'] . $identity)));
 			$userId   = $this->hm->getTable('User_Account')->getField('id', $con);
 
 			if(empty($userId))
@@ -131,14 +131,15 @@ class Facebook extends LoginHandlerAbstract implements CallbackInterface
 				$name = $this->normalizeName($acc['username']);
 
 				// create user account
-				$handler = $this->hm->getHandler('User_Account', $this->user);
+				$security = new Security($this->registry);
+				$handler  = $this->hm->getHandler('User_Account', $this->user);
 
 				$account = $handler->getRecord();
 				$account->setGroupId($this->registry['core.default_user_group']);
 				$account->setStatus(Account\Record::NORMAL);
 				$account->setIdentity($identity);
 				$account->setName($name);
-				$account->setPw(Security::generatePw());
+				$account->setPw($security->generatePw());
 
 				$account->profileUrl   = isset($acc['link']) ? $acc['link'] : null;
 				$account->thumbnailUrl = 'http://graph.facebook.com/' . $identity . '/picture';

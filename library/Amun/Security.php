@@ -31,45 +31,31 @@ namespace Amun;
  */
 class Security
 {
-	/**
-	 * Returns the salt from the config or an default salt if the parameter
-	 * doesnt exist in the config
-	 *
-	 * @return string
-	 */
-	public static function getSalt()
-	{
-		$config = Registry::getInstance()->getConfig();
-		$salt   = isset($config['amun_salt']) ? $config['amun_salt'] : '4ec656bfdee95a3596e31c3d36e49dda';
+	protected $config;
+	protected $registry;
 
-		return $salt;
+	public function __construct(Registry $registry)
+	{
+		$this->config   = $registry->getConfig();
+		$this->registry = $registry;
 	}
 
-	public static function getPwAlphaCount()
+	public function getPwAlphaCount()
 	{
-		$registry = Registry::getInstance();
-		$count    = isset($registry['core.pw_alpha']) ? $registry['core.pw_alpha'] : 4;
-
-		return $count;
+		return isset($this->registry['core.pw_alpha']) ? $this->registry['core.pw_alpha'] : 4;
 	}
 
-	public static function getPwNumericCount()
+	public function getPwNumericCount()
 	{
-		$registry = Registry::getInstance();
-		$count    = isset($registry['core.pw_numeric']) ? $registry['core.pw_numeric'] : 2;
-
-		return $count;
+		return isset($this->registry['core.pw_numeric']) ? $this->registry['core.pw_numeric'] : 2;
 	}
 
-	public static function getPwSpecialCount()
+	public function getPwSpecialCount()
 	{
-		$registry = Registry::getInstance();
-		$count    = isset($registry['core.pw_special']) ? $registry['core.pw_special'] : 0;
-
-		return $count;
+		return isset($this->registry['core.pw_special']) ? $this->registry['core.pw_special'] : 0;
 	}
 
-	public static function generatePw($length = 16)
+	public function generatePw($length = 16)
 	{
 		$pw      = '';
 		$chars   = array(' ', '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '<', '=', '>', '?', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', '\\', ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '|', '}');
@@ -79,7 +65,7 @@ class Security
 
 
 		// add alpha signs
-		$count = self::getPwAlphaCount();
+		$count = $this->getPwAlphaCount();
 
 		for($i = 0; $i < $count; $i++)
 		{
@@ -87,7 +73,7 @@ class Security
 		}
 
 		// add numeric signs
-		$count = self::getPwNumericCount();
+		$count = $this->getPwNumericCount();
 
 		for($i = 0; $i < $count; $i++)
 		{
@@ -95,7 +81,7 @@ class Security
 		}
 
 		// add special signs
-		$count = self::getPwSpecialCount();
+		$count = $this->getPwSpecialCount();
 
 		for($i = 0; $i < $count; $i++)
 		{
@@ -103,7 +89,7 @@ class Security
 		}
 
 
-		$minLength = self::getMinPwLength();
+		$minLength = $this->getMinPwLength();
 		$diff      = $length - $minLength;
 
 		if($diff >= 0)
@@ -122,6 +108,16 @@ class Security
 		{
 			throw new Exception('Cannot generate pw length is to short to contain all required characters');
 		}
+	}
+
+	public function getMinPwLength()
+	{
+		return $this->getPwAlphaCount() + $this->getPwNumericCount() + $this->getPwSpecialCount();
+	}
+
+	public function getMaxPwLength()
+	{
+		return 128;
 	}
 
 	public static function generateToken($length = false)
@@ -143,16 +139,6 @@ class Security
 				return substr($token, 0, $length);
 			}
 		}
-	}
-
-	public static function getMinPwLength()
-	{
-		return self::getPwAlphaCount() + self::getPwNumericCount() + self::getPwSpecialCount();
-	}
-
-	public static function getMaxPwLength()
-	{
-		return 128;
 	}
 }
 

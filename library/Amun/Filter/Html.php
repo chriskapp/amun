@@ -23,8 +23,8 @@
 namespace Amun\Filter;
 
 use Amun\User;
+use Amun\Registry;
 use Amun\Html\Filter\Collection;
-use Amun\Sql\Table\Registry;
 use AmunService\User\Account\Record;
 use PSX\FilterAbstract;
 use PSX\Html\Filter;
@@ -49,6 +49,8 @@ use PSX\Sql\Condition;
 class Html extends FilterAbstract implements ElementListenerInterface, TextListenerInterface
 {
 	private $config;
+	private $sql;
+	private $registry;
 	private $user;
 	private $discover;
 	private $collection;
@@ -58,10 +60,12 @@ class Html extends FilterAbstract implements ElementListenerInterface, TextListe
 	private $oembedHosts;
 	private $oembedMedia;
 
-	public function __construct(Config $config, User $user, $discoverOembed = false)
+	public function __construct(Registry $registry, User $user, $discoverOembed = false)
 	{
-		$this->config = $config;
-		$this->user   = $user;
+		$this->config   = $registry->getConfig();
+		$this->sql      = $registry->getSql();
+		$this->registry = $registry;
+		$this->user     = $user;
 
 		switch($this->user->getStatus())
 		{
@@ -228,10 +232,7 @@ class Html extends FilterAbstract implements ElementListenerInterface, TextListe
 			}
 			else
 			{
-				$con = new Condition();
-				$con->add('name', '=', $part);
-
-				$profileUrl = Registry::get('User_Account')->getField('profileUrl', $con);
+				$profileUrl = $this->sql->getField('SELECT `profileUrl` FROM ' . $this->registry['table.user_account'] . ' WHERE `name` = ?', array($part));
 
 				if(!empty($profileUrl))
 				{
@@ -265,10 +266,7 @@ class Html extends FilterAbstract implements ElementListenerInterface, TextListe
 			}
 			else
 			{
-				$con = new Condition();
-				$con->add('urlTitle', '=', $part);
-
-				$path = Registry::get('Content_Page')->getField('path', $con);
+				$path = $this->sql->getField('SELECT `path` FROM ' . $this->registry['table.content_page'] . ' WHERE `urlTitle` = ?', array($part));
 
 				if(!empty($path))
 				{
@@ -368,10 +366,7 @@ class Html extends FilterAbstract implements ElementListenerInterface, TextListe
 			return false;
 		}
 
-		$con = new Condition();
-		$con->add('path', '=', $href);
-
-		$path = Registry::get('Content_Page')->getField('path', $con);
+		$path = $this->sql->getField('SELECT `path` FROM ' . $this->registry['table.content_page'] . ' WHERE `path` = ?', array($href));
 
 		if(!empty($path))
 		{
@@ -388,10 +383,7 @@ class Html extends FilterAbstract implements ElementListenerInterface, TextListe
 			return false;
 		}
 
-		$con = new Condition();
-		$con->add('path', '=', $href);
-
-		$globalId = Registry::get('Media')->getField('globalId', $con);
+		$globalId = $this->sql->getField('SELECT `globalId` FROM ' . $this->registry['table.media'] . ' WHERE `path` = ?', array($href));
 
 		if(!empty($globalId))
 		{

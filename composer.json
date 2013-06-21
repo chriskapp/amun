@@ -15,7 +15,8 @@
   "require": {
     "php": ">=5.3",
     "psx/psx": "dev-master",
-    "zendframework/zend-mail": "2.1.*"
+    "zendframework/zend-mail": "2.1.*",
+    "monolog/monolog": "1.5.*"
   },
   "autoload": {
     "psr-0": {

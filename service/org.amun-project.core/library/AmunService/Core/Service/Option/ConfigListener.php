@@ -25,6 +25,7 @@ namespace AmunService\Core\Service\Option;
 use Amun\Data\ListenerAbstract;
 use AmunService\Core\Service;
 use DOMDocument;
+use Monolog\Logger;
 use PSX\Log;
 
 /**
@@ -36,13 +37,13 @@ use PSX\Log;
  */
 class ConfigListener extends ListenerAbstract
 {
-	public function notify(Service\Record $record, DOMDocument $config)
+	public function notify(Service\Record $record, DOMDocument $config, Logger $logger)
 	{
 		$navigation = $config->getElementsByTagName('navigation')->item(0);
 
 		if($navigation !== null)
 		{
-			Log::info('Navigation option');
+			$logger->info('Navigation option');
 
 			try
 			{
@@ -68,14 +69,14 @@ class ConfigListener extends ListenerAbstract
 								'name'      => $name,
 							));
 
-							Log::info('> Created navigation option "' . $name . '"');
+							$logger->info('> Created navigation option "' . $name . '"');
 						}
 					}
 				}
 			}
 			catch(\Exception $e)
 			{
-				Log::error($e->getMessage());
+				$logger->error($e->getMessage());
 			}
 		}
 	}

@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-use Amun\Dependency;
+use Amun\Dependency\Container;
 use Amun\Exception;
 use Amun\DataFactory;
 use Amun\Security;
@@ -78,26 +78,38 @@ class install extends ViewAbstract
 		'org.amun-project.pipe',
 	);
 
-	public function getDependencies()
-	{
-		$ct = new Dependency\Install($this->base->getConfig());
-
-		return $ct;
-	}
+	protected $post;
+	protected $sql;
+	protected $registry;
+	protected $session;
+	protected $template;
 
 	public function onLoad()
 	{
+		$this->container->setParameter('session.name', 'amun-install-' . md5($this->config['psx_url']));
+		$this->container->setParameter('user.id', 1);
+
+		$this->validate  = $this->getValidate();
+		$this->post      = $this->getInputPost();
+		$this->template  = $this->getTemplate();
+		$this->session   = $this->getSession();
+		$this->sql       = $this->getSql();
+		$this->registry  = $this->getRegistry();
+		$this->user      = $this->getUser();
+
+		// check whether already installed
 		try
 		{
-			$con         = new Condition(array('name', '=', 'core.install_date'));
-			$installDate = $this->sql->select($this->registry['table.core_registry'], array('value'), $con, Sql::SELECT_FIELD);
+			// load registry
+			$this->registry->load();
+
+			$condition   = new Condition(array('name', '=', 'core.install_date'));
+			$installDate = $this->sql->select($this->registry['table.core_registry'], array('value'), $condition, Sql::SELECT_FIELD);
 
 			if(!empty($installDate))
 			{
 				throw new Exception('You already have run the installer, for security reasons the installer stops here.');
 			}
-
-			$this->registry->load();
 		}
 		catch(\PDOException $e)
 		{
@@ -117,8 +129,6 @@ class install extends ViewAbstract
 		$this->template->assign('settingsSubTitle', $this->session->settingsSubTitle);
 		$this->template->assign('settingsTimezone', $this->session->settingsTimezone);
 		$this->template->assign('settingsSample', $this->session->settingsSample);
-
-		$this->template->set('system/install.tpl');
 	}
 
 	/**
@@ -151,7 +161,7 @@ class install extends ViewAbstract
 			$hash = new ReflectionExtension('hash');
 
 			// gd
-			$simplexml = new ReflectionExtension('gd');
+			$gd = new ReflectionExtension('gd');
 
 			// phar
 			//$phar = new ReflectionExtension('phar');
@@ -730,7 +740,8 @@ SQL;
 
 			if($count == 1)
 			{
-				$handler = new Account\Handler($this->getContainer(), $this->user);
+				$security = new Security($this->registry);
+				$handler  = new Account\Handler($this->getContainer(), $this->user);
 
 				// anonymous
 				$record = $handler->getRecord();
@@ -738,7 +749,7 @@ SQL;
 				$record->setStatus(Account\Record::ANONYMOUS);
 				$record->setIdentity('anonymous@anonymous.com');
 				$record->setName('Anonymous');
-				$record->setPw(Security::generatePw());
+				$record->setPw($security->generatePw());
 				$record->setTimezone('UTC');
 
 				$handler->create($record);
@@ -746,14 +757,9 @@ SQL;
 
 
 			// find services
-			$con = new Condition(array('source', '=', 'org.amun-project.page'));
-			$servicePageId = DataFactory::getTable('Core_Service')->getField('id', $con);
-
-			$con = new Condition(array('source', '=', 'org.amun-project.profile'));
-			$serviceProfileId = DataFactory::getTable('Core_Service')->getField('id', $con);
-
-			$con = new Condition(array('source', '=', 'org.amun-project.my'));
-			$serviceMyId = DataFactory::getTable('Core_Service')->getField('id', $con);
+			$servicePageId    = $this->sql->getField('SELECT `id` FROM ' . $this->registry['table.core_service'] . ' WHERE `source` = "org.amun-project.page"');
+			$serviceProfileId = $this->sql->getField('SELECT `id` FROM ' . $this->registry['table.core_service'] . ' WHERE `source` = "org.amun-project.profile"');
+			$serviceMyId      = $this->sql->getField('SELECT `id` FROM ' . $this->registry['table.core_service'] . ' WHERE `source` = "org.amun-project.my"');
 
 
 			// insert pages
@@ -1052,65 +1058,6 @@ TEXT;
 				$this->sql->query($sql);
 			}
 		}
-	}
-}
-
-class RegistryNoDb extends Registry
-{
-	protected $container = array();
-	protected $config;
-	protected $sql;
-
-	public function __construct(Config $config, Sql $sql)
-	{
-		$this->config = $config;
-		$this->sql    = $sql;
-
-		$this->exchangeArray(array(
-
-			'table.core_approval'        => $this->config['amun_table_prefix'] . 'core_approval',
-			'table.core_approval_record' => $this->config['amun_table_prefix'] . 'core_approval_record',
-			'table.core_event'           => $this->config['amun_table_prefix'] . 'core_event',
-			'table.core_event_listener'  => $this->config['amun_table_prefix'] . 'core_event_listener',
-			'table.core_registry'        => $this->config['amun_table_prefix'] . 'core_registry',
-			'table.core_service'         => $this->config['amun_table_prefix'] . 'core_service',
-			'core.default_timezone'      => new DateTimeZone('UTC'),
-
-		));
-	}
-}
-
-class UserNoDb extends User
-{
-	public $id      = 1;
-	public $groupId = 1;
-	public $name    = 'System';
-	public $status  = Account\Record::ADMINISTRATOR;
-
-	public function __construct(Registry $registry)
-	{
-		$this->registry = $registry;
-		$this->config   = $registry->getConfig();
-		$this->sql      = $registry->getSql();
-
-		$this->id       = 1;
-		$this->groupId  = 1;
-		$this->name     = 'System';
-	}
-
-	public function hasRight($key)
-	{
-		return true;
-	}
-
-	public function isAdministrator()
-	{
-		return true;
-	}
-
-	public function isAnonymous()
-	{
-		return false;
 	}
 }
 

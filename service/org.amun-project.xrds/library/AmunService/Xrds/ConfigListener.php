@@ -24,9 +24,10 @@ namespace AmunService\Xrds;
 
 use Amun\Data\ListenerAbstract;
 use AmunService\Core\Service;
-use PSX\Log;
 use DOMDocument;
 use DOMElement;
+use Monolog\Logger;
+use PSX\Log;
 
 /**
  * ConfigListener
@@ -37,13 +38,13 @@ use DOMElement;
  */
 class ConfigListener extends ListenerAbstract
 {
-	public function notify(Service\Record $record, DOMDocument $config)
+	public function notify(Service\Record $record, DOMDocument $config, Logger $logger)
 	{
 		$api = $config->getElementsByTagName('api')->item(0);
 
 		if($api !== null)
 		{
-			Log::info('Create api');
+			$logger->info('Create api');
 
 			try
 			{
@@ -88,7 +89,7 @@ class ConfigListener extends ListenerAbstract
 			}
 			catch(\Exception $e)
 			{
-				Log::error($e->getMessage());
+				$logger->error($e->getMessage());
 			}
 		}
 	}

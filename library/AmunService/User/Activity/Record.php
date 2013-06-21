@@ -109,7 +109,7 @@ class Record extends RecordAbstract
 	public function setSummary($summary)
 	{
 		$summary = Markdown::decode($summary);
-		$summary = $this->_validate->apply($summary, 'string', array(new Filter\Length(3, 4096), new AmunFilter\Html($this->_config, $this->_user, true)), 'summary', 'Summary');
+		$summary = $this->_validate->apply($summary, 'string', array(new Filter\Length(3, 4096), new AmunFilter\Html($this->_registry, $this->_user, true)), 'summary', 'Summary');
 
 		if(!$this->_validate->hasError())
 		{

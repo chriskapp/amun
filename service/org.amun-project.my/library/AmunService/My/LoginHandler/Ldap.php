@@ -108,7 +108,7 @@ class Ldap extends LoginHandlerAbstract
 			if($this->comparePassword($pw, $password) === true)
 			{
 				$identity = $mail;
-				$con      = new Condition(array('identity', '=', sha1(Security::getSalt() . $identity)));
+				$con      = new Condition(array('identity', '=', sha1($this->config['amun_salt'] . $identity)));
 				$userId   = $this->hm->getTable('User_Account')->getField('id', $con);
 
 				if(empty($userId))
@@ -124,14 +124,15 @@ class Ldap extends LoginHandlerAbstract
 					$name = $this->normalizeName($name);
 
 					// create user account
-					$handler = $this->hm->getHandler('User_Account', $this->user);
+					$security = new Security($this->registry);
+					$handler  = $this->hm->getHandler('User_Account', $this->user);
 
 					$account = $handler->getRecord();
 					$account->setGroupId($this->registry['core.default_user_group']);
 					$account->setStatus(Account\Record::NORMAL);
 					$account->setIdentity($identity);
 					$account->setName($name);
-					$account->setPw(Security::generatePw());
+					$account->setPw($security->generatePw());
 
 					$account = $handler->create($account);
 					$userId  = $account->id;

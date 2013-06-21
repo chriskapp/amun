@@ -52,7 +52,7 @@ class System extends LoginHandlerAbstract
 	{
 		// we have given an email address if a password is set we check
 		// whether the user exists
-		$identity = sha1(Security::getSalt() . $identity);
+		$identity = sha1($this->config['amun_salt'] . $identity);
 
 		if(!empty($password))
 		{
@@ -63,7 +63,7 @@ class System extends LoginHandlerAbstract
 
 			if(!empty($row))
 			{
-				if($row['pw'] == sha1(Security::getSalt() . $password))
+				if($row['pw'] == sha1($this->config['amun_salt'] . $password))
 				{
 					if(($error = $this->isValidStatus($row['status'])) === true)
 					{

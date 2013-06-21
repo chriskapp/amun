@@ -28,6 +28,7 @@ use Amun\Data\RecordAbstract;
 use Amun\Exception;
 use Amun\Filter as AmunFilter;
 use Amun\Util;
+use Amun\Security;
 use AmunService\User\Account\Filter as AccountFilter;
 use PSX\Data\WriterInterface;
 use PSX\Data\WriterResult;
@@ -136,7 +137,7 @@ class Record extends RecordAbstract
 
 	public function setIdentity($identity)
 	{
-		$identity = $this->_validate->apply($identity, 'string', array(new AccountFilter\Identity(), new AmunFilter\Salt()), 'identity', 'Identity');
+		$identity = $this->_validate->apply($identity, 'string', array(new AccountFilter\Identity(), new AmunFilter\Salt($this->_config)), 'identity', 'Identity');
 
 		if(!$this->_validate->hasError())
 		{
@@ -164,7 +165,7 @@ class Record extends RecordAbstract
 
 	public function setPw($pw)
 	{
-		$pw = $this->_validate->apply($pw, 'string', array(new AccountFilter\Pw(), new AmunFilter\Salt()), 'pw', 'Password');
+		$pw = $this->_validate->apply($pw, 'string', array(new AccountFilter\Pw(new Security($this->_registry)), new AmunFilter\Salt($this->_config)), 'pw', 'Password');
 
 		if(!$this->_validate->hasError())
 		{

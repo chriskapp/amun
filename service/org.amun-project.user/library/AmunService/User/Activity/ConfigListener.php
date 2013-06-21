@@ -27,6 +27,7 @@ use Amun\Exception;
 use AmunService\Core\Service;
 use DOMDocument;
 use DOMElement;
+use Monolog\Logger;
 use PSX\Log;
 
 /**
@@ -38,13 +39,13 @@ use PSX\Log;
  */
 class ConfigListener extends ListenerAbstract
 {
-	public function notify(Service\Record $record, DOMDocument $config)
+	public function notify(Service\Record $record, DOMDocument $config, Logger $logger)
 	{
 		$activity = $config->getElementsByTagName('activity')->item(0);
 
 		if($activity !== null)
 		{
-			Log::info('Create user activity template');
+			$logger->info('Create user activity template');
 
 			try
 			{
@@ -86,15 +87,15 @@ class ConfigListener extends ListenerAbstract
 								'summary' => $summary,
 							));
 
-							Log::info('> Created user activity template');
-							Log::info($summary);
+							$logger->info('> Created user activity template');
+							$logger->info($summary);
 						}
 					}
 				}
 			}
 			catch(\Exception $e)
 			{
-				Log::error($e->getMessage());
+				$logger->error($e->getMessage());
 			}
 		}
 	}

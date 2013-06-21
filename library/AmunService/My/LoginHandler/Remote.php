@@ -111,7 +111,7 @@ class Remote extends Openid
 
 				// if the provider is connected with the website and supports 
 				// the oauth extension request an token
-				$identity = sha1(Security::getSalt() . OpenId::normalizeIdentifier($profileUrl));
+				$identity = sha1($this->config['amun_salt'] . OpenId::normalizeIdentifier($profileUrl));
 				$con      = new Condition(array('identity', '=', $identity));
 				$userId   = $this->hm->getTable('User_Account')->getField('id', $con);
 				$oauth    = false;
@@ -167,7 +167,7 @@ class Remote extends Openid
 			{
 				// check whether user is already registered
 				$data   = $openid->getData();
-				$con    = new Condition(array('identity', '=', sha1(Security::getSalt() . $openid->getIdentifier())));
+				$con    = new Condition(array('identity', '=', sha1($this->config['amun_salt'] . $openid->getIdentifier())));
 				$userId = $this->hm->getTable('User_Account')->getField('id', $con);
 
 				if(empty($userId))
@@ -208,7 +208,8 @@ class Remote extends Openid
 					$name = $this->normalizeName($acc['name']);
 
 					// create user account
-					$handler = $this->hm->getHandler('User_Account', $this->user);
+					$security = new Security($this->registry);
+					$handler  = $this->hm->getHandler('User_Account', $this->user);
 
 					$account = $handler->getRecord();
 					$account->setGlobalId($globalId);
@@ -217,7 +218,7 @@ class Remote extends Openid
 					$account->setStatus(Account\Record::REMOTE);
 					$account->setIdentity($identity);
 					$account->setName($name);
-					$account->setPw(Security::generatePw());
+					$account->setPw($security->generatePw());
 					$account->setGender($acc['gender']);
 					$account->setTimezone($acc['timezone']);
 
