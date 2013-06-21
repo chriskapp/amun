@@ -64,7 +64,7 @@ class index extends ApplicationAbstract
 			// template
 			$this->htmlCss->add('news');
 			$this->htmlJs->add('news');
-			$this->htmlJs->add('ace');
+			$this->htmlJs->add('ace-html');
 			$this->htmlJs->add('bootstrap');
 			$this->htmlJs->add('prettify');
 			$this->htmlContent->add(Html\Content::META, Atom\Writer::link($this->page->getTitle(), $this->service->getApiEndpoint() . '?format=atom&filterBy=pageId&filterOp=equals&filterValue=' . $this->page->getId()));

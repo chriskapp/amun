@@ -25,6 +25,7 @@ namespace my\application;
 use Amun\Module\ApplicationAbstract;
 use Amun\Exception;
 use Amun\Captcha;
+use Amun\Security;
 use AmunService\My\Attempt;
 use AmunService\User\Account;
 use AmunService\My\LoginHandlerFactory;
@@ -93,7 +94,7 @@ class login extends ApplicationAbstract
 
 		$redirect = $this->getRedirect($this->post);
 		$identity = $this->post->identity('string', array(new Account\Filter\Identity()));
-		$pw       = $this->post->pw('string', array(new Account\Filter\Pw()));
+		$pw       = $this->post->pw('string', array(new Account\Filter\Pw(new Security($this->registry))));
 		$captcha  = $this->post->captcha('integer');
 
 		try

@@ -55,7 +55,7 @@ class render extends ApiAbstract
 				$oembed   = $this->get->oembed('boolean');
 				$markdown = $this->get->markdown('boolean');
 				$input    = Base::getRawInput();
-				$filter   = new Filter\Html($this->config, $this->user, $oembed);
+				$filter   = new Filter\Html($this->registry, $this->user, $oembed);
 
 				if($markdown)
 				{

@@ -632,6 +632,7 @@
 		var beforeShowCallback;
 		var successCallback;
 		var errorCallback;
+		var editorCreateCallback;
 
 		this.addButton = function(name, cssClass, callback){
 			buttons.push({
@@ -651,6 +652,10 @@
 
 		this.onError = function(callback){
 			errorCallback = callback;
+		}
+
+		this.onEditorCreate = function(callback){
+			editorCreateCallback = callback;
 		}
 
 		this.getForm = function(){
@@ -725,8 +730,7 @@
 						var editor = ace.edit(ref);
 						editor.setTheme("ace/theme/eclipse");
 
-						var mode = require("ace/mode/html").Mode;
-						editor.getSession().setMode(new mode());
+						editorCreateCallback.call(self, editor);
 
 						client.addEditor(ref, editor);
 					});

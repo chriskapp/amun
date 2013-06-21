@@ -117,7 +117,7 @@ class index extends ApplicationAbstract
 			// template
 			$this->htmlCss->add('php');
 			$this->htmlJs->add('php');
-			$this->htmlJs->add('ace');
+			$this->htmlJs->add('ace-php');
 			$this->htmlJs->add('bootstrap');
 			$this->htmlJs->add('prettify');
 		}

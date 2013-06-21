@@ -66,7 +66,7 @@ class index extends ApplicationAbstract
 			// template
 			$this->htmlCss->add('page');
 			$this->htmlJs->add('page');
-			$this->htmlJs->add('ace');
+			$this->htmlJs->add('ace-html');
 			$this->htmlJs->add('bootstrap');
 			$this->htmlJs->add('prettify');
 		}

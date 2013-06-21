@@ -4,7 +4,6 @@ amun.services.news = {
 	showForm: function(url){
 		var win = new amun.window(url);
 		win.addButton('Preview', 'btn', function(){
-			// if we have an ace editor
 			var editors = this.getClient().getEditors();
 			for (var k in editors) {
 				var editor = editors[k];
@@ -13,7 +12,12 @@ amun.services.news = {
 				$.post(amun.config.url + 'api/content/page/render?markdown=1', value, function(resp){
 					$('#amun-form-window-preview').html(resp).fadeIn();
 				});
+				break;
 			}
+		});
+		win.onEditorCreate(function(editor){
+			var mode = require("ace/mode/markdown").Mode;
+			editor.getSession().setMode(new mode());
 		});
 		win.beforeShow(function(){
 			$('#amun-form-window-preview').css('display', 'none');
@@ -29,7 +33,6 @@ amun.services.news = {
 		var client;
 
 		form.addButton('Preview', 'btn', function(){
-			// if we have an ace editor
 			var editors = client.getEditors();
 			for (var k in editors) {
 				var editor = editors[k];
@@ -38,6 +41,7 @@ amun.services.news = {
 				$.post(amun.config.url + 'api/content/page/render?markdown=1&oembed=1', value, function(resp){
 					$('#preview').html(resp).fadeIn();
 				});
+				break;
 			}
 		});
 
