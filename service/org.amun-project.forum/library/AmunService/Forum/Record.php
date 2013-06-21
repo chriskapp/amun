@@ -143,7 +143,7 @@ class Record extends RecordAbstract
 	public function setText($text)
 	{
 		$text = Markdown::decode($text);
-		$text = $this->_validate->apply($text, 'string', array(new Filter\Length(3, 4096), new AmunFilter\Html($this->_config, $this->_user)), 'text', 'Text');
+		$text = $this->_validate->apply($text, 'string', array(new Filter\Length(3, 4096), new AmunFilter\Html($this->_registry, $this->_user)), 'text', 'Text');
 
 		if(!$this->_validate->hasError())
 		{

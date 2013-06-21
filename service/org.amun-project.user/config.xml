@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="529907cf30fe90b64096c728688bd3132335f9a1">
+<service xmlns="http://amun-project.org" signature="8f341d1098cc88f53ee7d2b0139b2ca8cb2bcce7">
   <status>system</status>
   <name>user</name>
   <description>Basic service wich handles user groups and rights</description>
@@ -145,7 +145,7 @@
             <file name="Record.php" md5="16001052a0519ae316e2ef3001a18bed"/>
             <file name="Table.php" md5="fbcadb5e4543223769a2e7f261966cd9"/>
           </dir>
-          <file name="Record.php" md5="6598f609807ebcb8514816ea5b3c53f6"/>
+          <file name="Record.php" md5="b9bb1a7c04f5222744e8660d9b5b1be7"/>
           <file name="RecordListener.php" md5="db0b8255e9e012e0525fe50144e39289"/>
           <file name="Table.php" md5="7727ca22856da80e83c125d405b9e392"/>
         </dir>
