@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="586cf23d714d1b99c71683551b006d313c357fe9">
+<service xmlns="http://amun-project.org" signature="668f2665ef348622d7cc781c5cf52c6fbe7e04eb">
   <status>system</status>
   <name>openid</name>
   <description>Provides an OpenID provider implementation</description>

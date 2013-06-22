@@ -41,7 +41,7 @@ class Google extends Openid
 	protected function getOpenidProvider($identity)
 	{
 		// build callback
-		$callback = $this->pageUrl . '/login/callback/openid';
+		$callback = $this->pageUrl . '/callback/openid';
 
 		$openid = new Op\Google($this->http, $this->config['psx_url'], $this->store);
 		$openid->initialize($identity, $callback);

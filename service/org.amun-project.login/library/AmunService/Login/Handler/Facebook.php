@@ -75,7 +75,7 @@ class Facebook extends HandlerAbstract implements CallbackInterface
 	public function handle($identity, $password)
 	{
 		// build callback
-		$callback = $this->pageUrl . '/login/callback/facebook';
+		$callback = $this->pageUrl . '/callback/facebook';
 
 		AuthorizationCode::redirect(new Url(self::AUTHENTICATE), self::CLIENT_ID, $callback);
 	}
@@ -85,7 +85,7 @@ class Facebook extends HandlerAbstract implements CallbackInterface
 		$code = new AuthorizationCode($this->http, new Url(self::ACCESS_TOKEN));
 		$code->setClientPassword(self::CLIENT_ID, self::CLIENT_SECRET, AuthorizationCode::AUTH_POST);
 
-		$accessToken = $code->getAccessToken($this->pageUrl . '/login/callback/facebook');
+		$accessToken = $code->getAccessToken($this->pageUrl . '/callback/facebook');
 
 		// request user informations
 		$url    = new Url(self::VERIFY_ACCOUNT);

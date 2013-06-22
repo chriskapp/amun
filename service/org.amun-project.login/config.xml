@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="91651dc3337ab0dbdc73e9ee4a05370c68a36464">
+<service xmlns="http://amun-project.org" signature="a67bb83872c315711861473807515645f7eb9455">
   <status>normal</status>
   <name>login</name>
   <description>Service wich offers a login and registration</description>
@@ -98,16 +98,16 @@ You can login with the new password at:
         <file name="InvalidPasswordException.php" md5="cb109f97a911aa9c44b898964bc30c18"/>
         <dir name="Handler">
           <file name="CallbackInterface.php" md5="1fae5d443d8c1e03690e5357ad652115"/>
-          <file name="Facebook.php" md5="4b26a79c8d9f75a0ee7848dc6e2fda73"/>
-          <file name="Github.php" md5="1c310bffa42bebf3d471c682fb4e692b"/>
-          <file name="Google.php" md5="ff1bfc631260392328accd37f0f8d19d"/>
+          <file name="Facebook.php" md5="63fd558bfcd45bcc8c2728d885603f2e"/>
+          <file name="Github.php" md5="04d7b745057f536ac72f0f6bb48ad829"/>
+          <file name="Google.php" md5="bc37294262841ca54a8e475f1a1e1705"/>
           <file name="Ldap.php" md5="bd3681b144662543e2bfb6d061d46e6b"/>
-          <file name="Openid.php" md5="89489a8b22e4de938eeee5323e89126c"/>
-          <file name="Remote.php" md5="c3c0582bf7bc692d8c31e8dc677bda4a"/>
+          <file name="Openid.php" md5="d5f3f7552e565cc1d17fa64bb8444af7"/>
+          <file name="Remote.php" md5="80215c2854f7661ce807d13908f6a667"/>
           <file name="System.php" md5="d31508d0dbe08fb551cacdf9fdb11e35"/>
-          <file name="Twitter.php" md5="21199473dd11ba2c9d78e8d34179bd21"/>
+          <file name="Twitter.php" md5="a56e1f5ec90f7615e890f0260762d970"/>
           <file name="Webfinger.php" md5="89326db87d4bb0fa92cd6ca1c56adacd"/>
-          <file name="Yahoo.php" md5="0d47199aeb50608b13ed0651851a511a"/>
+          <file name="Yahoo.php" md5="525a886244cded3e90bf335c2c0b64e3"/>
         </dir>
         <file name="HandlerAbstract.php" md5="e5c024a15fc18f85f5e898901a563c7c"/>
         <file name="HandlerFactory.php" md5="3e985fbc9d3803e7ec0088400b378e4c"/>

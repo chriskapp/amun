@@ -231,7 +231,7 @@ class Openid extends HandlerAbstract implements CallbackInterface
 		}
 
 		// build callback
-		$callback = $this->pageUrl . '/login/callback/openid';
+		$callback = $this->pageUrl . '/callback/openid';
 
 		$openid = new \PSX\OpenId($this->http, $this->config['psx_url'], $this->store);
 		$openid->initialize($identity, $callback);
