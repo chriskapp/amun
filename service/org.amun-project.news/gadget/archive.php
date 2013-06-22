@@ -83,7 +83,7 @@ SQL;
 
 		foreach($result as $row)
 		{
-			echo '<li><a href="' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $row['pagePath'] . '/archive/' . $row['newsYear'] . $row['newsMonth'] . '">' . $row['newsMonthname'] . ' ' . $row['newsYear'] . '</a> (' . $row['newsCount'] . ')</li>';
+			echo '<li><a href="' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $row['pagePath'] . '/archive/' . $row['newsYear'] . '/' . $row['newsMonth'] . '">' . $row['newsMonthname'] . ' ' . $row['newsYear'] . '</a> (' . $row['newsCount'] . ')</li>';
 		}
 
 		echo '</ul>';
