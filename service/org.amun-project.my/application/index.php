@@ -87,7 +87,7 @@ class index extends MyAbstract
 		$this->htmlCss->add('my');
 		$this->htmlJs->add('amun');
 		$this->htmlJs->add('my');
-		$this->htmlContent->add(Html\Content::META, Atom\Writer::link($this->page->getTitle(), $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/activity/' . $this->user->name . '?format=atom'));
+		$this->htmlContent->add(Html\Content::META, Atom\Writer::link($this->page->getTitle(), $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/activity/' . $this->user->getName() . '?format=atom'));
 	}
 
 	private function getActivities()

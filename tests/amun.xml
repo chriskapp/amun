@@ -229,6 +229,26 @@
 		<field name="publishDate">0000-00-00 00:00:00</field>
 		<field name="date">2013-04-12 20:52:34</field>
 	</row>
+	<row>
+		<field name="id">11</field>
+		<field name="parentId">1</field>
+		<field name="globalId">1f258c0f-d0da-56f8-8dd8-8003564bdc71</field>
+		<field name="serviceId">26</field>
+		<field name="rightId">0</field>
+		<field name="status">1</field>
+		<field name="load">3</field>
+		<field name="sort">0</field>
+		<field name="path">login</field>
+		<field name="urlTitle">login</field>
+		<field name="title">Login</field>
+		<field name="template"></field>
+		<field name="description"></field>
+		<field name="keywords"></field>
+		<field name="cache">0</field>
+		<field name="expire"></field>
+		<field name="publishDate">0000-00-00 00:00:00</field>
+		<field name="date">2013-04-12 20:52:34</field>
+	</row>
 	</table_data>
 	<table_data name="amun_content_page_gadget">
 	<row>
@@ -3436,6 +3456,21 @@ echo $_SERVER['REMOTE_ADDR'];</field>
 		<field name="id">201</field>
 		<field name="groupId">1</field>
 		<field name="rightId">158</field>
+	</row>
+	<row>
+		<field name="id">202</field>
+		<field name="groupId">1</field>
+		<field name="rightId">159</field>
+	</row>
+	<row>
+		<field name="id">203</field>
+		<field name="groupId">2</field>
+		<field name="rightId">159</field>
+	</row>
+	<row>
+		<field name="id">204</field>
+		<field name="groupId">3</field>
+		<field name="rightId">159</field>
 	</row>
 	</table_data>
 	<table_data name="amun_user_right">

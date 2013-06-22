@@ -1,5 +1,5 @@
 
-testCase('my/login', {
+testCase('login', {
 
 	enterCredentials: function(){
 		Assert.object(window.amun.user);

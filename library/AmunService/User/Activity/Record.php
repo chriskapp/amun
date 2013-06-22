@@ -159,7 +159,7 @@ class Record extends RecordAbstract
 			)
 			->where('parentId', '=', $this->id)
 			->orderBy('date', Sql::SORT_ASC)
-			->getAll(Sql::FETCH_OBJECT, '\AmunService\User\Activity\Record', array($this->_table, $this->_ct));
+			->getAll(Sql::FETCH_OBJECT, '\AmunService\User\Activity\Record', array($this->_table, $this->_container));
 	}
 
 	public function export(WriterResult $result)

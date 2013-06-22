@@ -58,9 +58,10 @@ class security extends SettingsAbstract
 	{
 		try
 		{
-			$currentPw = $this->post->current_password('string', array(new AccountFilter\Pw(), new Filter\Salt()), 'Current password');
-			$newPw     = $this->post->new_password('string', array(new AccountFilter\Pw()), 'New password');
-			$verifyPw  = $this->post->verify_password('string', array(new AccountFilter\Pw()), 'Verify password');
+			$security  = new \Amun\Security($this->registry);
+			$currentPw = $this->post->current_password('string', array(new AccountFilter\Pw($security), new Filter\Salt($this->config)), 'Current password');
+			$newPw     = $this->post->new_password('string', array(new AccountFilter\Pw($security)), 'New password');
+			$verifyPw  = $this->post->verify_password('string', array(new AccountFilter\Pw($security)), 'Verify password');
 
 			if(!$this->validate->hasError())
 			{

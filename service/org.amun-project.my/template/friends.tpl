@@ -57,7 +57,7 @@
 			<td><label for="friend_<?php echo $friend->id; ?>"><img src="<?php echo $friend->friendThumbnailUrl; ?>" width="48" height="48" /></label></td>
 			<td><h4><a href="<?php echo $friend->friendProfileUrl; ?>"><?php echo $friend->friendName; ?></a></h4></td>
 			<td><?php echo $friend->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></td>
-			<?php if($friend->friendId == $user->id): ?>
+			<?php if($friend->friendId == $user->getId()): ?>
 			<td><input class="btn" type="button" disabled="disabled" value="Remove" /></td>
 			<?php else: ?>
 			<td><input class="btn" type="button" onclick="amun.services.my.friendsRevokeRelation(<?php echo $friend->id . ',\'' . $friendUrl . '\''; ?>, this)" value="Remove" /></td>

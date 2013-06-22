@@ -63,7 +63,7 @@ class settings extends SettingsAbstract
 			$this->template->assign('appRights', $appRights);
 
 			// load user rights
-			$this->userRights = $this->getHandler('User_Group_Right')->getByGroupId($this->user->groupId);
+			$this->userRights = $this->getHandler('User_Group_Right')->getByGroupId($this->user->getGroupId());
 
 			$this->template->assign('userRights', $this->userRights);
 		}
