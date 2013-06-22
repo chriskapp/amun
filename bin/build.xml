@@ -18,10 +18,54 @@
 	<taskdef name="git-clone" classname="org.eclipse.jgit.ant.tasks.GitCloneTask" />
 
 	<!-- clone the repository -->
-	<target name="git-clone">
+	<target name="git-check">
+		<available file="${build}" property="repository.available" />
+	</target>
+
+	<target name="git-clone" depends="git-check" unless="repository.available">
 		<git-clone uri="https://github.com/k42b3/amun.git" dest="${build}" />
-		<!-- change config -->
-		<replace file="${build}/configuration.php" token="http://127.0.0.1:8000/public" value="http://127.0.0.1/projects/amun/public" />
+	</target>
+
+	<target name="install-dependencies">
+		<exec dir="${build}" executable="composer.bat" failonerror="true">
+			<arg line="install --no-interaction --quiet" />
+		</exec>
+	</target>
+
+	<target name="syntax-check">
+		<exec dir="${bin}" executable="php" failonerror="true">
+			<arg line="check-syntax.php amun" />
+		</exec>
+	</target>
+
+	<target name="setup-sql">
+		<exec dir="${build}" executable="mysql" failonerror="true">
+			<arg line="-u root -e 'drop database amun_dev;'" />
+		</exec>
+		<exec dir="${build}" executable="mysql" failonerror="true">
+			<arg line="-u root -e 'create database amun_dev;'" />
+		</exec>
+		<sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/amun_dev?user=root&amp;password=" userid="root" password="" src="${build}/tests/amun.sql" />
+	</target>
+
+	<target name="start-webserver">
+		<exec dir="${build}" executable="php" spawn="true">
+			<arg line="-S 127.0.0.1:8000" />
+		</exec>
+		<sleep seconds="4" />
+	</target>
+
+	<target name="phpunit" depends="git-clone,install-dependencies,syntax-check,setup-sql,start-webserver">
+		<!-- run tests -->
+		<exec dir="${build}" executable="phpunit.bat" failonerror="true" />
+		<!-- clean temp files from test -->
+		<delete>
+			<fileset dir="${build}/cache" />
+		</delete>
+		<!-- run js tests -->
+		<exec dir="${build}" executable="phantomjs" failonerror="true">
+			<arg line="tests/testee.js tests/frontend http://127.0.0.1:8000/public/index.php/" />
+		</exec>
 	</target>
 
 	<!-- removes all files wich are not needed in the release -->
@@ -34,7 +78,6 @@
 		<delete file="${build}/.gitignore" />
 		<delete file="${build}/.travis.yml" />
 		<delete file="${build}/phpunit.xml" />
-		<delete file="${build}/README.md" />
 		<delete file="${build}/todo.txt" />
 		<delete file="${build}/doc/amun.xsl" />
 		<delete file="${build}/doc/distributed_network.html" />
@@ -46,37 +89,11 @@
 		</delete>
 	</target>
 
-	<!-- install dependencies -->
-	<target name="install-dependencies">
-		<exec dir="${build}" executable="composer.bat" failonerror="true">
-			<arg line="install" />
-		</exec>
-	</target>
-
 	<target name="get-version">
 		<exec dir="${bin}" executable="php" failonerror="true" outputproperty="version">
 			<arg line="get-version.php" />
 		</exec>
 		<echo message="Building version ${version}" />
-	</target>
-
-	<target name="syntax-check">
-		<exec dir="${bin}" executable="php" failonerror="true">
-			<arg line="check-syntax.php amun" />
-		</exec>
-	</target>
-
-	<target name="phpunit" depends="syntax-check">
-		<!-- run tests -->
-		<exec dir="${build}" executable="phpunit.bat" failonerror="true" />
-		<!-- clean temp files from test -->
-		<delete>
-			<fileset dir="${build}/cache" />
-		</delete>
-		<!-- run js tests -->
-		<exec dir="${build}" executable="phantomjs" failonerror="true">
-			<arg line="tests/testee.js tests/frontend http://127.0.0.1/projects/amun/public/index.php/" />
-		</exec>
 	</target>
 
 	<target name="generate-service-config">
@@ -92,17 +109,16 @@
 		<zip destfile="${bin}/amun_${version}.zip" basedir="${build}" />
 	</target>
 
-	<target name="build-init" depends="git-clone,install-dependencies,get-version,phpunit">
+	<target name="build-release" depends="phpunit,clean-git,get-version,generate-service-config,compress">
+		<!-- change config -->
+		<replace file="${build}/configuration.php" token="http://127.0.0.1:8000/public" value="http://127.0.0.1/amun/public" />
 	</target>
-
-	<target name="build-release" depends="build-init,clean-git,generate-service-config,compress">
-	</target>
-
-	<target name="build-all" depends="clean,build-release" />
 
 	<target name="clean">
 		<delete dir="${build}" />
 	</target>
+
+	<target name="build-all" depends="clean,build-release" />
 
 	<target name="clean-doc">
 		<delete>
