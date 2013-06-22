@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="6eb1e4cc3c4920469268f633b9fff252b4815ef3">
+  <status>normal</status>
+  <name>login</name>
+  <description>Service wich offers a login and registration</description>
+  <path>/login</path>
+  <namespace>login</namespace>
+  <type>http://ns.amun-project.org/2011/amun/service/login</type>
+  <link>http://amun.phpsx.org</link>
+  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
+  <license>GPLv3</license>
+  <version>0.0.1</version>
+  <provider>http://amun-project.org</provider>
+  <api>
+    <service>
+      <type>http://specs.openid.net/auth/2.0/signon</type>
+      <type>http://openid.net/extensions/sreg/1.1</type>
+      <type>http://specs.openid.net/extensions/oauth/1.0</type>
+      <uri>/signon</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="My View"/>
+  </permissions>
+  <navigation>
+    <option name="index"/>
+  </navigation>
+  <registry>
+    <table name="login_attempt"/>
+    <param name="registration_enabled" value="1" type="BOOLEAN"/>
+    <param name="max_wrong" value="8" type="INTEGER"/>
+    <param name="provider" value="google, yahoo, openid, system" type="STRING"/>
+  </registry>
+  <mail>
+    <template name="LOGIN_REGISTRATION" from="noreply@%host%" subject="Account activation" values="account.name;account.identity;host.name;register.link;register.date">
+      <text><![CDATA[
+Hello {account.name},
+
+you have successful registered at {host.name}. Your identity is
+"{account.identity}". In order to activate your account please visit the
+following activation link:
+
+{register.link}
+]]></text>
+      <html><![CDATA[
+Hello {account.name},
+
+you have successful registered at {host.name}. Your identity is
+"{account.identity}". In order to activate your account please visit the
+following activation link:
+
+{register.link}
+]]></html>
+    </template>
+    <template name="LOGIN_RECOVER" from="noreply@%host%" subject="Account recover" values="account.name;host.name;recover.ip;recover.link;recover.date">
+      <text><![CDATA[
+Hello {account.name},
+
+{recover.ip} wants to recover your password. In order to get a new password 
+visit the following link. We will create a new password for you and send it to 
+this email address. Ignore this email if you have not requested a new password.
+
+{recover.link}
+]]></text>
+      <html><![CDATA[
+Hello {account.name},
+
+{recover.ip} wants to recover your password. In order to get a new password 
+visit the following link. We will create a new password for you and send it to 
+this email address. Ignore this email if you have not requested a new password.
+
+{recover.link}
+]]></html>
+    </template>
+    <template name="LOGIN_RECOVER_SUCCESS" from="noreply@%host%" subject="Account recover success" values="account.name;account.pw;host.name;recover.link;recover.date">
+      <text><![CDATA[
+Hello {account.name},
+
+you have successful recovered your password. It is highly recommended to change
+the password after a recovery process because the password was maybe transmitted
+over an insecure channel.
+
+New password: {account.pw}
+
+You can login with the new password at:
+{recover.link}
+]]></text>
+      <html><![CDATA[
+Hello {account.name},
+
+you have successful recovered your password. It is highly recommended to change
+the password after a recovery process because the password was maybe transmitted
+over an insecure channel.
+
+New password: {account.pw}
+
+You can login with the new password at:
+{recover.link}
+]]></html>
+    </template>
+  </mail>
+  <library>
+    <dir name="AmunService">
+      <dir name="Login">
+        <file name="Attempt.php" md5="027ac4564553ae056403db687b5d5483"/>
+        <file name="InvalidPasswordException.php" md5="cb109f97a911aa9c44b898964bc30c18"/>
+        <dir name="Handler">
+          <file name="CallbackInterface.php" md5="1fae5d443d8c1e03690e5357ad652115"/>
+          <file name="Facebook.php" md5="4b26a79c8d9f75a0ee7848dc6e2fda73"/>
+          <file name="Github.php" md5="1c310bffa42bebf3d471c682fb4e692b"/>
+          <file name="Google.php" md5="ff1bfc631260392328accd37f0f8d19d"/>
+          <file name="Ldap.php" md5="bd3681b144662543e2bfb6d061d46e6b"/>
+          <file name="Openid.php" md5="89489a8b22e4de938eeee5323e89126c"/>
+          <file name="Remote.php" md5="c3c0582bf7bc692d8c31e8dc677bda4a"/>
+          <file name="System.php" md5="d31508d0dbe08fb551cacdf9fdb11e35"/>
+          <file name="Twitter.php" md5="21199473dd11ba2c9d78e8d34179bd21"/>
+          <file name="Webfinger.php" md5="89326db87d4bb0fa92cd6ca1c56adacd"/>
+          <file name="Yahoo.php" md5="0d47199aeb50608b13ed0651851a511a"/>
+        </dir>
+        <file name="HandlerAbstract.php" md5="e5c024a15fc18f85f5e898901a563c7c"/>
+        <file name="HandlerFactory.php" md5="3e985fbc9d3803e7ec0088400b378e4c"/>
+      </dir>
+    </dir>
+  </library>
+  <database>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.login_attempt}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `ip` varchar(40) NOT NULL,
+  `count` int(10) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ip` (`ip`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+  </database>
+</service>
