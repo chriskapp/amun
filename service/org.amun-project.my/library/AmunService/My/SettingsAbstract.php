@@ -40,10 +40,10 @@ abstract class SettingsAbstract extends MyAbstract
 
 		// options
 		$settings = new Option('settings', $this->registry, $this->user, $this->page);
-		$settings->add('my_view', 'Account', $this->page->url . '/settings');
-		$settings->add('my_view', 'Security', $this->page->url . '/settings/security');
-		$settings->add('my_view', 'Connection', $this->page->url . '/settings/connection');
-		$settings->add('my_view', 'Application', $this->page->url . '/settings/application');
+		$settings->add('my_view', 'Account', $this->page->getUrl() . '/settings');
+		$settings->add('my_view', 'Security', $this->page->getUrl() . '/settings/security');
+		$settings->add('my_view', 'Connection', $this->page->getUrl() . '/settings/connection');
+		$settings->add('my_view', 'Application', $this->page->getUrl() . '/settings/application');
 		$settings->load(array($this->page));
 
 		$this->template->assign('optionsSettings', $settings);

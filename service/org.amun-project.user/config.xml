@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="8f341d1098cc88f53ee7d2b0139b2ca8cb2bcce7">
+<service xmlns="http://amun-project.org" signature="d1163f48b03d4e391695dc03ba1a2a5994ad97f2">
   <status>system</status>
   <name>user</name>
   <description>Basic service wich handles user groups and rights</description>
@@ -145,7 +145,7 @@
             <file name="Record.php" md5="16001052a0519ae316e2ef3001a18bed"/>
             <file name="Table.php" md5="fbcadb5e4543223769a2e7f261966cd9"/>
           </dir>
-          <file name="Record.php" md5="b9bb1a7c04f5222744e8660d9b5b1be7"/>
+          <file name="Record.php" md5="05c26a08140ef4f69d74c0a80b547174"/>
           <file name="RecordListener.php" md5="db0b8255e9e012e0525fe50144e39289"/>
           <file name="Table.php" md5="7727ca22856da80e83c125d405b9e392"/>
         </dir>
@@ -160,7 +160,7 @@
             <file name="Record.php" md5="84ea52d3fb42308c574dec887f3b88db"/>
             <file name="Table.php" md5="6c6bdf767e4c3d2fb157cc0ec795655c"/>
           </dir>
-          <file name="Handler.php" md5="37baf1e1097bf20d16213680c6d313b0"/>
+          <file name="Handler.php" md5="71f1d1b86caeed5670c1410b843ab165"/>
           <file name="Record.php" md5="f8419c21b05f143f8de8389d25f8e2a4"/>
           <file name="Relation.php" md5="629205d6cd79bcff6f4e9072a60f4387"/>
           <file name="Table.php" md5="47dda351151e7e07c055a8928608098c"/>
@@ -171,7 +171,7 @@
           <file name="Record.php" md5="86ca2bfb38f70b6875afd8ea5eb11f50"/>
           <dir name="Right">
             <file name="Form.php" md5="b1675d68880332d52e296f3c029cc6b6"/>
-            <file name="Handler.php" md5="deea2c7b03673fcee550a07e8f0797d7"/>
+            <file name="Handler.php" md5="570db9466c5cc9989c5dfd0ce4040059"/>
             <file name="Record.php" md5="22d23219f5237935f7a171c0cf6657eb"/>
             <file name="Table.php" md5="3db59cf07a71412c9a7fa21c0baad077"/>
           </dir>

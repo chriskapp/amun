@@ -111,7 +111,7 @@ class Handler extends HandlerAbstract
 				->select(array('title'), 'group')
 			)
 			->join(Join::INNER, $this->hm->getTable('User_Right')
-				->select(array('name'), 'right')
+				->select(array('id', 'name', 'description'), 'right')
 			);
 	}
 }

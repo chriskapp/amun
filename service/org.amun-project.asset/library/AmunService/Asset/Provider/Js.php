@@ -61,9 +61,21 @@ class Js implements ProviderInterface
 		$services['ace'] = array(
 			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/js/ace/ace.js',
 			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/js/ace/theme-eclipse.js',
+			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/js/ace/mode-text.js',
+		);
+
+		$services['ace-html'] = array(
+			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/js/ace/ace.js',
+			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/js/ace/theme-eclipse.js',
 			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/js/ace/mode-html.js',
 			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/js/ace/mode-markdown.js',
+		);
+
+		$services['ace-php'] = array(
+			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/js/ace/ace.js',
+			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/js/ace/theme-eclipse.js',
 			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/js/ace/mode-php.js',
+			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/js/ace/worker-php.js',
 		);
 
 		$services['prettify'] = array(

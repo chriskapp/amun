@@ -54,9 +54,9 @@ abstract class MyAbstract extends ApplicationAbstract
 
 		// options
 		$options = new Option('index', $this->registry, $this->user, $this->page);
-		$options->add('my_view', 'Settings', $this->page->url . '/settings');
-		$options->add('my_view', 'Friends', $this->page->url . '/friends');
-		$options->add('my_view', 'Account', $this->page->url);
+		$options->add('my_view', 'Settings', $this->page->getUrl() . '/settings');
+		$options->add('my_view', 'Friends', $this->page->getUrl() . '/friends');
+		$options->add('my_view', 'Account', $this->page->getUrl());
 		$options->load(array($this->page));
 
 		$this->template->assign('options', $options);

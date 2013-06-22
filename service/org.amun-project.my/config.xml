@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="6fd90280126df4b1b13d5924869c1e6fd6d3f980">
+<service xmlns="http://amun-project.org" signature="7154536e29c42528af42d51a0c21dbad8b5f4984">
   <status>normal</status>
   <name>my</name>
   <description>Service wich offers an activitystream and handling of user settings and friends</description>
@@ -46,10 +46,10 @@
       <dir name="My">
         <file name="Activity.php" md5="260a6892ebaa8054dc3bc13b175ebace"/>
         <file name="Credentials.php" md5="d0345d7ec707b6a7d828f4c44d282c05"/>
-        <file name="FriendsAbstract.php" md5="0c23909fca6732dce40cbf2f83134d93"/>
-        <file name="MyAbstract.php" md5="282d88714b7dca24fa323b9c78a59bba"/>
+        <file name="FriendsAbstract.php" md5="082f5eb889800bb195fa439613b33eae"/>
+        <file name="MyAbstract.php" md5="c5a18c72dace6975d2fde43238a108e8"/>
         <file name="People.php" md5="95ab22f771e7f336062d099ea9786879"/>
-        <file name="SettingsAbstract.php" md5="a89956553d6ba44bfb372ca17190125c"/>
+        <file name="SettingsAbstract.php" md5="a3bb4634c8a6ad388a1155ce6933b47d"/>
       </dir>
     </dir>
   </library>
