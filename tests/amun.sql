@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.5.8, for Win32 (x86)
 --
--- Host: localhost    Database: amun_dev
+-- Host: localhost    Database: amun_db
 -- ------------------------------------------------------
 -- Server version 5.5.8
 

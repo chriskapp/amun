@@ -40,12 +40,12 @@
 
 	<target name="setup-sql">
 		<exec dir="${build}" executable="mysql" failonerror="true">
-			<arg line="-u root -e 'drop database amun_dev;'" />
+			<arg line="-u root -e 'drop database amun_db;'" />
 		</exec>
 		<exec dir="${build}" executable="mysql" failonerror="true">
-			<arg line="-u root -e 'create database amun_dev;'" />
+			<arg line="-u root -e 'create database amun_db;'" />
 		</exec>
-		<sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/amun_dev?user=root&amp;password=" userid="root" password="" src="${build}/tests/amun.sql" />
+		<sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/amun_db?user=root&amp;password=" userid="root" password="" src="${build}/tests/amun.sql" />
 	</target>
 
 	<target name="start-webserver">
@@ -58,14 +58,16 @@
 	<target name="phpunit" depends="git-clone,install-dependencies,syntax-check,setup-sql,start-webserver">
 		<!-- run tests -->
 		<exec dir="${build}" executable="phpunit.bat" failonerror="true" />
-		<!-- clean temp files from test -->
-		<delete>
-			<fileset dir="${build}/cache" />
-		</delete>
 		<!-- run js tests -->
 		<exec dir="${build}" executable="phantomjs" failonerror="true">
 			<arg line="tests/testee.js tests/frontend http://127.0.0.1:8000/public/index.php/" />
 		</exec>
+		<!-- clean temp files from test -->
+		<!-- 
+		<delete>
+			<fileset dir="${build}/cache" />
+		</delete> 
+		-->
 	</target>
 
 	<!-- removes all files wich are not needed in the release -->
