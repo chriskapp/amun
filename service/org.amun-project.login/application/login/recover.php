@@ -55,7 +55,7 @@ class recover extends ApplicationAbstract
 		$this->template->assign('captcha', $captcha);
 
 		// template
-		$this->htmlCss->add('my');
+		$this->htmlCss->add('login');
 	}
 
 	public function onPost()

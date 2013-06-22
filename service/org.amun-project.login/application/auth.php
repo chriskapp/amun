@@ -167,7 +167,7 @@ class auth extends ApplicationAbstract
 			}
 
 			// template
-			$this->htmlCss->add('my');
+			$this->htmlCss->add('login');
 		}
 		else
 		{

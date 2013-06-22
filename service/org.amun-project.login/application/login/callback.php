@@ -23,8 +23,8 @@
 namespace login\application\login;
 
 use Amun\Module\ApplicationAbstract;
-use AmunService\My\HandlerFactory;
-use AmunService\My\Handler\CallbackInterface;
+use AmunService\Handler\Factory;
+use AmunService\Handler\CallbackInterface;
 
 /**
  * callback

@@ -74,9 +74,9 @@ class index extends ApplicationAbstract
 			}
 
 			// template
-			$this->htmlCss->add('my');
+			$this->htmlCss->add('login');
 			$this->htmlJs->add('amun');
-			$this->htmlJs->add('my');
+			$this->htmlJs->add('login');
 		}
 		else
 		{

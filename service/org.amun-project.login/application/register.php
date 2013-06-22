@@ -54,7 +54,7 @@ class register extends ApplicationAbstract
 			$this->path->add('Register', $this->page->getUrl() . '/register');
 
 			// template
-			$this->htmlCss->add('my');
+			$this->htmlCss->add('login');
 			$this->htmlJs->add('jquery');
 		}
 		else

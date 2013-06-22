@@ -20,7 +20,7 @@
     </service>
   </api>
   <permissions>
-    <perm name="view" description="My View"/>
+    <perm name="view" description="Login View"/>
   </permissions>
   <navigation>
     <option name="index"/>

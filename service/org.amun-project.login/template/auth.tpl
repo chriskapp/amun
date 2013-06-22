@@ -43,9 +43,9 @@
 
 	<hr />
 
-	<h4><a href="#" onclick="$('.amun-service-my-app-rights').slideToggle();">Rights (+)</a></h4>
+	<h4><a href="#" onclick="$('.amun-service-login-app-rights').slideToggle();">Rights (+)</a></h4>
 
-	<div class="amun-service-my-app-rights">
+	<div class="amun-service-login-app-rights">
 		<ul>
 			<?php foreach($userRights as $right): ?>
 				<li>

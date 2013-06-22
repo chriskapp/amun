@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace my\gadget;
+namespace login\gadget;
 
 use Amun\Module\GadgetAbstract;
 use Amun\DataFactory;

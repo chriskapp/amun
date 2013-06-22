@@ -48,7 +48,7 @@ class activate extends ApplicationAbstract
 		$this->path->add('Activate', $this->page->getUrl() . '/register/activate');
 
 		// template
-		$this->htmlCss->add('my');
+		$this->htmlCss->add('login');
 	}
 
 	public function onGet()

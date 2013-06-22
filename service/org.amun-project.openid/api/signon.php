@@ -43,6 +43,17 @@ class signon extends ProviderAbstract
 {
 	const EXPIRE = 46800; // seconds
 
+	public function onLoad()
+	{
+		parent::onLoad();
+
+		// dependencies
+		$this->base     = $this->getBase();
+		$this->config   = $this->getConfig();
+		$this->sql      = $this->getSql();
+		$this->registry = $this->getRegistry();
+	}
+
 	/**
 	 * OpenId endpoint for indirect communication like HTTP redirect
 	 *
@@ -67,13 +78,6 @@ class signon extends ProviderAbstract
 	public function directCommunication()
 	{
 		$this->handle();
-	}
-
-	public function getDependencies()
-	{
-		$ct = new Dependency\Session($this->base->getConfig());
-
-		return $ct;
 	}
 
 	public function onAsocciation(Association $assoc)
@@ -121,7 +125,7 @@ SQL;
 		// check whether authenticated
 		if(!$this->isAuthenticated())
 		{
-			$loginUrl = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'my.htm/login';
+			$loginUrl = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'login';
 			$selfUrl  = new Url($this->base->getSelf());
 			$values   = array_merge($_GET, $_POST);
 

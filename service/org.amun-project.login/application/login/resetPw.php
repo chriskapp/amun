@@ -48,7 +48,7 @@ class resetPw extends ApplicationAbstract
 		$this->path->add('Reset Password', $this->page->getUrl() . '/login/resetPw');
 
 		// template
-		$this->htmlCss->add('my');
+		$this->htmlCss->add('login');
 	}
 
 	public function onGet()

@@ -165,7 +165,7 @@ class connect extends ApplicationAbstract
 		$nonce = gmdate('Y-m-d\TH:i:s\Z') . Security::generateToken(15);
 
 		$redirect = new Redirect();
-		$redirect->setOpEndpoint($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/signon');
+		$redirect->setOpEndpoint($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/openid/signon');
 		$redirect->setClaimedId($this->claimedId);
 		$redirect->setIdentity($this->identity);
 		$redirect->setReturnTo($this->returnTo);
