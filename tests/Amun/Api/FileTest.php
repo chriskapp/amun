@@ -55,7 +55,7 @@ class FileTest extends RestTest
 
 	public function getHandler()
 	{
-		return DataFactory::get('File');
+		return getContainer()->get('handlerManager')->getHandler('File');
 	}
 
 	public function testGet()

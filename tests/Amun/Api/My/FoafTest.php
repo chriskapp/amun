@@ -68,7 +68,7 @@ class FoafTest extends ApiTest
 		$person  = $persons->item(0);
 
 		$this->assertEquals(true, $person instanceof DOMElement);
-		$this->assertEquals(getContainer()->getUser()->name, $person->getElementsByTagName('name')->item(0)->nodeValue);
+		$this->assertEquals(getContainer()->get('user')->getName(), $person->getElementsByTagName('name')->item(0)->nodeValue);
 	}
 }
 

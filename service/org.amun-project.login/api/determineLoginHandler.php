@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace my\login;
+namespace login\api;
 
 use AmunService\Login\HandlerAbstract;
 use AmunService\Login\HandlerFactory;

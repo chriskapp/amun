@@ -55,7 +55,7 @@ class RedirectTest extends RestTest
 
 	public function getHandler()
 	{
-		return DataFactory::get('Redirect');
+		return getContainer()->get('handlerManager')->getHandler('Redirect');
 	}
 
 	public function testGet()

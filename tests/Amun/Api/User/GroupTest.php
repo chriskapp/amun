@@ -56,7 +56,7 @@ class GroupTest extends RestTest
 
 	public function getHandler()
 	{
-		return DataFactory::get('User_Group');
+		return getContainer()->get('handlerManager')->getHandler('User_Group');
 	}
 
 	public function testGet()
@@ -78,8 +78,10 @@ class GroupTest extends RestTest
 		unset($record->rights);
 		$expect = array_map('strval', $record->getData());
 
+		$table = getContainer()->get('handlerManager')->getTable('User_Group_Right');
+
 		$this->assertEquals($expect, $actual);
-		$this->assertEquals($rightIds, DataFactory::getTable('User_Group_Right')->getCol('rightId', new Condition(array('groupId', '=', 4))));
+		$this->assertEquals($rightIds, $table->getCol('rightId', new Condition(array('groupId', '=', 4))));
 	}
 
 	public function testPut()
@@ -97,8 +99,10 @@ class GroupTest extends RestTest
 		unset($record->rights);
 		$expect = array_map('strval', $record->getData());
 
+		$table = getContainer()->get('handlerManager')->getTable('User_Group_Right');
+
 		$this->assertEquals($expect, $actual);
-		$this->assertEquals($rightIds, DataFactory::getTable('User_Group_Right')->getCol('rightId', new Condition(array('groupId', '=', 1))));
+		$this->assertEquals($rightIds, $table->getCol('rightId', new Condition(array('groupId', '=', 1))));
 	}
 
 	public function testDelete()

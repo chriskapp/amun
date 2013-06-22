@@ -56,7 +56,7 @@ class FriendTest extends RestTest
 
 	public function getHandler()
 	{
-		return DataFactory::get('User_Friend');
+		return getContainer()->get('handlerManager')->getHandler('User_Friend');
 	}
 
 	public function testGet()

@@ -23,7 +23,10 @@
 
 namespace Amun\Dispatch\RequestFilter;
 
+use DateTime;
+use DateInterval;
 use Amun\Registry;
+use AmunService\Oauth\Record;
 use Closure;
 use PSX\Exception;
 use PSX\Oauth;
@@ -42,18 +45,20 @@ class OauthAuthentication extends \PSX\Dispatch\RequestFilter\OauthAuthenticatio
 	protected $sql;
 
 	protected $claimedUserId;
+	protected $requestToken;
 
 	public function __construct(Registry $registry)
 	{
-		parent::__construct(function($consumerKey, $token){
-			return $this->getConsumer($consumerKey, $token);
+		$auth = $this;
+		parent::__construct(function($consumerKey, $token) use ($auth){
+			return $auth->getConsumer($consumerKey, $token);
 		});
 
 		$this->registry = $registry;
 		$this->sql      = $registry->getSql();
 	}
 
-	protected function getConsumer($consumerKey, $token)
+	public function getConsumer($consumerKey, $token)
 	{
 		$sql = <<<SQL
 SELECT
@@ -100,6 +105,7 @@ SQL;
 			}
 
 			$this->claimedUserId = $request['requestUserId'];
+			$this->requestToken  = $request['requestToken'];
 
 			return new Consumer($row['apiConsumerKey'], $row['apiConsumerSecret'], $request['requestToken'], $request['requestTokenSecret']);
 		}
@@ -173,6 +179,6 @@ SQL;
 
 	protected function callSuccess()
 	{
-		call_user_func_array($this->successCallback, array($this->claimedUserId));
+		call_user_func_array($this->successCallback, array($this->claimedUserId, $this->requestToken));
 	}
 }

@@ -56,7 +56,7 @@ class RegistryTest extends RestTest
 
 	public function getHandler()
 	{
-		return DataFactory::get('Core_Registry');
+		return getContainer()->get('handlerManager')->getHandler('Core_Registry');
 	}
 
 	public function testGet()

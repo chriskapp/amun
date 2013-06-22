@@ -55,7 +55,7 @@ class MediaTest extends RestTest
 
 	public function getHandler()
 	{
-		return DataFactory::get('Media');
+		return getContainer()->get('handlerManager')->getHandler('Media');
 	}
 
 	public function testGet()

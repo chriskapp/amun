@@ -89,6 +89,8 @@ class LocationFinder extends FileSystem
 					" . $this->registry['table.core_service'] . "
 				WHERE
 					`path` LIKE SUBSTRING(?, 1, CHAR_LENGTH(`path`))
+				ORDER BY
+					CHAR_LENGTH(`path`) DESC
 				LIMIT 1";
 
 		$service = $this->sql->getRow($sql, array('/' . $pathInfo));

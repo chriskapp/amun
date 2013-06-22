@@ -58,7 +58,7 @@ abstract class ApiTest extends \PHPUnit_Extensions_Database_TestCase
 
 	public function getConnection()
 	{
-		return $this->createDefaultDBConnection(getContainer()->getSql(), getContainer()->getConfig()->offsetGet('psx_sql_db'));
+		return $this->createDefaultDBConnection(getContainer()->get('sql'), getContainer()->get('config')->get('psx_sql_db'));
 	}
 
 	public function getDataSet()
@@ -78,10 +78,10 @@ abstract class ApiTest extends \PHPUnit_Extensions_Database_TestCase
 		parent::setUp();
 
 		// get api credentials
-		$this->config   = getContainer()->getConfig();
-		$this->sql      = getContainer()->getSql();
-		$this->registry = getContainer()->getRegistry();
-		$this->user     = getContainer()->getUser();
+		$this->config   = getContainer()->get('config');
+		$this->sql      = getContainer()->get('sql');
+		$this->registry = getContainer()->get('registry');
+		$this->user     = getContainer()->get('user');
 		$this->http     = new Http();
 		$this->oauth    = new Oauth($this->http);
 
@@ -105,7 +105,7 @@ FROM
 WHERE 
 	`apiId` = {$api['id']}
 AND 
-	`userId` = {$this->user->id}
+	`userId` = {$this->user->getId()}
 AND 
 	`status` = {$status} 
 LIMIT 1

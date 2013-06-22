@@ -43,8 +43,22 @@ use PSX\Sql\Condition;
  */
 class request extends RequestAbstract
 {
-	private $apiId;
-	private $callback;
+	protected $config;
+	protected $sql;
+	protected $registry;
+
+	protected $apiId;
+	protected $callback;
+
+	public function onLoad()
+	{
+		parent::onLoad();
+
+		// dependencies
+		$this->config   = $this->getConfig();
+		$this->sql      = $this->getSql();
+		$this->registry = $this->getRegistry();
+	}
 
 	/**
 	 * Endpoint to request an temporary credential
@@ -73,13 +87,6 @@ class request extends RequestAbstract
 
 			exit;
 		}
-	}
-
-	public function getDependencies()
-	{
-		$ct = new Dependency\Request($this->base->getConfig());
-
-		return $ct;
 	}
 
 	protected function getConsumer($consumerKey)

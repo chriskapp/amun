@@ -58,7 +58,7 @@ class GadgetTest extends RestTest
 
 	public function getHandler()
 	{
-		return DataFactory::get('Content_Gadget');
+		return getContainer()->get('handlerManager')->getHandler('Content_Gadget');
 	}
 
 	public function testGet()

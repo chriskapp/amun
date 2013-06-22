@@ -58,7 +58,7 @@ class AccountTest extends RestTest
 
 	public function getHandler()
 	{
-		return DataFactory::get('User_Account');
+		return getContainer()->get('handlerManager')->getHandler('User_Account');
 	}
 
 	public function testGet()
@@ -78,8 +78,8 @@ class AccountTest extends RestTest
 		$this->assertPositiveResponse($this->post($record));
 
 		$actual = $this->table->getRow(array('groupId', 'status', 'identity', 'name', 'pw'), new Condition(array('id', '=', 3)));
-		$record->identity = sha1(Security::getSalt() . $record->identity);
-		$record->pw = sha1(Security::getSalt() . $record->pw);
+		$record->identity = sha1($this->config['amun_salt'] . $record->identity);
+		$record->pw = sha1($this->config['amun_salt'] . $record->pw);
 		$expect = array_map('strval', $record->getData());
 
 		$this->assertEquals($expect, $actual);
@@ -98,8 +98,8 @@ class AccountTest extends RestTest
 		$this->assertPositiveResponse($this->put($record));
 
 		$actual = $this->table->getRow(array('id', 'groupId', 'status', 'identity', 'name', 'pw'), new Condition(array('id', '=', 1)));
-		$record->identity = sha1(Security::getSalt() . $record->identity);
-		$record->pw = sha1(Security::getSalt() . $record->pw);
+		$record->identity = sha1($this->config['amun_salt'] . $record->identity);
+		$record->pw = sha1($this->config['amun_salt'] . $record->pw);
 		$expect = array_map('strval', $record->getData());
 
 		$this->assertEquals($expect, $actual);

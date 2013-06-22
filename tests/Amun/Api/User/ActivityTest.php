@@ -57,7 +57,7 @@ class ActivityTest extends RestTest
 
 	public function getHandler()
 	{
-		return DataFactory::get('User_Activity');
+		return getContainer()->get('handlerManager')->getHandler('User_Activity');
 	}
 
 	protected function assertResultSetResponse(Response $response)
@@ -70,8 +70,8 @@ class ActivityTest extends RestTest
 		$this->assertEquals(true, isset($result['startIndex']), $response->getBody());
 		$this->assertEquals(true, isset($result['itemsPerPage']), $response->getBody());
 
-		$tblActivity = DataFactory::getTable('User_Activity')->getName();
-		$tblAccount  = DataFactory::getTable('User_Account')->getName();
+		$tblActivity = getContainer()->get('handlerManager')->getTable('User_Activity')->getName();
+		$tblAccount  = getContainer()->get('handlerManager')->getTable('User_Account')->getName();
 		$count       = $this->sql->getField('SELECT COUNT(*) FROM ' . $tblActivity . ' INNER JOIN ' . $tblAccount . ' ON ' . $tblActivity . '.userId = ' . $tblAccount . '.id');
 
 		$this->assertEquals($count, $result['totalResults']);

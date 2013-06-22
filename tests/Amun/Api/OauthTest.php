@@ -56,7 +56,7 @@ class OauthTest extends RestTest
 
 	public function getHandler()
 	{
-		return DataFactory::get('Oauth');
+		return getContainer()->get('handlerManager')->getHandler('Oauth');
 	}
 
 	public function testGet()

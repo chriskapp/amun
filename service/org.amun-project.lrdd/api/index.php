@@ -65,7 +65,7 @@ class index extends ApiAbstract
 
 			$uri = $this->get->uri('string', array(new Filter\Length(3, 256)));
 
-			$this->event->notifyListener('lrdd.resource_discovery', array($this->writer, $uri));
+			$this->getEvent()->notifyListener('lrdd.resource_discovery', array($this->writer, $uri));
 
 
 			$this->writer->endElement();

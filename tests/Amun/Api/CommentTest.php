@@ -55,7 +55,7 @@ class CommentTest extends RestTest
 
 	public function getHandler()
 	{
-		return DataFactory::get('Comment');
+		return getContainer()->get('handlerManager')->getHandler('Comment');
 	}
 
 	public function testGet()

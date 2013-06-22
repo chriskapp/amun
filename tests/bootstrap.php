@@ -26,27 +26,19 @@ $loader->add('Amun', 'tests');
 // defines the user id under wich the tests gets executed
 define('USER_ID', 1);
 
-
 doBootstrap();
 
 function doBootstrap()
 {
 	$container = getContainer();
-	$bootstrap = new PSX\Bootstrap($container->getConfig());
-
-	// set container
-	Amun\DataFactory::initInstance($container);
-
-	// set logger
-	PSX\Log::getLogger()->addHandler(new PSX\Log\Handler\File(PSX_PATH_CACHE . '/log.txt'));
-	PSX\Log::getLogger()->setLevel(PSX\Log::INFO);
+	$bootstrap = new PSX\Bootstrap($container->get('config'));
 
 	// check whether http server is available
 	$server = false;
 	try
 	{
-		$config   = $container->getConfig();
-		$http     = new PSX\Http();
+		$config   = $container->get('config');
+		$http     = $container->get('http');
 		$request  = new PSX\Http\GetRequest($config['psx_url'] . '/');
 		$response = $http->request($request);
 		$body     = $response->getBody();
@@ -62,7 +54,7 @@ function doBootstrap()
 			echo $body . "\n";
 		}
 	}
-	catch(Exception $e)
+	catch(\Exception $e)
 	{
 		echo 'Webserver not running: ' . $e->getMessage() . "\n";
 	}
@@ -76,17 +68,17 @@ function getContainer()
 
 	if($container === null)
 	{
-		$config = new PSX\Config('configuration.php');
-		$config['amun_service_path'] = 'service';
+		$container = new Amun\Dependency\Container();
+		$container->setParameter('config.file', 'configuration.php');
+		$container->setParameter('user.id', USER_ID);
+
+		$config = $container->get('config');
 		$config['psx_path_cache']    = 'cache';
 		$config['psx_path_library']  = 'library';
 		$config['psx_path_module']   = 'module';
 		$config['psx_path_template'] = 'template';
-
-		$container = new Amun\Dependency\Script($config, array(
-			'script.userId' => USER_ID,
-		));
 	}
 
 	return $container;
 }
+

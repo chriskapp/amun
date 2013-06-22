@@ -353,7 +353,7 @@ class Handler extends HandlerAbstract
 			// the remote website about the friendship request
 			case Record::REQUEST:
 
-				if($record->getUser()->status == Account\Record::REMOTE)
+				if($record->getUser()->getStatus() == Account\Record::REMOTE)
 				{
 					$url  = new Url($record->getUser()->getHost()->url);
 					$mode = Relation::REQUEST;
@@ -369,7 +369,7 @@ class Handler extends HandlerAbstract
 			// was accepted
 			case Record::NORMAL:
 
-				if($record->getFriend()->status == Account\Record::REMOTE)
+				if($record->getFriend()->getStatus() == Account\Record::REMOTE)
 				{
 					$url  = new Url($record->getFriend()->getHost()->url);
 					$mode = Relation::ACCEPT;

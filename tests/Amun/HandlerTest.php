@@ -43,7 +43,7 @@ abstract class HandlerTest extends \PHPUnit_Extensions_Database_TestCase
 
 	public function getConnection()
 	{
-		return $this->createDefaultDBConnection(getContainer()->getSql(), getContainer()->getConfig()->offsetGet('psx_sql_db'));
+		return $this->createDefaultDBConnection(getContainer()->get('sql'), getContainer()->get('config')->get('psx_sql_db'));
 	}
 
 	public function getDataSet()
@@ -55,10 +55,10 @@ abstract class HandlerTest extends \PHPUnit_Extensions_Database_TestCase
 	{
 		parent::setUp();
 
-		$this->config   = getContainer()->getConfig();
-		$this->sql      = getContainer()->getSql();
-		$this->registry = getContainer()->getRegistry();
-		$this->user     = getContainer()->getUser();
+		$this->config   = getContainer()->get('config');
+		$this->sql      = getContainer()->get('sql');
+		$this->registry = getContainer()->get('registry');
+		$this->user     = getContainer()->get('user');
 	}
 
 	protected function tearDown()
@@ -73,6 +73,6 @@ abstract class HandlerTest extends \PHPUnit_Extensions_Database_TestCase
 
 	protected function getHandler($table)
 	{
-		return DataFactory::getInstance()->getHandlerInstance($table);
+		return getContainer()->get('handlerManager')->getHandler($table);
 	}
 }

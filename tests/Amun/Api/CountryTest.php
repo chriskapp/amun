@@ -55,7 +55,7 @@ class CountryTest extends RestTest
 
 	public function getHandler()
 	{
-		return DataFactory::get('Country');
+		return getContainer()->get('handlerManager')->getHandler('Country');
 	}
 
 	public function testGet()

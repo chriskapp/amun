@@ -55,7 +55,7 @@ class ServiceTest extends RestTest
 
 	public function getHandler()
 	{
-		return DataFactory::get('Core_Service');
+		return getContainer()->get('handlerManager')->getHandler('Core_Service');
 	}
 
 	public function testGet()

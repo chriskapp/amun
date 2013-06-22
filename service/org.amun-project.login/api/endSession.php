@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace my\login;
+namespace login\api;
 
 use Amun\Module\ApiAbstract;
 use Amun\Exception;

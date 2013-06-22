@@ -55,7 +55,7 @@ class NewsTest extends RestTest
 
 	public function getHandler()
 	{
-		return DataFactory::get('News');
+		return getContainer()->get('handlerManager')->getHandler('News');
 	}
 
 	public function testGet()

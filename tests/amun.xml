@@ -719,14 +719,14 @@
 	</row>
 	<row>
 		<field name="id">55</field>
-		<field name="name">table.my_attempt</field>
+		<field name="name">table.login_attempt</field>
 		<field name="type">STRING</field>
 		<field name="class" xsi:nil="true" />
-		<field name="value">amun_my_attempt</field>
+		<field name="value">amun_login_attempt</field>
 	</row>
 	<row>
 		<field name="id">56</field>
-		<field name="name">my.registration_enabled</field>
+		<field name="name">login.registration_enabled</field>
 		<field name="type">BOOLEAN</field>
 		<field name="class" xsi:nil="true" />
 		<field name="value">1</field>
@@ -740,14 +740,14 @@
 	</row>
 	<row>
 		<field name="id">58</field>
-		<field name="name">my.max_wrong_login</field>
+		<field name="name">login.max_wrong</field>
 		<field name="type">INTEGER</field>
 		<field name="class" xsi:nil="true" />
 		<field name="value">8</field>
 	</row>
 	<row>
 		<field name="id">59</field>
-		<field name="name">my.login_provider</field>
+		<field name="name">login.provider</field>
 		<field name="type">STRING</field>
 		<field name="class" xsi:nil="true" />
 		<field name="value">google, yahoo, openid, system</field>
@@ -1185,6 +1185,21 @@
 		<field name="version">0.0.1</field>
 		<field name="date">2013-04-12 20:51:10</field>
 	</row>
+	<row>
+		<field name="id">26</field>
+		<field name="providerId">2</field>
+		<field name="status">1</field>
+		<field name="source">org.amun-project.login</field>
+		<field name="name">login</field>
+		<field name="path">/login</field>
+		<field name="namespace">login</field>
+		<field name="type">http://ns.amun-project.org/2011/amun/service/login</field>
+		<field name="link">http://amun.phpsx.org</field>
+		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
+		<field name="license">GPLv3</field>
+		<field name="version">0.0.1</field>
+		<field name="date">2013-04-12 20:51:10</field>
+	</row>
 	</table_data>
 	<table_data name="amun_core_service_option">
 	</table_data>
@@ -1233,7 +1248,7 @@
 	<table_data name="amun_mail">
 	<row>
 		<field name="id">1</field>
-		<field name="name">MY_REGISTRATION</field>
+		<field name="name">LOGIN_REGISTRATION</field>
 		<field name="from">noreply@127.0.0.1</field>
 		<field name="subject">Account activation</field>
 		<field name="text">
@@ -1258,7 +1273,7 @@ following activation link:
 	</row>
 	<row>
 		<field name="id">2</field>
-		<field name="name">MY_RECOVER</field>
+		<field name="name">LOGIN_RECOVER</field>
 		<field name="from">noreply@127.0.0.1</field>
 		<field name="subject">Account recover</field>
 		<field name="text">
@@ -1283,7 +1298,7 @@ this email address. Ignore this email if you have not requested a new password.
 	</row>
 	<row>
 		<field name="id">3</field>
-		<field name="name">MY_RECOVER_SUCCESS</field>
+		<field name="name">LOGIN_RECOVER_SUCCESS</field>
 		<field name="from">noreply@127.0.0.1</field>
 		<field name="subject">Account recover success</field>
 		<field name="text">
@@ -1326,7 +1341,7 @@ You can login with the new password at:
 		<field name="date">2013-04-12 20:52:58</field>
 	</row>
 	</table_data>
-	<table_data name="amun_my_attempt">
+	<table_data name="amun_login_attempt">
 	</table_data>
 	<table_data name="amun_news">
 	<row>
@@ -4371,6 +4386,12 @@ echo $_SERVER['REMOTE_ADDR'];</field>
 		<field name="serviceId">16</field>
 		<field name="name">content_page_preview</field>
 		<field name="description">Content Page preview</field>
+	</row>
+	<row>
+		<field name="id">159</field>
+		<field name="serviceId">26</field>
+		<field name="name">login_view</field>
+		<field name="description">Login View</field>
 	</row>
 	</table_data>
 	<table_data name="amun_xrds">

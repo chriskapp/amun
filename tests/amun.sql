@@ -41,7 +41,8 @@ CREATE TABLE `amun_comment` (
 
 LOCK TABLES `amun_comment` WRITE;
 /*!40000 ALTER TABLE `amun_comment` DISABLE KEYS */;
-INSERT INTO `amun_comment` VALUES (1,'7a834452-14df-5724-b00e-e165b974e61b',7,1,1,'<p>foobar </p>','2013-04-12 21:12:52');
+INSERT INTO `amun_comment` VALUES 
+(1,'7a834452-14df-5724-b00e-e165b974e61b',7,1,1,'<p>foobar </p>','2013-04-12 21:12:52');
 /*!40000 ALTER TABLE `amun_comment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -76,7 +77,8 @@ CREATE TABLE `amun_content_gadget` (
 
 LOCK TABLES `amun_content_gadget` WRITE;
 /*!40000 ALTER TABLE `amun_content_gadget` DISABLE KEYS */;
-INSERT INTO `amun_content_gadget` VALUES (1,'52a73a5c-d95d-5013-aee4-47d3ee75d712',21,0,'ajax','LATEST_NEWS','Latest News','latestNews.php',NULL,0,'','2013-04-12 20:53:17');
+INSERT INTO `amun_content_gadget` VALUES 
+(1,'52a73a5c-d95d-5013-aee4-47d3ee75d712',21,0,'ajax','LATEST_NEWS','Latest News','latestNews.php',NULL,0,'','2013-04-12 20:53:17');
 /*!40000 ALTER TABLE `amun_content_gadget` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,7 +120,17 @@ CREATE TABLE `amun_content_page` (
 
 LOCK TABLES `amun_content_page` WRITE;
 /*!40000 ALTER TABLE `amun_content_page` DISABLE KEYS */;
-INSERT INTO `amun_content_page` VALUES (1,0,'5aa63a03-b140-59b4-922a-a3e91b5266fe',19,0,2,3,0,'','test','test','','','',0,'','0000-00-00 00:00:00','2013-04-12 20:51:10'),(2,1,'1b20fc55-32bf-5eca-9dd9-9f54f3552844',19,0,1,3,0,'home','home','Home','','','',0,'','0000-00-00 00:00:00','2013-04-12 20:51:10'),(3,1,'2eb1e5f8-0bb4-58f2-b889-954d18c7163a',17,0,2,3,0,'my','my','My','','','',0,'','0000-00-00 00:00:00','2013-04-12 20:51:10'),(4,1,'a0cf04e4-a229-5f79-b22f-f1d047c73a00',18,0,2,3,0,'profile','profile','Profile','','','',0,'','0000-00-00 00:00:00','2013-04-12 20:51:10'),(5,1,'9b87cd28-07f9-5e33-b11f-f44116ecd64b',19,0,2,3,0,'help','help','Help','','','',0,'','0000-00-00 00:00:00','2013-04-12 20:51:10'),(6,1,'c2f0b0d0-31a2-5b65-a55e-e97b0f4ce5da',22,0,1,3,0,'file','file','File','','','',0,'','0000-00-00 00:00:00','2013-04-12 20:51:47'),(7,1,'eef15285-adac-5465-a88f-fa461ff967c4',21,0,1,3,0,'news','news','News','','','',0,'','0000-00-00 00:00:00','2013-04-12 20:51:59'),(8,1,'a2c1f1ff-2831-5638-9ff9-9617d1a5dc0a',23,0,1,3,0,'php','php','Php','','','',0,'','0000-00-00 00:00:00','2013-04-12 20:52:09'),(9,1,'da47434a-2f57-5bcf-a222-271246d8d9a9',25,0,1,3,0,'pipe','pipe','Pipe','','','',0,'','0000-00-00 00:00:00','2013-04-12 20:52:21'),(10,1,'1fd58c0f-d0da-56f8-8dd8-80035d4bdc71',24,0,1,3,0,'redirect','redirect','Redirect','','','',0,'','0000-00-00 00:00:00','2013-04-12 20:52:34');
+INSERT INTO `amun_content_page` VALUES 
+(1,0,'5aa63a03-b140-59b4-922a-a3e91b5266fe',19,0,2,3,0,'','test','test','','','',0,'','0000-00-00 00:00:00','2013-04-12 20:51:10'),
+(2,1,'1b20fc55-32bf-5eca-9dd9-9f54f3552844',19,0,1,3,0,'home','home','Home','','','',0,'','0000-00-00 00:00:00','2013-04-12 20:51:10'),
+(3,1,'2eb1e5f8-0bb4-58f2-b889-954d18c7163a',17,0,2,3,0,'my','my','My','','','',0,'','0000-00-00 00:00:00','2013-04-12 20:51:10'),
+(4,1,'a0cf04e4-a229-5f79-b22f-f1d047c73a00',18,0,2,3,0,'profile','profile','Profile','','','',0,'','0000-00-00 00:00:00','2013-04-12 20:51:10'),
+(5,1,'9b87cd28-07f9-5e33-b11f-f44116ecd64b',19,0,2,3,0,'help','help','Help','','','',0,'','0000-00-00 00:00:00','2013-04-12 20:51:10'),
+(6,1,'c2f0b0d0-31a2-5b65-a55e-e97b0f4ce5da',22,0,1,3,0,'file','file','File','','','',0,'','0000-00-00 00:00:00','2013-04-12 20:51:47'),
+(7,1,'eef15285-adac-5465-a88f-fa461ff967c4',21,0,1,3,0,'news','news','News','','','',0,'','0000-00-00 00:00:00','2013-04-12 20:51:59'),
+(8,1,'a2c1f1ff-2831-5638-9ff9-9617d1a5dc0a',23,0,1,3,0,'php','php','Php','','','',0,'','0000-00-00 00:00:00','2013-04-12 20:52:09'),
+(9,1,'da47434a-2f57-5bcf-a222-271246d8d9a9',25,0,1,3,0,'pipe','pipe','Pipe','','','',0,'','0000-00-00 00:00:00','2013-04-12 20:52:21'),
+(10,1,'1fd58c0f-d0da-56f8-8dd8-80035d4bdc71',24,0,1,3,0,'redirect','redirect','Redirect','','','',0,'','0000-00-00 00:00:00','2013-04-12 20:52:34');
 /*!40000 ALTER TABLE `amun_content_page` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -281,7 +293,11 @@ CREATE TABLE `amun_core_event` (
 
 LOCK TABLES `amun_core_event` WRITE;
 /*!40000 ALTER TABLE `amun_core_event` DISABLE KEYS */;
-INSERT INTO `amun_core_event` VALUES (1,'core.service_install',NULL,'Notifies if a service gets installed'),(2,'core.record_change',NULL,'Notifies if a record has changed'),(3,'hostmeta.request',NULL,'Notifies if a hostmeta request occurs'),(4,'lrdd.resource_discovery',NULL,'Notifies if an lrdd lookup occurs');
+INSERT INTO `amun_core_event` VALUES 
+(1,'core.service_install',NULL,'Notifies if a service gets installed'),
+(2,'core.record_change',NULL,'Notifies if a record has changed'),
+(3,'hostmeta.request',NULL,'Notifies if a hostmeta request occurs'),
+(4,'lrdd.resource_discovery',NULL,'Notifies if an lrdd lookup occurs');
 /*!40000 ALTER TABLE `amun_core_event` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -307,7 +323,17 @@ CREATE TABLE `amun_core_event_listener` (
 
 LOCK TABLES `amun_core_event_listener` WRITE;
 /*!40000 ALTER TABLE `amun_core_event_listener` DISABLE KEYS */;
-INSERT INTO `amun_core_event_listener` VALUES (1,2,0,'AmunService\\Log\\RecordListener'),(2,1,0,'AmunService\\Xrds\\ConfigListener'),(3,3,0,'AmunService\\Lrdd\\HostmetaListener'),(4,2,0,'AmunService\\User\\Activity\\RecordListener'),(5,1,0,'AmunService\\User\\Activity\\ConfigListener'),(6,1,0,'AmunService\\User\\Right\\ConfigListener'),(7,4,0,'AmunService\\User\\LrddListener'),(8,1,0,'AmunService\\Core\\Service\\Option\\ConfigListener'),(9,1,0,'AmunService\\Mail\\ConfigListener'),(10,4,0,'AmunService\\Content\\LrddListener');
+INSERT INTO `amun_core_event_listener` VALUES 
+(1,2,0,'AmunService\\Log\\RecordListener'),
+(2,1,0,'AmunService\\Xrds\\ConfigListener'),
+(3,3,0,'AmunService\\Lrdd\\HostmetaListener'),
+(4,2,0,'AmunService\\User\\Activity\\RecordListener'),
+(5,1,0,'AmunService\\User\\Activity\\ConfigListener'),
+(6,1,0,'AmunService\\User\\Right\\ConfigListener'),
+(7,4,0,'AmunService\\User\\LrddListener'),
+(8,1,0,'AmunService\\Core\\Service\\Option\\ConfigListener'),
+(9,1,0,'AmunService\\Mail\\ConfigListener'),
+(10,4,0,'AmunService\\Content\\LrddListener');
 /*!40000 ALTER TABLE `amun_core_event_listener` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -394,7 +420,74 @@ CREATE TABLE `amun_core_registry` (
 
 LOCK TABLES `amun_core_registry` WRITE;
 /*!40000 ALTER TABLE `amun_core_registry` DISABLE KEYS */;
-INSERT INTO `amun_core_registry` VALUES (1,'table.core_approval','STRING',NULL,'amun_core_approval'),(2,'table.core_approval_record','STRING',NULL,'amun_core_approval_record'),(3,'table.core_event','STRING',NULL,'amun_core_event'),(4,'table.core_event_listener','STRING',NULL,'amun_core_event_listener'),(5,'table.core_registry','STRING',NULL,'amun_core_registry'),(6,'table.core_service','STRING',NULL,'amun_core_service'),(7,'core.default_timezone','STRING','DateTimeZone','UTC'),(8,'table.log','STRING',NULL,'amun_log'),(9,'table.xrds','STRING',NULL,'amun_xrds'),(10,'table.xrds_type','STRING',NULL,'amun_xrds_type'),(11,'table.user_account','STRING',NULL,'amun_user_account'),(12,'table.user_activity','STRING',NULL,'amun_user_activity'),(13,'table.user_activity_receiver','STRING',NULL,'amun_user_activity_receiver'),(14,'table.user_activity_template','STRING',NULL,'amun_user_activity_template'),(15,'table.user_friend','STRING',NULL,'amun_user_friend'),(16,'table.user_friend_group','STRING',NULL,'amun_user_friend_group'),(17,'table.user_group','STRING',NULL,'amun_user_group'),(18,'table.user_group_right','STRING',NULL,'amun_user_group_right'),(19,'table.user_right','STRING',NULL,'amun_user_right'),(20,'table.core_service_option','STRING',NULL,'amun_core_service_option'),(21,'table.core_assoc','STRING',NULL,'amun_core_assoc'),(22,'table.core_host','STRING',NULL,'amun_core_host'),(23,'table.core_host_request','STRING',NULL,'amun_core_host_request'),(24,'core.title','STRING',NULL,'test'),(25,'core.sub_title','STRING',NULL,''),(26,'core.anonymous_user','INTEGER',NULL,'2'),(27,'core.session_expire','INTEGER',NULL,'1800'),(28,'core.default_user_group','INTEGER',NULL,'2'),(29,'core.default_page','STRING',NULL,'home'),(30,'core.format_datetime','STRING',NULL,'d M. Y, H:i'),(31,'core.format_date','STRING',NULL,'d. F Y'),(32,'core.install_date','STRING',NULL,'2013-04-12 20:51:10'),(33,'core.input_limit','INTEGER',NULL,'16'),(34,'core.input_interval','STRING',NULL,'PT30M'),(35,'core.pw_alpha','INTEGER',NULL,'4'),(36,'core.pw_numeric','INTEGER',NULL,'2'),(37,'core.pw_special','INTEGER',NULL,'0'),(38,'table.oauth','STRING',NULL,'amun_oauth'),(39,'table.oauth_access','STRING',NULL,'amun_oauth_access'),(40,'table.oauth_access_right','STRING',NULL,'amun_oauth_access_right'),(41,'table.oauth_request','STRING',NULL,'amun_oauth_request'),(42,'table.media','STRING',NULL,'amun_media'),(43,'media.upload_size','INTEGER',NULL,'4194304'),(44,'media.path','STRING',NULL,'../cache'),(45,'table.openid','STRING',NULL,'amun_openid'),(46,'table.openid_access','STRING',NULL,'amun_openid_access'),(47,'table.openid_assoc','STRING',NULL,'amun_openid_assoc'),(48,'table.country','STRING',NULL,'amun_country'),(49,'table.mail','STRING',NULL,'amun_mail'),(50,'table.content_gadget','STRING',NULL,'amun_content_gadget'),(51,'table.content_page','STRING',NULL,'amun_content_page'),(52,'table.content_page_gadget','STRING',NULL,'amun_content_page_gadget'),(53,'table.content_page_option','STRING',NULL,'amun_content_page_option'),(54,'table.content_page_right','STRING',NULL,'amun_content_page_right'),(55,'table.my_attempt','STRING',NULL,'amun_my_attempt'),(56,'my.registration_enabled','BOOLEAN',NULL,'1'),(57,'my.max_group_count','INTEGER',NULL,'12'),(58,'my.max_wrong_login','INTEGER',NULL,'8'),(59,'my.login_provider','STRING',NULL,'google, yahoo, openid, system'),(60,'table.page','STRING',NULL,'amun_page'),(61,'table.comment','STRING',NULL,'amun_comment'),(62,'table.news','STRING',NULL,'amun_news'),(63,'table.file','STRING',NULL,'amun_file'),(64,'table.php','STRING',NULL,'amun_php'),(65,'table.redirect','STRING',NULL,'amun_redirect'),(66,'table.pipe','STRING',NULL,'amun_pipe'),(67,'table.core_service_provider','STRING',NULL,'amun_core_service_provider');
+INSERT INTO `amun_core_registry` VALUES 
+(1,'table.core_approval','STRING',NULL,'amun_core_approval'),
+(2,'table.core_approval_record','STRING',NULL,'amun_core_approval_record'),
+(3,'table.core_event','STRING',NULL,'amun_core_event'),
+(4,'table.core_event_listener','STRING',NULL,'amun_core_event_listener'),
+(5,'table.core_registry','STRING',NULL,'amun_core_registry'),
+(6,'table.core_service','STRING',NULL,'amun_core_service'),
+(7,'core.default_timezone','STRING','DateTimeZone','UTC'),
+(8,'table.log','STRING',NULL,'amun_log'),
+(9,'table.xrds','STRING',NULL,'amun_xrds'),
+(10,'table.xrds_type','STRING',NULL,'amun_xrds_type'),
+(11,'table.user_account','STRING',NULL,'amun_user_account'),
+(12,'table.user_activity','STRING',NULL,'amun_user_activity'),
+(13,'table.user_activity_receiver','STRING',NULL,'amun_user_activity_receiver'),
+(14,'table.user_activity_template','STRING',NULL,'amun_user_activity_template'),
+(15,'table.user_friend','STRING',NULL,'amun_user_friend'),
+(16,'table.user_friend_group','STRING',NULL,'amun_user_friend_group'),
+(17,'table.user_group','STRING',NULL,'amun_user_group'),
+(18,'table.user_group_right','STRING',NULL,'amun_user_group_right'),
+(19,'table.user_right','STRING',NULL,'amun_user_right'),
+(20,'table.core_service_option','STRING',NULL,'amun_core_service_option'),
+(21,'table.core_assoc','STRING',NULL,'amun_core_assoc'),
+(22,'table.core_host','STRING',NULL,'amun_core_host'),
+(23,'table.core_host_request','STRING',NULL,'amun_core_host_request'),
+(24,'core.title','STRING',NULL,'test'),
+(25,'core.sub_title','STRING',NULL,''),
+(26,'core.anonymous_user','INTEGER',NULL,'2'),
+(27,'core.session_expire','INTEGER',NULL,'1800'),
+(28,'core.default_user_group','INTEGER',NULL,'2'),
+(29,'core.default_page','STRING',NULL,'home'),
+(30,'core.format_datetime','STRING',NULL,'d M. Y, H:i'),
+(31,'core.format_date','STRING',NULL,'d. F Y'),
+(32,'core.install_date','STRING',NULL,'2013-04-12 20:51:10'),
+(33,'core.input_limit','INTEGER',NULL,'16'),
+(34,'core.input_interval','STRING',NULL,'PT30M'),
+(35,'core.pw_alpha','INTEGER',NULL,'4'),
+(36,'core.pw_numeric','INTEGER',NULL,'2'),
+(37,'core.pw_special','INTEGER',NULL,'0'),
+(38,'table.oauth','STRING',NULL,'amun_oauth'),
+(39,'table.oauth_access','STRING',NULL,'amun_oauth_access'),
+(40,'table.oauth_access_right','STRING',NULL,'amun_oauth_access_right'),
+(41,'table.oauth_request','STRING',NULL,'amun_oauth_request'),
+(42,'table.media','STRING',NULL,'amun_media'),
+(43,'media.upload_size','INTEGER',NULL,'4194304'),
+(44,'media.path','STRING',NULL,'../cache'),
+(45,'table.openid','STRING',NULL,'amun_openid'),
+(46,'table.openid_access','STRING',NULL,'amun_openid_access'),
+(47,'table.openid_assoc','STRING',NULL,'amun_openid_assoc'),
+(48,'table.country','STRING',NULL,'amun_country'),
+(49,'table.mail','STRING',NULL,'amun_mail'),
+(50,'table.content_gadget','STRING',NULL,'amun_content_gadget'),
+(51,'table.content_page','STRING',NULL,'amun_content_page'),
+(52,'table.content_page_gadget','STRING',NULL,'amun_content_page_gadget'),
+(53,'table.content_page_option','STRING',NULL,'amun_content_page_option'),
+(54,'table.content_page_right','STRING',NULL,'amun_content_page_right'),
+(55,'table.login_attempt','STRING',NULL,'amun_login_attempt'),
+(56,'login.registration_enabled','BOOLEAN',NULL,'1'),
+(57,'my.max_group_count','INTEGER',NULL,'12'),
+(58,'login.max_wrong','INTEGER',NULL,'8'),
+(59,'login.provider','STRING',NULL,'google, yahoo, openid, system'),
+(60,'table.page','STRING',NULL,'amun_page'),
+(61,'table.comment','STRING',NULL,'amun_comment'),
+(62,'table.news','STRING',NULL,'amun_news'),
+(63,'table.file','STRING',NULL,'amun_file'),
+(64,'table.php','STRING',NULL,'amun_php'),
+(65,'table.redirect','STRING',NULL,'amun_redirect'),
+(66,'table.pipe','STRING',NULL,'amun_pipe'),
+(67,'table.core_service_provider','STRING',NULL,'amun_core_service_provider');
 /*!40000 ALTER TABLE `amun_core_registry` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -421,7 +514,7 @@ CREATE TABLE `amun_core_service` (
   `date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -430,7 +523,33 @@ CREATE TABLE `amun_core_service` (
 
 LOCK TABLES `amun_core_service` WRITE;
 /*!40000 ALTER TABLE `amun_core_service` DISABLE KEYS */;
-INSERT INTO `amun_core_service` VALUES (1,2,2,'org.amun-project.log','log','/log','log','http://ns.amun-project.org/2011/amun/service/log','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:03'),(2,2,2,'org.amun-project.xrds','xrds','/xrds','xrds','http://ns.amun-project.org/2011/amun/service/xrds','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:03'),(3,2,2,'org.amun-project.hostmeta','hostmeta','/hostmeta','hostmeta','http://ns.amun-project.org/2011/amun/service/hostmeta','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:03'),(4,2,2,'org.amun-project.lrdd','lrdd','/lrdd','lrdd','http://ns.amun-project.org/2011/amun/service/lrdd','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:03'),(5,2,2,'org.amun-project.user','user','/user','user','http://ns.amun-project.org/2011/amun/service/user','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:04'),(6,2,2,'org.amun-project.core','core','/core','core','http://ns.amun-project.org/2011/amun/service/core','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:05'),(7,2,2,'org.amun-project.asset','asset','/asset','asset','http://ns.amun-project.org/2011/amun/service/asset','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:06'),(8,2,2,'org.amun-project.oauth','oauth','/oauth','oauth','http://ns.amun-project.org/2011/amun/service/oauth','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:06'),(9,2,2,'org.amun-project.media','media','/media','media','http://ns.amun-project.org/2011/amun/service/media','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:06'),(10,2,2,'org.amun-project.openid','openid','/openid','openid','http://ns.amun-project.org/2011/amun/service/openid','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:06'),(11,2,2,'org.amun-project.country','country','/country','country','http://ns.amun-project.org/2011/amun/service/country','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:07'),(12,2,2,'org.amun-project.mail','mail','/mail','mail','http://ns.amun-project.org/2011/amun/service/mail','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:07'),(13,2,2,'org.amun-project.swagger','swagger','/swagger','swagger','http://ns.amun-project.org/2011/amun/service/swagger','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:07'),(14,2,2,'org.amun-project.sitemap','sitemap','/sitemap','sitemap','http://ns.amun-project.org/2011/amun/service/sitemap','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:07'),(15,2,2,'org.amun-project.phpinfo','phpinfo','/phpinfo','phpinfo','http://ns.amun-project.org/2011/amun/service/phpinfo','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:07'),(16,2,2,'org.amun-project.content','content','/content','content','http://ns.amun-project.org/2011/amun/service/content','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:08'),(17,2,1,'org.amun-project.my','my','/my','my','http://ns.amun-project.org/2011/amun/service/my','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:08'),(18,2,1,'org.amun-project.profile','profile','/profile','profile','http://ns.amun-project.org/2011/amun/service/profile','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:08'),(19,2,1,'org.amun-project.page','page','/page','page','http://ns.amun-project.org/2011/amun/service/page','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:09'),(20,2,2,'org.amun-project.comment','comment','/comment','comment','http://ns.amun-project.org/2011/amun/service/comment','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:09'),(21,2,1,'org.amun-project.news','news','/news','news','http://ns.amun-project.org/2011/amun/service/news','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:09'),(22,2,1,'org.amun-project.file','file','/file','file','http://ns.amun-project.org/2011/amun/service/file','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:09'),(23,2,1,'org.amun-project.php','php','/php','php','http://ns.amun-project.org/2011/amun/service/php','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:09'),(24,2,1,'org.amun-project.redirect','redirect','/redirect','redirect','http://ns.amun-project.org/2011/amun/service/redirect','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:10'),(25,2,1,'org.amun-project.pipe','pipe','/pipe','pipe','http://ns.amun-project.org/2011/amun/service/pipe','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:10');
+INSERT INTO `amun_core_service` VALUES 
+(1,2,2,'org.amun-project.log','log','/log','log','http://ns.amun-project.org/2011/amun/service/log','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:03'),
+(2,2,2,'org.amun-project.xrds','xrds','/xrds','xrds','http://ns.amun-project.org/2011/amun/service/xrds','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:03'),
+(3,2,2,'org.amun-project.hostmeta','hostmeta','/hostmeta','hostmeta','http://ns.amun-project.org/2011/amun/service/hostmeta','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:03'),
+(4,2,2,'org.amun-project.lrdd','lrdd','/lrdd','lrdd','http://ns.amun-project.org/2011/amun/service/lrdd','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:03'),
+(5,2,2,'org.amun-project.user','user','/user','user','http://ns.amun-project.org/2011/amun/service/user','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:04'),
+(6,2,2,'org.amun-project.core','core','/core','core','http://ns.amun-project.org/2011/amun/service/core','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:05'),
+(7,2,2,'org.amun-project.asset','asset','/asset','asset','http://ns.amun-project.org/2011/amun/service/asset','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:06'),
+(8,2,2,'org.amun-project.oauth','oauth','/oauth','oauth','http://ns.amun-project.org/2011/amun/service/oauth','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:06'),
+(9,2,2,'org.amun-project.media','media','/media','media','http://ns.amun-project.org/2011/amun/service/media','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:06'),
+(10,2,2,'org.amun-project.openid','openid','/openid','openid','http://ns.amun-project.org/2011/amun/service/openid','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:06'),
+(11,2,2,'org.amun-project.country','country','/country','country','http://ns.amun-project.org/2011/amun/service/country','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:07'),
+(12,2,2,'org.amun-project.mail','mail','/mail','mail','http://ns.amun-project.org/2011/amun/service/mail','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:07'),
+(13,2,2,'org.amun-project.swagger','swagger','/swagger','swagger','http://ns.amun-project.org/2011/amun/service/swagger','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:07'),
+(14,2,2,'org.amun-project.sitemap','sitemap','/sitemap','sitemap','http://ns.amun-project.org/2011/amun/service/sitemap','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:07'),
+(15,2,2,'org.amun-project.phpinfo','phpinfo','/phpinfo','phpinfo','http://ns.amun-project.org/2011/amun/service/phpinfo','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:07'),
+(16,2,2,'org.amun-project.content','content','/content','content','http://ns.amun-project.org/2011/amun/service/content','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:08'),
+(17,2,1,'org.amun-project.my','my','/my','my','http://ns.amun-project.org/2011/amun/service/my','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:08'),
+(18,2,1,'org.amun-project.profile','profile','/profile','profile','http://ns.amun-project.org/2011/amun/service/profile','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:08'),
+(19,2,1,'org.amun-project.page','page','/page','page','http://ns.amun-project.org/2011/amun/service/page','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:09'),
+(20,2,2,'org.amun-project.comment','comment','/comment','comment','http://ns.amun-project.org/2011/amun/service/comment','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:09'),
+(21,2,1,'org.amun-project.news','news','/news','news','http://ns.amun-project.org/2011/amun/service/news','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:09'),
+(22,2,1,'org.amun-project.file','file','/file','file','http://ns.amun-project.org/2011/amun/service/file','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:09'),
+(23,2,1,'org.amun-project.php','php','/php','php','http://ns.amun-project.org/2011/amun/service/php','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:09'),
+(24,2,1,'org.amun-project.redirect','redirect','/redirect','redirect','http://ns.amun-project.org/2011/amun/service/redirect','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:10'),
+(25,2,1,'org.amun-project.pipe','pipe','/pipe','pipe','http://ns.amun-project.org/2011/amun/service/pipe','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:10'),
+(26,2,1,'org.amun-project.login','login','/login','login','http://ns.amun-project.org/2011/amun/service/login','http://amun.phpsx.org','Christoph Kappestein <k42b3.x@gmail.com>','GPLv3','0.0.1','2013-04-12 20:51:10');
 /*!40000 ALTER TABLE `amun_core_service` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -479,7 +598,9 @@ CREATE TABLE `amun_core_service_provider` (
 
 LOCK TABLES `amun_core_service_provider` WRITE;
 /*!40000 ALTER TABLE `amun_core_service_provider` DISABLE KEYS */;
-INSERT INTO `amun_core_service_provider` VALUES (1,'localhost','2013-04-28 12:43:28'),(2,'http://amun-project.org','2013-04-28 12:43:28');
+INSERT INTO `amun_core_service_provider` VALUES 
+(1,'localhost','2013-04-28 12:43:28'),
+(2,'http://amun-project.org','2013-04-28 12:43:28');
 /*!40000 ALTER TABLE `amun_core_service_provider` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -627,7 +748,7 @@ CREATE TABLE `amun_mail` (
 
 LOCK TABLES `amun_mail` WRITE;
 /*!40000 ALTER TABLE `amun_mail` DISABLE KEYS */;
-INSERT INTO `amun_mail` VALUES (1,'MY_REGISTRATION','noreply@127.0.0.1','Account activation','\nHello {account.name},\n\nyou have successful registered at {host.name}. Your identity is\n\"{account.identity}\". In order to activate your account please visit the\nfollowing activation link:\n\n{register.link}\n','\nHello {account.name},\n\nyou have successful registered at {host.name}. Your identity is\n\"{account.identity}\". In order to activate your account please visit the\nfollowing activation link:\n\n{register.link}\n','account.name;account.identity;host.name;register.link;register.date'),(2,'MY_RECOVER','noreply@127.0.0.1','Account recover','\nHello {account.name},\n\n{recover.ip} wants to recover your password. In order to get a new password \nvisit the following link. We will create a new password for you and send it to \nthis email address. Ignore this email if you have not requested a new password.\n\n{recover.link}\n','\nHello {account.name},\n\n{recover.ip} wants to recover your password. In order to get a new password \nvisit the following link. We will create a new password for you and send it to \nthis email address. Ignore this email if you have not requested a new password.\n\n{recover.link}\n','account.name;host.name;recover.ip;recover.link;recover.date'),(3,'MY_RECOVER_SUCCESS','noreply@127.0.0.1','Account recover success','\nHello {account.name},\n\nyou have successful recovered your password. It is highly recommended to change\nthe password after a recovery process because the password was maybe transmitted\nover an insecure channel.\n\nNew password: {account.pw}\n\nYou can login with the new password at:\n{recover.link}\n','\nHello {account.name},\n\nyou have successful recovered your password. It is highly recommended to change\nthe password after a recovery process because the password was maybe transmitted\nover an insecure channel.\n\nNew password: {account.pw}\n\nYou can login with the new password at:\n{recover.link}\n','account.name;account.pw;host.name;recover.link;recover.date');
+INSERT INTO `amun_mail` VALUES (1,'LOGIN_REGISTRATION','noreply@127.0.0.1','Account activation','\nHello {account.name},\n\nyou have successful registered at {host.name}. Your identity is\n\"{account.identity}\". In order to activate your account please visit the\nfollowing activation link:\n\n{register.link}\n','\nHello {account.name},\n\nyou have successful registered at {host.name}. Your identity is\n\"{account.identity}\". In order to activate your account please visit the\nfollowing activation link:\n\n{register.link}\n','account.name;account.identity;host.name;register.link;register.date'),(2,'LOGIN_RECOVER','noreply@127.0.0.1','Account recover','\nHello {account.name},\n\n{recover.ip} wants to recover your password. In order to get a new password \nvisit the following link. We will create a new password for you and send it to \nthis email address. Ignore this email if you have not requested a new password.\n\n{recover.link}\n','\nHello {account.name},\n\n{recover.ip} wants to recover your password. In order to get a new password \nvisit the following link. We will create a new password for you and send it to \nthis email address. Ignore this email if you have not requested a new password.\n\n{recover.link}\n','account.name;host.name;recover.ip;recover.link;recover.date'),(3,'LOGIN_RECOVER_SUCCESS','noreply@127.0.0.1','Account recover success','\nHello {account.name},\n\nyou have successful recovered your password. It is highly recommended to change\nthe password after a recovery process because the password was maybe transmitted\nover an insecure channel.\n\nNew password: {account.pw}\n\nYou can login with the new password at:\n{recover.link}\n','\nHello {account.name},\n\nyou have successful recovered your password. It is highly recommended to change\nthe password after a recovery process because the password was maybe transmitted\nover an insecure channel.\n\nNew password: {account.pw}\n\nYou can login with the new password at:\n{recover.link}\n','account.name;account.pw;host.name;recover.link;recover.date');
 /*!40000 ALTER TABLE `amun_mail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -698,13 +819,13 @@ INSERT INTO `amun_media` VALUES (1,'0f52d88e-ac8f-5aad-8004-4c2169eef2f4',77,'em
 UNLOCK TABLES;
 
 --
--- Table structure for table `amun_my_attempt`
+-- Table structure for table `amun_login_attempt`
 --
 
-DROP TABLE IF EXISTS `amun_my_attempt`;
+DROP TABLE IF EXISTS `amun_login_attempt`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `amun_my_attempt` (
+CREATE TABLE `amun_login_attempt` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `ip` varchar(40) NOT NULL,
   `count` int(10) NOT NULL,
@@ -715,12 +836,12 @@ CREATE TABLE `amun_my_attempt` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `amun_my_attempt`
+-- Dumping data for table `amun_login_attempt`
 --
 
-LOCK TABLES `amun_my_attempt` WRITE;
-/*!40000 ALTER TABLE `amun_my_attempt` DISABLE KEYS */;
-/*!40000 ALTER TABLE `amun_my_attempt` ENABLE KEYS */;
+LOCK TABLES `amun_login_attempt` WRITE;
+/*!40000 ALTER TABLE `amun_login_attempt` DISABLE KEYS */;
+/*!40000 ALTER TABLE `amun_login_attempt` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1344,7 +1465,7 @@ CREATE TABLE `amun_user_right` (
 
 LOCK TABLES `amun_user_right` WRITE;
 /*!40000 ALTER TABLE `amun_user_right` DISABLE KEYS */;
-INSERT INTO `amun_user_right` VALUES (1,5,'user_view','User view'),(2,5,'user_add','User add'),(3,5,'user_edit','User edit'),(4,5,'user_delete','User delete'),(5,5,'user_account_view','User Account view'),(6,5,'user_account_add','User Account add'),(7,5,'user_account_edit','User Account edit'),(8,5,'user_account_delete','User Account delete'),(9,5,'user_activity_view','User Activity view'),(10,5,'user_activity_add','User Activity add'),(11,5,'user_activity_edit','User Activity edit'),(12,5,'user_activity_delete','User Activity delete'),(13,5,'user_activity_receiver_view','User Activity Receiver view'),(14,5,'user_activity_receiver_add','User Activity Receiver add'),(15,5,'user_activity_receiver_edit','User Activity Receiver edit'),(16,5,'user_activity_receiver_delete','User Activity Receiver delete'),(17,5,'user_friend_view','User Friend view'),(18,5,'user_friend_add','User Friend add'),(19,5,'user_friend_edit','User Friend edit'),(20,5,'user_friend_delete','User Friend delete'),(21,5,'user_friend_group_view','User Friend Group view'),(22,5,'user_friend_group_add','User Friend Group add'),(23,5,'user_friend_group_edit','User Friend Group edit'),(24,5,'user_friend_group_delete','User Friend Group delete'),(25,5,'user_group_view','User Group view'),(26,5,'user_group_add','User Group add'),(27,5,'user_group_edit','User Group edit'),(28,5,'user_group_delete','User Group delete'),(29,5,'user_group_right_view','User Group Right view'),(30,5,'user_group_right_add','User Group Right add'),(31,5,'user_group_right_edit','User Group Right edit'),(32,5,'user_group_right_delete','User Group Right delete'),(33,5,'user_right_view','User Right view'),(34,5,'user_right_add','User Right add'),(35,5,'user_right_edit','User Right edit'),(36,5,'user_right_delete','User Right delete'),(37,6,'core_view','Core view'),(38,6,'core_add','Core add'),(39,6,'core_edit','Core edit'),(40,6,'core_delete','Core delete'),(41,6,'core_service_view','Core Service view'),(42,6,'core_service_add','Core Service add'),(43,6,'core_service_edit','Core Service edit'),(44,6,'core_service_delete','Core Service delete'),(45,6,'core_approval_view','Core Approval view'),(46,6,'core_approval_add','Core Approval add'),(47,6,'core_approval_edit','Core Approval edit'),(48,6,'core_approval_delete','Core Approval delete'),(49,6,'core_approval_record_view','Core Approval Record view'),(50,6,'core_approval_record_add','Core Approval Record add'),(51,6,'core_approval_record_edit','Core Approval Record edit'),(52,6,'core_approval_record_delete','Core Approval Record delete'),(53,6,'core_host_view','Core Host view'),(54,6,'core_host_add','Core Host add'),(55,6,'core_host_edit','Core Host edit'),(56,6,'core_host_delete','Core Host delete'),(57,6,'core_registry_view','Core Registry view'),(58,6,'core_registry_add','Core Registry add'),(59,6,'core_registry_edit','Core Registry edit'),(60,6,'core_registry_delete','Core Registry delete'),(61,8,'oauth_view','Oauth view'),(62,8,'oauth_add','Oauth add'),(63,8,'oauth_edit','Oauth edit'),(64,8,'oauth_delete','Oauth delete'),(65,8,'oauth_access_view','Oauth Access view'),(66,8,'oauth_access_add','Oauth Access add'),(67,8,'oauth_access_edit','Oauth Access edit'),(68,8,'oauth_access_delete','Oauth Access delete'),(69,8,'oauth_request_view','Oauth Request view'),(70,8,'oauth_request_add','Oauth Request add'),(71,8,'oauth_request_edit','Oauth Request edit'),(72,8,'oauth_request_delete','Oauth Request delete'),(73,8,'oauth_access_right_view','Oauth Access Right view'),(74,8,'oauth_access_right_add','Oauth Access Right add'),(75,8,'oauth_access_right_edit','Oauth Access Right edit'),(76,8,'oauth_access_right_delete','Oauth Access Right delete'),(77,9,'media_view','Media View'),(78,9,'media_add','Media Add'),(79,9,'media_edit','Media Edit'),(80,9,'media_delete','Media Delete'),(81,10,'openid_view','OpenId View'),(82,10,'openid_add','OpenId add'),(83,10,'openid_edit','OpenId edit'),(84,10,'openid_delete','OpenId delete'),(85,10,'openid_access_view','OpenId Access view'),(86,10,'openid_access_add','OpenId Access add'),(87,10,'openid_access_edit','OpenId Access edit'),(88,10,'openid_access_delete','OpenId Access delete'),(89,11,'country_view','Country View'),(90,11,'country_add','Country Add'),(91,11,'country_edit','Country Edit'),(92,11,'country_delete','Country Delete'),(93,12,'mail_view','Mail View'),(94,12,'mail_add','Mail Add'),(95,12,'mail_edit','Mail Edit'),(96,12,'mail_delete','Mail Delete'),(97,13,'swagger_view','Swagger View'),(98,14,'sitemap_view','Sitemap View'),(99,15,'phpinfo_view','Phpinfo View'),(100,16,'content_view','Content view'),(101,16,'content_add','Content add'),(102,16,'content_edit','Content edit'),(103,16,'content_delete','Content delete'),(104,16,'content_gadget_view','Content Gadget view'),(105,16,'content_gadget_add','Content Gadget add'),(106,16,'content_gadget_edit','Content Gadget edit'),(107,16,'content_gadget_delete','Content Gadget delete'),(108,16,'content_page_view','Content Page view'),(109,16,'content_page_add','Content Page add'),(110,16,'content_page_edit','Content Page edit'),(111,16,'content_page_delete','Content Page delete'),(112,16,'content_page_gadget_view','Content Page Gadget view'),(113,16,'content_page_gadget_add','Content Page Gadget add'),(114,16,'content_page_gadget_edit','Content Page Gadget edit'),(115,16,'content_page_gadget_delete','Content Page Gadget delete'),(116,16,'content_page_option_view','Content Page Option view'),(117,16,'content_page_option_add','Content Page Option add'),(118,16,'content_page_option_edit','Content Page Option edit'),(119,16,'content_page_option_delete','Content Page Option delete'),(120,17,'my_view','My View'),(121,17,'my_friends_view','My Friends View'),(122,17,'my_activities_view','My Activites View'),(123,17,'my_settings_view','My Settings View'),(124,18,'profile_view','Profile View'),(125,19,'page_view','Page View'),(126,19,'page_add','Page Add'),(127,19,'page_edit','Page Edit'),(128,19,'page_delete','Page Delete'),(129,20,'comment_view','Comment View'),(130,20,'comment_add','Comment Add'),(131,20,'comment_edit','Comment Edit'),(132,20,'comment_delete','Comment Delete'),(133,21,'news_view','News View'),(134,21,'news_add','News Add'),(135,21,'news_edit','News Edit'),(136,21,'news_delete','News Delete'),(137,21,'news_comment_add','News Comment Add'),(138,22,'file_view','File View'),(139,22,'file_add','File Add'),(140,22,'file_edit','File Edit'),(141,22,'file_delete','File Delete'),(142,23,'php_view','Php View'),(143,23,'php_add','Php Add'),(144,23,'php_edit','Php Edit'),(145,23,'php_delete','Php Delete'),(146,24,'redirect_view','Redirect View'),(147,24,'redirect_add','Redirect Add'),(148,24,'redirect_edit','Redirect Edit'),(149,24,'redirect_delete','Redirect Delete'),(150,25,'pipe_view','Pipe View'),(151,25,'pipe_add','Pipe Add'),(152,25,'pipe_edit','Pipe Edit'),(153,25,'pipe_delete','Pipe Delete'),(154,6,'core_service_provider_view','Core Service Provider view'),(155,6,'core_service_provider_add','Core Service Provider add'),(156,6,'core_service_provider_edit','Core Service Provider edit'),(157,6,'core_service_provider_delete','Core Service Provider delete');
+INSERT INTO `amun_user_right` VALUES (1,5,'user_view','User view'),(2,5,'user_add','User add'),(3,5,'user_edit','User edit'),(4,5,'user_delete','User delete'),(5,5,'user_account_view','User Account view'),(6,5,'user_account_add','User Account add'),(7,5,'user_account_edit','User Account edit'),(8,5,'user_account_delete','User Account delete'),(9,5,'user_activity_view','User Activity view'),(10,5,'user_activity_add','User Activity add'),(11,5,'user_activity_edit','User Activity edit'),(12,5,'user_activity_delete','User Activity delete'),(13,5,'user_activity_receiver_view','User Activity Receiver view'),(14,5,'user_activity_receiver_add','User Activity Receiver add'),(15,5,'user_activity_receiver_edit','User Activity Receiver edit'),(16,5,'user_activity_receiver_delete','User Activity Receiver delete'),(17,5,'user_friend_view','User Friend view'),(18,5,'user_friend_add','User Friend add'),(19,5,'user_friend_edit','User Friend edit'),(20,5,'user_friend_delete','User Friend delete'),(21,5,'user_friend_group_view','User Friend Group view'),(22,5,'user_friend_group_add','User Friend Group add'),(23,5,'user_friend_group_edit','User Friend Group edit'),(24,5,'user_friend_group_delete','User Friend Group delete'),(25,5,'user_group_view','User Group view'),(26,5,'user_group_add','User Group add'),(27,5,'user_group_edit','User Group edit'),(28,5,'user_group_delete','User Group delete'),(29,5,'user_group_right_view','User Group Right view'),(30,5,'user_group_right_add','User Group Right add'),(31,5,'user_group_right_edit','User Group Right edit'),(32,5,'user_group_right_delete','User Group Right delete'),(33,5,'user_right_view','User Right view'),(34,5,'user_right_add','User Right add'),(35,5,'user_right_edit','User Right edit'),(36,5,'user_right_delete','User Right delete'),(37,6,'core_view','Core view'),(38,6,'core_add','Core add'),(39,6,'core_edit','Core edit'),(40,6,'core_delete','Core delete'),(41,6,'core_service_view','Core Service view'),(42,6,'core_service_add','Core Service add'),(43,6,'core_service_edit','Core Service edit'),(44,6,'core_service_delete','Core Service delete'),(45,6,'core_approval_view','Core Approval view'),(46,6,'core_approval_add','Core Approval add'),(47,6,'core_approval_edit','Core Approval edit'),(48,6,'core_approval_delete','Core Approval delete'),(49,6,'core_approval_record_view','Core Approval Record view'),(50,6,'core_approval_record_add','Core Approval Record add'),(51,6,'core_approval_record_edit','Core Approval Record edit'),(52,6,'core_approval_record_delete','Core Approval Record delete'),(53,6,'core_host_view','Core Host view'),(54,6,'core_host_add','Core Host add'),(55,6,'core_host_edit','Core Host edit'),(56,6,'core_host_delete','Core Host delete'),(57,6,'core_registry_view','Core Registry view'),(58,6,'core_registry_add','Core Registry add'),(59,6,'core_registry_edit','Core Registry edit'),(60,6,'core_registry_delete','Core Registry delete'),(61,8,'oauth_view','Oauth view'),(62,8,'oauth_add','Oauth add'),(63,8,'oauth_edit','Oauth edit'),(64,8,'oauth_delete','Oauth delete'),(65,8,'oauth_access_view','Oauth Access view'),(66,8,'oauth_access_add','Oauth Access add'),(67,8,'oauth_access_edit','Oauth Access edit'),(68,8,'oauth_access_delete','Oauth Access delete'),(69,8,'oauth_request_view','Oauth Request view'),(70,8,'oauth_request_add','Oauth Request add'),(71,8,'oauth_request_edit','Oauth Request edit'),(72,8,'oauth_request_delete','Oauth Request delete'),(73,8,'oauth_access_right_view','Oauth Access Right view'),(74,8,'oauth_access_right_add','Oauth Access Right add'),(75,8,'oauth_access_right_edit','Oauth Access Right edit'),(76,8,'oauth_access_right_delete','Oauth Access Right delete'),(77,9,'media_view','Media View'),(78,9,'media_add','Media Add'),(79,9,'media_edit','Media Edit'),(80,9,'media_delete','Media Delete'),(81,10,'openid_view','OpenId View'),(82,10,'openid_add','OpenId add'),(83,10,'openid_edit','OpenId edit'),(84,10,'openid_delete','OpenId delete'),(85,10,'openid_access_view','OpenId Access view'),(86,10,'openid_access_add','OpenId Access add'),(87,10,'openid_access_edit','OpenId Access edit'),(88,10,'openid_access_delete','OpenId Access delete'),(89,11,'country_view','Country View'),(90,11,'country_add','Country Add'),(91,11,'country_edit','Country Edit'),(92,11,'country_delete','Country Delete'),(93,12,'mail_view','Mail View'),(94,12,'mail_add','Mail Add'),(95,12,'mail_edit','Mail Edit'),(96,12,'mail_delete','Mail Delete'),(97,13,'swagger_view','Swagger View'),(98,14,'sitemap_view','Sitemap View'),(99,15,'phpinfo_view','Phpinfo View'),(100,16,'content_view','Content view'),(101,16,'content_add','Content add'),(102,16,'content_edit','Content edit'),(103,16,'content_delete','Content delete'),(104,16,'content_gadget_view','Content Gadget view'),(105,16,'content_gadget_add','Content Gadget add'),(106,16,'content_gadget_edit','Content Gadget edit'),(107,16,'content_gadget_delete','Content Gadget delete'),(108,16,'content_page_view','Content Page view'),(109,16,'content_page_add','Content Page add'),(110,16,'content_page_edit','Content Page edit'),(111,16,'content_page_delete','Content Page delete'),(112,16,'content_page_gadget_view','Content Page Gadget view'),(113,16,'content_page_gadget_add','Content Page Gadget add'),(114,16,'content_page_gadget_edit','Content Page Gadget edit'),(115,16,'content_page_gadget_delete','Content Page Gadget delete'),(116,16,'content_page_option_view','Content Page Option view'),(117,16,'content_page_option_add','Content Page Option add'),(118,16,'content_page_option_edit','Content Page Option edit'),(119,16,'content_page_option_delete','Content Page Option delete'),(120,17,'my_view','My View'),(121,17,'my_friends_view','My Friends View'),(122,17,'my_activities_view','My Activites View'),(123,17,'my_settings_view','My Settings View'),(124,18,'profile_view','Profile View'),(125,19,'page_view','Page View'),(126,19,'page_add','Page Add'),(127,19,'page_edit','Page Edit'),(128,19,'page_delete','Page Delete'),(129,20,'comment_view','Comment View'),(130,20,'comment_add','Comment Add'),(131,20,'comment_edit','Comment Edit'),(132,20,'comment_delete','Comment Delete'),(133,21,'news_view','News View'),(134,21,'news_add','News Add'),(135,21,'news_edit','News Edit'),(136,21,'news_delete','News Delete'),(137,21,'news_comment_add','News Comment Add'),(138,22,'file_view','File View'),(139,22,'file_add','File Add'),(140,22,'file_edit','File Edit'),(141,22,'file_delete','File Delete'),(142,23,'php_view','Php View'),(143,23,'php_add','Php Add'),(144,23,'php_edit','Php Edit'),(145,23,'php_delete','Php Delete'),(146,24,'redirect_view','Redirect View'),(147,24,'redirect_add','Redirect Add'),(148,24,'redirect_edit','Redirect Edit'),(149,24,'redirect_delete','Redirect Delete'),(150,25,'pipe_view','Pipe View'),(151,25,'pipe_add','Pipe Add'),(152,25,'pipe_edit','Pipe Edit'),(153,25,'pipe_delete','Pipe Delete'),(154,6,'core_service_provider_view','Core Service Provider view'),(155,6,'core_service_provider_add','Core Service Provider add'),(156,6,'core_service_provider_edit','Core Service Provider edit'),(157,6,'core_service_provider_delete','Core Service Provider delete'),(158,18,'login_view','Login View');
 /*!40000 ALTER TABLE `amun_user_right` ENABLE KEYS */;
 UNLOCK TABLES;
 

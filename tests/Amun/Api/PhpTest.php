@@ -55,7 +55,7 @@ class PhpTest extends RestTest
 
 	public function getHandler()
 	{
-		return DataFactory::get('Php');
+		return getContainer()->get('handlerManager')->getHandler('Php');
 	}
 
 	public function testGet()

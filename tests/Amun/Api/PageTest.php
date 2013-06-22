@@ -55,7 +55,7 @@ class PageTest extends RestTest
 
 	public function getHandler()
 	{
-		return DataFactory::get('Page');
+		return getContainer()->get('handlerManager')->getHandler('Page');
 	}
 
 	public function testGet()

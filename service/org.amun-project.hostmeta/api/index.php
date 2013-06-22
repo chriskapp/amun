@@ -84,7 +84,7 @@ class index extends ApiAbstract
 			$this->writer->endElement();
 
 
-			$this->event->notifyListener('hostmeta.request', array($this->writer));
+			$this->getEvent()->notifyListener('hostmeta.request', array($this->writer));
 
 
 			$this->writer->endElement();

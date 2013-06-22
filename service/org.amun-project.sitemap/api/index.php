@@ -117,7 +117,7 @@ SELECT
 		ORDER BY `page`.`sort` ASC
 SQL;
 
-		$result = $this->sql->getAll($sql);
+		$result = $this->getSql()->getAll($sql);
 
 		foreach($result as $row)
 		{

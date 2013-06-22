@@ -55,7 +55,7 @@ class MailTest extends RestTest
 
 	public function getHandler()
 	{
-		return DataFactory::get('Mail');
+		return getContainer()->get('handlerManager')->getHandler('Mail');
 	}
 
 	public function testGet()

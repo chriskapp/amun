@@ -46,6 +46,16 @@ class access extends AccessAbstract
 	private $nonce;
 	private $verifier;
 
+	public function onLoad()
+	{
+		parent::onLoad();
+
+		// dependencies
+		$this->config   = $this->getConfig();
+		$this->sql      = $this->getSql();
+		$this->registry = $this->getRegistry();
+	}
+
 	/**
 	 * Endpoint to exchange the temporary credentials for an token
 	 *

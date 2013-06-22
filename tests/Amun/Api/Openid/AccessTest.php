@@ -55,7 +55,7 @@ class AccessTest extends RestTest
 
 	public function getHandler()
 	{
-		return DataFactory::get('Openid_Access');
+		return getContainer()->get('handlerManager')->getHandler('Openid_Access');
 	}
 
 	public function testGet()

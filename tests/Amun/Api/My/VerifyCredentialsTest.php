@@ -63,7 +63,7 @@ class VerifyCredentialsTest extends ApiTest
 
 		// check subject
 		$this->assertEquals(true, isset($xml->name));
-		$this->assertEquals(getContainer()->getUser()->name, (string) $xml->name);
+		$this->assertEquals(getContainer()->get('user')->getName(), (string) $xml->name);
 	}
 }
 

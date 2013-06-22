@@ -55,7 +55,7 @@ class PipeTest extends RestTest
 
 	public function getHandler()
 	{
-		return DataFactory::get('Pipe');
+		return getContainer()->get('handlerManager')->getHandler('Pipe');
 	}
 
 	public function testGet()

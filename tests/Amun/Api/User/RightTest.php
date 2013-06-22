@@ -56,7 +56,7 @@ class RightTest extends RestTest
 
 	public function getHandler()
 	{
-		return DataFactory::get('User_Right');
+		return getContainer()->get('handlerManager')->getHandler('User_Right');
 	}
 
 	public function testGet()
