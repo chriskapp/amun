@@ -44,7 +44,7 @@ class Record extends RecordAbstract
 	const NORMAL  = 0x2;
 
 	protected $_group;
-	protected $_user;
+	protected $_account;
 	protected $_friend;
 	protected $_date;
 
@@ -107,12 +107,12 @@ class Record extends RecordAbstract
 
 	public function getUser()
 	{
-		if($this->_user === null)
+		if($this->_account === null)
 		{
-			$this->_user = $this->_hm->getHandler('User_Account')->getRecord($this->userId);
+			$this->_account = $this->_hm->getHandler('User_Account')->getRecord($this->userId);
 		}
 
-		return $this->_user;
+		return $this->_account;
 	}
 
 	public function getFriend()
