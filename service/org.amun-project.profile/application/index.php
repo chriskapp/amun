@@ -105,8 +105,6 @@ class index extends ApplicationAbstract
 			$this->htmlContent->add(Html\Content::META, '<link rel="alternate" type="application/stream+json" href="' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/activity/' . $account->id . '?format=json" />');
 			$this->htmlContent->add(Html\Content::META, '<link rel="meta" type="application/rdf+xml" title="FOAF" href="' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/my/foaf/' . $account->name . '" />');
 			$this->htmlContent->add(Html\Content::META, '<link rel="profile" type="html/text" href="' . $account->profileUrl . '" />');
-
-			$this->template->set(__CLASS__ . '.tpl');
 		}
 		else
 		{
