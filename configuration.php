@@ -48,7 +48,7 @@ $config = array(
 	'psx_sql_host'            => 'localhost',
 	'psx_sql_user'            => 'root',
 	'psx_sql_pw'              => '',
-	'psx_sql_db'              => 'amun_dev',
+	'psx_sql_db'              => 'amun_db',
 
 	'psx_cache_enabled'       => true,
 	'psx_cache_expire'        => 60 * 30,
