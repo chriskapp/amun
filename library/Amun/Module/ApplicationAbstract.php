@@ -73,6 +73,7 @@ abstract class ApplicationAbstract extends ViewAbstract
 		header('X-XRDS-Location: ' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/xrds');
 
 		// dependencies
+		$this->validate = $this->getValidate();
 		$this->get      = $this->getInputGet();
 		$this->post     = $this->getInputPost();
 		$this->registry = $this->getRegistry();

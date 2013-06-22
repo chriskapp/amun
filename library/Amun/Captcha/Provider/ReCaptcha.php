@@ -49,7 +49,7 @@ class ReCaptcha implements ProviderInterface
 		}
 		else
 		{
-			throw new Exception('Challenge not set');
+			throw new Exception('Captcha challenge not set');
 		}
 
 		if(!empty($challenge))

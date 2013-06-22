@@ -48,7 +48,7 @@ class Image implements ProviderInterface
 		}
 		else
 		{
-			throw new Exception('Result not set');
+			throw new Exception('Captcha result not set');
 		}
 
 		if(!empty($captchaResult) && !empty($result))

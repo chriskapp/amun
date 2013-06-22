@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="754042068d41495433b4cddc099885178e71429b">
+<service xmlns="http://amun-project.org" signature="6fd90280126df4b1b13d5924869c1e6fd6d3f980">
   <status>normal</status>
   <name>my</name>
-  <description>Service wich offers a login and social activities for a user</description>
+  <description>Service wich offers an activitystream and handling of user settings and friends</description>
   <path>/my</path>
   <namespace>my</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/my</type>
@@ -12,12 +12,6 @@
   <version>0.0.1</version>
   <provider>http://amun-project.org</provider>
   <api>
-    <service>
-      <type>http://specs.openid.net/auth/2.0/signon</type>
-      <type>http://openid.net/extensions/sreg/1.1</type>
-      <type>http://specs.openid.net/extensions/oauth/1.0</type>
-      <uri>/signon</uri>
-    </service>
     <service>
       <type>http://portablecontacts.net/spec/1.0</type>
       <type>http://ns.opensocial.org/2008/opensocial/people</type>
@@ -45,119 +39,18 @@
     <option name="settings"/>
   </navigation>
   <registry>
-    <table name="my_attempt"/>
-    <param name="registration_enabled" value="1" type="BOOLEAN"/>
     <param name="max_group_count" value="12" type="INTEGER"/>
-    <param name="max_wrong_login" value="8" type="INTEGER"/>
-    <param name="login_provider" value="google, yahoo, openid, system" type="STRING"/>
   </registry>
-  <mail>
-    <template name="MY_REGISTRATION" from="noreply@%host%" subject="Account activation" values="account.name;account.identity;host.name;register.link;register.date">
-      <text><![CDATA[
-Hello {account.name},
-
-you have successful registered at {host.name}. Your identity is
-"{account.identity}". In order to activate your account please visit the
-following activation link:
-
-{register.link}
-]]></text>
-      <html><![CDATA[
-Hello {account.name},
-
-you have successful registered at {host.name}. Your identity is
-"{account.identity}". In order to activate your account please visit the
-following activation link:
-
-{register.link}
-]]></html>
-    </template>
-    <template name="MY_RECOVER" from="noreply@%host%" subject="Account recover" values="account.name;host.name;recover.ip;recover.link;recover.date">
-      <text><![CDATA[
-Hello {account.name},
-
-{recover.ip} wants to recover your password. In order to get a new password 
-visit the following link. We will create a new password for you and send it to 
-this email address. Ignore this email if you have not requested a new password.
-
-{recover.link}
-]]></text>
-      <html><![CDATA[
-Hello {account.name},
-
-{recover.ip} wants to recover your password. In order to get a new password 
-visit the following link. We will create a new password for you and send it to 
-this email address. Ignore this email if you have not requested a new password.
-
-{recover.link}
-]]></html>
-    </template>
-    <template name="MY_RECOVER_SUCCESS" from="noreply@%host%" subject="Account recover success" values="account.name;account.pw;host.name;recover.link;recover.date">
-      <text><![CDATA[
-Hello {account.name},
-
-you have successful recovered your password. It is highly recommended to change
-the password after a recovery process because the password was maybe transmitted
-over an insecure channel.
-
-New password: {account.pw}
-
-You can login with the new password at:
-{recover.link}
-]]></text>
-      <html><![CDATA[
-Hello {account.name},
-
-you have successful recovered your password. It is highly recommended to change
-the password after a recovery process because the password was maybe transmitted
-over an insecure channel.
-
-New password: {account.pw}
-
-You can login with the new password at:
-{recover.link}
-]]></html>
-    </template>
-  </mail>
   <library>
     <dir name="AmunService">
       <dir name="My">
         <file name="Activity.php" md5="260a6892ebaa8054dc3bc13b175ebace"/>
-        <file name="Attempt.php" md5="104c57a2e18d17f68aa0f03c9e01977f"/>
         <file name="Credentials.php" md5="d0345d7ec707b6a7d828f4c44d282c05"/>
         <file name="FriendsAbstract.php" md5="0c23909fca6732dce40cbf2f83134d93"/>
-        <dir name="Login">
-          <file name="InvalidPasswordException.php" md5="a642461f2775c2c56433ebce6d4662b9"/>
-        </dir>
-        <dir name="LoginHandler">
-          <file name="CallbackInterface.php" md5="278a8689e65dcbfdae52e22a0bd0f9ea"/>
-          <file name="Facebook.php" md5="b393cfc48268fd253661288049357e6d"/>
-          <file name="Github.php" md5="be3f4d4b17ad8b2b2caa7d996334701b"/>
-          <file name="Google.php" md5="84268c526b9ae27192587c0eb78932cd"/>
-          <file name="Ldap.php" md5="6db7536b3e8f270b88e47f3e4f4ac2eb"/>
-          <file name="Openid.php" md5="5c89b56406a5798e6e77014314ef5de0"/>
-          <file name="Remote.php" md5="98c32b88ad83c9f0ba66f2560b50c5fe"/>
-          <file name="System.php" md5="8e149eee1fc63954959951c3993cebc1"/>
-          <file name="Twitter.php" md5="587790581e9af8de26cd9378a3f364df"/>
-          <file name="Webfinger.php" md5="4cde3453858fa59fcf73561844854228"/>
-          <file name="Yahoo.php" md5="1e815916e2bc2db67f11870be6f6a211"/>
-        </dir>
-        <file name="LoginHandlerAbstract.php" md5="d17642d98dc1e00e2b5f61fa85db24fa"/>
-        <file name="LoginHandlerFactory.php" md5="29a0339c577965cb714261c078b263be"/>
         <file name="MyAbstract.php" md5="282d88714b7dca24fa323b9c78a59bba"/>
         <file name="People.php" md5="95ab22f771e7f336062d099ea9786879"/>
         <file name="SettingsAbstract.php" md5="a89956553d6ba44bfb372ca17190125c"/>
       </dir>
     </dir>
   </library>
-  <database>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.my_attempt}` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `ip` varchar(40) NOT NULL,
-  `count` int(10) NOT NULL,
-  `date` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `ip` (`ip`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-  </database>
 </service>

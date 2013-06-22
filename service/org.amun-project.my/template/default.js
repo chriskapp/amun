@@ -21,30 +21,6 @@
 
 amun.services.my = {
 
-	loginDetection: function(){
-		$.get(amun.config.url + 'api/my/determineLoginHandler?identity=' + $('#identity').val(), function(resp){
-			resp = JSON.parse(resp);
-			if (resp.icon) {
-				$('#identity').css('background-image', 'url(' + resp.icon + ')');
-				$('#identity').css('background-position', '95% 50%');
-				$('#identity').css('background-repeat', 'no-repeat');
-			} else {
-				$('#identity').css('background-image', 'none');
-			}
-
-			if (resp.needPassword == '0') {
-				$('#pw').css('background-color', '#eee');
-				$('#pw').val('');
-
-				if ($('#pw').is(':focus')) {
-					$('#login').focus();
-				}
-			} else {
-				$('#pw').css('background-color', '#fff');
-			}
-		});
-	},
-
 	loadSettingsForm: function(cId, url){
 		var form = new amun.form(cId, url);
 

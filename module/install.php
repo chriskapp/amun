@@ -67,6 +67,7 @@ class install extends ViewAbstract
 		'org.amun-project.sitemap',
 		'org.amun-project.phpinfo',
 		'org.amun-project.content',
+		'org.amun-project.login',
 		'org.amun-project.my',
 		'org.amun-project.profile',
 		'org.amun-project.page',
@@ -693,6 +694,7 @@ SQL;
 					'swagger_view',
 					'sitemap_view',
 					'content_view',
+					'login_view',
 					'my_view',
 					'my_friends_view',
 					'my_activities_view',
@@ -722,6 +724,7 @@ SQL;
 					'swagger_view',
 					'sitemap_view',
 					'content_view',
+					'login_view',
 					'my_view',
 					'profile_view',
 					'page_view',
@@ -760,6 +763,7 @@ SQL;
 			$servicePageId    = $this->sql->getField('SELECT `id` FROM ' . $this->registry['table.core_service'] . ' WHERE `source` = "org.amun-project.page"');
 			$serviceProfileId = $this->sql->getField('SELECT `id` FROM ' . $this->registry['table.core_service'] . ' WHERE `source` = "org.amun-project.profile"');
 			$serviceMyId      = $this->sql->getField('SELECT `id` FROM ' . $this->registry['table.core_service'] . ' WHERE `source` = "org.amun-project.my"');
+			$serviceLoginId   = $this->sql->getField('SELECT `id` FROM ' . $this->registry['table.core_service'] . ' WHERE `source` = "org.amun-project.login"');
 
 
 			// insert pages
@@ -786,6 +790,17 @@ SQL;
 				$record->setServiceId($servicePageId);
 				$record->setStatus(ContentPage\Record::NORMAL);
 				$record->setTitle('Home');
+				$record->setTemplate(null);
+
+				$handler->create($record);
+
+
+				// login
+				$record = $handler->getRecord();
+				$record->setParentId(1);
+				$record->setServiceId($serviceLoginId);
+				$record->setStatus(ContentPage\Record::HIDDEN);
+				$record->setTitle('Login');
 				$record->setTemplate(null);
 
 				$handler->create($record);
@@ -961,7 +976,7 @@ tempor invidunt ut labore
 TEXT;
 
 				$record = $handler->getRecord();
-				$record->setPageId(5);
+				$record->setPageId(6);
 				$record->setContent($content);
 
 				$handler->create($record);

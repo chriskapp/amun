@@ -36,6 +36,8 @@ class captcha extends ApiAbstract
 {
 	public function onLoad()
 	{
+		parent::onLoad();
+
 		try
 		{
 			$captcha = \Amun\Captcha::factory($this->config['amun_captcha']);
