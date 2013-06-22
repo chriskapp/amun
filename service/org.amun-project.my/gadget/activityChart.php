@@ -45,6 +45,8 @@ class activityChart extends GadgetAbstract
 	 */
 	public function onLoad()
 	{
+		parent::onLoad();
+
 		$count = $this->args->get('count', 8);
 
 		$now  = new DateTime('NOW', $this->registry['core.default_timezone']);

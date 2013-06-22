@@ -104,7 +104,7 @@ abstract class ApplicationAbstract extends ViewAbstract
 		if($this->page->hasGadget())
 		{
 			$this->gadgetContainer = $this->getGadgetContainer();
-			$this->gadgetContainer->load($this->getLoader(), $this->page, $this->htmlCss);
+			$this->gadgetContainer->load($this->getLoader(), $this->page, $this->getHtmlCss());
 		}
 
 		// template dependencies

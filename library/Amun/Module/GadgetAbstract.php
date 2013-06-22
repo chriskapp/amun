@@ -23,6 +23,7 @@
 namespace Amun\Module;
 
 use Amun\Dependency;
+use Amun\User;
 use PSX\Module\ViewAbstract;
 
 /**
@@ -40,12 +41,15 @@ abstract class GadgetAbstract extends ViewAbstract
 	protected $session;
 	protected $user;
 	protected $gadget;
+	protected $args;
 
 	protected $hm;
 
 	public function onLoad()
 	{
 		// set parameters
+		$this->container->setParameter('session.name', 'amun-' . md5($this->config['psx_url']));
+		$this->container->setParameter('user.id', User::findUserId($this->getSession(), $this->getRegistry()));
 		$this->container->setParameter('gadget.id', $this->location->getServiceId());
 
 		// dependencies
@@ -55,6 +59,7 @@ abstract class GadgetAbstract extends ViewAbstract
 		$this->session  = $this->getSession();
 		$this->user     = $this->getUser();
 		$this->gadget   = $this->getGadget();
+		$this->args     = $this->gadget->getArgs();
 
 		// manager
 		$this->hm = $this->getHandlerManager();

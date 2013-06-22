@@ -169,8 +169,8 @@ SQL;
 
 				if(strpos($content, $key) !== false)
 				{
-					$method  = 'get' . ucfirst($v);
-					$content = str_replace($key, $this->user->$method(), $content);
+					$value   = call_user_func(array($this->user, 'get' . ucfirst($v)));
+					$content = str_replace($key, $value, $content);
 				}
 			}
 		}

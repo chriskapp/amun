@@ -38,6 +38,8 @@ class userMap extends GadgetAbstract
 	 */
 	public function onLoad()
 	{
+		parent::onLoad();
+
 		$chld = array();
 		$chd  = array();
 		$sql  = <<<SQL
@@ -56,7 +58,7 @@ ORDER BY
 	`account`.`id` ASC
 SQL;
 
-		$result = $this->sql->getAll($sql);
+		$result = $this->getSql()->getAll($sql);
 
 		foreach($result as $row)
 		{

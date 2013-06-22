@@ -45,6 +45,8 @@ class latestActivity extends GadgetAbstract
 	 */
 	public function onLoad()
 	{
+		parent::onLoad();
+
 		$count = $this->args->get('count', 8);
 
 		// condition

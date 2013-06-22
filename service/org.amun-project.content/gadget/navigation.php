@@ -44,6 +44,8 @@ class navigation extends GadgetAbstract
 	 */
 	public function onLoad()
 	{
+		parent::onLoad();
+
 		$pageId = $this->args->get('pageId', 1);
 		$tabs   = $this->args->get('tabs', false);
 
@@ -61,24 +63,13 @@ class navigation extends GadgetAbstract
 
 	private function display(array $result, $tabs)
 	{
-		$path = trim($this->config['psx_module_input'], '/');
-
 		echo '<ul class="nav ' . ($tabs ? 'nav-tabs' : 'nav-list') . '">';
 
 		foreach($result as $i => $row)
 		{
-			$selected = substr($path, 0, strlen($row['path'])) == $row['path'];
-
 			if(empty($row['rightId']) || $this->user->hasRightId($row['rightId']))
 			{
-				if($selected)
-				{
-					echo '<li class="active"><a href="' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $row['path'] . '">' . $row['title'] . '</a></li>' . "\n";
-				}
-				else
-				{
-					echo '<li><a href="' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $row['path'] . '">' . $row['title'] . '</a></li>' . "\n";
-				}
+				echo '<li><a href="' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $row['path'] . '">' . $row['title'] . '</a></li>' . "\n";
 			}
 		}
 

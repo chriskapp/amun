@@ -127,7 +127,7 @@ ORDER BY
 	`pageGadget`.`sort` ASC
 SQL;
 
-		$result = $this->sql->getAll($sql, array($page->id), Sql::FETCH_OBJECT, '\Amun\Gadget\Item', array($this->config, $loader));
+		$result = $this->sql->getAll($sql, array($page->getId()), Sql::FETCH_OBJECT, '\Amun\Gadget\Item', array($this->config, $loader));
 
 		foreach($result as $gadget)
 		{

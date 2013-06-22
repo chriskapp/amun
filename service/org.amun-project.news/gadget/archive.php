@@ -40,6 +40,8 @@ class archive extends GadgetAbstract
 	 */
 	public function onLoad()
 	{
+		parent::onLoad();
+
 		$pageId = $this->args->get('pageId', 0);
 
 		// get news archive
@@ -70,7 +72,7 @@ ORDER BY
 	`news`.`date` DESC
 SQL;
 
-		$result = $this->sql->getAll($sql);
+		$result = $this->getSql()->getAll($sql);
 
 		$this->display($result);
 	}

@@ -46,6 +46,8 @@ class latestNews extends GadgetAbstract
 	 */
 	public function onLoad()
 	{
+		parent::onLoad();
+
 		$pageId = $this->args->get('pageId', 0);
 		$count  = $this->args->get('count', 8);
 
