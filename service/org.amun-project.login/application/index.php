@@ -55,9 +55,6 @@ class index extends ApplicationAbstract
 			// assign redirect
 			$this->template->assign('redirect', $this->getRedirect($this->get));
 
-			// add path
-			//$this->path->add('Login', $this->page->getUrl() . '/login');
-
 			// check login attempts
 			$this->attempt = new Attempt($this->registry);
 			$this->stage   = $this->attempt->getStage();

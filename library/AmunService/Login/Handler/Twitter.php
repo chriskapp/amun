@@ -76,7 +76,7 @@ class Twitter extends HandlerAbstract implements CallbackInterface
 	public function handle($identity, $password)
 	{
 		// build callback
-		$callback = $this->pageUrl . '/login/callback/twitter';
+		$callback = $this->pageUrl . '/callback/twitter';
 		$response = $this->oauth->requestToken(new Url(self::REQUEST_TOKEN), self::CONSUMER_KEY, self::CONSUMER_SECRET, 'HMAC-SHA1', $callback);
 
 		$token       = $response->getToken();

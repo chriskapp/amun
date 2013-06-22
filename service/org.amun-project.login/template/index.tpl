@@ -1,10 +1,10 @@
 
-<div class="row amun-service-my-login">
+<div class="row amun-service-login">
 
 	<form method="POST">
 	<input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
 
-	<div class="span8 amun-service-my-login-description">
+	<div class="span8 amun-service-login-description">
 
 		<h3>Sign in to personalize your experience</h3>
 
@@ -18,7 +18,7 @@
 		on the "Register" button and follow the instructions.</p>
 
 	</div>
-	<div class="span4 amun-service-my-login-form">
+	<div class="span4 amun-service-login-form">
 
 		<h3>Login</h3>
 
@@ -54,9 +54,9 @@
 			<input class="btn" type="submit" id="register" name="register" value="Register" />
 		</p>
 
-		<div class="help-block amun-service-my-login-form-help">
+		<div class="help-block amun-service-login-form-help">
 			<br />
-			<small><a href="<?php echo $page->getUrl() . '/login/recover'; ?>">Can't access your account?</a></small>
+			<small><a href="<?php echo $page->getUrl() . '/recover'; ?>">Can't access your account?</a></small>
 		</div>
 
 	</div>

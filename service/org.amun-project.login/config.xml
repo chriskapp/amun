@@ -11,14 +11,6 @@
   <license>GPLv3</license>
   <version>0.0.1</version>
   <provider>http://amun-project.org</provider>
-  <api>
-    <service>
-      <type>http://specs.openid.net/auth/2.0/signon</type>
-      <type>http://openid.net/extensions/sreg/1.1</type>
-      <type>http://specs.openid.net/extensions/oauth/1.0</type>
-      <uri>/signon</uri>
-    </service>
-  </api>
   <permissions>
     <perm name="view" description="Login View"/>
   </permissions>

@@ -63,7 +63,7 @@ class auth extends ApplicationAbstract
 		{
 			$self = $this->page->getUrl() . '/auth?oauth_token=' . $oauthToken;
 
-			header('Location: ' . $this->page->getUrl() . '/login?redirect=' . urlencode($self));
+			header('Location: ' . $this->page->getUrl() . '?redirect=' . urlencode($self));
 
 			exit;
 		}

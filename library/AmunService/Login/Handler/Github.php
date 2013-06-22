@@ -75,7 +75,7 @@ class Github extends HandlerAbstract implements CallbackInterface
 	public function handle($identity, $password)
 	{
 		// build callback
-		$callback = $this->pageUrl . '/login/callback/github';
+		$callback = $this->pageUrl . '/callback/github';
 
 		AuthorizationCode::redirect(new Url(self::AUTHENTICATE), self::CLIENT_ID, $callback);
 	}
@@ -85,7 +85,7 @@ class Github extends HandlerAbstract implements CallbackInterface
 		$code = new AuthorizationCode($this->http, new Url(self::ACCESS_TOKEN));
 		$code->setClientPassword(self::CLIENT_ID, self::CLIENT_SECRET, AuthorizationCode::AUTH_POST);
 
-		$accessToken = $code->getAccessToken($this->pageUrl . '/login/callback/github');
+		$accessToken = $code->getAccessToken($this->pageUrl . '/callback/github');
 
 		// request user informations
 		$url    = new Url(self::VERIFY_ACCOUNT);

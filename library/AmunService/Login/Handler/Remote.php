@@ -60,7 +60,7 @@ class Remote extends Openid
 		}
 
 		// build callback
-		$callback = $this->pageUrl . '/login/callback/remote';
+		$callback = $this->pageUrl . '/callback/remote';
 
 		// create an openid object
 		$openid = new \PSX\OpenId($this->http, $this->config['psx_url'], $this->store);

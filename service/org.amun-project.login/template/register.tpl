@@ -1,12 +1,12 @@
 
-<div class="row amun-service-my-register">
+<div class="row amun-service-login-register">
 
 	<form id="register" method="POST" action="<?php echo $self; ?>">
 
 	<input type="hidden" name="longitude" id="longitude" value="" />
 	<input type="hidden" name="latitude" id="latitude" value="" />
 
-	<div class="span8 amun-service-my-register-description">
+	<div class="span8 amun-service-login-register-description">
 
 		<h3>Register at <?php echo $registry['core.title']; ?></h3>
 
@@ -32,7 +32,7 @@
 
 	</div>
 
-	<div class="span4 amun-service-my-register-form">
+	<div class="span4 amun-service-login-register-form">
 
 		<h3>Register</h3>
 

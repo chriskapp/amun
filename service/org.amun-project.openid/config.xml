@@ -27,6 +27,12 @@
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/assoc</uri>
     </service>
+    <service>
+      <type>http://specs.openid.net/auth/2.0/signon</type>
+      <type>http://openid.net/extensions/sreg/1.1</type>
+      <type>http://specs.openid.net/extensions/oauth/1.0</type>
+      <uri>/signon</uri>
+    </service>
   </api>
   <permissions>
     <perm name="view" description="OpenId View"/>
