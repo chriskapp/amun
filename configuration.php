@@ -35,26 +35,16 @@ $config = array(
 	// psx
 	'psx_url'                 => 'http://127.0.0.1:8000/public',
 	'psx_dispatch'            => 'index.php/',
-	'psx_timezone'            => 'Europe/Berlin',
+	'psx_timezone'            => 'UTC',
 	'psx_gzip'                => false,
 	'psx_debug'               => true,
-	'psx_autoload'            => false,
-	'psx_include_path'        => false,
-
 	'psx_module_default'      => '',
-	'psx_module_input'        => isset($_GET['x']) ? $_GET['x'] : (isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : (isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : '')),
-	'psx_module_input_length' => 256,
+	'psx_template_dir'        => 'default',
 
 	'psx_sql_host'            => 'localhost',
 	'psx_sql_user'            => 'root',
 	'psx_sql_pw'              => '',
 	'psx_sql_db'              => 'amun_db',
-
-	'psx_cache_enabled'       => true,
-	'psx_cache_expire'        => 60 * 30,
-
-	'psx_template_dir'        => 'default',
-	'psx_template_default'    => false,
 
 	'psx_path_cache'          => '../cache',
 	'psx_path_library'        => '../library',
