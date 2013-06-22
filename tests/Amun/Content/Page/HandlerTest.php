@@ -45,41 +45,43 @@ class HandlerTest extends \Amun\HandlerTest
 		$record->setStatus(\AmunService\Content\Page\Record::NORMAL);
 		$record->setTitle('foo');
 
-		$this->getHandler('Content_Page')->create($record);
+		$record = $this->getHandler('Content_Page')->create($record);
+		$parentId = $record->id;
 
 		// check path and parent id of the page
-		$row = $handler->getTable()->getRow(array('id', 'parentId', 'path'), new Condition(array('id', '=', 11)));
+		$row = $handler->getTable()->getRow(array('id', 'parentId', 'path'), new Condition(array('id', '=', $parentId)));
 
 		$this->assertEquals(2, $row['parentId']);
 		$this->assertEquals('home/foo', $row['path']);
 
 		// create two sub pages under foo
 		$record = $handler->getRecord();
-		$record->setParentId(11);
+		$record->setParentId($parentId);
 		$record->setServiceId(19);
 		$record->setStatus(\AmunService\Content\Page\Record::NORMAL);
 		$record->setTitle('bar');
 
-		$this->getHandler('Content_Page')->create($record);
+		$record = $this->getHandler('Content_Page')->create($record);
+
+		$row = $handler->getTable()->getRow(array('id', 'parentId', 'path'), new Condition(array('id', '=', $record->id)));
+
+		$this->assertEquals($parentId, $row['parentId']);
+		$this->assertEquals('home/foo/bar', $row['path']);
+
 
 		$record = $handler->getRecord();
-		$record->setParentId(11);
+		$record->setParentId($parentId);
 		$record->setServiceId(19);
 		$record->setStatus(\AmunService\Content\Page\Record::NORMAL);
 		$record->setTitle('foo');
 
-		$this->getHandler('Content_Page')->create($record);
+		$record = $this->getHandler('Content_Page')->create($record);
 
-		// check pages
-		$row = $handler->getTable()->getRow(array('id', 'parentId', 'path'), new Condition(array('id', '=', 12)));
+		$row = $handler->getTable()->getRow(array('id', 'parentId', 'path'), new Condition(array('id', '=', $record->id)));
 
-		$this->assertEquals(11, $row['parentId']);
-		$this->assertEquals('home/foo/bar', $row['path']);
-
-		$row = $handler->getTable()->getRow(array('id', 'parentId', 'path'), new Condition(array('id', '=', 13)));
-
-		$this->assertEquals(11, $row['parentId']);
+		$this->assertEquals($parentId, $row['parentId']);
 		$this->assertEquals('home/foo/foo', $row['path']);
+
 	}
 
 	public function testReparentPath()
@@ -93,7 +95,7 @@ class HandlerTest extends \Amun\HandlerTest
 		$record->setStatus(\AmunService\Content\Page\Record::NORMAL);
 		$record->setTitle('bar');
 
-		$this->getHandler('Content_Page')->create($record);
+		$page1 = $this->getHandler('Content_Page')->create($record);
 
 		$record = $handler->getRecord();
 		$record->setParentId(2);
@@ -101,22 +103,22 @@ class HandlerTest extends \Amun\HandlerTest
 		$record->setStatus(\AmunService\Content\Page\Record::NORMAL);
 		$record->setTitle('foo');
 
-		$this->getHandler('Content_Page')->create($record);
+		$page2 = $this->getHandler('Content_Page')->create($record);
 
 		// move bar page to another parent
 		$record = $handler->getRecord();
-		$record->setId(11);
+		$record->setId($page1->id);
 		$record->setParentId(7);
 
 		$this->getHandler('Content_Page')->update($record);
 
 		// check path and parent id of the page
-		$row = $handler->getTable()->getRow(array('id', 'parentId', 'path'), new Condition(array('id', '=', 11)));
+		$row = $handler->getTable()->getRow(array('id', 'parentId', 'path'), new Condition(array('id', '=', $page1->id)));
 
 		$this->assertEquals(7, $row['parentId']);
 		$this->assertEquals('news/bar', $row['path']);
 
-		$row = $handler->getTable()->getRow(array('id', 'parentId', 'path'), new Condition(array('id', '=', 12)));
+		$row = $handler->getTable()->getRow(array('id', 'parentId', 'path'), new Condition(array('id', '=', $page2->id)));
 
 		$this->assertEquals(2, $row['parentId']);
 		$this->assertEquals('home/foo', $row['path']);
@@ -138,7 +140,7 @@ class HandlerTest extends \Amun\HandlerTest
 		$record->setStatus(\AmunService\Content\Page\Record::NORMAL);
 		$record->setTitle('bar');
 
-		$this->getHandler('Content_Page')->create($record);
+		$page1 = $this->getHandler('Content_Page')->create($record);
 
 		$record = $handler->getRecord();
 		$record->setParentId(2);
@@ -146,7 +148,7 @@ class HandlerTest extends \Amun\HandlerTest
 		$record->setStatus(\AmunService\Content\Page\Record::NORMAL);
 		$record->setTitle('foo');
 
-		$this->getHandler('Content_Page')->create($record);
+		$page2 = $this->getHandler('Content_Page')->create($record);
 
 		// rename home
 		$record = $handler->getRecord();
@@ -156,12 +158,12 @@ class HandlerTest extends \Amun\HandlerTest
 		$this->getHandler('Content_Page')->update($record);
 
 		// check path and parent id of the page
-		$row = $handler->getTable()->getRow(array('id', 'parentId', 'path'), new Condition(array('id', '=', 11)));
+		$row = $handler->getTable()->getRow(array('id', 'parentId', 'path'), new Condition(array('id', '=', $page1->id)));
 
 		$this->assertEquals(2, $row['parentId']);
 		$this->assertEquals('test/bar', $row['path']);
 
-		$row = $handler->getTable()->getRow(array('id', 'parentId', 'path'), new Condition(array('id', '=', 12)));
+		$row = $handler->getTable()->getRow(array('id', 'parentId', 'path'), new Condition(array('id', '=', $page2->id)));
 
 		$this->assertEquals(2, $row['parentId']);
 		$this->assertEquals('test/foo', $row['path']);
