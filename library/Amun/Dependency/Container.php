@@ -75,7 +75,6 @@ class Container extends \PSX\Dependency\Container
 	public function getSession()
 	{
 		$session = new Session($this->getParameter('session.name'));
-		$session->setSavePath(PSX_PATH_CACHE);
 
 		if($this->hasParameter('session.id'))
 		{
