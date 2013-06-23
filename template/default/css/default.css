@@ -276,3 +276,13 @@ blockquote p
 	color:#333;
 	border:2px dotted #ccc;
 }
+
+.prettyprint
+{
+	-webkit-border-radius:0px;
+	-moz-border-radius:0px;
+	border-radius:0px;
+	padding:6px;
+	font-size:12px;
+	line-height:16px;
+}
