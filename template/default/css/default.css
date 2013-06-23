@@ -250,24 +250,12 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 #amun-form-window
 {
 	width:800px;
-	height:600px;
-	margin-top:-300px;
 	margin-left:-400px;
-	text-align:left;
-}
-
-#amun-form-window .modal-header h3
-{
 }
 
 #amun-form-window .modal-body
 {
 	min-height:460px;
-}
-
-#amun-form-window .modal-body label
-{
-	color:#333;
 }
 
 .amun-preview
