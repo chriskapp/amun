@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="d7f62082412ba786d0e33eebc00415e328279329">
+<service xmlns="http://amun-project.org" signature="378bc1e734cace4fc34097907a0ce986f401552f">
   <status>system</status>
   <name>core</name>
   <description>Contains the core functionalities of amun</description>
@@ -16,10 +16,6 @@
       <type>http://ns.amun-project.org/2011/amun/service/core/service</type>
       <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
       <uri>/service</uri>
-    </service>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/core/service/navigation</type>
-      <uri>/service/navigation</uri>
     </service>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/core/approval</type>

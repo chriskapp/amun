@@ -24,9 +24,10 @@
 
 require_once('../vendor/autoload.php');
 
-$config    = new PSX\Config('../configuration.php');
-$bootstrap = new PSX\Bootstrap($config);
+$container = new Amun\Dependency\Container();
+$container->setParameter('config.file', '../configuration.php');
 
+$config = $container->get('config');
 $config['psx_path_cache']    = '../cache';
 $config['psx_path_library']  = '../library';
 $config['psx_path_module']   = '../module';

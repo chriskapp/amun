@@ -50,15 +50,13 @@ else
 {
 	try
 	{
-		$ct = new Amun\Dependency\Script($config, array('script.userId' => $userId));
+		$container->setParameter('user.id', $userId);
 
-		Amun\DataFactory::initInstance($ct);
+		$logger = new Monolog\Logger('amun');
+		$logger->pushHandler(new Amun\Logger\EchoHandler(Monolog\Logger::INFO));
 
-		PSX\Log::getLogger()->setLevel(PSX\Log::INFO);
-		PSX\Log::getLogger()->addHandler(new PSX\Log\Handler\Println());
-
-		$handler = new AmunService\Media\Handler($ct->getUser());
-		$handler->import($path, $rightId);
+		$handler = new AmunService\Media\Handler($container);
+		$handler->import($path, $rightId, $logger);
 
 		echo 'Import successful';
 		exit(0);

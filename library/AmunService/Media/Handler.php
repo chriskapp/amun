@@ -215,7 +215,7 @@ class Handler extends HandlerAbstract
 					{
 						try
 						{
-							$record = new Record($this->table);
+							$record = new Record($this->table, $this->container);
 							$record->name = $f;
 							$record->path = realpath($item);
 							$record->type = $type;
