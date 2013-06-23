@@ -205,7 +205,8 @@ Ext.define('Amun.form.Form', {
                     name: item.ref,
                     disabled: item.disabled,
                     value: item.value,
-                    fieldLabel: item.label
+                    fieldLabel: item.label,
+                    format: 'Y-m-d H:i:s'
                 };
                 break;
 
