@@ -192,13 +192,13 @@ abstract class ApplicationAbstract extends ViewAbstract
 		$description = $this->page->getDescription();
 		if(!empty($description))
 		{
-			$this->htmlContent->add(Html\Content::META, '<meta name="description" content="' . htmlspecialchars($description) . '" />');
+			$this->htmlContent->add(Html\Content::META, '<meta name="description" content="' . $description . '" />');
 		}
 
 		$keywords = $this->page->getKeywords();
 		if(!empty($keywords))
 		{
-			$this->htmlContent->add(Html\Content::META, '<meta name="keywords" content="' . htmlspecialchars($keywords) . '" />');
+			$this->htmlContent->add(Html\Content::META, '<meta name="keywords" content="' . $keywords . '" />');
 		}
 
 		$publishDate = $this->page->getPublishDate();
