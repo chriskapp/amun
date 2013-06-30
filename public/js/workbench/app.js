@@ -40,8 +40,6 @@ Ext.require('Amun.service.core.service.Grid');
 Ext.require('Amun.service.user.group.Form');
 Ext.require('Amun.service.user.group.Grid');
 
-Ext.require('Amun.service.explorer.Grid');
-
 Ext.require('Amun.service.mail.Form');
 Ext.require('Amun.service.mail.Grid');
 

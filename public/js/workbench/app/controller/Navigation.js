@@ -71,9 +71,6 @@ Ext.define('Workbench.controller.Navigation', {
             title: 'Country',
             type: 'http://ns.amun-project.org/2011/amun/service/country'
         },{
-            title: 'Explorer',
-            type: 'http://ns.amun-project.org/2011/amun/service/explorer'
-        },{
             title: 'VCS Hooks',
             type: 'http://ns.amun-project.org/2011/amun/service/vcshook'
         },{
