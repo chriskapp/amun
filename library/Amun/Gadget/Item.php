@@ -25,6 +25,8 @@ namespace Amun\Gadget;
 use PSX\Cache;
 use PSX\Config;
 use PSX\Loader;
+use PSX\Url;
+use PSX\Http\Request;
 
 /**
  * Item
@@ -44,6 +46,8 @@ class Item
 
 	private $config;
 	private $loader;
+	private $request;
+
 	private $body;
 
 	public function __construct(Config $config, Loader $loader)
@@ -132,7 +136,10 @@ class Item
 
 		try
 		{
-			$this->loader->load('/gadget/' . $this->name);
+			$url     = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'gadget/' . $this->name;
+			$request = new Request(new Url($url), 'GET');
+
+			$this->loader->load('/gadget/' . $this->name, $request);
 
 			$content = ob_get_contents();
 		}
