@@ -30,8 +30,13 @@ use Amun\Data\RecordAbstract;
 use Amun\Sql\TableInterface;
 use AmunService\User\Account;
 use AmunService\User\Friend;
+use PSX\ActivityStream;
 use PSX\Data\RecordInterface;
+use PSX\Data\Writer;
+use PSX\Data\WriterResult;
+use PSX\Data\WriterInterface;
 use PSX\DateTime;
+use PSX\Sql;
 
 /**
  * RecordListener
@@ -125,12 +130,12 @@ SQL;
 			// get object
 			$className = $this->registry->getClassNameFromTable($table->getName());
 			$handler   = $this->hm->getHandler($className, $this->user);
-			$object    = $handler->get($record->id, array('*'));
+			$object    = $handler->get($record->id, array(), Sql::FETCH_OBJECT);
 
 			// build object url
-			if(isset($object['pagePath']) && !empty($row['path']))
+			if(isset($object->pagePath) && !empty($row['path']))
 			{
-				$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $object['pagePath'] . '/' . $row['path'];
+				$url = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $object->pagePath . '/' . $row['path'];
 				$url = $this->substituteVars($object, $url);
 			}
 			else
@@ -138,19 +143,30 @@ SQL;
 				$url = '#';
 			}
 
+			// get activity stream object. If the record does not support jas
+			// an exception is thrown
+			$jas = null;
+			try
+			{
+				$jas = $object->export(new WriterResult(WriterInterface::JAS, new Writer\Jas()));
+			}
+			catch(\Exception $e)
+			{
+			}
+
 			// insert activity
 			$handler = $this->hm->getHandler('User_Activity', $this->user);
 
 			$activity          = $handler->getRecord();
 			$activity->verb    = $row['verb'];
-			$activity->object  = json_encode($object);
+			$activity->object  = $jas instanceof ActivityStream\Activity ? json_encode($jas->getData()) : null;
 			$activity->summary = $this->substituteVars($object, $row['summary'], $url);
 
 			$handler->create($activity);
 		}
 	}
 
-	private function substituteVars(array $record, $content, $url = null)
+	private function substituteVars(RecordInterface $record, $content, $url = null)
 	{
 		// object fields
 		if($url !== null && strpos($content, '{object.url') !== false)
@@ -178,7 +194,9 @@ SQL;
 		// record fields
 		if(strpos($content, '{record.') !== false)
 		{
-			foreach($record as $k => $v)
+			$fields = $record->getData();
+
+			foreach($fields as $k => $v)
 			{
 				$key = '{record.' . $k . '}';
 

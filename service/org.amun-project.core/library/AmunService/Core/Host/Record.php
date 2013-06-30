@@ -160,39 +160,6 @@ class Record extends RecordAbstract
 		return $this->_date;
 	}
 
-	public function export(WriterResult $result)
-	{
-		switch($result->getType())
-		{
-			case WriterInterface::JSON:
-			case WriterInterface::XML:
-
-				return parent::export($result);
-
-				break;
-
-			case WriterInterface::ATOM:
-
-				$entry = $result->getWriter()->createEntry();
-
-				$entry->setTitle($this->name);
-				$entry->setId('urn:uuid:' . $this->_base->getUUID('system:host:' . $this->id));
-				$entry->setUpdated($this->getDate());
-				$entry->addAuthor('System');
-				$entry->addLink($this->url, 'alternate', 'text/html');
-
-				return $entry;
-
-				break;
-
-			default:
-
-				throw new Exception('Writer is not supported');
-
-				break;
-		}
-	}
-
 	public static function getStatus($status = false)
 	{
 		$s = array(

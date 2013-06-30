@@ -139,46 +139,6 @@ class Record extends RecordAbstract
 
 		return $this->_date;
 	}
-
-	public function export(WriterResult $result)
-	{
-		switch($result->getType())
-		{
-			case WriterInterface::JSON:
-			case WriterInterface::XML:
-
-				$fields = parent::export($result);
-
-				if(isset($fields['record']))
-				{
-					$fields['record'] = unserialize($fields['record']);
-				}
-
-				return $fields;
-
-				break;
-
-			case WriterInterface::ATOM:
-
-				$entry = $result->getWriter()->createEntry();
-
-				$entry->setTitle($this->table);
-				$entry->setId($this->getId());
-				$entry->setUpdated($this->getDate());
-				$entry->addAuthor($this->authorName);
-				$entry->setContent($this->getRecord(), 'application/xml');
-
-				return $entry;
-
-				break;
-
-			default:
-
-				throw new Exception('Writer is not supported');
-
-				break;
-		}
-	}
 }
 
 

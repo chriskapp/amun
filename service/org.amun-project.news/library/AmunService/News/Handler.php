@@ -132,7 +132,7 @@ class Handler extends ApproveHandlerAbstract
 		return $this->table
 			->select(array('id', 'globalId', 'pageId', 'userId', 'urlTitle', 'title', 'text', 'date'))
 			->join(Join::INNER, $this->hm->getTable('User_Account')
-				->select(array('name', 'profileUrl'), 'author')
+				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			)
 			->join(Join::INNER, $this->hm->getTable('Content_Page')
 				->select(array('path'), 'page')

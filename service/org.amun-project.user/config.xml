@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="c9fdc707b448d840e078fce0c3fefc57f8f6f93c">
+<service xmlns="http://amun-project.org" signature="e2004bd5683978bc0fa684d94d2be1b401454226">
   <status>system</status>
   <name>user</name>
   <description>Basic service wich handles user groups and rights</description>
@@ -127,7 +127,7 @@
           </dir>
           <file name="Form.php" md5="ac2bb6f1cae67d6debea8aa668807bcc"/>
           <file name="Handler.php" md5="95e4fbe63d7b67aef82e42c9f3a880a2"/>
-          <file name="Record.php" md5="2971e2739f535473b32f54e8457ab39c"/>
+          <file name="Record.php" md5="cf1abd64c41925815c9ad51716d9deb5"/>
           <file name="Table.php" md5="e4ef66469cf0aaa79c21cd6313dc2c52"/>
         </dir>
         <dir name="Activity">
@@ -136,7 +136,7 @@
             <file name="Verb.php" md5="1d04cd814017ffda844627f9d0da116e"/>
           </dir>
           <file name="Form.php" md5="25fe66e5534799412a943c84650f6ca9"/>
-          <file name="Handler.php" md5="a953b4861f40ad483be25ad20c96be4d"/>
+          <file name="Handler.php" md5="2486166c36d80e8c369d8ff2f5b011c0"/>
           <dir name="Receiver">
             <dir name="Filter">
               <file name="Status.php" md5="413868baffefd9c275396723de7bb1a9"/>
@@ -145,8 +145,8 @@
             <file name="Record.php" md5="16001052a0519ae316e2ef3001a18bed"/>
             <file name="Table.php" md5="fbcadb5e4543223769a2e7f261966cd9"/>
           </dir>
-          <file name="Record.php" md5="05c26a08140ef4f69d74c0a80b547174"/>
-          <file name="RecordListener.php" md5="efb28bb15e7a73ffb7895a8d425bc75e"/>
+          <file name="Record.php" md5="599906de547cec3a10ef07091796232a"/>
+          <file name="RecordListener.php" md5="830eee192ba42e2d8ad042a7bd531d10"/>
           <file name="Table.php" md5="7727ca22856da80e83c125d405b9e392"/>
         </dir>
         <dir name="Friend">
@@ -161,7 +161,7 @@
             <file name="Table.php" md5="6c6bdf767e4c3d2fb157cc0ec795655c"/>
           </dir>
           <file name="Handler.php" md5="71f1d1b86caeed5670c1410b843ab165"/>
-          <file name="Record.php" md5="b38eb0f4d6e7dff0f0133417af4cf48d"/>
+          <file name="Record.php" md5="36299d02ab6eae73f5ce06a4ec5f6950"/>
           <file name="Relation.php" md5="629205d6cd79bcff6f4e9072a60f4387"/>
           <file name="Table.php" md5="47dda351151e7e07c055a8928608098c"/>
         </dir>

@@ -47,14 +47,16 @@ class RecordListener extends ListenerAbstract
 UPDATE
 	{$this->registry['table.forum']}
 SET
-	replyUserId = ?,
-	replyCount = replyCount + 1,
-	replyDate = NOW()
+	`replyUserId` = ?,
+	`replyCount` = replyCount + 1,
+	`replyDate` = NOW()
 WHERE
-	id = ?
+	`id` = ?
+AND
+	`pageId` = ?
 SQL;
 
-			$this->sql->execute($sql, array($record->userId, $record->refId));
+			$this->sql->execute($sql, array($record->userId, $record->refId, $record->pageId));
 		}
 	}
 }

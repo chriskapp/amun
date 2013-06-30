@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="7154536e29c42528af42d51a0c21dbad8b5f4984">
+<service xmlns="http://amun-project.org" signature="e43652990787eba355d851c0efbe7636e8472bd4">
   <status>normal</status>
   <name>my</name>
   <description>Service wich offers an activitystream and handling of user settings and friends</description>
@@ -44,7 +44,6 @@
   <library>
     <dir name="AmunService">
       <dir name="My">
-        <file name="Activity.php" md5="260a6892ebaa8054dc3bc13b175ebace"/>
         <file name="Credentials.php" md5="d0345d7ec707b6a7d828f4c44d282c05"/>
         <file name="FriendsAbstract.php" md5="082f5eb889800bb195fa439613b33eae"/>
         <file name="MyAbstract.php" md5="c5a18c72dace6975d2fde43238a108e8"/>

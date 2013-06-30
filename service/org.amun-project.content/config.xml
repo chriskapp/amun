@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="ba6a4641a82bab9e5652b5677ffcba5c3797cd73">
+<service xmlns="http://amun-project.org" signature="79e08e12ce9b766705ba769f757f971cae91568d">
   <status>system</status>
   <name>content</name>
   <description>Basic service wich handles pages and gadgets</description>
@@ -101,7 +101,7 @@
             <file name="Record.php" md5="5ea5ca9fcc5ebd757afdb634ffd02dc8"/>
             <file name="Table.php" md5="302b0f4896106973bf6e1fd619eb5330"/>
           </dir>
-          <file name="Record.php" md5="8a8628e27384df17dee8380f99b0a5ab"/>
+          <file name="Record.php" md5="ec67723bcc3f8948ddac6050ed1c8981"/>
           <file name="Table.php" md5="733e7775343b71b4994ff261e26e4bf0"/>
         </dir>
       </dir>

@@ -257,7 +257,7 @@ class Handler extends HandlerAbstract
 	protected function getDefaultSelect()
 	{
 		return $this->table
-			->select(array('id', 'globalId', 'parentId', 'userId', 'title', 'summary', 'date'))
+			->select(array('id', 'globalId', 'parentId', 'userId', 'title', 'object', 'summary', 'date'))
 			->join(Join::INNER, $this->hm->getTable('User_Account')
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			);

@@ -28,6 +28,7 @@ use Amun\Data\RecordAbstract;
 use Amun\Exception;
 use Amun\Filter as AmunFilter;
 use Amun\Util;
+use PSX\ActivityStream;
 use PSX\Data\WriterInterface;
 use PSX\Data\WriterResult;
 use PSX\DateTime;
@@ -224,11 +225,6 @@ class Record extends RecordAbstract
 	{
 		switch($result->getType())
 		{
-			case WriterInterface::JSON:
-			case WriterInterface::XML:
-				return parent::export($result);
-				break;
-
 			case WriterInterface::ATOM:
 				$entry = $result->getWriter()->createEntry();
 
@@ -269,7 +265,7 @@ class Record extends RecordAbstract
 				break;
 
 			default:
-				throw new Exception('Writer is not supported');
+				return parent::export($result);
 				break;
 		}
 	}
