@@ -325,13 +325,23 @@ Ext.define('Amun.Grid', {
         if (this.getSelectionModel().hasSelection()) {
             var rec = this.getSelectionModel().getSelection()[0];
 
-            this.query('button[cls=wb-content-edit]')[0].enable();
-            this.query('button[cls=wb-content-delete]')[0].enable();
+            if (this.query('button[cls=wb-content-edit]').length > 0) {
+                this.query('button[cls=wb-content-edit]')[0].enable();
+            }
+
+            if (this.query('button[cls=wb-content-delete]').length > 0) {
+                this.query('button[cls=wb-content-delete]')[0].enable();
+            }
 
             this.selectedRecordId = rec.get('id');
         } else {
-            this.query('button[cls=wb-content-edit]')[0].disable();
-            this.query('button[cls=wb-content-delete]')[0].disable();
+            if (this.query('button[cls=wb-content-edit]').length > 0) {
+                this.query('button[cls=wb-content-edit]')[0].disable();
+            }
+
+            if (this.query('button[cls=wb-content-delete]').length > 0) {
+                this.query('button[cls=wb-content-delete]')[0].disable();
+            }
 
             this.selectedRecordId = null;
         }
