@@ -41,29 +41,4 @@ class record extends RestAbstract
 	{
 		return parent::getHandler($table === null ? 'Core_Approval_Record' : $table);
 	}
-
-	protected function setWriterConfig(WriterResult $writer)
-	{
-		switch($writer->getType())
-		{
-			case WriterInterface::ATOM:
-
-				$updated = $this->sql->getField('SELECT `date` FROM ' . $this->registry['table.core_approval_record'] . ' ORDER BY `date` DESC LIMIT 1');
-
-				$title   = 'Record';
-				$id      = 'urn:uuid:' . $this->base->getUUID('core:approval:record');
-				$updated = new DateTime($updated, $this->registry['core.default_timezone']);
-
-				$writer = $writer->getWriter();
-				$writer->setConfig($title, $id, $updated);
-				$writer->setGenerator('amun ' . Base::getVersion());
-
-				if(!empty($this->config['amun_hub']))
-				{
-					$writer->addLink($this->config['amun_hub'], 'hub');
-				}
-
-				break;
-		}
-	}
 }

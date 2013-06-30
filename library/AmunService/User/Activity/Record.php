@@ -22,7 +22,6 @@
 
 namespace AmunService\User\Activity;
 
-use Amun\DataFactory;
 use Amun\Data\HandlerAbstract;
 use Amun\Data\RecordAbstract;
 use Amun\Data\StreamAbstract;
@@ -30,11 +29,13 @@ use Amun\Exception;
 use Amun\Filter as AmunFilter;
 use Amun\Util;
 use AmunService\User\Activity\Filter as ActivityFilter;
+use PSX\ActivityStream;
 use PSX\Data\WriterInterface;
 use PSX\Data\WriterResult;
 use PSX\DateTime;
 use PSX\Filter;
 use PSX\Util\Markdown;
+use PSX\Json;
 use PSX\Sql;
 use PSX\Sql\Join;
 
@@ -48,6 +49,7 @@ use PSX\Sql\Join;
 class Record extends RecordAbstract
 {
 	protected $_user;
+	protected $_object;
 	protected $_date;
 
 	public function setId($id)
@@ -136,6 +138,16 @@ class Record extends RecordAbstract
 		return $this->_user;
 	}
 
+	public function getObject()
+	{
+		if($this->_object === null)
+		{
+			$this->_object = Json::decode($this->object);
+		}
+
+		return $this->_object;
+	}
+
 	public function getSummary()
 	{
 		return htmlspecialchars($this->summary, ENT_NOQUOTES, 'UTF-8');
@@ -166,11 +178,6 @@ class Record extends RecordAbstract
 	{
 		switch($result->getType())
 		{
-			case WriterInterface::JSON:
-			case WriterInterface::XML:
-				return parent::export($result);
-				break;
-
 			case WriterInterface::ATOM:
 				$entry = $result->getWriter()->createEntry();
 
@@ -195,8 +202,42 @@ class Record extends RecordAbstract
 				return $entry;
 				break;
 
+			case WriterInterface::JAS:
+				$object = $this->getObject();
+
+				if(empty($object))
+				{
+					$image = new ActivityStream\MediaLink();
+					$image->setUrl($this->authorThumbnailUrl);
+
+					$actor = new ActivityStream\Object();
+					$actor->setObjectType('person');
+					$actor->setDisplayName($this->authorName);
+					$actor->setUrl($this->authorProfileUrl);
+					$actor->setImage($image);
+
+					$object = new ActivityStream\Object();
+					$object->setObjectType('note');
+					$object->setId('urn:uuid:' . $this->globalId);
+					$object->setDisplayName(Util::stripAndTruncateHtml($this->summary));
+					$object->setPublished($this->getDate());
+					$object->setContent($this->summary);
+
+					$activity = new ActivityStream\Activity();
+					$activity->setActor($actor);
+					$activity->setVerb('post');
+					$activity->setObject($object);
+
+					return $activity;
+				}
+				else
+				{
+					return $object;
+				}
+				break;
+
 			default:
-				throw new Exception('Writer is not supported');
+				return parent::export($result);
 				break;
 		}
 	}

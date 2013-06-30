@@ -40,14 +40,4 @@ class gadget extends RestAbstract
 	{
 		return parent::getHandler($table === null ? 'Content_Gadget' : $table);
 	}
-
-	protected function setWriterConfig(WriterResult $writer)
-	{
-		switch($writer->getType())
-		{
-			case WriterInterface::ATOM:
-				throw new PSX_Data_Exception('Atom not supported');
-				break;
-		}
-	}
 }

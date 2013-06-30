@@ -46,30 +46,4 @@ class host extends RestAbstract
 	{
 		return array('consumerKey', 'consumerSecret');
 	}
-
-	protected function setWriterConfig(WriterResult $writer)
-	{
-		switch($writer->getType())
-		{
-			case WriterInterface::ATOM:
-
-				// get last inserted date
-				$updated = $this->sql->getField('SELECT `date` FROM ' . $this->registry['table.core_host'] . ' ORDER BY `date` DESC LIMIT 1');
-
-				$title   = 'Host';
-				$id      = 'urn:uuid:' . $this->base->getUUID('core:host');
-				$updated = new DateTime($updated, $this->registry['core.default_timezone']);
-
-				$writer = $writer->getWriter();
-				$writer->setConfig($title, $id, $updated);
-				$writer->setGenerator('amun ' . Base::getVersion());
-
-				if(!empty($this->config['amun_hub']))
-				{
-					$writer->addLink($this->config['amun_hub'], 'hub');
-				}
-
-				break;
-		}
-	}
 }

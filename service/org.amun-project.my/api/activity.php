@@ -78,9 +78,7 @@ class activity extends RestAbstract
 					$params['sortBy'], 
 					$params['sortOrder'], 
 					$this->getRequestCondition(),
-					Sql::FETCH_OBJECT, 
-					'\AmunService\My\Activity', 
-					array($this->hm->getTable('User_Activity'), $this->getContainer()));
+					Sql::FETCH_OBJECT);
 
 				$this->setResponse($resultSet);
 			}
@@ -142,6 +140,11 @@ class activity extends RestAbstract
 		$msg = new Message('Delete a activity record is not possible', false);
 
 		$this->setResponse($msg, null, 500);
+	}
+
+	protected function getHandler($table = null)
+	{
+		return parent::getHandler($table === null ? 'User_Activity' : $table);
 	}
 
 	protected function setWriterConfig(WriterResult $writer)

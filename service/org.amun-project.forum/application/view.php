@@ -102,7 +102,7 @@ class view extends ApplicationAbstract
 			$this->htmlCss->add('forum');
 			$this->htmlCss->add('comment');
 			$this->htmlJs->add('forum');
-			$this->htmlJs->add('ace');
+			$this->htmlJs->add('ace-html');
 			$this->htmlJs->add('bootstrap');
 			$this->htmlJs->add('prettify');
 		}

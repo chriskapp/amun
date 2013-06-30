@@ -48,7 +48,7 @@ class activity extends RestAbstract
 		{
 			case WriterInterface::ATOM:
 
-				$updated = $this->sql->getField('SELECT `date` FROM ' . $this->registry['table.user_activity'] . ' ORDER BY `date` DESC LIMIT 1');
+				$updated = $this->getSql()->getField('SELECT `date` FROM ' . $this->registry['table.user_activity'] . ' ORDER BY `date` DESC LIMIT 1');
 
 				$title   = 'Activity';
 				$id      = 'urn:uuid:' . $this->base->getUUID('user:activity');

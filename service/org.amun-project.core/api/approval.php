@@ -40,14 +40,4 @@ class approval extends RestAbstract
 	{
 		return parent::getHandler($table === null ? 'Core_Approval' : $table);
 	}
-
-	protected function setWriterConfig(WriterResult $writer)
-	{
-		switch($writer->getType())
-		{
-			case WriterInterface::ATOM:
-				throw new Exception('Atom not supported');
-				break;
-		}
-	}
 }

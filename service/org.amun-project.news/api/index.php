@@ -45,7 +45,7 @@ class index extends RestAbstract
 		{
 			case WriterInterface::ATOM:
 
-				$updated = $this->sql->getField('SELECT `date` FROM ' . $this->registry['table.news'] . ' ORDER BY `date` DESC LIMIT 1');
+				$updated = $this->getSql()->getField('SELECT `date` FROM ' . $this->registry['table.news'] . ' ORDER BY `date` DESC LIMIT 1');
 
 				$title   = 'News';
 				$id      = 'urn:uuid:' . $this->base->getUUID('news');

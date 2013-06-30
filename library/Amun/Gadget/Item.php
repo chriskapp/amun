@@ -150,21 +150,4 @@ class Item
 
 		return $content;
 	}
-
-	private function getCache($token, $expire)
-	{
-		$file = PSX_PATH_CACHE . '/c_g_' . $token . '.htm';
-
-		if(is_file($file))
-		{
-			if((filemtime($file) + $expire) > time())
-			{
-				$content = file_get_contents($file);
-
-				return $content;
-			}
-		}
-
-		return false;
-	}
 }

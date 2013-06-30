@@ -49,7 +49,7 @@ class page extends RestAbstract
 			case WriterInterface::ATOM:
 
 				// get last inserted date
-				$updated = $this->sql->getField('SELECT `date` FROM ' . $this->registry['table.content_page'] . ' ORDER BY `date` DESC LIMIT 1');
+				$updated = $this->getSql()->getField('SELECT `date` FROM ' . $this->registry['table.content_page'] . ' ORDER BY `date` DESC LIMIT 1');
 
 				$title   = 'Page';
 				$id      = 'urn:uuid:' . $this->base->getUUID('content:page');
