@@ -102,12 +102,21 @@ Ext.define('Amun.service.core.service.Form', {
                     dataIndex: 'description',
                     flex: 1,
                     renderer: function renderTopic(value, p, record) {
-                        return Ext.String.format(
-                            '<b><a href="{0}" target="_blank">{1}</a></b><p>{2}</p>',
-                            record.data.link,
-                            record.data.name,
-                            value
-                        );
+                        if (record.data.installed) {
+                            return Ext.String.format(
+                                '<b><a href="{0}" target="_blank" style="color:#aaa;">{1}</a></b><p style="color:#aaa;">{2}</p>',
+                                record.data.link,
+                                record.data.name,
+                                value
+                            );
+                        } else {
+                            return Ext.String.format(
+                                '<b><a href="{0}" target="_blank">{1}</a></b><p>{2}</p>',
+                                record.data.link,
+                                record.data.name,
+                                value
+                            );
+                        }
                     },
                     sortable: false
                 },{

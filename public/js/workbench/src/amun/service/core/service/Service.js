@@ -8,7 +8,8 @@ Ext.define('Amun.service.core.service.Service', {
         { name: 'link', type: 'string' },
         { name: 'author', type: 'string' },
         { name: 'license', type: 'string' },
-        { name: 'version', type: 'string' }
+        { name: 'version', type: 'string' },
+        { name: 'installed', type: 'boolean' }
     ]
 });
 

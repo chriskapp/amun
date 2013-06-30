@@ -83,6 +83,15 @@ class discover extends ApiAbstract
 					$services = unserialize($content);
 				}
 
+				// check wich services are installed
+				$installedServices = $this->getSql()->getCol('SELECT `source` FROM ' . $this->registry['table.core_service']);
+
+				foreach($services as $k => $service)
+				{
+					$services[$k]['installed'] = in_array($service['source'], $installedServices);
+				}
+
+				// set response
 				$resultSet = new ResultSet(count($services), 0, null, $services);
 
 				$this->setResponse($resultSet);
