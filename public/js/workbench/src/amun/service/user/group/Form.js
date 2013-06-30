@@ -9,6 +9,32 @@ Ext.define('Amun.service.user.group.Form', {
 
         // load group rights
         this.loadRights();
+
+        // show loading panel
+        me.on('submit', function(el){
+            var loadingPanel = Ext.create('Ext.window.Window', {
+                title: 'Operation',
+                height: 60,
+                width: 280,
+                modal: true,
+                layout: 'fit',
+                items: [Ext.create('Ext.ProgressBar', {
+                    border: false,
+                    text: 'Initialize ...'
+                })]
+            });
+            loadingPanel.show();
+
+            loadingPanel.getComponent(0).wait({
+                interval: 200,
+                increment: 15
+            });
+
+            var form = el.getForm();
+            form.on('actioncomplete', function(el, action){
+                loadingPanel.hide();
+            });
+        }, this);
     },
 
     reload: function(){
