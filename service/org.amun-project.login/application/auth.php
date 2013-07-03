@@ -30,6 +30,7 @@ use AmunService\Oauth;
 use PSX\DateTime;
 use PSX\Filter;
 use PSX\Url;
+use PSX\Sql;
 use PSX\Sql\Condition;
 use DateInterval;
 
@@ -109,7 +110,8 @@ class auth extends ApplicationAbstract
 						}
 
 						// load user rights
-						$this->userRights = $this->getHandler('User_Group_Right')->getByGroupId($this->user->getGroupId());
+						$con = new Condition(array('groupId', '=', $this->user->getGroupId()));
+						$this->userRights = $this->getHandler('User_Group_Right')->getAll(array('rightId', 'groupId', 'rightDescription'), 0, 1024, 'rightDescription', Sql::SORT_ASC, $con);
 
 						$this->template->assign('userRights', $this->userRights);
 

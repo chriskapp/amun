@@ -25,6 +25,8 @@ namespace my\application\settings\application;
 use AmunService\My\SettingsAbstract;
 use AmunService\Oauth\Access;
 use Amun\Exception;
+use PSX\Sql;
+use PSX\Sql\Condition;
 
 /**
  * settings
@@ -63,7 +65,8 @@ class settings extends SettingsAbstract
 			$this->template->assign('appRights', $appRights);
 
 			// load user rights
-			$this->userRights = $this->getHandler('User_Group_Right')->getByGroupId($this->user->getGroupId());
+			$con = new Condition(array('groupId', '=', $this->user->getGroupId()));
+			$this->userRights = $this->getHandler('User_Group_Right')->getAll(array('rightId', 'groupId', 'rightDescription'), 0, 1024, 'rightDescription', Sql::SORT_ASC, $con);
 
 			$this->template->assign('userRights', $this->userRights);
 		}
