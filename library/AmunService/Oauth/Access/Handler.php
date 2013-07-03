@@ -61,7 +61,7 @@ class Handler extends HandlerAbstract
 
 	public function isAllowed($apiId, $userId)
 	{
-		return $this->hm->getTable('Oauth_Access')
+		return (boolean) $this->hm->getTable('Oauth_Access')
 			->select(array('allowed'))
 			->where('apiId', '=', $apiId)
 			->where('userId', '=', $userId)

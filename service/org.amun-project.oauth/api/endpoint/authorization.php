@@ -50,27 +50,18 @@ class authorization extends ModuleAbstract
 	public function doAuthorization()
 	{
 		// get oauth token
-		$oauthToken = $this->get->oauth_token('string', array(new Filter\Length(40, 40), new Filter\Xdigit()));
+		$oauthToken = $this->getInputGet()->oauth_token('string', array(new Filter\Length(40, 40), new Filter\Xdigit()));
 
-		if(!$this->validate->hasError())
+		if(!$this->getValidate()->hasError())
 		{
 			// redirect to the auth page
-			header('Location: ' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'my/auth?oauth_token=' . $oauthToken);
-
+			header('Location: ' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'login/auth?oauth_token=' . $oauthToken);
 			exit;
 		}
 		else
 		{
-			throw new Exception($this->validate->getLastError());
+			throw new Exception($this->getValidate()->getLastError());
 		}
 	}
-
-	public function getDependencies()
-	{
-		$ct = new Dependency\Request($this->base->getConfig());
-
-		return $ct;
-	}
 }
-
 

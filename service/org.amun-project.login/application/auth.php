@@ -78,7 +78,7 @@ class auth extends ApplicationAbstract
 				if(!empty($oauthToken))
 				{
 					// check token
-					$row = $this->getHandler('Oauth_Request')->getOneByToken($oauthToken);
+					$row = $this->getHandler('Oauth_Request')->getOneByToken($oauthToken, array('apiId', 'status', 'callback', 'token', 'expire', 'date'));
 
 					if(!empty($row))
 					{
@@ -109,7 +109,7 @@ class auth extends ApplicationAbstract
 						}
 
 						// load user rights
-						$this->userRights = $this->getHandler('User_Group_Right')->getByGroupId($this->user->groupId);
+						$this->userRights = $this->getHandler('User_Group_Right')->getByGroupId($this->user->getGroupId());
 
 						$this->template->assign('userRights', $this->userRights);
 
@@ -181,7 +181,7 @@ class auth extends ApplicationAbstract
 
 		if($token !== false)
 		{
-			$row = $this->getHandler('Oauth_Request')->getOneByToken($token);
+			$row = $this->getHandler('Oauth_Request')->getOneByToken($token, array('status', 'token', 'callback'));
 
 			if(!empty($row))
 			{
@@ -221,7 +221,7 @@ class auth extends ApplicationAbstract
 		// insert or update access
 		$now = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-		$this->sql->replace($this->registry['table.oauth_access'], array(
+		$this->getSql()->replace($this->registry['table.oauth_access'], array(
 
 			'apiId'   => $this->apiId,
 			'userId'  => $this->user->getId(),
@@ -230,7 +230,7 @@ class auth extends ApplicationAbstract
 
 		));
 
-		$accessId = $this->sql->getLastInsertId();
+		$accessId = $this->getSql()->getLastInsertId();
 
 		// insert rights
 		$this->insertAppRights($accessId);
@@ -238,7 +238,7 @@ class auth extends ApplicationAbstract
 		// approve token
 		$con = new Condition(array('token', '=', $token));
 
-		$this->sql->update($this->registry['table.oauth_request'], array(
+		$this->getSql()->update($this->registry['table.oauth_request'], array(
 
 			'userId'   => $this->user->getId(),
 			'status'   => Oauth\Record::APPROVED,
@@ -269,7 +269,7 @@ class auth extends ApplicationAbstract
 		// insert access
 		$now = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-		$this->sql->replace($this->registry['table.oauth_access'], array(
+		$this->getSql()->replace($this->registry['table.oauth_access'], array(
 
 			'apiId'   => $this->apiId,
 			'userId'  => $this->user->getId(),
@@ -281,7 +281,7 @@ class auth extends ApplicationAbstract
 		// delete token
 		$con = new Condition(array('token', '=', $token));
 
-		$this->sql->delete($this->registry['table.oauth_request'], $con);
+		$this->getSql()->delete($this->registry['table.oauth_request'], $con);
 
 		// redirect if callback available
 		if($callback != 'oob')
@@ -313,7 +313,7 @@ class auth extends ApplicationAbstract
 		// delete any existing rights
 		$con = new Condition(array('accessId', '=', $accessId));
 
-		$this->sql->delete($this->registry['table.oauth_access_right'], $con);
+		$this->getSql()->delete($this->registry['table.oauth_access_right'], $con);
 
 		// insert rigts
 		$rights = array();
@@ -345,7 +345,7 @@ VALUES
 	{$sql}
 SQL;
 
-			$this->sql->query($sql);
+			$this->getSql()->query($sql);
 		}
 	}
 }
