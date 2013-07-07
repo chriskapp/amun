@@ -78,14 +78,11 @@ class Handler extends HandlerAbstract
 			}
 
 
-			// set logger if in debug mode
-			if($this->config['psx_debug'] === true)
-			{
-				$this->logger = new Logger('amun');
-				$this->logger->pushHandler(new StreamHandler(PSX_PATH_CACHE . '/install.log', Logger::INFO));
+			// set logger
+			$this->logger = new Logger('amun');
+			$this->logger->pushHandler(new StreamHandler(PSX_PATH_CACHE . '/install.log', Logger::INFO));
 
-				$this->logger->info('Start installation of service ' . $record->source);
-			}
+			$this->logger->info('Start installation of service ' . $record->source);
 
 
 			// check whether phar or folder installation
