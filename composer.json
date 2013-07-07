@@ -1,26 +1,34 @@
 {
-  "name": "amun/amun",
-  "description": "Amun CMS",
-  "keywords": ["cms", "social", "rest", "api", "oauth", "openid"],
-  "homepage": "http://amun-project.org",
-  "type": "cms",
-  "license": "GPLv3",
-  "authors": [
-    {
-      "name": "Christoph Kappestein",
-      "email": "k42b3.x@gmail.com",
-      "homepage": "http://k42b3.com"
+    "name": "amun/amun",
+    "description": "Amun CMS",
+    "keywords": [
+        "cms",
+        "social",
+        "rest",
+        "api",
+        "oauth",
+        "openid"
+    ],
+    "homepage": "http://amun-project.org",
+    "type": "cms",
+    "license": "GPL-3.0",
+    "version": "0.4.4",
+    "authors": [
+        {
+            "name": "Christoph Kappestein",
+            "email": "k42b3.x@gmail.com",
+            "homepage": "http://k42b3.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3",
+        "psx/psx": "dev-master",
+        "composer/composer": "1.0.*@dev",
+        "monolog/monolog": "1.5.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Amun": "library/"
+        }
     }
-  ],
-  "require": {
-    "php": ">=5.3",
-    "psx/psx": "dev-master",
-    "zendframework/zend-mail": "2.1.*",
-    "monolog/monolog": "1.5.*"
-  },
-  "autoload": {
-    "psr-0": {
-      "Amun": "library/"
-    }
-  }
 }

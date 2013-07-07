@@ -23,12 +23,18 @@
 namespace AmunService\Core\Service;
 
 use Amun\Base;
+use Amun\Composer\LoggerIO;
+use Amun\Composer\XmlFile;
 use Amun\DataFactory;
 use Amun\Data\HandlerAbstract;
 use Amun\Data\RecordAbstract;
 use Amun\Exception;
 use AmunService\Core\Approval;
 use AmunService\Core\Service;
+use Composer\Factory;
+use Composer\Config;
+use Composer\Installer;
+use Composer\Json\JsonFile;
 use DOMDocument;
 use DOMElement;
 use DOMNodeList;
@@ -247,6 +253,10 @@ class Handler extends HandlerAbstract
 		{
 			throw new Exception('Invalid configuration signature');
 		}
+
+
+		// install dependencies via composer
+		$package = $this->installDependencies($this->serviceConfig);
 
 
 		// get meta data
@@ -761,7 +771,7 @@ class Handler extends HandlerAbstract
 		}
 	}
 
-	public function substituteVars($sql, Service\Record $record)
+	private function substituteVars($sql, Service\Record $record)
 	{
 		// tables
 		$result = $this->sql->getAll('SELECT name, value FROM ' . $this->registry['table.core_registry'] . ' WHERE name LIKE "table.%"');
@@ -797,6 +807,73 @@ class Handler extends HandlerAbstract
 		}
 
 		return $sql;
+	}
+
+	/**
+	 * Installs the dependencies via composer. It gets the dependencies from the
+	 * service and merges them with the local composer.json. After the 
+	 * composer.json is updated composer updates all dependencies
+	 *
+	 * @param DOMDocument $config 
+	 * @param string $serviceConfigFile 
+	 */
+	private function installDependencies(DOMDocument $config)
+	{
+		ignore_user_abort(true);
+		set_time_limit(0);
+
+		Config::$defaultConfig['vendor-dir'] = '../vendor';
+		Config::$defaultConfig['cache-dir']  = PSX_PATH_CACHE;
+
+		$io = new LoggerIO($this->logger);
+
+		$localFile     = new JsonFile('../composer.json');
+		$localConfig   = $localFile->read();
+
+		$serviceFile   = new XmlFile($config);
+		$serviceConfig = $serviceFile->read();
+
+		if(empty($serviceConfig))
+		{
+			// nothing todo here
+			return;
+		}
+
+		if(isset($serviceConfig['require']))
+		{
+			if(!isset($localConfig['require']))
+			{
+				$localConfig['require'] = array();
+			}
+
+			$localConfig['require'] = array_merge($localConfig['require'], $serviceConfig['require']);
+		}
+
+		if(isset($serviceConfig['require-dev']))
+		{
+			if(!isset($localConfig['require-dev']))
+			{
+				$localConfig['require-dev'] = array();
+			}
+
+			$localConfig['require-dev'] = array_merge($localConfig['require-dev'], $serviceConfig['require-dev']);
+		}
+
+		$localFile->write($localConfig);
+
+		$cwd = getcwd();
+		chdir('..');
+
+		$composer  = Factory::create($io);
+		$installer = Installer::create($io, $composer);
+		$installer
+			->setRunScripts(false)
+			->setOptimizeAutoloader(true)
+			->setUpdate(true);
+
+		$installer->run();
+
+		chdir($cwd);
 	}
 }
 

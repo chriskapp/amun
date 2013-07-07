@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="9027cc043ad73ee7458908233bc4e1e5de1a6082">
+<service xmlns="http://amun-project.org" xmlns:cp="http://composer.org/2013/composer/config" signature="c8093924eedb5c06edc3b65f750c381092f26554">
   <status>system</status>
   <name>mail</name>
   <description>A service to manage mail templates wich can be used by other services</description>
@@ -11,6 +11,9 @@
   <license>GPLv3</license>
   <version>0.0.1</version>
   <provider>http://amun-project.org</provider>
+  <cp:require>
+    <cp:package name="zendframework/zend-mail" version="2.1.*"/>
+  </cp:require>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/mail</type>

@@ -180,6 +180,7 @@ Ext.define('Amun.service.core.service.Form', {
                                 // remote provider and then we can install it
                                 Ext.Ajax.request({
                                     url: serviceUri + '/download?format=json',
+                                    timeout: 60000, // downloading  can take a while
                                     method: 'POST',
                                     params: {
                                         provider: provider,
@@ -223,6 +224,7 @@ Ext.define('Amun.service.core.service.Form', {
         // we can simply install the service
         Ext.Ajax.request({
             url: this.formAction + '?format=json',
+            timeout: 60000, // installing can take a while
             method: 'POST',
             params: {
                 source: source
