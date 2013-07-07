@@ -816,12 +816,11 @@ class Handler extends HandlerAbstract
 	 */
 	private function installDependencies(DOMDocument $config)
 	{
+		// ignore time
 		ignore_user_abort(true);
 		set_time_limit(0);
 
-		Config::$defaultConfig['vendor-dir'] = '../vendor';
-		Config::$defaultConfig['cache-dir']  = PSX_PATH_CACHE;
-
+		// io logger
 		$io = new LoggerIO($this->logger);
 
 		// load dependencies
