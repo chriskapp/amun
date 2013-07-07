@@ -827,6 +827,7 @@ class Handler extends HandlerAbstract
 
 		$io = new LoggerIO($this->logger);
 
+		// load dependencies
 		$localFile     = new JsonFile('../composer.json');
 		$localConfig   = $localFile->read();
 
@@ -836,6 +837,7 @@ class Handler extends HandlerAbstract
 		if(empty($serviceConfig))
 		{
 			// nothing todo here
+			$this->logger->info('Found no dependencies');
 			return;
 		}
 
@@ -844,6 +846,12 @@ class Handler extends HandlerAbstract
 			if(!isset($localConfig['require']))
 			{
 				$localConfig['require'] = array();
+			}
+
+			$this->logger->info('Append the following dependencies (require)');
+			foreach($serviceConfig['require'] as $name => $version)
+			{
+				$this->logger->info('> ' . $name . ' (' . $version . ')');
 			}
 
 			$localConfig['require'] = array_merge($localConfig['require'], $serviceConfig['require']);
@@ -856,10 +864,22 @@ class Handler extends HandlerAbstract
 				$localConfig['require-dev'] = array();
 			}
 
+			$this->logger->info('Append the following dependencies (require-dev)');
+			foreach($serviceConfig['require-dev'] as $name => $version)
+			{
+				$this->logger->info('> ' . $name . ' (' . $version . ')');
+			}
+
 			$localConfig['require-dev'] = array_merge($localConfig['require-dev'], $serviceConfig['require-dev']);
 		}
 
+		// write config
+		$this->logger->info('Write merged composer.json');
+
 		$localFile->write($localConfig);
+
+		// update composer
+		$this->logger->info('Update composer ...');
 
 		$cwd = getcwd();
 		chdir('..');
