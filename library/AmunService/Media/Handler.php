@@ -27,7 +27,7 @@ use Amun\Data\HandlerAbstract;
 use Amun\Data\RecordAbstract;
 use Amun\Exception;
 use AmunService\Core\Approval;
-use Monolog\Logger;
+use DirectoryIterator;
 use PSX\DateTime;
 use PSX\Data\RecordInterface;
 use PSX\Data\ResultSet;
@@ -183,58 +183,49 @@ class Handler extends HandlerAbstract
 	 *
 	 * @return void
 	 */
-	public function import($path, $rightId = null, Logger $logger)
+	public function import($path, $rightId = null)
 	{
 		if(!is_dir($path))
 		{
 			throw new Exception('Path is not a valid dir');
 		}
 
-		$logger->info('Scan ' . $path);
+		$count  = 0;
+		$logger = $this->container->get('logger');
+		$it     = new DirectoryIterator($path);
 
-		$files = scandir($path);
-		$count = 0;
-
-		foreach($files as $f)
+		foreach($it as $file)
 		{
-			if($f[0] != '.')
+			if(!$file->isDot() && $file->isFile())
 			{
-				$item = $path . '/' . $f;
+				$mimeType = $this->getMimeTypeByExtension($file->getFilename());
+				$type     = $this->getType($mimeType);
 
-				if(is_dir($item))
+				if($type !== false)
 				{
-					$this->import($item, $rightId);
-				}
-
-				if(is_file($item))
-				{
-					$mimeType = $this->getMimeTypeByExtension($item);
-					$type     = $this->getType($mimeType);
-
-					if($type !== false)
+					try
 					{
-						try
+						$record = new Record($this->table, $this->container);
+						$record->name = $file->getFilename();
+						$record->path = $file->getRealPath();
+						$record->type = $type;
+						$record->size = $file->getSize();
+						$record->mimeType = $mimeType;
+
+						if(!empty($rightId))
 						{
-							$record = new Record($this->table, $this->container);
-							$record->name = $f;
-							$record->path = realpath($item);
-							$record->type = $type;
-							$record->size = filesize($item);
-							$record->mimeType = $mimeType;
-
-							if(!empty($rightId))
-							{
-								$record->setRightId($rightId);
-							}
-
-							$this->create($record);
-
-							$count++;
+							$record->setRightId($rightId);
 						}
-						catch(\Exception $e)
-						{
-							$logger->error($e->getMessage());
-						}
+
+						$this->create($record);
+
+						$logger->info('Added ' . $record->path);
+
+						$count++;
+					}
+					catch(\Exception $e)
+					{
+						$logger->error($e->getMessage());
 					}
 				}
 			}
