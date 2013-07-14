@@ -22,11 +22,10 @@
 
 require_once('../vendor/autoload.php');
 
-$userId  = isset($_SERVER['argv'][1]) ? intval($_SERVER['argv'][1]) : null;
-$path    = isset($_SERVER['argv'][2]) ? $_SERVER['argv'][2] : null;
-$rightId = isset($_SERVER['argv'][3]) ? intval($_SERVER['argv'][3]) : null;
+$path    = isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : null;
+$rightId = isset($_SERVER['argv'][2]) ? intval($_SERVER['argv'][2]) : null;
 
-if(empty($userId) || empty($path))
+if(empty($path))
 {
 	echo <<<USAGE
 NAME
