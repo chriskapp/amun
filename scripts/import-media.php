@@ -1,12 +1,10 @@
 <?php
 /*
- *  $Id: import-media.php 811 2012-07-09 14:23:49Z k42b3.x@googlemail.com $
- *
  * amun
  * A social content managment system based on the psx framework. For
  * the current version and informations visit <http://amun.phpsx.org>
  *
- * Copyright (c) 2010-2012 Christoph Kappestein <k42b3.x@gmail.com>
+ * Copyright (c) 2010-2013 Christoph Kappestein <k42b3.x@gmail.com>
  *
  * This file is part of amun. amun is free software: you can
  * redistribute it and/or modify it under the terms of the
@@ -22,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once('bootstrap.php');
+require_once('../vendor/autoload.php');
 
 $userId  = isset($_SERVER['argv'][1]) ? intval($_SERVER['argv'][1]) : null;
 $path    = isset($_SERVER['argv'][2]) ? $_SERVER['argv'][2] : null;
@@ -50,6 +48,8 @@ else
 {
 	try
 	{
+		$container = new Amun\Dependency\Container();
+		$container->setParameter('config.file', '../configuration.php');
 		$container->setParameter('user.id', $userId);
 
 		$logger = new Monolog\Logger('amun');
