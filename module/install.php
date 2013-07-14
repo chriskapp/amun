@@ -123,13 +123,13 @@ class install extends ViewAbstract
 	 */
 	public function showInstall()
 	{
-		$this->template->assign('administratorName', $this->session->administratorName);
-		$this->template->assign('administratorPw', $this->session->administratorPw);
-		$this->template->assign('administratorEmail', $this->session->administratorEmail);
-		$this->template->assign('settingsTitle', $this->session->settingsTitle);
-		$this->template->assign('settingsSubTitle', $this->session->settingsSubTitle);
-		$this->template->assign('settingsTimezone', $this->session->settingsTimezone);
-		$this->template->assign('settingsSample', $this->session->settingsSample);
+		$this->template->assign('administratorName', $this->session->get('administratorName'));
+		$this->template->assign('administratorPw', $this->session->get('administratorPw'));
+		$this->template->assign('administratorEmail', $this->session->get('administratorEmail'));
+		$this->template->assign('settingsTitle', $this->session->get('settingsTitle'));
+		$this->template->assign('settingsSubTitle', $this->session->get('settingsSubTitle'));
+		$this->template->assign('settingsTimezone', $this->session->get('settingsTimezone'));
+		$this->template->assign('settingsSample', $this->session->get('settingsSample'));
 	}
 
 	/**
@@ -162,7 +162,7 @@ class install extends ViewAbstract
 			$hash = new ReflectionExtension('hash');
 
 			// gd
-			$gd = new ReflectionExtension('gd');
+			//$gd = new ReflectionExtension('gd');
 
 			// phar
 			//$phar = new ReflectionExtension('phar');
@@ -632,7 +632,7 @@ SQL;
 					$values = array(
 
 						'host.name'       => $this->base->getHost(),
-						'account.name'    => $this->session->administratorName,
+						'account.name'    => $this->session->get('administratorName'),
 						'consumer.key'    => $row['consumerKey'],
 						'consumer.secret' => $row['consumerSecret'],
 
@@ -778,7 +778,7 @@ SQL;
 				$record->setParentId(0);
 				$record->setServiceId($servicePageId);
 				$record->setStatus(ContentPage\Record::HIDDEN);
-				$record->setTitle($_SESSION['settingsTitle']);
+				$record->setTitle($this->session->get('settingsTitle'));
 				$record->setTemplate(null);
 
 				$handler->create($record);
