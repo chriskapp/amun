@@ -1,9 +1,7 @@
 
 [FEATURES]
 
-[x] remove window dialog from footer since css from the footer is applied on the 
-    window
-[x] add loading animation to user group right save
+[ ] improve right system probably with inheritance. Add page specific rights
 [ ] clean up handler selection methods
 [ ] fix php_view right .. php code is returned by the api
 [ ] build backend for approval system
@@ -45,7 +43,6 @@
     table where the templates are defined
 [ ] A option to create a pasword protected page. This should be general so 
     that you can protect any page with an password
-[ ] improve right system probably with inheritance
 [ ] my service add possibility to delete (invalidate) an account
 [ ] my service add data export function where a user can export all records wich
     he made in an XML or maybe HTML format
@@ -62,6 +59,9 @@
     framework because its not amun specific and a well written proxy is in
     general needed
 [ ] test ostatus remote subscription interoperability
+[x] remove window dialog from footer since css from the footer is applied on the 
+    window
+[x] add loading animation to user group right save
 [x] fix activity stream handling
 [x] fix api field default selection (restricted field authorPw etc.)
 [x] fix installer
