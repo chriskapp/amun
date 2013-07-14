@@ -39,8 +39,6 @@ use DOMDocument;
 use DOMElement;
 use DOMNodeList;
 use DOMNode;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
 use PharData;
 use PSX\DateTime;
 use PSX\Data\RecordInterface;
@@ -77,13 +75,9 @@ class Handler extends HandlerAbstract
 				throw new Exception('Service already installed');
 			}
 
-
 			// set logger
-			$this->logger = new Logger('amun');
-			$this->logger->pushHandler(new StreamHandler(PSX_PATH_CACHE . '/install.log', Logger::INFO));
-
+			$this->logger = $this->container->get('logger');
 			$this->logger->info('Start installation of service ' . $record->source);
-
 
 			// check whether phar or folder installation
 			$phar = $this->config['amun_service_path'] . '/' . $record->source;
