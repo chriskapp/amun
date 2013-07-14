@@ -807,9 +807,9 @@ class Handler extends HandlerAbstract
 	}
 
 	/**
-	 * Installs the dependencies via composer. It gets the dependencies from the
-	 * service and merges them with the local composer.json. After the 
-	 * composer.json is updated composer updates all dependencies
+	 * Installs the dependencies via composer. It reads the requires from the 
+	 * service config.xml and writes them to the composer.json and then update 
+	 * the requirements
 	 *
 	 * @param DOMDocument $config 
 	 * @param string $serviceConfigFile 
@@ -820,59 +820,78 @@ class Handler extends HandlerAbstract
 		ignore_user_abort(true);
 		set_time_limit(0);
 
-		// io logger
-		$io = new LoggerIO($this->logger);
+		// read composer json
+		$file = '../composer.json';
 
-		// load dependencies
-		$localFile     = new JsonFile('../composer.json');
+		if(!file_exists($file) && !file_put_contents($file, "{\n}\n"))
+		{
+			$this->logger->info($file . ' could not be created');
+			return;
+		}
+		if(!is_readable($file))
+		{
+			$this->logger->info($file . ' is not readable');
+			return;
+		}
+		if(!is_writable($file)) 
+		{
+			$this->logger->info($file . ' is not writable');
+			return;
+		}
+
+		// read composer json
+		$localFile     = new JsonFile($file);
 		$localConfig   = $localFile->read();
+		$localBackup   = file_get_contents($localFile->getPath());
 
+		// read service dependencies
 		$serviceFile   = new XmlFile($config);
 		$serviceConfig = $serviceFile->read();
 
 		if(empty($serviceConfig))
 		{
-			// nothing todo here
 			$this->logger->info('Found no dependencies');
 			return;
 		}
 
+		// determine requirements
+		$requires    = null;
+		$requiresDev = null;
+
 		if(isset($serviceConfig['require']))
 		{
-			if(!isset($localConfig['require']))
-			{
-				$localConfig['require'] = array();
-			}
-
-			$this->logger->info('Append the following dependencies (require)');
-			foreach($serviceConfig['require'] as $name => $version)
-			{
-				$this->logger->info('> ' . $name . ' (' . $version . ')');
-			}
-
-			$localConfig['require'] = array_merge($localConfig['require'], $serviceConfig['require']);
+			$requires = $this->getRequires($localConfig, $serviceConfig, 'require');
 		}
 
-		if(isset($serviceConfig['require-dev']))
+		if($this->config['psx_debug'] === true && isset($serviceConfig['require-dev']))
 		{
-			if(!isset($localConfig['require-dev']))
-			{
-				$localConfig['require-dev'] = array();
-			}
+			$requiresDev = $this->getRequires($localConfig, $serviceConfig, 'require-dev');
+		}
 
-			$this->logger->info('Append the following dependencies (require-dev)');
-			foreach($serviceConfig['require-dev'] as $name => $version)
-			{
-				$this->logger->info('> ' . $name . ' (' . $version . ')');
-			}
-
-			$localConfig['require-dev'] = array_merge($localConfig['require-dev'], $serviceConfig['require-dev']);
+		if(empty($requires) && empty($requiresDev))
+		{
+			$this->logger->info('Found no dependencies');
+			return;
 		}
 
 		// write config
-		$this->logger->info('Write merged composer.json');
+		$updateWhitelist = array();
 
-		$localFile->write($localConfig);
+		if(!empty($requires))
+		{
+			$this->mergeRequires($localFile, $localConfig, $requires, 'require');
+
+			$updateWhitelist = array_merge($updateWhitelist, array_keys($requires));
+		}
+
+		if(!empty($requiresDev))
+		{
+			$this->mergeRequires($localFile, $localConfig, $requiresDev, 'require-dev');
+
+			$updateWhitelist = array_merge($updateWhitelist, array_keys($requiresDev));
+		}
+
+		$this->logger->info($file . ' has been updated');
 
 		// update composer
 		$this->logger->info('Update composer ...');
@@ -880,16 +899,88 @@ class Handler extends HandlerAbstract
 		$cwd = getcwd();
 		chdir('..');
 
-		$composer  = Factory::create($io);
-		$installer = Installer::create($io, $composer);
-		$installer
-			->setRunScripts(false)
-			->setOptimizeAutoloader(true)
-			->setUpdate(true);
-
-		$installer->run();
+		$this->updateComposer($localFile, $updateWhitelist, $localBackup);
 
 		chdir($cwd);
+	}
+
+	protected function getRequires($localConfig, $serviceConfig, $key)
+	{
+		$requires = array();
+
+		$this->logger->info('Append the following dependencies (' . $key . ')');
+
+		foreach($serviceConfig[$key] as $name => $version)
+		{
+			if(!isset($localConfig[$key][$name]))
+			{
+				$requires[$name] = $version;
+
+				$this->logger->info('> ' . $name . ' (' . $version . ')');
+			}
+			else
+			{
+				$this->logger->info('> Skipped ' . $name . ' (' . $version . ') already installed');
+			}
+		}
+
+		return $requires;
+	}
+
+	protected function mergeRequires(JsonFile $localFile, $localConfig, $requires, $key)
+	{
+		$baseRequirements = isset($localConfig[$key]) ? $localConfig[$key] : array();
+
+		if(!$this->updateFileCleanly($localFile, $requires, $key))
+		{
+			foreach($requires as $package => $version)
+			{
+				$baseRequirements[$package] = $version;
+			}
+
+			$localConfig[$key] = $baseRequirements;
+
+			$localFile->write($localConfig);
+		}
+	}
+
+	protected function updateFileCleanly($json, array $new, $requireKey)
+	{
+		$contents = file_get_contents($json->getPath());
+		$manipulator = new JsonManipulator($contents);
+
+		foreach($new as $package => $constraint) 
+		{
+			if(!$manipulator->addLink($requireKey, $package, $constraint)) 
+			{
+				return false;
+			}
+		}
+
+		file_put_contents($json->getPath(), $manipulator->getContents());
+
+		return true;
+	}
+
+	protected function updateComposer($json, $packages, $composerBackup)
+	{
+		// io logger
+		$io = new LoggerIO($this->logger);
+
+		$composer = Factory::create($io);
+		$install  = Installer::create($io, $composer);
+		$install
+			->setVerbose(true)
+			->setDevMode(true)
+			->setUpdate(true)
+			->setUpdateWhitelist($packages);
+
+		if(!$install->run())
+		{
+			$this->logger->info('Installation failed, reverting to its original content');
+
+			file_put_contents($json->getPath(), $composerBackup);
+		}
 	}
 }
 
