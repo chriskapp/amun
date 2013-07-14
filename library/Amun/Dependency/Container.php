@@ -36,6 +36,8 @@ use Amun\Html;
 use Amun\Gadget;
 use Amun\HandlerManager;
 use Amun\FormManager;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 use PSX\Loader;
 use PSX\Session;
 
@@ -144,5 +146,13 @@ class Container extends \PSX\Dependency\Container
 	public function getFormManager()
 	{
 		return new FormManager($this);
+	}
+
+	public function getLogger()
+	{
+		$logger = new Logger('amun');
+		$logger->pushHandler(new StreamHandler(PSX_PATH_CACHE . '/log.txt', Logger::INFO));
+
+		return $logger;
 	}
 }
