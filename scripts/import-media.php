@@ -34,7 +34,7 @@ NAME
 	media table
 
 SYNOPSIS
-	import-media.php [USER_ID] [PATH] [RIGHT_ID]
+	import-media.php PATH [RIGHT_ID]
 
 DESCRIPTION
 	This script can be used to import recursively an folder into the media 
@@ -50,13 +50,16 @@ else
 	{
 		$container = new Amun\Dependency\Container();
 		$container->setParameter('config.file', '../configuration.php');
-		$container->setParameter('user.id', $userId);
+		$container->setParameter('user.id', 1);
+		$bootstrap = new PSX\Bootstrap($container->get('config'));
 
 		$logger = new Monolog\Logger('amun');
 		$logger->pushHandler(new Amun\Logger\EchoHandler(Monolog\Logger::INFO));
 
+		$container->set('logger', $logger);
+
 		$handler = new AmunService\Media\Handler($container);
-		$handler->import($path, $rightId, $logger);
+		$handler->import($path, $rightId);
 
 		echo 'Import successful';
 		exit(0);

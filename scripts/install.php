@@ -47,13 +47,13 @@ else
 		$container = new Amun\Dependency\Install();
 		$container->setParameter('config.file', '../configuration.php');
 		$container->setParameter('user.id', 1);
+		$bootstrap = new PSX\Bootstrap($container->get('config'));
 
 		$container->set('session', new PSX\Session\Void('amun-install'));
 
 		$logger = new Monolog\Logger('amun');
 		$logger->pushHandler(new Amun\Logger\EchoHandler(Monolog\Logger::INFO));
 
-		$bootstrap  = new PSX\Bootstrap($container->get('config'));
 		$request    = new PSX\Http\Request(new PSX\Url($container->getConfig()->get('psx_url') . '/install'), 'GET');
 		$controller = $container->get('loader')->load('/', $request);
 

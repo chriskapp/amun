@@ -1,5 +1,6 @@
 
 0.4.4 beta
+* Add cli installer
 * Added composer support for services
 
 0.4.1 beta
