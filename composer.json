@@ -10,9 +10,8 @@
         "openid"
     ],
     "homepage": "http://amun-project.org",
-    "type": "cms",
+    "type": "project",
     "license": "GPL-3.0",
-    "version": "0.4.4",
     "authors": [
         {
             "name": "Christoph Kappestein",
@@ -24,7 +23,8 @@
         "php": ">=5.3",
         "psx/psx": "dev-master",
         "composer/composer": "1.0.*@dev",
-        "monolog/monolog": "1.5.*"
+        "monolog/monolog": "1.5.*",
+        "zendframework/zend-mail": "2.1.*"
     },
     "autoload": {
         "psr-0": {
