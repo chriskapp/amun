@@ -44,7 +44,7 @@ use PSX\Input;
 class index extends ApplicationAbstract
 {
 	private $attempt;
-	private $stage;
+	private $level;
 
 	public function onLoad()
 	{
@@ -57,15 +57,15 @@ class index extends ApplicationAbstract
 
 			// check login attempts
 			$this->attempt = new Attempt($this->registry);
-			$this->stage   = $this->attempt->getStage();
+			$this->level   = $this->attempt->getStage();
 
-			if($this->stage == Attempt::TRYING)
+			if($this->level == Attempt::TRYING)
 			{
 				$captcha = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha';
 
 				$this->template->assign('captcha', $captcha);
 			}
-			else if($this->stage == Attempt::ABUSE)
+			else if($this->level == Attempt::ABUSE)
 			{
 				throw new Exception('Your IP ' . $_SERVER['REMOTE_ADDR'] . ' is banned for 30 minutes because of too many wrong logins');
 			}
@@ -102,7 +102,7 @@ class index extends ApplicationAbstract
 			}
 
 			// check captcha if needed
-			if($this->stage == Attempt::TRYING)
+			if($this->level == Attempt::TRYING)
 			{
 				if(!Captcha::factory($this->config['amun_captcha'])->verify($captcha))
 				{
@@ -131,7 +131,7 @@ class index extends ApplicationAbstract
 						if($handler->handle($identity, $pw) === true)
 						{
 							// clear attempts
-							if($this->stage != Attempt::NONE)
+							if($this->level != Attempt::NONE)
 							{
 								$this->attempt->clear();
 							}
@@ -151,7 +151,7 @@ class index extends ApplicationAbstract
 						$this->attempt->increase();
 
 						// if none assign captcha
-						if($this->stage == Attempt::NONE)
+						if($this->level == Attempt::NONE)
 						{
 							$captcha = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha';
 
