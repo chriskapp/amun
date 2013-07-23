@@ -51,8 +51,8 @@ abstract class RestAbstract extends ApiAbstract
 	 * @parameter [query count integer]
 	 * @parameter [query sortBy integer]
 	 * @parameter [query sortOrder string ascending|descending]
-	 * @parameter [query filterBy integer]
-	 * @parameter [query filterOp integer contains|equals|startsWith|present]
+	 * @parameter [query filterBy string]
+	 * @parameter [query filterOp string contains|equals|startsWith|present]
 	 * @parameter [query filterValue string]
 	 * @parameter [query updatedSince DateTime]
 	 * @responseClass PSX_Data_ResultSet

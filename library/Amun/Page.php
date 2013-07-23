@@ -23,6 +23,7 @@
 namespace Amun;
 
 use DateInterval;
+use DateTime;
 use AmunService\Content\Page\Record;
 
 /**
@@ -202,7 +203,7 @@ SQL;
 			return new DateInterval($this->expire);
 		}
 
-		return null;
+		return 0;
 	}
 
 	public function getPublishDate()
@@ -212,7 +213,7 @@ SQL;
 
 	public function getDate()
 	{
-		return $this->date;
+		return new DateTime($this->date);
 	}
 
 	public function getApplication()

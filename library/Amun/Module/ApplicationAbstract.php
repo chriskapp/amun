@@ -22,6 +22,7 @@
 
 namespace Amun\Module;
 
+use DateInterval;
 use Amun\Dependency;
 use Amun\Exception;
 use Amun\Html;
@@ -105,6 +106,24 @@ abstract class ApplicationAbstract extends ViewAbstract
 		{
 			$this->gadgetContainer = $this->getGadgetContainer();
 			$this->gadgetContainer->load($this->getLoader(), $this->page, $this->getHtmlCss());
+		}
+
+		// load cache
+		if($this->page->hasCache() && $this->user->isAnonymous() && Base::getRequestMethod() == 'GET')
+		{
+			$expire   = $this->page->getExpire();
+			$expire   = $expire instanceof DateInterval ? $expire : new DateInterval('P1D');
+			$modified = new DateTime();
+			$expires  = clone $modified;
+			$expires->add($expire);
+
+			$type     = $this->user->isAnonymous() ? 'public' : 'private';
+			$maxAge   = DateTime::convertIntervalToSeconds($expire);
+
+			header('Expires: ' . $expires->format(DateTime::RFC1123));
+			header('Last-Modified: ' . $modified->format(DateTime::RFC1123));
+			header('Cache-Control: ' . $type . ', max-age=' . $maxAge);
+			header('Pragma:'); // remove pragma header
 		}
 
 		// template dependencies
