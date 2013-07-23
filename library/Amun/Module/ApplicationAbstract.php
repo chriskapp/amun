@@ -109,7 +109,7 @@ abstract class ApplicationAbstract extends ViewAbstract
 		}
 
 		// load cache
-		if($this->page->hasCache() && $this->user->isAnonymous() && Base::getRequestMethod() == 'GET')
+		if($this->page->hasCache() && Base::getRequestMethod() == 'GET')
 		{
 			$expire   = $this->page->getExpire();
 			$expire   = $expire instanceof DateInterval ? $expire : new DateInterval('P1D');

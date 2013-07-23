@@ -23,6 +23,7 @@
 namespace Amun;
 
 use Amun\Gadget\Args;
+use DateInterval;
 
 /**
  * Gadget

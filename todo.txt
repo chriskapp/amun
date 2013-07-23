@@ -1,6 +1,7 @@
 
 [FEATURES]
 
+[x] add page and gadget caching
 [ ] improve right system probably with inheritance. Add page specific rights
 [ ] clean up handler selection methods
 [ ] fix php_view right .. php code is returned by the api

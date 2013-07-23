@@ -23,7 +23,6 @@
 namespace Amun;
 
 use DateInterval;
-use DateTime;
 use AmunService\Content\Page\Record;
 
 /**
@@ -213,7 +212,7 @@ SQL;
 
 	public function getDate()
 	{
-		return new DateTime($this->date);
+		return $this->date;
 	}
 
 	public function getApplication()

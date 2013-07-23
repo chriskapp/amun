@@ -22,8 +22,11 @@
 
 namespace Amun\Module;
 
+use DateInterval;
 use Amun\Dependency;
 use Amun\User;
+use PSX\Base;
+use PSX\DateTime;
 use PSX\Module\ViewAbstract;
 
 /**
@@ -63,6 +66,24 @@ abstract class GadgetAbstract extends ViewAbstract
 
 		// manager
 		$this->hm = $this->getHandlerManager();
+
+		// load cache
+		if($this->gadget->hasCache() && Base::getRequestMethod() == 'GET')
+		{
+			$expire   = $this->gadget->getExpire();
+			$expire   = $expire instanceof DateInterval ? $expire : new DateInterval('P1D');
+			$modified = new DateTime();
+			$expires  = clone $modified;
+			$expires->add($expire);
+
+			$type     = $this->user->isAnonymous() ? 'public' : 'private';
+			$maxAge   = DateTime::convertIntervalToSeconds($expire);
+
+			header('Expires: ' . $expires->format(DateTime::RFC1123));
+			header('Last-Modified: ' . $modified->format(DateTime::RFC1123));
+			header('Cache-Control: ' . $type . ', max-age=' . $maxAge);
+			header('Pragma:'); // remove pragma header
+		}
 	}
 
 	protected function getHandler($name = null)
