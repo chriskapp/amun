@@ -99,7 +99,7 @@ class Handler extends HandlerAbstract
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
 			$record->token    = Security::generateToken();
-			$record->ip       = $_SERVER['REMOTE_ADDR'];
+			$record->ip       = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '127.0.0.1';
 			$record->lastSeen = $date->format(DateTime::SQL);
 			$record->updated  = $date->format(DateTime::SQL);
 			$record->date     = $date->format(DateTime::SQL);
