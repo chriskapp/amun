@@ -1,5 +1,5 @@
 
-0.4.4 beta
+0.4.5 beta
 * Added page and gadget http cache
 * Add cli installer
 * Added composer support for services
