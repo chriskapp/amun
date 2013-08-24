@@ -108,7 +108,7 @@ SQL;
 	 *
 	 * @param $name
 	 * @param array $args
-	 * @param Amun_User $user
+	 * @param Amun\User $user
 	 * @return void
 	 */
 	public function notifyListener($name, array $args, $user = null)
