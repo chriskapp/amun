@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="a76b20396f7f76da92c74de449cb2c3719cd240c">
+<service xmlns="http://amun-project.org">
   <status>system</status>
-  <name>log</name>
-  <description>Service wich logs every record insert, update or delete</description>
   <path>/log</path>
-  <namespace>log</namespace>
+  <namespace>AmunService\Log</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/log</type>
-  <link>http://amun.phpsx.org</link>
-  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
-  <license>GPLv3</license>
-  <version>0.0.1</version>
-  <provider>http://amun-project.org</provider>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/log</type>
@@ -27,17 +20,6 @@
   <event>
     <listener name="core.record_change" class="\AmunService\Log\RecordListener"/>
   </event>
-  <library>
-    <dir name="AmunService">
-      <dir name="Log">
-        <file name="Form.php" md5="2e9a0a6cce38ac3cf008d7a8103a6a3b"/>
-        <file name="Handler.php" md5="2cf15031261970cbdf05a8e7cdfce843"/>
-        <file name="RecordListener.php" md5="295b7f152f351d001af1dd8cc487ed24"/>
-        <file name="Record.php" md5="7a3af18ecc6eacbc427777f0390a7813"/>
-        <file name="Table.php" md5="bccbe8bb1521a0eba755b75a65114b0b"/>
-      </dir>
-    </dir>
-  </library>
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.log}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,

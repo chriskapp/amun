@@ -1,19 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" xmlns:cp="http://composer.org/2013/composer/config" signature="c8093924eedb5c06edc3b65f750c381092f26554">
+<service xmlns="http://amun-project.org">
   <status>system</status>
-  <name>mail</name>
-  <description>A service to manage mail templates wich can be used by other services</description>
   <path>/mail</path>
-  <namespace>mail</namespace>
+  <namespace>AmunService\Mail</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/mail</type>
-  <link>http://amun.phpsx.org</link>
-  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
-  <license>GPLv3</license>
-  <version>0.0.1</version>
-  <provider>http://amun-project.org</provider>
-  <cp:require>
-    <cp:package name="zendframework/zend-mail" version="2.1.*"/>
-  </cp:require>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/mail</type>
@@ -33,23 +23,6 @@
   <event>
     <listener name="core.service_install" class="\AmunService\Mail\ConfigListener"/>
   </event>
-  <library>
-    <dir name="Amun">
-      <dir name="Mail">
-        <file name="SenderInterface.php" md5="b68ae0a6dde955cc272ad878373c82e5"/>
-      </dir>
-    </dir>
-    <dir name="AmunService">
-      <dir name="Mail">
-        <file name="Form.php" md5="cf84726656374d57e402cd937ff38c6f"/>
-        <file name="Handler.php" md5="eb9f4d8db84c12a9492aadef6d10fd5f"/>
-        <file name="ConfigListener.php" md5="5faed12d8044568b46d59b2c6c74f824"/>
-        <file name="Record.php" md5="e28440010eccfedc8de333a98f654cfc"/>
-        <file name="Sender.php" md5="29e767cbd5ccf9af36ca285e32bd9a4e"/>
-        <file name="Table.php" md5="3135a680e2597fd53db572975132d7ee"/>
-      </dir>
-    </dir>
-  </library>
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.mail}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,

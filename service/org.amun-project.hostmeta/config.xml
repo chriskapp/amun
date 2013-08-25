@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="05807011f149eebb75daa2e20bb7f799f9570fcf">
+<service xmlns="http://amun-project.org">
   <status>system</status>
-  <name>hostmeta</name>
-  <description>Provides an Host-Meta endpoint</description>
   <path>/hostmeta</path>
-  <namespace>hostmeta</namespace>
+  <namespace>AmunService\Hostmeta</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/hostmeta</type>
-  <link>http://amun.phpsx.org</link>
-  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
-  <license>GPLv3</license>
-  <version>0.0.1</version>
-  <provider>http://amun-project.org</provider>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/hostmeta</type>

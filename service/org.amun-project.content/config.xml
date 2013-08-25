@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="79e08e12ce9b766705ba769f757f971cae91568d">
+<service xmlns="http://amun-project.org">
   <status>system</status>
-  <name>content</name>
-  <description>Basic service wich handles pages and gadgets</description>
   <path>/content</path>
-  <namespace>content</namespace>
+  <namespace>AmunService\Content</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/content</type>
-  <link>http://amun.phpsx.org</link>
-  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
-  <license>GPLv3</license>
-  <version>0.0.1</version>
-  <provider>http://amun-project.org</provider>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/content/gadget</type>
@@ -66,47 +59,6 @@
   <event>
     <listener name="lrdd.resource_discovery" class="\AmunService\Content\LrddListener"/>
   </event>
-  <library>
-    <dir name="AmunService">
-      <dir name="Content">
-        <dir name="Gadget">
-          <dir name="Filter">
-            <file name="Path.php" md5="7f1d5a1bb465b7837d347c3851188180"/>
-          </dir>
-          <file name="Form.php" md5="2637745bdb07fe620b97d3fabada1002"/>
-          <file name="Handler.php" md5="108771ef0cd3ad882887a868c77ba4cc"/>
-          <file name="Record.php" md5="f450962dcbefcb8a4e730622653e985b"/>
-          <file name="Table.php" md5="1ff969cbbb45f9d4fc31c4fc2108cf2a"/>
-        </dir>
-        <file name="LrddListener.php" md5="d97c46b31d940ab06f58ce7ee05d5d96"/>
-        <dir name="Page">
-          <dir name="Filter">
-            <file name="Load.php" md5="d2bd365f3d09d14691f84dafa7d041ab"/>
-            <file name="ParentId.php" md5="12935a66926bc1164eb0dcca9bc58894"/>
-            <file name="Status.php" md5="6fb3fb6eb05f22558d3fd7cae60ecc5b"/>
-            <file name="Template.php" md5="eb66667aacfb9f8f202df0ac7e936423"/>
-            <file name="TitleExists.php" md5="a80009488e3919a31f2e8846ae9472cb"/>
-          </dir>
-          <file name="Form.php" md5="5a8e2954c960bdff4b7f7537165190bb"/>
-          <dir name="Gadget">
-            <file name="Form.php" md5="c6177841d7d9dcdfbc5cfa1d812e17d6"/>
-            <file name="Handler.php" md5="1b09c6ceac47204306d4094dc5951250"/>
-            <file name="Record.php" md5="a4a87e16557363390e7c5f64c584e6a2"/>
-            <file name="Table.php" md5="7bc34aa354ef642dd315c111eb2db05f"/>
-          </dir>
-          <file name="Handler.php" md5="c2a3bcc9063cb90c5511cf26efeb9d1d"/>
-          <dir name="Option">
-            <file name="Form.php" md5="f4eba278ed64a7db097d4ec7588e4fbd"/>
-            <file name="Handler.php" md5="5d7f056864eab723ff2d6e75eb33bb89"/>
-            <file name="Record.php" md5="5ea5ca9fcc5ebd757afdb634ffd02dc8"/>
-            <file name="Table.php" md5="302b0f4896106973bf6e1fd619eb5330"/>
-          </dir>
-          <file name="Record.php" md5="ec67723bcc3f8948ddac6050ed1c8981"/>
-          <file name="Table.php" md5="733e7775343b71b4994ff261e26e4bf0"/>
-        </dir>
-      </dir>
-    </dir>
-  </library>
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.content_gadget}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,

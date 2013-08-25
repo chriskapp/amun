@@ -1,0 +1,24 @@
+{
+    "name": "amun/asset",
+    "description": "A service wich concatenates various css or js files into one output",
+    "homepage": "http://amun-project.org",
+    "type": "library",
+    "license": "GPL-3.0",
+    "version": "0.0.1",
+    "authors": [
+        {
+            "name": "Christoph Kappestein",
+            "email": "k42b3.x@gmail.com",
+            "homepage": "http://k42b3.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3",
+        "amun/core": "0.0.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "AmunService\\Asset\\": "src/"
+        }
+    }
+}

@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="3b43a462070945ea43053538bf3e9e512c1fcdc0">
+<service xmlns="http://amun-project.org">
   <status>normal</status>
-  <name>redirect</name>
-  <description>Redirects the user to an given url</description>
   <path>/redirect</path>
-  <namespace>redirect</namespace>
+  <namespace>AmunService\Redirect</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/redirect</type>
-  <link>http://amun.phpsx.org</link>
-  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
-  <license>GPLv3</license>
-  <version>0.0.1</version>
-  <provider>http://amun-project.org</provider>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/redirect</type>
@@ -27,16 +20,6 @@
   <registry>
     <table name="redirect"/>
   </registry>
-  <library>
-    <dir name="AmunService">
-      <dir name="Redirect">
-        <file name="Form.php" md5="5136d3e2c934cc814b72e0988c5fa777"/>
-        <file name="Handler.php" md5="2cc8a5bfc2c12b88f1e733c6bf13b6ca"/>
-        <file name="Record.php" md5="516f8516e66b8f51d6caad435f1c3b76"/>
-        <file name="Table.php" md5="f0db4e69852005e2dad248092ab41e0e"/>
-      </dir>
-    </dir>
-  </library>
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.redirect}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,

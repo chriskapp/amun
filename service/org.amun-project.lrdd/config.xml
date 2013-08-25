@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="b9be16f32dd9de2407b8c0d50b1015d26d230ec0">
+<service xmlns="http://amun-project.org">
   <status>system</status>
-  <name>lrdd</name>
-  <description>Provides an LRDD endpoint to discover details about a page or person</description>
   <path>/lrdd</path>
-  <namespace>lrdd</namespace>
+  <namespace>AmunService\Lrdd</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/lrdd</type>
-  <link>http://amun.phpsx.org</link>
-  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
-  <license>GPLv3</license>
-  <version>0.0.1</version>
-  <provider>http://amun-project.org</provider>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/lrdd</type>
@@ -24,11 +17,4 @@
     <publisher name="lrdd.resource_discovery" description="Notifies if an lrdd lookup occurs"/>
     <listener name="hostmeta.request" class="\AmunService\Lrdd\HostmetaListener"/>
   </event>
-  <library>
-    <dir name="AmunService">
-      <dir name="Lrdd">
-        <file name="HostmetaListener.php" md5="ad2bbfb6b79fcbb78982466beebc6bfa"/>
-      </dir>
-    </dir>
-  </library>
 </service>

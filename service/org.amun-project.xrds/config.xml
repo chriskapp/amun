@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="65bb15abf6c0c5df395ad75ec6b5b1890c63bb06">
+<service xmlns="http://amun-project.org">
   <status>system</status>
-  <name>xrds</name>
-  <description>Provides an xrds endpoint to discover all APIs</description>
   <path>/xrds</path>
-  <namespace>xrds</namespace>
+  <namespace>AmunService\Xrds</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/xrds</type>
-  <link>http://amun.phpsx.org</link>
-  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
-  <license>GPLv3</license>
-  <version>0.0.1</version>
-  <provider>http://amun-project.org</provider>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/xrds</type>
@@ -27,21 +20,6 @@
   <event>
     <listener name="core.service_install" class="\AmunService\Xrds\ConfigListener"/>
   </event>
-  <library>
-    <dir name="AmunService">
-      <dir name="Xrds">
-        <file name="ConfigListener.php" md5="f21bb7a4deab37de8dfa006bb4fa7347"/>
-        <file name="Handler.php" md5="4665aee968b65ee7819d1d754f8c08f8"/>
-        <file name="Record.php" md5="141862f96b6fe40ded7ca4ca83244a72"/>
-        <file name="Table.php" md5="8daf45137b53870a40a6b42235bed2f3"/>
-        <dir name="Type">
-          <file name="Handler.php" md5="c5a0224260eaee229df06a8e42967b25"/>
-          <file name="Record.php" md5="9049f36a73174ac7fe8c442843a408d4"/>
-          <file name="Table.php" md5="2a58f62e4163234b1f0a13fc5cd38d7b"/>
-        </dir>
-      </dir>
-    </dir>
-  </library>
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.xrds}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,

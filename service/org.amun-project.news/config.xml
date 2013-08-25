@@ -1,19 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="fe7696894ed9c5de1fcd4be1162b45c821a9ce15">
+<service xmlns="http://amun-project.org">
   <status>normal</status>
-  <name>news</name>
-  <description>Implementation of an News system. It is possible to post news and users can comment each entry</description>
   <path>/news</path>
-  <namespace>news</namespace>
+  <namespace>AmunService\News</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/news</type>
-  <link>http://amun.phpsx.org</link>
-  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
-  <license>GPLv3</license>
-  <version>0.0.1</version>
-  <provider>http://amun-project.org</provider>
-  <required>
-    <service>org.amun-project.comment</service>
-  </required>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/news</type>
@@ -40,16 +30,6 @@
   <registry>
     <table name="news"/>
   </registry>
-  <library>
-    <dir name="AmunService">
-      <dir name="News">
-        <file name="Form.php" md5="8e09f118075b35f58f317253adb3027d"/>
-        <file name="Handler.php" md5="a9ad8fa22ca3eed8a60119ff4cd741a4"/>
-        <file name="Record.php" md5="f468e1a54b0faebd577d7afb460a2621"/>
-        <file name="Table.php" md5="3cfbe39789f98527fb1cb27d3b5d6d2b"/>
-      </dir>
-    </dir>
-  </library>
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.news}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,

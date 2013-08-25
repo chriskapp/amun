@@ -1,32 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="6c69f6a1fd11cd8ce38b9a67f2c848ee2083ccb2">
+<service xmlns="http://amun-project.org">
   <status>system</status>
-  <name>asset</name>
-  <description>A service wich concatenates various css or js files into one output</description>
   <path>/asset</path>
-  <namespace>asset</namespace>
+  <namespace>AmunService\Asset</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/asset</type>
-  <link>http://amun.phpsx.org</link>
-  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
-  <license>GPLv3</license>
-  <version>0.0.1</version>
-  <provider>http://amun-project.org</provider>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/asset</type>
       <uri>/</uri>
     </service>
   </api>
-  <library>
-    <dir name="AmunService">
-      <dir name="Asset">
-        <file name="Manager.php" md5="17ec45ade1d5f4c99df60b80c081dc7c"/>
-        <dir name="Provider">
-          <file name="Css.php" md5="259ace01bea88e1e4792e0aa928da837"/>
-          <file name="Js.php" md5="d2003cd75aa60876e42f868e467f7137"/>
-        </dir>
-        <file name="ProviderInterface.php" md5="0604f4797ef1887b7effa47663ec4c9f"/>
-      </dir>
-    </dir>
-  </library>
 </service>

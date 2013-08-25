@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="a67bb83872c315711861473807515645f7eb9455">
+<service xmlns="http://amun-project.org">
   <status>normal</status>
-  <name>login</name>
-  <description>Service wich offers a login and registration</description>
   <path>/login</path>
-  <namespace>login</namespace>
+  <namespace>AmunService\Login</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/login</type>
-  <link>http://amun.phpsx.org</link>
-  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
-  <license>GPLv3</license>
-  <version>0.0.1</version>
-  <provider>http://amun-project.org</provider>
   <permissions>
     <perm name="view" description="Login View"/>
   </permissions>
@@ -91,29 +84,6 @@ You can login with the new password at:
 ]]></html>
     </template>
   </mail>
-  <library>
-    <dir name="AmunService">
-      <dir name="Login">
-        <file name="Attempt.php" md5="027ac4564553ae056403db687b5d5483"/>
-        <file name="InvalidPasswordException.php" md5="cb109f97a911aa9c44b898964bc30c18"/>
-        <dir name="Handler">
-          <file name="CallbackInterface.php" md5="1fae5d443d8c1e03690e5357ad652115"/>
-          <file name="Facebook.php" md5="63fd558bfcd45bcc8c2728d885603f2e"/>
-          <file name="Github.php" md5="04d7b745057f536ac72f0f6bb48ad829"/>
-          <file name="Google.php" md5="bc37294262841ca54a8e475f1a1e1705"/>
-          <file name="Ldap.php" md5="bd3681b144662543e2bfb6d061d46e6b"/>
-          <file name="Openid.php" md5="d5f3f7552e565cc1d17fa64bb8444af7"/>
-          <file name="Remote.php" md5="80215c2854f7661ce807d13908f6a667"/>
-          <file name="System.php" md5="d31508d0dbe08fb551cacdf9fdb11e35"/>
-          <file name="Twitter.php" md5="a56e1f5ec90f7615e890f0260762d970"/>
-          <file name="Webfinger.php" md5="89326db87d4bb0fa92cd6ca1c56adacd"/>
-          <file name="Yahoo.php" md5="525a886244cded3e90bf335c2c0b64e3"/>
-        </dir>
-        <file name="HandlerAbstract.php" md5="e5c024a15fc18f85f5e898901a563c7c"/>
-        <file name="HandlerFactory.php" md5="3e985fbc9d3803e7ec0088400b378e4c"/>
-      </dir>
-    </dir>
-  </library>
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.login_attempt}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,

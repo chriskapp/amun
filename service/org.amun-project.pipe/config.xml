@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="914584f7e4e33b023464ca43a885df7c53717689">
+<service xmlns="http://amun-project.org">
   <status>normal</status>
-  <name>pipe</name>
-  <description>Service wich redirects the content of an media item to an page</description>
   <path>/pipe</path>
-  <namespace>pipe</namespace>
+  <namespace>AmunService\Pipe</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/pipe</type>
-  <link>http://amun.phpsx.org</link>
-  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
-  <license>GPLv3</license>
-  <version>0.0.1</version>
-  <provider>http://amun-project.org</provider>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/pipe</type>
@@ -30,24 +23,6 @@
   <registry>
     <table name="pipe"/>
   </registry>
-  <library>
-    <dir name="AmunService">
-      <dir name="Pipe">
-        <file name="Form.php" md5="881ec2bfe423389d25f1e386ffd0652c"/>
-        <file name="Handler.php" md5="539352aeb292d21f7212e069f3301978"/>
-        <dir name="Processor">
-          <file name="Exec.php" md5="5ad15a3c8e13f4eb20afa788385d27d3"/>
-          <file name="Highlite.php" md5="be55277f4a49f8200ff289d3289d34a9"/>
-          <file name="Markdown.php" md5="e631561cbbc9db41ab212075d2371eb7"/>
-          <file name="Passthru.php" md5="586833965a3bb803e8cbbe7f33ea3e98"/>
-        </dir>
-        <file name="ProcessorAbstract.php" md5="0fd3ed4283018d4adaee3b83c2efcce0"/>
-        <file name="ProcessorInterface.php" md5="b2b88ac01299e44641c9ae8f7b9f0520"/>
-        <file name="Record.php" md5="ad98608224459c7d6051f0ab8b6dbb69"/>
-        <file name="Table.php" md5="5774a8301208bd139e062aafee8f224c"/>
-      </dir>
-    </dir>
-  </library>
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.pipe}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,

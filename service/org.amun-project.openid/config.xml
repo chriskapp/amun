@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="668f2665ef348622d7cc781c5cf52c6fbe7e04eb">
+<service xmlns="http://amun-project.org">
   <status>system</status>
-  <name>openid</name>
-  <description>Provides an OpenID provider implementation</description>
   <path>/openid</path>
-  <namespace>openid</namespace>
+  <namespace>AmunService\Openid</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/openid</type>
-  <link>http://amun.phpsx.org</link>
-  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
-  <license>GPLv3</license>
-  <version>0.0.1</version>
-  <provider>http://amun-project.org</provider>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/openid</type>
@@ -49,28 +42,6 @@
     <table name="openid_access"/>
     <table name="openid_assoc"/>
   </registry>
-  <library>
-    <dir name="AmunService">
-      <dir name="Openid">
-        <dir name="Access">
-          <file name="Form.php" md5="4220745ee2ccd6d0ff730aa20010e497"/>
-          <file name="Handler.php" md5="e144d5d657958e3d0c8829f3a6a43fef"/>
-          <file name="Record.php" md5="ce30cd343fe635fa5ef6f2e71a82db86"/>
-          <file name="Table.php" md5="8ddeca95226e9311bfb80b08a589f814"/>
-        </dir>
-        <dir name="Assoc">
-          <file name="Table.php" md5="7b62869354c137554522d5cb5f2122c4"/>
-        </dir>
-        <dir name="Filter">
-          <file name="Status.php" md5="9780dc0676a20b378a4ce37c2b42c958"/>
-        </dir>
-        <file name="Form.php" md5="4ff837062317c08a99b29107996ef5d5"/>
-        <file name="Handler.php" md5="3f48a070bb73b145eaac36193812426c"/>
-        <file name="Record.php" md5="8fc750071c6b8d5506e0d0da3c0cb94d"/>
-        <file name="Table.php" md5="c866802b67122e11269b4382ded1de19"/>
-      </dir>
-    </dir>
-  </library>
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.openid}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,

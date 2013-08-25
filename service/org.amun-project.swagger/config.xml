@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="fc6117e8aeed6a8b9b5e2cdfb256f6eb73807e4c">
+<service xmlns="http://amun-project.org">
   <status>system</status>
-  <name>swagger</name>
-  <description>Provides an API swagger endpoint wich can be used by i.e. swagger-ui to display all available APIs</description>
   <path>/swagger</path>
-  <namespace>swagger</namespace>
+  <namespace>AmunService\Swagger</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/swagger</type>
-  <link>http://amun.phpsx.org</link>
-  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
-  <license>GPLv3</license>
-  <version>0.0.1</version>
-  <provider>http://amun-project.org</provider>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/swagger</type>

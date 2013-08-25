@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="62342ab5a518d3623fdc6cf9c3dfe357f2021b81">
+<service xmlns="http://amun-project.org">
   <status>system</status>
-  <name>comment</name>
-  <description>General comment system wich can be used to store comments refering to an id</description>
   <path>/comment</path>
-  <namespace>comment</namespace>
+  <namespace>AmunService\Comment</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/comment</type>
-  <link>http://amun.phpsx.org</link>
-  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
-  <license>GPLv3</license>
-  <version>0.0.1</version>
-  <provider>http://amun-project.org</provider>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/comment</type>
@@ -27,16 +20,6 @@
   <registry>
     <table name="comment"/>
   </registry>
-  <library>
-    <dir name="AmunService">
-      <dir name="Comment">
-        <file name="Form.php" md5="6e8abab22fa91332dee2d53f0ddd2bcd"/>
-        <file name="Handler.php" md5="3613e5f7c86ceb19af1ef6e8500884a1"/>
-        <file name="Record.php" md5="28c696256c13329cf69a3258fccd93a4"/>
-        <file name="Table.php" md5="d05581c098e8fd814ffa88f9c5f1a84e"/>
-      </dir>
-    </dir>
-  </library>
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.comment}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,

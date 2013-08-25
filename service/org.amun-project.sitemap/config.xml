@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="c3f0c0c2ea247f9b6624b7dcdf8b8b7cc79201e0">
+<service xmlns="http://amun-project.org">
   <status>system</status>
-  <name>sitemap</name>
-  <description>Adds an API to generate a sitemap (sitemaps.org) wich can be used by search engines</description>
   <path>/sitemap</path>
-  <namespace>sitemap</namespace>
+  <namespace>AmunService\Sitemap</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/sitemap</type>
-  <link>http://amun.phpsx.org</link>
-  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
-  <license>GPLv3</license>
-  <version>0.0.1</version>
-  <provider>http://amun-project.org</provider>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/sitemap</type>

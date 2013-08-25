@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="7024924ad013b74b15804e34f668895006711c63">
+<service xmlns="http://amun-project.org">
   <status>system</status>
-  <name>media</name>
-  <description>Offers a general way to upload and access arbitrary media files</description>
   <path>/media</path>
-  <namespace>media</namespace>
+  <namespace>AmunService\Media</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/media</type>
-  <link>http://amun.phpsx.org</link>
-  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
-  <license>GPLv3</license>
-  <version>0.0.1</version>
-  <provider>http://amun-project.org</provider>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/media</type>
@@ -29,19 +22,6 @@
     <param name="upload_size" value="4194304" type="INTEGER"/>
     <param name="path" value="../cache" type="STRING"/>
   </registry>
-  <library>
-    <dir name="AmunService">
-      <dir name="Media">
-        <dir name="Filter">
-          <file name="Folder.php" md5="9bc9509f6cc18e51fac382108f909b6f"/>
-        </dir>
-        <file name="Form.php" md5="5c386cb4fe6110edd364be2bb4e9fcee"/>
-        <file name="Handler.php" md5="3d1958a20cae9c26e48933f37d024b4c"/>
-        <file name="Record.php" md5="a26f4cb76c1a17958d95b7ead37ee9d9"/>
-        <file name="Table.php" md5="e53f8f4c87e58801422c461d005c0f50"/>
-      </dir>
-    </dir>
-  </library>
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.media}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,

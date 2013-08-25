@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="61e8169c3be79d6f53f8eebf019209d4be3ff9ca">
+<service xmlns="http://amun-project.org">
   <status>system</status>
-  <name>oauth</name>
-  <description>Provides an Oauth 1.0 endpoint implementation where applications can register to access the API</description>
   <path>/oauth</path>
-  <namespace>oauth</namespace>
+  <namespace>AmunService\Oauth</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/oauth</type>
-  <link>http://amun.phpsx.org</link>
-  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
-  <license>GPLv3</license>
-  <version>0.0.1</version>
-  <provider>http://amun-project.org</provider>
   <api>
     <service>
       <type>http://oauth.net/core/1.0/endpoint/request</type>
@@ -64,37 +57,6 @@
     <table name="oauth_access_right"/>
     <table name="oauth_request"/>
   </registry>
-  <library>
-    <dir name="AmunService">
-      <dir name="Oauth">
-        <dir name="Access">
-          <dir name="Right">
-            <file name="Handler.php" md5="30b2585a98d57e3813f34a2db217721b"/>
-            <file name="Record.php" md5="6df8dfca085771ba51673b3a85590662"/>
-            <file name="Table.php" md5="e0d7b0d690cfd1093bcea82f40fdbeeb"/>
-          </dir>
-          <file name="Form.php" md5="79fb898db8c571e0c0b9633bf29a55aa"/>
-          <file name="Handler.php" md5="c22434d052e7c0a2029871bc4316e046"/>
-          <file name="Record.php" md5="788f51939a89cd070a96907ac2ce64b5"/>
-          <file name="Table.php" md5="4fe775e00a3f426211e8980582318a95"/>
-        </dir>
-        <dir name="Filter">
-          <file name="Callback.php" md5="0f8342d95e3cab824e24bcd9bd914b91"/>
-          <file name="Status.php" md5="202caa7047e2094966ac8f2bc5355760"/>
-        </dir>
-        <file name="Form.php" md5="40b52174dbb574245bdfcfc786fa27a9"/>
-        <file name="Handler.php" md5="71e9d3ac5109aab4a8bef01c506035b8"/>
-        <file name="Record.php" md5="e17d18aed75fd73b39b4c42458a90d49"/>
-        <dir name="Request">
-          <file name="Form.php" md5="f64cfb27699d6e5d53c0a830f66d5742"/>
-          <file name="Handler.php" md5="beaacd50d11c271c29058c69a5df759f"/>
-          <file name="Record.php" md5="5ffbe165bff401e4df30f7282dabacc2"/>
-          <file name="Table.php" md5="77bbc21ca2e6147cbbc787f23349af8a"/>
-        </dir>
-        <file name="Table.php" md5="2c65c6318483f1099dd3f9f835ea4480"/>
-      </dir>
-    </dir>
-  </library>
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.oauth}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,

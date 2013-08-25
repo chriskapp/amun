@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="06784236e5e564c1dbdcebc1fa35bdecf0132ac0">
+<service xmlns="http://amun-project.org">
   <status>normal</status>
-  <name>file</name>
-  <description>Service to make a raw page wich can be edited. It is possible to define the content type and content of each page</description>
   <path>/file</path>
-  <namespace>file</namespace>
+  <namespace>AmunService\File</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/file</type>
-  <link>http://amun.phpsx.org</link>
-  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
-  <license>GPLv3</license>
-  <version>0.0.1</version>
-  <provider>http://amun-project.org</provider>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/file</type>
@@ -27,16 +20,6 @@
   <registry>
     <table name="file"/>
   </registry>
-  <library>
-    <dir name="AmunService">
-      <dir name="File">
-        <file name="Form.php" md5="8fbf91db34f324fdd045aa40a9608146"/>
-        <file name="Handler.php" md5="9abfb0e49d751551fb854b8ea4359c19"/>
-        <file name="Record.php" md5="2eed2f0647bf9a6d1ceb8b763886fa21"/>
-        <file name="Table.php" md5="78d9700e5ab094247293cfe9d74f5d87"/>
-      </dir>
-    </dir>
-  </library>
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.file}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,

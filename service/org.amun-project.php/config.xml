@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="7962f123bede1c81627a5245fbb780c272c58a07">
+<service xmlns="http://amun-project.org">
   <status>normal</status>
-  <name>php</name>
-  <description>Service to embed PHP code in a page</description>
   <path>/php</path>
-  <namespace>php</namespace>
+  <namespace>AmunService\Php</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/php</type>
-  <link>http://amun.phpsx.org</link>
-  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
-  <license>GPLv3</license>
-  <version>0.0.1</version>
-  <provider>http://amun-project.org</provider>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/php</type>
@@ -30,16 +23,6 @@
   <registry>
     <table name="php"/>
   </registry>
-  <library>
-    <dir name="AmunService">
-      <dir name="Php">
-        <file name="Form.php" md5="c661671c48fd5c894487d5d32380a0a5"/>
-        <file name="Handler.php" md5="b76417d6042698c48e9adba2ca0ef44a"/>
-        <file name="Record.php" md5="5046172d4b7cd42fcb46bd023180d911"/>
-        <file name="Table.php" md5="03cac136cfcdb0f2f643b50b3f37c0ab"/>
-      </dir>
-    </dir>
-  </library>
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.php}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,

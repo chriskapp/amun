@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="6e6e3230153babf9995207088abee8edc1e13060">
+<service xmlns="http://amun-project.org">
   <status>system</status>
-  <name>phpinfo</name>
-  <description>Service to offer PHP informations via an API</description>
   <path>/phpinfo</path>
-  <namespace>phpinfo</namespace>
+  <namespace>AmunService\Phpinfo</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/phpinfo</type>
-  <link>http://amun.phpsx.org</link>
-  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
-  <license>GPLv3</license>
-  <version>0.0.1</version>
-  <provider>http://amun-project.org</provider>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/phpinfo</type>

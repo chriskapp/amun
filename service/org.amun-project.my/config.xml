@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="e43652990787eba355d851c0efbe7636e8472bd4">
+<service xmlns="http://amun-project.org">
   <status>normal</status>
-  <name>my</name>
-  <description>Service wich offers an activitystream and handling of user settings and friends</description>
   <path>/my</path>
-  <namespace>my</namespace>
+  <namespace>AmunService\My</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/my</type>
-  <link>http://amun.phpsx.org</link>
-  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
-  <license>GPLv3</license>
-  <version>0.0.1</version>
-  <provider>http://amun-project.org</provider>
   <api>
     <service>
       <type>http://portablecontacts.net/spec/1.0</type>
@@ -41,15 +34,4 @@
   <registry>
     <param name="max_group_count" value="12" type="INTEGER"/>
   </registry>
-  <library>
-    <dir name="AmunService">
-      <dir name="My">
-        <file name="Credentials.php" md5="d0345d7ec707b6a7d828f4c44d282c05"/>
-        <file name="FriendsAbstract.php" md5="082f5eb889800bb195fa439613b33eae"/>
-        <file name="MyAbstract.php" md5="c5a18c72dace6975d2fde43238a108e8"/>
-        <file name="People.php" md5="95ab22f771e7f336062d099ea9786879"/>
-        <file name="SettingsAbstract.php" md5="a3bb4634c8a6ad388a1155ce6933b47d"/>
-      </dir>
-    </dir>
-  </library>
 </service>

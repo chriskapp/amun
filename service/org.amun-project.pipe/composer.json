@@ -1,0 +1,24 @@
+{
+    "name": "amun/pipe",
+    "description": "Service wich redirects the content of an media item to an page",
+    "homepage": "http://amun-project.org",
+    "type": "library",
+    "license": "GPL-3.0",
+    "version": "0.0.1",
+    "authors": [
+        {
+            "name": "Christoph Kappestein",
+            "email": "k42b3.x@gmail.com",
+            "homepage": "http://k42b3.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3",
+        "amun/content": "0.0.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "AmunService\\Pipe\\": "src/"
+        }
+    }
+}

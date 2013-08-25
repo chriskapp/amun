@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="3aba36a68676719293b704d7a45b8d7a6be4105c">
+<service xmlns="http://amun-project.org">
   <status>system</status>
-  <name>country</name>
-  <description>Service wich provides a table of countries</description>
   <path>/country</path>
-  <namespace>country</namespace>
+  <namespace>AmunService\Country</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/country</type>
-  <link>http://amun.phpsx.org</link>
-  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
-  <license>GPLv3</license>
-  <version>0.0.1</version>
-  <provider>http://amun-project.org</provider>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/country</type>
@@ -27,16 +20,6 @@
   <registry>
     <table name="country"/>
   </registry>
-  <library>
-    <dir name="AmunService">
-      <dir name="Country">
-        <file name="Form.php" md5="f48afab2f564d32cebf75121fea1daa0"/>
-        <file name="Handler.php" md5="129a3a9823494476a563455cb5a6ccc0"/>
-        <file name="Record.php" md5="413228f97b1de90e53160fb04e822098"/>
-        <file name="Table.php" md5="92fa1d0a78e7cf74ebffed6e716cf44d"/>
-      </dir>
-    </dir>
-  </library>
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.country}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,

@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="9b32266e38d8d65c07073526b6edf2c5c7443469">
+<service xmlns="http://amun-project.org">
   <status>system</status>
-  <name>core</name>
-  <description>Contains the core functionalities of amun</description>
   <path>/core</path>
-  <namespace>core</namespace>
+  <namespace>AmunService\Core</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/core</type>
-  <link>http://amun.phpsx.org</link>
-  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
-  <license>GPLv3</license>
-  <version>0.0.1</version>
-  <provider>http://amun-project.org</provider>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/core/service</type>
@@ -47,10 +40,6 @@
     <perm name="service_add" description="Core Service add"/>
     <perm name="service_edit" description="Core Service edit"/>
     <perm name="service_delete" description="Core Service delete"/>
-    <perm name="service_provider_view" description="Core Service Provider view"/>
-    <perm name="service_provider_add" description="Core Service Provider add"/>
-    <perm name="service_provider_edit" description="Core Service Provider edit"/>
-    <perm name="service_provider_delete" description="Core Service Provider delete"/>
     <perm name="approval_view" description="Core Approval view"/>
     <perm name="approval_add" description="Core Approval add"/>
     <perm name="approval_edit" description="Core Approval edit"/>
@@ -99,74 +88,6 @@
     <publisher name="core.record_change" description="Notifies if a record has changed"/>
     <listener name="core.service_install" class="\AmunService\Core\Service\Option\ConfigListener"/>
   </event>
-  <library>
-    <dir name="AmunService">
-      <dir name="Core">
-        <dir name="Approval">
-          <dir name="Filter">
-            <file name="Field.php" md5="157d98d85336a8e4076994eeb2273d98"/>
-          </dir>
-          <file name="Form.php" md5="63b55d22a7e2b01bc5a1e740fa5ee6a4"/>
-          <file name="Handler.php" md5="1c59a52ad12000a917b5e763e981976d"/>
-          <dir name="Record">
-            <dir name="Filter">
-              <file name="Type.php" md5="0efbf9a14a6a6c81f487e5cc6c6f4075"/>
-            </dir>
-            <file name="Form.php" md5="222dfe40a770641e3b777b1bc36b1f81"/>
-            <file name="Handler.php" md5="d3e27282fb4c5be73b3412e066770bc7"/>
-            <file name="Record.php" md5="3766153efb608d684d2a01e3123d5042"/>
-            <file name="Table.php" md5="597f1dafbda089f34575bde9169e419c"/>
-          </dir>
-          <file name="Record.php" md5="564ee1923c5648d2ff256bd70d9fbb61"/>
-          <file name="Table.php" md5="ca0e6fa7af926a7c142132e90be944be"/>
-        </dir>
-        <dir name="Host">
-          <dir name="Filter">
-            <file name="Name.php" md5="c92d15398e046bc6f71371f93df8ef6c"/>
-            <file name="Status.php" md5="2f24ec9ffe8440405da96e1230013378"/>
-          </dir>
-          <file name="Form.php" md5="0dceed0d6b47e001969e50098afd730d"/>
-          <file name="Handler.php" md5="512116cd38b528789dfd8f69a4fc89c4"/>
-          <file name="Record.php" md5="4b0edc8da4fe5d846b164b21499657c2"/>
-          <dir name="Request">
-            <file name="Record.php" md5="70bd5d290d52122bfb70064af3c2b6e0"/>
-            <file name="Table.php" md5="663292813cf412be5627af72ed1b232d"/>
-          </dir>
-          <file name="Table.php" md5="8fb746462183f154376b803f36da1bca"/>
-        </dir>
-        <dir name="Registry">
-          <dir name="Filter">
-            <file name="ClassName.php" md5="827bced3665364b01384bc8523178083"/>
-            <file name="Name.php" md5="aaa7727c4fde7f16a3a87ce00462d85d"/>
-          </dir>
-          <file name="Form.php" md5="02c8b1be005276db265a0d8fe4459860"/>
-          <file name="Handler.php" md5="1a25ac5a3ffa3ce0aa7e2f2e43fccb49"/>
-          <file name="Record.php" md5="f501c66eed68577d7e113385264de465"/>
-          <file name="Table.php" md5="52e708cbab9d5746535ce403af077782"/>
-        </dir>
-        <dir name="Service">
-          <dir name="Filter">
-            <file name="Link.php" md5="1cc00a00228eb7670f13405a662d6ec9"/>
-            <file name="Status.php" md5="17eea6ecab2e21bf9a529029c8667d8d"/>
-          </dir>
-          <file name="Form.php" md5="2de7b9aec736ec58f66a4e83d51cb1e5"/>
-          <file name="Handler.php" md5="77c8038d91f8edf057ea89ea2cdeb520"/>
-          <dir name="Option">
-            <file name="ConfigListener.php" md5="8318b5c458709742ca4ce92cf668a938"/>
-            <file name="Record.php" md5="998d720b431bc5830b426b07e309780d"/>
-            <file name="Table.php" md5="5b3e10a340164170ef666be7417f3395"/>
-          </dir>
-          <dir name="Provider">
-            <file name="Handler.php" md5="a6102ef3303d28a6f95a83be00ca5b48"/>
-            <file name="Record.php" md5="db5bcd1d273cf3dd4abfeb87d56d2b10"/>
-            <file name="Table.php" md5="fefee9b1d19a880ef54eacadc9da1f83"/>
-          </dir>
-          <file name="Record.php" md5="b4c40e8f4b8db4ecfe0a5c331c65b7f3"/>
-          <file name="Table.php" md5="c66d3342bf9d7af341c034bdcf4d8542"/>
-        </dir>
-      </dir>
-    </dir>
-  </library>
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_service}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -184,18 +105,6 @@
   `date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;]]></query>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_service_option}` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `serviceId` int(10) NOT NULL,
-  `name` varchar(64) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=ascii;]]></query>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_service_provider}` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `url` varchar(256) NOT NULL,
-  `date` datetime NOT NULL,
-  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;]]></query>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_approval}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,

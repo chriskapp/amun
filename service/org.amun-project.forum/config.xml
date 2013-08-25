@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="e65a8e62b31e4ff72e9b8054aed1cf4d24a8523c">
+<service xmlns="http://amun-project.org">
   <status>normal</status>
-  <name>forum</name>
-  <description>Implementation of an simple forum system. It is possible to create threads and set the status to sticky or closed</description>
   <path>/forum</path>
-  <namespace>forum</namespace>
+  <namespace>AmunService\Forum</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/forum</type>
-  <link>http://amun.phpsx.org</link>
-  <author><![CDATA[Christoph Kappestein <k42b3.x@gmail.com>]]></author>
-  <license>GPLv3</license>
-  <version>0.0.1</version>
   <provider>http://amun-project.org</provider>
   <required>
     <service>org.amun-project.comment</service>
@@ -45,17 +39,6 @@
   <event>
     <listener name="core.record_change" class="\AmunService\Forum\RecordListener"/>
   </event>
-  <library>
-    <dir name="AmunService">
-      <dir name="Forum">
-        <file name="Form.php" md5="9288abfd9bf10f5f221be10e36b32445"/>
-        <file name="Handler.php" md5="37b8773281c31aae921589e5c9b04ab8"/>
-        <file name="Record.php" md5="9591fb51afdcdf6165b845adbd9f604d"/>
-        <file name="RecordListener.php" md5="6ee1f11cb376e6392dbbe69de94bd1d5"/>
-        <file name="Table.php" md5="c82497f040e9d26ecbbd99c6c5253795"/>
-      </dir>
-    </dir>
-  </library>
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.forum}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,

@@ -1,0 +1,26 @@
+{
+    "name": "amun/core",
+    "description": "Contains the core functionalities of amun",
+    "homepage": "http://amun-project.org",
+    "type": "library",
+    "license": "GPL-3.0",
+    "version": "0.0.1",
+    "authors": [
+        {
+            "name": "Christoph Kappestein",
+            "email": "k42b3.x@gmail.com",
+            "homepage": "http://k42b3.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3",
+        "psx/psx": "dev-master",
+        "composer/composer": "1.0.*@dev",
+        "monolog/monolog": "1.5.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "AmunService\\Core\\": "src/"
+        }
+    }
+}
