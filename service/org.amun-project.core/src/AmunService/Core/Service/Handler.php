@@ -99,12 +99,13 @@ class Handler extends HandlerAbstract
 			}
 
 
-			// call pre install class
-			$setup = $this->getSetup();
+			// get setup class
+			$setup = $this->getSetup($record);
 
+			// call pre install class
 			try
 			{
-				$setup->preInstall();
+				$setup->preInstall($record);
 			}
 			catch(\Exception $e)
 			{
@@ -142,7 +143,7 @@ class Handler extends HandlerAbstract
 			// call post install class
 			try
 			{
-				$setup->postInstall();
+				$setup->postInstall($record);
 			}
 			catch(\Exception $e)
 			{
@@ -209,7 +210,7 @@ class Handler extends HandlerAbstract
 
 	private function getSetup(Service\Record $record)
 	{
-		$className = $record->namespace . '\Setup';
+		$className = '\\' . $record->namespace . '\Setup';
 
 		if(class_exists($className))
 		{

@@ -99,6 +99,7 @@ class Installer
 		catch(\Exception $e)
 		{
             $event->getIo()->write('    - ' . $e->getMessage() . "\n");
+            $event->getIo()->write('      ' . $e->getTraceAsString() . "\n");
 		}
 	}
 

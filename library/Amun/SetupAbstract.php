@@ -31,7 +31,7 @@ use PSX\Data\RecordInterface;
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class SetupAbstract
+abstract class SetupAbstract
 {
 	protected $container;
 	protected $config;

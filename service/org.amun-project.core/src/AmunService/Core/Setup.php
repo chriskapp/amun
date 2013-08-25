@@ -20,9 +20,10 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace AmunService\Core\Service;
+namespace AmunService\Core;
 
 use Amun\SetupAbstract;
+use PSX\Data\RecordInterface;
 
 /**
  * Form
@@ -33,7 +34,7 @@ use Amun\SetupAbstract;
  */
 class Setup extends SetupAbstract
 {
-	public function preInstall()
+	public function preInstall(RecordInterface $record)
 	{
 		$queries = array();
 		$queries[] = <<<SQL
@@ -133,7 +134,7 @@ SQL;
 		}
 	}
 
-	public function postInstall()
+	public function postInstall(RecordInterface $record)
 	{
 	}
 }

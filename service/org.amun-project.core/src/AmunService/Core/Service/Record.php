@@ -140,7 +140,7 @@ class Record extends RecordAbstract
 
 		if(!$this->_validate->hasError())
 		{
-			$this->namespace = $namespace;
+			$this->namespace = ltrim($namespace, '\\');
 		}
 		else
 		{

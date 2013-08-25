@@ -85,6 +85,11 @@ class RegistryNoDb extends Registry
 
 		));
 	}
+
+	public function hasService($source)
+	{
+		return false;
+	}
 }
 
 class UserNoDb extends User
