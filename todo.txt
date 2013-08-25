@@ -1,12 +1,15 @@
 
 [FEATURES]
 
+[ ] add general payment service with an event publisher if an payments is 
+    executed and an backend where its possible to see all transactions
+[ ] option for module to register event wich is loaded on page load
 [x] add page and gadget caching
 [ ] improve right system probably with inheritance. Add page specific rights
 [ ] clean up handler selection methods
 [ ] fix php_view right .. php code is returned by the api
 [ ] build backend for approval system
-[ ] extend navigation to show a dropdown if child pages ar available
+[ ] extend navigation to show a dropdown if child pages are available
 [ ] add api bulk operations by accepting resultset in an post. We could use
     annotations to declare the object type in array problem is that we need to
     pass an table into the contructor of an record and also the di container

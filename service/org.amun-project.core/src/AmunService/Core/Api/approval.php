@@ -38,6 +38,6 @@ class approval extends RestAbstract
 {
 	protected function getHandler($table = null)
 	{
-		return parent::getHandler($table === null ? 'Core_Approval' : $table);
+		return parent::getHandler($table === null ? 'AmunService\Core\Approval' : $table);
 	}
 }

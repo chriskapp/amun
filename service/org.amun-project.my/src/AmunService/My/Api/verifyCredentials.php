@@ -49,7 +49,7 @@ class verifyCredentials extends ApiAbstract
 	{
 		try
 		{
-			$select = $this->hm->getTable('User_Account')
+			$select = $this->hm->getTable('AmunService\User\Account')
 				->select(array('id', 'groupId', 'status', 'name', 'gender', 'profileUrl', 'thumbnailUrl', 'timezone', 'updated', 'date'))
 				->where('id', '=', $this->user->getId());
 

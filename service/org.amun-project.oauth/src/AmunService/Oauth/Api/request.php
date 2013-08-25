@@ -38,7 +38,7 @@ class request extends RestAbstract
 {
 	protected function getHandler($table = null)
 	{
-		return parent::getHandler($table === null ? 'Oauth_Request' : $table);
+		return parent::getHandler($table === null ? 'AmunService\Oauth\Request' : $table);
 	}
 
 	protected function getRestrictedFields()

@@ -64,7 +64,7 @@ class Record extends RecordAbstract
 
 	public function setGroupId($groupId)
 	{
-		$groupId = $this->_validate->apply($groupId, 'integer', array(new Filter\Id($this->_hm->getTable('User_Friend_Group'))), 'groupId', 'Group Id');
+		$groupId = $this->_validate->apply($groupId, 'integer', array(new Filter\Id($this->_hm->getTable('AmunService\User\Friend\Group'))), 'groupId', 'Group Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -78,7 +78,7 @@ class Record extends RecordAbstract
 
 	public function setFriendId($friendId)
 	{
-		$friendId = $this->_validate->apply($friendId, 'integer', array(new Filter\Id($this->_hm->getTable('User_Friend'))), 'friendId', 'Friend Id');
+		$friendId = $this->_validate->apply($friendId, 'integer', array(new Filter\Id($this->_hm->getTable('AmunService\User\Friend'))), 'friendId', 'Friend Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -99,7 +99,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_group === null)
 		{
-			$this->_group = $this->_hm->getHandler('User_Friend_Group')->getRecord($this->groupId);
+			$this->_group = $this->_hm->getHandler('AmunService\User\Friend\Group')->getRecord($this->groupId);
 		}
 
 		return $this->_group;
@@ -109,7 +109,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_account === null)
 		{
-			$this->_account = $this->_hm->getHandler('User_Account')->getRecord($this->userId);
+			$this->_account = $this->_hm->getHandler('AmunService\User\Account')->getRecord($this->userId);
 		}
 
 		return $this->_account;
@@ -119,7 +119,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_friend === null)
 		{
-			$this->_friend = $this->_hm->getHandler('User_Account')->getRecord($this->friendId);
+			$this->_friend = $this->_hm->getHandler('AmunService\User\Account')->getRecord($this->friendId);
 		}
 
 		return $this->_friend;

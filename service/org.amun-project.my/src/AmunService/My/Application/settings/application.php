@@ -70,7 +70,7 @@ class application extends SettingsAbstract
 		$count = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
 		$count = $count > 16 ? 16 : $count;
 
-		$result = $this->getHandler('Oauth_Access')->getResultSet(array(),
+		$result = $this->getHandler('AmunService\Oauth\Access')->getResultSet(array(),
 			$url->getParam('startIndex'), 
 			$count, 
 			$url->getParam('sortBy'), 

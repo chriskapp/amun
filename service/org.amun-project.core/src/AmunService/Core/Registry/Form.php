@@ -51,7 +51,7 @@ class Form extends FormAbstract
 
 	public function update($id)
 	{
-		$record = $this->hm->getHandler('Core_Registry')->getRecord($id);
+		$record = $this->hm->getHandler('AmunService\Core\Registry')->getRecord($id);
 
 
 		$form = new AmunForm('PUT', $this->url);

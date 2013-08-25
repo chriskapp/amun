@@ -69,7 +69,7 @@ class Form extends FormAbstract
 
 	public function update($id)
 	{
-		$record = $this->hm->getHandler('User_Friend_Group')->getRecord($id);
+		$record = $this->hm->getHandler('AmunService\User\Friend\Group')->getRecord($id);
 
 
 		$form = new AmunForm('PUT', $this->url);
@@ -107,7 +107,7 @@ class Form extends FormAbstract
 
 	public function delete($id)
 	{
-		$record = $this->hm->getHandler('User_Friend_Group')->getRecord($id);
+		$record = $this->hm->getHandler('AmunService\User\Friend\Group')->getRecord($id);
 
 
 		$form = new AmunForm('DELETE', $this->url);

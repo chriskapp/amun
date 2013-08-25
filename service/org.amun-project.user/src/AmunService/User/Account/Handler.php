@@ -52,7 +52,7 @@ class Handler extends HandlerAbstract
 		$class = $this->getClassName();
 		$args  = $this->getClassArgs();
 
-		return $this->hm->getTable('User_Account')
+		return $this->hm->getTable('AmunService\User\Account')
 			->select(array('id', 'name', 'ip', 'email', 'date'))
 			->where('token', '=', $token)
 			->where('status', '=', Record::RECOVER)
@@ -64,7 +64,7 @@ class Handler extends HandlerAbstract
 		$class = $this->getClassName();
 		$args  = $this->getClassArgs();
 
-		return $this->hm->getTable('User_Account')
+		return $this->hm->getTable('AmunService\User\Account')
 			->select(array('id', 'ip', 'date'))
 			->where('token', '=', $token)
 			->where('status', '=', Record::NOT_ACTIVATED)
@@ -256,10 +256,10 @@ class Handler extends HandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'globalId', 'groupId', 'status', 'name', 'updated', 'profileUrl', 'thumbnailUrl', 'date'))
-			->join(Join::INNER, $this->hm->getTable('User_Group')
+			->join(Join::INNER, $this->hm->getTable('AmunService\User\Group')
 				->select(array('title'), 'group')
 			)
-			->join(Join::INNER, $this->hm->getTable('Country')
+			->join(Join::INNER, $this->hm->getTable('AmunService\Country')
 				->select(array('title'), 'country')
 			);
 	}

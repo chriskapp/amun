@@ -71,7 +71,7 @@ class activity extends RestAbstract
 
 				$params    = $this->getRequestParams();
 				$fields    = (array) $params['fields'];
-				$resultSet = $this->getHandler('User_Activity')->getPublicResultSet($this->userId, 
+				$resultSet = $this->getHandler('AmunService\User\Activity')->getPublicResultSet($this->userId, 
 					array(), 
 					$params['startIndex'], 
 					$params['count'], 
@@ -144,7 +144,7 @@ class activity extends RestAbstract
 
 	protected function getHandler($table = null)
 	{
-		return parent::getHandler($table === null ? 'User_Activity' : $table);
+		return parent::getHandler($table === null ? 'AmunService\User\Activity' : $table);
 	}
 
 	protected function setWriterConfig(WriterResult $writer)
@@ -153,7 +153,7 @@ class activity extends RestAbstract
 		{
 			case WriterInterface::ATOM:
 
-				$account = $this->getHandler('User_Account')->getOneById($this->userId, 
+				$account = $this->getHandler('AmunService\User\Account')->getOneById($this->userId, 
 					array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated'), 
 					Sql::FETCH_OBJECT);
 

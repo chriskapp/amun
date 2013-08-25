@@ -49,7 +49,7 @@ class settings extends SettingsAbstract
 		$this->path->add('Application', $this->page->getUrl() . '/settings/application');
 
 		// load application
-		$this->application = $this->getHandler('Oauth_Access')->getAllowedApplication(
+		$this->application = $this->getHandler('AmunService\Oauth\Access')->getAllowedApplication(
 			$this->get->appId('integer'),
 			$this->user->getId()
 		);
@@ -66,7 +66,7 @@ class settings extends SettingsAbstract
 
 			// load user rights
 			$con = new Condition(array('groupId', '=', $this->user->getGroupId()));
-			$this->userRights = $this->getHandler('User_Group_Right')->getAll(array('rightId', 'groupId', 'rightDescription'), 0, 1024, 'rightDescription', Sql::SORT_ASC, $con);
+			$this->userRights = $this->getHandler('AmunService\User\Group\Right')->getAll(array('rightId', 'groupId', 'rightDescription'), 0, 1024, 'rightDescription', Sql::SORT_ASC, $con);
 
 			$this->template->assign('userRights', $this->userRights);
 		}
@@ -106,7 +106,7 @@ class settings extends SettingsAbstract
 
 		if(!empty($rights))
 		{
-			$this->getHandler('Oauth_Access')->setRights($this->application->id, $rights);
+			$this->getHandler('AmunService\Oauth\Access')->setRights($this->application->id, $rights);
 		}
 
 		// redirect

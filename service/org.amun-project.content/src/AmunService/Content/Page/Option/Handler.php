@@ -105,7 +105,7 @@ class Handler extends HandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'name', 'href'))
-			->join(Join::INNER, $this->hm->getTable('Content_Page')
+			->join(Join::INNER, $this->hm->getTable('AmunService\Content\Page')
 				->select(array('id', 'title'), 'page')
 			);
 	}

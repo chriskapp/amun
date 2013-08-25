@@ -47,7 +47,9 @@ else
 		$container = new Amun\Dependency\Install();
 		$container->setParameter('config.file', '../configuration.php');
 		$container->setParameter('user.id', 1);
-		$bootstrap = new PSX\Bootstrap($container->get('config'));
+
+		// bootstrap
+		Bootstrap::setupEnvironment($container->get('config'));
 
 		$container->set('session', new PSX\Session\Void('amun-install'));
 

@@ -38,7 +38,7 @@ class right extends RestAbstract
 {
 	protected function getHandler($table = null)
 	{
-		return parent::getHandler($table === null ? 'User_Right' : $table);
+		return parent::getHandler($table === null ? 'AmunService\User\Right' : $table);
 	}
 
 	protected function setWriterConfig(WriterResult $writer)

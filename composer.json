@@ -21,14 +21,52 @@
     ],
     "require": {
         "php": ">=5.3",
+        "ext-pdo": "*",
+        "ext-curl": "*",
+        "ext-dom": "*",
+        "ext-simplexml": "*",
+        "ext-hash": "*",
         "psx/psx": "dev-master",
         "composer/composer": "1.0.*@dev",
         "monolog/monolog": "1.5.*",
-        "zendframework/zend-mail": "2.1.*"
+        "amun/core": "0.0.1",
+        "amun/log": "0.0.1",
+        "amun/xrds": "0.0.1",
+        "amun/hostmeta": "0.0.1",
+        "amun/lrdd": "0.0.1",
+        "amun/user": "0.0.1",
+        "amun/asset": "0.0.1",
+        "amun/oauth": "0.0.1",
+        "amun/media": "0.0.1",
+        "amun/openid": "0.0.1",
+        "amun/country": "0.0.1",
+        "amun/mail": "0.0.1",
+        "amun/swagger": "0.0.1",
+        "amun/sitemap": "0.0.1",
+        "amun/phpinfo": "0.0.1",
+        "amun/content": "0.0.1",
+        "amun/login": "0.0.1",
+        "amun/my": "0.0.1",
+        "amun/profile": "0.0.1",
+        "amun/page": "0.0.1",
+        "amun/comment": "0.0.1",
+        "amun/news": "0.0.1",
+        "amun/file": "0.0.1",
+        "amun/php": "0.0.1",
+        "amun/redirect": "0.0.1",
+        "amun/pipe": "0.0.1"
+    },
+    "repositories": [{
+        "type": "artifact",
+        "url": "service/"
+    }],
+    "scripts": {
+        "post-package-install": "Amun\\Installer::postInstall",
+        "post-package-update": "Amun\\Installer::postUpdate"
     },
     "autoload": {
         "psr-0": {
-            "Amun": "library/"
+            "Amun\\": "library/"
         }
     }
 }

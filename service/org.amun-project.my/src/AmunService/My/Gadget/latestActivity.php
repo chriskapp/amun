@@ -53,7 +53,7 @@ class latestActivity extends GadgetAbstract
 		$con = new Condition(array('scope', '=', 0));
 
 		// get activities
-		$handler = $this->hm->getHandler('User_Activity');
+		$handler = $this->hm->getHandler('AmunService\User\Activity');
 		$result  = $handler->getAll(array('id', 
 			'scope', 
 			'summary', 

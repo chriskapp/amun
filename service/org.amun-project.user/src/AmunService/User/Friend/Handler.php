@@ -60,12 +60,12 @@ class Handler extends HandlerAbstract
 
 		$select = $this->table
 			->select(array('id', 'status', 'date'))
-			->join(Join::INNER, $this->hm->getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('AmunService\User\Account')
 				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'author'),
 				'n:1',
 				'userId'
 			)
-			->join(Join::INNER, $this->hm->getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('AmunService\User\Account')
 				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'friend'),
 				'n:1',
 				'friendId'
@@ -114,12 +114,12 @@ class Handler extends HandlerAbstract
 
 		$select = $this->table
 			->select(array('id', 'status', 'date'))
-			->join(Join::INNER, $this->hm->getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('AmunService\User\Account')
 				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'author'),
 				'n:1',
 				'userId'
 			)
-			->join(Join::INNER, $this->hm->getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('AmunService\User\Account')
 				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'friend'),
 				'n:1',
 				'friendId'
@@ -301,12 +301,12 @@ class Handler extends HandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'status', 'date'))
-			->join(Join::INNER, $this->hm->getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('AmunService\User\Account')
 				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'author'),
 				'n:1',
 				'userId'
 			)
-			->join(Join::INNER, $this->hm->getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('AmunService\User\Account')
 				->select(array('id', 'globalId', 'name', 'profileUrl', 'thumbnailUrl', 'updated', 'date'), 'friend'),
 				'n:1',
 				'friendId'
@@ -430,7 +430,7 @@ SQL;
 			if(empty($friendId))
 			{
 				$security = new Security($this->registry);
-				$handler  = $this->hm->getHandler('User_Account', $this->user);
+				$handler  = $this->hm->getHandler('AmunService\User\Account', $this->user);
 
 				$account = $handler->getRecord();
 				$account->globalId = $profile['id'];
@@ -447,7 +447,7 @@ SQL;
 
 
 			// create relation
-			$friend = $this->hm->getTable('User_Friend')->getRecord();
+			$friend = $this->hm->getTable('AmunService\User\Friend')->getRecord();
 			$friend->friendId = $friendId;
 
 			return $this->create($friend);

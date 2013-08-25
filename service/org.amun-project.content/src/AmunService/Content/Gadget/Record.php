@@ -76,7 +76,7 @@ class Record extends RecordAbstract
 
 	public function setRightId($rightId)
 	{
-		$rightId = $this->_validate->apply($rightId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('User_Right'), true)), 'rightId', 'Right Id');
+		$rightId = $this->_validate->apply($rightId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('AmunService\User\Right'), true)), 'rightId', 'Right Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -139,7 +139,7 @@ class Record extends RecordAbstract
 			list($serviceId, $file) = $parts;
 
 			$con      = new Condition(array('id', '=', $serviceId));
-			$service  = $this->_hm->getTable('Core_Service')->getRow(array('id', 'source', 'namespace'), $con);
+			$service  = $this->_hm->getTable('AmunService\Core\Service')->getRow(array('id', 'source', 'namespace'), $con);
 
 			if(!empty($service))
 			{

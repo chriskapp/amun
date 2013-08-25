@@ -56,7 +56,7 @@ class System extends HandlerAbstract
 
 		if(!empty($password))
 		{
-			$row = $this->hm->getTable('User_Account')
+			$row = $this->hm->getTable('AmunService\User\Account')
 				->select(array('id', 'status', 'pw'))
 				->where('identity', '=', $identity)
 				->getRow();

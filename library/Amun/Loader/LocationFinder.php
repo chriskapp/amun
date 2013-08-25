@@ -98,36 +98,16 @@ class LocationFinder extends FileSystem
 		if(!empty($service))
 		{
 			// load module
-			$pathInfo = substr($pathInfo, strlen($service['path']));
-			$x        = $service['source'] . '/api/' . trim($pathInfo, '/');
+			$pathInfo  = substr($pathInfo, strlen($service['path']));
+			$path      = $service['namespace'] . '/api/' . $pathInfo;
 
-			$location = $this->getLocation($x);
+			list($className, $rest) = $this->getClassByPath($path);
 
-			if($location !== false)
+			if(class_exists($className))
 			{
-				list($file, $path, $class) = $location;
+				$class = new ReflectionClass($className);
 
-				// include class
-				require_once($file);
-
-				// create class
-				$namespace = $this->getApiNamespace($path, $service['source'], $service['namespace']);
-
-				$class = new ReflectionClass($namespace . '\\' . $class);
-
-				// remove path and class
-				$path = substr($path, strlen($service['source']) + 5);
-				$rest = $pathInfo;
-
-				if(!empty($path))
-				{
-					$rest = self::removePathPart($path, $rest);
-				}
-
-				$rest = self::removePathPart($class->getShortName(), $rest);
-
-				// return location
-				return new Location(md5($file), $rest, $class, $service['id']);
+				return new Location(md5($className), $rest, $class, $service['id']);
 			}
 		}
 		else
@@ -270,6 +250,29 @@ class LocationFinder extends FileSystem
 		$ns = rtrim($ns, '\\');
 
 		return $ns;
+	}
+
+	protected function getClassByPath($path)
+	{
+		$parts = array_map('ucfirst', explode('/', $path));
+		$len   = count($parts);
+
+		for($i = $len; $i > 0; $i--)
+		{
+			$class    = implode('\\', array_slice($parts, 0, $i));
+			$rest     = implode('/', array_slice($parts, $i));
+			$explicit = $class;
+			$default  = $class . '\\Index';
+
+			if(class_exists($explicit))
+			{
+				return array($explicit, $rest);
+			}
+			else if(class_exists($default))
+			{
+				return array($default, $rest);
+			}
+		}
 	}
 }
 

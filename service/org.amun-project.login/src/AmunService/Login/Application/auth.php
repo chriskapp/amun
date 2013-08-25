@@ -79,7 +79,7 @@ class auth extends ApplicationAbstract
 				if(!empty($oauthToken))
 				{
 					// check token
-					$row = $this->getHandler('Oauth_Request')->getOneByToken($oauthToken, array('apiId', 'status', 'callback', 'token', 'expire', 'date'));
+					$row = $this->getHandler('AmunService\Oauth\Request')->getOneByToken($oauthToken, array('apiId', 'status', 'callback', 'token', 'expire', 'date'));
 
 					if(!empty($row))
 					{
@@ -104,14 +104,14 @@ class auth extends ApplicationAbstract
 						{
 							$con = new Condition(array('token', '=', $oauthToken));
 
-							$this->hm->getTable('Oauth_Request')->delete($con);
+							$this->hm->getTable('AmunService\Oauth\Request')->delete($con);
 
 							throw new Exception('The token is expired');
 						}
 
 						// load user rights
 						$con = new Condition(array('groupId', '=', $this->user->getGroupId()));
-						$this->userRights = $this->getHandler('User_Group_Right')->getAll(array('rightId', 'groupId', 'rightDescription'), 0, 1024, 'rightDescription', Sql::SORT_ASC, $con);
+						$this->userRights = $this->getHandler('AmunService\User\Group\Right')->getAll(array('rightId', 'groupId', 'rightDescription'), 0, 1024, 'rightDescription', Sql::SORT_ASC, $con);
 
 						$this->template->assign('userRights', $this->userRights);
 
@@ -140,7 +140,7 @@ class auth extends ApplicationAbstract
 					}
 
 					// request consumer informations
-					$row = $this->getHandler('Oauth')->getOneById($this->apiId, array('url', 'title', 'description'));
+					$row = $this->getHandler('AmunService\Oauth')->getOneById($this->apiId, array('url', 'title', 'description'));
 
 					if(!empty($row))
 					{
@@ -153,7 +153,7 @@ class auth extends ApplicationAbstract
 					}
 
 					// check whether access is already allowed
-					if($this->getHandler('Oauth_Access')->isAllowed($this->apiId, $this->user->getId()))
+					if($this->getHandler('AmunService\Oauth\Access')->isAllowed($this->apiId, $this->user->getId()))
 					{
 						$this->allowAccess($token, $callback);
 					}
@@ -183,7 +183,7 @@ class auth extends ApplicationAbstract
 
 		if($token !== false)
 		{
-			$row = $this->getHandler('Oauth_Request')->getOneByToken($token, array('status', 'token', 'callback'));
+			$row = $this->getHandler('AmunService\Oauth\Request')->getOneByToken($token, array('status', 'token', 'callback'));
 
 			if(!empty($row))
 			{

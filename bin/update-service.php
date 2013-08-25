@@ -92,100 +92,44 @@ catch(Exception $e)
 	exit(1);
 }
 
-
 // update the service
 function updateService($service)
 {
-	// read config
-	$config = new DOMDocument();
-	$file   = AMUN_PATH . '/service/' . $service . '/config.xml';
+	$spath  = AMUN_PATH . '/service/' . $service;
+	$config = $spath . '/config.xml';
 
-	if(is_file($file))
+	$dir  = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($spath), RecursiveIteratorIterator::SELF_FIRST);
+	$phar = new PharData(AMUN_PATH . '/service/' . $service . '.zip', 0, $service . '.zip', Phar::ZIP);
+
+	foreach($dir as $file)
 	{
-		$config->load($file);
-	}
-	else
-	{
-		throw new InvalidArgumentException('Could not find config ' . $file);
-	}
-
-	// library
-	$library = $config->getElementsByTagName('library');
-
-	if($library->length > 0)
-	{
-		copyFiles(AMUN_PATH . '/library', AMUN_PATH . '/service/' . $service . '/library', $library->item(0));
-	}
-}
-
-
-// copy files to the service folder
-function copyFiles($src, $dest, DomNode $el)
-{
-	if(!is_dir($src))
-	{
-		throw new InvalidPathException($src . ' not found');
-	}
-
-	if(!is_dir($dest))
-	{
-		if(!mkdir($dest, 0755))
+		if($file->getFilename() != '.' && $file->getFilename() != '..')
 		{
-			throw new RuntimeException('Could not create folder ' . $dest);
-		}
+			$path = (string) $file;
+			$name = substr($path, strlen($spath) + 1);
 
-		echo 'A ' . $dest . "\n";
-	}
-
-	for($i = 0; $i < $el->childNodes->length; $i++)
-	{
-		$e = $el->childNodes->item($i);
-
-		if($e instanceof DOMElement)
-		{
-			if($e->nodeName == 'dir')
+			if($file->isFile())
 			{
-				copyFiles($src . '/' . $e->getAttribute('name'), $dest . '/' . $e->getAttribute('name'), $e);
+				$phar->addFromString($name, file_get_contents($path));
+			}
+			else if($file->isDir())
+			{
+				$phar->addEmptyDir($name);
 			}
 
-			if($e->nodeName == 'file')
-			{
-				$srcFile  = $src . '/' . $e->getAttribute('name');
-				$destFile = $dest . '/' . $e->getAttribute('name');
-
-				if(!is_file($srcFile))
-				{
-					throw new RuntimeException('Invalid source file ' . $srcFile);
-				}
-
-				if(!is_file($destFile))
-				{
-					file_put_contents($destFile, file_get_contents($srcFile));
-
-					echo 'A ' . $destFile . "\n";
-				}
-				else
-				{
-					// file has been changes
-					if(md5_file($srcFile) != md5_file($destFile))
-					{
-						file_put_contents($destFile, file_get_contents($srcFile));
-
-						echo 'M ' . $destFile . "\n";
-					}
-				}
-			}
+			echo 'A ' . $name . "\n";
 		}
 	}
-}
 
+	echo "\n";
+	echo 'Generating service zip ' . $service . ' successful' . "\n";
+}
 
 // exception error handler
 function exceptionErrorHandler($errno, $errstr, $errfile, $errline)
 {
 	throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
 }
-
 
 // exceptions
 class InvalidPathException extends Exception

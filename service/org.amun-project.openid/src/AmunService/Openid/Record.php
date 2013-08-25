@@ -67,7 +67,7 @@ class Record extends RecordAbstract
 
 	public function setUserId($userId)
 	{
-		$userId = $this->_validate->apply($userId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('User_Account'))), 'userId', 'User Id');
+		$userId = $this->_validate->apply($userId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('AmunService\User\Account'))), 'userId', 'User Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -169,7 +169,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_user === null)
 		{
-			$this->_user = $this->_hm->getHandler('User_Account')->getRecord($this->userId);
+			$this->_user = $this->_hm->getHandler('AmunService\User\Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;

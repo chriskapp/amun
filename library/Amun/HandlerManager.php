@@ -46,7 +46,7 @@ class HandlerManager
 	{
 		$name  = str_replace('_', '\\', $name);
 		$name  = implode('\\', array_map('ucfirst', explode('\\', $name)));
-		$class = '\AmunService\\' . $name . '\Handler';
+		$class = $name . '\Handler';
 
 		if(isset($this->_cache[$class]))
 		{

@@ -66,7 +66,7 @@ class Record extends RecordAbstract
 
 	public function setPageId($pageId)
 	{
-		$pageId = $this->_validate->apply($pageId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('Content_Page'))), 'pageId', 'Page Id');
+		$pageId = $this->_validate->apply($pageId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('AmunService\Content\Page'))), 'pageId', 'Page Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -80,7 +80,7 @@ class Record extends RecordAbstract
 
 	public function setMediaId($mediaId)
 	{
-		$mediaId = $this->_validate->apply($mediaId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('Media'))), 'mediaId', 'Media Id');
+		$mediaId = $this->_validate->apply($mediaId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('AmunService\Media'))), 'mediaId', 'Media Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -140,7 +140,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_page === null)
 		{
-			$this->_page = $this->_hm->getHandler('Content_Page')->getRecord($this->pageId);
+			$this->_page = $this->_hm->getHandler('AmunService\Content\Page')->getRecord($this->pageId);
 		}
 
 		return $this->_page;
@@ -150,7 +150,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_user === null)
 		{
-			$this->_user = $this->_hm->getHandler('User_Account')->getRecord($this->userId);
+			$this->_user = $this->_hm->getHandler('AmunService\User\Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;
@@ -160,7 +160,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_media === null)
 		{
-			$this->_media = $this->_hm->getHandler('Media')->getRecord($this->mediaId);
+			$this->_media = $this->_hm->getHandler('AmunService\Media')->getRecord($this->mediaId);
 		}
 
 		return $this->_media;

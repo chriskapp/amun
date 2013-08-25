@@ -140,7 +140,7 @@ class Openid extends HandlerAbstract implements CallbackInterface
 				// check whether user is already registered
 				$data   = $openid->getData();
 				$con    = new Condition(array('identity', '=', sha1($this->config['amun_salt'] . $openid->getIdentifier())));
-				$userId = $this->hm->getTable('User_Account')->getField('id', $con);
+				$userId = $this->hm->getTable('AmunService\User\Account')->getField('id', $con);
 
 				if(empty($userId))
 				{
@@ -168,7 +168,7 @@ class Openid extends HandlerAbstract implements CallbackInterface
 
 					// create user account
 					$security = new Security($this->registry);
-					$handler  = $this->hm->getHandler('User_Account', $this->user);
+					$handler  = $this->hm->getHandler('AmunService\User\Account', $this->user);
 
 					$account = $handler->getRecord();
 					$account->setGroupId($this->registry['core.default_user_group']);

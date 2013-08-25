@@ -35,7 +35,7 @@ class author extends RestAbstract
 {
 	protected function getHandler($table = null)
 	{
-		return parent::getHandler($table === null ? 'Vcshook_Author' : $table);
+		return parent::getHandler($table === null ? 'AmunService\Vcshook\Author' : $table);
 	}
 }
 

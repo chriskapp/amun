@@ -58,7 +58,7 @@ class resetPw extends ApplicationAbstract
 
 			if($token !== false)
 			{
-				$handler = $this->getHandler('User_Account');
+				$handler = $this->getHandler('AmunService\User\Account');
 				$account = $handler->getRecoverByToken($token);
 
 				if($account instanceof Account\Record)

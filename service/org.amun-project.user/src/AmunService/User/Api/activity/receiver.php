@@ -38,7 +38,7 @@ class receiver extends RestAbstract
 {
 	protected function getHandler($table = null)
 	{
-		return parent::getHandler($table === null ? 'User_Activity_Receiver' : $table);
+		return parent::getHandler($table === null ? 'AmunService\User\Activity\Receiver' : $table);
 	}
 
 	protected function setWriterConfig(WriterResult $writer)

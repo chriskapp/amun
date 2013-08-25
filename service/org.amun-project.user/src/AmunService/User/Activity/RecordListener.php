@@ -74,7 +74,7 @@ class RecordListener extends ListenerAbstract
 		if($type == RecordAbstract::INSERT)
 		{
 			// insert activity
-			$handler = $this->hm->getHandler('User_Activity', new User($record->id, $this->registry));
+			$handler = $this->hm->getHandler('AmunService\User\Activity', new User($record->id, $this->registry));
 
 			$activity          = $handler->getRecord();
 			$activity->verb    = 'join';
@@ -96,7 +96,7 @@ class RecordListener extends ListenerAbstract
 			else if($record->status == Friend\Record::NORMAL)
 			{
 				// insert activity for user who has accepted the friend request
-				$handler = $this->hm->getHandler('User_Activity', $this->user);
+				$handler = $this->hm->getHandler('AmunService\User\Activity', $this->user);
 
 				$activity          = $handler->getRecord();
 				$activity->verb    = 'make-friend';
@@ -155,7 +155,7 @@ SQL;
 			}
 
 			// insert activity
-			$handler = $this->hm->getHandler('User_Activity', $this->user);
+			$handler = $this->hm->getHandler('AmunService\User\Activity', $this->user);
 
 			$activity          = $handler->getRecord();
 			$activity->verb    = $row['verb'];

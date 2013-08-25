@@ -122,7 +122,7 @@ class index extends ApiAbstract
 
 	private function buildApiIndex(Declaration $declaration)
 	{
-		$result = $this->hm->getTable('Core_Service')
+		$result = $this->hm->getTable('AmunService\Core\Service')
 			->select(array('name', 'path'))
 			->orderBy('name', Sql::SORT_ASC)
 			->getAll();
@@ -141,7 +141,7 @@ class index extends ApiAbstract
 	{
 		$declaration->setResourcePath('/swagger/' . $serviceName);
 
-		$result = $this->hm->getTable('Core_Service')
+		$result = $this->hm->getTable('AmunService\Core\Service')
 			->select(array('source', 'name', 'namespace', 'path'))
 			->orderBy('id', Sql::SORT_ASC)
 			->where('name', '=', $serviceName)

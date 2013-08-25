@@ -22,13 +22,14 @@
 
 namespace Amun;
 
-use Amun\Dependency\Container;
+use Amun\Dependency;
 use Amun\Logger\ComposerHandler;
 use Composer\Script\Event;
 use Composer\IO\IOInterface;
 use Exception;
 use Monolog\Logger;
 use PSX\Bootstrap;
+use PSX\DependencyInterface;
 
 /**
  * Installer
@@ -43,7 +44,7 @@ class Installer
 
 	protected $container;
 
-	public function __construct(Container $container)
+	public function __construct(DependencyInterface $container)
 	{
 		$this->container = $container;
 	}
@@ -97,8 +98,7 @@ class Installer
 		}
 		catch(\Exception $e)
 		{
-            $event->getIo()->write('<error>An error occured while installing an service</error>');
-            $event->getIo()->write($e->getMessage() . "\n" . $e->getTraceAsString() . "\n");
+            $event->getIo()->write('    - ' . $e->getMessage() . "\n");
 		}
 	}
 
@@ -106,16 +106,25 @@ class Installer
 	{
 	}
 
+	/**
+	 * Returns the di container. If $installerDi is true the installer container
+	 * gets returned wich uses a User and Registry object wich doesnt need a db
+	 * connection
+	 *
+	 * @param Composer\IO\IOInterface $io
+	 * @param boolean $installerDi
+	 * @return PSX\DependencyInterface
+	 */
 	protected static function getContainer(IOInterface $io = null)
 	{
 		if(self::$_container === null)
 		{
-			self::$_container = new Container();
-			self::$_container->setParameter('config.file', 'configuration.php');
-			self::$_container->setParameter('user.id', 1);
+			$container = new Dependency\Install();
+			$container->setParameter('config.file', 'configuration.php');
+			$container->setParameter('user.id', 1);
 
 			// start bootstrap
-			new Bootstrap(self::$_container->get('config'));
+			Bootstrap::setupEnvironment($container->get('config'));
 
 			// setup composer logger to redirect all log infos to the console
 			if($io !== null)
@@ -123,8 +132,10 @@ class Installer
 				$logger = new Logger('amun');
 				$logger->pushHandler(new ComposerHandler($io, Logger::INFO));
 
-				self::$_container->set('logger', $logger);
+				$container->set('logger', $logger);
 			}
+
+			self::$_container = $container;
 		}
 
 		return self::$_container;

@@ -75,7 +75,7 @@ class Remote extends Openid
 
 			// check whether the provider belongs to an connected website. If
 			// yes we also try to get an token and tokenSecret for the user
-			$host = $this->hm->getTable('Core_Host')
+			$host = $this->hm->getTable('AmunService\Core\Host')
 				->select(array('id', 'consumerKey', 'url', 'template'))
 				->where('name', '=', $provider)
 				->where('status', '=', Host\Record::NORMAL)
@@ -113,7 +113,7 @@ class Remote extends Openid
 				// the oauth extension request an token
 				$identity = sha1($this->config['amun_salt'] . OpenId::normalizeIdentifier($profileUrl));
 				$con      = new Condition(array('identity', '=', $identity));
-				$userId   = $this->hm->getTable('User_Account')->getField('id', $con);
+				$userId   = $this->hm->getTable('AmunService\User\Account')->getField('id', $con);
 				$oauth    = false;
 
 				if(!empty($userId))
@@ -122,7 +122,7 @@ class Remote extends Openid
 					$con->add('hostId', '=', $host['id']);
 					$con->add('userId', '=', $userId);
 
-					$requestId = $this->hm->getTable('Core_Host_Request')->getField('id', $con);
+					$requestId = $this->hm->getTable('AmunService\Core\Host\Request')->getField('id', $con);
 
 					if(empty($requestId))
 					{
@@ -168,7 +168,7 @@ class Remote extends Openid
 				// check whether user is already registered
 				$data   = $openid->getData();
 				$con    = new Condition(array('identity', '=', sha1($this->config['amun_salt'] . $openid->getIdentifier())));
-				$userId = $this->hm->getTable('User_Account')->getField('id', $con);
+				$userId = $this->hm->getTable('AmunService\User\Account')->getField('id', $con);
 
 				if(empty($userId))
 				{
@@ -209,7 +209,7 @@ class Remote extends Openid
 
 					// create user account
 					$security = new Security($this->registry);
-					$handler  = $this->hm->getHandler('User_Account', $this->user);
+					$handler  = $this->hm->getHandler('AmunService\User\Account', $this->user);
 
 					$account = $handler->getRecord();
 					$account->setGlobalId($globalId);
@@ -265,7 +265,7 @@ class Remote extends Openid
 
 		if($hostId > 0 && !empty($token) && !empty($verifier))
 		{
-			$row = $this->hm->getTable('Core_Host')
+			$row = $this->hm->getTable('AmunService\Core\Host')
 				->select(array('consumerKey', 'consumerSecret', 'url'))
 				->where('id', '=', $hostId)
 				->where('status', '=', Host\Record::NORMAL)

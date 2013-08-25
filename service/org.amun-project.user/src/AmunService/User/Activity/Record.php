@@ -68,7 +68,7 @@ class Record extends RecordAbstract
 
 	public function setParentId($parentId)
 	{
-		$parentId = $this->_validate->apply($parentId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('User_Activity'), true)), 'parentId', 'Parent Id');
+		$parentId = $this->_validate->apply($parentId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('AmunService\User\Activity'), true)), 'parentId', 'Parent Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -82,7 +82,7 @@ class Record extends RecordAbstract
 
 	public function setScope($scope)
 	{
-		$scope = $this->_validate->apply($scope, 'integer', array(new AmunFilter\Id($this->_hm->getTable('User_Friend_Group'), true)), 'scope', 'Scope');
+		$scope = $this->_validate->apply($scope, 'integer', array(new AmunFilter\Id($this->_hm->getTable('AmunService\User\Friend\Group'), true)), 'scope', 'Scope');
 
 		if(!$this->_validate->hasError())
 		{
@@ -132,7 +132,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_user === null)
 		{
-			$this->_user = $this->_hm->getHandler('User_Account')->getRecord($this->userId);
+			$this->_user = $this->_hm->getHandler('AmunService\User\Account')->getRecord($this->userId);
 		}
 
 		return $this->_user;
@@ -166,7 +166,7 @@ class Record extends RecordAbstract
 	public function getComments()
 	{
 		return $this->_table->select(array('id', 'refId', 'table', 'verb', 'summary', 'date'))
-			->join(Join::INNER, $this->_hm->getTable('User_Account')
+			->join(Join::INNER, $this->_hm->getTable('AmunService\User\Account')
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			)
 			->where('parentId', '=', $this->id)

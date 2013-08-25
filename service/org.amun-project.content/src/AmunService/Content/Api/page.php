@@ -39,7 +39,7 @@ class page extends RestAbstract
 {
 	protected function getHandler($table = null)
 	{
-		return parent::getHandler($table === null ? 'Content_Page' : $table);
+		return parent::getHandler($table === null ? 'AmunService\Content\Page' : $table);
 	}
 
 	protected function setWriterConfig(WriterResult $writer)

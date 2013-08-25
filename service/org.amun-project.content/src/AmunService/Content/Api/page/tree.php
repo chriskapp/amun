@@ -83,7 +83,7 @@ class tree extends ApiAbstract
 		{
 			try
 			{
-				$handler  = $this->getHandler('Content_Page');
+				$handler  = $this->getHandler('AmunService\Content\Page');
 				$result   = $this->getRequest();
 				$data     = (array) $result->getData();
 				$messages = array();

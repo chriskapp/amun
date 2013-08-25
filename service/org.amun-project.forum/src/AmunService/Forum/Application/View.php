@@ -145,7 +145,7 @@ class View extends ApplicationAbstract
 		$count = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
 		$count = $count > 16 ? 16 : $count;
 
-		$result = $this->getHandler('Comment')->getResultSet(array(),
+		$result = $this->getHandler('AmunService\Comment')->getResultSet(array(),
 			$url->getParam('startIndex'),
 			$count,
 			$url->getParam('sortBy'),

@@ -28,7 +28,6 @@ use PSX\Loader;
 use PSX\Sql;
 use Amun\Registry;
 use Amun\User;
-use AmunService\User\Account;
 
 /**
  * Install
@@ -93,7 +92,7 @@ class UserNoDb extends User
 	public $id      = 1;
 	public $groupId = 1;
 	public $name    = 'System';
-	public $status  = Account\Record::ADMINISTRATOR;
+	public $status  = User::ADMINISTRATOR;
 
 	public function __construct(Registry $registry)
 	{

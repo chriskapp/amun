@@ -148,10 +148,10 @@ class Handler extends ApproveHandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'globalId', 'pageId', 'userId', 'refId', 'text', 'date'))
-			->join(Join::INNER, $this->hm->getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('AmunService\User\Account')
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			)
-			->join(Join::INNER, $this->hm->getTable('Content_Page')
+			->join(Join::INNER, $this->hm->getTable('AmunService\Content\Page')
 				->select(array('path'), 'page')
 			);
 	}

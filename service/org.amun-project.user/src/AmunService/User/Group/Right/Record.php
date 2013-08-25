@@ -52,7 +52,7 @@ class Record extends RecordAbstract
 
 	public function setGroupId($groupId)
 	{
-		$groupId = $this->_validate->apply($groupId, 'integer', array(new Filter\Id($this->_hm->getTable('User_Group'))), 'groupId', 'Group Id');
+		$groupId = $this->_validate->apply($groupId, 'integer', array(new Filter\Id($this->_hm->getTable('AmunService\User\Group'))), 'groupId', 'Group Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -66,7 +66,7 @@ class Record extends RecordAbstract
 
 	public function setRightId($rightId)
 	{
-		$rightId = $this->_validate->apply($rightId, 'integer', array(new Filter\Id($this->_hm->getTable('User_Right'))), 'rightId', 'Right Id');
+		$rightId = $this->_validate->apply($rightId, 'integer', array(new Filter\Id($this->_hm->getTable('AmunService\User\Right'))), 'rightId', 'Right Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -87,7 +87,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_group === null)
 		{
-			$this->_group = $this->_hm->getHandler('User_Group')->getRecord($this->groupId);
+			$this->_group = $this->_hm->getHandler('AmunService\User\Group')->getRecord($this->groupId);
 		}
 
 		return $this->_group;
@@ -97,7 +97,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_right === null)
 		{
-			$this->_right = $this->_hm->getHandler('User_Right')->getRecord($this->rightId);
+			$this->_right = $this->_hm->getHandler('AmunService\User\Right')->getRecord($this->rightId);
 		}
 
 		return $this->_right;

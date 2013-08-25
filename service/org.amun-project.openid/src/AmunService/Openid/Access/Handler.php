@@ -78,7 +78,7 @@ class Handler extends HandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'userId', 'returnTo', 'allowed', 'date'))
-			->join(Join::INNER, $this->hm->getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('AmunService\User\Account')
 				->select(array('id', 'name', 'profileUrl'), 'author')
 			);
 	}

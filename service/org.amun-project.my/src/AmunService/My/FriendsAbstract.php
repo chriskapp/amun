@@ -85,7 +85,7 @@ abstract class FriendsAbstract extends MyAbstract
 
 	private function getGroups()
 	{
-		return $this->hm->getTable('User_Friend_Group')
+		return $this->hm->getTable('AmunService\User\Friend\Group')
 			->select(array('id', 'title', 'date'))
 			->where('userId', '=', $this->user->getId())
 			->getAll();

@@ -74,7 +74,7 @@ class recover extends ApplicationAbstract
 
 			if(!$this->validate->hasError())
 			{
-				$handler = $this->getHandler('User_Account');
+				$handler = $this->getHandler('AmunService\User\Account');
 				$account = $handler->getOneByIdentity(sha1($this->config['amun_salt'] . $email), array('id', 'name', 'status', 'email'), Sql::FETCH_OBJECT);
 
 				if($account instanceof Account\Record)

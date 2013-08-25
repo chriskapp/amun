@@ -71,7 +71,7 @@ class people extends RestAbstract
 				$con    = $this->getRequestCondition();
 				$con->add('userId', '=', $this->userId);
 
-				$resultSet = $this->getHandler('User_Friend')->getResultSet(array(), 
+				$resultSet = $this->getHandler('AmunService\User\Friend')->getResultSet(array(), 
 					$params['startIndex'], 
 					$params['count'], 
 					$params['sortBy'], 
@@ -79,7 +79,7 @@ class people extends RestAbstract
 					$con,
 					Sql::FETCH_OBJECT, 
 					'\AmunService\My\People', 
-					array($this->hm->getTable('User_Friend'), $this->getContainer()));
+					array($this->hm->getTable('AmunService\User\Friend'), $this->getContainer()));
 
 				$this->setResponse($resultSet);
 			}

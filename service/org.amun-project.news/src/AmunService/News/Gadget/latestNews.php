@@ -59,7 +59,7 @@ class latestNews extends GadgetAbstract
 		}
 
 		// get latest news		
-		$handler = $this->hm->getHandler('News');
+		$handler = $this->hm->getHandler('AmunService\News');
 		$result  = $handler->getAll(array('id', 
 			'urlTitle', 
 			'title', 

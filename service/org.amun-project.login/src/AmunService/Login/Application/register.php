@@ -98,7 +98,7 @@ class register extends ApplicationAbstract
 				}
 
 				// create account record
-				$handler = $this->getHandler('User_Account');
+				$handler = $this->getHandler('AmunService\User\Account');
 
 				$account = $handler->getRecord();
 				$account->setGroupId($this->registry['core.default_user_group']);

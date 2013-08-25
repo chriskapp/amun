@@ -31,7 +31,9 @@ doBootstrap();
 function doBootstrap()
 {
 	$container = getContainer();
-	$bootstrap = new PSX\Bootstrap($container->get('config'));
+
+	// bootstrap
+	PSX\Bootstrap::setupEnvironment($container->get('config'));
 
 	// check whether http server is available
 	$server = false;

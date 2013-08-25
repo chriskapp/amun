@@ -1,3 +1,0 @@
-
-amun.services.comment = {
-};

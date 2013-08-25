@@ -98,7 +98,7 @@ class Record extends RecordAbstract
 
 	public function setServiceId($serviceId)
 	{
-		$serviceId = $this->_validate->apply($serviceId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('Core_Service'))), 'serviceId', 'Service Id');
+		$serviceId = $this->_validate->apply($serviceId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('AmunService\Core\Service'))), 'serviceId', 'Service Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -112,7 +112,7 @@ class Record extends RecordAbstract
 
 	public function setRightId($rightId)
 	{
-		$rightId = $this->_validate->apply($rightId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('User_Right'), true)), 'rightId', 'Right Id');
+		$rightId = $this->_validate->apply($rightId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('AmunService\User\Right'), true)), 'rightId', 'Right Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -288,7 +288,7 @@ SQL;
 	{
 		if($this->_parent === null)
 		{
-			$this->_parent = $this->_hm->getHandler('Content_Page')->getRecord($this->parentId);
+			$this->_parent = $this->_hm->getHandler('AmunService\Content\Page')->getRecord($this->parentId);
 		}
 
 		return $this->_parent;
@@ -298,7 +298,7 @@ SQL;
 	{
 		if($this->_service === null)
 		{
-			$this->_service = $this->_hm->getHandler('Core_Service')->getRecord($this->serviceId);
+			$this->_service = $this->_hm->getHandler('AmunService\Core\Service')->getRecord($this->serviceId);
 		}
 
 		return $this->_service;

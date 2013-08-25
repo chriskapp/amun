@@ -71,7 +71,7 @@ class ConfigListener extends ListenerAbstract
 
 						if($text instanceof DOMElement && $html instanceof DOMElement)
 						{
-							$handler = $this->hm->getHandler('Mail', $this->user);
+							$handler = $this->hm->getHandler('AmunService\Mail', $this->user);
 
 							$record = $handler->getRecord();
 							$record->setName($name);

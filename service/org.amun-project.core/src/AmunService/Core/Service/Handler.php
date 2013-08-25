@@ -28,6 +28,8 @@ use Amun\Composer\XmlFile;
 use Amun\Data\HandlerAbstract;
 use Amun\Data\RecordAbstract;
 use Amun\Exception;
+use Amun\SetupAbstract;
+use Amun\Setup\VoidSetup;
 use AmunService\Core\Service;
 use Composer\Factory;
 use Composer\Config;
@@ -97,6 +99,19 @@ class Handler extends HandlerAbstract
 			}
 
 
+			// call pre install class
+			$setup = $this->getSetup();
+
+			try
+			{
+				$setup->preInstall();
+			}
+			catch(\Exception $e)
+			{
+				$this->logger->error($e->getMessage());
+			}
+
+
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
 			$record->date = $date->format(DateTime::SQL);
@@ -122,6 +137,17 @@ class Handler extends HandlerAbstract
 
 
 			$this->notify(RecordAbstract::INSERT, $record);
+
+
+			// call post install class
+			try
+			{
+				$setup->postInstall();
+			}
+			catch(\Exception $e)
+			{
+				$this->logger->error($e->getMessage());
+			}
 
 
 			return $record;
@@ -179,6 +205,23 @@ class Handler extends HandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'status', 'name', 'type', 'link', 'author', 'license', 'version', 'date'));
+	}
+
+	private function getSetup(Service\Record $record)
+	{
+		$className = $record->namespace . '\Setup';
+
+		if(class_exists($className))
+		{
+			$setup = new $className($this->container);
+
+			if($setup instanceof SetupAbstract)
+			{
+				return $setup;
+			}
+		}
+
+		return new VoidSetup($this->container);
 	}
 
 	private function parseMeta(Service\Record $record)

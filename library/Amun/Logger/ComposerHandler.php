@@ -46,6 +46,8 @@ class ComposerHandler extends AbstractProcessingHandler
 
 	protected function write(array $record)
 	{
-		$this->io->write((string) $record['formatted']);
+		$msg = '[' . $record['datetime']->format('Y-m-d H:i:s') . ']: ' . $record['message'];
+
+		$this->io->write('    - ' . $msg);
 	}
 }

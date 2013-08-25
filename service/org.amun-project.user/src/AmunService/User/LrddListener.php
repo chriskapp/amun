@@ -119,7 +119,7 @@ class LrddListener extends ListenerAbstract
 			list($name, $host) = explode('@', $email);
 
 			// get account record
-			$handler = $this->hm->getHandler('User_Account');
+			$handler = $this->hm->getHandler('AmunService\User\Account');
 			return $handler->getOneByName($name, array(), Sql::FETCH_OBJECT);
 		}
 	}

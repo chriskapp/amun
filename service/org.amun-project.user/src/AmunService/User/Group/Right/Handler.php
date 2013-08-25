@@ -107,10 +107,10 @@ class Handler extends HandlerAbstract
 	{
 		return $this->table
 			->select(array('id'))
-			->join(Join::INNER, $this->hm->getTable('User_Group')
+			->join(Join::INNER, $this->hm->getTable('AmunService\User\Group')
 				->select(array('title'), 'group')
 			)
-			->join(Join::INNER, $this->hm->getTable('User_Right')
+			->join(Join::INNER, $this->hm->getTable('AmunService\User\Right')
 				->select(array('id', 'name', 'description'), 'right')
 			);
 	}

@@ -67,7 +67,7 @@ class Record extends RecordAbstract
 
 	public function setOptionId($optionId)
 	{
-		$optionId = $this->_validate->apply($optionId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('Core_Service_Option'))), 'optionId', 'Option Id');
+		$optionId = $this->_validate->apply($optionId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('AmunService\Core\Service\Option'))), 'optionId', 'Option Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -81,7 +81,7 @@ class Record extends RecordAbstract
 
 	public function setRightId($rightId)
 	{
-		$rightId = $this->_validate->apply($rightId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('User_Right'))), 'rightId', 'Right Id');
+		$rightId = $this->_validate->apply($rightId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('AmunService\User\Right'))), 'rightId', 'Right Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -95,7 +95,7 @@ class Record extends RecordAbstract
 
 	public function setSrcPageId($srcPageId)
 	{
-		$srcPageId = $this->_validate->apply($srcPageId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('Content_Page'))), 'srcPageId', 'Source Page Id');
+		$srcPageId = $this->_validate->apply($srcPageId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('AmunService\Content\Page'))), 'srcPageId', 'Source Page Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -109,7 +109,7 @@ class Record extends RecordAbstract
 
 	public function setDestPageId($destPageId)
 	{
-		$destPageId = $this->_validate->apply($destPageId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('Content_Page'))), 'destPageId', 'Destination Page Id');
+		$destPageId = $this->_validate->apply($destPageId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('AmunService\Content\Page'))), 'destPageId', 'Destination Page Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -158,7 +158,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_srcPage === null)
 		{
-			$this->_srcPage = $this->_hm->getHandler('Content_Page')->getRecord($this->srcPageId);
+			$this->_srcPage = $this->_hm->getHandler('AmunService\Content\Page')->getRecord($this->srcPageId);
 		}
 
 		return $this->_srcPage;
@@ -168,7 +168,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_destPage === null)
 		{
-			$this->_destPage = $this->_hm->getHandler('Content_Page')->getRecord($this->destPageId);
+			$this->_destPage = $this->_hm->getHandler('AmunService\Content\Page')->getRecord($this->destPageId);
 		}
 
 		return $this->_destPage;

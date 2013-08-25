@@ -128,7 +128,10 @@ class Registry extends ArrayObject
 		{
 			if(substr($it->key(), 0, 6) == 'table.' && $it->current() == $table)
 			{
-				return self::getClassName(substr($it->key(), 6));
+				$class = substr($it->key(), 6);
+				$class = implode('\\', array_map('ucfirst', explode('_', $class)));
+
+				return 'AmunService\\' . $class;
 			}
 
 			$it->next();
@@ -190,7 +193,7 @@ class Registry extends ArrayObject
 
 	public static function getClassName($table)
 	{
-		return implode('\\', array_map('ucfirst', explode('\\', $table)));
+		return implode('\\', array_map('ucfirst', explode('_', $table)));
 	}
 }
 

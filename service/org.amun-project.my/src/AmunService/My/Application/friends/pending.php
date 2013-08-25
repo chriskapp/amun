@@ -68,7 +68,7 @@ class pending extends FriendsAbstract
 		$count = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
 		$count = $count > 16 ? 16 : $count;
 
-		$result = $this->getHandler('User_Friend')->getPendingResultSet($this->user->getId(),
+		$result = $this->getHandler('AmunService\User\Friend')->getPendingResultSet($this->user->getId(),
 			array(),
 			$url->getParam('startIndex'), 
 			$count, 

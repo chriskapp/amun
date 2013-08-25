@@ -81,7 +81,7 @@ class Record extends RecordAbstract
 
 	public function setGroupId($groupId)
 	{
-		$groupId = $this->_validate->apply($groupId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('User_Group'))), 'groupId', 'Group Id');
+		$groupId = $this->_validate->apply($groupId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('AmunService\User\Group'))), 'groupId', 'Group Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -95,7 +95,7 @@ class Record extends RecordAbstract
 
 	public function setHostId($hostId)
 	{
-		$hostId = $this->_validate->apply($hostId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('Core_Host'), true)), 'hostId', 'Host Id');
+		$hostId = $this->_validate->apply($hostId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('AmunService\Core\Host'), true)), 'hostId', 'Host Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -109,7 +109,7 @@ class Record extends RecordAbstract
 
 	public function setCountryId($countryId)
 	{
-		$countryId = $this->_validate->apply($countryId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('Country'))), 'countryId', 'Country Id');
+		$countryId = $this->_validate->apply($countryId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('AmunService\Country'))), 'countryId', 'Country Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -279,7 +279,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_group === null)
 		{
-			$this->_group = $this->_hm->getHandler('User_Group')->getRecord($this->groupId);
+			$this->_group = $this->_hm->getHandler('AmunService\User\Group')->getRecord($this->groupId);
 		}
 
 		return $this->_group;
@@ -289,7 +289,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_host === null && $this->hostId > 0)
 		{
-			$this->_host = $this->_hm->getHandler('Core_Host')->getRecord($this->hostId);
+			$this->_host = $this->_hm->getHandler('AmunService\Core\Host')->getRecord($this->hostId);
 		}
 
 		return $this->_host;
@@ -299,7 +299,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_country === null)
 		{
-			$this->_country = $this->_hm->getHandler('Country')->getRecord($this->countryId);
+			$this->_country = $this->_hm->getHandler('AmunService\Country')->getRecord($this->countryId);
 		}
 
 		return $this->_country;
@@ -351,7 +351,7 @@ class Record extends RecordAbstract
 		{
 			$con = new Condition(array('userId', '=', $this->id));
 
-			$this->_karma = $this->_hm->getTable('User_Activity')->count($con);
+			$this->_karma = $this->_hm->getTable('AmunService\User\Activity')->count($con);
 		}
 
 		return $this->_karma;

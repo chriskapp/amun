@@ -69,7 +69,7 @@ class access extends RestAbstract
 
 	protected function getHandler($table = null)
 	{
-		return parent::getHandler($table === null ? 'Openid_Access' : $table);
+		return parent::getHandler($table === null ? 'AmunService\Openid\Access' : $table);
 	}
 
 	protected function setWriterConfig(WriterResult $writer)

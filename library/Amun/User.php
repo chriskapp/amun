@@ -42,6 +42,14 @@ use PSX\Sql\Condition;
  */
 class User
 {
+	const BANNED        = 0x1;
+	const ANONYMOUS     = 0x2;
+	const NOT_ACTIVATED = 0x3;
+	const NORMAL        = 0x4;
+	const ADMINISTRATOR = 0x5;
+	const RECOVER       = 0x6;
+	const REMOTE        = 0x7;
+
 	protected $id;
 	protected $groupId;
 	protected $hostId;
@@ -69,7 +77,7 @@ class User
 		$this->registry = $registry;
 		$this->accessId = (integer) $accessId;
 
-		$status = Account\Record::BANNED;
+		$status = self::BANNED;
 		$sql    = <<<SQL
 SELECT
 	`account`.`id`           AS `accountId`,

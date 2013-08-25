@@ -137,7 +137,7 @@ SQL;
 	{
 		return $this->table
 			->select(array('id', 'userId', 'type', 'table', 'record', 'date'))
-			->join(Join::INNER, $this->hm->getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('AmunService\User\Account')
 				->select(array('name', 'profileUrl'), 'author')
 			);
 	}

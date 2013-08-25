@@ -47,7 +47,7 @@ class latestUser extends GadgetAbstract
 		$count = $this->args->get('count', 10);
 
 		// get latest user
-		$handler = $this->hm->getHandler('User_Account');
+		$handler = $this->hm->getHandler('AmunService\User\Account');
 		$result  = $handler->getAll(array('id', 
 			'name', 
 			'thumbnailUrl', 

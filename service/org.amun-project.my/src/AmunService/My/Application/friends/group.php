@@ -69,7 +69,7 @@ class group extends FriendsAbstract
 		$count = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
 		$count = $count > 16 ? 16 : $count;
 
-		$result = $this->getHandler('User_Friend_Group')->getResultSet(array(),
+		$result = $this->getHandler('AmunService\User\Friend\Group')->getResultSet(array(),
 			$url->getParam('startIndex'), 
 			$count, 
 			$url->getParam('sortBy'), 

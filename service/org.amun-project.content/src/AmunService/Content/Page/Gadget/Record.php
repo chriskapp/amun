@@ -62,7 +62,7 @@ class Record extends RecordAbstract
 
 	public function setPageId($pageId)
 	{
-		$pageId = $this->_validate->apply($pageId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('Content_Page'))), 'pageId', 'Page Id');
+		$pageId = $this->_validate->apply($pageId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('AmunService\Content\Page'))), 'pageId', 'Page Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -76,7 +76,7 @@ class Record extends RecordAbstract
 
 	public function setGadgetId($gadgetId)
 	{
-		$gadgetId = $this->_validate->apply($gadgetId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('Content_Gadget'))), 'gadgetId', 'Gadget Id');
+		$gadgetId = $this->_validate->apply($gadgetId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('AmunService\Content\Gadget'))), 'gadgetId', 'Gadget Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -102,7 +102,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_page === null)
 		{
-			$this->_page = $this->_hm->getHandler('Content_Page')->getRecord($this->pageId);
+			$this->_page = $this->_hm->getHandler('AmunService\Content\Page')->getRecord($this->pageId);
 		}
 
 		return $this->_page;
@@ -112,7 +112,7 @@ class Record extends RecordAbstract
 	{
 		if($this->_gadget === null)
 		{
-			$this->_gadget = $this->_hm->getHandler('Content_Gadget')->getRecord($this->gadgetId);
+			$this->_gadget = $this->_hm->getHandler('AmunService\Content\Gadget')->getRecord($this->gadgetId);
 		}
 
 		return $this->_gadget;

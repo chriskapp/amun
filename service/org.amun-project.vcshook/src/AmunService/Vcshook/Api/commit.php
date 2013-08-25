@@ -61,7 +61,7 @@ class commit extends RestAbstract
 
 	protected function getHandler($table = null)
 	{
-		return parent::getHandler($table === null ? 'Vcshook_Commit' : $table);
+		return parent::getHandler($table === null ? 'AmunService\Vcshook\Commit' : $table);
 	}
 
 	protected function setWriterConfig(WriterResult $writer)

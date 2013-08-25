@@ -81,7 +81,7 @@ class friends extends FriendsAbstract
 		$count = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
 		$count = $count > 16 ? 16 : $count;
 
-		$result = $this->getHandler('User_Friend')->getResultSet(array(),
+		$result = $this->getHandler('AmunService\User\Friend')->getResultSet(array(),
 			$url->getParam('startIndex'), 
 			$count, 
 			$url->getParam('sortBy'), 

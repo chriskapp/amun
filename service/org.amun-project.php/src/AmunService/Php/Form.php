@@ -91,7 +91,7 @@ class Form extends FormAbstract
 
 	public function update($id)
 	{
-		$record = $this->hm->getHandler('Php')->getRecord($id);
+		$record = $this->hm->getHandler('AmunService\Php')->getRecord($id);
 
 
 		$form = new AmunForm('PUT', $this->url);
@@ -128,7 +128,7 @@ class Form extends FormAbstract
 
 	public function delete($id)
 	{
-		$record = $this->hm->getHandler('Php')->getRecord($id);
+		$record = $this->hm->getHandler('AmunService\Php')->getRecord($id);
 
 
 		$form = new AmunForm('PUT', $this->url);

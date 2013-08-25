@@ -48,7 +48,7 @@ class CommitListener extends ListenerAbstract
 			$user = $this->user;
 		}
 
-		$handler = $this->hm->getHandler('Vcshook_Commit', $user);
+		$handler = $this->hm->getHandler('AmunService\Vcshook\Commit', $user);
 		$handler->create($record);
 	}
 }

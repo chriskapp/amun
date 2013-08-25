@@ -50,7 +50,7 @@ class Form extends FormAbstract
 
 	public function update($id)
 	{
-		$record = $this->hm->getHandler('Core_Approval_Record')->getRecord($id);
+		$record = $this->hm->getHandler('AmunService\Core\Approval\Record')->getRecord($id);
 
 
 		$form = new AmunForm('PUT', $this->url);
@@ -105,7 +105,7 @@ class Form extends FormAbstract
 
 	public function delete($id)
 	{
-		$record = $this->hm->getHandler('Core_Approval_Record')->getRecord($id);
+		$record = $this->hm->getHandler('AmunService\Core\Approval\Record')->getRecord($id);
 
 
 		$form = new AmunForm('DELETE', $this->url);

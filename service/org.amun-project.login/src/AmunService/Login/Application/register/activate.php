@@ -59,7 +59,7 @@ class activate extends ApplicationAbstract
 
 			if($token !== false)
 			{
-				$handler = $this->getHandler('User_Account');
+				$handler = $this->getHandler('AmunService\User\Account');
 				$account = $handler->getNotActivatedByToken($token);
 
 				if($account instanceof Account\Record)

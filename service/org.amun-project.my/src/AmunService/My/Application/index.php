@@ -98,7 +98,7 @@ class index extends MyAbstract
 		$count = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
 		$count = $count > 16 ? 16 : $count;
 
-		$result = $this->getHandler('User_Activity')->getPrivateResultSet($this->user->getId(),
+		$result = $this->getHandler('AmunService\User\Activity')->getPrivateResultSet($this->user->getId(),
 			array(),
 			$url->getParam('startIndex'), 
 			$count, 

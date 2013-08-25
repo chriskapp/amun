@@ -136,7 +136,7 @@ class index extends ApplicationAbstract
 
 		if($con !== null)
 		{
-			$handler = $this->getHandler('User_Account');
+			$handler = $this->getHandler('AmunService\User\Account');
 			$record  = $handler->getOneBy($con, array('id', 
 				'globalId', 
 				'status', 
@@ -166,7 +166,7 @@ class index extends ApplicationAbstract
 		$count = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
 		$count = $count > 16 ? 16 : $count;
 
-		$result = $this->getHandler('User_Activity')->getPublicResultSet($account->id,
+		$result = $this->getHandler('AmunService\User\Activity')->getPublicResultSet($account->id,
 			array(),
 			$url->getParam('startIndex'), 
 			$count, 

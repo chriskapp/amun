@@ -201,13 +201,13 @@ SQL;
 	{
 		return $this->table
 			->select(array('id', 'globalId', 'pageId', 'userId', 'sticky', 'closed', 'urlTitle', 'title', 'text', 'date', 'replyUserId', 'replyCount', 'replyDate'))
-			->join(Join::INNER, $this->hm->getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('AmunService\User\Account')
 				->select(array('name', 'profileUrl'), 'author')
 			)
-			->join(Join::INNER, $this->hm->getTable('Content_Page')
+			->join(Join::INNER, $this->hm->getTable('AmunService\Content\Page')
 				->select(array('path'), 'page')
 			)
-			->join(Join::LEFT, $this->hm->getTable('User_Account')
+			->join(Join::LEFT, $this->hm->getTable('AmunService\User\Account')
 				->select(array('name', 'profileUrl'), 'reply')
 			, 'n:1', 'replyUserId')
 			->orderBy('sticky', Sql::SORT_DESC);

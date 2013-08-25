@@ -38,7 +38,7 @@ class group extends RestAbstract
 {
 	protected function getHandler($table = null)
 	{
-		return parent::getHandler($table === null ? 'User_Group' : $table);
+		return parent::getHandler($table === null ? 'AmunService\User\Group' : $table);
 	}
 
 	protected function setWriterConfig(WriterResult $writer)

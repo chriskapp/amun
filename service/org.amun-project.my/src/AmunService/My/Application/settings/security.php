@@ -70,7 +70,7 @@ class security extends SettingsAbstract
 					throw new Exception('Passwords doesnt match');
 				}
 
-				$handler = $this->getHandler('User_Account');
+				$handler = $this->getHandler('AmunService\User\Account');
 				$user    = $handler->getOneById($this->user->getId(), 
 					array('id', 'pw'), 
 					Sql::FETCH_OBJECT

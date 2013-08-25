@@ -79,7 +79,7 @@ class callback extends ApiAbstract
 				{
 					try
 					{
-						$record = $this->hm->getHandler('Vcshook_Commit')->getRecord();
+						$record = $this->hm->getHandler('AmunService\Vcshook\Commit')->getRecord();
 						$record->setProjectId($id);
 						$record->setAuthor($commit->getAuthor());
 						$record->setUrl($commit->getUrl());

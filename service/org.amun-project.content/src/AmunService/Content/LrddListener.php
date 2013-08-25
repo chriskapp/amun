@@ -80,7 +80,7 @@ class LrddListener extends ListenerAbstract
 			$uri = trim($uri, '/');
 
 			// get page
-			$handler = $this->hm->getHandler('Content_Page');
+			$handler = $this->hm->getHandler('AmunService\Content\Page');
 			return $handler->getOneByPath($uri);
 		}
 	}

@@ -56,7 +56,7 @@ class Form extends FormAbstract
 
 	public function delete($id)
 	{
-		$record = $this->hm->getHandler('Openid')->getRecord($id);
+		$record = $this->hm->getHandler('AmunService\Openid')->getRecord($id);
 
 
 		$form = new AmunForm('DELETE', $this->url);

@@ -61,7 +61,7 @@ class Record extends RecordAbstract
 
 	public function setServiceId($serviceId)
 	{
-		$serviceId = $this->_validate->apply($serviceId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('Core_Service'))), 'serviceId', 'Service Id');
+		$serviceId = $this->_validate->apply($serviceId, 'integer', array(new AmunFilter\Id($this->_hm->getTable('AmunService\Core\Service'))), 'serviceId', 'Service Id');
 
 		if(!$this->_validate->hasError())
 		{

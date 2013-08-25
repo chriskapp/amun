@@ -40,7 +40,7 @@ class account extends RestAbstract
 {
 	protected function getHandler($table = null)
 	{
-		return parent::getHandler($table === null ? 'User_Account' : $table);
+		return parent::getHandler($table === null ? 'AmunService\User\Account' : $table);
 	}
 
 	protected function isOwner(RecordAbstract $record)

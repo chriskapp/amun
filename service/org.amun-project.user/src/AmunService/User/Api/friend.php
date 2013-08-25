@@ -39,7 +39,7 @@ class friend extends RestAbstract
 {
 	protected function getHandler($table = null)
 	{
-		return parent::getHandler($table === null ? 'User_Friend' : $table);
+		return parent::getHandler($table === null ? 'AmunService\User\Friend' : $table);
 	}
 
 	protected function setWriterConfig(WriterResult $writer)

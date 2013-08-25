@@ -39,7 +39,7 @@ class activity extends RestAbstract
 {
 	protected function getHandler($table = null)
 	{
-		return parent::getHandler($table === null ? 'User_Activity' : $table);
+		return parent::getHandler($table === null ? 'AmunService\User\Activity' : $table);
 	}
 
 	protected function setWriterConfig(WriterResult $writer)

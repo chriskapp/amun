@@ -109,7 +109,7 @@ class connect extends ApplicationAbstract
 			$this->assoc = $this->getAssociation();
 
 			// check whether access is already allowed or denied
-			$status = $this->getHandler('Openid')->getStatus($this->user->getId(), $this->assoc['id']);
+			$status = $this->getHandler('AmunService\Openid')->getStatus($this->user->getId(), $this->assoc['id']);
 
 			if($status === Openid\Record::APPROVED)
 			{
@@ -202,7 +202,7 @@ class connect extends ApplicationAbstract
 			$data['status'] = Openid\Record::APPROVED;
 		}
 
-		$this->hm->getTable('Openid')->replace($data);
+		$this->hm->getTable('AmunService\Openid')->replace($data);
 
 		// redirect to rp
 		$redirect->redirect($this->assoc['secret'], $this->assoc['assocType']);
@@ -241,7 +241,7 @@ class connect extends ApplicationAbstract
 			$data['status'] = Openid\Record::DENIED;
 		}
 
-		$this->hm->getTable('Openid')->replace($data);
+		$this->hm->getTable('AmunService\Openid')->replace($data);
 
 		// cancel request
 		$this->returnTo->addParam('openid.ns', ProviderAbstract::NS);
@@ -255,7 +255,7 @@ class connect extends ApplicationAbstract
 	{
 		if(!empty($this->assocHandle))
 		{
-			$row = $this->hm->getTable('Openid_Assoc')
+			$row = $this->hm->getTable('AmunService\Openid\Assoc')
 				->select(array('id', 'assocHandle', 'assocType', 'sessionType', 'secret', 'expires', 'date'))
 				->where('assocHandle', '=', $this->assocHandle)
 				->getRow();
@@ -317,7 +317,7 @@ class connect extends ApplicationAbstract
 	private function handleOauthExt()
 	{
 		$consumerKey = isset($this->oauth['consumer']) ? $this->oauth['consumer'] : null;
-		$row         = $this->getHandler('Openid')->getOneByConsumerKey($consumerKey);
+		$row         = $this->getHandler('AmunService\Openid')->getOneByConsumerKey($consumerKey);
 
 		if(!empty($row))
 		{

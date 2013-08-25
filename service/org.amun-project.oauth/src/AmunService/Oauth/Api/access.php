@@ -38,7 +38,7 @@ class access extends RestAbstract
 {
 	protected function getHandler($table = null)
 	{
-		return parent::getHandler($table === null ? 'Oauth_Access' : $table);
+		return parent::getHandler($table === null ? 'AmunService\Oauth\Access' : $table);
 	}
 
 	protected function setWriterConfig(WriterResult $writer)

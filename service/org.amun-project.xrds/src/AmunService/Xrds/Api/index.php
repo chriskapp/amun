@@ -56,7 +56,7 @@ class index extends ApiAbstract
 		{
 			$this->writer = new Writer();
 
-			$result   = $this->getHandler('Xrds_Type')->getAll(array(), 0, 1024);
+			$result   = $this->getHandler('AmunService\Xrds\Type')->getAll(array(), 0, 1024);
 			$baseUrl  = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'];
 			$services = array();
 

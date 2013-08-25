@@ -36,6 +36,6 @@ class provider extends RestAbstract
 {
 	protected function getHandler($table = null)
 	{
-		return parent::getHandler($table === null ? 'Core_Service_Provider' : $table);
+		return parent::getHandler($table === null ? 'AmunService\Core\Service\Provider' : $table);
 	}
 }

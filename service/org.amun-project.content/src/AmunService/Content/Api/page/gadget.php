@@ -35,7 +35,7 @@ class gadget extends RestAbstract
 {
 	protected function getHandler($table = null)
 	{
-		return parent::getHandler($table === null ? 'Content_Page_Gadget' : $table);
+		return parent::getHandler($table === null ? 'AmunService\Content\Page\Gadget' : $table);
 	}
 }
 

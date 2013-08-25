@@ -260,15 +260,14 @@ SQL;
 			$q[] = <<<SQL
 CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_service']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `providerId` int(10) NOT NULL DEFAULT '0',
   `status` int(10) NOT NULL,
-  `source` varchar(128) NOT NULL,
-  `name` varchar(32) NOT NULL,
+  `source` varchar(256) NOT NULL,
+  `config` varchar(256) NOT NULL,
+  `name` varchar(64) NOT NULL,
   `path` varchar(256) NOT NULL,
   `namespace` varchar(64) NOT NULL,
   `type` varchar(256) NOT NULL,
   `link` varchar(256) NOT NULL,
-  `author` varchar(512) NOT NULL,
   `license` varchar(256) NOT NULL,
   `version` varchar(16) NOT NULL,
   `date` datetime NOT NULL,
@@ -383,7 +382,6 @@ SQL;
 						$errors[] = '[' . $source . ']: ' . $e->getMessage() . $debug;
 					}
 				}
-
 
 				// check errors
 				if(count($errors) > 0)

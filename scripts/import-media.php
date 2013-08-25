@@ -50,7 +50,9 @@ else
 		$container = new Amun\Dependency\Container();
 		$container->setParameter('config.file', '../configuration.php');
 		$container->setParameter('user.id', 1);
-		$bootstrap = new PSX\Bootstrap($container->get('config'));
+
+		// bootstrap
+		Bootstrap::setupEnvironment($container->get('config'));
 
 		$logger = new Monolog\Logger('amun');
 		$logger->pushHandler(new Amun\Logger\EchoHandler(Monolog\Logger::INFO));

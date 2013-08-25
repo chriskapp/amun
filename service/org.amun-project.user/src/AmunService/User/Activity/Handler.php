@@ -56,11 +56,11 @@ class Handler extends HandlerAbstract
 
 		$select = $this->table
 			->select(array('id', 'parentId', 'status', 'verb', 'summary', 'date'))
-			->join(Join::INNER, $this->hm->getTable('User_Activity_Receiver')
+			->join(Join::INNER, $this->hm->getTable('AmunService\User\Activity\Receiver')
 				->select(array('id', 'status', 'activityId', 'userId', 'date'), 'receiver'),
 				'1:n'
 			)
-			->join(Join::INNER, $this->hm->getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('AmunService\User\Account')
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			)
 			->where('receiverUserId', '=', $userId)
@@ -107,11 +107,11 @@ class Handler extends HandlerAbstract
 		$sortBy     = $sortBy     !== null ? $sortBy               : 'date';
 		$sortOrder  = $sortOrder  !== null ? (integer) $sortOrder  : Sql::SORT_DESC;
 
-		$select = $this->hm->getTable('User_Activity_Receiver')
+		$select = $this->hm->getTable('AmunService\User\Activity\Receiver')
 			->select(array('id', 'status', 'activityId', 'userId', 'date'), 'receiver')
-			->join(Join::INNER, $this->hm->getTable('User_Activity')
+			->join(Join::INNER, $this->hm->getTable('AmunService\User\Activity')
 				->select(array('id', 'globalId', 'parentId', 'userId', 'refId', 'table', 'status', 'scope', 'verb', 'summary', 'date'))
-				->join(Join::INNER, $this->hm->getTable('User_Account')
+				->join(Join::INNER, $this->hm->getTable('AmunService\User\Account')
 					->select(array('globalId', 'name', 'profileUrl', 'thumbnailUrl'), 'author')
 				)
 			)
@@ -241,7 +241,7 @@ class Handler extends HandlerAbstract
 
 		if($verb instanceof DOMElement)
 		{
-			$activity = $this->hm->getTable('User_Activity')->getRecord();
+			$activity = $this->hm->getTable('AmunService\User\Activity')->getRecord();
 			$activity->setVerb($verb->nodeValue);
 			$activity->setSummary($entry->content);
 			$activity->table = 'amun_user_activity';
@@ -258,7 +258,7 @@ class Handler extends HandlerAbstract
 	{
 		return $this->table
 			->select(array('id', 'globalId', 'parentId', 'userId', 'title', 'object', 'summary', 'date'))
-			->join(Join::INNER, $this->hm->getTable('User_Account')
+			->join(Join::INNER, $this->hm->getTable('AmunService\User\Account')
 				->select(array('name', 'profileUrl', 'thumbnailUrl'), 'author')
 			);
 	}
