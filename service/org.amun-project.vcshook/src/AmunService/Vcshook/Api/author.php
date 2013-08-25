@@ -20,18 +20,18 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace vcshook\api;
+namespace AmunService\Vcshook\Api;
 
 use Amun\Module\RestAbstract;
 
 /**
- * author
+ * Author
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class author extends RestAbstract
+class Author extends RestAbstract
 {
 	protected function getHandler($table = null)
 	{

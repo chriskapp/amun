@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace my\application\settings;
+namespace AmunService\My\Application\Settings;
 
 use Amun\Filter;
 use Amun\Exception;
@@ -32,13 +32,13 @@ use PSX\Url;
 use PSX\Html\Paging;
 
 /**
- * security
+ * Security
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class security extends SettingsAbstract
+class Security extends SettingsAbstract
 {
 	public function onLoad()
 	{

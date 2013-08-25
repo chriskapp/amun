@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace login\application;
+namespace AmunService\Login\Application;
 
 use Amun\Module\ApplicationAbstract;
 use Amun\Exception;
@@ -31,13 +31,13 @@ use PSX\DateTime;
 use PSX\Filter;
 
 /**
- * register
+ * Register
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class register extends ApplicationAbstract
+class Register extends ApplicationAbstract
 {
 	public function onLoad()
 	{

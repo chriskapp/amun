@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace login\application;
+namespace AmunService\Login\Application;
 
 use Amun\Module\ApplicationAbstract;
 use Amun\Exception;
@@ -35,13 +35,13 @@ use PSX\Sql\Condition;
 use DateInterval;
 
 /**
- * auth
+ * Auth
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class auth extends ApplicationAbstract
+class Auth extends ApplicationAbstract
 {
 	private $apiId;
 	private $userRights;

@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace mail\api;
+namespace AmunService\Mail\Api;
 
 use AmunService\Mail\Receiver;
 use AmunService\Mail\Sender;
@@ -30,13 +30,13 @@ use PSX\Data\Message;
 use PSX\Data\Record;
 
 /**
- * send
+ * Send
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class send extends ApiAbstract
+class Send extends ApiAbstract
 {
 	/**
 	 * Sends an mail template to specific email addresses. The API accepts only

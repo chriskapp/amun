@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace my\api;
+namespace AmunService\My\Api;
 
 use AmunService\User\Account;
 use Amun\Base;
@@ -34,13 +34,13 @@ use PSX\Data\WriterResult;
 use PSX\Sql;
 
 /**
- * activity
+ * Activity
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class activity extends RestAbstract
+class Activity extends RestAbstract
 {
 	protected $userId;
 

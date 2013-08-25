@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace my\gadget;
+namespace AmunService\My\Gadget;
 
 use Amun\Module\GadgetAbstract;
 use Amun\DataFactory;
@@ -30,13 +30,13 @@ use PSX\Sql\Condition;
 use PSX\Sql\Join;
 
 /**
- * latestActivity
+ * LatestActivity
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class latestActivity extends GadgetAbstract
+class LatestActivity extends GadgetAbstract
 {
 	/**
 	 * onLoad

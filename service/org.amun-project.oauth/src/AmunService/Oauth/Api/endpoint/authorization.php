@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace oauth\api\endpoint;
+namespace AmunService\Oauth\Api\Endpoint;
 
 use Amun\DataFactory;
 use Amun\Dependency;
@@ -29,13 +29,13 @@ use PSX\Filter;
 use PSX\ModuleAbstract;
 
 /**
- * authorization
+ * Authorization
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class authorization extends ModuleAbstract
+class Authorization extends ModuleAbstract
 {
 	/**
 	 * Endpoint to redirect the client to the authentication page containing the

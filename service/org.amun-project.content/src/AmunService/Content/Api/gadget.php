@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace content\api;
+namespace AmunService\Content\Api;
 
 use Amun\Module\RestAbstract;
 use PSX\Data\Exception;
@@ -28,13 +28,13 @@ use PSX\Data\WriterInterface;
 use PSX\Data\WriterResult;
 
 /**
- * gadget
+ * Gadget
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class gadget extends RestAbstract
+class Gadget extends RestAbstract
 {
 	protected function getHandler($table = null)
 	{

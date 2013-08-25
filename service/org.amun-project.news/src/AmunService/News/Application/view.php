@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace news\application;
+namespace AmunService\News\Application;
 
 use Amun\Base;
 use Amun\Exception;
@@ -35,13 +35,13 @@ use PSX\Html\Paging;
 use DateInterval;
 
 /**
- * view
+ * View
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class view extends ApplicationAbstract
+class View extends ApplicationAbstract
 {
 	private $id;
 	private $title;

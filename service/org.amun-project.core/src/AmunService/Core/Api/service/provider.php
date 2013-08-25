@@ -20,19 +20,19 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace core\api\service;
+namespace AmunService\Core\Api\Service;
 
 use Amun\Module\RestAbstract;
 use PSX\Data\Message;
 
 /**
- * provider
+ * Provider
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class provider extends RestAbstract
+class Provider extends RestAbstract
 {
 	protected function getHandler($table = null)
 	{

@@ -20,18 +20,18 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace core\api\approval;
+namespace AmunService\Core\Api\Approval;
 
 use Amun\Module\FormAbstract;
 
 /**
- * form
+ * Form
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class form extends FormAbstract
+class Form extends FormAbstract
 {
 	protected function getForm($table = null)
 	{

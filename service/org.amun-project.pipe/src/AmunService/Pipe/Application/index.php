@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace pipe\application;
+namespace AmunService\Pipe\Application;
 
 use Amun\Module\ApplicationAbstract;
 use Amun\Exception;
@@ -29,13 +29,13 @@ use AmunService\Pipe\Record;
 use PSX\Sql;
 
 /**
- * index
+ * Index
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class index extends ApplicationAbstract
+class Index extends ApplicationAbstract
 {
 	/**
 	 * @httpMethod GET

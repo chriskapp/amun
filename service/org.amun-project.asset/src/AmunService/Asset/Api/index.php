@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace asset\api;
+namespace AmunService\Asset\Api;
 
 use AmunService\Asset\Manager;
 use AmunService\Asset\ProviderInterface;
@@ -29,13 +29,13 @@ use Amun\Module\ApiAbstract;
 use PSX\Base;
 
 /**
- * index
+ * Index
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class index extends ApiAbstract
+class Index extends ApiAbstract
 {
 	/**
 	 * @httpMethod GET

@@ -20,18 +20,18 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace my\gadget;
+namespace AmunService\My\Gadget;
 
 use Amun\Module\GadgetAbstract;
 
 /**
- * userMap
+ * UserMap
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class userMap extends GadgetAbstract
+class UserMap extends GadgetAbstract
 {
 	/**
 	 * onLoad

@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace media\api;
+namespace AmunService\Media\Api;
 
 use Amun\Base;
 use Amun\Exception;
@@ -28,13 +28,13 @@ use Amun\Module\ApiAbstract;
 use PSX\Data\Message;
 
 /**
- * serve
+ * Serve
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class serve extends ApiAbstract
+class Serve extends ApiAbstract
 {
 	/**
 	 * Outputs the raw media item

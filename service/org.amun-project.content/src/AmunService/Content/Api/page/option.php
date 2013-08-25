@@ -20,18 +20,18 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace content\api\page;
+namespace AmunService\Content\Api\Page;
 
 use Amun\Module\RestAbstract;
 
 /**
- * option
+ * Option
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class option extends RestAbstract
+class Option extends RestAbstract
 {
 	protected function getHandler($table = null)
 	{

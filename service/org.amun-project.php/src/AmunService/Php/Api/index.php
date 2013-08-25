@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace php\api;
+namespace AmunService\Php\Api;
 
 use Amun\Module\RestAbstract;
 use Amun\DataFactory;
@@ -30,13 +30,13 @@ use PSX\Data\WriterResult;
 use PSX\Sql\Join;
 
 /**
- * index
+ * Index
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class index extends RestAbstract
+class Index extends RestAbstract
 {
 	protected function setWriterConfig(WriterResult $writer)
 	{

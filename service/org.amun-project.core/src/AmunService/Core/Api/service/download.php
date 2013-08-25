@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace core\api\service;
+namespace AmunService\Core\Api\Service;
 
 use Amun\Module\ApiAbstract;
 use Amun\DataFactory;
@@ -34,13 +34,13 @@ use PSX\Sql\Join;
 use ZipArchive;
 
 /**
- * download
+ * Download
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class download extends ApiAbstract
+class Download extends ApiAbstract
 {
 	/**
 	 * Downloads an given service from an remote provider

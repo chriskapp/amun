@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace oauth\api;
+namespace AmunService\Oauth\Api;
 
 use Amun\Base;
 use Amun\Module\RestAbstract;
@@ -29,13 +29,13 @@ use PSX\Data\WriterInterface;
 use PSX\Data\WriterResult;
 
 /**
- * index
+ * Index
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class index extends RestAbstract
+class Index extends RestAbstract
 {
 	protected function getRestrictedFields()
 	{

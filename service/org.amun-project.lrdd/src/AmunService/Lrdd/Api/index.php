@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace lrdd\api;
+namespace AmunService\Lrdd\Api;
 
 use Amun\Module\ApiAbstract;
 use PSX\Data\Message;
@@ -28,13 +28,13 @@ use PSX\Filter;
 use XMLWriter;
 
 /**
- * index
+ * Index
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class index extends ApiAbstract
+class Index extends ApiAbstract
 {
 	private $writer;
 	private $uri;

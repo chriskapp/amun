@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace my\api;
+namespace AmunService\My\Api;
 
 use Amun\Module\ApiAbstract;
 use Amun\DataFactory;
@@ -29,13 +29,13 @@ use PSX\Data\Message;
 use PSX\Sql;
 
 /**
- * verifyCredentials
+ * VerifyCredentials
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class verifyCredentials extends ApiAbstract
+class VerifyCredentials extends ApiAbstract
 {
 	/**
 	 * Returns informations about the current loggedin user

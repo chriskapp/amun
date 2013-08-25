@@ -20,19 +20,19 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace login\application;
+namespace AmunService\Login\Application;
 
 use Amun\Module\ApplicationAbstract;
 use Amun\Exception;
 
 /**
- * logout
+ * Logout
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class logout extends ApplicationAbstract
+class Logout extends ApplicationAbstract
 {
 	public function onLoad()
 	{

@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace my\application\friends;
+namespace AmunService\My\Application\Friends;
 
 use AmunService\My\FriendsAbstract;
 use PSX\Url;
@@ -28,13 +28,13 @@ use PSX\Sql;
 use PSX\Html\Paging;
 
 /**
- * pending
+ * Pending
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class pending extends FriendsAbstract
+class Pending extends FriendsAbstract
 {
 	public function onLoad()
 	{

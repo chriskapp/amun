@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace vcshook\api;
+namespace AmunService\Vcshook\Api;
 
 use Amun\Module\ApiAbstract;
 use Amun\DataFactory;
@@ -35,13 +35,13 @@ use PSX\Sql;
 use PSX\Sql\Condition;
 
 /**
- * callback
+ * Callback
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class callback extends ApiAbstract
+class Callback extends ApiAbstract
 {
 	public function onGet()
 	{

@@ -20,20 +20,20 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace login\application;
+namespace AmunService\Login\Application;
 
 use Amun\Module\ApplicationAbstract;
 use AmunService\Login\HandlerFactory;
 use AmunService\Login\Handler\CallbackInterface;
 
 /**
- * callback
+ * Callback
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class callback extends ApplicationAbstract
+class Callback extends ApplicationAbstract
 {
 	/**
 	 * @httpMethod GET

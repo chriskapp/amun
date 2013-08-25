@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace login\application;
+namespace AmunService\Login\Application;
 
 use Amun\Module\ApplicationAbstract;
 use Amun\DataFactory;
@@ -36,13 +36,13 @@ use PSX\Sql\Condition;
 use DateTimeZone;
 
 /**
- * connect
+ * Connect
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class connect extends ApplicationAbstract
+class Connect extends ApplicationAbstract
 {
 	private $request;
 	private $assoc;

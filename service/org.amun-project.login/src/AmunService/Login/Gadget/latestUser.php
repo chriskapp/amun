@@ -20,20 +20,20 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace login\gadget;
+namespace AmunService\Login\Gadget;
 
 use Amun\Module\GadgetAbstract;
 use Amun\DataFactory;
 use PSX\Sql;
 
 /**
- * latestUser
+ * LatestUser
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class latestUser extends GadgetAbstract
+class LatestUser extends GadgetAbstract
 {
 	/**
 	 * onLoad

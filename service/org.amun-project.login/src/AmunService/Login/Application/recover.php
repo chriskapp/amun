@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace login\application;
+namespace AmunService\Login\Application;
 
 use Amun\Module\ApplicationAbstract;
 use Amun\Captcha;
@@ -33,13 +33,13 @@ use PSX\Filter;
 use PSX\Sql;
 
 /**
- * recover
+ * Recover
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class recover extends ApplicationAbstract
+class Recover extends ApplicationAbstract
 {
 	public function onLoad()
 	{

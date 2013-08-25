@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace my\application\settings;
+namespace AmunService\My\Application\Settings;
 
 use AmunService\My\SettingsAbstract;
 use PSX\Sql;
@@ -28,13 +28,13 @@ use PSX\Url;
 use PSX\Html\Paging;
 
 /**
- * connection
+ * Connection
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class connection extends SettingsAbstract
+class Connection extends SettingsAbstract
 {
 	public function onLoad()
 	{

@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace marketplace\api;
+namespace AmunService\Marketplace\Api;
 
 use Amun\Module\ApiAbstract;
 use Amun\Exception;
@@ -30,13 +30,13 @@ use PSX\Data\Record;
 use PSX\Data\RecordAbstract;
 
 /**
- * get
+ * Get
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class get extends ApiAbstract
+class Get extends ApiAbstract
 {
 	/**
 	 * Returns a specific service as zip

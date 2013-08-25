@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace user\api\activity;
+namespace AmunService\User\Api\Activity;
 
 use AmunService\User\Activity\Handler;
 use Amun\Module\ApiAbstract;
@@ -40,13 +40,13 @@ use PSX\Sql\Condition;
 use PSX\Urn;
 
 /**
- * message
+ * Message
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class message extends ApiAbstract
+class Message extends ApiAbstract
 {
 	public function onGet()
 	{

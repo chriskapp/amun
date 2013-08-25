@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace openid\api;
+namespace AmunService\Openid\Api;
 
 use Amun\DataFactory;
 use Amun\Dependency;
@@ -33,13 +33,13 @@ use PSX\OpenId\Provider\Data\SetupRequest;
 use PSX\Url;
 
 /**
- * signon
+ * Signon
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class signon extends ProviderAbstract
+class Signon extends ProviderAbstract
 {
 	const EXPIRE = 46800; // seconds
 

@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace my\api;
+namespace AmunService\My\Api;
 
 use Amun\Base;
 use Amun\Module\RestAbstract;
@@ -34,13 +34,13 @@ use PSX\Data\WriterResult;
 use PSX\Sql;
 
 /**
- * people
+ * People
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class people extends RestAbstract
+class People extends RestAbstract
 {
 	/**
 	 * Returns informations about the current loggedin user

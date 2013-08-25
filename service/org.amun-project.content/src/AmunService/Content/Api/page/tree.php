@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace content\api\page;
+namespace AmunService\Content\Api\Page;
 
 use Amun\Module\ApiAbstract;
 use Amun\Exception;
@@ -30,13 +30,13 @@ use PSX\Data\Record;
 use PSX\Data\RecordAbstract;
 
 /**
- * tree
+ * Tree
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class tree extends ApiAbstract
+class Tree extends ApiAbstract
 {
 	/**
 	 * Returns all pages in an tree structure

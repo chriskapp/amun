@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace comment\api;
+namespace AmunService\Comment\Api;
 
 use Amun\Module\FormAbstract;
 
@@ -31,7 +31,7 @@ use Amun\Module\FormAbstract;
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class form extends FormAbstract
+class Form extends FormAbstract
 {
 	protected function getCreateForm()
 	{

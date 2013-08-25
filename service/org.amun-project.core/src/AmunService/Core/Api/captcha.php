@@ -20,19 +20,19 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace core\api;
+namespace AmunService\Core\Api;
 
 use Amun\Module\ApiAbstract;
 use Exception;
 
 /**
- * captcha
+ * Captcha
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class captcha extends ApiAbstract
+class Captcha extends ApiAbstract
 {
 	public function onLoad()
 	{

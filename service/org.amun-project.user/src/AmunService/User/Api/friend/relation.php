@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace user\api\friend;
+namespace AmunService\User\Api\Friend;
 
 use AmunService\User\Friend;
 use Amun\Module\ApiAbstract;
@@ -29,13 +29,13 @@ use PSX\Data\Message;
 use PSX\Data\ReaderInterface;
 
 /**
- * relation
+ * Relation
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class relation extends ApiAbstract
+class Relation extends ApiAbstract
 {
 	public function onGet()
 	{

@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace xrds\api;
+namespace AmunService\Xrds\Api;
 
 use Amun\Module\ApiAbstract;
 use Amun\DataFactory;
@@ -32,13 +32,13 @@ use XMLWriter;
 use PSX\Xrds\Writer;
 
 /**
- * index
+ * Index
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class index extends ApiAbstract
+class Index extends ApiAbstract
 {
 	private $writer;
 

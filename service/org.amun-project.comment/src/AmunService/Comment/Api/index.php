@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace comment\api;
+namespace AmunService\Comment\Api;
 
 use Amun\Base;
 use Amun\Module\RestAbstract;
@@ -35,7 +35,7 @@ use PSX\Data\WriterResult;
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class index extends RestAbstract
+class Index extends RestAbstract
 {
 	protected function setWriterConfig(WriterResult $writer)
 	{

@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace vcshook\api;
+namespace AmunService\Vcshook\Api;
 
 use Amun\Base;
 use Amun\Module\RestAbstract;
@@ -30,13 +30,13 @@ use PSX\Data\WriterInterface;
 use PSX\Data\WriterResult;
 
 /**
- * commit
+ * Commit
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class commit extends RestAbstract
+class Commit extends RestAbstract
 {
 	public function onPost()
 	{

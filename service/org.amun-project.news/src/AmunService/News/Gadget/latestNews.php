@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace news\gadget;
+namespace AmunService\News\Gadget;
 
 use Amun\Module\GadgetAbstract;
 use Amun\DataFactory;
@@ -30,13 +30,13 @@ use PSX\Sql\Condition;
 use PSX\Sql\Join;
 
 /**
- * latestNews
+ * LatestNews
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class latestNews extends GadgetAbstract
+class LatestNews extends GadgetAbstract
 {
 	/**
 	 * onLoad

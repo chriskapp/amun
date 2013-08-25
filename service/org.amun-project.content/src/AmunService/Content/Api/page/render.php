@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace content\api\page;
+namespace AmunService\Content\Api\Page;
 
 use Amun\Module\ApiAbstract;
 use Amun\Filter;
@@ -30,13 +30,13 @@ use PSX\Data\ResultSet;
 use PSX\Util\Markdown;
 
 /**
- * render
+ * Render
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class render extends ApiAbstract
+class Render extends ApiAbstract
 {
 	/**
 	 * Renders the content as html markup

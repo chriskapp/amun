@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace login\api;
+namespace AmunService\Login\Api;
 
 use AmunService\Login\HandlerAbstract;
 use AmunService\Login\HandlerFactory;
@@ -28,13 +28,13 @@ use Amun\Module\ApiAbstract;
 use PSX\Json;
 
 /**
- * determineLoginHandler
+ * DetermineLoginHandler
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class determineLoginHandler extends ApiAbstract
+class DetermineLoginHandler extends ApiAbstract
 {
 	/**
 	 * Returns whether the given identity needs an password or not

@@ -29,13 +29,13 @@ use PSX\Sql;
 use PSX\Sql\Join;
 
 /**
- * latestThreads
+ * LatestThreads
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class latestThreads extends GadgetAbstract
+class LatestThreads extends GadgetAbstract
 {
 	/**
 	 * onLoad

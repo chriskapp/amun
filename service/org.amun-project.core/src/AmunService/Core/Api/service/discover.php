@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace core\api\service;
+namespace AmunService\Core\Api\Service;
 
 use Amun\Module\ApiAbstract;
 use Amun\DataFactory;
@@ -39,13 +39,13 @@ use PSX\Sql\Condition;
 use PSX\Sql\Join;
 
 /**
- * discover
+ * Discover
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class discover extends ApiAbstract
+class Discover extends ApiAbstract
 {
 	/**
 	 * List all available provider

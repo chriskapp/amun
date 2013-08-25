@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace my\api;
+namespace AmunService\My\Api;
 
 use AmunService\User\Friend;
 use Amun\Exception;
@@ -31,13 +31,13 @@ use PSX\Sql\Join;
 use XMLWriter;
 
 /**
- * foaf
+ * Foaf
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class foaf extends ApiAbstract
+class Foaf extends ApiAbstract
 {
 	/**
 	 * Returns FOAF informations about an user

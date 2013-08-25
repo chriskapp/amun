@@ -20,18 +20,18 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace country\api;
+namespace AmunService\Country\Api;
 
 use Amun\Module\FormAbstract;
 
 /**
- * form
+ * Form
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class form extends FormAbstract
+class Form extends FormAbstract
 {
 }
 

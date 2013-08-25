@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace oauth\api\endpoint;
+namespace AmunService\Oauth\Api\Endpoint;
 
 use AmunService\Oauth;
 use Amun\DataFactory;
@@ -35,13 +35,13 @@ use PSX\Sql;
 use PSX\Sql\Condition;
 
 /**
- * request
+ * Request
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class request extends RequestAbstract
+class Request extends RequestAbstract
 {
 	protected $config;
 	protected $sql;

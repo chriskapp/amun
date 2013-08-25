@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace user\api\activity;
+namespace AmunService\User\Api\Activity;
 
 use Amun\Module\RestAbstract;
 use Amun\Exception;
@@ -28,13 +28,13 @@ use PSX\Data\WriterInterface;
 use PSX\Data\WriterResult;
 
 /**
- * receiver
+ * Receiver
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class receiver extends RestAbstract
+class Receiver extends RestAbstract
 {
 	protected function getHandler($table = null)
 	{
