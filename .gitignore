@@ -1,5 +1,3 @@
-library/PSX
-library/Sabre
-library/vendor
+vendor/
 service/*.zip
 configuration.php
