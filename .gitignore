@@ -1,5 +1,5 @@
 library/PSX
 library/Sabre
 library/vendor
-service/webdav/library/Sabre
+service/*.zip
 configuration.php
