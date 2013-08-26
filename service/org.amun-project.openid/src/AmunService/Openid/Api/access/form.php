@@ -35,7 +35,7 @@ class Form extends FormAbstract
 {
 	protected function getForm($table = null)
 	{
-		return parent::getForm($table === null ? 'Openid_Access' : $table);
+		return parent::getForm($table === null ? 'AmunService\Openid\Access' : $table);
 	}
 }
 

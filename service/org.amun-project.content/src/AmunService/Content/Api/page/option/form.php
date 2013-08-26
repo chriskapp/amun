@@ -35,7 +35,7 @@ class Form extends FormAbstract
 {
 	protected function getForm($table = null)
 	{
-		return parent::getForm($table === null ? 'Content_Page_Option' : $table);
+		return parent::getForm($table === null ? 'AmunService\Content\Page\Option' : $table);
 	}
 }
 

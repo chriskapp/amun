@@ -35,7 +35,7 @@ class Form extends FormAbstract
 {
 	protected function getForm($table = null)
 	{
-		return parent::getForm($table === null ? 'Core_Approval' : $table);
+		return parent::getForm($table === null ? 'AmunService\Core\Approval' : $table);
 	}
 }
 

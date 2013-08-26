@@ -35,7 +35,7 @@ class Form extends FormAbstract
 {
 	protected function getForm($table = null)
 	{
-		return parent::getForm($table === null ? 'Oauth_Access' : $table);
+		return parent::getForm($table === null ? 'AmunService\Oauth\Access' : $table);
 	}
 }
 
