@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org">
+  <status>system</status>
+  <path>/sample</path>
+  <namespace>AmunService\Sample</namespace>
+  <type>http://ns.amun-project.org/2011/amun/service/sample</type>
+</service>
