@@ -155,4 +155,9 @@ class Container extends \PSX\Dependency\Container
 
 		return $logger;
 	}
+
+	public function getMail()
+	{
+		return new Mail($this->get('registry'));
+	}
 }

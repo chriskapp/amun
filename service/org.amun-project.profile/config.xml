@@ -7,7 +7,4 @@
   <permissions>
     <perm name="view" description="Profile View"/>
   </permissions>
-  <navigation>
-    <option name="index"/>
-  </navigation>
 </service>

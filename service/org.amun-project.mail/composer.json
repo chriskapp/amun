@@ -15,7 +15,9 @@
     "require": {
         "php": ">=5.3",
         "zendframework/zend-mail": "2.1.*",
-        "amun/core": "0.0.*"
+        "amun/core": "0.0.*",
+        "amun/user": "0.0.*",
+        "amun/xrds": "0.0.*"
     },
     "autoload": {
         "psr-0": {

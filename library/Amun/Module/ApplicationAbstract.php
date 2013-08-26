@@ -132,7 +132,10 @@ abstract class ApplicationAbstract extends ViewAbstract
 		$this->htmlContent = $this->getHtmlContent();
 
 		// set application template path
-		$this->template->setDir($this->config['amun_service_path'] . '/' . $this->page->getApplication() . '/template');
+		$dir = '../vendor/' . $this->service->getName() . '/src/' . $this->service->getNamespace();
+		$dir = str_replace('\\', '/', $dir);
+
+		$this->template->setDir($dir . '/Resource');
 
 		// add html fragments
 		$this->loadHtmlFragments();
@@ -173,7 +176,7 @@ abstract class ApplicationAbstract extends ViewAbstract
 			if(!$this->template->hasFile())
 			{
 				$file = substr(get_class($this), strlen($this->service->getNamespace()) + 13);
-				$file = str_replace('\\', '/', $file);
+				$file = strtolower(str_replace('\\', '/', $file));
 
 				$this->template->set($file . '.tpl');
 			}

@@ -26,11 +26,6 @@
     <perm name="activities_view" description="My Activites View"/>
     <perm name="settings_view" description="My Settings View"/>
   </permissions>
-  <navigation>
-    <option name="index"/>
-    <option name="friends"/>
-    <option name="settings"/>
-  </navigation>
   <registry>
     <param name="max_group_count" value="12" type="INTEGER"/>
   </registry>

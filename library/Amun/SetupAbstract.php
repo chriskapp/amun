@@ -44,6 +44,7 @@ abstract class SetupAbstract
 		$this->config    = $container->get('config');
 		$this->sql       = $container->get('sql');
 		$this->registry  = $container->get('registry');
+		$this->logger    = $container->get('logger');
 	}
 
 	abstract public function preInstall(RecordInterface $record);

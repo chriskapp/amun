@@ -72,6 +72,7 @@ class Option extends RecursiveArrayIterator
 
 	public function load(array $objects = array())
 	{
+		/*
 		$sql = <<<SQL
 SELECT
 	`pageOption`.`rightId`,
@@ -110,6 +111,7 @@ SQL;
 				));
 			}
 		}
+		*/
 	}
 
 	private function substitueVars(array $objects, $href)

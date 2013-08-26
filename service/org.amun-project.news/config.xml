@@ -23,10 +23,6 @@
     <perm name="delete" description="News Delete"/>
     <perm name="comment_add" description="News Comment Add"/>
   </permissions>
-  <navigation>
-    <option name="index"/>
-    <option name="view"/>
-  </navigation>
   <registry>
     <table name="news"/>
   </registry>

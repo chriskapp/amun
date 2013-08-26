@@ -83,6 +83,8 @@ class ConfigListener extends ListenerAbstract
 									'type'  => $type->nodeValue,
 								));
 							}
+
+							$logger->info('> Register endpoint ' . $endpoint);
 						}
 					}
 				}

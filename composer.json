@@ -54,7 +54,8 @@
         "amun/file": "0.0.1",
         "amun/php": "0.0.1",
         "amun/redirect": "0.0.1",
-        "amun/pipe": "0.0.1"
+        "amun/pipe": "0.0.1",
+        "amun/sample": "0.0.1"
     },
     "repositories": [{
         "type": "artifact",

@@ -195,34 +195,16 @@ class LocationFinder extends FileSystem
 		{
 			// load module
 			$pathInfo = substr($pathInfo, strlen($page['path']));
-			$x        = $page['source'] . '/application/' . trim($pathInfo, '/');
+			$path     = $page['namespace'] . '/application/' . trim($pathInfo, '/');
 
-			$location = $this->getLocation($x);
+			list($className, $rest) = $this->getClassByPath($path);
 
-			if($location !== false)
+			if(class_exists($className))
 			{
-				list($file, $path, $class) = $location;
-
-				// include class
-				require_once($file);
-
-				// create class
-				$namespace = $this->getApiNamespace($path, $page['source'], $page['namespace']);
-
-				$class = new ReflectionClass($namespace  . '\\' . $class);
-
-				// remove path and class
-				$rest = $pathInfo;
-
-				if(!empty($path))
-				{
-					$rest = self::removePathPart($path, $rest);
-				}
-
-				$rest = self::removePathPart($class->getShortName(), $rest);
+				$class = new ReflectionClass($className);
 
 				// return location
-				return new Location(md5($file), $rest, $class, $page['id']);
+				return new Location(md5($className), $rest, $class, $page['id']);
 			}
 		}
 		else

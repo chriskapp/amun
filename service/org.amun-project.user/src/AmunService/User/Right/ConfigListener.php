@@ -48,7 +48,9 @@ class ConfigListener extends ListenerAbstract
 
 			try
 			{
-				$namespace = strtolower($record->namespace);
+				$namespace = str_replace('\\', '_', strtolower($record->namespace));
+				$pos       = strpos($namespace, '_');
+				$namespace = substr($namespace, $pos !== false ? $pos + 1 : 0); // remove vendor part
 				$perms     = $permissions->childNodes;
 
 				for($i = 0; $i < $perms->length; $i++)

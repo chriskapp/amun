@@ -17,9 +17,6 @@
     <perm name="edit" description="Page Edit"/>
     <perm name="delete" description="Page Delete"/>
   </permissions>
-  <navigation>
-    <option name="index"/>
-  </navigation>
   <registry>
     <table name="page"/>
   </registry>

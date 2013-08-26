@@ -7,9 +7,6 @@
   <permissions>
     <perm name="view" description="Login View"/>
   </permissions>
-  <navigation>
-    <option name="index"/>
-  </navigation>
   <registry>
     <table name="login_attempt"/>
     <param name="registration_enabled" value="1" type="BOOLEAN"/>

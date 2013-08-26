@@ -127,6 +127,9 @@ class Installer
 			// start bootstrap
 			Bootstrap::setupEnvironment($container->get('config'));
 
+			// set io
+			$container->set('io', $io);
+
 			// setup composer logger to redirect all log infos to the console
 			if($io !== null)
 			{

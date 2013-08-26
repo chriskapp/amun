@@ -17,9 +17,6 @@
     <perm name="edit" description="Pipe Edit"/>
     <perm name="delete" description="Pipe Delete"/>
   </permissions>
-  <navigation>
-    <option name="index"/>
-  </navigation>
   <registry>
     <table name="pipe"/>
   </registry>

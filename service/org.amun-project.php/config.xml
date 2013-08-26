@@ -17,9 +17,6 @@
     <perm name="edit" description="Php Edit"/>
     <perm name="delete" description="Php Delete"/>
   </permissions>
-  <navigation>
-    <option name="index"/>
-  </navigation>
   <registry>
     <table name="php"/>
   </registry>
