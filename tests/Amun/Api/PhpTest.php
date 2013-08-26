@@ -42,7 +42,7 @@ class PhpTest extends RestTest
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.php'))
+		if(!$this->hasService('amun/php'))
 		{
 			$this->markTestSkipped('Service php not installed');
 		}
@@ -55,7 +55,7 @@ class PhpTest extends RestTest
 
 	public function getHandler()
 	{
-		return getContainer()->get('handlerManager')->getHandler('Php');
+		return getContainer()->get('handlerManager')->getHandler('AmunService\Php');
 	}
 
 	public function testGet()

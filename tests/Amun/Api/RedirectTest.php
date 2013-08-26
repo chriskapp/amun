@@ -42,7 +42,7 @@ class RedirectTest extends RestTest
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.redirect'))
+		if(!$this->hasService('amun/redirect'))
 		{
 			$this->markTestSkipped('Service redirect not installed');
 		}
@@ -55,7 +55,7 @@ class RedirectTest extends RestTest
 
 	public function getHandler()
 	{
-		return getContainer()->get('handlerManager')->getHandler('Redirect');
+		return getContainer()->get('handlerManager')->getHandler('AmunService\Redirect');
 	}
 
 	public function testGet()

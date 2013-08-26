@@ -43,7 +43,7 @@ class RegistryTest extends RestTest
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.core'))
+		if(!$this->hasService('amun/core'))
 		{
 			$this->markTestSkipped('Service core not installed');
 		}
@@ -56,7 +56,7 @@ class RegistryTest extends RestTest
 
 	public function getHandler()
 	{
-		return getContainer()->get('handlerManager')->getHandler('Core_Registry');
+		return getContainer()->get('handlerManager')->getHandler('AmunService\Core\Registry');
 	}
 
 	public function testGet()

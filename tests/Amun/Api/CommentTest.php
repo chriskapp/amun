@@ -42,7 +42,7 @@ class CommentTest extends RestTest
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.comment'))
+		if(!$this->hasService('amun/comment'))
 		{
 			$this->markTestSkipped('Service comment not installed');
 		}
@@ -55,7 +55,7 @@ class CommentTest extends RestTest
 
 	public function getHandler()
 	{
-		return getContainer()->get('handlerManager')->getHandler('Comment');
+		return getContainer()->get('handlerManager')->getHandler('AmunService\Comment');
 	}
 
 	public function testGet()

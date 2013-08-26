@@ -212,15 +212,15 @@ SQL;
 		$this->assertEquals(false, $resp['success'], $response->getBody());
 	}
 
-	protected function hasService($source)
+	protected function hasService($name)
 	{
-		return $this->registry->hasService($source);
+		return $this->registry->hasService($name);
 	}
 
-	protected function getServiceId($source)
+	protected function getServiceId($name)
 	{
-		$sql       = "SELECT `id` FROM `" . $this->registry['table.core_service'] . "` WHERE `source` = ?";
-		$serviceId = $this->sql->getField($sql, array($source));
+		$sql       = "SELECT `id` FROM `" . $this->registry['table.core_service'] . "` WHERE `name` = ?";
+		$serviceId = $this->sql->getField($sql, array($name));
 
 		return $serviceId;
 	}

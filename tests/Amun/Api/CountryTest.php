@@ -42,7 +42,7 @@ class CountryTest extends RestTest
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.country'))
+		if(!$this->hasService('amun/country'))
 		{
 			$this->markTestSkipped('Service country not installed');
 		}
@@ -55,7 +55,7 @@ class CountryTest extends RestTest
 
 	public function getHandler()
 	{
-		return getContainer()->get('handlerManager')->getHandler('Country');
+		return getContainer()->get('handlerManager')->getHandler('AmunService\Country');
 	}
 
 	public function testGet()

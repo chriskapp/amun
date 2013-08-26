@@ -43,7 +43,7 @@ class TreeTest extends ApiTest
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.content'))
+		if(!$this->hasService('amun/content'))
 		{
 			$this->markTestSkipped('Service content not installed');
 		}

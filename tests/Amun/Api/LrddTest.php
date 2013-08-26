@@ -41,7 +41,7 @@ class LrddTest extends ApiTest
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.lrdd'))
+		if(!$this->hasService('amun/lrdd'))
 		{
 			$this->markTestSkipped('Service lrdd not installed');
 		}

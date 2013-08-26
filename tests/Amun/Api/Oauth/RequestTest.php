@@ -44,7 +44,7 @@ class RequestTest extends RestTest
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.oauth'))
+		if(!$this->hasService('amun/oauth'))
 		{
 			$this->markTestSkipped('Service oauth not installed');
 		}
@@ -57,7 +57,7 @@ class RequestTest extends RestTest
 
 	public function getHandler()
 	{
-		return getContainer()->get('handlerManager')->getHandler('Oauth_Request');
+		return getContainer()->get('handlerManager')->getHandler('AmunService\Oauth\Request');
 	}
 
 	public function testGet()

@@ -42,7 +42,7 @@ class HostmetaTest extends ApiTest
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.hostmeta'))
+		if(!$this->hasService('amun/hostmeta'))
 		{
 			$this->markTestSkipped('Service hostmeta not installed');
 		}

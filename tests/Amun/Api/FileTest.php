@@ -42,7 +42,7 @@ class FileTest extends RestTest
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.file'))
+		if(!$this->hasService('amun/file'))
 		{
 			$this->markTestSkipped('Service file not installed');
 		}
@@ -55,7 +55,7 @@ class FileTest extends RestTest
 
 	public function getHandler()
 	{
-		return getContainer()->get('handlerManager')->getHandler('File');
+		return getContainer()->get('handlerManager')->getHandler('AmunService\File');
 	}
 
 	public function testGet()

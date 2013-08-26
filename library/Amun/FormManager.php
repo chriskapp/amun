@@ -46,7 +46,7 @@ class FormManager
 	{
 		$name  = str_replace('_', '\\', $name);
 		$name  = implode('\\', array_map('ucfirst', explode('\\', $name)));
-		$class = '\AmunService\\' . $name . '\Form';
+		$class = $name . '\Form';
 
 		if(isset($this->_cache[$class]))
 		{

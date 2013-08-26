@@ -42,7 +42,7 @@ class MailTest extends RestTest
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.mail'))
+		if(!$this->hasService('amun/mail'))
 		{
 			$this->markTestSkipped('Service mail not installed');
 		}
@@ -55,7 +55,7 @@ class MailTest extends RestTest
 
 	public function getHandler()
 	{
-		return getContainer()->get('handlerManager')->getHandler('Mail');
+		return getContainer()->get('handlerManager')->getHandler('AmunService\Mail');
 	}
 
 	public function testGet()

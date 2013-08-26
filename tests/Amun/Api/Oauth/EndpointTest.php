@@ -44,7 +44,7 @@ class EndpointTest extends ApiTest
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.oauth'))
+		if(!$this->hasService('amun/oauth'))
 		{
 			$this->markTestSkipped('Service oauth not installed');
 		}

@@ -42,7 +42,7 @@ class AccessTest extends RestTest
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.openid'))
+		if(!$this->hasService('amun/openid'))
 		{
 			$this->markTestSkipped('Service openid not installed');
 		}
@@ -55,7 +55,7 @@ class AccessTest extends RestTest
 
 	public function getHandler()
 	{
-		return getContainer()->get('handlerManager')->getHandler('Openid_Access');
+		return getContainer()->get('handlerManager')->getHandler('AmunService\Openid\Access');
 	}
 
 	public function testGet()

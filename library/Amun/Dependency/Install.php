@@ -86,7 +86,7 @@ class RegistryNoDb extends Registry
 		));
 	}
 
-	public function hasService($source)
+	public function hasService($name)
 	{
 		return false;
 	}

@@ -42,7 +42,7 @@ class PageTest extends RestTest
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.page'))
+		if(!$this->hasService('amun/page'))
 		{
 			$this->markTestSkipped('Service page not installed');
 		}
@@ -55,7 +55,7 @@ class PageTest extends RestTest
 
 	public function getHandler()
 	{
-		return getContainer()->get('handlerManager')->getHandler('Page');
+		return getContainer()->get('handlerManager')->getHandler('AmunService\Page');
 	}
 
 	public function testGet()

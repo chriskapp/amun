@@ -43,7 +43,7 @@ class RightTest extends RestTest
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.user'))
+		if(!$this->hasService('amun/user'))
 		{
 			$this->markTestSkipped('Service user not installed');
 		}
@@ -56,7 +56,7 @@ class RightTest extends RestTest
 
 	public function getHandler()
 	{
-		return getContainer()->get('handlerManager')->getHandler('User_Group_Right');
+		return getContainer()->get('handlerManager')->getHandler('AmunService\User\Group\Right');
 	}
 
 	public function testGet()

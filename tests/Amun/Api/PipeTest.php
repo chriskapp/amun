@@ -42,7 +42,7 @@ class PipeTest extends RestTest
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.pipe'))
+		if(!$this->hasService('amun/pipe'))
 		{
 			$this->markTestSkipped('Service pipe not installed');
 		}
@@ -55,7 +55,7 @@ class PipeTest extends RestTest
 
 	public function getHandler()
 	{
-		return getContainer()->get('handlerManager')->getHandler('Pipe');
+		return getContainer()->get('handlerManager')->getHandler('AmunService\Pipe');
 	}
 
 	public function testGet()

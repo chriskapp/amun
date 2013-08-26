@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <mysqldump xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-<database name="amun_db">
+<database name="amun_dev">
 	<table_data name="amun_comment">
 	<row>
 		<field name="id">1</field>
@@ -33,7 +33,7 @@
 		<field name="id">1</field>
 		<field name="parentId">0</field>
 		<field name="globalId">5aa63a03-b140-59b4-922a-a3e91b5266fe</field>
-		<field name="serviceId">19</field>
+		<field name="serviceId">26</field>
 		<field name="rightId">0</field>
 		<field name="status">2</field>
 		<field name="load">3</field>
@@ -53,7 +53,7 @@
 		<field name="id">2</field>
 		<field name="parentId">1</field>
 		<field name="globalId">1b20fc55-32bf-5eca-9dd9-9f54f3552844</field>
-		<field name="serviceId">19</field>
+		<field name="serviceId">26</field>
 		<field name="rightId">0</field>
 		<field name="status">1</field>
 		<field name="load">3</field>
@@ -113,7 +113,7 @@
 		<field name="id">5</field>
 		<field name="parentId">1</field>
 		<field name="globalId">9b87cd28-07f9-5e33-b11f-f44116ecd64b</field>
-		<field name="serviceId">19</field>
+		<field name="serviceId">26</field>
 		<field name="rightId">0</field>
 		<field name="status">2</field>
 		<field name="load">3</field>
@@ -133,7 +133,7 @@
 		<field name="id">6</field>
 		<field name="parentId">1</field>
 		<field name="globalId">c2f0b0d0-31a2-5b65-a55e-e97b0f4ce5da</field>
-		<field name="serviceId">22</field>
+		<field name="serviceId">21</field>
 		<field name="rightId">0</field>
 		<field name="status">1</field>
 		<field name="load">3</field>
@@ -153,7 +153,7 @@
 		<field name="id">7</field>
 		<field name="parentId">1</field>
 		<field name="globalId">eef15285-adac-5465-a88f-fa461ff967c4</field>
-		<field name="serviceId">21</field>
+		<field name="serviceId">20</field>
 		<field name="rightId">0</field>
 		<field name="status">1</field>
 		<field name="load">3</field>
@@ -173,7 +173,7 @@
 		<field name="id">8</field>
 		<field name="parentId">1</field>
 		<field name="globalId">a2c1f1ff-2831-5638-9ff9-9617d1a5dc0a</field>
-		<field name="serviceId">23</field>
+		<field name="serviceId">22</field>
 		<field name="rightId">0</field>
 		<field name="status">1</field>
 		<field name="load">3</field>
@@ -193,7 +193,7 @@
 		<field name="id">9</field>
 		<field name="parentId">1</field>
 		<field name="globalId">da47434a-2f57-5bcf-a222-271246d8d9a9</field>
-		<field name="serviceId">25</field>
+		<field name="serviceId">24</field>
 		<field name="rightId">0</field>
 		<field name="status">1</field>
 		<field name="load">3</field>
@@ -213,7 +213,7 @@
 		<field name="id">10</field>
 		<field name="parentId">1</field>
 		<field name="globalId">1fd58c0f-d0da-56f8-8dd8-80035d4bdc71</field>
-		<field name="serviceId">24</field>
+		<field name="serviceId">23</field>
 		<field name="rightId">0</field>
 		<field name="status">1</field>
 		<field name="load">3</field>
@@ -233,7 +233,7 @@
 		<field name="id">11</field>
 		<field name="parentId">1</field>
 		<field name="globalId">1f258c0f-d0da-56f8-8dd8-8003564bdc71</field>
-		<field name="serviceId">26</field>
+		<field name="serviceId">16</field>
 		<field name="rightId">0</field>
 		<field name="status">1</field>
 		<field name="load">3</field>
@@ -257,8 +257,6 @@
 		<field name="gadgetId">1</field>
 		<field name="sort">0</field>
 	</row>
-	</table_data>
-	<table_data name="amun_content_page_option">
 	</table_data>
 	<table_data name="amun_core_approval">
 	</table_data>
@@ -491,13 +489,6 @@
 		<field name="type">STRING</field>
 		<field name="class" xsi:nil="true" />
 		<field name="value">amun_user_right</field>
-	</row>
-	<row>
-		<field name="id">20</field>
-		<field name="name">table.core_service_option</field>
-		<field name="type">STRING</field>
-		<field name="class" xsi:nil="true" />
-		<field name="value">amun_core_service_option</field>
 	</row>
 	<row>
 		<field name="id">21</field>
@@ -821,418 +812,385 @@
 		<field name="class" xsi:nil="true" />
 		<field name="value">amun_pipe</field>
 	</row>
-	<row>
-		<field name="id">67</field>
-		<field name="name">table.core_service_provider</field>
-		<field name="type">STRING</field>
-		<field name="class" xsi:nil="true" />
-		<field name="value">amun_core_service_provider</field>
-	</row>
 	</table_data>
 	<table_data name="amun_core_service">
 	<row>
 		<field name="id">1</field>
-		<field name="providerId">2</field>
 		<field name="status">2</field>
-		<field name="source">org.amun-project.log</field>
-		<field name="name">log</field>
-		<field name="path">/log</field>
-		<field name="namespace">log</field>
-		<field name="type">http://ns.amun-project.org/2011/amun/service/log</field>
-		<field name="link">http://amun.phpsx.org</field>
-		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
-		<field name="license">GPLv3</field>
+		<field name="source">org.amun-project.core.zip</field>
+		<field name="config">vendor/amun/core/config.xml</field>
+		<field name="name">amun/core</field>
+		<field name="path">/core</field>
+		<field name="namespace">AmunService\Core</field>
+		<field name="type">http://ns.amun-project.org/2011/amun/service/core</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
 		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">2</field>
-		<field name="providerId">2</field>
 		<field name="status">2</field>
-		<field name="source">org.amun-project.xrds</field>
-		<field name="name">xrds</field>
+		<field name="source">org.amun-project.xrds.zip</field>
+		<field name="config">vendor/amun/xrds/config.xml</field>
+		<field name="name">amun/xrds</field>
 		<field name="path">/xrds</field>
-		<field name="namespace">xrds</field>
+		<field name="namespace">AmunService\Xrds</field>
 		<field name="type">http://ns.amun-project.org/2011/amun/service/xrds</field>
-		<field name="link">http://amun.phpsx.org</field>
-		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
-		<field name="license">GPLv3</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
 		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">3</field>
-		<field name="providerId">2</field>
 		<field name="status">2</field>
-		<field name="source">org.amun-project.hostmeta</field>
-		<field name="name">hostmeta</field>
-		<field name="path">/hostmeta</field>
-		<field name="namespace">hostmeta</field>
-		<field name="type">http://ns.amun-project.org/2011/amun/service/hostmeta</field>
-		<field name="link">http://amun.phpsx.org</field>
-		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
-		<field name="license">GPLv3</field>
+		<field name="source">org.amun-project.user.zip</field>
+		<field name="config">vendor/amun/user/config.xml</field>
+		<field name="name">amun/user</field>
+		<field name="path">/user</field>
+		<field name="namespace">AmunService\User</field>
+		<field name="type">http://ns.amun-project.org/2011/amun/service/user</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
 		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">4</field>
-		<field name="providerId">2</field>
 		<field name="status">2</field>
-		<field name="source">org.amun-project.lrdd</field>
-		<field name="name">lrdd</field>
-		<field name="path">/lrdd</field>
-		<field name="namespace">lrdd</field>
-		<field name="type">http://ns.amun-project.org/2011/amun/service/lrdd</field>
-		<field name="link">http://amun.phpsx.org</field>
-		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
-		<field name="license">GPLv3</field>
+		<field name="source">org.amun-project.log.zip</field>
+		<field name="config">vendor/amun/log/config.xml</field>
+		<field name="name">amun/log</field>
+		<field name="path">/log</field>
+		<field name="namespace">AmunService\Log</field>
+		<field name="type">http://ns.amun-project.org/2011/amun/service/log</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
 		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">5</field>
-		<field name="providerId">2</field>
 		<field name="status">2</field>
-		<field name="source">org.amun-project.user</field>
-		<field name="name">user</field>
-		<field name="path">/user</field>
-		<field name="namespace">user</field>
-		<field name="type">http://ns.amun-project.org/2011/amun/service/user</field>
-		<field name="link">http://amun.phpsx.org</field>
-		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
-		<field name="license">GPLv3</field>
+		<field name="source">org.amun-project.hostmeta.zip</field>
+		<field name="config">vendor/amun/hostmeta/config.xml</field>
+		<field name="name">amun/hostmeta</field>
+		<field name="path">/hostmeta</field>
+		<field name="namespace">AmunService\Hostmeta</field>
+		<field name="type">http://ns.amun-project.org/2011/amun/service/hostmeta</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-04-12 20:51:04</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">6</field>
-		<field name="providerId">2</field>
 		<field name="status">2</field>
-		<field name="source">org.amun-project.core</field>
-		<field name="name">core</field>
-		<field name="path">/core</field>
-		<field name="namespace">core</field>
-		<field name="type">http://ns.amun-project.org/2011/amun/service/core</field>
-		<field name="link">http://amun.phpsx.org</field>
-		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
-		<field name="license">GPLv3</field>
+		<field name="source">org.amun-project.lrdd.zip</field>
+		<field name="config">vendor/amun/lrdd/config.xml</field>
+		<field name="name">amun/lrdd</field>
+		<field name="path">/lrdd</field>
+		<field name="namespace">AmunService\Lrdd</field>
+		<field name="type">http://ns.amun-project.org/2011/amun/service/lrdd</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-04-12 20:51:05</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">7</field>
-		<field name="providerId">2</field>
 		<field name="status">2</field>
-		<field name="source">org.amun-project.asset</field>
-		<field name="name">asset</field>
+		<field name="source">org.amun-project.asset.zip</field>
+		<field name="config">vendor/amun/asset/config.xml</field>
+		<field name="name">amun/asset</field>
 		<field name="path">/asset</field>
-		<field name="namespace">asset</field>
+		<field name="namespace">AmunService\Asset</field>
 		<field name="type">http://ns.amun-project.org/2011/amun/service/asset</field>
-		<field name="link">http://amun.phpsx.org</field>
-		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
-		<field name="license">GPLv3</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-04-12 20:51:06</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">8</field>
-		<field name="providerId">2</field>
 		<field name="status">2</field>
-		<field name="source">org.amun-project.oauth</field>
-		<field name="name">oauth</field>
-		<field name="path">/oauth</field>
-		<field name="namespace">oauth</field>
-		<field name="type">http://ns.amun-project.org/2011/amun/service/oauth</field>
-		<field name="link">http://amun.phpsx.org</field>
-		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
-		<field name="license">GPLv3</field>
+		<field name="source">org.amun-project.media.zip</field>
+		<field name="config">vendor/amun/media/config.xml</field>
+		<field name="name">amun/media</field>
+		<field name="path">/media</field>
+		<field name="namespace">AmunService\Media</field>
+		<field name="type">http://ns.amun-project.org/2011/amun/service/media</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-04-12 20:51:06</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">9</field>
-		<field name="providerId">2</field>
 		<field name="status">2</field>
-		<field name="source">org.amun-project.media</field>
-		<field name="name">media</field>
-		<field name="path">/media</field>
-		<field name="namespace">media</field>
-		<field name="type">http://ns.amun-project.org/2011/amun/service/media</field>
-		<field name="link">http://amun.phpsx.org</field>
-		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
-		<field name="license">GPLv3</field>
+		<field name="source">org.amun-project.openid.zip</field>
+		<field name="config">vendor/amun/openid/config.xml</field>
+		<field name="name">amun/openid</field>
+		<field name="path">/openid</field>
+		<field name="namespace">AmunService\Openid</field>
+		<field name="type">http://ns.amun-project.org/2011/amun/service/openid</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-04-12 20:51:06</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">10</field>
-		<field name="providerId">2</field>
 		<field name="status">2</field>
-		<field name="source">org.amun-project.openid</field>
-		<field name="name">openid</field>
-		<field name="path">/openid</field>
-		<field name="namespace">openid</field>
-		<field name="type">http://ns.amun-project.org/2011/amun/service/openid</field>
-		<field name="link">http://amun.phpsx.org</field>
-		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
-		<field name="license">GPLv3</field>
+		<field name="source">org.amun-project.country.zip</field>
+		<field name="config">vendor/amun/country/config.xml</field>
+		<field name="name">amun/country</field>
+		<field name="path">/country</field>
+		<field name="namespace">AmunService\Country</field>
+		<field name="type">http://ns.amun-project.org/2011/amun/service/country</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-04-12 20:51:06</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">11</field>
-		<field name="providerId">2</field>
 		<field name="status">2</field>
-		<field name="source">org.amun-project.country</field>
-		<field name="name">country</field>
-		<field name="path">/country</field>
-		<field name="namespace">country</field>
-		<field name="type">http://ns.amun-project.org/2011/amun/service/country</field>
-		<field name="link">http://amun.phpsx.org</field>
-		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
-		<field name="license">GPLv3</field>
+		<field name="source">org.amun-project.swagger.zip</field>
+		<field name="config">vendor/amun/swagger/config.xml</field>
+		<field name="name">amun/swagger</field>
+		<field name="path">/swagger</field>
+		<field name="namespace">AmunService\Swagger</field>
+		<field name="type">http://ns.amun-project.org/2011/amun/service/swagger</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-04-12 20:51:07</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">12</field>
-		<field name="providerId">2</field>
 		<field name="status">2</field>
-		<field name="source">org.amun-project.mail</field>
-		<field name="name">mail</field>
-		<field name="path">/mail</field>
-		<field name="namespace">mail</field>
-		<field name="type">http://ns.amun-project.org/2011/amun/service/mail</field>
-		<field name="link">http://amun.phpsx.org</field>
-		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
-		<field name="license">GPLv3</field>
+		<field name="source">org.amun-project.sitemap.zip</field>
+		<field name="config">vendor/amun/sitemap/config.xml</field>
+		<field name="name">amun/sitemap</field>
+		<field name="path">/sitemap</field>
+		<field name="namespace">AmunService\Sitemap</field>
+		<field name="type">http://ns.amun-project.org/2011/amun/service/sitemap</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-04-12 20:51:07</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">13</field>
-		<field name="providerId">2</field>
 		<field name="status">2</field>
-		<field name="source">org.amun-project.swagger</field>
-		<field name="name">swagger</field>
-		<field name="path">/swagger</field>
-		<field name="namespace">swagger</field>
-		<field name="type">http://ns.amun-project.org/2011/amun/service/swagger</field>
-		<field name="link">http://amun.phpsx.org</field>
-		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
-		<field name="license">GPLv3</field>
+		<field name="source">org.amun-project.phpinfo.zip</field>
+		<field name="config">vendor/amun/phpinfo/config.xml</field>
+		<field name="name">amun/phpinfo</field>
+		<field name="path">/phpinfo</field>
+		<field name="namespace">AmunService\Phpinfo</field>
+		<field name="type">http://ns.amun-project.org/2011/amun/service/phpinfo</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-04-12 20:51:07</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">14</field>
-		<field name="providerId">2</field>
 		<field name="status">2</field>
-		<field name="source">org.amun-project.sitemap</field>
-		<field name="name">sitemap</field>
-		<field name="path">/sitemap</field>
-		<field name="namespace">sitemap</field>
-		<field name="type">http://ns.amun-project.org/2011/amun/service/sitemap</field>
-		<field name="link">http://amun.phpsx.org</field>
-		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
-		<field name="license">GPLv3</field>
+		<field name="source">org.amun-project.mail.zip</field>
+		<field name="config">vendor/amun/mail/config.xml</field>
+		<field name="name">amun/mail</field>
+		<field name="path">/mail</field>
+		<field name="namespace">AmunService\Mail</field>
+		<field name="type">http://ns.amun-project.org/2011/amun/service/mail</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-04-12 20:51:07</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">15</field>
-		<field name="providerId">2</field>
 		<field name="status">2</field>
-		<field name="source">org.amun-project.phpinfo</field>
-		<field name="name">phpinfo</field>
-		<field name="path">/phpinfo</field>
-		<field name="namespace">phpinfo</field>
-		<field name="type">http://ns.amun-project.org/2011/amun/service/phpinfo</field>
-		<field name="link">http://amun.phpsx.org</field>
-		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
-		<field name="license">GPLv3</field>
+		<field name="source">org.amun-project.content.zip</field>
+		<field name="config">vendor/amun/content/config.xml</field>
+		<field name="name">amun/content</field>
+		<field name="path">/content</field>
+		<field name="namespace">AmunService\Content</field>
+		<field name="type">http://ns.amun-project.org/2011/amun/service/content</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-04-12 20:51:07</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">16</field>
-		<field name="providerId">2</field>
-		<field name="status">2</field>
-		<field name="source">org.amun-project.content</field>
-		<field name="name">content</field>
-		<field name="path">/content</field>
-		<field name="namespace">content</field>
-		<field name="type">http://ns.amun-project.org/2011/amun/service/content</field>
-		<field name="link">http://amun.phpsx.org</field>
-		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
-		<field name="license">GPLv3</field>
+		<field name="status">1</field>
+		<field name="source">org.amun-project.login.zip</field>
+		<field name="config">vendor/amun/login/config.xml</field>
+		<field name="name">amun/login</field>
+		<field name="path">/login</field>
+		<field name="namespace">AmunService\Login</field>
+		<field name="type">http://ns.amun-project.org/2011/amun/service/login</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-04-12 20:51:08</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">17</field>
-		<field name="providerId">2</field>
 		<field name="status">1</field>
-		<field name="source">org.amun-project.my</field>
-		<field name="name">my</field>
+		<field name="source">org.amun-project.my.zip</field>
+		<field name="config">vendor/amun/my/config.xml</field>
+		<field name="name">amun/my</field>
 		<field name="path">/my</field>
-		<field name="namespace">my</field>
+		<field name="namespace">AmunService\My</field>
 		<field name="type">http://ns.amun-project.org/2011/amun/service/my</field>
-		<field name="link">http://amun.phpsx.org</field>
-		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
-		<field name="license">GPLv3</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-04-12 20:51:08</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">18</field>
-		<field name="providerId">2</field>
 		<field name="status">1</field>
-		<field name="source">org.amun-project.profile</field>
-		<field name="name">profile</field>
+		<field name="source">org.amun-project.profile.zip</field>
+		<field name="config">vendor/amun/profile/config.xml</field>
+		<field name="name">amun/profile</field>
 		<field name="path">/profile</field>
-		<field name="namespace">profile</field>
+		<field name="namespace">AmunService\Profile</field>
 		<field name="type">http://ns.amun-project.org/2011/amun/service/profile</field>
-		<field name="link">http://amun.phpsx.org</field>
-		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
-		<field name="license">GPLv3</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-04-12 20:51:08</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">19</field>
-		<field name="providerId">2</field>
-		<field name="status">1</field>
-		<field name="source">org.amun-project.page</field>
-		<field name="name">page</field>
-		<field name="path">/page</field>
-		<field name="namespace">page</field>
-		<field name="type">http://ns.amun-project.org/2011/amun/service/page</field>
-		<field name="link">http://amun.phpsx.org</field>
-		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
-		<field name="license">GPLv3</field>
+		<field name="status">2</field>
+		<field name="source">org.amun-project.comment.zip</field>
+		<field name="config">vendor/amun/comment/config.xml</field>
+		<field name="name">amun/comment</field>
+		<field name="path">/comment</field>
+		<field name="namespace">AmunService\Comment</field>
+		<field name="type">http://ns.amun-project.org/2011/amun/service/comment</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-04-12 20:51:09</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">20</field>
-		<field name="providerId">2</field>
-		<field name="status">2</field>
-		<field name="source">org.amun-project.comment</field>
-		<field name="name">comment</field>
-		<field name="path">/comment</field>
-		<field name="namespace">comment</field>
-		<field name="type">http://ns.amun-project.org/2011/amun/service/comment</field>
-		<field name="link">http://amun.phpsx.org</field>
-		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
-		<field name="license">GPLv3</field>
+		<field name="status">1</field>
+		<field name="source">org.amun-project.news.zip</field>
+		<field name="config">vendor/amun/news/config.xml</field>
+		<field name="name">amun/news</field>
+		<field name="path">/news</field>
+		<field name="namespace">AmunService\News</field>
+		<field name="type">http://ns.amun-project.org/2011/amun/service/news</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-04-12 20:51:09</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">21</field>
-		<field name="providerId">2</field>
 		<field name="status">1</field>
-		<field name="source">org.amun-project.news</field>
-		<field name="name">news</field>
-		<field name="path">/news</field>
-		<field name="namespace">news</field>
-		<field name="type">http://ns.amun-project.org/2011/amun/service/news</field>
-		<field name="link">http://amun.phpsx.org</field>
-		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
-		<field name="license">GPLv3</field>
+		<field name="source">org.amun-project.file.zip</field>
+		<field name="config">vendor/amun/file/config.xml</field>
+		<field name="name">amun/file</field>
+		<field name="path">/file</field>
+		<field name="namespace">AmunService\File</field>
+		<field name="type">http://ns.amun-project.org/2011/amun/service/file</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-04-12 20:51:09</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">22</field>
-		<field name="providerId">2</field>
 		<field name="status">1</field>
-		<field name="source">org.amun-project.file</field>
-		<field name="name">file</field>
-		<field name="path">/file</field>
-		<field name="namespace">file</field>
-		<field name="type">http://ns.amun-project.org/2011/amun/service/file</field>
-		<field name="link">http://amun.phpsx.org</field>
-		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
-		<field name="license">GPLv3</field>
+		<field name="source">org.amun-project.php.zip</field>
+		<field name="config">vendor/amun/php/config.xml</field>
+		<field name="name">amun/php</field>
+		<field name="path">/php</field>
+		<field name="namespace">AmunService\Php</field>
+		<field name="type">http://ns.amun-project.org/2011/amun/service/php</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-04-12 20:51:09</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">23</field>
-		<field name="providerId">2</field>
 		<field name="status">1</field>
-		<field name="source">org.amun-project.php</field>
-		<field name="name">php</field>
-		<field name="path">/php</field>
-		<field name="namespace">php</field>
-		<field name="type">http://ns.amun-project.org/2011/amun/service/php</field>
-		<field name="link">http://amun.phpsx.org</field>
-		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
-		<field name="license">GPLv3</field>
+		<field name="source">org.amun-project.redirect.zip</field>
+		<field name="config">vendor/amun/redirect/config.xml</field>
+		<field name="name">amun/redirect</field>
+		<field name="path">/redirect</field>
+		<field name="namespace">AmunService\Redirect</field>
+		<field name="type">http://ns.amun-project.org/2011/amun/service/redirect</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-04-12 20:51:09</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">24</field>
-		<field name="providerId">2</field>
 		<field name="status">1</field>
-		<field name="source">org.amun-project.redirect</field>
-		<field name="name">redirect</field>
-		<field name="path">/redirect</field>
-		<field name="namespace">redirect</field>
-		<field name="type">http://ns.amun-project.org/2011/amun/service/redirect</field>
-		<field name="link">http://amun.phpsx.org</field>
-		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
-		<field name="license">GPLv3</field>
+		<field name="source">org.amun-project.pipe.zip</field>
+		<field name="config">vendor/amun/pipe/config.xml</field>
+		<field name="name">amun/pipe</field>
+		<field name="path">/pipe</field>
+		<field name="namespace">AmunService\Pipe</field>
+		<field name="type">http://ns.amun-project.org/2011/amun/service/pipe</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-04-12 20:51:10</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">25</field>
-		<field name="providerId">2</field>
 		<field name="status">1</field>
-		<field name="source">org.amun-project.pipe</field>
-		<field name="name">pipe</field>
-		<field name="path">/pipe</field>
-		<field name="namespace">pipe</field>
-		<field name="type">http://ns.amun-project.org/2011/amun/service/pipe</field>
-		<field name="link">http://amun.phpsx.org</field>
-		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
-		<field name="license">GPLv3</field>
+		<field name="source">org.amun-project.oauth.zip</field>
+		<field name="config">vendor/amun/oauth/config.xml</field>
+		<field name="name">amun/oauth</field>
+		<field name="path">/oauth</field>
+		<field name="namespace">AmunService\Oauth</field>
+		<field name="type">http://ns.amun-project.org/2011/amun/service/oauth</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-04-12 20:51:10</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
 		<field name="id">26</field>
-		<field name="providerId">2</field>
 		<field name="status">1</field>
-		<field name="source">org.amun-project.login</field>
-		<field name="name">login</field>
-		<field name="path">/login</field>
-		<field name="namespace">login</field>
-		<field name="type">http://ns.amun-project.org/2011/amun/service/login</field>
-		<field name="link">http://amun.phpsx.org</field>
-		<field name="author">Christoph Kappestein &lt;k42b3.x@gmail.com&gt;</field>
-		<field name="license">GPLv3</field>
+		<field name="source">org.amun-project.page.zip</field>
+		<field name="config">vendor/amun/page/config.xml</field>
+		<field name="name">amun/page</field>
+		<field name="path">/page</field>
+		<field name="namespace">AmunService\Page</field>
+		<field name="type">http://ns.amun-project.org/2011/amun/service/page</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
-		<field name="date">2013-04-12 20:51:10</field>
-	</row>
-	</table_data>
-	<table_data name="amun_core_service_option">
-	</table_data>
-	<table_data name="amun_core_service_provider">
-	<row>
-		<field name="id">1</field>
-		<field name="url">localhost</field>
-		<field name="date">2013-04-28 12:43:28</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	<row>
-		<field name="id">2</field>
-		<field name="url">http://amun-project.org</field>
-		<field name="date">2013-04-28 12:43:28</field>
+		<field name="id">27</field>
+		<field name="status">2</field>
+		<field name="source">org.amun-project.sample.zip</field>
+		<field name="config">vendor/amun/sample/config.xml</field>
+		<field name="name">amun/sample</field>
+		<field name="path">/sample</field>
+		<field name="namespace">AmunService\Sample</field>
+		<field name="type">http://ns.amun-project.org/2011/amun/service/sample</field>
+		<field name="link">http://amun-project.org</field>
+		<field name="license">GPL-3.0</field>
+		<field name="version">0.0.1</field>
+		<field name="date">2013-04-12 20:51:03</field>
 	</row>
 	</table_data>
 	<table_data name="amun_country">

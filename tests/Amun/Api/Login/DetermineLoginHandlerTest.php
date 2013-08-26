@@ -42,7 +42,7 @@ class DetermineLoginHandlerTest extends ApiTest
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.login'))
+		if(!$this->hasService('amun/login'))
 		{
 			$this->markTestSkipped('Service my not installed');
 		}

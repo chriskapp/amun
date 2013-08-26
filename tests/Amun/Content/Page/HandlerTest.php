@@ -36,7 +36,7 @@ class HandlerTest extends \Amun\HandlerTest
 {
 	public function testBuildPath()
 	{
-		$handler = $this->getHandler('Content_Page');
+		$handler = $this->getHandler('AmunService\Content\Page');
 
 		// create foo under home page
 		$record = $handler->getRecord();
@@ -45,7 +45,7 @@ class HandlerTest extends \Amun\HandlerTest
 		$record->setStatus(\AmunService\Content\Page\Record::NORMAL);
 		$record->setTitle('foo');
 
-		$record = $this->getHandler('Content_Page')->create($record);
+		$record = $this->getHandler('AmunService\Content\Page')->create($record);
 		$parentId = $record->id;
 
 		// check path and parent id of the page
@@ -61,7 +61,7 @@ class HandlerTest extends \Amun\HandlerTest
 		$record->setStatus(\AmunService\Content\Page\Record::NORMAL);
 		$record->setTitle('bar');
 
-		$record = $this->getHandler('Content_Page')->create($record);
+		$record = $this->getHandler('AmunService\Content\Page')->create($record);
 
 		$row = $handler->getTable()->getRow(array('id', 'parentId', 'path'), new Condition(array('id', '=', $record->id)));
 
@@ -75,7 +75,7 @@ class HandlerTest extends \Amun\HandlerTest
 		$record->setStatus(\AmunService\Content\Page\Record::NORMAL);
 		$record->setTitle('foo');
 
-		$record = $this->getHandler('Content_Page')->create($record);
+		$record = $this->getHandler('AmunService\Content\Page')->create($record);
 
 		$row = $handler->getTable()->getRow(array('id', 'parentId', 'path'), new Condition(array('id', '=', $record->id)));
 
@@ -86,7 +86,7 @@ class HandlerTest extends \Amun\HandlerTest
 
 	public function testReparentPath()
 	{
-		$handler = $this->getHandler('Content_Page');
+		$handler = $this->getHandler('AmunService\Content\Page');
 
 		// create two sub pages under home
 		$record = $handler->getRecord();
@@ -95,7 +95,7 @@ class HandlerTest extends \Amun\HandlerTest
 		$record->setStatus(\AmunService\Content\Page\Record::NORMAL);
 		$record->setTitle('bar');
 
-		$page1 = $this->getHandler('Content_Page')->create($record);
+		$page1 = $this->getHandler('AmunService\Content\Page')->create($record);
 
 		$record = $handler->getRecord();
 		$record->setParentId(2);
@@ -103,14 +103,14 @@ class HandlerTest extends \Amun\HandlerTest
 		$record->setStatus(\AmunService\Content\Page\Record::NORMAL);
 		$record->setTitle('foo');
 
-		$page2 = $this->getHandler('Content_Page')->create($record);
+		$page2 = $this->getHandler('AmunService\Content\Page')->create($record);
 
 		// move bar page to another parent
 		$record = $handler->getRecord();
 		$record->setId($page1->id);
 		$record->setParentId(7);
 
-		$this->getHandler('Content_Page')->update($record);
+		$this->getHandler('AmunService\Content\Page')->update($record);
 
 		// check path and parent id of the page
 		$row = $handler->getTable()->getRow(array('id', 'parentId', 'path'), new Condition(array('id', '=', $page1->id)));
@@ -131,7 +131,7 @@ class HandlerTest extends \Amun\HandlerTest
 
 	public function testRebuildPath()
 	{
-		$handler = $this->getHandler('Content_Page');
+		$handler = $this->getHandler('AmunService\Content\Page');
 
 		// create two sub pages under home
 		$record = $handler->getRecord();
@@ -140,7 +140,7 @@ class HandlerTest extends \Amun\HandlerTest
 		$record->setStatus(\AmunService\Content\Page\Record::NORMAL);
 		$record->setTitle('bar');
 
-		$page1 = $this->getHandler('Content_Page')->create($record);
+		$page1 = $this->getHandler('AmunService\Content\Page')->create($record);
 
 		$record = $handler->getRecord();
 		$record->setParentId(2);
@@ -148,14 +148,14 @@ class HandlerTest extends \Amun\HandlerTest
 		$record->setStatus(\AmunService\Content\Page\Record::NORMAL);
 		$record->setTitle('foo');
 
-		$page2 = $this->getHandler('Content_Page')->create($record);
+		$page2 = $this->getHandler('AmunService\Content\Page')->create($record);
 
 		// rename home
 		$record = $handler->getRecord();
 		$record->setId(2);
 		$record->setTitle('test');
 
-		$this->getHandler('Content_Page')->update($record);
+		$this->getHandler('AmunService\Content\Page')->update($record);
 
 		// check path and parent id of the page
 		$row = $handler->getTable()->getRow(array('id', 'parentId', 'path'), new Condition(array('id', '=', $page1->id)));

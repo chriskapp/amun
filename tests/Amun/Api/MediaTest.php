@@ -42,7 +42,7 @@ class MediaTest extends RestTest
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.media'))
+		if(!$this->hasService('amun/media'))
 		{
 			$this->markTestSkipped('Service media not installed');
 		}
@@ -55,7 +55,7 @@ class MediaTest extends RestTest
 
 	public function getHandler()
 	{
-		return getContainer()->get('handlerManager')->getHandler('Media');
+		return getContainer()->get('handlerManager')->getHandler('AmunService\Media');
 	}
 
 	public function testGet()

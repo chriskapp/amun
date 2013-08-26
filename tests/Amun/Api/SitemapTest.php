@@ -41,7 +41,7 @@ class SitemapTest extends ApiTest
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.sitemap'))
+		if(!$this->hasService('amun/sitemap'))
 		{
 			$this->markTestSkipped('Service sitemap not installed');
 		}

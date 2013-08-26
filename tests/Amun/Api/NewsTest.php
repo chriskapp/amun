@@ -42,7 +42,7 @@ class NewsTest extends RestTest
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.news'))
+		if(!$this->hasService('amun/news'))
 		{
 			$this->markTestSkipped('Service news not installed');
 		}
@@ -55,7 +55,7 @@ class NewsTest extends RestTest
 
 	public function getHandler()
 	{
-		return getContainer()->get('handlerManager')->getHandler('News');
+		return getContainer()->get('handlerManager')->getHandler('AmunService\News');
 	}
 
 	public function testGet()

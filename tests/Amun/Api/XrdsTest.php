@@ -41,7 +41,7 @@ class XrdsTest extends ApiTest
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.xrds'))
+		if(!$this->hasService('amun/xrds'))
 		{
 			$this->markTestSkipped('Service xrds not installed');
 		}

@@ -43,7 +43,7 @@ class FoafTest extends ApiTest
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.my'))
+		if(!$this->hasService('amun/my'))
 		{
 			$this->markTestSkipped('Service my not installed');
 		}

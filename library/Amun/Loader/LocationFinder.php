@@ -236,6 +236,7 @@ class LocationFinder extends FileSystem
 
 	protected function getClassByPath($path)
 	{
+		$path  = str_replace('\\', '/', $path);
 		$parts = array_map('ucfirst', explode('/', $path));
 		$len   = count($parts);
 

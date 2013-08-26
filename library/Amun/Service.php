@@ -114,6 +114,14 @@ SQL;
 		return $this->name;
 	}
 
+	public function getShortName()
+	{
+		$pos  = strpos($this->name, '/');
+		$name = substr($this->name, $pos !== false ? $pos + 1 : 0);
+
+		return $name;
+	}
+
 	public function getNamespace()
 	{
 		return $this->namespace;

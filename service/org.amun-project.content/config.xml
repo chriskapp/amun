@@ -107,15 +107,5 @@
   PRIMARY KEY (`id`),
   UNIQUE KEY `pageGadgetId` (`pageId`,`gadgetId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.content_page_option}` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `optionId` int(10) NOT NULL,
-  `rightId` int(10) NOT NULL,
-  `srcPageId` int(10) NOT NULL,
-  `destPageId` int(10) NOT NULL,
-  `name` varchar(32) NOT NULL,
-  `href` varchar(512) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
   </database>
 </service>

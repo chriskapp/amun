@@ -44,7 +44,7 @@ class ActivityTest extends RestTest
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.user'))
+		if(!$this->hasService('amun/user'))
 		{
 			$this->markTestSkipped('Service user not installed');
 		}
@@ -57,7 +57,7 @@ class ActivityTest extends RestTest
 
 	public function getHandler()
 	{
-		return getContainer()->get('handlerManager')->getHandler('User_Activity');
+		return getContainer()->get('handlerManager')->getHandler('AmunService\User\Activity');
 	}
 
 	protected function assertResultSetResponse(Response $response)

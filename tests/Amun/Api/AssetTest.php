@@ -38,7 +38,7 @@ class AssetTest extends ApiTest
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.asset'))
+		if(!$this->hasService('amun/asset'))
 		{
 			$this->markTestSkipped('Service asset not installed');
 		}

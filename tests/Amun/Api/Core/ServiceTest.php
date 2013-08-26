@@ -42,7 +42,7 @@ class ServiceTest extends RestTest
 	{
 		parent::setUp();
 
-		if(!$this->hasService('org.amun-project.core'))
+		if(!$this->hasService('amun/core'))
 		{
 			$this->markTestSkipped('Service core not installed');
 		}
@@ -55,7 +55,7 @@ class ServiceTest extends RestTest
 
 	public function getHandler()
 	{
-		return getContainer()->get('handlerManager')->getHandler('Core_Service');
+		return getContainer()->get('handlerManager')->getHandler('AmunService\Core\Service');
 	}
 
 	public function testGet()

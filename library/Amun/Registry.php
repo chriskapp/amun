@@ -158,9 +158,9 @@ class Registry extends ArrayObject
 		return $result;
 	}
 
-	public function hasService($source)
+	public function hasService($name)
 	{
-		$con   = new Condition(array('source', '=', $source));
+		$con   = new Condition(array('name', '=', $name));
 		$count = $this->sql->count($this->offsetGet('table.core_service'), $con);
 
 		return $count > 0;
