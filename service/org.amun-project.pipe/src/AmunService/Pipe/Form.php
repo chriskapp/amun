@@ -207,7 +207,7 @@ class Form extends FormAbstract
 	private function getProcessor()
 	{
 		$procs  = array();
-		$path   = PSX_PATH_LIBRARY . '/AmunService/Pipe/Processor';
+		$path   = '../vendor/amun/pipe/src/AmunService/Pipe/Processor';
 		$files  = scandir($path);
 
 		foreach($files as $file)
