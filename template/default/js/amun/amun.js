@@ -685,8 +685,13 @@
 				$('#amun-form-window-buttons').append(btn);
 			}
 
+			// initialize
+			$('#amun-form-window').modal({
+				keyboard: true
+			});
+
 			// on show event
-			$('#amun-form-window').on('show', function(){
+			$('#amun-form-window').on('shown.bs.modal', function(){
 				form = new amun.form('amun-form-window-form', url);
 
 				form.onError(function(msg){

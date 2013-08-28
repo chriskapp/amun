@@ -222,17 +222,6 @@ footer.amun-footer .container
 	clear:both;
 }
 
-#amun-form-window
-{
-	width:800px;
-	margin-left:-400px;
-}
-
-#amun-form-window .modal-body
-{
-	min-height:460px;
-}
-
 .amun-preview
 {
 	display:none;
@@ -300,3 +289,17 @@ h2
 {
 	margin-bottom:2px;
 }
+
+/* modal dialog  */
+#amun-form-window .modal-dialog
+{
+	width:800px;
+}
+
+#amun-form-window .modal-body
+{
+	min-height:460px;
+}
+
+
+
