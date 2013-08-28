@@ -78,7 +78,7 @@ class GroupTest extends RestTest
 		unset($record->rights);
 		$expect = array_map('strval', $record->getData());
 
-		$table = getContainer()->get('handlerManager')->getTable('User_Group_Right');
+		$table = getContainer()->get('handlerManager')->getTable('AmunService\User\Group\Right');
 
 		$this->assertEquals($expect, $actual);
 		$this->assertEquals($rightIds, $table->getCol('rightId', new Condition(array('groupId', '=', 4))));
@@ -99,7 +99,7 @@ class GroupTest extends RestTest
 		unset($record->rights);
 		$expect = array_map('strval', $record->getData());
 
-		$table = getContainer()->get('handlerManager')->getTable('User_Group_Right');
+		$table = getContainer()->get('handlerManager')->getTable('AmunService\User\Group\Right');
 
 		$this->assertEquals($expect, $actual);
 		$this->assertEquals($rightIds, $table->getCol('rightId', new Condition(array('groupId', '=', 1))));

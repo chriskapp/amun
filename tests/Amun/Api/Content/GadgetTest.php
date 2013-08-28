@@ -45,6 +45,8 @@ class GadgetTest extends RestTest
 	{
 		parent::setUp();
 
+		$this->markTestSkipped('Temporary deactivated');
+
 		if(!$this->hasService('amun/content'))
 		{
 			$this->markTestSkipped('Service content not installed');
