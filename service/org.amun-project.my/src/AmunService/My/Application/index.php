@@ -47,7 +47,7 @@ class Index extends MyAbstract
 		parent::onLoad();
 
 		// get user details
-		$account = $this->getHandler('User\Account')->getOneById($this->user->getId(), 
+		$account = $this->getHandler('AmunService\User\Account')->getOneById($this->user->getId(), 
 			array('id', 'status', 'name', 'gender', 'thumbnailUrl', 'timezone', 'updated', 'date', 'countryTitle'),
 			Sql::FETCH_OBJECT);
 
@@ -67,7 +67,7 @@ class Index extends MyAbstract
 		$this->template->assign('activities', $activities);
 
 		// load groups
-		$groups = $this->getHandler('User\Friend\Group')->getAll(array(), 
+		$groups = $this->getHandler('AmunService\User\Friend\Group')->getAll(array(), 
 			0, 
 			16, 
 			'id', 
