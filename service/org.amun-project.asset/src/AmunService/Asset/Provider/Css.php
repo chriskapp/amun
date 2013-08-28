@@ -56,7 +56,7 @@ class Css implements ProviderInterface
 
 		$services['default'] = array(
 			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/css/bootstrap/bootstrap.css',
-			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/css/bootstrap/bootstrap-responsive.css',
+			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/css/bootstrap/bootstrap-theme.css',
 			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/css/prettify/prettify.css',
 			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/css/default.css',
 		);

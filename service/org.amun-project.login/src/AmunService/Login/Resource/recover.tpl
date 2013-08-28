@@ -3,7 +3,7 @@
 
 	<form method="POST">
 
-	<div class="span8">
+	<div class="col-md-8">
 
 		<h3>Recover by Email</h3>
 
@@ -13,28 +13,26 @@
 
 	</div>
 
-	<div class="span4">
+	<div class="col-md-4">
 
 		<h3>Recover</h3>
 
 		<?php if(isset($error)): ?>
-
-			<div class="alert alert-error">
-				<img src="<?php echo $base; ?>/img/icons/login/exclamation.png" />
-				<?php echo $error; ?>
-			</div>
-
+		<div class="alert alert-danger">
+			<img src="<?php echo $base; ?>/img/icons/login/exclamation.png" />
+			<?php echo $error; ?>
+		</div>
 		<?php endif; ?>
 
 		<p>
 			<label for="email">Email</label>
-			<input type="email" name="email" id="email" maxlength="256" required="required" />
+			<input type="email" name="email" id="email" maxlength="256" required="required" class="form-control" />
 		</p>
 
 		<p>
-			<label for="captcha">Captcha:</label>
-			<img src="<?php echo $captcha; ?>" alt="Captcha" id="amun-service-login-register-form-captcha" /><br />
-			<input type="text" name="captcha" id="captcha" value="" maxlength="64" required="required" />
+			<label for="captcha">Captcha:</label><br />
+			<img src="<?php echo $captcha; ?>" alt="Captcha" class="form-captcha" id="amun-service-login-register-form-captcha" /><br />
+			<input type="text" name="captcha" id="captcha" value="" maxlength="64" required="required" class="form-control" />
 		</p>
 
 		<p>

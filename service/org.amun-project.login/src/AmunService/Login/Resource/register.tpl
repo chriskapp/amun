@@ -6,7 +6,7 @@
 	<input type="hidden" name="longitude" id="longitude" value="" />
 	<input type="hidden" name="latitude" id="latitude" value="" />
 
-	<div class="span8 amun-service-login-register-description">
+	<div class="col-md-8 amun-service-login-register-description">
 
 		<h3>Register at <?php echo $registry['core.title']; ?></h3>
 
@@ -32,7 +32,7 @@
 
 	</div>
 
-	<div class="span4 amun-service-login-register-form">
+	<div class="col-md-4 amun-service-login-register-form">
 
 		<h3>Register</h3>
 
@@ -43,38 +43,36 @@
 		<?php else: ?>
 
 			<?php if(isset($error)): ?>
-
-				<div class="alert alert-error">
-					<img src="<?php echo $base; ?>/img/icons/login/exclamation.png" />
-					<?php echo $error; ?>
-				</div>
-
+			<div class="alert alert-danger">
+				<img src="<?php echo $base; ?>/img/icons/login/exclamation.png" />
+				<?php echo $error; ?>
+			</div>
 			<?php endif; ?>
 
 			<p>
 				<label for="name">Name:</label>
-				<input type="text" name="name" id="name" value="<?php echo isset($name) ? $name : ''; ?>" maxlength="256" required="required" <?php echo !$registry['login.registration_enabled'] ? 'disabled="disabled"' : ''; ?> />
+				<input type="text" name="name" id="name" value="<?php echo isset($name) ? $name : ''; ?>" maxlength="256" required="required" <?php echo !$registry['login.registration_enabled'] ? 'disabled="disabled"' : ''; ?> class="form-control" />
 			</p>
 
 			<p>
 				<label for="identity">Email:</label>
-				<input type="email" name="identity" id="identity" value="<?php echo isset($identity) ? $identity : ''; ?>" maxlength="256" required="required" <?php echo !$registry['login.registration_enabled'] ? 'disabled="disabled"' : ''; ?> />
+				<input type="email" name="identity" id="identity" value="<?php echo isset($identity) ? $identity : ''; ?>" maxlength="256" required="required" <?php echo !$registry['login.registration_enabled'] ? 'disabled="disabled"' : ''; ?> class="form-control" />
 			</p>
 
 			<p>
 				<label for="pw">Password:</label>
-				<input type="password" name="pw" id="pw" value="" maxlength="64" required="required" <?php echo !$registry['login.registration_enabled'] ? 'disabled="disabled"' : ''; ?> />
+				<input type="password" name="pw" id="pw" value="" maxlength="64" required="required" <?php echo !$registry['login.registration_enabled'] ? 'disabled="disabled"' : ''; ?> class="form-control" />
 			</p>
 
 			<p>
 				<label for="pwRepeat">Password repeat:</label>
-				<input type="password" name="pwRepeat" id="pwRepeat" value="" maxlength="64" required="required" <?php echo !$registry['login.registration_enabled'] ? 'disabled="disabled"' : ''; ?> />
+				<input type="password" name="pwRepeat" id="pwRepeat" value="" maxlength="64" required="required" <?php echo !$registry['login.registration_enabled'] ? 'disabled="disabled"' : ''; ?> class="form-control" />
 			</p>
 
 			<p>
-				<label for="captcha">Captcha:</label>
-				<img src="<?php echo $captcha; ?>" alt="Captcha" id="amun-service-login-register-form-captcha" /><br />
-				<input type="text" name="captcha" id="captcha" value="" maxlength="64" required="required" <?php echo !$registry['login.registration_enabled'] ? 'disabled="disabled"' : ''; ?> />
+				<label for="captcha">Captcha:</label><br />
+				<img src="<?php echo $captcha; ?>" alt="Captcha" class="form-captcha" id="amun-service-login-register-form-captcha" /><br />
+				<input type="text" name="captcha" id="captcha" value="" maxlength="64" required="required" <?php echo !$registry['login.registration_enabled'] ? 'disabled="disabled"' : ''; ?> class="form-control" />
 			</p>
 
 			<p>

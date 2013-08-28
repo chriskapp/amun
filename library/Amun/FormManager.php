@@ -56,7 +56,7 @@ class FormManager
 		if(class_exists($class))
 		{
 			$config = $this->container->get('config');
-			$path   = strtolower(str_replace('\\', '/', $name));
+			$path   = strtolower(str_replace('\\', '/', substr($name, 12)));
 			$url    = $config['psx_url'] . '/' . $config['psx_dispatch'] . 'api/' . $path;
 
 			return $this->_cache[$class] = new $class($this->container, $url);

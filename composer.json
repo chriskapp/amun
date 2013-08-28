@@ -1,24 +1,15 @@
 {
     "name": "amun/amun",
     "description": "Amun CMS",
-    "keywords": [
-        "cms",
-        "social",
-        "rest",
-        "api",
-        "oauth",
-        "openid"
-    ],
+    "keywords": ["cms", "social", "rest", "api", "oauth", "openid"],
     "homepage": "http://amun-project.org",
     "type": "project",
     "license": "GPL-3.0",
-    "authors": [
-        {
-            "name": "Christoph Kappestein",
-            "email": "k42b3.x@gmail.com",
-            "homepage": "http://k42b3.com"
-        }
-    ],
+    "authors": [{
+        "name": "Christoph Kappestein",
+        "email": "k42b3.x@gmail.com",
+        "homepage": "http://k42b3.com"
+    }],
     "require": {
         "php": ">=5.3",
         "ext-pdo": "*",

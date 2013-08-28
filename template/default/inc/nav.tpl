@@ -1,7 +1,7 @@
 
 <?php if($navigation instanceof \Amun\Navigation): ?>
 <nav>
-	<ul>
+	<ul class="nav nav-pills">
 		<?php foreach($navigation as $item): ?>
 			<?php if($item['selected']): ?>
 				<li class="active"><a href="<?php echo $item['href']; ?>"><?php echo $item['title']; ?></a></li>
@@ -16,6 +16,11 @@
 
 <?php if($path instanceof \Amun\Path): ?>
 <div class="amun-path">
-	<p>Location: <?php foreach($path as $item): ?><a href="<?php echo $item['href']; ?>"><?php echo $item['name']; ?></a> / <?php endforeach; ?></p>
+	<ol class="breadcrumb">
+		<?php foreach($path as $item): ?>
+		<li><a href="<?php echo $item['href']; ?>"><?php echo $item['name']; ?></a></li>
+		<?php endforeach; ?>
+	</ol>
+	
 </div>
 <?php endif; ?>

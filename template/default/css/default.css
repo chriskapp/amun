@@ -12,8 +12,9 @@ header.amun-header
 
 header.amun-header h1
 {
-	margin-top:8px;
-	margin-bottom:8px;
+	margin:8px;
+	margin-top:14px;
+	margin-bottom:14px;
 }
 
 header.amun-header a
@@ -73,27 +74,28 @@ div.amun-nav nav
 
 div.amun-nav nav ul
 {
-	margin:0px;
-	list-style-type:none;
 }
 
 div.amun-nav nav li
 {
-	float:left;
 }
 
 div.amun-nav nav ul li a
 {
-	display:block;
-	padding:12px 14px;
-	color:#eee;
+	color:#fff;
 	font-size:0.9em;
 	font-weight:bold;
+	padding:16px;
+	border-radius:0px;
+}
+
+div.amun-nav nav ul li a:hover
+{
+	background-color:#188AE5;
 }
 
 div.amun-nav nav .active
 {
-	font-weight:bold;
 }
 
 @media (max-width:480px) {
@@ -112,9 +114,15 @@ div.amun-nav nav .active
 
 div.amun-path
 {
-	margin-top:6px;
-	padding:4px;
 	font-size:0.9em;
+}
+
+div.amun-path .breadcrumb
+{
+	background-color:#fff;
+	padding-top:12px;
+	padding-left:8px;
+	margin-bottom:0px;
 }
 
 div.amun-body
@@ -124,11 +132,9 @@ div.amun-body
 div.amun-body .container
 {
 	padding:0px 6px;
-	padding-top:16px;
+	padding-top:0px;
 	padding-bottom:24px;
 	min-height:400px;
-
-	/*box-shadow:0px 1px 2px 1px #888;*/
 	border-right:1px solid #999;
 	border-left:1px solid #999;
 	border-bottom:1px solid #999;
@@ -182,19 +188,7 @@ footer.amun-footer .container
 	padding:24px 0;
 }
 
-/* */
-p.muted
-{
-	font-size:0.9em;
-	white-space:nowrap;
-	overflow:hidden;
-}
-
-h2
-{
-	margin-bottom:2px;
-}
-
+/* oembed */
 .amun-oembed-media
 {
 }
@@ -228,35 +222,6 @@ h2
 	clear:both;
 }
 
-.form-actions input
-{
-	margin-right:4px;
-}
-
-.btn
-{
-	-webkit-border-radius:0px;
-	-moz-border-radius:0px;
-	border-radius:0px;
-}
-
-select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"]
-{
-	-webkit-border-radius:0px;
-	-moz-border-radius:0px;
-	border-radius:0px;
-}
-
-blockquote
-{
-	padding:0 0 0 10px
-}
-
-blockquote p
-{
-	font-size:inherit;
-}
-
 #amun-form-window
 {
 	width:800px;
@@ -277,6 +242,13 @@ blockquote p
 	border:2px dotted #ccc;
 }
 
+.form-captcha
+{
+	border:1px solid #ccc;
+	padding:2px;
+	margin-bottom:4px;
+}
+
 .prettyprint
 {
 	-webkit-border-radius:0px;
@@ -285,4 +257,46 @@ blockquote p
 	padding:6px;
 	font-size:12px;
 	line-height:16px;
+}
+
+/* bootstrap customization */
+.btn
+{
+	-webkit-border-radius:0px;
+	-moz-border-radius:0px;
+	border-radius:0px;
+}
+
+.form-control
+{
+	-webkit-border-radius:0px;
+	-moz-border-radius:0px;
+	border-radius:0px;
+}
+
+.alert
+{
+	border-radius:0px;	
+}
+
+blockquote
+{
+	padding:0 0 0 10px
+}
+
+blockquote p
+{
+	font-size:inherit;
+}
+
+p.muted
+{
+	font-size:0.9em;
+	white-space:nowrap;
+	overflow:hidden;
+}
+
+h2
+{
+	margin-bottom:2px;
 }

@@ -1,6 +1,8 @@
 
-0.4.6 beta
-*
+0.5 beta
+* Redesigned service structure
+* Implemented composer based installer
+* Added bootstrap 3.0
 
 0.4.5 beta
 * Added page and gadget http cache

@@ -4,7 +4,7 @@
 	<form method="POST">
 	<input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
 
-	<div class="span8 amun-service-login-description">
+	<div class="col-md-8 amun-service-login-description">
 
 		<h3>Sign in to personalize your experience</h3>
 
@@ -18,35 +18,33 @@
 		on the "Register" button and follow the instructions.</p>
 
 	</div>
-	<div class="span4 amun-service-login-form">
+	<div class="col-md-4 amun-service-login-form">
 
 		<h3>Login</h3>
 
 		<?php if(isset($error)): ?>
-
-			<div class="alert alert-error">
-				<img src="<?php echo $base; ?>/img/icons/login/exclamation.png" />
-				<?php echo $error; ?>
-			</div>
-
+		<div class="alert alert-danger">
+			<img src="<?php echo $base; ?>/img/icons/login/exclamation.png" />
+			<?php echo $error; ?>
+		</div>
 		<?php endif; ?>
 
-		<p id="form-identity">
+		<div class="form-group" id="form-identity">
 			<label for="identity">Identity:</label>
-			<input type="text" name="identity" id="identity" value="" maxlength="256" placeholder="Email or OpenID" />
-		</p>
+			<input type="text" name="identity" id="identity" value="" maxlength="256" placeholder="Email or OpenID" class="form-control" />
+		</div>
 
-		<p id="form-pw">
+		<div class="form-group" id="form-pw">
 			<label for="pw">Password:</label>
-			<input type="password" name="pw" id="pw" value="" maxlength="64" placeholder="Password" />
-		</p>
+			<input type="password" name="pw" id="pw" value="" maxlength="64" placeholder="Password" class="form-control" />
+		</div>
 
 		<?php if(isset($captcha)): ?>
-		<p>
-			<label for="captcha">Captcha:</label>
-			<img src="<?php echo $captcha; ?>" alt="Captcha" id="amun-service-my-register-form-captcha" /><br />
-			<input type="text" name="captcha" id="captcha" value="" maxlength="64" />
-		</p>
+		<div class="form-group">
+			<label for="captcha">Captcha:</label><br />
+			<img src="<?php echo $captcha; ?>" alt="Captcha" class="form-captcha" id="amun-service-my-register-form-captcha" /><br />
+			<input type="text" name="captcha" id="captcha" value="" maxlength="64" class="form-control" />
+		</div>
 		<?php endif; ?>
 
 		<p>

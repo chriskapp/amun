@@ -19,13 +19,15 @@
 <div class="amun-nav">
 	<div class="container">
 		<nav>
-			<ul>
+			<ul class="nav nav-pills">
 				<li class="active"><a href="<?php echo $url; ?>">Home</a></li>
 			</ul>
 			<div class="clearfix"></div>
 		</nav>
 		<div class="amun-path">
-			<p>Location: <a href="<?php echo $url; ?>">Error</a> /</p>
+			<ol class="breadcrumb">
+				<li><a href="<?php echo $url; ?>">Error</a></li>
+			</ol>
 		</div>
 	</div>
 </div>

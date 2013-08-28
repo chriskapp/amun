@@ -31,7 +31,7 @@ namespace Amun;
  */
 class Base extends \PSX\Base
 {
-	const VERSION = '0.4.6 beta';
+	const VERSION = '0.5 beta';
 
 	protected $user;
 
