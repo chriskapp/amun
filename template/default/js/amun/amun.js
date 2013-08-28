@@ -493,6 +493,7 @@
 					input.setAttribute('name', item.ref);
 					input.setAttribute('id', ns + item.ref);
 					input.setAttribute('value', item.value || '');
+					input.setAttribute('class', 'form-control');
 
 					if (item.disabled) {
 						input.setAttribute('disabled', 'disabled');
@@ -504,22 +505,24 @@
 							break;
 
 						default:
-							var p = document.createElement('p');
+							var div = document.createElement('div');
+							div.setAttribute('class', 'form-group');
 
 							var label = document.createElement('label');
 							label.setAttribute('for', item.ref);
 							label.appendChild(document.createTextNode(item.label));
 
-							p.appendChild(label);
-							p.appendChild(input);
+							div.appendChild(label);
+							div.appendChild(input);
 
-							return p;
+							return div;
 							break;
 					}
 					break;
 
 				case 'select':
-					var p = document.createElement('p');
+					var div = document.createElement('div');
+					div.setAttribute('class', 'form-group');
 
 					var label = document.createElement('label');
 					label.setAttribute('for', item.ref);
@@ -528,7 +531,8 @@
 					var select = document.createElement('select');
 					select.setAttribute('name', item.ref);
 					select.setAttribute('id', ns + item.ref);
-
+					select.setAttribute('class', 'form-control');
+					
 					if (item.disabled) {
 						select.setAttribute('disabled', 'disabled');
 					}
@@ -548,14 +552,15 @@
 						}
 					}
 
-					p.appendChild(label);
-					p.appendChild(select);
+					div.appendChild(label);
+					div.appendChild(select);
 
-					return p;
+					return div;
 					break;
 
 				case 'textarea':
-					var p = document.createElement('p');
+					var div = document.createElement('div');
+					div.setAttribute('class', 'form-group');
 
 					var label = document.createElement('label');
 					label.setAttribute('for', item.ref);
@@ -564,6 +569,7 @@
 					var textarea = document.createElement('textarea');
 					textarea.setAttribute('name', item.ref);
 					textarea.setAttribute('id', ns + item.ref);
+					textarea.setAttribute('class', 'form-control');
 
 					if (item.disabled) {
 						textarea.setAttribute('disabled', 'disabled');
@@ -571,10 +577,10 @@
 
 					textarea.appendChild(document.createTextNode(item.value || ''));
 
-					p.appendChild(label);
-					p.appendChild(textarea);
+					div.appendChild(label);
+					div.appendChild(textarea);
 
-					return p;
+					return div;
 					break;
 			}
 		}
@@ -685,9 +691,10 @@
 				$('#amun-form-window-buttons').append(btn);
 			}
 
-			// initialize
+			// activate modal
 			$('#amun-form-window').modal({
-				keyboard: true
+				keyboard: true,
+				show: false
 			});
 
 			// on show event
