@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace AmunService\Phpinfo\Application;
+namespace AmunService\Phpinfo\Api;
 
 use Amun\Module\ApiAbstract;
 use Amun\Exception;
