@@ -43,7 +43,7 @@ class Handler extends HandlerAbstract
 {
 	public function create(RecordInterface $record)
 	{
-		if($record->hasFields('name', 'title', 'path'))
+		if($record->hasFields('serviceId', 'name', 'title', 'class'))
 		{
 			$record->globalId = $this->base->getUUID('content:gadget:' . $record->name . ':' . uniqid());
 

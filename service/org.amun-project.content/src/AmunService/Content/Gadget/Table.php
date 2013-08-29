@@ -54,7 +54,7 @@ class Table extends TableAbstract
 			'type' => self::TYPE_ENUM,
 			'name' => self::TYPE_VARCHAR | 64,
 			'title' => self::TYPE_VARCHAR | 32,
-			'path' => self::TYPE_VARCHAR | 256,
+			'class' => self::TYPE_VARCHAR | 128,
 			'param' => self::TYPE_TEXT,
 			'cache' => self::TYPE_TINYINT | 1,
 			'expire' => self::TYPE_VARCHAR | 25,

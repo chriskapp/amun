@@ -37,6 +37,7 @@ use PSX\Sql\Condition;
 use PSX\Util\Annotation;
 use PSX\Util\Markdown;
 use ReflectionClass;
+use ReflectionException;
 use DateInterval;
 
 /**
@@ -130,61 +131,50 @@ class Record extends RecordAbstract
 		}
 	}
 
-	public function setPath($path)
+	public function setClass($class)
 	{
-		$parts = explode(':', $path);
+		$class = new ReflectionClass($class);
 
-		if(count($parts) == 2)
+		if($class->isSubclassOf('\Amun\Module\GadgetAbstract'))
 		{
-			list($serviceId, $file) = $parts;
+			$sql = <<<SQL
+SELECT 
+	`id`
+FROM 
+	{$this->_registry['table.core_service']}
+WHERE 
+	`namespace` LIKE SUBSTRING(?, 1, CHAR_LENGTH(`namespace`) - 1)
+LIMIT 1
+SQL;
 
-			$con      = new Condition(array('id', '=', $serviceId));
-			$service  = $this->_hm->getTable('AmunService\Core\Service')->getRow(array('id', 'source', 'namespace'), $con);
+			$serviceId = $this->_sql->getField($sql, array($class->getName()));
 
-			if(!empty($service))
+			if(!empty($serviceId))
 			{
-				$fullPath = $this->_config['amun_service_path'] . '/' . $service['source'] . '/gadget/' . $file;
-
-				if(strpos($file, '..') === false && is_file($fullPath))
-				{
-					$this->serviceId = $service['id'];
-					$this->namespace = $service['namespace'];
-					$this->path      = $file;
-					$this->file      = $fullPath;
-				}
-				else
-				{
-					throw new Exception('Invalid gadget path');
-				}
+				$this->serviceId = $serviceId;
+				$this->class     = $class->getName();
 			}
 			else
 			{
-				throw new Exception('Invalid service');
+				throw new Exception('Could not assign gadget to a service');
 			}
 		}
 		else
 		{
-			throw new Exception('Invalid path format must be [serviceId]:[gadgetFile]');
+			throw new Exception('Gagdet must be an instanceof Amun\Module\GadgetAbstract');
 		}
 	}
 
 	public function setParam($param)
 	{
-		if(empty($this->file))
+		if(empty($this->class))
 		{
-			throw new Exception('No path specified');
+			throw new Exception('No class specified');
 		}
 
-		$data  = array();
-		$class = '\\' . $this->namespace . '\\gadget\\' . pathinfo($this->path, PATHINFO_FILENAME);
-
-		if(!class_exists($class, false))
-		{
-			include_once($this->file);
-		}
-
+		$data   = array();
 		$values = self::parseParamString($param);
-		$params = self::parseAnnotations($class);
+		$params = self::parseAnnotations($this->class);
 
 		foreach($params as $name => $type)
 		{
@@ -245,11 +235,6 @@ class Record extends RecordAbstract
 	public function getId()
 	{
 		return $this->_base->getUrn('content', 'gadget', $this->id);
-	}
-
-	public function getPath()
-	{
-		return $this->serviceId . ':' . $this->path;
 	}
 
 	public function getExpire()
@@ -358,10 +343,8 @@ class Record extends RecordAbstract
 	public static function getType($status = false)
 	{
 		$s = array(
-
 			self::INLINE => 'Inline',
 			self::AJAX   => 'Ajax',
-
 		);
 
 		if($status !== false)

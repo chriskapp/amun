@@ -109,7 +109,7 @@ SELECT
 	`gadget`.`type`,
 	`gadget`.`name`,
 	`gadget`.`title`,
-	`gadget`.`path`,
+	`gadget`.`class`,
 	`gadget`.`cache`,
 	`gadget`.`expire`,
 	`service`.`name` AS `serviceName`

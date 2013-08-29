@@ -40,7 +40,7 @@ class Item
 	public $id;
 	public $name;
 	public $title;
-	public $path;
+	public $class;
 	public $cache;
 	public $expire;
 

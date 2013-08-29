@@ -32,6 +32,8 @@ use Amun\Form\Element\Textarea;
 use Amun\Form\Element\Captcha;
 use Amun\Form\Element\Select;
 use AmunService\Content\Gadget;
+use ReflectionClass;
+use ReflectionException;
 
 /**
  * Form
@@ -62,10 +64,10 @@ class Form extends FormAbstract
 		$panel->add($title);
 
 
-		$path = new Select('path', 'Path');
-		$path->setOptions($this->getGadget());
+		$class = new Select('class', 'Class');
+		$class->setOptions($this->getGadget());
 
-		$panel->add($path);
+		$panel->add($class);
 
 
 		$type = new Select('type', 'Type', 'ajax');
@@ -142,10 +144,10 @@ class Form extends FormAbstract
 		$panel->add($title);
 
 
-		$path = new Select('path', 'Path', $record->getPath());
-		$path->setOptions($this->getGadget());
+		$class = new Select('class', 'Class', $record->class);
+		$class->setOptions($this->getGadget());
 
-		$panel->add($path);
+		$panel->add($class);
 
 
 		$type = new Select('type', 'Type', $record->type);
@@ -224,11 +226,11 @@ class Form extends FormAbstract
 		$panel->add($title);
 
 
-		$path = new Select('path', 'Path', $record->getPath());
-		$path->setOptions($this->getGadget());
-		$path->setDisabled(true);
+		$class = new Select('class', 'Class', $record->class);
+		$class->setOptions($this->getGadget());
+		$class->setDisabled(true);
 
-		$panel->add($path);
+		$panel->add($class);
 
 
 		$type = new Select('type', 'Type', $record->type);
@@ -303,11 +305,11 @@ class Form extends FormAbstract
 		$gadget = array();
 
 		// service gadgets
-		$result = $this->sql->getAll('SELECT id, source, name FROM ' . $this->registry['table.core_service'] . ' ORDER BY name ASC');
+		$result = $this->sql->getAll('SELECT name, namespace FROM ' . $this->registry['table.core_service'] . ' ORDER BY name ASC');
 
 		foreach($result as $row)
 		{
-			$this->scanDir($gadget, $row['name'], $row['id'], $this->config['amun_service_path'] . '/' . $row['source'] . '/gadget');
+			$this->scanDir($gadget, $row['name'], $row['namespace']);
 		}
 
 		return $gadget;
@@ -318,10 +320,8 @@ class Form extends FormAbstract
 		$rights = array();
 
 		array_push($rights, array(
-
 			'label' => '-',
 			'value' => 0,
-
 		));
 
 		$result = $this->sql->getAll('SELECT id, description FROM ' . $this->registry['table.user_right'] . ' ORDER BY name ASC');
@@ -329,18 +329,18 @@ class Form extends FormAbstract
 		foreach($result as $row)
 		{
 			array_push($rights, array(
-
 				'label' => $row['description'],
 				'value' => $row['id'],
-
 			));
 		}
 
 		return $rights;
 	}
 
-	private function scanDir(&$gadget, $name, $id, $path)
+	private function scanDir(&$gadget, $name, $namespace)
 	{
+		$path = '../vendor/' . $name . '/src/' . $namespace . '/Gadget';
+
 		if(!is_dir($path))
 		{
 			return;
@@ -352,17 +352,27 @@ class Form extends FormAbstract
 		{
 			if($d[0] != '.')
 			{
-				$item = $path . '/' . $d;
-				$ext  = pathinfo($item, PATHINFO_EXTENSION);
+				$item  = $path . '/' . $d;
+				$class = pathinfo($item, PATHINFO_FILENAME);
+				$ext   = pathinfo($item, PATHINFO_EXTENSION);
 
 				if(is_file($item) && $ext == 'php')
 				{
-					$gadget[] = array(
+					try
+					{
+						$class = new ReflectionClass($namespace . '\\Gadget\\' . $class);
 
-						'label' => ucfirst($name) . ' -> ' . $d,
-						'value' => $id . ':' . $d,
-
-					);
+						if($class->isSubclassOf('\Amun\Module\GadgetAbstract'))
+						{
+							$gadget[] = array(
+								'label' => $name . ' ' . $class->getShortName(),
+								'value' => $class->getName(),
+							);
+						}
+					}
+					catch(ReflectionException $e)
+					{
+					}
 				}
 			}
 		}

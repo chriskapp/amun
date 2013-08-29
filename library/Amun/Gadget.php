@@ -36,15 +36,14 @@ class Gadget
 {
 	protected $id;
 	protected $serviceId;
+	protected $rightId;
 	protected $type;
 	protected $name;
 	protected $title;
-	protected $path;
+	protected $class;
+	protected $param;
 	protected $cache;
 	protected $expire;
-	protected $param;
-
-	protected $applicationPath;
 
 	protected $config;
 	protected $sql;
@@ -61,21 +60,20 @@ class Gadget
 
 		$sql = <<<SQL
 SELECT
-	`gadget`.`id`          AS `gadgetId`,
-	`gadget`.`serviceId`   AS `gadgetServiceId`,
-	`gadget`.`rightId`     AS `gadgetRightId`,
-	`gadget`.`type`        AS `gadgetType`,
-	`gadget`.`name`        AS `gadgetName`,
-	`gadget`.`title`       AS `gadgetTitle`,
-	`gadget`.`path`        AS `gadgetPath`,
-	`gadget`.`param`       AS `gadgetParam`,
-	`gadget`.`cache`       AS `gadgetCache`,
-	`gadget`.`expire`      AS `gadgetExpire`,
-	`gadget`.`date`        AS `gadgetDate`,
-	`service`.`source`     AS `serviceSource`
+	`gadget`.`id`        AS `gadgetId`,
+	`gadget`.`serviceId` AS `gadgetServiceId`,
+	`gadget`.`rightId`   AS `gadgetRightId`,
+	`gadget`.`type`      AS `gadgetType`,
+	`gadget`.`name`      AS `gadgetName`,
+	`gadget`.`title`     AS `gadgetTitle`,
+	`gadget`.`class`     AS `gadgetClass`,
+	`gadget`.`param`     AS `gadgetParam`,
+	`gadget`.`cache`     AS `gadgetCache`,
+	`gadget`.`expire`    AS `gadgetExpire`,
+	`gadget`.`date`      AS `gadgetDate`
 FROM 
 	{$this->registry['table.content_gadget']} `gadget`
-INNER JOIN 
+INNER JOIN
 	{$this->registry['table.core_service']} `service`
 	ON `gadget`.`serviceId` = `service`.`id`
 WHERE 
@@ -91,18 +89,17 @@ SQL;
 				throw new Exception('Access not allowed', 401);
 			}
 
-			$this->id          = $row['gadgetId'];
-			$this->serviceId   = $row['gadgetServiceId'];
-			$this->type        = $row['gadgetType'];
-			$this->name        = $row['gadgetName'];
-			$this->title       = $row['gadgetTitle'];
-			$this->path        = $row['gadgetPath'];
-			$this->param       = $row['gadgetParam'];
-			$this->cache       = $row['gadgetCache'];
-			$this->expire      = $row['gadgetExpire'];
-			$this->date        = $row['gadgetDate'];
-
-			$this->application = $row['serviceSource'];
+			$this->id        = $row['gadgetId'];
+			$this->serviceId = $row['gadgetServiceId'];
+			$this->rightId   = $row['gadgetRightId'];
+			$this->type      = $row['gadgetType'];
+			$this->name      = $row['gadgetName'];
+			$this->title     = $row['gadgetTitle'];
+			$this->class     = $row['gadgetClass'];
+			$this->param     = $row['gadgetParam'];
+			$this->cache     = $row['gadgetCache'];
+			$this->expire    = $row['gadgetExpire'];
+			$this->date      = $row['gadgetDate'];
 		}
 		else
 		{
@@ -120,6 +117,11 @@ SQL;
 		return $this->serviceId;
 	}
 
+	public function getRightId()
+	{
+		return $this->rightId;
+	}
+
 	public function getType()
 	{
 		return $this->type;
@@ -135,9 +137,9 @@ SQL;
 		return $this->title;
 	}
 
-	public function getPath()
+	public function getClass()
 	{
-		return $this->path;
+		return $this->class;
 	}
 
 	public function getParam()
