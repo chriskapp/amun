@@ -94,7 +94,7 @@ class Index extends ApiAbstract
 		try
 		{
 			$basePath    = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api';
-			$serviceName = $this->getUriFragments('service');
+			$serviceName = strtolower($this->getUriFragments('service'));
 			$cache       = new Cache('swagger-api-detail-' . $serviceName);
 
 			if(($declaration = $cache->load()) === false)
@@ -123,7 +123,7 @@ class Index extends ApiAbstract
 	private function buildApiIndex(Declaration $declaration)
 	{
 		$result = $this->hm->getTable('AmunService\Core\Service')
-			->select(array('name', 'path'))
+			->select(array('name', 'namespace'))
 			->orderBy('name', Sql::SORT_ASC)
 			->getAll();
 
@@ -131,7 +131,7 @@ class Index extends ApiAbstract
 		{
 			// add api
 			$desc = '-';
-			$api  = new Api('/swagger/' . $row['name'], $desc);
+			$api  = new Api('/swagger/' . str_replace('/', '-', $row['name']), $desc);
 
 			$declaration->addApi($api);
 		}
@@ -142,9 +142,9 @@ class Index extends ApiAbstract
 		$declaration->setResourcePath('/swagger/' . $serviceName);
 
 		$result = $this->hm->getTable('AmunService\Core\Service')
-			->select(array('source', 'name', 'namespace', 'path'))
+			->select(array('name', 'path', 'namespace'))
 			->orderBy('id', Sql::SORT_ASC)
-			->where('name', '=', $serviceName)
+			->where('name', '=', str_replace('-', '/', $serviceName))
 			->getAll();
 
 		foreach($result as $row)
@@ -152,12 +152,12 @@ class Index extends ApiAbstract
 			try
 			{
 				// get the api class
-				$apiPath = $this->config['amun_service_path'] . '/' . $row['source'] . '/api';
+				$apiPath = '../vendor/' . $row['name'] . '/src/' . $row['namespace'] . '/Api';
 
 				if(is_dir($apiPath))
 				{
 					$models  = array();
-					$classes = $this->findApiClasses($apiPath, $row['namespace'], $row['source'], $row['path']);
+					$classes = $this->findApiClasses($apiPath, $row['path'], $row['namespace'] . '\\Api');
 
 					foreach($classes as $endpoint => $class)
 					{
@@ -192,54 +192,39 @@ class Index extends ApiAbstract
 		}
 	}
 
-	private function findApiClasses($path, $ns, $src, $basePath)
+	private function findApiClasses($filePath, $apiPath, $ns)
 	{
-		$files   = scandir($path);
+		$files   = scandir($filePath);
 		$classes = array();
 
 		foreach($files as $f)
 		{
 			if($f[0] != '.')
 			{
-				$item = $path . '/' . $f;
+				$item = $filePath . '/' . $f;
 
 				if(is_dir($item))
 				{
-					$classes = array_merge($classes, $this->findApiClasses($item, $ns, $src, $basePath));
+					$classes = array_merge($classes, $this->findApiClasses($item, $apiPath . '/' . $f, $ns . '\\' . $f));
 				}
 
 				if(is_file($item))
 				{
-					$file     = substr($item, strlen($this->config['amun_service_path'] . '/' . $src) + 1);
-					$endpoint = $basePath . '/' . substr($file, 4, -4);
+					$name     = pathinfo($item, PATHINFO_FILENAME);
+					$class    = $ns . '\\' . $name;
+					$endpoint = strtolower($apiPath . '/' . $name);
 
 					if(substr($endpoint, -5) == 'index')
 					{
 						$endpoint = substr($endpoint, 0, -5);
 					}
 
-					$classes[$endpoint] = $this->getClass($file, $ns, $src);
+					$classes[$endpoint] = new ReflectionClass($class);
 				}
 			}
 		}
 
 		return $classes;
-	}
-
-	private function getClass($file, $ns, $src)
-	{				
-		$path  = $this->config['amun_service_path'] . '/' . $src . '/' . $file;
-		$class = pathinfo($path, PATHINFO_FILENAME);
-		$subNs = str_replace('/', '\\', pathinfo($file, PATHINFO_DIRNAME));
-
-		if(!empty($subNs))
-		{
-			$ns.= '\\' . $subNs;
-		}
-
-		require_once($path);
-
-		return new ReflectionClass($ns . '\\' . $class);
 	}
 
 	private function scanMethods(Declaration $declaration, ReflectionClass $class, $endpoint, array &$models)
