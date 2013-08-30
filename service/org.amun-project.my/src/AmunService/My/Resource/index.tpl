@@ -11,7 +11,7 @@
 
 <div class="row amun-service-my">
 
-	<div class="span2 hidden-phone">
+	<div class="col-md-2 hidden-phone">
 		<img src="<?php echo $account->thumbnailUrl; ?>" width="48" height="48" />
 		<dl>
 			<dt>Name</dt>
@@ -40,19 +40,19 @@
 		</dl>
 	</div>
 
-	<div class="span10 amun-service-my-activity">
+	<div class="col-md-10 amun-service-my-activity">
 
-		<div class="row" id="activity">
+		<div id="activity">
 			<div id="response" class="alert alert-error" style="display:none;"></div>
 			<form id="activity-form-0" method="post" action="<?php echo $activityUrl; ?>" class="form-inline activity-form">
 				<input type="hidden" name="parentId" value="0" />
 				<input type="hidden" name="verb" id="verb" value="post" />
 				<p>
-					<textarea name="summary" id="summary" style="width:96%;height:64px;"></textarea>
+					<textarea name="summary" id="summary" style="height:64px;" class="form-control"></textarea>
 				</p>
 				<p>
 					<input class="btn btn-primary" type="submit" value="Send" style="padding:4px;" />
-					<select name="scope" id="scope" style="width:140px">
+					<select name="scope" id="scope" style="width:140px" class="form-control">
 						<option value="0">Everyone</option>
 						<?php foreach($groups as $group): ?>
 						<option value="<?php echo $group['id']; ?>"><?php echo $group['title']; ?></option>
@@ -62,73 +62,85 @@
 			</form>
 		</div>
 
-		<?php foreach($activities as $activity): ?>
-		<div class="row amun-service-my-activity-entry <?php if($activity->receiverStatus == AmunService\User\Activity\Receiver\Record::HIDDEN): ?>amun-service-my-activity-entry-hidden<?php endif; ?>" id="activity-<?php echo $activity->id; ?>">
-			<?php if($activity->receiverStatus == AmunService\User\Activity\Receiver\Record::VISIBLE): ?>
+		<ul class="media-list">
+			<?php foreach($activities as $activity): ?>
+			<li class="media amun-service-my-activity-entry <?php if($activity->receiverStatus == AmunService\User\Activity\Receiver\Record::HIDDEN): ?>amun-service-my-activity-entry-hidden<?php endif; ?>" id="activity-<?php echo $activity->id; ?>">
+
+				<?php if($activity->receiverStatus == AmunService\User\Activity\Receiver\Record::VISIBLE): ?>
 				<div class="pull-right"><a class="btn" href="#" onclick="amun.services.my.setActivityStatus(<?php echo $activity->receiverId . ',\'' . $receiverUrl . '\',this'; ?>);return false;" data-status="2" title="Hides the activity on your public profile">Hide</a></div>
-			<?php else: ?>
+				<?php else: ?>
 				<div class="pull-right"><a class="btn" href="#" onclick="amun.services.my.setActivityStatus(<?php echo $activity->receiverId . ',\'' . $receiverUrl . '\',this'; ?>);return false;" data-status="1" title="Shows the activity on your public profile">Show</a></div>
-			<?php endif; ?>
-			<img class="pull-left" src="<?php echo $activity->authorThumbnailUrl; ?>" alt="avatar" width="48" height="48" />
-			<h4><a href="<?php echo $activity->authorProfileUrl; ?>"><?php echo $activity->authorName; ?></a></h4>
-			<div class="amun-service-my-activity-summary"><?php echo $activity->summary; ?></div>
-			<?php $comments = $activity->getComments(); ?>
-			<?php if(!empty($comments)): ?>
-				<p class="muted">
-					created on
-					<time datetime="<?php echo $activity->getDate()->format(DateTime::ATOM); ?>"><?php echo $activity->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></time>
-				</p>
-				<div class="amun-service-my-activity-entry-comments" id="activity-comments-<?php echo $activity->id; ?>">
-					<?php foreach($comments as $comment): ?>
-					<div class="amun-service-my-activity-entry" id="activity-<?php echo $comment->id; ?>">
-						<img class="pull-left" src="<?php echo $comment->authorThumbnailUrl; ?>" alt="avatar" width="48" height="48" />
-						<h4><a href="<?php echo $comment->authorProfileUrl; ?>"><?php echo $comment->authorName; ?></a></h4>
-						<div class="amun-service-my-activity-summary"><?php echo $comment->summary; ?></div>
+				<?php endif; ?>
+
+				<a class="pull-left" href="<?php echo $activity->authorProfileUrl; ?>">
+					<img class="media-object" src="<?php echo $activity->authorThumbnailUrl; ?>" alt="avatar" />
+				</a>
+				<div class="media-body">
+					<h4 class="media-heading"><a href="<?php echo $activity->authorProfileUrl; ?>"><?php echo $activity->authorName; ?></a></h4>
+					<div class="amun-service-my-activity-summary"><?php echo $activity->summary; ?></div>
+
+					<?php $comments = $activity->getComments(); ?>
+					<?php if(!empty($comments)): ?>
 						<p class="muted">
 							created on
-							<time datetime="<?php echo $comment->getDate()->format(DateTime::ATOM); ?>"><?php echo $comment->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></time>
+							<time datetime="<?php echo $activity->getDate()->format(DateTime::ATOM); ?>"><?php echo $activity->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></time>
 						</p>
-					</div>
-					<?php endforeach; ?>
+
+						<ul class="media-list amun-service-my-activity-entry-comments" id="activity-comments-<?php echo $activity->id; ?>">
+							<?php foreach($comments as $comment): ?>
+							<li class="media amun-service-my-activity-entry" id="activity-<?php echo $comment->id; ?>">
+								<a class="pull-left" href="<?php echo $comment->authorProfileUrl; ?>">
+									<img class="media-object" src="<?php echo $comment->authorThumbnailUrl; ?>" alt="avatar" />
+								</a>
+								<div class="media-body">
+									<h4 class="media-heading"><a href="<?php echo $comment->authorProfileUrl; ?>"><?php echo $comment->authorName; ?></a></h4>
+									<div class="amun-service-my-activity-summary"><?php echo $comment->summary; ?></div>
+								</div>
+							</li>
+							<?php endforeach; ?>
+						</ul>
+
+						<div class="amun-service-my-activity-entry-reply" id="activity-reply-<?php echo $activity->id; ?>" style="display:block;">
+							<form id="activity-form-<?php echo $activity->id; ?>" method="post" action="<?php echo $activityUrl; ?>" class="form-inline activity-form">
+								<input type="hidden" name="parentId" value="<?php echo $activity->id; ?>" />
+								<input type="hidden" name="verb" id="verb" value="post" />
+								<input type="hidden" name="scope" id="scope" value="0" />
+								<p>
+									<textarea name="summary" placeholder="Write a comment" onfocus="$(this).css('height', '48');" class="form-control"></textarea>
+								</p>
+								<p>
+									<input class="btn btn-primary" type="submit" value="Comment" />
+								</p>
+							</form>
+						</div>
+					<?php else: ?>
+						<p class="muted">
+							<a href="#" onclick="$('#activity-reply-<?php echo $activity->id; ?>').fadeToggle();return false;">Comment</a>
+							created on
+							<time datetime="<?php echo $activity->getDate()->format(DateTime::ATOM); ?>"><?php echo $activity->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></time>
+						</p>
+
+						<ul class="media-list" class="amun-service-my-activity-entry-comments" id="activity-comments-<?php echo $activity->id; ?>">
+						</ul>
+
+						<div class="amun-service-my-activity-entry-reply" id="activity-reply-<?php echo $activity->id; ?>" style="display:none;">
+							<form id="activity-form-<?php echo $activity->id; ?>" method="post" action="<?php echo $activityUrl; ?>" class="form-inline activity-form">
+								<input type="hidden" name="parentId" value="<?php echo $activity->id; ?>" />
+								<input type="hidden" name="verb" id="verb" value="post" />
+								<input type="hidden" name="scope" id="scope" value="0" />
+								<p>
+									<textarea name="summary" placeholder="Write a comment" onfocus="$(this).css('height', '48');" class="form-control"></textarea>
+								</p>
+								<p>
+									<input class="btn btn-primary" type="submit" value="Comment" />
+								</p>
+							</form>
+						</div>
+					<?php endif; ?>
 				</div>
-				<div class="amun-service-my-activity-entry-reply" id="activity-reply-<?php echo $activity->id; ?>" style="display:block;">
-					<form id="activity-form-<?php echo $activity->id; ?>" method="post" action="<?php echo $activityUrl; ?>" class="form-inline activity-form">
-						<input type="hidden" name="parentId" value="<?php echo $activity->id; ?>" />
-						<input type="hidden" name="verb" id="verb" value="post" />
-						<input type="hidden" name="scope" id="scope" value="0" />
-						<p>
-							<textarea name="summary" placeholder="Write a comment" onfocus="$(this).css('height', '48');"></textarea>
-						</p>
-						<p>
-							<input class="btn btn-primary" type="submit" value="Comment" />
-						</p>
-					</form>
-				</div>
-			<?php else: ?>
-				<p class="muted">
-					<a href="#" onclick="$('#activity-reply-<?php echo $activity->id; ?>').fadeToggle();return false;">Comment</a>
-					created on
-					<time datetime="<?php echo $activity->getDate()->format(DateTime::ATOM); ?>"><?php echo $activity->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></time>
-				</p>
-				<div class="amun-service-my-activity-entry-comments" id="activity-comments-<?php echo $activity->id; ?>">
-				</div>
-				<div class="amun-service-my-activity-entry-reply" id="activity-reply-<?php echo $activity->id; ?>">
-					<form id="activity-form-<?php echo $activity->id; ?>" method="post" action="<?php echo $activityUrl; ?>" class="form-inline activity-form">
-						<input type="hidden" name="parentId" value="<?php echo $activity->id; ?>" />
-						<input type="hidden" name="verb" id="verb" value="post" />
-						<input type="hidden" name="scope" id="scope" value="0" />
-						<p>
-							<textarea name="summary" placeholder="Write a comment" onfocus="$(this).css('height', '48');"></textarea>
-						</p>
-						<p>
-							<input class="btn btn-primary" type="submit" value="Comment" />
-						</p>
-					</form>
-				</div>
-			<?php endif; ?>
-		</div>
-		<div class="clearfix"></div>
-		<?php endforeach; ?>
+			</li>
+			<?php endforeach; ?>
+		</ul>
 
 	</div>
 
@@ -164,5 +176,3 @@ $(document).ready(function(){
 
 });
 </script>
-
-

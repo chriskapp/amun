@@ -6,6 +6,6 @@
 
 <?php elseif(isset($error)): ?>
 
-	<div class="alert alert-error"><?php echo $error; ?></div>
+	<div class="alert alert-danger"><?php echo $error; ?></div>
 
 <?php endif; ?>
