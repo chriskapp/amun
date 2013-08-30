@@ -22,10 +22,10 @@
 <div class="amun-body">
 	<div class="container">
 		<div class="row">
-			<div class="span12">
+			<div class="col-md-12">
 				<?php echo $content; ?>
 			</div>
-			<div class="span12">
+			<div class="col-md-12">
 				<?php if($gadget->valid()): ?>
 				<div class="amun-gadget">
 					<?php echo $gadget->get()->getBody(); ?>

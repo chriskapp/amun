@@ -22,10 +22,10 @@
 <div class="amun-body">
 	<div class="container">
 		<div class="row">
-			<div class="span8">
+			<div class="col-md-8">
 				<?php echo $content; ?>
 			</div>
-			<div class="span4">
+			<div class="col-md-4">
 				<?php foreach($gadget as $g): ?>
 				<div class="amun-gadget">
 					<h2><?php echo $g->getTitle(); ?></h2>

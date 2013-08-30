@@ -22,7 +22,7 @@
 <div class="amun-body">
 	<div class="container">
 		<div class="row">
-			<div class="span4">
+			<div class="col-md-4">
 				<?php if($gadget->valid()): ?>
 				<div class="amun-gadget">
 					<h2><?php echo $gadget->get()->getTitle(); ?></h2>
@@ -31,7 +31,7 @@
 				<?php $gadget->next(); ?>
 				<?php endif; ?>
 			</div>
-			<div class="span4">
+			<div class="col-md-4">
 				<?php if($gadget->valid()): ?>
 				<div class="amun-gadget">
 					<h2><?php echo $gadget->get()->getTitle(); ?></h2>
@@ -40,7 +40,7 @@
 				<?php $gadget->next(); ?>
 				<?php endif; ?>
 			</div>
-			<div class="span4">
+			<div class="col-md-4">
 				<?php if($gadget->valid()): ?>
 				<div class="amun-gadget">
 					<h2><?php echo $gadget->get()->getTitle(); ?></h2>
@@ -51,7 +51,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="span12">
+			<div class="col-md-12">
 				<?php echo $content; ?>
 			</div>
 		</div>
