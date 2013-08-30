@@ -49,8 +49,8 @@
         "amun/sample": "0.0.1"
     },
     "repositories": [{
-        "type": "artifact",
-        "url": "service/"
+        "type": "composer",
+        "url": "http://packages.amun-project.org/packages.php"
     }],
     "scripts": {
         "post-package-install": "Amun\\Installer::postInstall",
