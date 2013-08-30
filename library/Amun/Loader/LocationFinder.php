@@ -81,16 +81,15 @@ class LocationFinder extends FileSystem
 	{
 		// get service
 		$sql = "SELECT
-					`id`,
-					`source`,
-					`path`,
-					`namespace`
+					`service`.`id`,
+					`service`.`path`,
+					`service`.`namespace`
 				FROM
-					" . $this->registry['table.core_service'] . "
+					" . $this->registry['table.core_service'] . " `service`
 				WHERE
-					`path` LIKE SUBSTRING(?, 1, CHAR_LENGTH(`path`))
+					`service`.`path` LIKE SUBSTRING(?, 1, CHAR_LENGTH(`service`.`path`))
 				ORDER BY
-					CHAR_LENGTH(`path`) DESC
+					CHAR_LENGTH(`service`.`path`) DESC
 				LIMIT 1";
 
 		$service = $this->sql->getRow($sql, array('/' . $pathInfo));
@@ -160,7 +159,6 @@ class LocationFinder extends FileSystem
 		$sql = "SELECT
 					`page`.`id`,
 					`page`.`path`,
-					`service`.`source`,
 					`service`.`namespace`
 				FROM
 					" . $this->registry['table.content_page'] . " `page`
@@ -196,27 +194,6 @@ class LocationFinder extends FileSystem
 		{
 			throw new Exception('Page not found', 404);
 		}
-	}
-
-	protected function getApiNamespace($path, $source, $namespace)
-	{
-		// remove package name
-		$path = substr($path, strlen($source) + 1);
-
-		// build namespace
-		if(empty($path))
-		{
-			$ns = '\\' . $namespace;
-		}
-		else
-		{
-			$ns = str_replace('/', '\\', $path);
-			$ns = '\\' . $namespace . '\\' . $ns;
-		}
-
-		$ns = rtrim($ns, '\\');
-
-		return $ns;
 	}
 
 	protected function getClassByPath($path)
