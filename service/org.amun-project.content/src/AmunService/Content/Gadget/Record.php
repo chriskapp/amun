@@ -143,11 +143,12 @@ SELECT
 FROM 
 	{$this->_registry['table.core_service']}
 WHERE 
-	`namespace` LIKE SUBSTRING(?, 1, CHAR_LENGTH(`namespace`) - 1)
+	REPLACE(`namespace`, '\\\\', '-') LIKE SUBSTRING(?, 1, CHAR_LENGTH(`namespace`))
 LIMIT 1
 SQL;
 
-			$serviceId = $this->_sql->getField($sql, array($class->getName()));
+			$className = str_replace('\\', '-', $class->getName());
+			$serviceId = $this->_sql->getField($sql, array($className));
 
 			if(!empty($serviceId))
 			{
