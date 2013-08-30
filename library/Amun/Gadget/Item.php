@@ -89,7 +89,9 @@ class Item
 				break;
 		}
 
-		$class   = pathinfo($this->path, PATHINFO_FILENAME);
+		$parts = explode('\\', $this->class);
+		$class = end($parts);
+
 		$content = '<div class="amun-gadget-' . strtolower($class) . '">' . $content . '</div>';
 
 		$this->setBody($content);

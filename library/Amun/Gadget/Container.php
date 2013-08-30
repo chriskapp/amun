@@ -136,8 +136,13 @@ SQL;
 			{
 				if(empty($gadget->rightId) || $this->user->hasRightId($gadget->rightId))
 				{
-					$htmlCss->add($gadget->serviceName);
+					// append css
+					$parts = explode('/', $gadget->serviceName);
+					$name  = end($parts);
 
+					$htmlCss->add($name);
+
+					// build content
 					$gadget->buildContent();
 
 					$this->append($gadget);
