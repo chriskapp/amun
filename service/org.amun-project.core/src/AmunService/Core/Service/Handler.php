@@ -182,10 +182,6 @@ class Handler extends HandlerAbstract
 			// @todo
 
 
-			// delete options
-			$this->sql->delete($this->registry['table.core_service_option'], $con);
-
-
 			$con = new Condition(array('id', '=', $record->id));
 
 			$this->table->delete($con);

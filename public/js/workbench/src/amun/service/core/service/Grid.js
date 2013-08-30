@@ -4,12 +4,6 @@ Ext.define('Amun.service.core.service.Grid', {
 
     getTbar: function(){
         return [{
-            text: 'Add Record',
-            iconCls: 'wb-icon-add',
-            cls: 'wb-content-add',
-            scope: this,
-            handler: this.onAddClick
-        },{
             text: 'Delete Record',
             iconCls: 'wb-icon-delete',
             cls: 'wb-content-delete',
@@ -43,20 +37,6 @@ Ext.define('Amun.service.core.service.Grid', {
             scope: this,
             handler: this.onSearchClick
         }];
-    },
-
-    onEditClick: function(el, e, eOpts){
-        // @todo if the service is an local service show the changes from the  
-        // library in the service folder and the installed library. If its an 
-        // remote service get the changes from the provider and display them.
-
-        /*
-        var grid = el.findParentByType('grid');
-        var rec = grid.getSelectionModel().getSelection()[0];
-        var uri = this.service.getUri() + '/form?method=update&id=' + rec.get('id');
-
-        this.loadForm(uri);
-        */
     },
 
     onDeleteClick: function(el, e, eOpts){

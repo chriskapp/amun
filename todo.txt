@@ -1,6 +1,12 @@
 
 [FEATURES]
 
+[ ] solve composer install problem that a db connection is needed if we want to
+    setup tables on composer installation
+[ ] fix and test service ui with bootstrap 3
+[ ] fix page multi colum template
+[ ] fix workbench service install
+[x] fix gadget system
 [ ] add general payment service with an event publisher if an payments is 
     executed and an backend where its possible to see all transactions
 [ ] option for module to register event wich is loaded on page load

@@ -85,7 +85,6 @@
   <event>
     <publisher name="core.service_install" description="Notifies if a service gets installed"/>
     <publisher name="core.record_change" description="Notifies if a record has changed"/>
-    <listener name="core.service_install" class="\AmunService\Core\Service\Option\ConfigListener"/>
   </event>
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_service}` (
