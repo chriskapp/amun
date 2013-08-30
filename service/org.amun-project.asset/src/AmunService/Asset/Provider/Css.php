@@ -71,7 +71,7 @@ class Css implements ProviderInterface
 		$sql = <<<SQL
 SELECT
 	`name`,
-	`source`
+	`namespace`
 FROM
 	{$this->registry['table.core_service']}
 SQL;
@@ -80,8 +80,11 @@ SQL;
 
 		foreach($result as $row)
 		{
-			$services[$row['name']] = array(
-				$this->config['amun_service_path'] . '/' . $row['source'] . '/template/default.css',
+			$parts = explode('/', $row['name']);
+			$name  = end($parts);
+
+			$services[$name] = array(
+				'../vendor/' . $row['name'] . '/src/' . $row['namespace'] . '/Resource/default.css',
 			);
 		}
 
