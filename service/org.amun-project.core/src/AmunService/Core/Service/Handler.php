@@ -76,7 +76,7 @@ class Handler extends HandlerAbstract
 		if($record->hasFields('source', 'config', 'name'))
 		{
 			// already installed
-			if($this->registry->hasService($record->source))
+			if($this->registry->hasService($record->name))
 			{
 				throw new Exception('Service already installed');
 			}
