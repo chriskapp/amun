@@ -11,16 +11,16 @@
 
 <div class="row amun-service-my-settings">
 
-	<div class="span2 amun-service-my-settings-nav">
-		<ul class="nav nav-list">
-			<li class="nav-header">Settings</li>
+	<div class="col-md-2 amun-service-my-settings-nav">
+		<ul class="nav nav-stacked">
+			<li><h4>Settings</h4></li>
 			<?php foreach($optionsSettings as $option): ?>
 			<li><a href="<?php echo $option['href']; ?>"><?php echo $option['name']; ?></a></li>
 			<?php endforeach; ?>
 		</ul>
 	</div>
 
-	<div class="span10">
+	<div class="col-md-10">
 
 		<p>A list of OpenID connections wich you have permanently allowed or
 		disallowed. If you revoke a connection you will be asked again whether you want connect to the website.
@@ -38,12 +38,13 @@
 			<th>Date</th>
 			<th>Option</th>
 		</tr>
-		</thead>		<tbody>
+		</thead>
+		<tbody>
 		<?php if(count($connections) > 0): ?>
 		<?php foreach($connections as $connection): ?>
 		<tr>
 		<td>
-			<div style="width:440px;overflow:hidden;white-space:nowrap;"><a href="http://<?php echo $connection->returnTo; ?>"><?php echo $connection->returnTo; ?></a></div></td>
+			<td><a href="http://<?php echo $connection->returnTo; ?>"><?php echo $connection->returnTo; ?></a></td>
 			<td><?php echo $connection->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></td>
 			<td><input type="button" onclick="amun.services.my.connectionsRevokeAccess(<?php echo $connection->id . ',\'' . $accessUrl . '\''; ?>, this)" value="Revoke" /></td>
 		</tr>
@@ -70,8 +71,6 @@
 		<?php endif; ?>
 
 	</div>
-
-	<hr />
 
 </div>
 

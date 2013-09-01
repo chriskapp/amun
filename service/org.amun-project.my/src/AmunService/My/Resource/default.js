@@ -78,28 +78,36 @@ amun.services.my = {
 				date = amun.util.getSqlToDate(entry.date);
 
 				if (id == 'activity-form-0') {
-					html+= '<div class="row amun-service-my-activity-entry" id="activity-' + entry.id + '" style="display:none;">';
-					html+= '	<img class="pull-left" src="' + entry.authorThumbnailUrl + '" alt="avatar" width="48" height="48" />';
-					html+= '	<h4><a href="' + entry.authorProfileUrl + '">' + entry.authorName + '</a></h4>';
-					html+= '	<div class="amun-service-my-activity-summary">' + entry.summary + '</div>';
-					html+= '	<p class="muted">';
-					html+= '	created on';
-					html+= '	<time datetime="' + date.toGMTString() + '">' + date.toGMTString() + '</time>';
-					html+= '	</p>';
-					html+= '</div>';
+					html+= '<li class="media amun-service-my-activity-entry" id="activity-' + entry.id + '" style="display:none;">';
+					html+= '	<a class="pull-left" href="' + entry.authorProfileUrl + '">';
+					html+= '		<img class="media-object" src="' + entry.authorThumbnailUrl + '" alt="avatar" width="48" height="48" />';
+					html+= '	</a>';
+					html+= '	<div class="media-body">';
+					html+= '		<h4 class="media-heading"><a href="' + entry.authorProfileUrl + '">' + entry.authorName + '</a></h4>';
+					html+= '		<div class="amun-service-my-activity-summary">' + entry.summary + '</div>';
+					html+= '		<p class="muted">';
+					html+= '			created on';
+					html+= '			<time datetime="' + date.toGMTString() + '">' + date.toGMTString() + '</time>';
+					html+= '		</p>';
+					html+= '	</div>';
+					html+= '</li>';
 
-					$('#activity').after(html);
+					$('.amun-service-my-activity .media-list:first').prepend(html);
 					$('#activity-' + entry.id).fadeIn();
 				} else {
-					html+= '<div class="amun-service-my-activity-entry" id="activity-' + entry.id + '" style="display:none;">';
-					html+= '	<img class="pull-left" src="' + entry.authorThumbnailUrl + '" alt="avatar" width="48" height="48" />';
-					html+= '	<h4><a href="' + entry.authorProfileUrl + '">' + entry.authorName + '</a></h4>';
-					html+= '	<div class="amun-service-my-activity-summary">' + entry.summary + '</div>';
-					html+= '	<p class="muted">';
-					html+= '		created on';
-					html+= '		<time datetime="' + date.toGMTString() + '">' + date.toGMTString() + '</time>';
-					html+= '	</p>';
-					html+= '</div>';
+					html+= '<li class="media amun-service-my-activity-entry" id="activity-' + entry.id + '" style="display:none;">';
+					html+= '	<a class="pull-left" href="' + entry.authorProfileUrl + '">';
+					html+= '		<img class="media-object" src="' + entry.authorThumbnailUrl + '" alt="avatar" width="48" height="48" />';
+					html+= '	</a>';
+					html+= '	<div class="media-body">';
+					html+= '		<h4 class="media-heading"><a href="' + entry.authorProfileUrl + '">' + entry.authorName + '</a></h4>';
+					html+= '		<div class="amun-service-my-activity-summary">' + entry.summary + '</div>';
+					html+= '		<p class="muted">';
+					html+= '			created on';
+					html+= '			<time datetime="' + date.toGMTString() + '">' + date.toGMTString() + '</time>';
+					html+= '		</p>';
+					html+= '	</div>';
+					html+= '</li>';
 
 					$('#' + id.replace(/form/, 'comments')).append(html);
 					$('#activity-' + entry.id).fadeIn();

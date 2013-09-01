@@ -11,13 +11,13 @@
 
 <div class="row amun-service-my-friend">
 
-	<div class="span2 amun-service-my-friend-nav">
-		<ul class="nav nav-list">
-			<li class="nav-header">General</li>
+	<div class="col-md-2 amun-service-my-friend-nav">
+		<ul class="nav nav-stacked">
+			<li><h4>General</h4></li>
 			<?php foreach($optionsFriends as $option): ?>
 			<li><a href="<?php echo $option['href']; ?>"><?php echo $option['name']; ?></a></li>
 			<?php endforeach; ?>
-			<li class="nav-header">Groups</li>
+			<li><h4>Groups</h4></li>
 			<?php foreach($groupList as $group): ?>
 			<li><a href="<?php echo $page->getUrl() . '/friends?filterBy=groupId&filterOp=equals&filterValue=' . $group['id']; ?>"><?php echo $group['title']; ?></a></li>
 			<?php endforeach; ?>
@@ -25,7 +25,7 @@
 		</ul>
 	</div>
 
-	<div class="span10">
+	<div class="col-md-10">
 
 		<table class="table">
 		<colgroup>
@@ -50,7 +50,7 @@
 			<td><h4><a href="<?php echo $request->friendProfileUrl; ?>"><?php echo $request->friendName; ?></a></h4></td>
 			<td><?php echo $request->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></td>
 			<td>
-				<input class="btn" type="button" onclick="amun.services.my.friendsCancelRelation(<?php echo $request->id . ',\'' . $pendingUrl . '\''; ?>, this)" value="Cancel" />
+				<input class="btn btn-default" type="button" onclick="amun.services.my.friendsCancelRelation(<?php echo $request->id . ',\'' . $pendingUrl . '\''; ?>, this)" value="Cancel" />
 			</td>
 		</tr>
 		<?php endforeach; ?>

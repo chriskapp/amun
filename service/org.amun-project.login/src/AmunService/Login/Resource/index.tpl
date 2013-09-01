@@ -49,7 +49,7 @@
 
 		<p>
 			<input class="btn btn-primary" type="submit" id="login" name="login" value="Login" />
-			<input class="btn" type="submit" id="register" name="register" value="Register" />
+			<input class="btn btn-default" type="submit" id="register" name="register" value="Register" />
 		</p>
 
 		<div class="help-block amun-service-login-form-help">

@@ -125,6 +125,7 @@ class Setup extends SetupAbstract
 				'user_activity_add',
 				'user_friend_view',
 				'user_friend_add',
+				'user_friend_edit',
 				'user_friend_delete',
 				'user_friend_group_view',
 				'user_friend_group_add',

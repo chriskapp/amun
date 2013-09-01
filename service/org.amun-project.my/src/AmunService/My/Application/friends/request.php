@@ -20,7 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace AmunService\My\Application\Request;
+namespace AmunService\My\Application\Friends;
 
 use AmunService\My\FriendsAbstract;
 use PSX\Url;

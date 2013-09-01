@@ -43,37 +43,41 @@
 	<div class="col-md-10 amun-service-my-activity">
 
 		<div id="activity">
-			<div id="response" class="alert alert-error" style="display:none;"></div>
+			<div id="response" class="alert alert-danger" style="display:none;"></div>
 			<form id="activity-form-0" method="post" action="<?php echo $activityUrl; ?>" class="form-inline activity-form">
 				<input type="hidden" name="parentId" value="0" />
 				<input type="hidden" name="verb" id="verb" value="post" />
-				<p>
-					<textarea name="summary" id="summary" style="height:64px;" class="form-control"></textarea>
-				</p>
-				<p>
-					<input class="btn btn-primary" type="submit" value="Send" style="padding:4px;" />
+				<div>
+					<textarea name="summary" id="summary" rows="3" class="form-control"></textarea>
+				</div>
+				<div class="form-group">
+					<input class="btn btn-primary" type="submit" value="Send" />
 					<select name="scope" id="scope" style="width:140px" class="form-control">
 						<option value="0">Everyone</option>
 						<?php foreach($groups as $group): ?>
 						<option value="<?php echo $group['id']; ?>"><?php echo $group['title']; ?></option>
 						<?php endforeach; ?>
 					</select>
-				</p>
+				</div>
 			</form>
 		</div>
+
+		<hr />
 
 		<ul class="media-list">
 			<?php foreach($activities as $activity): ?>
 			<li class="media amun-service-my-activity-entry <?php if($activity->receiverStatus == AmunService\User\Activity\Receiver\Record::HIDDEN): ?>amun-service-my-activity-entry-hidden<?php endif; ?>" id="activity-<?php echo $activity->id; ?>">
 
+				<!--
 				<?php if($activity->receiverStatus == AmunService\User\Activity\Receiver\Record::VISIBLE): ?>
-				<div class="pull-right"><a class="btn" href="#" onclick="amun.services.my.setActivityStatus(<?php echo $activity->receiverId . ',\'' . $receiverUrl . '\',this'; ?>);return false;" data-status="2" title="Hides the activity on your public profile">Hide</a></div>
+				<div class="pull-right"><a class="btn btn-default" href="#" onclick="amun.services.my.setActivityStatus(<?php echo $activity->receiverId . ',\'' . $receiverUrl . '\',this'; ?>);return false;" data-status="2" title="Hides the activity on your public profile">Hide</a></div>
 				<?php else: ?>
-				<div class="pull-right"><a class="btn" href="#" onclick="amun.services.my.setActivityStatus(<?php echo $activity->receiverId . ',\'' . $receiverUrl . '\',this'; ?>);return false;" data-status="1" title="Shows the activity on your public profile">Show</a></div>
+				<div class="pull-right"><a class="btn btn-default" href="#" onclick="amun.services.my.setActivityStatus(<?php echo $activity->receiverId . ',\'' . $receiverUrl . '\',this'; ?>);return false;" data-status="1" title="Shows the activity on your public profile">Show</a></div>
 				<?php endif; ?>
+				-->
 
 				<a class="pull-left" href="<?php echo $activity->authorProfileUrl; ?>">
-					<img class="media-object" src="<?php echo $activity->authorThumbnailUrl; ?>" alt="avatar" />
+					<img class="media-object" src="<?php echo $activity->authorThumbnailUrl; ?>" width="48" height="48" alt="avatar" />
 				</a>
 				<div class="media-body">
 					<h4 class="media-heading"><a href="<?php echo $activity->authorProfileUrl; ?>"><?php echo $activity->authorName; ?></a></h4>
@@ -90,11 +94,15 @@
 							<?php foreach($comments as $comment): ?>
 							<li class="media amun-service-my-activity-entry" id="activity-<?php echo $comment->id; ?>">
 								<a class="pull-left" href="<?php echo $comment->authorProfileUrl; ?>">
-									<img class="media-object" src="<?php echo $comment->authorThumbnailUrl; ?>" alt="avatar" />
+									<img class="media-object" src="<?php echo $comment->authorThumbnailUrl; ?>" width="48" height="48" alt="avatar" />
 								</a>
 								<div class="media-body">
 									<h4 class="media-heading"><a href="<?php echo $comment->authorProfileUrl; ?>"><?php echo $comment->authorName; ?></a></h4>
 									<div class="amun-service-my-activity-summary"><?php echo $comment->summary; ?></div>
+									<p class="muted">
+										created on
+										<time datetime="<?php echo $activity->getDate()->format(DateTime::ATOM); ?>"><?php echo $activity->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></time>
+									</p>
 								</div>
 							</li>
 							<?php endforeach; ?>
@@ -105,12 +113,12 @@
 								<input type="hidden" name="parentId" value="<?php echo $activity->id; ?>" />
 								<input type="hidden" name="verb" id="verb" value="post" />
 								<input type="hidden" name="scope" id="scope" value="0" />
-								<p>
-									<textarea name="summary" placeholder="Write a comment" onfocus="$(this).css('height', '48');" class="form-control"></textarea>
-								</p>
-								<p>
+								<div>
+									<textarea name="summary" placeholder="Write a comment" rows="1" onfocus="$(this).attr('rows', '2');" class="form-control"></textarea>
+								</div>
+								<div class="form-group">
 									<input class="btn btn-primary" type="submit" value="Comment" />
-								</p>
+								</div>
 							</form>
 						</div>
 					<?php else: ?>
@@ -129,7 +137,7 @@
 								<input type="hidden" name="verb" id="verb" value="post" />
 								<input type="hidden" name="scope" id="scope" value="0" />
 								<p>
-									<textarea name="summary" placeholder="Write a comment" onfocus="$(this).css('height', '48');" class="form-control"></textarea>
+									<textarea name="summary" placeholder="Write a comment" onfocus="$(this).css('height', '68');" class="form-control"></textarea>
 								</p>
 								<p>
 									<input class="btn btn-primary" type="submit" value="Comment" />
@@ -143,9 +151,11 @@
 		</ul>
 
 	</div>
+</div>
 
+<div class="row">
 	<?php if($pagingActivities->getPages() > 1): ?>
-	<div class="span12">
+	<div class="col-md-12">
 		<hr />
 		<div class="pagination pagination-centered">
 			<ul>
@@ -158,11 +168,12 @@
 		</div>
 	</div>
 	<?php endif; ?>
+</div>
 
-	<div class="span12">
+<div class="row">
+	<div class="col-md-12">
 		<span class="muted">Last updated on <?php echo $account->getUpdated()->format($registry['core.format_date']); ?></span>
 	</div>
-
 </div>
 
 <script type="text/javascript">

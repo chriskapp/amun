@@ -225,10 +225,21 @@ footer.amun-footer .container
 .amun-preview
 {
 	display:none;
-	margin:0px;
+	margin:8px 0px;
 	padding:2px;
 	color:#333;
 	border:2px dotted #ccc;
+}
+
+.amun-buttons
+{
+	margin-bottom:8px;
+}
+
+.amun-buttons .btn+.btn 
+{
+	margin-bottom:0;
+	margin-left:5px;
 }
 
 .form-captcha
@@ -266,6 +277,22 @@ footer.amun-footer .container
 .alert
 {
 	border-radius:0px;	
+}
+
+.nav-stacked li h4
+{
+	color:#eee;
+	font-size:0.9em;
+	padding:6px;
+	margin:0px;
+	line-height:2em;
+	background-color:#188AE5;
+	background-image:-webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #188AE5), color-stop(100%, #167CCE));
+	background-image:-webkit-linear-gradient(top, #188AE5, #167CCE 100%);
+	background-image:-moz-linear-gradient(top, #188AE5, #167CCE 100%);
+	background-image:-o-linear-gradient(top, #188AE5, #167CCE 100%);
+	background-image:-ms-linear-gradient(top, #188AE5, #167CCE 100%);
+	background-image:linear-gradient(top, #188AE5, #167CCE 100%);
 }
 
 blockquote

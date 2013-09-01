@@ -11,16 +11,16 @@
 
 <div class="row amun-service-my-settings">
 
-	<div class="span2 amun-service-my-settings-nav">
-		<ul class="nav nav-list">
-			<li class="nav-header">Settings</li>
+	<div class="col-md-2 amun-service-my-settings-nav">
+		<ul class="nav nav-stacked">
+			<li><h4>Settings</h4></li>
 			<?php foreach($optionsSettings as $option): ?>
 			<li><a href="<?php echo $option['href']; ?>"><?php echo $option['name']; ?></a></li>
 			<?php endforeach; ?>
 		</ul>
 	</div>
 
-	<div class="span10">
+	<div class="col-md-10">
 
 		<p>A list of applications wich have access to your account. If you revoke an access the
 		application has no longer access to your account. The applications using OAuth to access
@@ -45,7 +45,7 @@
 		<tr>
 			<td><a href="application/settings?appId=<?php echo $application->id; ?>"><?php echo $application->apiTitle; ?></a></td>
 			<td><?php echo $application->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></td>
-			<td><input class="btn" type="button" onclick="amun.services.my.applicationsRevokeAccess(<?php echo $application->id . ',\'' . $accessUrl . '\''; ?>, this)" value="Revoke" /></td>
+			<td><input class="btn btn-default" type="button" onclick="amun.services.my.applicationsRevokeAccess(<?php echo $application->id . ',\'' . $accessUrl . '\''; ?>, this)" value="Revoke" /></td>
 		</tr>
 		<?php endforeach; ?>
 		<?php else: ?>
@@ -70,8 +70,6 @@
 		<?php endif; ?>
 
 	</div>
-
-	<hr />
 
 </div>
 

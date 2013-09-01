@@ -9,12 +9,16 @@ div.amun-service-my-header
 
 div.amun-service-my-header img
 {
-	margin-right:6px;
 }
 
 div.amun-service-my-activity
 {
 
+}
+
+form.activity-form textarea
+{
+	margin-bottom:8px;
 }
 
 div.amun-service-my-activity-entry
@@ -40,32 +44,25 @@ div.amun-service-my-activity-entry-hidden
 
 div.amun-service-my-activity-summary
 {
-	padding-left:54px;
 }
 
 div.amun-service-my-activity-entry-comments
 {
-	padding-left:54px;
 }
 
 .amun-service-my-activity-entry p.muted
 {
-	margin:0px;
 	font-size:0.8em;
-	margin-left:54px;
 }
 
 div.amun-service-my-activity-entry-reply
 {
 	display:none;
-	padding-left:54px;
 }
 
 div.amun-service-my-activity-entry-reply textarea
 {
 	margin-top:14px;
-	width:96%;
-	height:24px;
 }
 
 div.amun-service-my-app-rights

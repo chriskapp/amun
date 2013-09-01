@@ -11,7 +11,7 @@
 
 <div class="row vcard amun-service-profile">
 
-	<div class="span2 vcard hidden-phone">
+	<div class="col-md-2 vcard hidden-phone">
 		<img class="photo" src="<?php echo $account->thumbnailUrl; ?>" width="48" height="48" />
 		<dl>
 			<dt>Name</dt>
@@ -40,39 +40,49 @@
 		</dl>
 	</div>
 
-	<div class="span10 amun-service-profile-activity">
-		<?php foreach($activities as $activity): ?>
-		<div class="row amun-service-profile-activity-entry" id="activity-<?php echo $activity->id; ?>">
-			<img class="pull-left" src="<?php echo $activity->authorThumbnailUrl; ?>" alt="avatar" width="48" height="48" />
-			<h4><a href="<?php echo $activity->authorProfileUrl; ?>"><?php echo $activity->authorName; ?></a></h4>
-			<div class="amun-service-profile-activity-summary"><?php echo $activity->summary; ?></div>
-			<p class="muted">
-				created on
-				<time datetime="<?php echo $activity->getDate()->format(DateTime::ATOM); ?>"><?php echo $activity->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></time>
-			</p>
-		</div>
-		<div class="clearfix"></div>
-		<?php endforeach; ?>
+	<div class="col-md-10 amun-service-profile-activity">
+		<ul class="media-list">
+			<?php foreach($activities as $activity): ?>
+			<li class="media amun-service-profile-activity-entry" id="activity-<?php echo $activity->id; ?>">
+				<a class="pull-left" href="<?php echo $activity->authorProfileUrl; ?>">
+					<img class="media-object" src="<?php echo $activity->authorThumbnailUrl; ?>" width="48" height="48" alt="avatar" />
+				</a>
+				<div class="media-body">
+					<h4 class="media-heading"><a href="<?php echo $activity->authorProfileUrl; ?>"><?php echo $activity->authorName; ?></a></h4>
+					<div class="amun-service-profile-activity-summary"><?php echo $activity->summary; ?></div>
+					<p class="muted">
+						created on
+						<time datetime="<?php echo $activity->getDate()->format(DateTime::ATOM); ?>"><?php echo $activity->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></time>
+					</p>
+				</div>
+			</li>
+			<?php endforeach; ?>
+		</ul>
 	</div>
+</div>
 
+<div class="row">
+	<div class="col-md-12">
 	<?php if($pagingActivities->getPages() > 1): ?>
-	<div class="span12">
-		<hr />
-		<div class="pagination pagination-centered">
-			<ul>
-				<li><a href="<?php echo $pagingActivities->getFirstUrl(); ?>">First</a></li>
-				<li><a href="<?php echo $pagingActivities->getPrevUrl(); ?>">Previous</a></li>
-				<li><span><?php echo $pagingActivities->getPage(); ?> of <?php echo $pagingActivities->getPages(); ?></span></li>
-				<li><a href="<?php echo $pagingActivities->getNextUrl(); ?>">Next</a></li>
-				<li><a href="<?php echo $pagingActivities->getLastUrl(); ?>">Last</a></li>
-			</ul>
-		</div>
+	<hr />
+	<div class="pagination pagination-centered">
+		<ul>
+			<li><a href="<?php echo $pagingActivities->getFirstUrl(); ?>">First</a></li>
+			<li><a href="<?php echo $pagingActivities->getPrevUrl(); ?>">Previous</a></li>
+			<li><span><?php echo $pagingActivities->getPage(); ?> of <?php echo $pagingActivities->getPages(); ?></span></li>
+			<li><a href="<?php echo $pagingActivities->getNextUrl(); ?>">Next</a></li>
+			<li><a href="<?php echo $pagingActivities->getLastUrl(); ?>">Last</a></li>
+		</ul>
 	</div>
 	<?php endif; ?>
-
-	<div class="span12">
-		<span class="muted">Last updated on <?php echo $account->getUpdated()->format($registry['core.format_date']); ?></span>
 	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<p><span class="muted">Last updated on <?php echo $account->getUpdated()->format($registry['core.format_date']); ?></span></p>
+	</div>
+</div>
 
 </div>
 

@@ -11,16 +11,16 @@
 
 <div class="row amun-service-my-settings">
 
-	<div class="span2 amun-service-my-settings-nav">
-		<ul class="nav nav-list">
-			<li class="nav-header">Settings</li>
+	<div class="col-md-2 amun-service-my-settings-nav">
+		<ul class="nav nav-stacked">
+			<li><h4>Settings</h4></li>
 			<?php foreach($optionsSettings as $option): ?>
 			<li><a href="<?php echo $option['href']; ?>"><?php echo $option['name']; ?></a></li>
 			<?php endforeach; ?>
 		</ul>
 	</div>
 
-	<div class="span10">
+	<div class="col-md-10">
 
 		<form method="post">
 			<h3><?php echo $application->apiTitle; ?></h3>
@@ -44,7 +44,7 @@
 				<ul>
 					<?php foreach($userRights as $right): ?>
 						<li>
-							<label for="right-<?php echo $right['rightId']; ?>" class="checkbox inline" style="white-space:nowrap;">
+							<label for="right-<?php echo $right['rightId']; ?>" class="checkbox-inline" style="white-space:nowrap;">
 							<?php if(in_array($right['rightId'], $appRights)): ?>
 							<input checked="checked" type="checkbox" name="right-<?php echo $right['rightId']; ?>" id="right-<?php echo $right['rightId']; ?>" value="1" /> <?php echo $right['rightDescription']; ?>
 							<?php else: ?>

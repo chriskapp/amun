@@ -11,13 +11,13 @@
 
 <div class="row amun-service-my-friend">
 
-	<div class="span2 amun-service-my-friend-nav">
-		<ul class="nav nav-list">
-			<li class="nav-header">General</li>
+	<div class="col-md-2 amun-service-my-friend-nav">
+		<ul class="nav nav-stacked">
+			<li><h4>General</h4></li>
 			<?php foreach($optionsFriends as $option): ?>
 			<li><a href="<?php echo $option['href']; ?>"><?php echo $option['name']; ?></a></li>
 			<?php endforeach; ?>
-			<li class="nav-header">Groups</li>
+			<li><h4>Groups</h4></li>
 			<?php foreach($groupList as $group): ?>
 			<li><a href="<?php echo $page->getUrl() . '/friends?filterBy=groupId&filterOp=equals&filterValue=' . $group['id']; ?>"><?php echo $group['title']; ?></a></li>
 			<?php endforeach; ?>
@@ -25,10 +25,12 @@
 		</ul>
 	</div>
 
-	<div class="span10">
+	<div class="col-md-10">
 
 		<form class="form-inline" method="post" action="<?php echo $self; ?>">
-			<input type="search" name="search" id="search">
+			<div class="form-group">
+				<input type="search" name="search" id="search" class="form-control">
+			</div>
 			<input type="submit" class="btn btn-primary" value="Search" />
 		</form>
 
@@ -58,9 +60,9 @@
 			<td><h4><a href="<?php echo $friend->friendProfileUrl; ?>"><?php echo $friend->friendName; ?></a></h4></td>
 			<td><?php echo $friend->getDate()->setTimezone($user->getTimezone())->format($registry['core.format_datetime']); ?></td>
 			<?php if($friend->friendId == $user->getId()): ?>
-			<td><input class="btn" type="button" disabled="disabled" value="Remove" /></td>
+			<td><input class="btn btn-default" type="button" disabled="disabled" value="Remove" /></td>
 			<?php else: ?>
-			<td><input class="btn" type="button" onclick="amun.services.my.friendsRevokeRelation(<?php echo $friend->id . ',\'' . $friendUrl . '\''; ?>, this)" value="Remove" /></td>
+			<td><input class="btn btn-default" type="button" onclick="amun.services.my.friendsRevokeRelation(<?php echo $friend->id . ',\'' . $friendUrl . '\''; ?>, this)" value="Remove" /></td>
 			<?php endif; ?>
 		</tr>
 		<?php endforeach; ?>
@@ -73,13 +75,15 @@
 		</table>
 
 		<form class="form-inline" action="#">
-			<select name="groups" id="groups" disabled="disabled">
-				<option value="0">Select a group</option>
-				<?php foreach($groupList as $group): ?>
-				<option value="<?php echo $group['id']; ?>"><?php echo $group['title']; ?></option>
-				<?php endforeach; ?>
-			</select>
-			<input class="btn" type="button" id="move" disabled="disabled" value="Move" onclick="amun.services.my.moveFriendInGroup('<?php echo $friendUrl; ?>')" />
+			<div class="form-group">
+				<select name="groups" id="groups" class="form-control" disabled="disabled">
+					<option value="0">Select a group</option>
+					<?php foreach($groupList as $group): ?>
+					<option value="<?php echo $group['id']; ?>"><?php echo $group['title']; ?></option>
+					<?php endforeach; ?>
+				</select>
+			</div>
+			<input class="btn btn-default" type="button" id="move" disabled="disabled" value="Move" onclick="amun.services.my.moveFriendInGroup('<?php echo $friendUrl; ?>')" />
 		</form>
 
 		<?php if($pagingFriends->getPages() > 1): ?>
@@ -96,8 +100,6 @@
 		<?php endif; ?>
 
 	</div>
-
-	<hr />
 
 </div>
 

@@ -368,7 +368,7 @@
 
 			if (typeof(item['success']) != 'undefined' && item['success'] == false) {
 				var p = document.createElement('p');
-				p.setAttribute('class', 'alert alert-notice');
+				p.setAttribute('class', 'alert alert-danger');
 				p.appendChild(document.createTextNode(item.text));
 
 				return p;
@@ -381,6 +381,7 @@
 					form.setAttribute('method', item.method);
 					form.setAttribute('action', item.action);
 					form.setAttribute('enctype', item.enctype);
+					form.setAttribute('role', 'form');
 
 					for (var i = 0; i < item.item.children.item.length; i++) {
 						form.appendChild(this.parseElements(item.item.children.item[i]));
@@ -389,24 +390,24 @@
 					// add buttons
 					if (showButtons) {
 						var div = document.createElement('div');
-						div.setAttribute('class', 'form-actions');
+						div.setAttribute('class', 'amun-buttons');
 
-						var input = document.createElement('input');
-						input.setAttribute('class', 'btn btn-primary');
-						input.setAttribute('type', 'submit');
-						input.setAttribute('value', 'Submit');
+						var button = document.createElement('button');
+						button.setAttribute('class', 'btn btn-primary');
+						button.setAttribute('type', 'submit');
+						button.appendChild(document.createTextNode('Submit'));
 
-						div.appendChild(input);
+						div.appendChild(button);
 
 						if (buttons.length > 0) {
 							for (var i = 0; i < buttons.length; i++) {
-								var input = document.createElement('input');
-								input.setAttribute('class', buttons[i].cssClass);
-								input.setAttribute('type', 'button');
-								input.setAttribute('value', buttons[i].name);
-								input.addEventListener('click', buttons[i].callback, false);
+								var button = document.createElement('button');
+								button.setAttribute('class', buttons[i].cssClass);
+								button.setAttribute('type', 'button');
+								button.addEventListener('click', buttons[i].callback, false);
+								button.appendChild(document.createTextNode(buttons[i].name));
 
-								div.appendChild(input);
+								div.appendChild(button);
 							}
 						}
 
@@ -674,7 +675,7 @@
 
 		this.show = function(){
 			// add close button
-			this.addButton('Close', 'btn', function(){
+			this.addButton('Close', 'btn btn-default', function(){
 				$('#amun-form-window').modal('hide');
 			});
 
