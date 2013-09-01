@@ -5,9 +5,6 @@
   <namespace>AmunService\Forum</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/forum</type>
   <provider>http://amun-project.org</provider>
-  <required>
-    <service>org.amun-project.comment</service>
-  </required>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/forum</type>
