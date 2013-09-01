@@ -144,7 +144,7 @@ abstract class HandlerAbstract extends \PSX\Data\HandlerAbstract
 			$con     = new Condition(array($pk, '=', $record->$pk));
 			$ownerId = $this->sql->select($this->table->getName(), array($field), $con, Sql::SELECT_FIELD);
 
-			return !empty($ownerId) && $ownerId == $this->user->id;
+			return !empty($ownerId) && $ownerId == $this->user->getId();
 		}
 		else
 		{
