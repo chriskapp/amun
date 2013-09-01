@@ -249,32 +249,6 @@ class Handler extends HandlerAbstract
 		{
 			throw new Exception('Missing fields: ' . implode(', ', $diff));
 		}
-
-		// check requirements
-		$required = $this->serviceConfig->getElementsByTagName('required')->item(0);
-
-		if($required !== null)
-		{
-			$services = array();
-
-			for($i = 0; $i < $required->childNodes->length; $i++)
-			{
-				$node = $required->childNodes->item($i);
-
-				if($node instanceof DOMElement && $node->nodeName == 'service')
-				{
-					$services[] = $node->nodeValue;
-				}
-			}
-
-			foreach($services as $source)
-			{
-				if(!$this->registry->hasService($source))
-				{
-					throw new Exception('Required service ' . $source . ' not installed');
-				}
-			}
-		}
 	}
 
 	private function parseEvents(Service\Record $record)
