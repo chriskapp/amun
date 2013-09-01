@@ -1,0 +1,27 @@
+{
+    "name": "amun/installer",
+    "description": "Provides an custom installer for amun services",
+    "homepage": "http://amun-project.org",
+    "type": "composer-installer",
+    "license": "GPL-3.0",
+    "version": "0.0.1",
+    "authors": [
+        {
+            "name": "Christoph Kappestein",
+            "email": "k42b3.x@gmail.com",
+            "homepage": "http://k42b3.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3",
+        "composer/composer": "1.0.*@dev"
+    },
+    "autoload": {
+        "psr-0": {
+            "AmunService\\Installer\\": "src/"
+        }
+    },
+    "extra": {
+        "class": "AmunService\\Installer\\Installer"
+    }
+}
