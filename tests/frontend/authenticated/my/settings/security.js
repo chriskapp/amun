@@ -29,7 +29,7 @@ testCase('my/settings/security', {
 	},
 
 	testChangePasswordWrongCurrentPassword: function(){
-		Assert.exists('.alert-error');
+		Assert.exists('.alert-danger');
 		Assert.triggerNext();
 	},
 
@@ -41,7 +41,7 @@ testCase('my/settings/security', {
 	},
 
 	testChangePasswordWrongCurrentComplexity: function(){
-		Assert.exists('.alert-error');
+		Assert.exists('.alert-danger');
 		Assert.triggerNext();
 	},
 
@@ -53,7 +53,7 @@ testCase('my/settings/security', {
 	},
 
 	testChangePasswordNotMatch: function(){
-		Assert.exists('.alert-error');
+		Assert.exists('.alert-danger');
 		Assert.triggerNext();
 	},
 
@@ -65,7 +65,7 @@ testCase('my/settings/security', {
 	},
 
 	testChangePasswordWrongComplexity: function(){
-		Assert.exists('.alert-error');
+		Assert.exists('.alert-danger');
 		Assert.triggerNext();
 	}
 

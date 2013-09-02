@@ -32,12 +32,6 @@
 		</exec>
 	</target>
 
-	<target name="syntax-check">
-		<exec dir="${bin}" executable="php" failonerror="true">
-			<arg line="check-syntax.php amun" />
-		</exec>
-	</target>
-
 	<target name="setup-sql">
 		<exec dir="${build}" executable="mysql" failonerror="true">
 			<arg line="-u root -e 'drop database amun_db;'" />
@@ -55,7 +49,7 @@
 		<sleep seconds="4" />
 	</target>
 
-	<target name="phpunit" depends="git-clone,install-dependencies,syntax-check,setup-sql,start-webserver">
+	<target name="phpunit" depends="git-clone,install-dependencies,setup-sql,start-webserver">
 		<!-- run tests -->
 		<exec dir="${build}" executable="phpunit.bat" failonerror="true" />
 		<!-- run js tests -->

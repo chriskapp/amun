@@ -12,6 +12,6 @@ before_script:
   - php -S 127.0.0.1:8000 &
   - sleep 4
 script:
-  - phpunit
+  - phpunit && phantomjs tests/testee.js tests/frontend http://127.0.0.1:8000/public/index.php/
 env:
   - DB=mysql

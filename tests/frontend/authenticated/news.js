@@ -18,7 +18,7 @@ testCase('news', {
 			// set title
 			$('#afw-title').val('foobar');
 
-			// enter form
+			// set text
 			var editor = ace.edit('afw-text');
 			editor.getSession().setValue('foobar');
 
@@ -28,12 +28,34 @@ testCase('news', {
 		});
 	},
 
-	testNewsAddedContent: function(){
+	testAddedNews: function(){
 		// check added news
-		Assert.equals('foobar', $('#news-2').find('h2').text().trim());
-		Assert.equals('foobar', $('#news-2').find('.amun-service-news-text').text().trim());
+		Assert.equals('foobar', $('.amun-service-news-entry:first').find('h2').text().trim());
+		Assert.equals('foobar', $('.amun-service-news-entry:first').find('.amun-service-news-text').text().trim());
 
-		Assert.triggerNext();
+		window.location = $('.amun-service-news-entry:first').find('h2 a').attr('href');
+	},
+
+	testAddComment: function(){
+		// wait for the form
+		Assert.waitFor('#form form', function(){
+			// set comment
+			var editor = ace.edit('text');
+			editor.getSession().setValue('foobar');
+
+			$('#form form').submit();
+
+			Assert.triggerNext();
+		});
+	},
+
+	testAddedComment: function(){
+		// wait for the form
+		Assert.waitFor('.amun-service-comment-entry', function(){
+			Assert.equals('foobar', $('.amun-service-comment-entry:last').find('.amun-service-comment-text').text().trim());
+
+			Assert.triggerNext();
+		});
 	}
 
 });

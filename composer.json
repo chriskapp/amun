@@ -50,7 +50,7 @@
     },
     "repositories": [{
         "type": "composer",
-        "url": "http://packages.amun-project.org/packages.php"
+        "url": "http://packages.amun-project.org/packages.json"
     }],
     "scripts": {
         "post-package-install": "Amun\\Installer::postInstall",

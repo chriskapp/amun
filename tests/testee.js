@@ -25,13 +25,13 @@ var webpage = require('webpage');
 
 // settings
 var baseDir = '.';
+var baseUrl = '';
+
 if (system.args.length >= 2) {
 	baseDir = system.args[1];
-}
-
-var baseUrl = '';
-if (system.args.length >= 3) {
 	baseUrl = system.args[2];
+} else {
+	console.log('phantomjs testee.js [path] [baseUrl]');
 }
 
 var debug = false;
@@ -319,7 +319,7 @@ function runNextTest(){
 		if (debug) {
 			Logger.log('REQUEST', url);
 		}
-	}
+	};
 	page.open(encodeURI(baseUrl + currentTestCase.url), function(status){
 		if (debug) {
 			Logger.log('OPEN', status);

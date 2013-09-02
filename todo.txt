@@ -1,11 +1,11 @@
 
 [FEATURES]
 
-[ ] test oauth authentication
-[ ] test openid authentication where amun is the openid provider
 [ ] solve composer install problem that a db connection is needed if we want to
     setup tables on composer installation
 [ ] fix and test service ui with bootstrap 3
+[ ] test openid authentication where amun is the openid provider
+[x] test oauth authentication
 [x] fix page multi colum template
 [x] fix workbench service install
 [x] fix gadget system

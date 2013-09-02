@@ -741,6 +741,7 @@
 						$(this).replaceWith('<div style="height:320px;"><div id="' + ref + '" title="' + ref + '" data-name="' + name + '" style="position:relative;width:740px;height:320px;border:1px solid #666;">' + $(this).html() + '</div></div>');
 
 						var editor = ace.edit(ref);
+						editor.getSession().setUseWorker(false);
 						editor.setTheme("ace/theme/eclipse");
 
 						editorCreateCallback.call(self, editor);
