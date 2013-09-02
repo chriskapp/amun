@@ -49,7 +49,7 @@
 		<sleep seconds="4" />
 	</target>
 
-	<target name="phpunit" depends="git-clone,install-dependencies,setup-sql,start-webserver">
+	<target name="phpunit" depends="git-clone,setup-sql,install-dependencies,start-webserver">
 		<!-- run tests -->
 		<exec dir="${build}" executable="phpunit.bat" failonerror="true" />
 		<!-- run js tests -->
