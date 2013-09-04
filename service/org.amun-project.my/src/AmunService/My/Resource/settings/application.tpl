@@ -58,8 +58,8 @@
 
 		<?php if($pagingApplications->getPages() > 1): ?>
 		<hr />
-		<div class="pagination pagination-centered">
-			<ul>
+		<div class="amun-pagination">
+			<ul class="pagination">
 				<li><a href="<?php echo $pagingApplications->getFirstUrl(); ?>">First</a></li>
 				<li><a href="<?php echo $pagingApplications->getPrevUrl(); ?>">Previous</a></li>
 				<li><span><?php echo $pagingApplications->getPage(); ?> of <?php echo $pagingApplications->getPages(); ?></span></li>

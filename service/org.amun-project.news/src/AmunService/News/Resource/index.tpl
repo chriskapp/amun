@@ -28,8 +28,8 @@
 
 	<?php if($pagingNews->getPages() > 1): ?>
 	<hr />
-	<div class="pagination pagination-centered">
-		<ul>
+	<div class="amun-pagination">
+		<ul class="pagination">
 			<li><a href="<?php echo $pagingNews->getFirstUrl(); ?>">First</a></li>
 			<li><a href="<?php echo $pagingNews->getPrevUrl(); ?>">Previous</a></li>
 			<li><span><?php echo $pagingNews->getPage(); ?> of <?php echo $pagingNews->getPages(); ?></span></li>

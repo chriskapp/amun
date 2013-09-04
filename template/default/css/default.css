@@ -242,6 +242,11 @@ footer.amun-footer .container
 	margin-left:5px;
 }
 
+.amun-pagination
+{
+	text-align:center;
+}
+
 .form-captcha
 {
 	border:1px solid #ccc;
@@ -327,6 +332,5 @@ h2
 {
 	min-height:460px;
 }
-
 
 

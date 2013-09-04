@@ -54,8 +54,8 @@
 
 	<?php if($pagingForum->getPages() > 1): ?>
 	<hr />
-	<div class="pagination pagination-centered">
-		<ul>
+	<div class="amun-pagination">
+		<ul class="pagination">
 			<li><a href="<?php echo $pagingForum->getFirstUrl(); ?>">First</a></li>
 			<li><a href="<?php echo $pagingForum->getPrevUrl(); ?>">Previous</a></li>
 			<li><span><?php echo $pagingForum->getPage(); ?> of <?php echo $pagingForum->getPages(); ?></span></li>

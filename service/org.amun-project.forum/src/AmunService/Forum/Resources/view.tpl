@@ -44,8 +44,8 @@
 
 	<?php if($pagingComments->getPages() > 1): ?>
 	<hr />
-	<div class="pagination pagination-centered">
-		<ul>
+	<div class="amun-pagination">
+		<ul class="pagination">
 			<li><a href="<?php echo $pagingComments->getFirstUrl(); ?>">First</a></li>
 			<li><a href="<?php echo $pagingComments->getPrevUrl(); ?>">Previous</a></li>
 			<li><span><?php echo $pagingComments->getPage(); ?> of <?php echo $pagingComments->getPages(); ?></span></li>

@@ -88,8 +88,8 @@
 
 		<?php if($pagingFriends->getPages() > 1): ?>
 		<hr />
-		<div class="pagination pagination-centered">
-			<ul>
+		<div class="amun-pagination">
+			<ul class="pagination">
 				<li><a href="<?php echo $pagingFriends->getFirstUrl(); ?>">First</a></li>
 				<li><a href="<?php echo $pagingFriends->getPrevUrl(); ?>">Previous</a></li>
 				<li><span><?php echo $pagingFriends->getPage(); ?> of <?php echo $pagingFriends->getPages(); ?></span></li>

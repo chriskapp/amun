@@ -58,8 +58,8 @@
 
 		<?php if($pagingNotifications->getPages() > 1): ?>
 		<hr />
-		<div class="pagination pagination-centered">
-			<ul>
+		<div class="amun-pagination">
+			<ul class="pagination">
 				<li><a href="<?php echo $pagingNotifications->getFirstUrl(); ?>">First</a></li>
 				<li><a href="<?php echo $pagingNotifications->getPrevUrl(); ?>">Previous</a></li>
 				<li><span><?php echo $pagingNotifications->getPage(); ?> of <?php echo $pagingNotifications->getPages(); ?></span></li>

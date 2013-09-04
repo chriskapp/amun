@@ -61,8 +61,8 @@
 
 		<?php if($pagingContacts->getPages() > 1): ?>
 		<hr />
-		<div class="pagination pagination-centered">
-			<ul>
+		<div class="amun-pagination">
+			<ul class="pagination">
 				<li><a href="<?php echo $pagingContacts->getFirstUrl(); ?>">First</a></li>
 				<li><a href="<?php echo $pagingContacts->getPrevUrl(); ?>">Previous</a></li>
 				<li><span><?php echo $pagingContacts->getPage(); ?> of <?php echo $pagingContacts->getPages(); ?></span></li>

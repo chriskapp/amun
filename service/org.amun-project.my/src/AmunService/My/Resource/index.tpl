@@ -157,8 +157,8 @@
 	<?php if($pagingActivities->getPages() > 1): ?>
 	<div class="col-md-12">
 		<hr />
-		<div class="pagination pagination-centered">
-			<ul>
+		<div class="amun-pagination">
+			<ul class="pagination">
 				<li><a href="<?php echo $pagingActivities->getFirstUrl(); ?>">First</a></li>
 				<li><a href="<?php echo $pagingActivities->getPrevUrl(); ?>">Previous</a></li>
 				<li><span><?php echo $pagingActivities->getPage(); ?> of <?php echo $pagingActivities->getPages(); ?></span></li>

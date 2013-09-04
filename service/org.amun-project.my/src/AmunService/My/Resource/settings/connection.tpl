@@ -59,8 +59,8 @@
 
 		<?php if($pagingConnections->getPages() > 1): ?>
 		<hr />
-		<div class="pagination pagination-centered">
-			<ul>
+		<div class="amun-pagination">
+			<ul class="pagination">
 				<li><a href="<?php echo $pagingConnections->getFirstUrl(); ?>">First</a></li>
 				<li><a href="<?php echo $pagingConnections->getPrevUrl(); ?>">Previous</a></li>
 				<li><span><?php echo $pagingConnections->getPage(); ?> of <?php echo $pagingConnections->getPages(); ?></span></li>

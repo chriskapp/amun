@@ -56,8 +56,8 @@
 
 		<?php if($pagingSubscriptions->getPages() > 1): ?>
 		<hr />
-		<div class="pagination pagination-centered">
-			<ul>
+		<div class="amun-pagination">
+			<ul class="pagination">
 				<li><a href="<?php echo $pagingSubscriptions->getFirstUrl(); ?>">First</a></li>
 				<li><a href="<?php echo $pagingSubscriptions->getPrevUrl(); ?>">Previous</a></li>
 				<li><span><?php echo $pagingSubscriptions->getPage(); ?> of <?php echo $pagingSubscriptions->getPages(); ?></span></li>
