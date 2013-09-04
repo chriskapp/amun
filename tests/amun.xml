@@ -21,7 +21,7 @@
 		<field name="type">ajax</field>
 		<field name="name">LATEST_NEWS</field>
 		<field name="title">Latest News</field>
-		<field name="path">latestNews.php</field>
+		<field name="class">\AmunService\News\Gadget\LatestNews</field>
 		<field name="param" xsi:nil="true" />
 		<field name="cache">0</field>
 		<field name="expire"></field>

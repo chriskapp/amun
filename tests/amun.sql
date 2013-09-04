@@ -59,7 +59,7 @@ CREATE TABLE `amun_content_gadget` (
   `type` enum('inline','iframe','ajax') NOT NULL DEFAULT 'inline',
   `name` varchar(64) NOT NULL,
   `title` varchar(32) NOT NULL,
-  `path` varchar(256) NOT NULL,
+  `class` varchar(128) NOT NULL,
   `param` text,
   `cache` tinyint(1) NOT NULL,
   `expire` varchar(25) NOT NULL,
