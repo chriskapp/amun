@@ -28,7 +28,7 @@
 
 	<target name="install-dependencies">
 		<exec dir="${build}" executable="composer.bat" failonerror="true">
-			<arg line="install --no-interaction --quiet" />
+			<arg line="install --no-interaction" />
 		</exec>
 	</target>
 
@@ -92,12 +92,6 @@
 		<echo message="Building version ${version}" />
 	</target>
 
-	<target name="generate-service-config">
-		<exec dir="${bin}" executable="php" failonerror="true">
-			<arg line="generate-service-config.php * amun" />
-		</exec>
-	</target>
-
 	<target name="compress" depends="get-version">
 		<tar destfile="${bin}/amun_${version}.tar" basedir="${build}" />
 		<gzip destfile="${bin}/amun_${version}.tar.gz" src="${bin}/amun_${version}.tar" />
@@ -105,7 +99,7 @@
 		<zip destfile="${bin}/amun_${version}.zip" basedir="${build}" />
 	</target>
 
-	<target name="build-release" depends="phpunit,clean-git,get-version,generate-service-config,compress">
+	<target name="build-release" depends="phpunit,clean-git,get-version,compress">
 		<!-- change config -->
 		<replace file="${build}/configuration.php" token="http://127.0.0.1:8000/public" value="http://127.0.0.1/amun/public" />
 	</target>

@@ -131,7 +131,7 @@ class Form extends FormAbstract
 		$record = $this->hm->getHandler('AmunService\Php')->getRecord($id);
 
 
-		$form = new AmunForm('PUT', $this->url);
+		$form = new AmunForm('DELETE', $this->url);
 
 
 		$panel = new Panel('php', 'Php');
