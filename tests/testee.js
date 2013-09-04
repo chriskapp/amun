@@ -31,7 +31,8 @@ if (system.args.length >= 2) {
 	baseDir = system.args[1];
 	baseUrl = system.args[2];
 } else {
-	console.log('phantomjs testee.js [path] [baseUrl]');
+	console.log('Usage: phantomjs testee.js [dir] [baseUrl]');
+	phantom.exit(0);
 }
 
 var debug = false;
