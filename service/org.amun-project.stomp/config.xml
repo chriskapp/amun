@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org" signature="2e748eabd4efc061ada3d8d0a57c9ecb8a7a1506">
+  <status>system</status>
+  <path>/stomp</path>
+  <namespace>stomp</namespace>
+  <type>http://ns.amun-project.org/2011/amun/service/stomp</type>
+  <registry>
+    <param name="broker" value="tcp://localhost:61613"/>
+    <param name="user" value="admin"/>
+    <param name="pw" value="password"/>
+    <param name="destination" value="/queue/amun"/>
+  </registry>
+  <event>
+    <listener name="core.record_change" class="\AmunService\Stomp\RecordListener"/>
+  </event>
+</service>
