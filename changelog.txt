@@ -1,6 +1,6 @@
 
 0.5 beta
-* Redesigned service structure
+* Redesigned service structure using composer for service installation
 * Implemented composer based installer
 * Added bootstrap 3.0
 

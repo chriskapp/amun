@@ -4,7 +4,6 @@
     "homepage": "http://amun-project.org",
     "type": "composer-installer",
     "license": "GPL-3.0",
-    "version": "0.0.1",
     "authors": [
         {
             "name": "Christoph Kappestein",

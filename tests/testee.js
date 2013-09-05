@@ -48,7 +48,7 @@ var FAILURE = 0x2;
 var NEXT = 0x3;
 var SKIP = 0x4;
 
-var version = '0.0.2';
+var version = '0.0.3';
 var cases = [];
 var result = [];
 var out;

@@ -4,7 +4,6 @@
     "homepage": "http://amun-project.org",
     "type": "library",
     "license": "GPL-3.0",
-    "version": "0.0.1",
     "authors": [
         {
             "name": "Christoph Kappestein",
@@ -14,8 +13,8 @@
     ],
     "require": {
         "php": ">=5.3",
-        "amun/content": "0.0.*",
-        "amun/mail": "0.0.*"
+        "amun/content": "self.version",
+        "amun/mail": "self.version"
     },
     "autoload": {
         "psr-0": {
