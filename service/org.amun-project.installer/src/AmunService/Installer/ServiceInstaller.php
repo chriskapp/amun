@@ -63,7 +63,7 @@ class ServiceInstaller extends LibraryInstaller
 		{
 			// if the files are installed check whether the service is in the 
 			// table registered
-			$hm      = $this->container->getHandlerManager();
+			$hm      = $this->container->get('handlerManager');
 			$handler = $hm->getHandler('AmunService\Core\Service');
 			$service = $handler->getOneByName($package->getName(), array('id', 'name'));
 
@@ -90,28 +90,35 @@ class ServiceInstaller extends LibraryInstaller
 
 		if(is_file($config))
 		{
-			// create service
-			$hm      = $this->container->getHandlerManager();
-			$handler = $hm->getHandler('AmunService\Core\Service');
-			$record  = $handler->getRecord();
-
-			if($package->getInstallationSource() == 'source')
+			try
 			{
-				$source = $package->getSourceUrl();
+				// create service
+				$hm      = $this->container->get('handlerManager');
+				$handler = $hm->getHandler('AmunService\Core\Service');
+				$record  = $handler->getRecord();
+
+				if($package->getInstallationSource() == 'source')
+				{
+					$source = $package->getSourceUrl();
+				}
+				else if($package->getInstallationSource() == 'dist')
+				{
+					$source = $package->getDistUrl();
+				}
+
+				$record->setSource($source);
+				$record->setConfig($config);
+				$record->setName($package->getPrettyName());
+				$record->setLink($package->getHomepage());
+				$record->setLicense(implode(', ', $package->getLicense()));
+				$record->setVersion($package->getPrettyVersion());
+
+				$handler->create($record);
 			}
-			else if($package->getInstallationSource() == 'dist')
+			catch(\Exception $e)
 			{
-				$source = $package->getDistUrl();
+				$this->container->get('logger')->error($e->getMessage());
 			}
-
-			$record->setSource($source);
-			$record->setConfig($config);
-			$record->setName($package->getPrettyName());
-			$record->setLink($package->getHomepage());
-			$record->setLicense(implode(', ', $package->getLicense()));
-			$record->setVersion($package->getPrettyVersion());
-
-			$handler->create($record);
 		}
 	}
 
