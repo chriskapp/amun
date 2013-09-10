@@ -63,13 +63,19 @@ class ServiceInstaller extends LibraryInstaller
 		{
 			// if the files are installed check whether the service is in the 
 			// table registered
-			$hm      = $this->container->get('handlerManager');
-			$handler = $hm->getHandler('AmunService\Core\Service');
-			$service = $handler->getOneByName($package->getName(), array('id', 'name'));
-
-			if(!empty($service))
+			try
 			{
-				return true;
+				$hm      = $this->container->get('handlerManager');
+				$handler = $hm->getHandler('AmunService\Core\Service');
+				$service = $handler->getOneByName($package->getName(), array('id', 'name'));
+
+				if(!empty($service))
+				{
+					return true;
+				}
+			}
+			catch(\Exception $e)
+			{
 			}
 		}
 
