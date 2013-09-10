@@ -25,7 +25,6 @@ namespace AmunService\Asset;
 use Amun\Exception;
 use PSX\Cache;
 use PSX\Config;
-use PSX\File;
 
 /**
  * Manager
@@ -93,7 +92,9 @@ class Manager
 		{
 			foreach($this->services[$service] as $srv)
 			{
-				if(!in_array($srv, $this->loaded) && File::exists($srv))
+				$srv = str_replace('\\', '/', $srv);
+
+				if(!in_array($srv, $this->loaded) && file_exists($srv))
 				{
 					$content.= file_get_contents($srv) . "\n\n";
 
