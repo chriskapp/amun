@@ -52,7 +52,7 @@ class ServiceInstaller extends LibraryInstaller
 	{
 		parent::__construct($io, $composer, $type);
 
-		$this->container = self::getContainer();
+		$this->container = self::getContainer($io);
 	}
 
 	public function isInstalled(InstalledRepositoryInterface $repo, PackageInterface $package)
@@ -120,7 +120,7 @@ class ServiceInstaller extends LibraryInstaller
 	 *
 	 * @return PSX\DependencyInterface
 	 */
-	protected static function getContainer()
+	protected static function getContainer($io)
 	{
 		if(self::$_container === null)
 		{
@@ -133,11 +133,11 @@ class ServiceInstaller extends LibraryInstaller
 			Bootstrap::setupEnvironment($container->get('config'));
 
 			// set io
-			$container->set('io', $this->io);
+			$container->set('io', $io);
 
 			// setup composer logger to redirect all log infos to the console
 			$logger = new Logger('amun');
-			$logger->pushHandler(new ComposerHandler($this->io, Logger::INFO));
+			$logger->pushHandler(new ComposerHandler($io, Logger::INFO));
 
 			$container->set('logger', $logger);
 
