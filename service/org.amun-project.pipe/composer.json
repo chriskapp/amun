@@ -2,7 +2,7 @@
     "name": "amun/pipe",
     "description": "Service wich redirects the content of an media item to an page",
     "homepage": "http://amun-project.org",
-    "type": "library",
+    "type": "amun-service",
     "license": "GPL-3.0",
     "authors": [
         {

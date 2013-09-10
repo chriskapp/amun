@@ -2,7 +2,7 @@
     "name": "amun/xrds",
     "description": "Provides an xrds endpoint to discover all APIs",
     "homepage": "http://amun-project.org",
-    "type": "library",
+    "type": "amun-service",
     "license": "GPL-3.0",
     "authors": [
         {

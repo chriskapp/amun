@@ -2,7 +2,7 @@
     "name": "amun/sample",
     "description": "Setups an sample website",
     "homepage": "http://amun-project.org",
-    "type": "library",
+    "type": "amun-service",
     "license": "GPL-3.0",
     "authors": [
         {

@@ -2,7 +2,7 @@
     "name": "amun/my",
     "description": "Service wich offers an activitystream and handling of user settings and friends",
     "homepage": "http://amun-project.org",
-    "type": "library",
+    "type": "amun-service",
     "license": "GPL-3.0",
     "authors": [
         {

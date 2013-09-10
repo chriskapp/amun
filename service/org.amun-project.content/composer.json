@@ -2,7 +2,7 @@
     "name": "amun/content",
     "description": "Basic service wich handles pages and gadgets",
     "homepage": "http://amun-project.org",
-    "type": "library",
+    "type": "amun-service",
     "license": "GPL-3.0",
     "authors": [
         {

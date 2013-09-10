@@ -2,7 +2,7 @@
     "name": "amun/mail",
     "description": "A service to manage mail templates wich can be used by other services",
     "homepage": "http://amun-project.org",
-    "type": "library",
+    "type": "amun-service",
     "license": "GPL-3.0",
     "authors": [
         {

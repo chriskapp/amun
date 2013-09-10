@@ -2,7 +2,7 @@
     "name": "amun/media",
     "description": "Offers a general way to upload and access arbitrary media files",
     "homepage": "http://amun-project.org",
-    "type": "library",
+    "type": "amun-service",
     "license": "GPL-3.0",
     "authors": [
         {

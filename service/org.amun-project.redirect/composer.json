@@ -2,7 +2,7 @@
     "name": "amun/redirect",
     "description": "Redirects the user to an given url",
     "homepage": "http://amun-project.org",
-    "type": "library",
+    "type": "amun-service",
     "license": "GPL-3.0",
     "authors": [
         {

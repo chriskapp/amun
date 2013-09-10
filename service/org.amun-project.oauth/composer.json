@@ -2,7 +2,7 @@
     "name": "amun/oauth",
     "description": "Provides an Oauth 1.0 endpoint implementation where applications can register to access the API",
     "homepage": "http://amun-project.org",
-    "type": "library",
+    "type": "amun-service",
     "license": "GPL-3.0",
     "authors": [
         {

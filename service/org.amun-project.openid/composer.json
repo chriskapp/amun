@@ -2,7 +2,7 @@
     "name": "amun/openid",
     "description": "Provides an OpenID provider implementation",
     "homepage": "http://amun-project.org",
-    "type": "library",
+    "type": "amun-service",
     "license": "GPL-3.0",
     "authors": [
         {

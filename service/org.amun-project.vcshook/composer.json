@@ -2,7 +2,7 @@
     "name": "amun/vcshook",
     "description": "Gateway to receive commits from different version control system services like github, googleproject",
     "homepage": "http://amun-project.org",
-    "type": "library",
+    "type": "amun-service",
     "license": "GPL-3.0",
     "authors": [
         {

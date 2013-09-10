@@ -2,7 +2,7 @@
     "name": "amun/forum",
     "description": "Implementation of an simple forum system. It is possible to create threads and set the status to sticky or closed",
     "homepage": "http://amun-project.org",
-    "type": "library",
+    "type": "amun-service",
     "license": "GPL-3.0",
     "authors": [
         {

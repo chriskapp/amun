@@ -2,7 +2,7 @@
     "name": "amun/asset",
     "description": "A service wich concatenates various css or js files into one output",
     "homepage": "http://amun-project.org",
-    "type": "library",
+    "type": "amun-service",
     "license": "GPL-3.0",
     "authors": [
         {

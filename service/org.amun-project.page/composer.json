@@ -2,7 +2,7 @@
     "name": "amun/page",
     "description": "Basic service to make a page wich can be edited",
     "homepage": "http://amun-project.org",
-    "type": "library",
+    "type": "amun-service",
     "license": "GPL-3.0",
     "authors": [
         {

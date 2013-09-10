@@ -2,7 +2,7 @@
     "name": "amun/login",
     "description": "Service wich offers a login and registration option",
     "homepage": "http://amun-project.org",
-    "type": "library",
+    "type": "amun-service",
     "license": "GPL-3.0",
     "authors": [
         {

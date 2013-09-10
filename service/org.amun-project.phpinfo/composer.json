@@ -2,7 +2,7 @@
     "name": "amun/phpinfo",
     "description": "Service to offer PHP informations via an API",
     "homepage": "http://amun-project.org",
-    "type": "library",
+    "type": "amun-service",
     "license": "GPL-3.0",
     "authors": [
         {

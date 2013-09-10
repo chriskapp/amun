@@ -2,7 +2,7 @@
     "name": "amun/profile",
     "description": "Displays the activities of an user and the option to add the user as friend",
     "homepage": "http://amun-project.org",
-    "type": "library",
+    "type": "amun-service",
     "license": "GPL-3.0",
     "authors": [
         {

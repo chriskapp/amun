@@ -2,7 +2,7 @@
     "name": "amun/swagger",
     "description": "Provides an API swagger endpoint wich can be used by i.e. swagger-ui to display all available APIs",
     "homepage": "http://amun-project.org",
-    "type": "library",
+    "type": "amun-service",
     "license": "GPL-3.0",
     "authors": [
         {

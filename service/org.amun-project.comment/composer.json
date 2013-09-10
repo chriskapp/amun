@@ -2,7 +2,7 @@
     "name": "amun/comment",
     "description": "General comment system wich can be used to store comments refering to an id",
     "homepage": "http://amun-project.org",
-    "type": "library",
+    "type": "amun-service",
     "license": "GPL-3.0",
     "authors": [
         {

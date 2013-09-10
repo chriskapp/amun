@@ -2,7 +2,7 @@
     "name": "amun/core",
     "description": "Contains the core functionalities of amun",
     "homepage": "http://amun-project.org",
-    "type": "library",
+    "type": "amun-service",
     "license": "GPL-3.0",
     "authors": [
         {

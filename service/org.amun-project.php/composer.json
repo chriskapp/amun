@@ -2,7 +2,7 @@
     "name": "amun/php",
     "description": "Service to embed PHP code in a page",
     "homepage": "http://amun-project.org",
-    "type": "library",
+    "type": "amun-service",
     "license": "GPL-3.0",
     "authors": [
         {

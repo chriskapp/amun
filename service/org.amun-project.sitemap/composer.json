@@ -2,7 +2,7 @@
     "name": "amun/sitemap",
     "description": "Adds an API to generate a sitemap (sitemaps.org) wich can be used by search engines",
     "homepage": "http://amun-project.org",
-    "type": "library",
+    "type": "amun-service",
     "license": "GPL-3.0",
     "authors": [
         {

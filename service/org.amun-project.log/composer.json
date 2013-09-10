@@ -2,7 +2,7 @@
     "name": "amun/log",
     "description": "Service wich logs every record insert, update or delete",
     "homepage": "http://amun-project.org",
-    "type": "library",
+    "type": "amun-service",
     "license": "GPL-3.0",
     "authors": [
         {
