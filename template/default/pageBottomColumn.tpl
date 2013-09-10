@@ -26,10 +26,12 @@
 				<?php echo $content; ?>
 			</div>
 			<div class="col-md-12">
-				<?php if($gadget->valid()): ?>
-				<div class="amun-gadget">
-					<?php echo $gadget->get()->getBody(); ?>
-				</div>
+				<?php if(isset($gadget)): ?>
+					<?php if($gadget->valid()): ?>
+					<div class="amun-gadget">
+						<?php echo $gadget->get()->getBody(); ?>
+					</div>
+					<?php endif; ?>
 				<?php endif; ?>
 			</div>
 		</div>

@@ -23,12 +23,14 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-4">
-				<?php foreach($gadget as $g): ?>
-				<div class="amun-gadget">
-					<h2><?php echo $g->getTitle(); ?></h2>
-					<?php echo $g->getBody(); ?>
-				</div>
-				<?php endforeach; ?>
+				<?php if(isset($gadget)): ?>
+					<?php foreach($gadget as $g): ?>
+					<div class="amun-gadget">
+						<h2><?php echo $g->getTitle(); ?></h2>
+						<?php echo $g->getBody(); ?>
+					</div>
+					<?php endforeach; ?>
+				<?php endif; ?>
 			</div>
 			<div class="col-md-8">
 				<?php echo $content; ?>

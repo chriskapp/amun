@@ -28,30 +28,36 @@
 		</div>
 		<div class="row">
 			<div class="col-md-4">
-				<?php if($gadget->valid()): ?>
-				<div class="amun-gadget">
-					<h2><?php echo $gadget->get()->getTitle(); ?></h2>
-					<?php echo $gadget->get()->getBody(); ?>
-				</div>
-				<?php $gadget->next(); ?>
+				<?php if(isset($gadget)): ?>
+					<?php if($gadget->valid()): ?>
+					<div class="amun-gadget">
+						<h2><?php echo $gadget->get()->getTitle(); ?></h2>
+						<?php echo $gadget->get()->getBody(); ?>
+					</div>
+					<?php $gadget->next(); ?>
+					<?php endif; ?>
 				<?php endif; ?>
 			</div>
 			<div class="col-md-4">
-				<?php if($gadget->valid()): ?>
-				<div class="amun-gadget">
-					<h2><?php echo $gadget->get()->getTitle(); ?></h2>
-					<?php echo $gadget->get()->getBody(); ?>
-				</div>
-				<?php $gadget->next(); ?>
+				<?php if(isset($gadget)): ?>
+					<?php if($gadget->valid()): ?>
+					<div class="amun-gadget">
+						<h2><?php echo $gadget->get()->getTitle(); ?></h2>
+						<?php echo $gadget->get()->getBody(); ?>
+					</div>
+					<?php $gadget->next(); ?>
+					<?php endif; ?>
 				<?php endif; ?>
 			</div>
 			<div class="col-md-4">
-				<?php if($gadget->valid()): ?>
-				<div class="amun-gadget">
-					<h2><?php echo $gadget->get()->getTitle(); ?></h2>
-					<?php echo $gadget->get()->getBody(); ?>
-				</div>
-				<?php $gadget->next(); ?>
+				<?php if(isset($gadget)): ?>
+					<?php if($gadget->valid()): ?>
+					<div class="amun-gadget">
+						<h2><?php echo $gadget->get()->getTitle(); ?></h2>
+						<?php echo $gadget->get()->getBody(); ?>
+					</div>
+					<?php $gadget->next(); ?>
+					<?php endif; ?>
 				<?php endif; ?>
 			</div>
 		</div>

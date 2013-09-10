@@ -1,18 +1,15 @@
 
 [FEATURES]
 
+[ ] Set media_view as default right when adding an media item in backend
+[ ] Anonymous user is created under the name of the admin in the sample service
+[ ] Backend service panel is not listed under System
 [ ] solve composer install problem that a db connection is needed if we want to
     setup tables on composer installation
-[ ] fix and test service ui with bootstrap 3
 [ ] test openid authentication where amun is the openid provider
-[x] test oauth authentication
-[x] fix page multi colum template
-[x] fix workbench service install
-[x] fix gadget system
 [ ] add general payment service with an event publisher if an payments is 
     executed and an backend where its possible to see all transactions
 [ ] option for module to register event wich is loaded on page load
-[x] add page and gadget caching
 [ ] improve right system probably with inheritance. Add page specific rights
 [ ] clean up handler selection methods
 [ ] fix php_view right .. php code is returned by the api
@@ -71,6 +68,12 @@
     framework because its not amun specific and a well written proxy is in
     general needed
 [ ] test ostatus remote subscription interoperability
+[x] fix and test service ui with bootstrap 3
+[x] test oauth authentication
+[x] fix page multi colum template
+[x] fix workbench service install
+[x] fix gadget system
+[x] add page and gadget caching
 [x] remove window dialog from footer since css from the footer is applied on the 
     window
 [x] add loading animation to user group right save
