@@ -13,10 +13,10 @@
     ],
     "require": {
         "php": ">=5.3",
+        "composer-plugin-api": "1.0.0",
         "psx/psx": "dev-master",
         "composer/composer": "1.0.*@dev",
-        "monolog/monolog": "1.5.*",
-        "composer-plugin-api": "1.0.0"
+        "monolog/monolog": "1.5.*"
     },
     "autoload": {
         "psr-0": {

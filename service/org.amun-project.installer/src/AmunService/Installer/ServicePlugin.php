@@ -38,6 +38,12 @@ class ServicePlugin implements PluginInterface
 {
 	public function activate(Composer $composer, IOInterface $io)
 	{
+		// register class loader to load amun classes
+		$loader = new ClassLoader();
+		$loader->add('Amun', 'library');
+		$loader->add('AmunService\Core', $composer->getConfig()->get('vendor-dir') . 'amun/core/src');
+		$loader->register();
+
 		// register installer
 		$installer = new ServiceInstaller($io, $composer);
 
