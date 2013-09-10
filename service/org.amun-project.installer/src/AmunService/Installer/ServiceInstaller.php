@@ -24,24 +24,23 @@ namespace AmunService\Installer;
 
 use Amun\Dependency;
 use Amun\Logger\ComposerHandler;
-use Composer\Autoload\ClassLoader;
+use Composer\Plugin\PluginInterface;
 use Composer\Composer;
-use Composer\Installer\LibraryInstaller;
 use Composer\IO\IOInterface;
 use Composer\Package\PackageInterface;
-use Composer\Repository\InstalledRepositoryInterface;
+use Composer\Installer\LibraryInstaller;
 use Monolog\Logger;
 use PSX\Bootstrap;
 use PSX\DependencyInterface;
 
 /**
- * Installer
+ * ServiceInstaller
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class Installer extends LibraryInstaller
+class ServiceInstaller extends LibraryInstaller
 {
 	protected static $_container;
 
@@ -124,9 +123,6 @@ class Installer extends LibraryInstaller
 	{
 		if(self::$_container === null)
 		{
-			// autoloader
-			spl_autoload_register('AmunService\Installer\Installer::autoload');
-
 			$container = new Dependency\Install();
 			$container->setParameter('config.file', 'configuration.php');
 			$container->setParameter('user.id', 1);

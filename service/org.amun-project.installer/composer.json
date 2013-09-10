@@ -2,7 +2,7 @@
     "name": "amun/installer",
     "description": "Provides an custom installer for amun services",
     "homepage": "http://amun-project.org",
-    "type": "composer-installer",
+    "type": "composer-plugin",
     "license": "GPL-3.0",
     "authors": [
         {
@@ -13,7 +13,10 @@
     ],
     "require": {
         "php": ">=5.3",
-        "composer/composer": "1.0.*@dev"
+        "psx/psx": "dev-master",
+        "composer/composer": "1.0.*@dev",
+        "monolog/monolog": "1.5.*",
+        "composer-plugin-api": "1.0.0"
     },
     "autoload": {
         "psr-0": {
@@ -21,6 +24,6 @@
         }
     },
     "extra": {
-        "class": "AmunService\\Installer\\Installer"
+        "class": "AmunService\\Installer\\ServicePlugin"
     }
 }
