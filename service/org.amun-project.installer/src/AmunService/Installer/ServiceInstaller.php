@@ -97,9 +97,20 @@ class ServiceInstaller extends LibraryInstaller
 		if(is_file($config))
 		{
 			// make service autoloadable
-			$generator   = $this->composer->getAutoloadGenerator();
-			$classLoader = $generator->createLoader($package->getAutoload());
-			$classLoader->register();
+			$generator = $this->composer->getAutoloadGenerator();
+			$autoload  = $package->getAutoload();
+
+			if(isset($autoload['psr-0']) && is_array($autoload['psr-0']))
+			{
+				$map = array();
+				foreach($autoload['psr-0'] as $ns => $src)
+				{
+					$map['psr-0'][$ns] = $dir . '/' . $package->getName() . '/' . $src;
+				}
+
+				$classLoader = $generator->createLoader($map);
+				$classLoader->register();
+			}
 
 			try
 			{
