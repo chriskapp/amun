@@ -29,6 +29,7 @@ use Composer\Composer;
 use Composer\IO\IOInterface;
 use Composer\Package\PackageInterface;
 use Composer\Installer\LibraryInstaller;
+use Composer\Repository\InstalledRepositoryInterface;
 use Monolog\Logger;
 use PSX\Bootstrap;
 use PSX\DependencyInterface;
