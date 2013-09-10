@@ -17,7 +17,7 @@
     },
     "autoload": {
         "psr-0": {
-            "AmunService\\My\\": "src/"
+            "AmunService\\My": "src/"
         }
     }
 }

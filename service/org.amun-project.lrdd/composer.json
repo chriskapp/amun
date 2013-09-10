@@ -19,7 +19,7 @@
     },
     "autoload": {
         "psr-0": {
-            "AmunService\\Lrdd\\": "src/"
+            "AmunService\\Lrdd": "src/"
         }
     }
 }

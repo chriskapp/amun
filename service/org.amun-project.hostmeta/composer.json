@@ -19,7 +19,7 @@
     },
     "autoload": {
         "psr-0": {
-            "AmunService\\Hostmeta\\": "src/"
+            "AmunService\\Hostmeta": "src/"
         }
     }
 }

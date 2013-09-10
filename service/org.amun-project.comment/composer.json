@@ -19,7 +19,7 @@
     },
     "autoload": {
         "psr-0": {
-            "AmunService\\Comment\\": "src/"
+            "AmunService\\Comment": "src/"
         }
     }
 }

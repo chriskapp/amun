@@ -18,7 +18,7 @@
     },
     "autoload": {
         "psr-0": {
-            "AmunService\\Forum\\": "src/"
+            "AmunService\\Forum": "src/"
         }
     }
 }

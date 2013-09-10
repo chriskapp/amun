@@ -19,7 +19,7 @@
     },
     "autoload": {
         "psr-0": {
-            "AmunService\\Country\\": "src/"
+            "AmunService\\Country": "src/"
         }
     }
 }
