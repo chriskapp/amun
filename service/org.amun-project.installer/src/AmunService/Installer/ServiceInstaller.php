@@ -124,6 +124,7 @@ class ServiceInstaller extends LibraryInstaller
 	{
 		if(self::$_container === null)
 		{
+			// create di container
 			$container = new Dependency\Install();
 			$container->setParameter('config.file', 'configuration.php');
 			$container->setParameter('user.id', 1);
