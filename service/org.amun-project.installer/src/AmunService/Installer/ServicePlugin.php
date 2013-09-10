@@ -22,7 +22,6 @@
 
 namespace AmunService\Installer;
 
-use Composer\Autoload\ClassLoader;
 use Composer\Composer;
 use Composer\IO\IOInterface;
 use Composer\Plugin\PluginInterface;
@@ -39,10 +38,9 @@ class ServicePlugin implements PluginInterface
 	public function activate(Composer $composer, IOInterface $io)
 	{
 		// register class loader to load amun classes
-		$loader = new ClassLoader();
-		$loader->add('Amun', 'library');
-		$loader->add('AmunService\Core', $composer->getConfig()->get('vendor-dir') . '/amun/core/src');
-		$loader->register();
+		$generator   = $composer->getAutoloadGenerator();
+		$classLoader = $generator->createLoader($composer->getPackage()->getAutoload());
+		$classLoader->register();
 
 		// register installer
 		$installer = new ServiceInstaller($io, $composer);

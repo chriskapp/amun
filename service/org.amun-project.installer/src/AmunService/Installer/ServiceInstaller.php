@@ -96,6 +96,11 @@ class ServiceInstaller extends LibraryInstaller
 
 		if(is_file($config))
 		{
+			// make service autoloadable
+			$generator   = $this->composer->getAutoloadGenerator();
+			$classLoader = $generator->createLoader($package->getAutoload());
+			$classLoader->register();
+
 			try
 			{
 				// create service
