@@ -7,6 +7,7 @@ before_script:
   - mysql -u root amun_db < tests/amun.sql
   - pear channel-discover pear.phpunit.de
   - pear install phpunit/DbUnit
+  - composer self-update
   - composer install --no-interaction
   - phpenv rehash
   - php -S 127.0.0.1:8000 &
