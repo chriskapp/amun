@@ -76,7 +76,8 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_event_listener']}` (
   `eventId` int(10) NOT NULL,
   `priority` int(10) NOT NULL,
   `class` varchar(64) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `eventIdClass` (`eventId`,`class`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8
 SQL;
 
