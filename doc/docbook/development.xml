@@ -16,16 +16,13 @@
 
 	<chapter id="services">
 		<title>Services</title>
-		<para>Services are a concept in amun wich can be seen as plugins. Each service has an config.xml
-		file wich contains some meta informations about the service, the md5 hash of all files and optional
-		sql statments wich will be executed on installation. To provide a basic security each config.xml contains
-		also an signature wich is the sha1 hmac hash of the complete xml document using the secret:</para>
-		<screen>d6b0c93c6f9b0a7917fdb402298ac692bf25fab8</screen>
-		<para>A service can register a listener to the "core.service_install" event in order to extend
-		the config.xml vocabular. I.e. if the mail service is installed the config can contain an mail
-		template. Installation of the service succeeds only if the signature is valid.</para>
+		<para>Services are a concept in amun wich can be seen as plugins. Each service has an composer.json file
+		wich contains some meta informations and all dependencies of the service. Also it can contain an
+		config.xml where the service can registere or publish events and execute SQL queries on installation.
+		The parsing behavior can be extended through other services i.e. the Mail service offers an possibility
+		to create a Mail template.</para>
 		<sect1>
-			<title>API</title>
+			<title>Api</title>
 			<para>In Amun every functionallity is provided via an RESTful API so in order to CRUD (Create, Receive,
 			Update, Delete) data you have to define an REST endpoint. All actions such as insert, update and delete 
 			data will be handled by amun if the corrosponding data classes exist. Please see the chapter 
@@ -62,7 +59,7 @@
 			The record is a data object wich is used to create or receive entries from a database. Here an example
 			howto create a new record.</para>
 			<programlisting role="php"><![CDATA[
-$news = DataFactory::get('Vendor_News')->getRecord();
+$news = $this->hm->getHandler('AmunService\News')->getRecord();
 $news->setPageId(1);
 $news->setTitle('Foobar');
 $news->setText('<p>lorem ipsum</p>');
@@ -73,19 +70,19 @@ $news->setText('<p>lorem ipsum</p>');
 			<para>The Table class represents an database table. It must extend the class Amun\Sql\TableAbstract.
 			It contains all informations about the table what columns are available and how they are connected
 			to other tables. The table class is used by the handler to CRUD (Create, Receive, Update and Delete) 
-			records on the table. Here an example howto receive a list of Vendor_News records.</para>
+			records on the table. Here an example howto receive a list of AmunService\News records.</para>
 			<programlisting role="php"><![CDATA[
-$result = DataFactory::get('Vendor_News')
+$result = $this->hm->getTable('AmunService\News')
 	->select(array('id', 'title', 'url', 'text', 'date'))
-	->join(Join::INNER, DataFactory::get('User_Account')
+	->join(Join::INNER, $this->hm->getTable('AmunService\User\Account')
 		->select(array('name', 'profileUrl'), 'author')
 	)
 	->where('pageId', '=', $this->page->id)
 	->orderBy('date', Sql::SORT_DESC)
 	->getAll(Sql::FETCH_OBJECT);]]></programlisting>
-			<para>We use the DataFactory class to get the table class. By default the getAll() method
+			<para>We use the handler manager to get the table class. By default the getAll() method
 			returns an associative array. If you use the <constant>Sql::FETCH_OBJECT</constant> constant you will
-			get an array of Vendor\News\Record records.</para>
+			get an array of AmunService\News\Record records.</para>
 		</sect1>
 		<sect1>
 			<title>Handler</title>
@@ -94,7 +91,7 @@ $result = DataFactory::get('Vendor_News')
 			Also it is possible to create, update or delete records. Here some examples howto use a handler
 			class.</para>
 			<programlisting role="php"><![CDATA[
-$handler = DataFactory::get('Vendor_News');
+$handler = $this->hm->getHandler('AmunService\News');
 
 // select row
 $row = $handler->getById(1, array('pageId', 'title'));
@@ -139,10 +136,8 @@ $handler->create($news);
 
 	<chapter>
 		<title>Coding standard</title>
-		<para></para>
 		<sect1>
 			<title>PHP</title>
-			<para></para>
 			<sect2>
 				<title>Indenting and line length</title>
 				<para>Use leading tabs to ident your code and spaces to format them if necessary. That
@@ -252,14 +247,17 @@ $bar = $this->foo($an, $oth, $er, null);
 				Amun needs PHP > 5.3 you should always define the visibility of the method with
 				"public", "protected" or "private".</para>
 				<programlisting role="php"><![CDATA[<?php
+
+use Amun\Module\ApplicationAbstract;
+
 /**
  * [description]
  *
- * @author  [author_name] <[author_email]>
- * @license [license_url] [license_name]
+ * @author  [name] <[email]>
+ * @license [url] [name]
  * @link    [url]
  */
-class index extends Amun_ApplicationAbstract
+class Index extends ApplicationAbstract
 {
 	public function onLoad()
 	{
@@ -331,11 +329,10 @@ SQL;
 
 	<chapter>
 		<title>How setup a development enviroment</title>
-		<para>Amun uses other applications to work but all these "3rd party applications" are not included in the
-		GIT repositiory. Because of that you have to setup a little development enviroment to start working on Amun. 
-		You need A local HTTP server with PHP, a GIT client and a texteditor.</para>
+		<para>Amun uses composer to manage all dependencies. Simply clone the repository and install all
+		dependencies. To start working on Amun you need a local HTTP server with PHP, a GIT client and a texteditor.</para>
 		<sect1>
-			<title>Checkout the repository</title>
+			<title>Clone the repository</title>
 			<para>First you have to create a folder where you want checkout Amun. This folder should
 			be in /var/www folder of your server where it can be accessed via the browser. Goto
 			your directoy and checkout the latest version of Amun with:</para>
@@ -346,86 +343,6 @@ SQL;
 			<para>Amun uses composer to manage the dependencies. Use the following command to install all
 			dependenig libraries</para>
 			<screen>composer install</screen>
-		</sect1>
-		<sect1>
-			<title>Install amun</title>
-			<para>You should install Amun though the /install.php script. More informations howto install Amun at 
-			the manual.</para>
-		</sect1>
-	</chapter>
-
-	<chapter>
-		<title>Hello world service</title>
-		<para>This chapter describes step by step howto write a "Hello World" service.</para>
-		<sect1>
-			<title>File structure</title>
-			<para>You have todo is to create a folder in service folder. The folder must have the name of the service. 
-			In our example we take "world". In this folder we create a file called "config.xml" and a folder
-			application containing a file "index.php". You should now have the following
-			structure in your service folder.</para>
-			<screen>service /
-	world /
-		application /
-			index.php
-		config.xml</screen>
-		</sect1>
-		<sect1>
-			<title>Build config.xml</title>
-			<para>Open the file config.xml with you favorite editor and insert the following content.</para>
-			<programlisting role="xml"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org" signature="">
-  <status>normal</status>
-  <name>world</name>
-  <type>http://ns.amun-project.org/2011/amun/service/world</type>
-  <link>http://phpsx.org</link>
-  <author>Your Name</author>
-  <license>GPLv3</license>
-  <version>0.0.1</version>
-  <permissions>
-    <perm name="view" description="World View"/>
-  </permissions>
-</service>]]></programlisting>
-			<para>These are the basic informations about your service wich will be inserted
-			into the service table. Each service should have at least one view right.
-			If the user has the right the page is shown in the navigation else not.</para>
-		</sect1>
-		<sect1>
-			<title>Start coding</title>
-			<para>Now open the file application/index.php and write the following code to it</para>
-			<programlisting role="php"><![CDATA[<?php
-
-use Amun\Exception;
-use Amun\Module\ApplicationAbstract;
-
-class index extends ApplicationAbstract
-{
-	public function onLoad()
-	{
-		if($this->user->hasRight('world_view'))
-		{
-			echo '<h1>Hello World</h1>';
-		}
-		else
-		{
-			throw new Exception('Access denied');
-		}
-	}
-}
-]]></programlisting>
-			<para>Each file of a service wich you want access must have a class wich has the same
-			name as the file. The output wich is generated by the class will be inserted into the
-			template. We first check whether the user has the right to view the template if
-			yes we output "Hello World" else we show an message that the user has not the right to
-			view it.</para>
-		</sect1>
-		<sect1>
-			<title>Installation</title>
-			<para>To install the service goto the backend and select the option System / Service.
-			Select the "world" service and install it. If the service was installed successful
-			you can create a new page at Content / Page wich uses the "world" service. Now you have
-			to set the rights in your user group. Goto User / Group and select the user group
-			wich you want give the right to view this application. If anything works you should
-			now see the service at the frontend.</para>
 		</sect1>
 	</chapter>
 

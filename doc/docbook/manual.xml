@@ -4,7 +4,7 @@
 	<bookinfo>
 		<title>Amun manual</title>
 		<abstract>
-			<para>This is the offical manual of Amun.</para>
+			<para>This is the official manual of Amun.</para>
 		</abstract>
 	</bookinfo>
 
@@ -17,84 +17,41 @@
 
 	<chapter>
 		<title>Installation and Configuration</title>
-		<para>This chapter describes howto install and configure Amun properly.</para>
-		<sect1>
-			<title>Requirements</title>
-			<para>You need PHP >= 5.3 and a MYSQL database.</para>
-		</sect1>
-		<sect1>
-			<title>Prepare</title>
-			<para>The installation is done via an install script but before you can
-			start it you have to make the following changes.</para>
-			<sect2>
-				<title>Setting rights</title>
-				<para>Amun needs write permissions to the folder "cache/".</para>
-			</sect2>
-			<sect2>
-				<title>Edit config</title>
-				<para>Open the file configuration.php and change the key "psx_url"
-				to your domain. Note do not use a trailing slash. Also enter your 
-				connection data at the "sql_*" keys. It is recommended to change
-				the "amun_salt" parameter to another random string.</para>
-			</sect2>
-		</sect1>
-		<sect1>
-			<title>Run installer</title>
-			<para>Point your browser to http://[server]/[path]/public/install.php
-			and run the install script. Enter the data and click on install. Note the
-			install script is based on javascript. If the installation was succesful 
-			you can goto the main page and login with your admin account.</para>
-		</sect1>
-		<sect1>
-			<title>Clean up</title>
-			<para>It is highly recommended that you delete the files wich are used by the 
-			install script.</para>
-			<orderedlist numeration="upperroman">
-			<title>Files that are used by the installation</title>
-			<listitem>
-				<para>module/install.php</para>
-			</listitem>
-			<listitem>
-				<para>public/install.php</para>
-			</listitem>
-			<listitem>
-				<para>template/default/system/install.tpl</para>
-			</listitem>
-			</orderedlist>
-		</sect1>
+		<para>To install Amun you need PHP >= 5.3 a current version of <ulink url="http://getcomposer.org/">Composer</ulink>
+		and a MYSQL database. You can download the latest version of Amun at the <ulink url="http://amun-project.org/">website</ulink>.
+		Amun uses composer to manage all dependencies and it has a custom plugin to install the database structure
+		through composer. So before you run the install command you have to set your database connection settings
+		in the configuration.php. After that you can simply install Amun with the following command:</para>
+		<screen>php composer.phar install</screen>
+		<para>If the database settings are wrong it is no problem simply correct them and use composer update to start the
+		installation process again.</para>
+		<para>During the installation you have to enter a username, password and email of the administrator account.
+		After this you have to set the correct url in the configuration.php for the key "psx_url". The installation is now 
+		complete and you should be able to visit the website.</para>
+	</chapter>
+
+	<chapter>
+		<title>Enabling clean urls</title>
+		<para>In order to activate clean urls you have to move the file public/htaccess.sample to public/.htaccess. After
+		this you must set in the configuration.php the key "psx_dispatch" to an empty value "". Now you can access all
+		pages without index.php/.</para>
 	</chapter>
 
 	<chapter>
 		<title>Manage Amun</title>
-		<para>In order to manage Amun you need an client wich connects to the Amun API.
-		By default amun offers a workbench wich offers basic functionallity to configure and control
-		amun. The endpoint url is at "index.php/workbench". You can find a list of
-		available backends at the <ulink url="http://amun-project.org/">website</ulink>.</para>
-	</chapter>
+		<para>In order to manage Amun you need an client wich connects to the Amun API. By default Amun comes with a javascript 
+		based backend wich has all functionallity to configure and control your website. The endpoint url is at "index.php/workbench". 
+		You can find a list of available backends at the <ulink url="http://amun-project.org/">website</ulink>.</para>
 
-	<chapter>
-		<title>Service</title>
-		<para>In amun every functionality is provided via a service. All services are normally placed
-		in the folder "service" but the location can be defined in the configuration at
-		the point "amun_service_path". On Installation some basic services are installed
-		but you can install and uninstall every service later on. An service can add functionality to
-		the following sections.</para>
 		<sect1>
-			<title>API</title>
-			<para>Every service wich insert, update or delete data defines an RESTful API endpoint
-			designed after the <ulink url="http://opensocial-resources.googlecode.com/svn/spec/2.0.1/Core-API-Server.xml">OpenSocial Core API</ulink>
-			specification. The endpoint is normally at the following location:</para>
-			<screen>http://[url]/index.php/api/service/[service]</screen>
-		</sect1>
-		<sect1>
-			<title>Application</title>
-			<para>The application represents the functionality on the website. In general it
-			offers a user interface to use the API.</para>
-		</sect1>
-		<sect1>
-			<title>Gadget</title>
-			<para>A gadget is a small script wich can be loaded beside an application to
-			display additional informations.</para>
+			<title>Structure</title>
+			<para>This section explains how the structure of the Amun CMS works.</para>
+			<para>In Amun every functionality is provided via a service. The structure of the website is created
+			with pages. A page refers to a service. I.e. if you create a page with the news service the page
+			contains a list of news and you have the option to add new entries. Beside the service a page can
+			load gadgets wich can display informations in a sidebar i.e. the latest news. Every service offers
+			an REST API endpoint where it is possible to create new entries. In fact the website uses the API to 
+			create or update records. The API endpoint of the news service is available at index.php/api/news.</para>
 		</sect1>
 	</chapter>
 
@@ -108,13 +65,22 @@
 			<para>Ace: <ulink url="http://ace.ajax.org/">http://ace.ajax.org/</ulink></para>
 		</listitem>
 		<listitem>
-			<para>Blueprint CSS Framework: <ulink url="http://blueprintcss.org">http://blueprintcss.org</ulink></para>
+			<para>Bootstrap CSS Framework: <ulink url="http://getbootstrap.com/">http://getbootstrap.com</ulink></para>
+		</listitem>
+		<listitem>
+			<para>Composer: <ulink url="http://getcomposer.org">http://getcomposer.org</ulink></para>
+		</listitem>
+		<listitem>
+			<para>ExtJs: <ulink url="http://www.sencha.com/products/extjs">http://www.sencha.com/products/extjs</ulink></para>
 		</listitem>
 		<listitem>
 			<para>Google Code Prettify: <ulink url="http://code.google.com/p/google-code-prettify/">http://code.google.com/p/google-code-prettify</ulink></para>
 		</listitem>
 		<listitem>
 			<para>jQuery: <ulink url="http://jquery.com">http://jquery.com</ulink></para>
+		</listitem>
+		<listitem>
+			<para>Monolog: <ulink url="https://github.com/Seldaek/monolog">https://github.com/Seldaek/monolog</ulink></para>
 		</listitem>
 		<listitem>
 			<para>PSX: <ulink url="http://phpsx.org">http://phpsx.org</ulink></para>
