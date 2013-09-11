@@ -1,6 +1,7 @@
 
 [FEATURES]
 
+[ ] test and approval system
 [ ] Set media_view as default right when adding an media item in backend
 [ ] Anonymous user is created under the name of the admin in the sample service
 [ ] Backend service panel is not listed under System
