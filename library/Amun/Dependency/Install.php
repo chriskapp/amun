@@ -64,31 +64,36 @@ class Install extends Container
 
 class RegistryNoDb extends Registry
 {
-	protected $container = array();
-	protected $config;
-	protected $sql;
-
 	public function __construct(Config $config, Sql $sql)
 	{
-		$this->config = $config;
-		$this->sql    = $sql;
-
-		$this->exchangeArray(array(
-
-			'table.core_approval'        => $this->config['amun_table_prefix'] . 'core_approval',
-			'table.core_approval_record' => $this->config['amun_table_prefix'] . 'core_approval_record',
-			'table.core_event'           => $this->config['amun_table_prefix'] . 'core_event',
-			'table.core_event_listener'  => $this->config['amun_table_prefix'] . 'core_event_listener',
-			'table.core_registry'        => $this->config['amun_table_prefix'] . 'core_registry',
-			'table.core_service'         => $this->config['amun_table_prefix'] . 'core_service',
-			'core.default_timezone'      => new DateTimeZone('UTC'),
-
-		));
+		try
+		{
+			parent::__construct($config, $sql);
+		}
+		catch(\PDOException $e)
+		{
+			$this->exchangeArray(array(
+				'table.core_approval'        => $this->config['amun_table_prefix'] . 'core_approval',
+				'table.core_approval_record' => $this->config['amun_table_prefix'] . 'core_approval_record',
+				'table.core_event'           => $this->config['amun_table_prefix'] . 'core_event',
+				'table.core_event_listener'  => $this->config['amun_table_prefix'] . 'core_event_listener',
+				'table.core_registry'        => $this->config['amun_table_prefix'] . 'core_registry',
+				'table.core_service'         => $this->config['amun_table_prefix'] . 'core_service',
+				'core.default_timezone'      => new DateTimeZone('UTC'),
+			));
+		}
 	}
 
 	public function hasService($name)
 	{
-		return false;
+		try
+		{
+			return parent::hasService($name);
+		}
+		catch(\PDOException $e)
+		{
+			return false;
+		}
 	}
 }
 
