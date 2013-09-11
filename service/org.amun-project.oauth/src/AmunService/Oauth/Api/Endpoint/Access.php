@@ -23,7 +23,6 @@
 namespace AmunService\Oauth\Api\Endpoint;
 
 use AmunService\Oauth;
-use Amun\DataFactory;
 use Amun\Dependency;
 use Amun\Security;
 use Amun\Exception;

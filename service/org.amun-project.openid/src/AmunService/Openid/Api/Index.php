@@ -23,7 +23,6 @@
 namespace AmunService\Openid\Api;
 
 use Amun\Module\RestAbstract;
-use Amun\DataFactory;
 use Amun\Exception;
 use PSX\Data\Message;
 use PSX\Data\WriterInterface;

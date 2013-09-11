@@ -23,7 +23,6 @@
 namespace AmunService\Oauth\Access\Right;
 
 use Amun\Data\RecordAbstract;
-use Amun\DataFactory;
 use Amun\Filter;
 use Amun\Exception;
 

@@ -25,7 +25,6 @@ namespace AmunService\Xrds\Type;
 use Amun\Data\HandlerAbstract;
 use Amun\Data\RecordAbstract;
 use Amun\Exception;
-use Amun\DataFactory;
 use PSX\Data\RecordInterface;
 use PSX\Sql;
 use PSX\Sql\Condition;

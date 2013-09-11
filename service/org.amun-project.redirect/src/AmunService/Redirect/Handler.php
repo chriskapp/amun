@@ -22,7 +22,6 @@
 
 namespace AmunService\Redirect;
 
-use Amun\DataFactory;
 use Amun\Data\ApproveHandlerAbstract;
 use Amun\Data\RecordAbstract;
 use Amun\Exception;

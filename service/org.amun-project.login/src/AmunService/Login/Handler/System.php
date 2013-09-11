@@ -23,7 +23,6 @@
 namespace AmunService\Login\Handler;
 
 use Amun\Security;
-use Amun\DataFactory;
 use Amun\Exception;
 use AmunService\Login\HandlerAbstract;
 use AmunService\Login\InvalidPasswordException;

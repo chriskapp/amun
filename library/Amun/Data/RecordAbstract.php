@@ -23,7 +23,6 @@
 namespace Amun\Data;
 
 use Amun\Dependency;
-use Amun\DataFactory;
 use Amun\Sql\TableInterface;
 use PSX\Data\Record\TableAbstract;
 

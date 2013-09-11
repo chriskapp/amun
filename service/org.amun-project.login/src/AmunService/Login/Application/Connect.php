@@ -23,7 +23,6 @@
 namespace AmunService\Login\Application;
 
 use Amun\Module\ApplicationAbstract;
-use Amun\DataFactory;
 use Amun\Exception;
 use Amun\Security;
 use AmunService\Openid;

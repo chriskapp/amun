@@ -24,7 +24,6 @@ namespace AmunService\Login\Application;
 
 use Amun\Module\ApplicationAbstract;
 use Amun\Exception;
-use Amun\DataFactory;
 use Amun\Security;
 use AmunService\Oauth;
 use PSX\DateTime;

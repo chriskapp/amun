@@ -23,7 +23,6 @@
 namespace AmunService\Mail;
 
 use Amun\Data\ListenerAbstract;
-use Amun\DataFactory;
 use AmunService\Core\Service;
 use DOMDocument;
 use DOMElement;

@@ -22,7 +22,6 @@
 
 namespace AmunService\Login\Handler;
 
-use Amun\DataFactory;
 use Amun\Exception;
 use Amun\Security;
 use AmunService\Core\Host;

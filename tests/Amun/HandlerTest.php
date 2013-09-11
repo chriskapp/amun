@@ -22,7 +22,6 @@
 
 namespace Amun;
 
-use Amun\DataFactory;
 use PDOException;
 use PSX\Sql;
 

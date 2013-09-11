@@ -23,7 +23,6 @@
 namespace AmunService\Content;
 
 use Amun\Data\ListenerAbstract;
-use Amun\DataFactory;
 use AmunService\Content\Page;
 use PSX\DateTime;
 use PSX\Filter;

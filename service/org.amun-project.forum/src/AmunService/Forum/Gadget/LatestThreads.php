@@ -23,7 +23,6 @@
 namespace AmunService\Forum\Gadget;
 
 use Amun\Module\GadgetAbstract;
-use Amun\DataFactory;
 use PSX\DateTime;
 use PSX\Sql;
 use PSX\Sql\Join;

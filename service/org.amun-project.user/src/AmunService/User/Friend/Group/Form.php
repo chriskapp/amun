@@ -23,7 +23,6 @@
 namespace AmunService\User\Friend\Group;
 
 use Amun\Data\FormAbstract;
-use Amun\DataFactory;
 use Amun\Form as AmunForm;
 use Amun\Form\Element\Panel;
 use Amun\Form\Element\Input;

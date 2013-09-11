@@ -23,7 +23,6 @@
 namespace Amun\Api\Oauth;
 
 use Amun\Api\ApiTest;
-use Amun\DataFactory;
 use Amun\Security;
 use AmunService\Oauth;
 use PSX\Yadis;

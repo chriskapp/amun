@@ -22,7 +22,6 @@
 
 namespace AmunService\Core\Host\Request;
 
-use Amun\DataFactory;
 use Amun\Data\HandlerAbstract;
 use Amun\Data\RecordAbstract;
 use Amun\Exception;

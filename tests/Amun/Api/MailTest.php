@@ -22,7 +22,6 @@
 
 namespace Amun\Api;
 
-use Amun\DataFactory;
 use PSX\Sql\Condition;
 use PSX\Http\GetRequest;
 use PSX\Json;

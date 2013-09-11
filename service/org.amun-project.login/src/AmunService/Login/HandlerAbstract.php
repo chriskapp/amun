@@ -22,8 +22,6 @@
 
 namespace AmunService\Login;
 
-use Amun\DataFactory;
-
 /**
  * HandlerAbstract
  *

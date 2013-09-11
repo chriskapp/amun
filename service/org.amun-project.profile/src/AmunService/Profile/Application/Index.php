@@ -24,7 +24,6 @@ namespace AmunService\Profile\Application;
 
 use Amun\Module\ApplicationAbstract;
 use Amun\Exception;
-use Amun\DataFactory;
 use Amun\Option;
 use Amun\Base;
 use Amun\Html;

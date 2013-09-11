@@ -24,7 +24,6 @@ namespace AmunService\My\Api;
 
 use AmunService\User\Account;
 use Amun\Base;
-use Amun\DataFactory;
 use Amun\Module\RestAbstract;
 use Amun\Sql\Table\Registry;
 use Amun\Exception;

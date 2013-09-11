@@ -23,7 +23,6 @@
 namespace AmunService\Vcshook\Commit;
 
 use DateTimeZone;
-use Amun\DataFactory;
 use Amun\Data\RecordAbstract;
 use Amun\Filter\Id;
 use Amun\Exception;

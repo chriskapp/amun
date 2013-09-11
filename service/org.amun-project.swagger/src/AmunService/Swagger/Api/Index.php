@@ -24,7 +24,6 @@ namespace AmunService\Swagger\Api;
 
 use Amun\Base;
 use Amun\Module\ApiAbstract;
-use Amun\DataFactory;
 use Amun\Exception;
 use PSX\Cache;
 use PSX\Data\Message;

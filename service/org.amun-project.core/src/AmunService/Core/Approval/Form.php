@@ -22,7 +22,6 @@
 
 namespace AmunService\Core\Approval;
 
-use Amun\DataFactory;
 use Amun\Data\FormAbstract;
 use Amun\Form as AmunForm;
 use Amun\Form\Element\Panel;

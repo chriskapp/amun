@@ -24,7 +24,6 @@ namespace AmunService\User\Group\Right;
 
 use Amun\Data\RecordAbstract;
 use Amun\Filter;
-use Amun\DataFactory;
 use Amun\Exception;
 
 /**

@@ -23,7 +23,6 @@
 namespace Amun\Api\Content;
 
 use Amun\Api\RestTest;
-use Amun\DataFactory;
 use AmunService\Content\Page;
 use AmunService\Core\Service;
 use PSX\Sql\Condition;

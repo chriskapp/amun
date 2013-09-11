@@ -23,7 +23,6 @@
 namespace Amun\Api\Oauth;
 
 use Amun\Api\RestTest;
-use Amun\DataFactory;
 use AmunService\Oauth;
 use PSX\Http\GetRequest;
 use PSX\Json;

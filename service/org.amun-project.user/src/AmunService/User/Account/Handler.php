@@ -24,7 +24,6 @@ namespace AmunService\User\Account;
 
 use Amun\Data\RecordAbstract;
 use Amun\Data\HandlerAbstract;
-use Amun\DataFactory;
 use Amun\Exception;
 use Amun\Security;
 use AmunService\User\Friend;

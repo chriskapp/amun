@@ -22,7 +22,6 @@
 
 namespace AmunService\My;
 
-use Amun\DataFactory;
 use Amun\Option;
 use AmunService\User\Friend;
 use PSX\Sql\Condition;

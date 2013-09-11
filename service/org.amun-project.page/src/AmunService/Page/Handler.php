@@ -24,7 +24,6 @@ namespace AmunService\Page;
 
 use Amun\Data\ApproveHandlerAbstract;
 use Amun\Data\RecordAbstract;
-use Amun\DataFactory;
 use Amun\Exception;
 use AmunService\Core\Approval;
 use PSX\Data\RecordInterface;

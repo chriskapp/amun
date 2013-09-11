@@ -22,7 +22,6 @@
 
 namespace AmunService\Media;
 
-use Amun\DataFactory;
 use Amun\Data\FormAbstract;
 use Amun\Exception;
 use Amun\Form as AmunForm;

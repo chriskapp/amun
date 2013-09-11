@@ -23,7 +23,6 @@
 namespace AmunService\Login\Handler;
 
 use Amun\Exception;
-use Amun\DataFactory;
 use Amun\Security;
 use AmunService\Login\HandlerAbstract;
 use AmunService\User\Account;

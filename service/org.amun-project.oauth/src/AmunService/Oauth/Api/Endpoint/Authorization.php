@@ -22,7 +22,6 @@
 
 namespace AmunService\Oauth\Api\Endpoint;
 
-use Amun\DataFactory;
 use Amun\Dependency;
 use Amun\Exception;
 use PSX\Filter;

@@ -23,7 +23,6 @@
 namespace AmunService\Login\Gadget;
 
 use Amun\Module\GadgetAbstract;
-use Amun\DataFactory;
 use PSX\Sql;
 
 /**

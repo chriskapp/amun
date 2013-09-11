@@ -24,7 +24,6 @@ namespace AmunService\Login\Handler;
 
 use Amun\Exception;
 use Amun\Security;
-use Amun\DataFactory;
 use AmunService\Login\HandlerAbstract;
 use AmunService\User\Account;
 use PSX\Http;

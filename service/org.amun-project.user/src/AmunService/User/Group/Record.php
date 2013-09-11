@@ -25,7 +25,6 @@ namespace AmunService\User\Group;
 use Amun\Data\RecordAbstract;
 use Amun\Filter as AmunFilter;
 use Amun\Exception;
-use Amun\DataFactory;
 use AmunService\Core\Registry;
 use PSX\Filter;
 use PSX\DateTime;

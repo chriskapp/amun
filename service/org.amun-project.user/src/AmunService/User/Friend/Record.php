@@ -23,7 +23,6 @@
 namespace AmunService\User\Friend;
 
 use Amun\Data\RecordAbstract;
-use Amun\DataFactory;
 use Amun\Exception;
 use Amun\Filter;
 use PSX\ActivityStream;

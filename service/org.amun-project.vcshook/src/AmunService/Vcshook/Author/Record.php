@@ -22,7 +22,6 @@
 
 namespace AmunService\Vcshook\Author;
 
-use Amun\DataFactory;
 use Amun\Data\RecordAbstract;
 use Amun\Filter\Id;
 use Amun\Exception;

@@ -24,7 +24,6 @@ namespace AmunService\User\Api\Activity;
 
 use AmunService\User\Activity\Handler;
 use Amun\Module\ApiAbstract;
-use Amun\DataFactory;
 use Amun\User;
 use Amun\Exception;
 use Amun\Base;

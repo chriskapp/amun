@@ -23,7 +23,6 @@
 namespace AmunService\My\Api;
 
 use Amun\Module\ApiAbstract;
-use Amun\DataFactory;
 use Amun\Exception;
 use PSX\Data\Message;
 use PSX\Sql;

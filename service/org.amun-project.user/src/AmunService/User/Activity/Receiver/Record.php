@@ -25,7 +25,6 @@ namespace AmunService\User\Activity\Receiver;
 use Amun\Data\RecordAbstract;
 use Amun\Filter;
 use Amun\Exception;
-use Amun\DataFactory;
 use AmunService\User\Activity\Receiver;
 use DateTime;
 

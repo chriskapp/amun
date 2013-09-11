@@ -23,7 +23,6 @@
 namespace AmunService\Vcshook;
 
 use Amun\Data\FormAbstract;
-use Amun\DataFactory;
 use Amun\Form as AmunForm;
 use Amun\Form\Element;
 use AmunService\Vcshook;

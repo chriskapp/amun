@@ -22,7 +22,6 @@
 
 namespace AmunService\Openid\Api;
 
-use Amun\DataFactory;
 use Amun\Dependency;
 use Amun\Exception;
 use PSX\DateTime;

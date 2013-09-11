@@ -23,7 +23,6 @@
 namespace AmunService\Vcshook\Api;
 
 use Amun\Module\ApiAbstract;
-use Amun\DataFactory;
 use AmunService\Vcshook\TypeAbstract;
 use Exception;
 use PSX\Base;

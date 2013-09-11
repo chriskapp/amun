@@ -25,7 +25,6 @@ namespace AmunService\Xrds\Type;
 use Amun\Data\RecordAbstract;
 use Amun\Filter;
 use Amun\Exception;
-use Amun\DataFactory;
 
 /**
  * Record

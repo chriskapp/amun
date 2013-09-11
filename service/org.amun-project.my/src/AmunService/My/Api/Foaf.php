@@ -24,7 +24,6 @@ namespace AmunService\My\Api;
 
 use AmunService\User\Friend;
 use Amun\Exception;
-use Amun\DataFactory;
 use Amun\Module\ApiAbstract;
 use Amun\Sql\Table\Registry;
 use PSX\Sql\Join;

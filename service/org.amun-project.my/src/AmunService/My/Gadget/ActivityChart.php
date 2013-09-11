@@ -23,7 +23,6 @@
 namespace AmunService\My\Gadget;
 
 use Amun\Module\GadgetAbstract;
-use Amun\DataFactory;
 use DateInterval;
 use PSX\DateTime;
 use PSX\Sql;

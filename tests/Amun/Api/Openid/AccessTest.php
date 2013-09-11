@@ -23,7 +23,6 @@
 namespace Amun\Api\Openid;
 
 use Amun\Api\RestTest;
-use Amun\DataFactory;
 use PSX\Http\GetRequest;
 use PSX\Json;
 use PSX\Url;

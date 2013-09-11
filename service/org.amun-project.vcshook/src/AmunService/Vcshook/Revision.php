@@ -23,7 +23,6 @@
 namespace AmunService\Vcshook;
 
 use Amun\Data\RecordAbstract;
-use Amun\DataFactory;
 use Amun\Filter\Id;
 use Amun\Exception;
 use PSX\DateTime;

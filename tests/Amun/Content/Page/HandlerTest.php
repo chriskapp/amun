@@ -34,6 +34,27 @@ use PSX\Sql\Condition;
  */
 class HandlerTest extends \Amun\HandlerTest
 {
+	public function testDefaultSelect()
+	{
+		$handler = $this->getHandler('AmunService\Content\Page');
+		$actual  = $handler->getOneById(1);
+		$expect  = array(
+			'id' => '1',
+			'date' => '2013-04-12 20:51:10',
+			'title' => 'test',
+			'parentId' => '0',
+			'globalId' => '5aa63a03-b140-59b4-922a-a3e91b5266fe',
+			'status' => '2',
+			'load' => '3',
+			'path' => '',
+			'template' => '',
+			'serviceId' => '26',
+			'serviceType' => 'http://ns.amun-project.org/2011/amun/service/page',
+		);
+
+		$this->assertEquals($expect, $actual);
+	}
+
 	public function testBuildPath()
 	{
 		$handler = $this->getHandler('AmunService\Content\Page');

@@ -23,7 +23,6 @@
 namespace Amun\Api\User\Group;
 
 use Amun\Api\RestTest;
-use Amun\DataFactory;
 use PSX\Sql\Condition;
 use PSX\Http\GetRequest;
 use PSX\Json;

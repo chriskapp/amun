@@ -22,7 +22,6 @@
 
 namespace AmunService\Forum;
 
-use Amun\DataFactory;
 use Amun\Data\ApproveHandlerAbstract;
 use Amun\Data\RecordAbstract;
 use Amun\Exception;

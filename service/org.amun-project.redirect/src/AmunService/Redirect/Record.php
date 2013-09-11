@@ -24,7 +24,6 @@ namespace AmunService\Redirect;
 
 use Amun\Data\RecordAbstract;
 use Amun\Filter as AmunFilter;
-use Amun\DataFactory;
 use Amun\Exception;
 use PSX\Filter;
 use PSX\Data\WriterResult;

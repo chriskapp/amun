@@ -23,7 +23,6 @@
 namespace Amun\Api\User;
 
 use Amun\Api\RestTest;
-use Amun\DataFactory;
 use Amun\Security;
 use AmunService\User\Account;
 use PSX\Sql\Condition;

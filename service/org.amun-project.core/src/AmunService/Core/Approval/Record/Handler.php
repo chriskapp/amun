@@ -25,7 +25,6 @@ namespace AmunService\Core\Approval\Record;
 use Amun\Data\RecordAbstract;
 use Amun\Data\HandlerAbstract;
 use Amun\Exception;
-use Amun\DataFactory;
 use PSX\Data\RecordInterface;
 use PSX\Sql\Condition;
 use PSX\Sql\Join;

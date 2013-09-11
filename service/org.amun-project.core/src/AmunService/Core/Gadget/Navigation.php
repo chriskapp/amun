@@ -23,7 +23,6 @@
 namespace content\gadget;
 
 use AmunService\Content\Page;
-use Amun\DataFactory;
 use Amun\Module\GadgetAbstract;
 use PSX\Sql;
 

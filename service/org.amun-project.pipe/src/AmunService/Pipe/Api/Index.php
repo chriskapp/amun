@@ -23,7 +23,6 @@
 namespace AmunService\Pipe\Api;
 
 use Amun\Module\RestAbstract;
-use Amun\DataFactory;
 use Amun\Exception;
 use PSX\Data\WriterInterface;
 use PSX\Data\WriterResult;

@@ -23,7 +23,6 @@
 namespace Amun\Api\Content;
 
 use Amun\Api\RestTest;
-use Amun\DataFactory;
 use PSX\Sql\Condition;
 use PSX\Util\Uuid;
 use PSX\DateTime;

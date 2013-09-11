@@ -25,7 +25,6 @@ namespace AmunService\Log;
 use Amun\Data\ListenerAbstract;
 use Amun\Data\RecordAbstract;
 use Amun\Sql\TableInterface;
-use Amun\DataFactory;
 use PSX\Data\RecordInterface;
 
 /**

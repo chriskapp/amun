@@ -24,7 +24,6 @@ namespace AmunService\News\Api;
 
 use Amun\Base;
 use Amun\Module\RestAbstract;
-use Amun\DataFactory;
 use PSX\DateTime;
 use PSX\Data\WriterInterface;
 use PSX\Data\WriterResult;

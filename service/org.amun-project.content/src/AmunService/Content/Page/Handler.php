@@ -25,7 +25,6 @@ namespace AmunService\Content\Page;
 use Amun\Data\HandlerAbstract;
 use Amun\Data\RecordAbstract;
 use Amun\Exception;
-use Amun\DataFactory;
 use AmunService\Content\Page\Gadget;
 use PSX\Data\RecordInterface;
 use PSX\DateTime;

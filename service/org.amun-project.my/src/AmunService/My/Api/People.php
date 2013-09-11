@@ -26,7 +26,6 @@ use Amun\Base;
 use Amun\Module\RestAbstract;
 use Amun\Sql\Table\Registry;
 use Amun\Exception;
-use Amun\DataFactory;
 use PSX\DateTime;
 use PSX\Data\Message;
 use PSX\Data\WriterInterface;

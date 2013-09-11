@@ -23,7 +23,6 @@
 namespace AmunService\User\Activity;
 
 use Amun\Data\ListenerAbstract;
-use Amun\DataFactory;
 use Amun\User;
 use Amun\Page;
 use Amun\Data\RecordAbstract;
