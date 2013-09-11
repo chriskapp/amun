@@ -23,15 +23,12 @@
 namespace AmunService\Core\Service;
 
 use Amun\Base;
-use Amun\Composer\LoggerIO;
-use Amun\Composer\XmlFile;
 use Amun\Data\HandlerAbstract;
 use Amun\Data\RecordAbstract;
 use Amun\Exception;
 use Amun\SetupAbstract;
 use Amun\Setup\VoidSetup;
 use AmunService\Core\Service;
-use Composer\Package\Version\VersionParser;
 use DOMDocument;
 use DOMElement;
 use DOMNodeList;
@@ -522,24 +519,24 @@ class Handler extends HandlerAbstract
 
 	private function isVersion($value)
 	{
-		$a = VersionParser::normalize(Base::getVersion());
-		$b = VersionParser::normalize($value);
+		$a = Base::getVersion();
+		$b = $value;
 
 		return version_compare($a, $b, '==');
 	}
 
 	private function isMinVersion($value)
 	{
-		$a = VersionParser::normalize(Base::getVersion());
-		$b = VersionParser::normalize($value);
+		$a = Base::getVersion();
+		$b = $value;
 
 		return version_compare($a, $b, '>=');
 	}
 
 	private function isMaxVersion($value)
 	{
-		$a = VersionParser::normalize(Base::getVersion());
-		$b = VersionParser::normalize($value);
+		$a = Base::getVersion();
+		$b = $value;
 
 		return version_compare($a, $b, '<=');
 	}

@@ -14,7 +14,6 @@
     "require": {
         "php": ">=5.3",
         "psx/psx": "dev-master",
-        "composer/composer": "1.0.*@dev",
         "monolog/monolog": "1.5.*"
     },
     "autoload": {

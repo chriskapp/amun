@@ -18,7 +18,6 @@
         "ext-simplexml": "*",
         "ext-hash": "*",
         "psx/psx": "dev-master",
-        "composer/composer": "1.0.*@dev",
         "monolog/monolog": "1.5.*",
         "amun/installer": "dev-master",
         "amun/core": "dev-master",
