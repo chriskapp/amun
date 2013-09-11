@@ -22,46 +22,23 @@
 
 namespace Amun;
 
-use PDOException;
-use PSX\Sql;
-
 /**
- * HandlerTest
+ * DbTest
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  * @backupStaticAttributes disabled
  */
-abstract class HandlerTest extends DbTest
+abstract class DbTest extends \PHPUnit_Extensions_Database_TestCase
 {
-	protected $config;
-	protected $sql;
-	protected $registry;
-	protected $user;
-
-	protected function setUp()
+	public function getConnection()
 	{
-		parent::setUp();
-
-		$this->config   = getContainer()->get('config');
-		$this->sql      = getContainer()->get('sql');
-		$this->registry = getContainer()->get('registry');
-		$this->user     = getContainer()->get('user');
+		return $this->createDefaultDBConnection(getContainer()->get('sql'), getContainer()->get('config')->get('psx_sql_db'));
 	}
 
-	protected function tearDown()
+	public function getDataSet()
 	{
-		parent::tearDown();
-
-		unset($this->config);
-		unset($this->sql);
-		unset($this->registry);
-		unset($this->user);
-	}
-
-	protected function getHandler($table)
-	{
-		return getContainer()->get('handlerManager')->getHandler($table);
+		return $this->createMySQLXMLDataSet('tests/amun.xml');
 	}
 }

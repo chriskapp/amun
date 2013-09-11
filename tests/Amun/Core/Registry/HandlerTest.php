@@ -20,10 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Amun;
-
-use PDOException;
-use PSX\Sql;
+namespace Amun\Core\Registry;
 
 /**
  * HandlerTest
@@ -33,35 +30,18 @@ use PSX\Sql;
  * @link    http://amun.phpsx.org
  * @backupStaticAttributes disabled
  */
-abstract class HandlerTest extends DbTest
+class HandlerTest extends \Amun\HandlerTest
 {
-	protected $config;
-	protected $sql;
-	protected $registry;
-	protected $user;
-
-	protected function setUp()
+	public function testDefaultSelect()
 	{
-		parent::setUp();
+		$handler = $this->getHandler('AmunService\Core\Registry');
+		$actual  = $handler->getOneById(1);
+		$expect  = array(
+			'id' => '1',
+			'name' => 'table.core_approval',
+			'value' => 'amun_core_approval',
+		);
 
-		$this->config   = getContainer()->get('config');
-		$this->sql      = getContainer()->get('sql');
-		$this->registry = getContainer()->get('registry');
-		$this->user     = getContainer()->get('user');
-	}
-
-	protected function tearDown()
-	{
-		parent::tearDown();
-
-		unset($this->config);
-		unset($this->sql);
-		unset($this->registry);
-		unset($this->user);
-	}
-
-	protected function getHandler($table)
-	{
-		return getContainer()->get('handlerManager')->getHandler($table);
+		$this->assertEquals($expect, $actual);
 	}
 }

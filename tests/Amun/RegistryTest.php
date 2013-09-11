@@ -22,46 +22,32 @@
 
 namespace Amun;
 
-use PDOException;
-use PSX\Sql;
-
 /**
- * HandlerTest
+ * RegistryTest
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  * @backupStaticAttributes disabled
  */
-abstract class HandlerTest extends DbTest
+class RegistryTest extends HandlerTest
 {
-	protected $config;
-	protected $sql;
-	protected $registry;
-	protected $user;
-
-	protected function setUp()
+	public function testGetClassNameFromTable()
 	{
-		parent::setUp();
-
-		$this->config   = getContainer()->get('config');
-		$this->sql      = getContainer()->get('sql');
-		$this->registry = getContainer()->get('registry');
-		$this->user     = getContainer()->get('user');
+		$this->assertEquals('AmunService\Core\Service', $this->registry->getClassNameFromTable('amun_core_service'));
+		$this->assertInstanceOf('AmunService\Core\Service\Handler', $this->getHandler($this->registry->getClassNameFromTable('amun_core_service')));
 	}
 
-	protected function tearDown()
+	public function testHasService()
 	{
-		parent::tearDown();
+		$this->assertEquals(false, $this->registry->hasService(null));
+		$this->assertEquals(false, $this->registry->hasService('foo'));
 
-		unset($this->config);
-		unset($this->sql);
-		unset($this->registry);
-		unset($this->user);
-	}
+		$services = $this->sql->getCol('SELECT `name` FROM ' . $this->registry['table.core_service']);
 
-	protected function getHandler($table)
-	{
-		return getContainer()->get('handlerManager')->getHandler($table);
+		foreach($services as $serviceName)
+		{
+			$this->assertEquals(true, $this->registry->hasService($serviceName));
+		}
 	}
 }

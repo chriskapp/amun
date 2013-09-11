@@ -20,10 +20,7 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Amun;
-
-use PDOException;
-use PSX\Sql;
+namespace Amun\Core\Service;
 
 /**
  * HandlerTest
@@ -33,35 +30,23 @@ use PSX\Sql;
  * @link    http://amun.phpsx.org
  * @backupStaticAttributes disabled
  */
-abstract class HandlerTest extends DbTest
+class HandlerTest extends \Amun\HandlerTest
 {
-	protected $config;
-	protected $sql;
-	protected $registry;
-	protected $user;
-
-	protected function setUp()
+	public function testDefaultSelect()
 	{
-		parent::setUp();
+		$handler = $this->getHandler('AmunService\Core\Service');
+		$actual  = $handler->getOneById(1);
+		$expect  = array(
+			'id' => '1',
+			'status' => '2',
+			'name' => 'amun/core',
+			'type' => 'http://ns.amun-project.org/2011/amun/service/core',
+			'link' => 'http://amun-project.org',
+			'license' => 'GPL-3.0',
+			'version' => '0.0.1',
+			'date' => '2013-04-12 20:51:03',
+		);
 
-		$this->config   = getContainer()->get('config');
-		$this->sql      = getContainer()->get('sql');
-		$this->registry = getContainer()->get('registry');
-		$this->user     = getContainer()->get('user');
-	}
-
-	protected function tearDown()
-	{
-		parent::tearDown();
-
-		unset($this->config);
-		unset($this->sql);
-		unset($this->registry);
-		unset($this->user);
-	}
-
-	protected function getHandler($table)
-	{
-		return getContainer()->get('handlerManager')->getHandler($table);
+		$this->assertEquals($expect, $actual);
 	}
 }

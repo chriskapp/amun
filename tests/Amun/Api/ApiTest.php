@@ -22,6 +22,7 @@
 
 namespace Amun\Api;
 
+use Amun\DbTest;
 use PSX\Http;
 use PSX\Http\Response;
 use PSX\Oauth;
@@ -38,7 +39,7 @@ use InvalidArgumentException;
  * @link    http://amun.phpsx.org
  * @backupStaticAttributes disabled
  */
-abstract class ApiTest extends \PHPUnit_Extensions_Database_TestCase
+abstract class ApiTest extends DbTest
 {
 	const ONLINE  = 0x1;
 	const OFFLINE = 0x2;
@@ -55,16 +56,6 @@ abstract class ApiTest extends \PHPUnit_Extensions_Database_TestCase
 	protected $consumerSecret;
 	protected $token;
 	protected $tokenSecret;
-
-	public function getConnection()
-	{
-		return $this->createDefaultDBConnection(getContainer()->get('sql'), getContainer()->get('config')->get('psx_sql_db'));
-	}
-
-	public function getDataSet()
-	{
-		return $this->createMySQLXMLDataSet('tests/amun.xml');
-	}
 
 	protected function setUp()
 	{
