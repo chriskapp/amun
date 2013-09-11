@@ -47,12 +47,18 @@ class ServiceInstaller extends LibraryInstaller
 
 	protected $container;
 	protected $classLoader;
+	protected $autoloadAvailable;
 
 	public function __construct(IOInterface $io, Composer $composer, $type = 'amun-service')
 	{
 		parent::__construct($io, $composer, $type);
 
 		$this->container = self::getContainer($io);
+	}
+
+	public function setAutoloadAvailable($autoloadAvailable)
+	{
+		$this->autoloadAvailable = (boolean) $autoloadAvailable;
 	}
 
 	public function isInstalled(InstalledRepositoryInterface $repo, PackageInterface $package)
@@ -83,20 +89,23 @@ class ServiceInstaller extends LibraryInstaller
 
 		if(is_file($config))
 		{
-			// make service autoloadable
-			$generator = $this->composer->getAutoloadGenerator();
-			$autoload  = $package->getAutoload();
-
-			if(isset($autoload['psr-0']) && is_array($autoload['psr-0']))
+			// make service autoloadable if not available
+			if(!$this->autoloadAvailable)
 			{
-				$map = array();
-				foreach($autoload['psr-0'] as $ns => $src)
-				{
-					$map['psr-0'][$ns] = $dir . '/' . $package->getName() . '/' . $src;
-				}
+				$generator = $this->composer->getAutoloadGenerator();
+				$autoload  = $package->getAutoload();
 
-				$classLoader = $generator->createLoader($map);
-				$classLoader->register();
+				if(isset($autoload['psr-0']) && is_array($autoload['psr-0']))
+				{
+					$map = array();
+					foreach($autoload['psr-0'] as $ns => $src)
+					{
+						$map['psr-0'][$ns] = $dir . '/' . $package->getName() . '/' . $src;
+					}
+
+					$classLoader = $generator->createLoader($map);
+					$classLoader->register();
+				}
 			}
 
 			try

@@ -37,13 +37,25 @@ class ServicePlugin implements PluginInterface
 {
 	public function activate(Composer $composer, IOInterface $io)
 	{
-		// register class loader to load amun classes
-		$generator   = $composer->getAutoloadGenerator();
-		$classLoader = $generator->createLoader($composer->getPackage()->getAutoload());
-		$classLoader->register();
+		// if the autoload.php was already generated use this fur autoloading
+		// else register a new autoloader
+		$file = $composer->getConfig()->get('vendor-dir') . '/autoload.php';
+
+		if($autoloadAvailable = is_file($file))
+		{
+			include $file;
+		}
+		else
+		{
+			// register class loader to load amun classes
+			$generator   = $composer->getAutoloadGenerator();
+			$classLoader = $generator->createLoader($composer->getPackage()->getAutoload());
+			$classLoader->register();
+		}
 
 		// register installer
 		$installer = new ServiceInstaller($io, $composer);
+		$installer->setAutoloadAvailable($autoloadAvailable);
 
 		$composer->getInstallationManager()->addInstaller($installer);
 	}
