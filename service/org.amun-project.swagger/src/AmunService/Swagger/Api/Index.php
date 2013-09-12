@@ -152,6 +152,7 @@ class Index extends ApiAbstract
 			{
 				// get the api class
 				$apiPath = '../vendor/' . $row['name'] . '/src/' . $row['namespace'] . '/Api';
+				$apiPath = str_replace('\\', '/', $apiPath);
 
 				if(is_dir($apiPath))
 				{
