@@ -49,6 +49,6 @@ class Index extends RestAbstract
 
 	protected function getRestrictedFields()
 	{
-		return array('authorIdentity', 'authorPw', 'authorEmail', 'authorToken', 'authorIp');
+		return array('content', 'authorIdentity', 'authorPw', 'authorEmail', 'authorToken', 'authorIp');
 	}
 }

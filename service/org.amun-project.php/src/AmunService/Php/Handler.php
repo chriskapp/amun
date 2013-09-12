@@ -131,7 +131,7 @@ class Handler extends ApproveHandlerAbstract
 	protected function getDefaultSelect()
 	{
 		return $this->table
-			->select(array('id', 'globalId', 'pageId', 'content', 'date'))
+			->select(array('id', 'globalId', 'pageId', 'date'))
 			->join(Join::INNER, $this->hm->getTable('AmunService\User\Account')
 				->select(array('name', 'profileUrl'), 'author')
 			)

@@ -60,7 +60,8 @@ class Index extends ApplicationAbstract
 		if($this->user->hasRight('php_view'))
 		{
 			// load php
-			$recordPhp = $this->getHandler()->getOneByPageId($this->page->getId(), array(), Sql::FETCH_OBJECT);
+			$fields    = array('id', 'globalId', 'pageId', 'content', 'date', 'authorName', 'authorProfileUrl', 'pagePath');
+			$recordPhp = $this->getHandler()->getOneByPageId($this->page->getId(), $fields, Sql::FETCH_OBJECT);
 
 			$this->template->assign('recordPhp', $recordPhp);
 
