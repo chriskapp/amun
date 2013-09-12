@@ -339,6 +339,7 @@ class Form extends FormAbstract
 	private function scanDir(&$gadget, $name, $namespace)
 	{
 		$path = '../vendor/' . $name . '/src/' . $namespace . '/Gadget';
+		$path = str_replace('\\', '/', $path);
 
 		if(!is_dir($path))
 		{
