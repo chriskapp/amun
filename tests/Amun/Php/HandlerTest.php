@@ -42,7 +42,6 @@ class HandlerTest extends \Amun\HandlerTest
 			'date' => '2013-04-12 20:54:42',
 			'pageId' => '8',
 			'pagePath' => 'php',
-			'content' => "\n" . 'echo $_SERVER[\'REMOTE_ADDR\'];',
 			'authorName' => 'test',
 			'authorProfileUrl' => 'http://127.0.0.1/index.php/profile/test',
 		);
