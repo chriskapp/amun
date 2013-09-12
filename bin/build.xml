@@ -3,17 +3,8 @@
 	<description>PSX build script</description>
 
 	<property name="build" location="bin/amun" />
-
 	<property name="bin" location="bin" />
-	<property name="cache" location="cache" />
 	<property name="doc" location="doc" />
-	<property name="library" location="library" />
-	<property name="module" location="module" />
-	<property name="public" location="public" />
-	<property name="scripts" location="scripts" />
-	<property name="service" location="service" />
-	<property name="template" location="template" />
-	<property name="tests" location="tests" />
 
 	<taskdef name="git-clone" classname="org.eclipse.jgit.ant.tasks.GitCloneTask" />
 
@@ -64,32 +55,30 @@
 		-->
 	</target>
 
-	<!-- removes all files wich are not needed in the release -->
-	<target name="clean-git">
-		<delete dir="${build}/.git" />
-		<delete dir="${build}/bin" />
-		<delete dir="${build}/tests" />
-		<delete dir="${build}/doc/docbook" />
-		<delete dir="${build}/doc/xsl" />
-		<delete file="${build}/.gitignore" />
-		<delete file="${build}/.travis.yml" />
-		<delete file="${build}/phpunit.xml" />
-		<delete file="${build}/todo.txt" />
-		<delete file="${build}/doc/amun.xsl" />
-		<delete file="${build}/doc/distributed_network.html" />
-		<!-- delete beta services -->
-		<delete includeemptydirs="true">
-			<fileset dir="${build}/service">
-				<include name="**/org.amun-project.beta.*/**" />
-			</fileset>
-		</delete>
-	</target>
-
+	<!-- we need to get the version before cleaning  -->
 	<target name="get-version">
 		<exec dir="${bin}" executable="php" failonerror="true" outputproperty="version">
 			<arg line="get-version.php" />
 		</exec>
 		<echo message="Building version ${version}" />
+	</target>
+
+	<!-- removes all files wich are not needed in the release -->
+	<target name="clean-git">
+		<delete dir="${build}/.git" />
+		<delete dir="${build}/bin" />
+		<delete dir="${build}/doc/docbook" />
+		<delete dir="${build}/doc/xsl" />
+		<delete dir="${build}/service" />
+		<delete dir="${build}/tests" />
+		<delete dir="${build}/vendor" />
+		<delete file="${build}/.gitignore" />
+		<delete file="${build}/.travis.yml" />
+		<delete file="${build}/composer.lock" />
+		<delete file="${build}/doc/amun.xsl" />
+		<delete file="${build}/doc/distributed_network.html" />
+		<delete file="${build}/phpunit.xml" />
+		<delete file="${build}/todo.txt" />
 	</target>
 
 	<target name="compress" depends="get-version">
@@ -99,7 +88,7 @@
 		<zip destfile="${bin}/amun_${version}.zip" basedir="${build}" />
 	</target>
 
-	<target name="build-release" depends="phpunit,clean-git,get-version,compress">
+	<target name="build-release" depends="phpunit,get-version,clean-git,compress">
 		<!-- change config -->
 		<replace file="${build}/configuration.php" token="http://127.0.0.1:8000/public" value="http://127.0.0.1/amun/public" />
 	</target>
