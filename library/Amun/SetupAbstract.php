@@ -66,12 +66,12 @@ abstract class SetupAbstract
 	protected function notifyInstalledServiceInstallListener(RecordInterface $record, ListenerAbstract $listener)
 	{
 		$handler = $this->container->get('handlerManager')->getHandler('AmunService\Core\Service');
-		$con     = new Condition('id', '<', $record->id);
-		$result  = $handler->getAll(array(), 0, 16, null, null, null, Sql::FETCH_OBJECT);
+		$con     = new Condition(array('id', '<', $record->id));
+		$result  = $handler->getAll(array(), 0, 16, null, null, $con, Sql::FETCH_OBJECT);
 
 		foreach($result as $serviceRecord)
 		{
-			$configFile = '../vendor/' . $serviceRecord->name . '/config.xml';
+			$configFile = 'vendor/' . $serviceRecord->name . '/config.xml';
 
 			if(is_file($configFile))
 			{
