@@ -37,7 +37,7 @@ class ServicePlugin implements PluginInterface
 {
 	public function activate(Composer $composer, IOInterface $io)
 	{
-		// if the autoload.php was already generated use this fur autoloading
+		// if the autoload.php was already generated use this for autoloading
 		// else register a new autoloader
 		$file = $composer->getConfig()->get('vendor-dir') . '/autoload.php';
 
