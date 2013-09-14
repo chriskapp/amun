@@ -67,16 +67,15 @@ abstract class SetupAbstract
 	{
 		$handler = $this->container->get('handlerManager')->getHandler('AmunService\Core\Service');
 		$con     = new Condition(array('id', '<', $record->id));
-		$result  = $handler->getAll(array(), 0, 16, null, null, $con, Sql::FETCH_OBJECT);
+		$fields  = array('id', 'status', 'source', 'config', 'name', 'path', 'namespace', 'type');
+		$result  = $handler->getAll($fields, 0, 16, null, null, $con, Sql::FETCH_OBJECT);
 
 		foreach($result as $serviceRecord)
 		{
-			$configFile = 'vendor/' . $serviceRecord->name . '/config.xml';
-
-			if(is_file($configFile))
+			if(is_file($serviceRecord->config))
 			{
 				$config = new DOMDocument();
-				$config->load($configFile, LIBXML_NOBLANKS);
+				$config->load($serviceRecord->config, LIBXML_NOBLANKS);
 
 				$listener->notify($serviceRecord, $config, $this->logger);
 			}
