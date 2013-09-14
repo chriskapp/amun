@@ -22,7 +22,11 @@
 
 namespace Amun;
 
+use Amun\Data\ListenerAbstract;
+use DOMDocument;
 use PSX\Data\RecordInterface;
+use PSX\Sql;
+use PSX\Sql\Condition;
 
 /**
  * SetupAbstract
@@ -37,6 +41,8 @@ abstract class SetupAbstract
 	protected $config;
 	protected $sql;
 	protected $registry;
+	protected $event;
+	protected $logger;
 
 	public function __construct($container)
 	{
@@ -44,7 +50,37 @@ abstract class SetupAbstract
 		$this->config    = $container->get('config');
 		$this->sql       = $container->get('sql');
 		$this->registry  = $container->get('registry');
+		$this->event     = $container->get('event');
 		$this->logger    = $container->get('logger');
+	}
+
+	/**
+	 * Method wich executes for every service wich was installed before $record
+	 * a specific core.service_install listener. Note this method can only 
+	 * handle core.service_install listener. Should be called if a service 
+	 * registeres a new core.service_install listener
+	 *
+	 * @param PSX\Data\RecordInterface $record
+	 * @param Amun\Data\ListenerAbstract $listener
+	 */
+	protected function notifyInstalledServiceInstallListener(RecordInterface $record, ListenerAbstract $listener)
+	{
+		$handler = $this->container->get('handlerManager')->getHandler('AmunService\Core\Service');
+		$con     = new Condition('id', '<', $record->id);
+		$result  = $handler->getAll(array(), 0, 16, null, null, null, Sql::FETCH_OBJECT);
+
+		foreach($result as $serviceRecord)
+		{
+			$configFile = '../vendor/' . $serviceRecord->name . '/config.xml';
+
+			if(is_file($configFile))
+			{
+				$config = new DOMDocument();
+				$config->load($configFile, LIBXML_NOBLANKS);
+
+				$listener->notify($serviceRecord, $config, $this->logger);
+			}
+		}
 	}
 
 	abstract public function preInstall(RecordInterface $record);
