@@ -196,6 +196,10 @@ class Setup extends SetupAbstract
 		{
 			$this->logger->info('Create users');
 
+			$security = new Security($this->registry);
+			$handler  = new UserAccount\Handler($this->container);
+
+			// get name, pw and email
 			$this->name  = isset($_POST['name'])  ? $_POST['name']  : null;
 			$this->pw    = isset($_POST['pw'])    ? $_POST['pw']    : null;
 			$this->email = isset($_POST['email']) ? $_POST['email'] : null;
@@ -206,22 +210,34 @@ class Setup extends SetupAbstract
 			{
 				if(empty($this->name))
 				{
-					$this->name = $io->ask('Username: ');
+					$this->name = $this->untilValid(function() use ($io, $handler){
+						$name = $io->ask('Username: ');
+						$handler->getRecord()->setName($name);
+
+						return $name;
+					});
 				}
 
 				if(empty($this->pw))
 				{
-					$this->pw = $io->askAndHideAnswer('Password: ');
+					$this->pw = $this->untilValid(function() use ($io, $handler){
+						$pw = $io->askAndHideAnswer('Password: ');
+						$handler->getRecord()->setPw($pw);
+
+						return $pw;
+					});
 				}
 
 				if(empty($this->email))
 				{
-					$this->email = $io->ask('Email: ');
+					$this->email = $this->untilValid(function() use ($io, $handler){
+						$email = $io->ask('Email: ');
+						$handler->getRecord()->setEmail($email);
+
+						return $email;
+					});
 				}
 			}
-
-			$security = new Security($this->registry);
-			$handler  = new UserAccount\Handler($this->container);
 
 			// admin user
 			$record = $handler->getRecord();
@@ -267,6 +283,10 @@ class Setup extends SetupAbstract
 		{
 			$this->logger->info('Create api');
 
+			// insert api
+			$handler = new Oauth\Handler($this->container);
+
+			// get email if not available
 			if(empty($this->email))
 			{
 				$this->email = isset($_POST['email']) ? $_POST['email'] : null;
@@ -275,15 +295,14 @@ class Setup extends SetupAbstract
 
 				if($io instanceof IOInterface)
 				{
-					if(empty($this->email))
-					{
-						$this->email = $io->ask('Email: ');
-					}
+					$this->email = $this->untilValid(function() use ($io, $handler){
+						$email = $io->ask('Email: ');
+						$handler->getRecord()->setEmail($email);
+
+						return $email;
+					});
 				}
 			}
-
-			// insert api
-			$handler = new Oauth\Handler($this->container);
 
 			$api = $handler->getRecord();
 			$api->setStatus(Oauth\Record::NORMAL);
@@ -297,7 +316,7 @@ class Setup extends SetupAbstract
 
 			$this->logger->info('> Created system API');
 
-			// @todo probably send consumerKey and consumerSecret to email
+			// @todo probably send consumerKey and consumerSecret per email
 			$row = $this->sql->getRow('SELECT consumerKey, consumerSecret FROM ' . $this->registry['table.oauth'] . ' LIMIT 1');
 
 			if(!empty($row))
@@ -581,6 +600,21 @@ TEXT;
 				}
 
 				$this->sql->query($sql);
+			}
+		}
+	}
+
+	private function untilValid(\Closure $callback)
+	{
+		while(true)
+		{
+			try
+			{
+				return $callback();
+			}
+			catch(\Exception $e)
+			{
+				$this->container->get('io')->write($e->getMessage());
 			}
 		}
 	}
