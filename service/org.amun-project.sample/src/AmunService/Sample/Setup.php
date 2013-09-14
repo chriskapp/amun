@@ -198,6 +198,7 @@ class Setup extends SetupAbstract
 
 			$security = new Security($this->registry);
 			$handler  = new UserAccount\Handler($this->container);
+			$validate = $this->container->get('validate');
 
 			// get name, pw and email
 			$this->name  = isset($_POST['name'])  ? $_POST['name']  : null;
@@ -210,8 +211,10 @@ class Setup extends SetupAbstract
 			{
 				if(empty($this->name))
 				{
-					$this->name = $this->untilValid(function() use ($io, $handler){
+					$this->name = $this->untilValid(function() use ($io, $handler, $validate){
 						$name = $io->ask('Username: ');
+
+						$validate->clearError();
 						$handler->getRecord()->setName($name);
 
 						return $name;
@@ -220,8 +223,10 @@ class Setup extends SetupAbstract
 
 				if(empty($this->pw))
 				{
-					$this->pw = $this->untilValid(function() use ($io, $handler){
+					$this->pw = $this->untilValid(function() use ($io, $handler, $validate){
 						$pw = $io->askAndHideAnswer('Password: ');
+
+						$validate->clearError();
 						$handler->getRecord()->setPw($pw);
 
 						return $pw;
@@ -230,8 +235,10 @@ class Setup extends SetupAbstract
 
 				if(empty($this->email))
 				{
-					$this->email = $this->untilValid(function() use ($io, $handler){
+					$this->email = $this->untilValid(function() use ($io, $handler, $validate){
 						$email = $io->ask('Email: ');
+
+						$validate->clearError();
 						$handler->getRecord()->setEmail($email);
 
 						return $email;
@@ -284,7 +291,8 @@ class Setup extends SetupAbstract
 			$this->logger->info('Create api');
 
 			// insert api
-			$handler = new Oauth\Handler($this->container);
+			$handler  = new Oauth\Handler($this->container);
+			$validate = $this->container->get('validate');
 
 			// get email if not available
 			if(empty($this->email))
@@ -295,8 +303,10 @@ class Setup extends SetupAbstract
 
 				if($io instanceof IOInterface)
 				{
-					$this->email = $this->untilValid(function() use ($io, $handler){
+					$this->email = $this->untilValid(function() use ($io, $handler, $validate){
 						$email = $io->ask('Email: ');
+
+						$validate->clearError();
 						$handler->getRecord()->setEmail($email);
 
 						return $email;
