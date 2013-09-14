@@ -31,19 +31,7 @@ namespace Amun;
  */
 class Base extends \PSX\Base
 {
-	const VERSION = '0.5 beta';
-
-	protected $user;
-
-	public function setUser(User $user)
-	{
-		$this->user = $user;
-	}
-
-	public function getUser()
-	{
-		return $this->user;
-	}
+	const VERSION = '1.0.0';
 
 	public static function getVersion()
 	{
