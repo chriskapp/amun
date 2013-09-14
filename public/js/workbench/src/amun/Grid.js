@@ -28,26 +28,37 @@ Ext.define('Amun.Grid', {
     },
 
     buildGrid: function(service, result){
-        // define model
-        var fields = [];
-        for (var i = 0; i < result.length; i++) {
-            fields.push({
-                name: result[i],
-                type: 'string'
-            });
-        }
+        // build columns
+        this.buildColumns(result);
 
-        var modelNs = 'Workbench.model.' + service.getName();
-        Ext.define(modelNs, {
-            extend: 'Ext.data.Model',
-            fields: fields,
-            idProperty: 'id'
-        });
+        // create store
+        this.store = this.buildStore(service, result);
 
+        // build grid
+        return {
+            store: this.store,
+            columns: this.columns,
+            border: false,
+            cls: 'wb-content-grid',
+            selModel: {
+                listeners: {
+                    scope: this,
+                    selectionchange: this.onSelect
+                }
+            },
+            listeners: {
+                scope: this,
+                celldblclick: this.onDblClick
+            },
+            tbar: this.getTbar(),
+            bbar: this.getBbar()
+        };
+    },
+
+    buildColumns: function(result){
         // columns
         this.columns = [];
         this.searchColumns = [];
-        var fields = '';
 
         // check whether we have an config
         var config = this.getColumnConfig();
@@ -59,7 +70,6 @@ Ext.define('Amun.Grid', {
                     dataIndex: k
                 });
                 this.searchColumns.push(k);
-                fields+= k + ',';
             }
         } else {
             // we have no config select all available fields
@@ -69,13 +79,43 @@ Ext.define('Amun.Grid', {
                     dataIndex: result[i]
                 });
                 this.searchColumns.push(result[i]);
-                fields+= result[i] + ',';
             }
         }
+        return fields;
+    },
 
-        // create store
-        this.store = Ext.create('Ext.data.Store', {
-            model: modelNs,
+    buildStore: function(service, result){
+        // define model
+        var modelName = 'Amun.' + service.getNamespace() + '.Model';
+        if (Ext.ClassManager.get(modelName) == null) {
+            var fields = [];
+            for (var i = 0; i < result.length; i++) {
+                fields.push({
+                    name: result[i],
+                    type: 'string'
+                });
+            }
+
+            Ext.define(modelName, {
+                extend: 'Ext.data.Model',
+                fields: fields,
+                idProperty: 'id'
+            });
+        }
+
+        // get fields
+        var fields = '';
+        for (var i = 0; i < this.searchColumns.length; i++) {
+            fields+= this.searchColumns[i] + ',';
+        }
+
+        var storeName = 'Amun.' + service.getNamespace() + '.Store';
+        if (Ext.ClassManager.get(storeName) == null) {
+            storeName = 'Ext.data.Store';
+        }
+
+        return Ext.create(storeName, {
+            model: modelName,
             autoLoad: true,
             remoteSort: true,
             remoteFilter: true,
@@ -99,26 +139,6 @@ Ext.define('Amun.Grid', {
                 }
             }
         });
-
-        // build grid
-        return {
-            store: this.store,
-            columns: this.columns,
-            border: false,
-            cls: 'wb-content-grid',
-            selModel: {
-                listeners: {
-                    scope: this,
-                    selectionchange: this.onSelect
-                }
-            },
-            listeners: {
-                scope: this,
-                celldblclick: this.onDblClick
-            },
-            tbar: this.getTbar(),
-            bbar: this.getBbar()
-        };
     },
 
     loadForm: function(uri){
@@ -168,12 +188,10 @@ Ext.define('Amun.Grid', {
             // check whether we have a custom form class else we build the form 
             // based on the json we received
             var form;
-            var className = 'Amun.' + this.service.getNamespace() + '.Form';
+            var formName = 'Amun.' + this.service.getNamespace() + '.Form';
 
-            var extClass = Ext.ClassManager.get(className);
-
-            if (extClass != null) {
-                form = Ext.create(className, {
+            if (Ext.ClassManager.get(formName) != null) {
+                form = Ext.create(formName, {
                     recordId: this.getSelectedRecordId(),
                     form: result,
                     fieldDefaults: {

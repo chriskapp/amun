@@ -118,6 +118,11 @@ Ext.define('Amun.ColumnConfig', {
                 content: 360,
                 date: 120
             };
+        } else if (service.hasType('http://ns.amun-project.org/2011/amun/service/phpinfo')) {
+            return {
+                key: 400,
+                value: 400
+            };
         } else if (service.hasType('http://ns.amun-project.org/2011/amun/service/pipe')) {
             return {
                 id: 80,
