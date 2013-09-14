@@ -194,7 +194,7 @@ class Handler extends HandlerAbstract
 	protected function getDefaultSelect()
 	{
 		return $this->table
-			->select(array('id', 'status', 'name', 'type', 'link', 'author', 'license', 'version', 'date'));
+			->select(array('id', 'status', 'name', 'type', 'link', 'license', 'version', 'date'));
 	}
 
 	private function getSetup(Service\Record $record)
