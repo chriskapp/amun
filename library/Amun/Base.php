@@ -31,7 +31,7 @@ namespace Amun;
  */
 class Base extends \PSX\Base
 {
-	const VERSION = '1.0.0';
+	const VERSION = '1.0.1';
 
 	public static function getVersion()
 	{
