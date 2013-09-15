@@ -1,4 +1,13 @@
 
+1.0.1
+* Fix oauth custom right settings
+
+1.0
+* Following semantic versioning and raising version to 1.0
+* Set version number for dependencies
+* Improved sample installer catching wrong input
+* Added phpinfo to backend
+
 0.5 beta
 * Redesigned service structure using composer for service installation
 * Implemented composer based installer
