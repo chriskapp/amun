@@ -45,6 +45,7 @@ class OauthAuthentication extends \PSX\Dispatch\RequestFilter\OauthAuthenticatio
 	protected $sql;
 
 	protected $claimedUserId;
+	protected $accessId;
 	protected $requestToken;
 
 	public function __construct(Registry $registry)
@@ -159,6 +160,8 @@ SQL;
 			{
 				if($access['accessAllowed'] === '1')
 				{
+					$this->accessId = $access['accessId'];
+
 					return $row;
 				}
 				else
@@ -179,6 +182,6 @@ SQL;
 
 	protected function callSuccess()
 	{
-		call_user_func_array($this->successCallback, array($this->claimedUserId, $this->requestToken));
+		call_user_func_array($this->successCallback, array($this->claimedUserId, $this->accessId, $this->requestToken));
 	}
 }

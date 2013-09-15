@@ -51,10 +51,11 @@ abstract class ApiAbstract extends \PSX\Module\ApiAbstract
 		$config = $this->config;
 		$oauth  = new OauthAuthentication($this->getRegistry());
 
-		$oauth->onSuccess(function($userId, $token) use ($con, $config){
+		$oauth->onSuccess(function($userId, $accessId, $token) use ($con, $config){
 			$con->setParameter('session.name', 'amun-api-' . md5($config['psx_url']));
 			$con->setParameter('session.id', md5($token));
 			$con->setParameter('user.id', $userId);
+			$con->setParameter('user.accessId', $accessId);
 		});
 
 		$oauth->onMissing(function(){
