@@ -56,6 +56,8 @@ class User
 	protected $countryId;
 	protected $status;
 	protected $name;
+	protected $email;
+	protected $gender;
 	protected $profileUrl;
 	protected $thumbnailUrl;
 	protected $timezone;
@@ -87,6 +89,7 @@ SELECT
 	`account`.`status`       AS `accountStatus`,
 	`account`.`name`         AS `accountName`,
 	`account`.`email`        AS `accountEmail`,
+	`account`.`gender`       AS `accountGender`,
 	`account`.`profileUrl`   AS `accountProfileUrl`,
 	`account`.`thumbnailUrl` AS `accountThumbnailUrl`,
 	`account`.`timezone`     AS `accountTimezone`,
@@ -116,6 +119,7 @@ SQL;
 			$this->status       = $row['accountStatus'];
 			$this->name         = $row['accountName'];
 			$this->email        = $row['accountEmail'];
+			$this->gender       = $row['accountGender'];
 			$this->profileUrl   = $row['accountProfileUrl'];
 			$this->thumbnailUrl = $row['accountThumbnailUrl'];
 			$this->updated      = $row['accountUpdated'];
@@ -188,6 +192,11 @@ SQL;
 	public function getEmail()
 	{
 		return $this->email;
+	}
+
+	public function getGender()
+	{
+		return $this->gender;
 	}
 
 	public function getProfileUrl()
@@ -422,11 +431,6 @@ SQL;
 	public function getTimezone()
 	{
 		return $this->timezone;
-	}
-
-	public function getAccount()
-	{
-		return Table\Registry::get('User_Account')->getRecord($this->id);
 	}
 
 	public function hasFriend(Account\Record $account)

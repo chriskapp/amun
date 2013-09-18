@@ -28,7 +28,7 @@ use Amun\Security;
 use AmunService\Openid;
 use PSX\DateTime;
 use PSX\OpenId\Provider\Data\SetupRequest;
-use PSX\OpenId\Provider\Data\Redirect;
+use PSX\OpenId\Provider\Redirect;
 use PSX\OpenId\ProviderAbstract;
 use PSX\OpenId\Extension;
 use PSX\Sql\Condition;
@@ -143,7 +143,7 @@ class Connect extends ApplicationAbstract
 				$this->denyAccess();
 			}
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
 			// cancel request
 			$this->returnTo->addParam('openid.ns', ProviderAbstract::NS);
@@ -254,10 +254,22 @@ class Connect extends ApplicationAbstract
 	{
 		if(!empty($this->assocHandle))
 		{
-			$row = $this->hm->getTable('AmunService\Openid\Assoc')
-				->select(array('id', 'assocHandle', 'assocType', 'sessionType', 'secret', 'expires', 'date'))
-				->where('assocHandle', '=', $this->assocHandle)
-				->getRow();
+			$sql = <<<SQL
+SELECT
+	`id`,
+	`assocHandle`,
+	`assocType`,
+	`sessionType`,
+	`secret`,
+	`expires`,
+	`date`
+FROM
+	{$this->registry['table.openid_assoc']}
+WHERE
+	`assocHandle` = ?
+SQL;
+
+			$row = $this->getSql()->getRow($sql, array($this->assocHandle));
 
 			if(!empty($row))
 			{
@@ -293,21 +305,24 @@ class Connect extends ApplicationAbstract
 	private function getAvailableSregExtFields()
 	{
 		$fields = array();
-		$fields['nickname'] = $this->user->name;
+		$fields['nickname'] = $this->user->getName();
 
-		if(!empty($this->user->email))
+		$email = $this->user->getEmail();
+		if(!empty($email))
 		{
-			$fields['email'] = $this->user->email;
+			$fields['email'] = $email;
 		}
 
-		if(!empty($this->user->gender) && $this->user->gender != 'undisclosed')
+		$gender = $this->user->getGender();
+		if(!empty($gender) && $gender != 'undisclosed')
 		{
-			$fields['gender'] = strtoupper(substr($this->user->gender, 0, 1));
+			$fields['gender'] = strtoupper(substr($gender, 0, 1));
 		}
 
-		if($this->user->timezone instanceof DateTimeZone)
+		$timezone = $this->user->getTimezone();
+		if($timezone instanceof DateTimeZone)
 		{
-			$fields['timezone'] = $this->user->timezone->getName();
+			$fields['timezone'] = $timezone->getName();
 		}
 
 		return $fields;
@@ -324,7 +339,7 @@ class Connect extends ApplicationAbstract
 			$verifier = Security::generateToken(32);
 			$date     = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-			$this->sql->insert($this->registry['table.oauth_request'], array(
+			$this->getSql()->insert($this->registry['table.oauth_request'], array(
 
 				'apiId'       => $row['id'],
 				'userId'      => $this->user->getId(),
@@ -342,7 +357,7 @@ class Connect extends ApplicationAbstract
 			));
 
 			// insert access
-			$this->sql->replace($this->registry['table.oauth_access'], array(
+			$this->getSql()->replace($this->registry['table.oauth_access'], array(
 
 				'apiId'   => $row['id'],
 				'userId'  => $this->user->getId(),
@@ -365,4 +380,3 @@ class Connect extends ApplicationAbstract
 		}
 	}
 }
-

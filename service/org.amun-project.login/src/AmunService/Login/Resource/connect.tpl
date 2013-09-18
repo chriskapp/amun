@@ -28,8 +28,8 @@
 	<hr />
 
 	<p>
-		<input type="submit" name="allow" value="Allow" />
-		<input type="submit" name="deny" value="Deny" />
+		<input type="submit" name="allow" value="Allow" class="btn btn-primary" />
+		<input type="submit" name="deny" value="Deny" class="btn btn-default" />
 	</p>
 
 	</form>

@@ -22,6 +22,7 @@
 
 namespace AmunService\Openid\Api;
 
+use Amun\User;
 use Amun\Dependency;
 use Amun\Exception;
 use PSX\DateTime;
@@ -46,11 +47,16 @@ class Signon extends ProviderAbstract
 	{
 		parent::onLoad();
 
+		$this->container->setParameter('session.name', 'amun-' . md5($this->config['psx_url']));
+		$this->container->setParameter('user.id', User::findUserId($this->getSession(), $this->getRegistry()));
+
 		// dependencies
 		$this->base     = $this->getBase();
 		$this->config   = $this->getConfig();
 		$this->sql      = $this->getSql();
 		$this->registry = $this->getRegistry();
+		$this->session  = $this->getSession();
+		$this->user     = $this->getUser();
 	}
 
 	/**
@@ -83,15 +89,14 @@ class Signon extends ProviderAbstract
 	{
 		$sql = <<<SQL
 SELECT
-
 	`assoc`.`id`,
 	`assoc`.`assocHandle`,
 	`assoc`.`expires`,
 	`assoc`.`date`
-
-	FROM {$this->registry['table.openid_assoc']} `assoc`
-
-		WHERE `assoc`.`assocHandle` = ?
+FROM 
+	{$this->registry['table.openid_assoc']} `assoc`
+WHERE 
+	`assoc`.`assocHandle` = ?
 SQL;
 
 		$row = $this->sql->getRow($sql, array($assoc->getAssocHandle()));
@@ -144,14 +149,13 @@ SQL;
 		// check association
 		$sql = <<<SQL
 SELECT
-
 	`assoc`.`id`,
 	`assoc`.`expires`,
 	`assoc`.`date`
-
-	FROM {$this->registry['table.openid_assoc']} `assoc`
-
-		WHERE `assoc`.`assocHandle` = ?
+FROM 
+	{$this->registry['table.openid_assoc']} `assoc`
+WHERE 
+	`assoc`.`assocHandle` = ?
 SQL;
 
 		$row = $this->sql->getRow($sql, array($request->getAssocHandle()));
@@ -235,7 +239,7 @@ SQL;
 
 
 		// redirect
-		header('Location: ' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'my.htm/connect');
+		header('Location: ' . $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'login/connect');
 		exit;
 	}
 
@@ -243,7 +247,6 @@ SQL;
 	{
 		$sql = <<<SQL
 SELECT
-
 	`assoc`.`id`,
 	`assoc`.`assocHandle`,
 	`assoc`.`assocType`,
@@ -251,10 +254,10 @@ SELECT
 	`assoc`.`secret`,
 	`assoc`.`expires`,
 	`assoc`.`date`
-
-	FROM {$this->registry['table.openid_assoc']} `assoc`
-
-		WHERE `assoc`.`assocHandle` = ?
+FROM 
+	{$this->registry['table.openid_assoc']} `assoc`
+WHERE 
+	`assoc`.`assocHandle` = ?
 SQL;
 
 		$row = $this->sql->getRow($sql, array($request->getAssocHandle()));
@@ -293,4 +296,3 @@ SQL;
 		return $this->session->has('amun_id') && !$this->user->isAnonymous();
 	}
 }
-
