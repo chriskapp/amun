@@ -818,6 +818,7 @@
 		<field name="id">1</field>
 		<field name="status">2</field>
 		<field name="source">org.amun-project.core.zip</field>
+		<field name="autoloadPath">vendor/amun/core/src/</field>
 		<field name="config">vendor/amun/core/config.xml</field>
 		<field name="name">amun/core</field>
 		<field name="path">/core</field>
@@ -832,6 +833,7 @@
 		<field name="id">2</field>
 		<field name="status">2</field>
 		<field name="source">org.amun-project.xrds.zip</field>
+		<field name="autoloadPath">vendor/amun/xrds/src/</field>
 		<field name="config">vendor/amun/xrds/config.xml</field>
 		<field name="name">amun/xrds</field>
 		<field name="path">/xrds</field>
@@ -846,6 +848,7 @@
 		<field name="id">3</field>
 		<field name="status">2</field>
 		<field name="source">org.amun-project.user.zip</field>
+		<field name="autoloadPath">vendor/amun/user/src/</field>
 		<field name="config">vendor/amun/user/config.xml</field>
 		<field name="name">amun/user</field>
 		<field name="path">/user</field>
@@ -860,6 +863,7 @@
 		<field name="id">4</field>
 		<field name="status">2</field>
 		<field name="source">org.amun-project.log.zip</field>
+		<field name="autoloadPath">vendor/amun/log/src/</field>
 		<field name="config">vendor/amun/log/config.xml</field>
 		<field name="name">amun/log</field>
 		<field name="path">/log</field>
@@ -874,6 +878,7 @@
 		<field name="id">5</field>
 		<field name="status">2</field>
 		<field name="source">org.amun-project.hostmeta.zip</field>
+		<field name="autoloadPath">vendor/amun/hostmeta/src/</field>
 		<field name="config">vendor/amun/hostmeta/config.xml</field>
 		<field name="name">amun/hostmeta</field>
 		<field name="path">/hostmeta</field>
@@ -888,6 +893,7 @@
 		<field name="id">6</field>
 		<field name="status">2</field>
 		<field name="source">org.amun-project.lrdd.zip</field>
+		<field name="autoloadPath">vendor/amun/lrdd/src/</field>
 		<field name="config">vendor/amun/lrdd/config.xml</field>
 		<field name="name">amun/lrdd</field>
 		<field name="path">/lrdd</field>
@@ -902,6 +908,7 @@
 		<field name="id">7</field>
 		<field name="status">2</field>
 		<field name="source">org.amun-project.asset.zip</field>
+		<field name="autoloadPath">vendor/amun/asset/src/</field>
 		<field name="config">vendor/amun/asset/config.xml</field>
 		<field name="name">amun/asset</field>
 		<field name="path">/asset</field>
@@ -916,6 +923,7 @@
 		<field name="id">8</field>
 		<field name="status">2</field>
 		<field name="source">org.amun-project.media.zip</field>
+		<field name="autoloadPath">vendor/amun/media/src/</field>
 		<field name="config">vendor/amun/media/config.xml</field>
 		<field name="name">amun/media</field>
 		<field name="path">/media</field>
@@ -930,6 +938,7 @@
 		<field name="id">9</field>
 		<field name="status">2</field>
 		<field name="source">org.amun-project.openid.zip</field>
+		<field name="autoloadPath">vendor/amun/openid/src/</field>
 		<field name="config">vendor/amun/openid/config.xml</field>
 		<field name="name">amun/openid</field>
 		<field name="path">/openid</field>
@@ -944,6 +953,7 @@
 		<field name="id">10</field>
 		<field name="status">2</field>
 		<field name="source">org.amun-project.country.zip</field>
+		<field name="autoloadPath">vendor/amun/country/src/</field>
 		<field name="config">vendor/amun/country/config.xml</field>
 		<field name="name">amun/country</field>
 		<field name="path">/country</field>
@@ -958,6 +968,7 @@
 		<field name="id">11</field>
 		<field name="status">2</field>
 		<field name="source">org.amun-project.swagger.zip</field>
+		<field name="autoloadPath">vendor/amun/swagger/src/</field>
 		<field name="config">vendor/amun/swagger/config.xml</field>
 		<field name="name">amun/swagger</field>
 		<field name="path">/swagger</field>
@@ -972,6 +983,7 @@
 		<field name="id">12</field>
 		<field name="status">2</field>
 		<field name="source">org.amun-project.sitemap.zip</field>
+		<field name="autoloadPath">vendor/amun/sitemap/src/</field>
 		<field name="config">vendor/amun/sitemap/config.xml</field>
 		<field name="name">amun/sitemap</field>
 		<field name="path">/sitemap</field>
@@ -986,6 +998,7 @@
 		<field name="id">13</field>
 		<field name="status">2</field>
 		<field name="source">org.amun-project.phpinfo.zip</field>
+		<field name="autoloadPath">vendor/amun/phpinfo/src/</field>
 		<field name="config">vendor/amun/phpinfo/config.xml</field>
 		<field name="name">amun/phpinfo</field>
 		<field name="path">/phpinfo</field>
@@ -1000,6 +1013,7 @@
 		<field name="id">14</field>
 		<field name="status">2</field>
 		<field name="source">org.amun-project.mail.zip</field>
+		<field name="autoloadPath">vendor/amun/mail/src/</field>
 		<field name="config">vendor/amun/mail/config.xml</field>
 		<field name="name">amun/mail</field>
 		<field name="path">/mail</field>
@@ -1014,6 +1028,7 @@
 		<field name="id">15</field>
 		<field name="status">2</field>
 		<field name="source">org.amun-project.content.zip</field>
+		<field name="autoloadPath">vendor/amun/content/src/</field>
 		<field name="config">vendor/amun/content/config.xml</field>
 		<field name="name">amun/content</field>
 		<field name="path">/content</field>
@@ -1028,6 +1043,7 @@
 		<field name="id">16</field>
 		<field name="status">1</field>
 		<field name="source">org.amun-project.login.zip</field>
+		<field name="autoloadPath">vendor/amun/login/src/</field>
 		<field name="config">vendor/amun/login/config.xml</field>
 		<field name="name">amun/login</field>
 		<field name="path">/login</field>
@@ -1042,6 +1058,7 @@
 		<field name="id">17</field>
 		<field name="status">1</field>
 		<field name="source">org.amun-project.my.zip</field>
+		<field name="autoloadPath">vendor/amun/my/src/</field>
 		<field name="config">vendor/amun/my/config.xml</field>
 		<field name="name">amun/my</field>
 		<field name="path">/my</field>
@@ -1056,6 +1073,7 @@
 		<field name="id">18</field>
 		<field name="status">1</field>
 		<field name="source">org.amun-project.profile.zip</field>
+		<field name="autoloadPath">vendor/amun/profile/src/</field>
 		<field name="config">vendor/amun/profile/config.xml</field>
 		<field name="name">amun/profile</field>
 		<field name="path">/profile</field>
@@ -1070,6 +1088,7 @@
 		<field name="id">19</field>
 		<field name="status">2</field>
 		<field name="source">org.amun-project.comment.zip</field>
+		<field name="autoloadPath">vendor/amun/comment/src/</field>
 		<field name="config">vendor/amun/comment/config.xml</field>
 		<field name="name">amun/comment</field>
 		<field name="path">/comment</field>
@@ -1084,6 +1103,7 @@
 		<field name="id">20</field>
 		<field name="status">1</field>
 		<field name="source">org.amun-project.news.zip</field>
+		<field name="autoloadPath">vendor/amun/news/src/</field>
 		<field name="config">vendor/amun/news/config.xml</field>
 		<field name="name">amun/news</field>
 		<field name="path">/news</field>
@@ -1098,6 +1118,7 @@
 		<field name="id">21</field>
 		<field name="status">1</field>
 		<field name="source">org.amun-project.file.zip</field>
+		<field name="autoloadPath">vendor/amun/file/src/</field>
 		<field name="config">vendor/amun/file/config.xml</field>
 		<field name="name">amun/file</field>
 		<field name="path">/file</field>
@@ -1112,6 +1133,7 @@
 		<field name="id">22</field>
 		<field name="status">1</field>
 		<field name="source">org.amun-project.php.zip</field>
+		<field name="autoloadPath">vendor/amun/php/src/</field>
 		<field name="config">vendor/amun/php/config.xml</field>
 		<field name="name">amun/php</field>
 		<field name="path">/php</field>
@@ -1126,6 +1148,7 @@
 		<field name="id">23</field>
 		<field name="status">1</field>
 		<field name="source">org.amun-project.redirect.zip</field>
+		<field name="autoloadPath">vendor/amun/redirect/src/</field>
 		<field name="config">vendor/amun/redirect/config.xml</field>
 		<field name="name">amun/redirect</field>
 		<field name="path">/redirect</field>
@@ -1140,6 +1163,7 @@
 		<field name="id">24</field>
 		<field name="status">1</field>
 		<field name="source">org.amun-project.pipe.zip</field>
+		<field name="autoloadPath">vendor/amun/pipe/src/</field>
 		<field name="config">vendor/amun/pipe/config.xml</field>
 		<field name="name">amun/pipe</field>
 		<field name="path">/pipe</field>
@@ -1154,6 +1178,7 @@
 		<field name="id">25</field>
 		<field name="status">1</field>
 		<field name="source">org.amun-project.oauth.zip</field>
+		<field name="autoloadPath">vendor/amun/oauth/src/</field>
 		<field name="config">vendor/amun/oauth/config.xml</field>
 		<field name="name">amun/oauth</field>
 		<field name="path">/oauth</field>
@@ -1168,6 +1193,7 @@
 		<field name="id">26</field>
 		<field name="status">1</field>
 		<field name="source">org.amun-project.page.zip</field>
+		<field name="autoloadPath">vendor/amun/page/src/</field>
 		<field name="config">vendor/amun/page/config.xml</field>
 		<field name="name">amun/page</field>
 		<field name="path">/page</field>
@@ -1182,6 +1208,7 @@
 		<field name="id">27</field>
 		<field name="status">2</field>
 		<field name="source">org.amun-project.sample.zip</field>
+		<field name="autoloadPath">vendor/amun/sample/src/</field>
 		<field name="config">vendor/amun/sample/config.xml</field>
 		<field name="name">amun/sample</field>
 		<field name="path">/sample</field>
