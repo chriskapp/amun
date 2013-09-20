@@ -115,7 +115,7 @@ SQL;
 
 	public function getAutoloadPath()
 	{
-		return $this->autoloadPath;
+		return '../' . trim($this->autoloadPath, '/');
 	}
 
 	public function getName()
