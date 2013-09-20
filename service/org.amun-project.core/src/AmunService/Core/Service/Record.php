@@ -91,6 +91,20 @@ class Record extends RecordAbstract
 		}
 	}
 
+	public function setAutoloadPath($autoloadPath)
+	{
+		$autoloadPath = $this->_validate->apply($autoloadPath, 'string', array(new Filter\Length(2, 256)), 'autoloadPath', 'Autoload Path');
+
+		if(!$this->_validate->hasError())
+		{
+			$this->autoloadPath = $autoloadPath;
+		}
+		else
+		{
+			throw new Exception($this->_validate->getLastError());
+		}
+	}
+
 	public function setConfig($config)
 	{
 		$config = $this->_validate->apply($config, 'string', array(new Filter\Length(2, 256)), 'config', 'Config');

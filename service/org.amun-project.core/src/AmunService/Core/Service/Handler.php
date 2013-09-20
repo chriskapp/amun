@@ -66,7 +66,7 @@ class Handler extends HandlerAbstract
 	 */
 	public function create(RecordInterface $record)
 	{
-		if($record->hasFields('source', 'config', 'name'))
+		if($record->hasFields('source', 'autoloadPath', 'config', 'name'))
 		{
 			// already installed
 			if($this->registry->hasService($record->name))
@@ -579,4 +579,3 @@ class Handler extends HandlerAbstract
 		return $sql;
 	}
 }
-

@@ -125,6 +125,7 @@ class ServiceInstaller extends LibraryInstaller
 				}
 
 				$record->setSource($source);
+				$record->setAutoloadPath($this->getAutoloadPath($package, $config));
 				$record->setConfig($config);
 				$record->setName($package->getPrettyName());
 				$record->setLink($package->getHomepage());
@@ -138,6 +139,31 @@ class ServiceInstaller extends LibraryInstaller
 				$this->container->get('logger')->error($e->getMessage());
 			}
 		}
+	}
+
+	protected function getAutoloadPath($package, $configFile)
+	{
+		$dir      = $this->composer->getConfig()->get('vendor-dir');
+		$config   = simplexml_load_file($configFile);
+		$autoload = $package->getAutoload();
+
+		if(isset($autoload['psr-0']) && is_array($autoload['psr-0']))
+		{
+			$namespace = (string) $config->namespace;
+			$namespace = trim($namespace, '\\');
+
+			foreach($autoload['psr-0'] as $ns => $path)
+			{
+				$ns = trim($ns, '\\');
+
+				if($namespace == $ns)
+				{
+					return $dir . '/' . $package->getName() . '/' . $path;
+				}
+			}
+		}
+
+		throw new \Exception('Could not find namespace in autoload psr-0');
 	}
 
 	/**

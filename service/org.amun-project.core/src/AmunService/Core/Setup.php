@@ -98,6 +98,7 @@ CREATE TABLE IF NOT EXISTS `{$this->registry['table.core_service']}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `status` int(10) NOT NULL,
   `source` varchar(256) NOT NULL,
+  `autoloadPath` varchar(256) NOT NULL,
   `config` varchar(256) NOT NULL,
   `name` varchar(64) NOT NULL,
   `path` varchar(256) NOT NULL,

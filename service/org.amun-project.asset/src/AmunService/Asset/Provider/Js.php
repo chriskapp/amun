@@ -100,6 +100,7 @@ class Js implements ProviderInterface
 	{
 		$sql = <<<SQL
 SELECT
+	`autoloadPath`,
 	`name`,
 	`namespace`
 FROM
@@ -114,7 +115,7 @@ SQL;
 			$name  = end($parts);
 
 			$services[$name] = array(
-				'../vendor/' . $row['name'] . '/src/' . $row['namespace'] . '/Resource/default.js',
+				$row['autoloadPath'] . '/' . $row['namespace'] . '/Resource/default.js',
 			);
 		}
 

@@ -179,6 +179,7 @@ class LocationFinder extends FileSystem
 			// load module
 			$pathInfo = substr($pathInfo, strlen($page['path']));
 			$path     = $page['namespace'] . '/application/' . trim($pathInfo, '/');
+			$path     = trim($path, '/');
 
 			list($className, $rest) = $this->getClassByPath($path);
 
@@ -207,7 +208,7 @@ class LocationFinder extends FileSystem
 			$class    = implode('\\', array_slice($parts, 0, $i));
 			$rest     = implode('/', array_slice($parts, $i));
 			$explicit = $class;
-			$default  = $class . '\\Index';
+			$default  = $class . '\Index';
 
 			if(class_exists($explicit))
 			{

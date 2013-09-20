@@ -141,7 +141,7 @@ class Index extends ApiAbstract
 		$declaration->setResourcePath('/swagger/' . $serviceName);
 
 		$result = $this->hm->getTable('AmunService\Core\Service')
-			->select(array('name', 'path', 'namespace'))
+			->select(array('autoloadPath', 'name', 'path', 'namespace'))
 			->orderBy('id', Sql::SORT_ASC)
 			->where('name', '=', str_replace('-', '/', $serviceName))
 			->getAll();
@@ -151,7 +151,7 @@ class Index extends ApiAbstract
 			try
 			{
 				// get the api class
-				$apiPath = '../vendor/' . $row['name'] . '/src/' . $row['namespace'] . '/Api';
+				$apiPath = $row['autoloadPath'] . '/' . $row['namespace'] . '/Api';
 				$apiPath = str_replace('\\', '/', $apiPath);
 
 				if(is_dir($apiPath))

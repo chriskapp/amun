@@ -32,8 +32,6 @@ use Amun\Form\Element\TabbedPane;
 use Amun\Form\Element\Textarea;
 use Amun\Form\Element\Captcha;
 use Amun\Form\Element\Select;
-use PharData;
-use SimpleXMLElement;
 
 /**
  * Form
@@ -46,31 +44,7 @@ class Form extends FormAbstract
 {
 	public function create()
 	{
-		$form = new AmunForm('POST', $this->url);
-
-
-		$panel = new Panel('service', 'Service');
-
-
-		$path = new Select('source', 'Source');
-		$path->setOptions($this->getInstallableService());
-
-		$panel->add($path);
-
-
-		if($this->user->isAnonymous() || $this->user->hasInputExceeded())
-		{
-			$captcha = new Captcha('captcha', 'Captcha');
-			$captcha->setSrc($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/core/captcha');
-
-			$panel->add($captcha);
-		}
-
-
-		$form->setContainer($panel);
-
-
-		return $form;
+		throw new Exception('Create a service record is not possible');
 	}
 
 	public function update($id)
@@ -116,13 +90,6 @@ class Form extends FormAbstract
 		$panel->add($link);
 
 
-		$author = new Input('author', 'Author', $record->author);
-		$author->setType('text');
-		$author->setDisabled(true);
-
-		$panel->add($author);
-
-
 		$license = new Input('license', 'License', $record->license);
 		$license->setType('text');
 		$license->setDisabled(true);
@@ -150,69 +117,6 @@ class Form extends FormAbstract
 
 
 		return $form;
-	}
-
-	private function getInstallableService()
-	{
-		$services          = array();
-		$installedServices = $this->sql->getCol('SELECT source FROM ' . $this->registry['table.core_service']);
-		$listedServices    = array();
-
-		$path = $this->config['amun_service_path'];
-		$dirs = scandir($path);
-
-		foreach($dirs as $f)
-		{
-			if($f != '.' && $f != '..')
-			{
-				$xml  = null;
-				$item = $path . '/' . $f;
-
-				if(is_dir($item))
-				{
-					$config = $item . '/config.xml';
-
-					if(is_file($config))
-					{
-						$xml  = simplexml_load_file($config);
-					}
-				}
-
-				if(is_file($item))
-				{
-					$ext = pathinfo($item, PATHINFO_EXTENSION);
-
-					if($ext == 'tar')
-					{
-						$phar = new PharData($item);
-						$xml  = simplexml_load_string($phar->getMetadata());
-					}
-				}
-
-				if($xml instanceof SimpleXMLElement)
-				{
-					if(isset($xml->name))
-					{
-						$name    = strval($xml->name);
-						$version = strval($xml->version);
-
-						if(!in_array($f, $installedServices) && !in_array($f, $listedServices))
-						{
-							array_push($services, array(
-
-								'label' => $name . ' (' . $version . ')',
-								'value' => $f,
-
-							));
-
-							$listedServices[] = $f;
-						}
-					}
-				}
-			}
-		}
-
-		return $services;
 	}
 }
 

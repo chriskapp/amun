@@ -59,15 +59,17 @@ class Service
 		$status = Record::NORMAL;
 		$sql    = <<<SQL
 SELECT
-	`service`.`id`        AS `serviceId`,
-	`service`.`status`    AS `serviceStatus`,
-	`service`.`source`    AS `serviceSource`,
-	`service`.`name`      AS `serviceName`,
-	`service`.`path`      AS `servicePath`,
-	`service`.`namespace` AS `serviceNamespace`,
-	`service`.`type`      AS `serviceType`,
-	`service`.`version`   AS `serviceVersion`,
-	`service`.`date`      AS `serviceDate`
+	`service`.`id`           AS `serviceId`,
+	`service`.`status`       AS `serviceStatus`,
+	`service`.`source`       AS `serviceSource`,
+	`service`.`autoloadPath` AS `serviceAutoloadPath`,
+	`service`.`config`       AS `serviceConfig`,
+	`service`.`name`         AS `serviceName`,
+	`service`.`path`         AS `servicePath`,
+	`service`.`namespace`    AS `serviceNamespace`,
+	`service`.`type`         AS `serviceType`,
+	`service`.`version`      AS `serviceVersion`,
+	`service`.`date`         AS `serviceDate`
 FROM 
 	{$this->registry['table.core_service']} `service`
 WHERE 
@@ -78,15 +80,17 @@ SQL;
 
 		if(!empty($row))
 		{
-			$this->id        = $row['serviceId'];
-			$this->status    = $row['serviceStatus'];
-			$this->source    = $row['serviceSource'];
-			$this->name      = $row['serviceName'];
-			$this->path      = $row['servicePath'];
-			$this->namespace = $row['serviceNamespace'];
-			$this->type      = $row['serviceType'];
-			$this->version   = $row['serviceVersion'];
-			$this->date      = $row['serviceDate'];
+			$this->id           = $row['serviceId'];
+			$this->status       = $row['serviceStatus'];
+			$this->source       = $row['serviceSource'];
+			$this->autoloadPath = $row['serviceAutoloadPath'];
+			$this->configFile   = $row['serviceConfig'];
+			$this->name         = $row['serviceName'];
+			$this->path         = $row['servicePath'];
+			$this->namespace    = $row['serviceNamespace'];
+			$this->type         = $row['serviceType'];
+			$this->version      = $row['serviceVersion'];
+			$this->date         = $row['serviceDate'];
 		}
 		else
 		{
@@ -107,6 +111,11 @@ SQL;
 	public function getSource()
 	{
 		return $this->source;
+	}
+
+	public function getAutoloadPath()
+	{
+		return $this->autoloadPath;
 	}
 
 	public function getName()

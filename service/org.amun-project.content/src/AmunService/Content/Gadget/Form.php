@@ -300,15 +300,25 @@ class Form extends FormAbstract
 
 	private function getGadget()
 	{
-		$path   = PSX_PATH_MODULE . '/gadget';
 		$gadget = array();
 
-		// service gadgets
-		$result = $this->sql->getAll('SELECT name, namespace FROM ' . $this->registry['table.core_service'] . ' ORDER BY name ASC');
+		$sql = <<<SQL
+SELECT 
+	`autoloadPath`, 
+	`name`, 
+	`namespace` 
+FROM 
+	{$this->registry['table.core_service']} 
+ORDER BY 
+	`name`
+ASC
+SQL;
+
+		$result = $this->sql->getAll($sql);
 
 		foreach($result as $row)
 		{
-			$this->scanDir($gadget, $row['name'], $row['namespace']);
+			$this->scanDir($gadget, $row['autoloadPath'], $row['name'], $row['namespace']);
 		}
 
 		return $gadget;
@@ -323,7 +333,18 @@ class Form extends FormAbstract
 			'value' => 0,
 		));
 
-		$result = $this->sql->getAll('SELECT id, description FROM ' . $this->registry['table.user_right'] . ' ORDER BY name ASC');
+		$sql = <<<SQL
+SELECT 
+	`id`, 
+	`description` 
+FROM 
+	{$this->registry['table.user_right']} 
+ORDER BY 
+	`name`
+ASC
+SQL;
+
+		$result = $this->sql->getAll($sql);
 
 		foreach($result as $row)
 		{
@@ -336,9 +357,9 @@ class Form extends FormAbstract
 		return $rights;
 	}
 
-	private function scanDir(&$gadget, $name, $namespace)
+	private function scanDir(&$gadget, $autoloadPath, $name, $namespace)
 	{
-		$path = '../vendor/' . $name . '/src/' . $namespace . '/Gadget';
+		$path = $autoloadPath . '/' . $namespace . '/Gadget';
 		$path = str_replace('\\', '/', $path);
 
 		if(!is_dir($path))
@@ -378,4 +399,3 @@ class Form extends FormAbstract
 		}
 	}
 }
-

@@ -132,10 +132,10 @@ abstract class ApplicationAbstract extends ViewAbstract
 		$this->htmlContent = $this->getHtmlContent();
 
 		// set application template path
-		$dir = '../vendor/' . $this->service->getName() . '/src/' . $this->service->getNamespace();
+		$dir = $this->service->getAutoloadPath() . '/' . $this->service->getNamespace() . '/Resource';
 		$dir = str_replace('\\', '/', $dir);
 
-		$this->template->setDir($dir . '/Resource');
+		$this->template->setDir($dir);
 
 		// add html fragments
 		$this->loadHtmlFragments();

@@ -50,6 +50,7 @@ class Table extends TableAbstract
 			'id' => self::TYPE_INT | 10 | self::PRIMARY_KEY,
 			'status' => self::TYPE_INT | 10,
 			'source' => self::TYPE_VARCHAR | 256,
+			'autoloadPath' => self::TYPE_VARCHAR | 256,
 			'config' => self::TYPE_VARCHAR | 256,
 			'name' => self::TYPE_VARCHAR | 64,
 			'path' => self::TYPE_VARCHAR | 256,
