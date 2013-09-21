@@ -2200,7 +2200,7 @@ You can login with the new password at:
 		<field name="tokenSecret">930f1aad0a6f8073c5ea5c0105b9953d145b8d22</field>
 		<field name="verifier">8f28b3b18a6eabb92854cd937397b042</field>
 		<field name="timestamp">1363808954</field>
-		<field name="expire">P6M</field>
+		<field name="expire">P6Y</field>
 		<field name="date">2013-03-20 19:49:26</field>
 	</row>
 	</table_data>
