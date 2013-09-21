@@ -45,12 +45,12 @@ class Form extends FormAbstract
 {
 	public function create()
 	{
-		throw new Exception('Create a access record is not possible');
+		throw new Exception('Create a openid record is not possible');
 	}
 
 	public function update($id)
 	{
-		throw new Exception('Update a access record is not possible');
+		throw new Exception('Update a openid record is not possible');
 	}
 
 	public function delete($id)

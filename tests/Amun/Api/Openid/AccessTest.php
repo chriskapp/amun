@@ -78,7 +78,9 @@ class AccessTest extends RestTest
 
 	public function testDelete()
 	{
-		/*
+		// we cant test since we have no openid access data fixture
+		$this->markTestIncomplete();
+
 		$record = $this->getHandler()->getRecord();
 		$record->setId(1);
 
@@ -87,7 +89,6 @@ class AccessTest extends RestTest
 		$actual = $this->table->getRow(array('id'), new Condition(array('id', '=', 1)));
 
 		$this->assertEquals(true, empty($actual));
-		*/
 	}
 
 	public function testSupportedFields()
@@ -133,6 +134,9 @@ class AccessTest extends RestTest
 
 	public function testFormDelete()
 	{
+		// we cant test since we have no openid access data fixture
+		$this->markTestIncomplete();
+
 		$url      = new Url($this->getEndpoint() . '/form?method=delete&id=1');
 		$response = $this->signedRequest('GET', $url);
 
