@@ -151,7 +151,7 @@ class Index extends ApiAbstract
 			try
 			{
 				// get the api class
-				$apiPath = $row['autoloadPath'] . '/' . $row['namespace'] . '/Api';
+				$apiPath = '../' . $row['autoloadPath'] . '/' . $row['namespace'] . '/Api';
 				$apiPath = str_replace('\\', '/', $apiPath);
 
 				if(is_dir($apiPath))

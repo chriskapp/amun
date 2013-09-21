@@ -115,7 +115,7 @@ SQL;
 			$name  = end($parts);
 
 			$services[$name] = array(
-				$row['autoloadPath'] . '/' . $row['namespace'] . '/Resource/default.js',
+				'../' . $row['autoloadPath'] . '/' . $row['namespace'] . '/Resource/default.js',
 			);
 		}
 

@@ -359,7 +359,7 @@ SQL;
 
 	private function scanDir(&$gadget, $autoloadPath, $name, $namespace)
 	{
-		$path = $autoloadPath . '/' . $namespace . '/Gadget';
+		$path = '../' . $autoloadPath . '/' . $namespace . '/Gadget';
 		$path = str_replace('\\', '/', $path);
 
 		if(!is_dir($path))

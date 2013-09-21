@@ -85,7 +85,7 @@ SQL;
 			$name  = end($parts);
 
 			$services[$name] = array(
-				$row['autoloadPath'] . '/' . $row['namespace'] . '/Resource/default.css',
+				'../' . $row['autoloadPath'] . '/' . $row['namespace'] . '/Resource/default.css',
 			);
 		}
 
