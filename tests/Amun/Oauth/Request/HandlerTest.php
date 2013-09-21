@@ -42,7 +42,7 @@ class HandlerTest extends \Amun\HandlerTest
 			'status' => '3',
 			'ip' => '127.0.0.1',
 			'callback' => 'oob',
-			'expire' => 'P6M',
+			'expire' => 'P6Y',
 			'apiId' => '1',
 			'apiTitle' => 'System',
 			'authorName' => 'test',
