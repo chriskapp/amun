@@ -31,6 +31,7 @@ use Closure;
 use PSX\Exception;
 use PSX\Oauth;
 use PSX\Oauth\Provider\Data\Consumer;
+use PSX\Sql\Condition;
 
 /**
  * OauthAuthentication
@@ -100,7 +101,7 @@ SQL;
 
 			if($now > $date)
 			{
-				$this->sql->delete($this->registry['table.oauth_request'], 'token', $token);
+				$this->sql->delete($this->registry['table.oauth_request'], new Condition(array('token', '=', $token)));
 
 				throw new Exception('The token is expired');
 			}
