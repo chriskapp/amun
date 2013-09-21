@@ -203,6 +203,11 @@ class LocationFinder extends FileSystem
 		$parts = array_map('ucfirst', explode('/', $path));
 		$len   = count($parts);
 
+		if($len > 16)
+		{
+			throw new Exception('Request uri to large', 414);
+		}
+
 		for($i = $len; $i > 0; $i--)
 		{
 			$class    = implode('\\', array_slice($parts, 0, $i));
