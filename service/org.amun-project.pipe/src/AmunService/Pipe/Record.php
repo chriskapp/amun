@@ -45,7 +45,7 @@ use PSX\Util\Markdown;
 class Record extends RecordAbstract
 {
 	protected $_page;
-	protected $_user;
+	protected $_account;
 	protected $_media;
 	protected $_date;
 
@@ -147,12 +147,12 @@ class Record extends RecordAbstract
 
 	public function getUser()
 	{
-		if($this->_user === null)
+		if($this->_account === null)
 		{
-			$this->_user = $this->_hm->getHandler('AmunService\User\Account')->getRecord($this->userId);
+			$this->_account = $this->_hm->getHandler('AmunService\User\Account')->getRecord($this->userId);
 		}
 
-		return $this->_user;
+		return $this->_account;
 	}
 
 	public function getMedia()

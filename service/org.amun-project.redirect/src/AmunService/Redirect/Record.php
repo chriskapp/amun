@@ -39,7 +39,7 @@ use PSX\Data\WriterInterface;
 class Record extends RecordAbstract
 {
 	protected $_page;
-	protected $_user;
+	protected $_account;
 	protected $_date;
 
 	public function setId($id)
@@ -101,12 +101,12 @@ class Record extends RecordAbstract
 
 	public function getUser()
 	{
-		if($this->_user === null)
+		if($this->_account === null)
 		{
-			$this->_user = $this->_hm->getHandler('AmunService\User\Account')->getRecord($this->userId);
+			$this->_account = $this->_hm->getHandler('AmunService\User\Account')->getRecord($this->userId);
 		}
 
-		return $this->_user;
+		return $this->_account;
 	}
 
 	public function getDate()

@@ -138,5 +138,33 @@ class OauthTest extends RestTest
 		$this->assertEquals('form', $data['class']);
 		$this->assertEquals('POST', $data['method']);
 	}
+
+	public function testFormUpdate()
+	{
+		$url      = new Url($this->getEndpoint() . '/form?method=update&id=1');
+		$response = $this->signedRequest('GET', $url);
+
+		$this->assertEquals(200, $response->getCode());
+
+		$data = Json::decode($response->getBody());
+
+		$this->assertEquals(true, is_array($data));
+		$this->assertEquals('form', $data['class']);
+		$this->assertEquals('PUT', $data['method']);
+	}
+
+	public function testFormDelete()
+	{
+		$url      = new Url($this->getEndpoint() . '/form?method=delete&id=1');
+		$response = $this->signedRequest('GET', $url);
+
+		$this->assertEquals(200, $response->getCode());
+
+		$data = Json::decode($response->getBody());
+
+		$this->assertEquals(true, is_array($data));
+		$this->assertEquals('form', $data['class']);
+		$this->assertEquals('DELETE', $data['method']);
+	}
 }
 

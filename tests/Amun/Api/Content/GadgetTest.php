@@ -44,8 +44,6 @@ class GadgetTest extends RestTest
 	{
 		parent::setUp();
 
-		$this->markTestSkipped('Temporary deactivated');
-
 		if(!$this->hasService('amun/content'))
 		{
 			$this->markTestSkipped('Service content not installed');
@@ -72,14 +70,13 @@ class GadgetTest extends RestTest
 		$record = $this->getHandler()->getRecord();
 		$record->setName('foo');
 		$record->setTitle('bar');
-		$record->path = '21:latestNews.php';
+		$record->setClass('AmunService\News\Gadget\LatestNews');
 		$record->setCache(1);
 		$record->setExpire('PT1H');
 
 		$this->assertPositiveResponse($this->post($record));
 
-		$actual = $this->table->getRow(array('name', 'title', 'path', 'cache', 'expire'), new Condition(array('id', '=', 2)));
-		$record->path = 'latestNews.php';
+		$actual = $this->table->getRow(array('serviceId', 'name', 'title', 'class', 'cache', 'expire'), new Condition(array('id', '=', 2)));
 		$expect = array_map('strval', $record->getData());
 
 		$this->assertEquals($expect, $actual);
@@ -90,22 +87,22 @@ class GadgetTest extends RestTest
 		$record = $this->getHandler()->getRecord();
 		$record->setName('bar');
 		$record->setTitle('foo');
-		$record->path = '21:latestNews.php';
+		$record->setClass('AmunService\News\Gadget\LatestNews');
 
 		$this->assertPositiveResponse($this->post($record));
 
-		$actual = $this->table->getRow(array('name', 'title', 'path'), new Condition(array('id', '=', 2)));
-		$record->path = 'latestNews.php';
+		$actual = $this->table->getRow(array('serviceId', 'name', 'title', 'class'), new Condition(array('id', '=', 2)));
 		$expect = array_map('strval', $record->getData());
 
 		$this->assertEquals($expect, $actual);
 	}
 
-	public function testWrongPathPost()
+	public function testWrongClassPost()
 	{
 		$record = $this->getHandler()->getRecord();
-		$record->title = 'bar';
-		$record->path = '21:foo.php';
+		$record->name = 'bar';
+		$record->title = 'foo';
+		$record->class = 'AmunService\News\Gadget\Foobar';
 
 		$this->assertNegativeResponse($this->post($record));
 	}
@@ -162,6 +159,34 @@ class GadgetTest extends RestTest
 		$this->assertEquals(true, is_array($data));
 		$this->assertEquals('form', $data['class']);
 		$this->assertEquals('POST', $data['method']);
+	}
+
+	public function testFormUpdate()
+	{
+		$url      = new Url($this->getEndpoint() . '/form?method=update&id=1');
+		$response = $this->signedRequest('GET', $url);
+
+		$this->assertEquals(200, $response->getCode());
+
+		$data = Json::decode($response->getBody());
+
+		$this->assertEquals(true, is_array($data));
+		$this->assertEquals('form', $data['class']);
+		$this->assertEquals('PUT', $data['method']);
+	}
+
+	public function testFormDelete()
+	{
+		$url      = new Url($this->getEndpoint() . '/form?method=delete&id=1');
+		$response = $this->signedRequest('GET', $url);
+
+		$this->assertEquals(200, $response->getCode());
+
+		$data = Json::decode($response->getBody());
+
+		$this->assertEquals(true, is_array($data));
+		$this->assertEquals('form', $data['class']);
+		$this->assertEquals('DELETE', $data['method']);
 	}
 }
 

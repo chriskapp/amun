@@ -89,7 +89,7 @@ class Form extends FormAbstract
 
 	public function update()
 	{
-		throw new Exception('You cant update a friend record');
+		throw new Exception('Update a friend record is not possible');
 	}
 
 	public function delete($id)

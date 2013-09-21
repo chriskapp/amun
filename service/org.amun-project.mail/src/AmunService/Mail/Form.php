@@ -167,7 +167,7 @@ class Form extends FormAbstract
 
 	public function delete($id)
 	{
-		throw new Exception('You cant delete a mail record');
+		throw new Exception('Delete a mail record is not possible');
 	}
 }
 

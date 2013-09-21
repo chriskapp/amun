@@ -44,12 +44,12 @@ class Form extends FormAbstract
 {
 	public function create()
 	{
-		throw new Exception('You cant create a access record');
+		throw new Exception('Create a access record is not possible');
 	}
 
 	public function update($id)
 	{
-		throw new Exception('You cant update a access record');
+		throw new Exception('Update a access record is not possible');
 	}
 
 	public function delete($id)

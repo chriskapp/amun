@@ -45,7 +45,7 @@ class Form extends FormAbstract
 {
 	public function create()
 	{
-		throw new Exception('You cant create a registry record');
+		throw new Exception('Create a registry record is not possible');
 	}
 
 	public function update($id)
@@ -95,7 +95,7 @@ class Form extends FormAbstract
 
 	public function delete($id)
 	{
-		throw new Exception('You cant delete a registry record');
+		throw new Exception('Delete a registry record is not possible');
 	}
 
 	public function getType()

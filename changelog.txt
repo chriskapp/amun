@@ -1,5 +1,9 @@
 
 1.0.1
+* Added request uri length restriction
+* Added autoloadPath to service to simplify development of new services
+* Added page tree api
+* Fixed openid provider implementation
 * Fix oauth custom right settings
 
 1.0

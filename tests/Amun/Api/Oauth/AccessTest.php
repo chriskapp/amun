@@ -106,5 +106,47 @@ class AccessTest extends RestTest
 		$this->assertEquals(true, is_array($fields));
 		$this->assertEquals(true, is_array($fields['item']));
 	}
+
+	public function testFormCreate()
+	{
+		$url      = new Url($this->getEndpoint() . '/form?method=create');
+		$response = $this->signedRequest('GET', $url);
+
+		$this->assertEquals(200, $response->getCode());
+
+		$data = Json::decode($response->getBody());
+
+		$this->assertEquals(true, is_array($data));
+		$this->assertEquals(false, $data['success']);
+		$this->assertEquals('Create a access record is not possible', $data['text']);
+	}
+
+	public function testFormUpdate()
+	{
+		$url      = new Url($this->getEndpoint() . '/form?method=update&id=1');
+		$response = $this->signedRequest('GET', $url);
+
+		$this->assertEquals(200, $response->getCode());
+
+		$data = Json::decode($response->getBody());
+
+		$this->assertEquals(true, is_array($data));
+		$this->assertEquals(false, $data['success']);
+		$this->assertEquals('Update a access record is not possible', $data['text']);
+	}
+
+	public function testFormDelete()
+	{
+		$url      = new Url($this->getEndpoint() . '/form?method=delete&id=1');
+		$response = $this->signedRequest('GET', $url);
+
+		$this->assertEquals(200, $response->getCode());
+
+		$data = Json::decode($response->getBody());
+
+		$this->assertEquals(true, is_array($data));
+		$this->assertEquals('form', $data['class']);
+		$this->assertEquals('DELETE', $data['method']);
+	}
 }
 

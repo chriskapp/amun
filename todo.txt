@@ -1,56 +1,36 @@
 
 [FEATURES]
 
-[ ] test and approval system
-[ ] Set media_view as default right when adding an media item in backend
-[ ] Anonymous user is created under the name of the admin in the sample service
-[ ] Backend service panel is not listed under System
-[ ] solve composer install problem that a db connection is needed if we want to
-    setup tables on composer installation
+[ ] make api message "Missing field in record" more verbose
+[ ] option to create page aliases so that a page refers to another page
+[ ] add service installation through backend by executing composer as process
+[ ] html comments do not work in page service
+[ ] set media_view as default right when adding an media item in backend
+[ ] anonymous user is created under the name of the admin in the sample service
 [ ] test openid authentication where amun is the openid provider
-[ ] add general payment service with an event publisher if an payments is 
-    executed and an backend where its possible to see all transactions
-[ ] option for module to register event wich is loaded on page load
 [ ] improve right system probably with inheritance. Add page specific rights
 [ ] clean up handler selection methods
-[ ] fix php_view right .. php code is returned by the api
+[ ] test approval system
 [ ] build backend for approval system
 [ ] extend navigation to show a dropdown if child pages are available
-[ ] add api bulk operations by accepting resultset in an post. We could use
-    annotations to declare the object type in array problem is that we need to
-    pass an table into the contructor of an record and also the di container
-[ ] implement page option 
+[ ] add api bulk operations by accepting resultset in an post
 [ ] the next step in the amun infrastructure is to build an packetmanager for
     services. That means we need a host service wich offers a list of services 
     and a client service wich can connect to an host service and install it from
     there.
-    [x] host service
-        Provides the APIs to browse and install existing services. The host 
-        creates an certificate and the client has to trust the cert if he wants 
-        download a service. A possibility for paid services
-    [x] client service
-        we need a sources.list in the client so that you can discover multiple 
-        hosts. A browse overview to search existing services
-    [ ] option for a client to add a provider
-    [ ] option to update a service. We send an json map with all md5 hashes to
-        the server and receive the files wich have changed as zip. We extract
-        them in the service folder and replace the old files. We need probably
-        a way to execute sql queries when updating
-    [ ] a frontend application wich lists all available services of the host 
-        service and offers users to add a new service and download existing once
-        as file
-    [ ] before installing a service we should display an overview what the 
-        service actually does i.e. wich queries gets executed, registry entries
-        created etc. Probably analyze the query and display an info message
-        if the service truncates, drops or deletes
-    [ ] test service remote download and implement update possibility
+    [x] the service infrastructure is now based on composer using an custom 
+        composer plugin as installer to register events execute sql queries etc
+        All services are hosted at http://package.amun-project.org
+    [ ] make specific actions when update a service
 [ ] check and clean up not used api endpoints
 [ ] openid login activity "... created an Account" is not created
-[ ] fix explorer service
+[ ] option for module to register event wich is loaded on page load (probably
+    slows the page load down we need some tests)
 [ ] add possibility to add dynamic content to the htmlContent class in areas
-    like meta, header, footer etc. to load i.e. google analytics js. Probably
-    add this to the template instead of the page and therefor we need a template
-    table where the templates are defined
+    like meta, header, footer etc. to load i.e. google analytics js
+[ ] Implement a content / template system where all templates are saved in an
+    table insteadof files. We could use a custom template syntax to create
+    templates wich are cached as files, reddis, etc
 [ ] A option to create a pasword protected page. This should be general so 
     that you can protect any page with an password
 [ ] my service add possibility to delete (invalidate) an account
@@ -64,11 +44,17 @@
 [ ] if someone has subscribed via PSHB to a topic and we receive these messages
     we have to create a remote user for the author of the topic if the user id
     doesnt exist. (should be done in the PSHB service)
-[ ] implement an http proxy for making ajax requests to external domains (same
-    origin policy stuff) ... we should put the proxy class into the psx
-    framework because its not amun specific and a well written proxy is in
-    general needed
 [ ] test ostatus remote subscription interoperability
+[x] improve sample installation when setting username, password, email 
+    possibility to enter wrong values so taht the installer asks again
+[x] backend service panel is not listed under System
+[/] fix explorer service
+[/] implement page option 
+[x] solve composer install problem that a db connection is needed if we want to
+    setup tables on composer installation
+    Is solved the installer marks the package as installed if the db entries
+    are available
+[x] fix php_view right .. php code is returned by the api
 [x] fix and test service ui with bootstrap 3
 [x] test oauth authentication
 [x] fix page multi colum template
@@ -89,10 +75,13 @@
 
 [SERVICES]
 
-[ ] write a plugin with that you can donwload plugins from a server ... the
+[ ] add general payment service with an event publisher if an payments is 
+    executed and an backend where its possible to see all transactions
+[/] write a plugin with that you can donwload plugins from a server ... the
     client gets a list of all plugins via an xml or json list if he want to
     install a paticular plugin the client donwload all files in an xml format
     and create the files and directories in the plugin dir (this is a big task)
+    replaced through new service composer system
 [ ] implement http://xing.github.com/wysihtml5/ as service for page editing
 [ ] add database backend service (like phpmyadmin)
 [ ] add tent (https://tent.io/) service wich can post and receive messages for 
