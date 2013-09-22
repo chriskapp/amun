@@ -112,7 +112,7 @@ abstract class HandlerAbstract extends \PSX\Data\HandlerAbstract
 	 * event
 	 *
 	 * @param integer $type
-	 * @param PSX_Data_RecordInterface $record
+	 * @param PSX\Data\RecordInterface $record
 	 * @return void
 	 */
 	public function notify($type, RecordInterface $record)
@@ -237,7 +237,6 @@ abstract class HandlerAbstract extends \PSX\Data\HandlerAbstract
 		}
 
 		$select = clone $this->_select;
-		$select->getCondition()->removeAll();
 
 		return $select;
 	}
@@ -245,7 +244,7 @@ abstract class HandlerAbstract extends \PSX\Data\HandlerAbstract
 	/**
 	 * Returns the default select object
 	 *
-	 * @return PSX_Sql_Table_SelectInterface
+	 * @return PSX\Sql\Table\SelectInterface
 	 */
 	protected function getDefaultSelect()
 	{
