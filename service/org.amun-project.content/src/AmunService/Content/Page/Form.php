@@ -465,7 +465,7 @@ class Form extends FormAbstract
 
 	public function getTemplate()
 	{
-		$path     = PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'];
+		$path     = $this->registry['core.template_dir'];
 		$template = array();
 		$result   = scandir($path);
 

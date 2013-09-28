@@ -156,7 +156,7 @@ abstract class ApplicationAbstract extends ViewAbstract
 		$this->template->assign('config', $config);
 		$this->template->assign('self', htmlspecialchars($self));
 		$this->template->assign('url', $url);
-		$this->template->assign('location', $this->config['amun_service_path'] . '/' . $this->page->getApplication() . '/template');
+		$this->template->assign('location', $this->service->getAutoloadPath() . '/' . $this->service->getNamespace() . '/Resource');
 		$this->template->assign('base', $base);
 
 		$this->template->assign('registry', $this->registry);
@@ -193,7 +193,7 @@ abstract class ApplicationAbstract extends ViewAbstract
 
 		// set custom template if any
 		$this->template->assign('content', $response);
-		$this->template->setDir(PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir']);
+		$this->template->setDir($this->registry['core.template_dir']);
 
 		$template = $this->page->getTemplate();
 		if(!empty($template))
@@ -205,7 +205,29 @@ abstract class ApplicationAbstract extends ViewAbstract
 			$this->template->set('page.tpl');
 		}
 
-		return parent::processResponse(null);
+		// assign default values
+		$render = round(microtime(true) - $GLOBALS['psx_benchmark'], 6);
+
+		$this->template->assign('config', $config);
+		$this->template->assign('self', htmlspecialchars($self));
+		$this->template->assign('url', $url);
+		$this->template->assign('base', $base);
+		$this->template->assign('render', $render);
+		$this->template->assign('location', $this->registry['core.template_dir']);
+
+		if(empty($content))
+		{
+			if(!($response = $this->template->transform()))
+			{
+				throw new Exception('Error while transforming template');
+			}
+
+			return $response;
+		}
+		else
+		{
+			return $content;
+		}
 	}
 
 	protected function loadHtmlFragments()

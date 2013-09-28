@@ -22,9 +22,8 @@
 
 namespace AmunService\Content\Page\Filter;
 
-use AmunService\Content\Page;
+use Amun\Registry;
 use PSX\FilterAbstract;
-use PSX\Config;
 
 /**
  * Template
@@ -35,16 +34,16 @@ use PSX\Config;
  */
 class Template extends FilterAbstract
 {
-	private $config;
+	private $registry;
 
-	public function __construct(Config $config)
+	public function __construct(Registry $registry)
 	{
-		$this->config = $config;
+		$this->registry = $registry;
 	}
 
 	public function apply($value)
 	{
-		return empty($value) ? '' : is_file(PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/' . $value);
+		return empty($value) ? '' : is_file($this->registry['core.template_dir'] . '/' . $value);
 	}
 
 	public function getErrorMsg()

@@ -188,7 +188,7 @@ class Record extends RecordAbstract
 
 	public function setTemplate($template)
 	{
-		$template = $this->_validate->apply($template, 'string', array(new PageFilter\Template($this->_config)));
+		$template = $this->_validate->apply($template, 'string', array(new PageFilter\Template($this->_registry)));
 
 		if(!$this->_validate->hasError())
 		{

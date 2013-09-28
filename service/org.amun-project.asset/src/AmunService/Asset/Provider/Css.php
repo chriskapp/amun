@@ -55,10 +55,10 @@ class Css implements ProviderInterface
 		$services = array();
 
 		$services['default'] = array(
-			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/css/bootstrap/bootstrap.css',
-			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/css/bootstrap/bootstrap-theme.css',
-			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/css/prettify/prettify.css',
-			PSX_PATH_TEMPLATE . '/' . $this->config['psx_template_dir'] . '/css/default.css',
+			$this->registry['core.template_dir'] . '/css/bootstrap/bootstrap.css',
+			$this->registry['core.template_dir'] . '/css/bootstrap/bootstrap-theme.css',
+			$this->registry['core.template_dir'] . '/css/prettify/prettify.css',
+			$this->registry['core.template_dir'] . '/css/default.css',
 		);
 
 		$services = array_merge($services, $this->getContentServices());
