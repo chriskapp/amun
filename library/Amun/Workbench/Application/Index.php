@@ -20,21 +20,19 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Amun\Workbench\Application;
+
 use Amun\Dependency;
 use PSX\Module\ViewAbstract;
 use PSX\Template;
 
 /**
- * workbench
+ * Index
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class workbench extends ViewAbstract
+class Index extends ViewAbstract
 {
-	public function onLoad()
-	{
-		$this->getTemplate()->set('system/workbench.tpl');
-	}
 }

@@ -63,10 +63,8 @@ class LocationFinder implements LocationFinderInterface
 				return $this->resolveGadget($path);
 				break;
 
-			case 'install':
 			case 'workbench':
-				$this->path = PSX_PATH_MODULE;
-				return parent::resolve($pathInfo);
+				return $this->resolveWorkbench($path);
 				break;
 
 			default:
@@ -193,6 +191,14 @@ class LocationFinder implements LocationFinderInterface
 		{
 			throw new Exception('Page not found', 404);
 		}
+	}
+
+	public function resolveWorkbench($pathInfo)
+	{
+		$className = 'Amun\Workbench\Application\Index';
+		$class     = new ReflectionClass($className);
+
+		return new Location(md5($className), '/', $class, 0);
 	}
 
 	protected function getClassByPath($path)
