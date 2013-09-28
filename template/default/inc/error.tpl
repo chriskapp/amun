@@ -48,12 +48,5 @@
 	</div>
 </div>
 
-<footer class="amun-footer">
-	<div class="container">
-		<?php include($location . '/inc/footer.tpl'); ?>
-	</div>
-</footer>
-
-
 </body>
 </html>
