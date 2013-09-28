@@ -812,6 +812,13 @@
 		<field name="class" xsi:nil="true" />
 		<field name="value">amun_pipe</field>
 	</row>
+	<row>
+		<field name="id">67</field>
+		<field name="name">core.template_dir</field>
+		<field name="type">STRING</field>
+		<field name="class" xsi:nil="true" />
+		<field name="value">../template/default</field>
+	</row>
 	</table_data>
 	<table_data name="amun_core_service">
 	<row>

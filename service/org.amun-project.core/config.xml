@@ -70,6 +70,7 @@
     <param name="sub_title" value="" type="STRING"/>
     <param name="anonymous_user" value="" type="INTEGER"/>
     <param name="session_expire" value="1800" type="INTEGER"/>
+    <param name="template_dir" value="../template/default" type="STRING"/>
     <param name="default_user_group" value="" type="INTEGER"/>
     <param name="default_page" value="" type="STRING"/>
     <param name="default_timezone" value="UTC" type="STRING" class="DateTimeZone"/>
