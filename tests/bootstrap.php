@@ -77,8 +77,6 @@ function getContainer()
 		$config = $container->get('config');
 		$config['psx_path_cache']    = 'cache';
 		$config['psx_path_library']  = 'library';
-		$config['psx_path_module']   = 'module';
-		$config['psx_path_template'] = 'template';
 	}
 
 	return $container;
