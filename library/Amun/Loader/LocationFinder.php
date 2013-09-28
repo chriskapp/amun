@@ -25,7 +25,7 @@ namespace Amun\Loader;
 use Amun\Registry;
 use Amun\Exception;
 use ReflectionClass;
-use PSX\Loader\LocationFinder\FileSystem;
+use PSX\Loader\LocationFinderInterface;
 
 /**
  * LocationFinder
@@ -34,7 +34,7 @@ use PSX\Loader\LocationFinder\FileSystem;
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class LocationFinder extends FileSystem
+class LocationFinder implements LocationFinderInterface
 {
 	protected $config;
 	protected $sql;
@@ -45,8 +45,6 @@ class LocationFinder extends FileSystem
 		$this->config   = $registry->getConfig();
 		$this->sql      = $registry->getSql();
 		$this->registry = $registry;
-
-		parent::__construct($this->config['amun_service_path']);
 	}
 
 	public function resolve($pathInfo)
