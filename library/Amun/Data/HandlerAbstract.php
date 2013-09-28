@@ -211,7 +211,7 @@ abstract class HandlerAbstract extends \PSX\Data\HandlerAbstract
 	/**
 	 * Returns the table instance on wich the handler operates
 	 *
-	 * @return Amun_Sql_TableInterface
+	 * @return Amun\Sql\TableInterface
 	 */
 	protected function getTableInstance()
 	{
