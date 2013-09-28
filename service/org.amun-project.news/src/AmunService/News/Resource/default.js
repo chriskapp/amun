@@ -46,7 +46,7 @@ amun.services.news = {
 		});
 
 		form.onError(function(msg){
-			$('#response').html('<div class="alert alert-error">' + msg + '</div>');
+			$('#response').html('<div class="alert alert-danger">' + msg + '</div>');
 		});
 
 		form.onLoad(function(cId){
@@ -97,7 +97,7 @@ amun.services.news = {
 			});
 
 			client.onError(function(msg){
-				$('#response').html('<div class="alert alert-error">' + msg + '</div>');
+				$('#response').html('<div class="alert alert-danger">' + msg + '</div>');
 			});
 
 			// transform textarea

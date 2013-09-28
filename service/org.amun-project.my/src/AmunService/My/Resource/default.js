@@ -25,7 +25,7 @@ amun.services.my = {
 		var form = new amun.form(cId, url);
 
 		form.onError(function(msg){
-			$('#response').html('<div class="alert alert-error">' + msg + '</div>');
+			$('#response').html('<div class="alert alert-danger">' + msg + '</div>');
 		});
 
 		form.onLoad(function(cId){
@@ -44,7 +44,7 @@ amun.services.my = {
 			});
 
 			client.onError(function(msg){
-				$('#response').html('<div class="alert alert-error">' + msg + '</div>');
+				$('#response').html('<div class="alert alert-danger">' + msg + '</div>');
 			});
 
 		});
