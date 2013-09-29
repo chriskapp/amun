@@ -44,7 +44,7 @@ class HandlerTest extends \Amun\HandlerTest
 			'title' => 'test',
 			'parentId' => '0',
 			'globalId' => '5aa63a03-b140-59b4-922a-a3e91b5266fe',
-			'status' => '2',
+			'status' => '1',
 			'load' => '3',
 			'path' => '',
 			'template' => '',
