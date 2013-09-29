@@ -52,7 +52,7 @@ class Tree extends ApiAbstract
 		{
 			try
 			{
-				$this->setResponse(new Record('tree', array($this->buildTreeArray())));
+				$this->setResponse(new Record('tree', $this->buildTreeArray()));
 			}
 			catch(Exception $e)
 			{

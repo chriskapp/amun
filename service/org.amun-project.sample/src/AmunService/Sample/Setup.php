@@ -369,7 +369,7 @@ class Setup extends SetupAbstract
 			$record = $handler->getRecord();
 			$record->setParentId(0);
 			$record->setServiceId($servicePageId);
-			$record->setStatus(ContentPage\Record::HIDDEN);
+			$record->setStatus(ContentPage\Record::NORMAL);
 			$record->setTitle('Sample');
 			$record->setTemplate(null);
 
