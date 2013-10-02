@@ -1,5 +1,7 @@
 
 1.0.1
+* Updated psx to version 0.7
+* Added core.template_dir registry entry
 * Added request uri length restriction
 * Added autoloadPath to service to simplify development of new services
 * Added page tree api
