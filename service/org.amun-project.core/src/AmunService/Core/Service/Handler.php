@@ -291,11 +291,7 @@ class Handler extends HandlerAbstract
 						$priority = (integer) $event->getAttribute('priority');
 						$class    = $event->getAttribute('class');
 
-						if(!empty($class))
-						{
-							$class = new ReflectionClass($class);
-						}
-						else
+						if(empty($class))
 						{
 							throw new Exception('Empty listener event class');
 						}
@@ -310,7 +306,7 @@ class Handler extends HandlerAbstract
 								$this->sql->insert($this->registry['table.core_event_listener'], array(
 									'eventId'  => $eventId,
 									'priority' => $priority,
-									'class'    => $class->getName(),
+									'class'    => $class,
 								));
 
 								$this->logger->info('> Added event listener "' . $name . '" to event ' . $eventId);
