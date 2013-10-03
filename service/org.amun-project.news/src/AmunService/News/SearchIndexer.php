@@ -24,6 +24,7 @@ namespace AmunService\News;
 
 use Amun\Data\RecordAbstract;
 use Amun\Sql\TableInterface;
+use AmunService\Search\IndexerAbstract;
 use Elastica\Client;
 use Elastica\Document;
 use Elastica\Exception\NotFoundException;
