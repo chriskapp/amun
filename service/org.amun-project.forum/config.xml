@@ -26,10 +26,6 @@
     <perm name="close" description="Forum Close"/>
     <perm name="comment_add" description="Forum Comment Add"/>
   </permissions>
-  <navigation>
-    <option name="index"/>
-    <option name="view"/>
-  </navigation>
   <registry>
     <table name="forum"/>
   </registry>
