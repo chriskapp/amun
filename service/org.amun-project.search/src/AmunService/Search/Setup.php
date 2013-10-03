@@ -38,6 +38,10 @@ class Setup extends SetupAbstract
 {
 	public function preInstall(RecordInterface $record)
 	{
+	}
+
+	public function postInstall(RecordInterface $record)
+	{
 		$client  = new Client(array(
 			'host'      => $this->registry['search.host'],
 			'port'      => $this->registry['search.port'],
@@ -61,9 +65,5 @@ class Setup extends SetupAbstract
 		));
 
 		$mapping->send();
-	}
-
-	public function postInstall(RecordInterface $record)
-	{
 	}
 }
