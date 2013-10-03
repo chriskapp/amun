@@ -52,7 +52,7 @@ else
 		$container->setParameter('user.id', 1);
 
 		// bootstrap
-		Bootstrap::setupEnvironment($container->get('config'));
+		PSX\Bootstrap::setupEnvironment($container->get('config'));
 
 		$logger = new Monolog\Logger('amun');
 		$logger->pushHandler(new Amun\Logger\EchoHandler(Monolog\Logger::INFO));
