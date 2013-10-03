@@ -48,9 +48,8 @@ class RecordListener extends ListenerAbstract
 		if(class_exists($className))
 		{
 			$client  = new Client(array(
-				'host'      => $this->registry['search.host'],
-				'port'      => $this->registry['search.port'],
-				'transport' => $this->registry['search.transport'],
+				'host' => $this->registry['search.host'],
+				'port' => $this->registry['search.port'],
 			));
 
 			$indexer = new $className($this->container);

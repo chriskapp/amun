@@ -7,3 +7,8 @@
 .amun-service-search ul
 {
 }
+
+.amun-service-search ul > li
+{
+	border-bottom:1px solid #ccc;
+}

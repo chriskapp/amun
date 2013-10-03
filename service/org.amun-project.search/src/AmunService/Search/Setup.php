@@ -43,9 +43,8 @@ class Setup extends SetupAbstract
 	public function postInstall(RecordInterface $record)
 	{
 		$client  = new Client(array(
-			'host'      => $this->registry['search.host'],
-			'port'      => $this->registry['search.port'],
-			'transport' => $this->registry['search.transport'],
+			'host' => $this->registry['search.host'],
+			'port' => $this->registry['search.port'],
 		));
 
 		$index = $client->getIndex('amun');
