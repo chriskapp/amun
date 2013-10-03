@@ -29,6 +29,7 @@ use Elastica\Client;
 use Elastica\Document;
 use Elastica\Exception\NotFoundException;
 use PSX\Data\RecordInterface;
+use PSX\Sql\Condition;
 
 /**
  * SearchIndexer
@@ -91,7 +92,7 @@ class SearchIndexer extends IndexerAbstract
 					'date'    => time(),
 				);
 
-				$type->addDocument(new Document($record->globalId, $data));
+				$type->addDocument(new Document($id, $data));
 			}
 			else if($actionType == RecordAbstract::DELETE)
 			{
