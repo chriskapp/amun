@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns="http://amun-project.org">
+  <status>normal</status>
+  <path>/search</path>
+  <namespace>AmunService\Search</namespace>
+  <type>http://ns.amun-project.org/2013/amun/service/search</type>
+  <provider>http://amun-project.org</provider>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/search</type>
+      <uri>/</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Search View"/>
+  </permissions>
+  <registry>
+    <param name="host" value="localhost" type="STRING"/>
+    <param name="port" value="9200" type="INTEGER"/>
+    <param name="transport" value="http" type="STRING"/>
+  </registry>
+  <event>
+    <listener name="core.record_change" class="\AmunService\Search\RecordListener"/>
+  </event>
+</service>

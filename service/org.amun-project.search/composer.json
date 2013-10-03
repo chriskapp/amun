@@ -1,0 +1,24 @@
+{
+    "name": "amun/search",
+    "description": "Basic search service using elasticsearch",
+    "homepage": "http://amun-project.org",
+    "type": "amun-service",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Christoph Kappestein",
+            "email": "k42b3.x@gmail.com",
+            "homepage": "http://k42b3.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3",
+        "ruflin/elastica": "v0.90.2.0",
+        "amun/content": "self.version"
+    },
+    "autoload": {
+        "psr-0": {
+            "AmunService\\Search": "src/"
+        }
+    }
+}
