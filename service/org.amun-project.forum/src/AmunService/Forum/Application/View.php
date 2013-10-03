@@ -126,10 +126,11 @@ class View extends ApplicationAbstract
 		$this->id = $result->id;
 
 		// redirect to correct url
-		if(empty($this->title) || $this->title != $result->urlTitle)
+		if(empty($this->title) || strcasecmp($this->title, $result->urlTitle) !== 0)
 		{
 			Base::setResponseCode(301);
 			header('Location: ' . $this->page->getUrl() . '/view/' . $result->id . '/' . $result->urlTitle);
+			exit;
 		}
 
 		return $result;
