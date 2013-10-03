@@ -36,8 +36,6 @@ use PSX\Sql\Condition;
  */
 class Registry extends ArrayObject
 {
-	protected static $_instance;
-
 	protected $container = array();
 	protected $config;
 	protected $sql;
@@ -166,29 +164,24 @@ class Registry extends ArrayObject
 		return $count > 0;
 	}
 
-	public static function get($key)
+	public function getUrlByType($type)
 	{
-		return self::getInstance()->offsetGet($key);
-	}
+		$sql = <<<SQL
+SELECT
+	`page`.`path`
+FROM
+	{$this['table.content_page']} `page`
+INNER JOIN
+	{$this['table.core_service']} `service`
+	ON `page`.`serviceId` = `service`.`id`
+WHERE
+	`service`.`type` = ?
+LIMIT 1
+SQL;
 
-	public static function set($key, $value)
-	{
-		self::getInstance()->offsetSet($key, $value);
-	}
+		$path = $this->sql->getField($sql, array($type));
 
-	public static function has($key)
-	{
-		return self::getInstance()->offsetExists($key);
-	}
-
-	public static function initInstance(Config $config, Sql $sql)
-	{
-		return self::$_instance = new self($config, $sql);
-	}
-
-	public static function getInstance()
-	{
-		return self::$_instance;
+		return $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $path;
 	}
 
 	public static function getClassName($table)

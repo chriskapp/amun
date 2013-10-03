@@ -66,7 +66,7 @@ class Container extends \PSX\Dependency\Container
 
 	public function getRegistry()
 	{
-		return Registry::initInstance($this->get('config'), $this->get('sql'));
+		return new Registry($this->get('config'), $this->get('sql'));
 	}
 
 	public function getEvent()
