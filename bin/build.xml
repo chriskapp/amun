@@ -55,12 +55,22 @@
 		-->
 	</target>
 
-	<!-- we need to get the version before cleaning  -->
+	<!-- we need to get the version before cleaning -->
 	<target name="get-version">
 		<exec dir="${bin}" executable="php" failonerror="true" outputproperty="version">
 			<arg line="get-version.php" />
 		</exec>
 		<echo message="Building version ${version}" />
+	</target>
+
+	<!-- adds the current version to the composer json -->
+	<target name="composer-inject-version" depends="get-version">
+		<replace file="${build}/composer.json">
+			<replacetoken><![CDATA[    "license": "GPL-3.0",]]></replacetoken>
+			<replacevalue expandProperties="true"><![CDATA[    "license": "GPL-3.0",
+    "version": "${version}",]]></replacevalue>
+		</replace>
+		<echo message="Injected version ${version} into composer" />
 	</target>
 
 	<!-- removes all files wich are not needed in the release -->
@@ -88,7 +98,7 @@
 		<zip destfile="${bin}/amun_${version}.zip" basedir="${build}" />
 	</target>
 
-	<target name="build-release" depends="phpunit,get-version,clean-git,compress">
+	<target name="build-release" depends="phpunit,get-version,composer-inject-version,clean-git,compress">
 		<!-- change config -->
 		<replace file="${build}/configuration.php" token="http://127.0.0.1:8000/public" value="http://127.0.0.1/amun/public" />
 	</target>
