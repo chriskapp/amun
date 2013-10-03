@@ -703,7 +703,7 @@
 				form = new amun.form('amun-form-window-form', url);
 
 				form.onError(function(msg){
-					$('#amun-form-window-response').html('<div class="alert alert-error">' + msg + '</div>');
+					$('#amun-form-window-response').html('<div class="alert alert-danger">' + msg + '</div>');
 				});
 
 				form.onLoad(function(cId){
@@ -726,7 +726,7 @@
 					});
 
 					client.onError(function(msg){
-						$('#amun-form-window-response').html('<div class="alert alert-error">' + msg + '</div>');
+						$('#amun-form-window-response').html('<div class="alert alert-danger">' + msg + '</div>');
 
 						if (errorCallback) {
 							errorCallback.call(self);
