@@ -17,7 +17,6 @@
   <registry>
     <param name="host" value="localhost" type="STRING"/>
     <param name="port" value="9200" type="INTEGER"/>
-    <param name="transport" value="http" type="STRING"/>
   </registry>
   <event>
     <listener name="core.record_change" class="\AmunService\Search\RecordListener"/>

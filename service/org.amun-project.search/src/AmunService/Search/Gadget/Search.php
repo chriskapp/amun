@@ -48,7 +48,7 @@ class Search extends GadgetAbstract
 
 	private function display($url)
 	{
-		echo '<form method="post" action="' . $url . '" class="form-inline" role="form">';
+		echo '<form method="get" action="' . $url . '" class="form-inline" role="form">';
 		echo '	<div class="form-group">';
 		echo '		<label class="sr-only" for="search">Search</label>';
 		echo '		<input type="search" class="form-control" name="search" id="search" placeholder="Search ..." />';

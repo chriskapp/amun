@@ -1,7 +1,7 @@
 
 <div class="amun-service-search">
 
-	<form method="post" class="form-inline" role="form">
+	<form method="get" class="form-inline" role="form">
 		<div class="form-group">
 			<label class="sr-only" for="search">Search</label>
 			<input type="search" class="form-control" name="search" id="search" placeholder="Search ..." />

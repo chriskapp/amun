@@ -66,19 +66,11 @@ class Index extends ApplicationAbstract
 	 */
 	public function doIndex()
 	{
-	}
-
-	/**
-	 * @httpMethod POST
-	 * @path /
-	 */
-	public function doSearch()
-	{
 		$url   = new Url($this->base->getSelf());
 		$count = $url->getParam('count') > 0 ? $url->getParam('count') : 8;
 		$count = $count > 16 ? 16 : $count;
 
-		$search = $this->post->search('string');
+		$search = $this->get->search('string');
 
 		if(!empty($search))
 		{
@@ -90,8 +82,16 @@ class Index extends ApplicationAbstract
 
 			$query = new Query();
 			$query->setQuery($queryString);
-			//$query->setFrom($url->getParam('startIndex'));
-			//$query->setLimit($count);
+			$query->setFrom($url->getParam('startIndex'));
+			$query->setLimit($count);
+			$query->setHighlight(array(
+				'pre_tags'  => array('<mark>'),
+				'post_tags' => array('</mark>'),
+				'fields'    => array(
+					'title'   => new \stdClass,
+					'content' => new \stdClass,
+				),
+			));
 
 			// get elasticsearch client
 			$client  = new Client(array(
@@ -108,6 +108,19 @@ class Index extends ApplicationAbstract
 				$data = $row->getData();
 				$data['url']  = $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . $data['path'];
 				$data['date'] = new DateTime('@' . $data['date']);
+
+				// if we have an highlite overwrite the title or content
+				$highlights = $row->getHighlights();
+
+				if(isset($highlights['title']))
+				{
+					$data['title'] = implode(' ... ', $highlights['title']);
+				}
+
+				if(isset($highlights['content']))
+				{
+					$data['content'] = implode(' ... ', $highlights['content']);
+				}
 
 				$result->addData($data);
 			}
