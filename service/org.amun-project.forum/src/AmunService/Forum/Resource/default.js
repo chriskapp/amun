@@ -3,7 +3,7 @@ amun.services.forum = {
 
 	showForm: function(url){
 		var win = new amun.window(url);
-		win.addButton('Preview', 'btn', function(){
+		win.addButton('Preview', 'btn btn-default', function(){
 			var editors = this.getClient().getEditors();
 			for (var k in editors) {
 				var editor = editors[k];
@@ -32,7 +32,7 @@ amun.services.forum = {
 		var form = new amun.form(cId, url);
 		var client;
 
-		form.addButton('Preview', 'btn', function(){
+		form.addButton('Preview', 'btn btn-default', function(){
 			var editors = client.getEditors();
 			for (var k in editors) {
 				var editor = editors[k];
