@@ -41,7 +41,7 @@ class ServicePlugin implements PluginInterface
 		// else register a new autoloader
 		$file = $composer->getConfig()->get('vendor-dir') . '/autoload.php';
 
-		if($autoloadAvailable = is_file($file))
+		if(is_file($file))
 		{
 			include $file;
 		}
@@ -55,7 +55,6 @@ class ServicePlugin implements PluginInterface
 
 		// register installer
 		$installer = new ServiceInstaller($io, $composer);
-		$installer->setAutoloadAvailable($autoloadAvailable);
 
 		$composer->getInstallationManager()->addInstaller($installer);
 	}
