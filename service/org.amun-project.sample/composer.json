@@ -16,7 +16,8 @@
         "amun/user": "self.version",
         "amun/content": "self.version",
         "amun/page": "self.version",
-        "amun/oauth": "self.version"
+        "amun/oauth": "self.version",
+        "amun/country": "self.version"
     },
     "autoload": {
         "psr-0": {
