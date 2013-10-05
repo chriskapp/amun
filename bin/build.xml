@@ -73,6 +73,15 @@
 		<echo message="Injected version ${version} into composer" />
 	</target>
 
+	<!-- validate config xml schema -->
+	<target name="validate-config-xml" depends="git-clone">
+		<schemavalidate noNamespaceFile="${build}/doc/config.xsd">
+			<fileset dir="${build}/service">
+				<include name="**/config.xml" />
+			</fileset>
+		</schemavalidate>
+	</target>
+
 	<!-- removes all files wich are not needed in the release -->
 	<target name="clean-git">
 		<delete dir="${build}/.git" />
@@ -98,7 +107,7 @@
 		<zip destfile="${bin}/amun_${version}.zip" basedir="${build}" />
 	</target>
 
-	<target name="build-release" depends="phpunit,get-version,composer-inject-version,clean-git,compress">
+	<target name="build-release" depends="phpunit,get-version,composer-inject-version,validate-config-xml,clean-git,compress">
 		<!-- change config -->
 		<replace file="${build}/configuration.php" token="http://127.0.0.1:8000/public" value="http://127.0.0.1/amun/public" />
 	</target>
