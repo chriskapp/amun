@@ -1,22 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org">
+<service>
   <status>system</status>
   <path>/country</path>
   <namespace>AmunService\Country</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/country</type>
-  <api>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/country</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/</uri>
-    </service>
-  </api>
-  <permissions>
-    <perm name="view" description="Country View"/>
-    <perm name="add" description="Country Add"/>
-    <perm name="edit" description="Country Edit"/>
-    <perm name="delete" description="Country Delete"/>
-  </permissions>
   <registry>
     <table name="country"/>
   </registry>
@@ -270,4 +257,17 @@
 ('Zambia', 'ZM', '-15.0000', '30.0000'),
 ('Zimbabwe', 'ZW', '-20.0000', '30.0000');]]></query>
   </database>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/country</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Country View"/>
+    <perm name="add" description="Country Add"/>
+    <perm name="edit" description="Country Edit"/>
+    <perm name="delete" description="Country Delete"/>
+  </permissions>
 </service>

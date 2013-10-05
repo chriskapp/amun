@@ -1,29 +1,31 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<!-- This XSD schema describes the default elements wich are allowed in the 
+config.xml. Because the elements can be extended by services it is not used for
+validation. This schema acts more as a reference -->
 
-	<xs:element name="service" type="service">
-		<xs:attribute name="signature" type="xs:hexBinary" use="required" />
-	</xs:element>
+	<xs:element name="service" type="service" />
 
 	<xs:complexType name="service">
 		<xs:sequence>
+			<!-- core elements -->
 			<xs:element name="status" type="status" minOccurs="1" maxOccurs="1" />
-			<xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="path" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="namespace" type="xs:string" minOccurs="1" maxOccurs="1" />
 			<xs:element name="type" type="xs:anyURI" minOccurs="1" maxOccurs="1" />
-			<xs:element name="link" type="xs:anyURI" minOccurs="1" maxOccurs="1" />
-			<xs:element name="author" type="xs:string" minOccurs="1" maxOccurs="1" />
-			<xs:element name="license" type="xs:string" minOccurs="1" maxOccurs="1" />
-			<xs:element name="version" type="xs:string" minOccurs="1" maxOccurs="1" />
-			<xs:element name="required" type="required" minOccurs="0" maxOccurs="1" />
-			<xs:element name="api" type="folder" minOccurs="0" maxOccurs="1" />
-			<xs:element name="application" type="folder" minOccurs="0" maxOccurs="1" />
-			<xs:element name="gadget" type="folder" minOccurs="0" maxOccurs="1" />
-			<xs:element name="library" type="folder" minOccurs="0" maxOccurs="1" />
-			<xs:element name="template" type="folder" minOccurs="0" maxOccurs="1" />
+			<xs:element name="event" type="event" minOccurs="0" maxOccurs="1" />
+			<xs:element name="registry" type="registry" minOccurs="0" maxOccurs="1" />
 			<xs:element name="database" type="database" minOccurs="0" maxOccurs="1" />
+
+			<!-- service elements -->
+			<xs:element name="api" type="api" minOccurs="0" maxOccurs="1" />
+			<xs:element name="permissions" type="permissions" minOccurs="0" maxOccurs="1" />
+			<xs:element name="activity" type="activity" minOccurs="0" maxOccurs="1" />
+			<xs:element name="mail" type="mail" minOccurs="0" maxOccurs="1" />
 		</xs:sequence>
 	</xs:complexType>
 
+	<!-- core elements -->
 	<xs:simpleType name="status">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="normal" />
@@ -31,27 +33,124 @@
 		</xs:restriction>
 	</xs:simpleType>
 
-	<xs:complexType name="required">
+	<xs:complexType name="event">
 		<xs:sequence>
-			<xs:element name="service" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+			<xs:element name="listener" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="name" type="xs:string" use="required" />
+					<xs:attribute name="class" type="xs:string" use="required" />
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="publisher" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="name" type="xs:string" use="required" />
+					<xs:attribute name="description" type="xs:string" use="required" />
+				</xs:complexType>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:complexType name="folder">
+	<xs:complexType name="registry">
 		<xs:sequence>
-			<xs:element name="dir" type="folder" minOccurs="0" maxOccurs="unbounded">
-				<xs:attribute name="name" type="xs:string" use="required" />
+			<xs:element name="table" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="name" type="xs:string" use="required" />
+				</xs:complexType>
 			</xs:element>
-			<xs:element name="file" minOccurs="0" maxOccurs="unbounded">
-				<xs:attribute name="name" type="xs:string" use="required" />
-				<xs:attribute name="md5" type="xs:hexBinary" use="required" />
+			<xs:element name="param" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="name" type="xs:string" use="required" />
+					<xs:attribute name="value" type="xs:string" use="required" />
+					<xs:attribute name="class" type="xs:string" />
+					<xs:attribute name="type" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="STRING" />
+								<xs:enumeration value="INTEGER" />
+								<xs:enumeration value="FLOAT" />
+								<xs:enumeration value="BOOLEAN" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 
 	<xs:complexType name="database">
 		<xs:sequence>
-			<xs:element name="query" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+			<xs:element name="query" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- service elements -->
+	<!-- xrds -->
+	<xs:complexType name="api">
+		<xs:sequence>
+			<xs:element name="service" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="type" type="xs:anyURI" minOccurs="1" maxOccurs="unbounded" />
+						<xs:element name="uri" type="xs:string" minOccurs="1" maxOccurs="1" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- user activity -->
+	<xs:complexType name="activity">
+		<xs:sequence>
+			<xs:element name="template" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="type" use="required">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:enumeration value="INSERT" />
+										<xs:enumeration value="UPDATE" />
+										<xs:enumeration value="DELETE" />
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="verb" type="xs:string" use="required" />
+							<xs:attribute name="table" type="xs:string" use="required" />
+							<xs:attribute name="path" type="xs:string" use="required" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- user right -->
+	<xs:complexType name="permissions">
+		<xs:sequence>
+			<xs:element name="perm" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="name" type="xs:string" use="required" />
+					<xs:attribute name="description" type="xs:string" use="required" />
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- mail -->
+	<xs:complexType name="mail">
+		<xs:sequence>
+			<xs:element name="template" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="text" type="xs:string" minOccurs="1" maxOccurs="1" />
+						<xs:element name="html" type="xs:string" minOccurs="1" maxOccurs="1" />
+					</xs:sequence>
+					<xs:attribute name="name" type="xs:string" use="required" />
+					<xs:attribute name="from" type="xs:string" use="required" />
+					<xs:attribute name="subject" type="xs:string" use="required" />
+					<xs:attribute name="values" type="xs:string" />
+				</xs:complexType>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 

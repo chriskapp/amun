@@ -1,37 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org">
+<service>
   <status>normal</status>
   <path>/forum</path>
   <namespace>AmunService\Forum</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/forum</type>
-  <provider>http://amun-project.org</provider>
-  <api>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/forum</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/</uri>
-    </service>
-  </api>
-  <activity>
-    <template type="INSERT" verb="add" table="forum" path="view?id={record.id}"><![CDATA[
-<p><a href="{user.profileUrl}">{user.name}</a> has created a <a href="{object.url}">thread</a></p><blockquote>{record.text}</blockquote>
-]]></template>
-  </activity>
-  <permissions>
-    <perm name="view" description="Forum View"/>
-    <perm name="add" description="Forum Add"/>
-    <perm name="edit" description="Forum Edit"/>
-    <perm name="delete" description="Forum Delete"/>
-    <perm name="sticky" description="Forum Sticky"/>
-    <perm name="close" description="Forum Close"/>
-    <perm name="comment_add" description="Forum Comment Add"/>
-  </permissions>
-  <registry>
-    <table name="forum"/>
-  </registry>
   <event>
     <listener name="core.record_change" class="\AmunService\Forum\RecordListener"/>
   </event>
+  <registry>
+    <table name="forum"/>
+  </registry>
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.forum}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,
@@ -51,4 +29,25 @@
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
   </database>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/forum</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Forum View"/>
+    <perm name="add" description="Forum Add"/>
+    <perm name="edit" description="Forum Edit"/>
+    <perm name="delete" description="Forum Delete"/>
+    <perm name="sticky" description="Forum Sticky"/>
+    <perm name="close" description="Forum Close"/>
+    <perm name="comment_add" description="Forum Comment Add"/>
+  </permissions>
+  <activity>
+    <template type="INSERT" verb="add" table="forum" path="view?id={record.id}"><![CDATA[
+<p><a href="{user.profileUrl}">{user.name}</a> has created a <a href="{object.url}">thread</a></p><blockquote>{record.text}</blockquote>
+]]></template>
+  </activity>
 </service>

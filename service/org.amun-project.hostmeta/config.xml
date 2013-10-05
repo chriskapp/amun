@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org">
+<service>
   <status>system</status>
   <path>/hostmeta</path>
   <namespace>AmunService\Hostmeta</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/hostmeta</type>
+  <event>
+    <publisher name="hostmeta.request" description="Notifies if a hostmeta request occurs"/>
+  </event>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/hostmeta</type>
@@ -13,7 +16,4 @@
   <permissions>
     <perm name="view" description="Host-Meta View"/>
   </permissions>
-  <event>
-    <publisher name="hostmeta.request" description="Notifies if a hostmeta request occurs"/>
-  </event>
 </service>

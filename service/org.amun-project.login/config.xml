@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org">
+<service>
   <status>normal</status>
   <path>/login</path>
   <namespace>AmunService\Login</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/login</type>
-  <permissions>
-    <perm name="view" description="Login View"/>
-  </permissions>
   <registry>
     <table name="login_attempt"/>
     <param name="registration_enabled" value="1" type="BOOLEAN"/>
     <param name="max_wrong" value="8" type="INTEGER"/>
     <param name="provider" value="google, yahoo, openid, system" type="STRING"/>
   </registry>
+  <database>
+    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.login_attempt}` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `ip` varchar(40) NOT NULL,
+  `count` int(10) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ip` (`ip`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
+  </database>
+  <permissions>
+    <perm name="view" description="Login View"/>
+  </permissions>
   <mail>
     <template name="LOGIN_REGISTRATION" from="noreply@%host%" subject="Account activation" values="account.name;account.identity;host.name;register.link;register.date">
       <text><![CDATA[
@@ -81,14 +91,4 @@ You can login with the new password at:
 ]]></html>
     </template>
   </mail>
-  <database>
-    <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.login_attempt}` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `ip` varchar(40) NOT NULL,
-  `count` int(10) NOT NULL,
-  `date` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `ip` (`ip`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
-  </database>
 </service>

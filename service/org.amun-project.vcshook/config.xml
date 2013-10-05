@@ -1,45 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org">
+<service>
   <status>system</status>
   <path>/vcshook</path>
   <namespace>AmunService\Vcshook</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/vcshook</type>
-  <api>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/vcshook</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/</uri>
-    </service>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/vcshook/author</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/author</uri>
-    </service>
-  </api>
-  <activity>
-    <template type="INSERT" verb="add" table="vcshook_commit" path=""><![CDATA[
-<p><a href="{user.profileUrl}">{user.name}</a> has commited</p><blockquote>{record.message}</blockquote>
-]]></template>
-  </activity>
-  <permissions>
-    <perm name="view" description="Vcshook View"/>
-    <perm name="add" description="Vcshook Add"/>
-    <perm name="edit" description="Vcshook Edit"/>
-    <perm name="delete" description="Vcshook Delete"/>
-    <perm name="author_view" description="Vcshook Author View"/>
-    <perm name="author_add" description="Vcshook Author Add"/>
-    <perm name="author_edit" description="Vcshook Author Edit"/>
-    <perm name="author_delete" description="Vcshook Author Delete"/>
-  </permissions>
+  <event>
+    <listener name="vcshook.commit" class="\AmunService\Vcshook\CommitListener"/>
+    <publisher name="vcshook.commit" description="Notifies if a commit was made"/>
+  </event>
   <registry>
     <table name="vcshook"/>
     <table name="vcshook_commit"/>
     <table name="vcshook_author"/>
   </registry>
-  <event>
-    <publisher name="vcshook.commit" description="Notifies if a commit was made"/>
-    <listener name="vcshook.commit" class="\AmunService\Vcshook\CommitListener"/>
-  </event>
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.vcshook}` (
   `id` INT(10) NOT NULL AUTO_INCREMENT,
@@ -74,4 +47,31 @@
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
   </database>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/vcshook</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/vcshook/author</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/author</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Vcshook View"/>
+    <perm name="add" description="Vcshook Add"/>
+    <perm name="edit" description="Vcshook Edit"/>
+    <perm name="delete" description="Vcshook Delete"/>
+    <perm name="author_view" description="Vcshook Author View"/>
+    <perm name="author_add" description="Vcshook Author Add"/>
+    <perm name="author_edit" description="Vcshook Author Edit"/>
+    <perm name="author_delete" description="Vcshook Author Delete"/>
+  </permissions>
+  <activity>
+    <template type="INSERT" verb="add" table="vcshook_commit" path=""><![CDATA[
+<p><a href="{user.profileUrl}">{user.name}</a> has commited</p><blockquote>{record.message}</blockquote>
+]]></template>
+  </activity>
 </service>

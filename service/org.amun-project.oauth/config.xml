@@ -1,56 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org">
+<service>
   <status>system</status>
   <path>/oauth</path>
   <namespace>AmunService\Oauth</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/oauth</type>
-  <api>
-    <service>
-      <type>http://oauth.net/core/1.0/endpoint/request</type>
-      <uri>/endpoint/request</uri>
-    </service>
-    <service>
-      <type>http://oauth.net/core/1.0/endpoint/authorize</type>
-      <uri>/endpoint/authorization</uri>
-    </service>
-    <service>
-      <type>http://oauth.net/core/1.0/endpoint/access</type>
-      <uri>/endpoint/access</uri>
-    </service>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/oauth</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/</uri>
-    </service>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/oauth/access</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/access</uri>
-    </service>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/oauth/request</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/request</uri>
-    </service>
-  </api>
-  <permissions>
-    <perm name="view" description="Oauth view"/>
-    <perm name="add" description="Oauth add"/>
-    <perm name="edit" description="Oauth edit"/>
-    <perm name="delete" description="Oauth delete"/>
-    <perm name="access_view" description="Oauth Access view"/>
-    <perm name="access_add" description="Oauth Access add"/>
-    <perm name="access_edit" description="Oauth Access edit"/>
-    <perm name="access_delete" description="Oauth Access delete"/>
-    <perm name="request_view" description="Oauth Request view"/>
-    <perm name="request_add" description="Oauth Request add"/>
-    <perm name="request_edit" description="Oauth Request edit"/>
-    <perm name="request_delete" description="Oauth Request delete"/>
-    <perm name="access_right_view" description="Oauth Access Right view"/>
-    <perm name="access_right_add" description="Oauth Access Right add"/>
-    <perm name="access_right_edit" description="Oauth Access Right edit"/>
-    <perm name="access_right_delete" description="Oauth Access Right delete"/>
-  </permissions>
   <registry>
     <table name="oauth"/>
     <table name="oauth_access"/>
@@ -106,4 +59,51 @@
   UNIQUE KEY `token` (`token`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=ascii;]]></query>
   </database>
+  <api>
+    <service>
+      <type>http://oauth.net/core/1.0/endpoint/request</type>
+      <uri>/endpoint/request</uri>
+    </service>
+    <service>
+      <type>http://oauth.net/core/1.0/endpoint/authorize</type>
+      <uri>/endpoint/authorization</uri>
+    </service>
+    <service>
+      <type>http://oauth.net/core/1.0/endpoint/access</type>
+      <uri>/endpoint/access</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/oauth</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/oauth/access</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/access</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/oauth/request</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/request</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Oauth view"/>
+    <perm name="add" description="Oauth add"/>
+    <perm name="edit" description="Oauth edit"/>
+    <perm name="delete" description="Oauth delete"/>
+    <perm name="access_view" description="Oauth Access view"/>
+    <perm name="access_add" description="Oauth Access add"/>
+    <perm name="access_edit" description="Oauth Access edit"/>
+    <perm name="access_delete" description="Oauth Access delete"/>
+    <perm name="request_view" description="Oauth Request view"/>
+    <perm name="request_add" description="Oauth Request add"/>
+    <perm name="request_edit" description="Oauth Request edit"/>
+    <perm name="request_delete" description="Oauth Request delete"/>
+    <perm name="access_right_view" description="Oauth Access Right view"/>
+    <perm name="access_right_add" description="Oauth Access Right add"/>
+    <perm name="access_right_edit" description="Oauth Access Right edit"/>
+    <perm name="access_right_delete" description="Oauth Access Right delete"/>
+  </permissions>
 </service>

@@ -1,22 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org">
+<service>
   <status>system</status>
   <path>/comment</path>
   <namespace>AmunService\Comment</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/comment</type>
-  <api>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/comment</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/</uri>
-    </service>
-  </api>
-  <permissions>
-    <perm name="view" description="Comment View"/>
-    <perm name="add" description="Comment Add"/>
-    <perm name="edit" description="Comment Edit"/>
-    <perm name="delete" description="Comment Delete"/>
-  </permissions>
   <registry>
     <table name="comment"/>
   </registry>
@@ -33,4 +20,17 @@
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
   </database>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/comment</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Comment View"/>
+    <perm name="add" description="Comment Add"/>
+    <perm name="edit" description="Comment Edit"/>
+    <perm name="delete" description="Comment Delete"/>
+  </permissions>
 </service>

@@ -1,28 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org">
+<service>
   <status>system</status>
   <path>/mail</path>
   <namespace>AmunService\Mail</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/mail</type>
-  <api>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/mail</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/</uri>
-    </service>
-  </api>
-  <permissions>
-    <perm name="view" description="Mail View"/>
-    <perm name="add" description="Mail Add"/>
-    <perm name="edit" description="Mail Edit"/>
-    <perm name="delete" description="Mail Delete"/>
-  </permissions>
-  <registry>
-    <table name="mail"/>
-  </registry>
   <event>
     <listener name="core.service_install" class="\AmunService\Mail\ConfigListener"/>
   </event>
+  <registry>
+    <table name="mail"/>
+  </registry>
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.mail}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -36,4 +23,17 @@
   UNIQUE KEY `NAME` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8]]></query>
   </database>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/mail</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Mail View"/>
+    <perm name="add" description="Mail Add"/>
+    <perm name="edit" description="Mail Edit"/>
+    <perm name="delete" description="Mail Delete"/>
+  </permissions>
 </service>

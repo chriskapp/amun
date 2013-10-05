@@ -1,22 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org">
+<service>
   <status>normal</status>
   <path>/pipe</path>
   <namespace>AmunService\Pipe</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/pipe</type>
-  <api>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/pipe</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/</uri>
-    </service>
-  </api>
-  <permissions>
-    <perm name="view" description="Pipe View"/>
-    <perm name="add" description="Pipe Add"/>
-    <perm name="edit" description="Pipe Edit"/>
-    <perm name="delete" description="Pipe Delete"/>
-  </permissions>
   <registry>
     <table name="pipe"/>
   </registry>
@@ -33,4 +20,17 @@
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
   </database>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/pipe</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Pipe View"/>
+    <perm name="add" description="Pipe Add"/>
+    <perm name="edit" description="Pipe Edit"/>
+    <perm name="delete" description="Pipe Delete"/>
+  </permissions>
 </service>

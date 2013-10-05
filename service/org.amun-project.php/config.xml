@@ -1,22 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org">
+<service>
   <status>normal</status>
   <path>/php</path>
   <namespace>AmunService\Php</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/php</type>
-  <api>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/php</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/</uri>
-    </service>
-  </api>
-  <permissions>
-    <perm name="view" description="Php View"/>
-    <perm name="add" description="Php Add"/>
-    <perm name="edit" description="Php Edit"/>
-    <perm name="delete" description="Php Delete"/>
-  </permissions>
   <registry>
     <table name="php"/>
   </registry>
@@ -32,4 +19,17 @@
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
   </database>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/php</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Php View"/>
+    <perm name="add" description="Php Add"/>
+    <perm name="edit" description="Php Edit"/>
+    <perm name="delete" description="Php Delete"/>
+  </permissions>
 </service>

@@ -1,42 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org">
+<service>
   <status>system</status>
   <path>/openid</path>
   <namespace>AmunService\Openid</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/openid</type>
-  <api>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/openid</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/</uri>
-    </service>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/openid/access</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/access</uri>
-    </service>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/openid/assoc</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/assoc</uri>
-    </service>
-    <service>
-      <type>http://specs.openid.net/auth/2.0/signon</type>
-      <type>http://openid.net/extensions/sreg/1.1</type>
-      <type>http://specs.openid.net/extensions/oauth/1.0</type>
-      <uri>/signon</uri>
-    </service>
-  </api>
-  <permissions>
-    <perm name="view" description="OpenId View"/>
-    <perm name="add" description="OpenId add"/>
-    <perm name="edit" description="OpenId edit"/>
-    <perm name="delete" description="OpenId delete"/>
-    <perm name="access_view" description="OpenId Access view"/>
-    <perm name="access_add" description="OpenId Access add"/>
-    <perm name="access_edit" description="OpenId Access edit"/>
-    <perm name="access_delete" description="OpenId Access delete"/>
-  </permissions>
   <registry>
     <table name="openid"/>
     <table name="openid_access"/>
@@ -77,4 +44,37 @@
   UNIQUE KEY `assocHandle` (`assocHandle`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
   </database>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/openid</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/openid/access</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/access</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/openid/assoc</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/assoc</uri>
+    </service>
+    <service>
+      <type>http://specs.openid.net/auth/2.0/signon</type>
+      <type>http://openid.net/extensions/sreg/1.1</type>
+      <type>http://specs.openid.net/extensions/oauth/1.0</type>
+      <uri>/signon</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="OpenId View"/>
+    <perm name="add" description="OpenId add"/>
+    <perm name="edit" description="OpenId edit"/>
+    <perm name="delete" description="OpenId delete"/>
+    <perm name="access_view" description="OpenId Access view"/>
+    <perm name="access_add" description="OpenId Access add"/>
+    <perm name="access_edit" description="OpenId Access edit"/>
+    <perm name="access_delete" description="OpenId Access delete"/>
+  </permissions>
 </service>

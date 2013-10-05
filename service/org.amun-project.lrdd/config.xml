@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org">
+<service>
   <status>system</status>
   <path>/lrdd</path>
   <namespace>AmunService\Lrdd</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/lrdd</type>
+  <event>
+    <listener name="hostmeta.request" class="\AmunService\Lrdd\HostmetaListener"/>
+    <publisher name="lrdd.resource_discovery" description="Notifies if an lrdd lookup occurs"/>
+  </event>
   <api>
     <service>
       <type>http://ns.amun-project.org/2011/amun/service/lrdd</type>
@@ -13,8 +17,4 @@
   <permissions>
     <perm name="view" description="Lrdd View"/>
   </permissions>
-  <event>
-    <publisher name="lrdd.resource_discovery" description="Notifies if an lrdd lookup occurs"/>
-    <listener name="hostmeta.request" class="\AmunService\Lrdd\HostmetaListener"/>
-  </event>
 </service>

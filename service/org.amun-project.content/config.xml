@@ -1,54 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org">
+<service>
   <status>system</status>
   <path>/content</path>
   <namespace>AmunService\Content</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/content</type>
-  <api>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/content/gadget</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/gadget</uri>
-    </service>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/content/page</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/page</uri>
-    </service>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/content/page/gadget</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/page/gadget</uri>
-    </service>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/content/page/option</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/page/option</uri>
-    </service>
-  </api>
-  <permissions>
-    <perm name="view" description="Content view"/>
-    <perm name="add" description="Content add"/>
-    <perm name="edit" description="Content edit"/>
-    <perm name="delete" description="Content delete"/>
-    <perm name="gadget_view" description="Content Gadget view"/>
-    <perm name="gadget_add" description="Content Gadget add"/>
-    <perm name="gadget_edit" description="Content Gadget edit"/>
-    <perm name="gadget_delete" description="Content Gadget delete"/>
-    <perm name="page_view" description="Content Page view"/>
-    <perm name="page_add" description="Content Page add"/>
-    <perm name="page_edit" description="Content Page edit"/>
-    <perm name="page_delete" description="Content Page delete"/>
-    <perm name="page_preview" description="Content Page preview"/>
-    <perm name="page_gadget_view" description="Content Page Gadget view"/>
-    <perm name="page_gadget_add" description="Content Page Gadget add"/>
-    <perm name="page_gadget_edit" description="Content Page Gadget edit"/>
-    <perm name="page_gadget_delete" description="Content Page Gadget delete"/>
-    <perm name="page_option_view" description="Content Page Option view"/>
-    <perm name="page_option_add" description="Content Page Option add"/>
-    <perm name="page_option_edit" description="Content Page Option edit"/>
-    <perm name="page_option_delete" description="Content Page Option delete"/>
-  </permissions>
+  <event>
+    <listener name="lrdd.resource_discovery" class="\AmunService\Content\LrddListener"/>
+  </event>
   <registry>
     <table name="content_gadget"/>
     <table name="content_page"/>
@@ -56,9 +14,6 @@
     <table name="content_page_option"/>
     <table name="content_page_right"/>
   </registry>
-  <event>
-    <listener name="lrdd.resource_discovery" class="\AmunService\Content\LrddListener"/>
-  </event>
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.content_gadget}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -108,4 +63,49 @@
   UNIQUE KEY `pageGadgetId` (`pageId`,`gadgetId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
   </database>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/content/gadget</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/gadget</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/content/page</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/page</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/content/page/gadget</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/page/gadget</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/content/page/option</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/page/option</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Content view"/>
+    <perm name="add" description="Content add"/>
+    <perm name="edit" description="Content edit"/>
+    <perm name="delete" description="Content delete"/>
+    <perm name="gadget_view" description="Content Gadget view"/>
+    <perm name="gadget_add" description="Content Gadget add"/>
+    <perm name="gadget_edit" description="Content Gadget edit"/>
+    <perm name="gadget_delete" description="Content Gadget delete"/>
+    <perm name="page_view" description="Content Page view"/>
+    <perm name="page_add" description="Content Page add"/>
+    <perm name="page_edit" description="Content Page edit"/>
+    <perm name="page_delete" description="Content Page delete"/>
+    <perm name="page_preview" description="Content Page preview"/>
+    <perm name="page_gadget_view" description="Content Page Gadget view"/>
+    <perm name="page_gadget_add" description="Content Page Gadget add"/>
+    <perm name="page_gadget_edit" description="Content Page Gadget edit"/>
+    <perm name="page_gadget_delete" description="Content Page Gadget delete"/>
+    <perm name="page_option_view" description="Content Page Option view"/>
+    <perm name="page_option_add" description="Content Page Option add"/>
+    <perm name="page_option_edit" description="Content Page Option edit"/>
+    <perm name="page_option_delete" description="Content Page Option delete"/>
+  </permissions>
 </service>

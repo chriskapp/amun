@@ -1,92 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org">
+<service>
   <status>system</status>
   <path>/user</path>
   <namespace>AmunService\User</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/user</type>
-  <api>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/user/account</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/account</uri>
-    </service>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/user/activity</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/activity</uri>
-    </service>
-    <service>
-      <type>http://ns.amun-project.org/2012/amun/user/activity/message/1.0</type>
-      <uri>/activity/message</uri>
-    </service>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/user/friend</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/friend</uri>
-    </service>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/user/friend/relation/1.0</type>
-      <uri>/friend/relation</uri>
-    </service>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/user/friend/group</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/friend/group</uri>
-    </service>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/user/group</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/group</uri>
-    </service>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/user/group/right</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/group/right</uri>
-    </service>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/user/right</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/right</uri>
-    </service>
-  </api>
-  <permissions>
-    <perm name="view" description="User view"/>
-    <perm name="add" description="User add"/>
-    <perm name="edit" description="User edit"/>
-    <perm name="delete" description="User delete"/>
-    <perm name="account_view" description="User Account view"/>
-    <perm name="account_add" description="User Account add"/>
-    <perm name="account_edit" description="User Account edit"/>
-    <perm name="account_delete" description="User Account delete"/>
-    <perm name="activity_view" description="User Activity view"/>
-    <perm name="activity_add" description="User Activity add"/>
-    <perm name="activity_edit" description="User Activity edit"/>
-    <perm name="activity_delete" description="User Activity delete"/>
-    <perm name="activity_receiver_view" description="User Activity Receiver view"/>
-    <perm name="activity_receiver_add" description="User Activity Receiver add"/>
-    <perm name="activity_receiver_edit" description="User Activity Receiver edit"/>
-    <perm name="activity_receiver_delete" description="User Activity Receiver delete"/>
-    <perm name="friend_view" description="User Friend view"/>
-    <perm name="friend_add" description="User Friend add"/>
-    <perm name="friend_edit" description="User Friend edit"/>
-    <perm name="friend_delete" description="User Friend delete"/>
-    <perm name="friend_group_view" description="User Friend Group view"/>
-    <perm name="friend_group_add" description="User Friend Group add"/>
-    <perm name="friend_group_edit" description="User Friend Group edit"/>
-    <perm name="friend_group_delete" description="User Friend Group delete"/>
-    <perm name="group_view" description="User Group view"/>
-    <perm name="group_add" description="User Group add"/>
-    <perm name="group_edit" description="User Group edit"/>
-    <perm name="group_delete" description="User Group delete"/>
-    <perm name="group_right_view" description="User Group Right view"/>
-    <perm name="group_right_add" description="User Group Right add"/>
-    <perm name="group_right_edit" description="User Group Right edit"/>
-    <perm name="group_right_delete" description="User Group Right delete"/>
-    <perm name="right_view" description="User Right view"/>
-    <perm name="right_add" description="User Right add"/>
-    <perm name="right_edit" description="User Right edit"/>
-    <perm name="right_delete" description="User Right delete"/>
-  </permissions>
+  <event>
+    <listener name="core.record_change" class="\AmunService\User\Activity\RecordListener"/>
+    <listener name="core.service_install" class="\AmunService\User\Activity\ConfigListener"/>
+    <listener name="core.service_install" class="\AmunService\User\Right\ConfigListener"/>
+    <listener name="lrdd.resource_discovery" class="\AmunService\User\LrddListener"/>
+  </event>
   <registry>
     <table name="user_account"/>
     <table name="user_activity"/>
@@ -98,12 +21,6 @@
     <table name="user_group_right"/>
     <table name="user_right"/>
   </registry>
-  <event>
-    <listener name="core.record_change" class="\AmunService\User\Activity\RecordListener"/>
-    <listener name="core.service_install" class="\AmunService\User\Activity\ConfigListener"/>
-    <listener name="core.service_install" class="\AmunService\User\Right\ConfigListener"/>
-    <listener name="lrdd.resource_discovery" class="\AmunService\User\LrddListener"/>
-  </event>
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.user_account}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -203,4 +120,87 @@
   UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii]]></query>
   </database>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/user/account</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/account</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/user/activity</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/activity</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2012/amun/user/activity/message/1.0</type>
+      <uri>/activity/message</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/user/friend</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/friend</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/user/friend/relation/1.0</type>
+      <uri>/friend/relation</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/user/friend/group</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/friend/group</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/user/group</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/group</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/user/group/right</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/group/right</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/user/right</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/right</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="User view"/>
+    <perm name="add" description="User add"/>
+    <perm name="edit" description="User edit"/>
+    <perm name="delete" description="User delete"/>
+    <perm name="account_view" description="User Account view"/>
+    <perm name="account_add" description="User Account add"/>
+    <perm name="account_edit" description="User Account edit"/>
+    <perm name="account_delete" description="User Account delete"/>
+    <perm name="activity_view" description="User Activity view"/>
+    <perm name="activity_add" description="User Activity add"/>
+    <perm name="activity_edit" description="User Activity edit"/>
+    <perm name="activity_delete" description="User Activity delete"/>
+    <perm name="activity_receiver_view" description="User Activity Receiver view"/>
+    <perm name="activity_receiver_add" description="User Activity Receiver add"/>
+    <perm name="activity_receiver_edit" description="User Activity Receiver edit"/>
+    <perm name="activity_receiver_delete" description="User Activity Receiver delete"/>
+    <perm name="friend_view" description="User Friend view"/>
+    <perm name="friend_add" description="User Friend add"/>
+    <perm name="friend_edit" description="User Friend edit"/>
+    <perm name="friend_delete" description="User Friend delete"/>
+    <perm name="friend_group_view" description="User Friend Group view"/>
+    <perm name="friend_group_add" description="User Friend Group add"/>
+    <perm name="friend_group_edit" description="User Friend Group edit"/>
+    <perm name="friend_group_delete" description="User Friend Group delete"/>
+    <perm name="group_view" description="User Group view"/>
+    <perm name="group_add" description="User Group add"/>
+    <perm name="group_edit" description="User Group edit"/>
+    <perm name="group_delete" description="User Group delete"/>
+    <perm name="group_right_view" description="User Group Right view"/>
+    <perm name="group_right_add" description="User Group Right add"/>
+    <perm name="group_right_edit" description="User Group Right edit"/>
+    <perm name="group_right_delete" description="User Group Right delete"/>
+    <perm name="right_view" description="User Right view"/>
+    <perm name="right_add" description="User Right add"/>
+    <perm name="right_edit" description="User Right edit"/>
+    <perm name="right_delete" description="User Right delete"/>
+  </permissions>
 </service>

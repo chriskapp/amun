@@ -1,22 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org">
+<service>
   <status>normal</status>
   <path>/page</path>
   <namespace>AmunService\Page</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/page</type>
-  <api>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/page</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/</uri>
-    </service>
-  </api>
-  <permissions>
-    <perm name="view" description="Page View"/>
-    <perm name="add" description="Page Add"/>
-    <perm name="edit" description="Page Edit"/>
-    <perm name="delete" description="Page Delete"/>
-  </permissions>
   <registry>
     <table name="page"/>
   </registry>
@@ -32,4 +19,17 @@
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
   </database>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/page</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Page View"/>
+    <perm name="add" description="Page Add"/>
+    <perm name="edit" description="Page Edit"/>
+    <perm name="delete" description="Page Delete"/>
+  </permissions>
 </service>

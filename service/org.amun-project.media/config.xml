@@ -1,22 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org">
+<service>
   <status>system</status>
   <path>/media</path>
   <namespace>AmunService\Media</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/media</type>
-  <api>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/media</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/</uri>
-    </service>
-  </api>
-  <permissions>
-    <perm name="view" description="Media View"/>
-    <perm name="add" description="Media Add"/>
-    <perm name="edit" description="Media Edit"/>
-    <perm name="delete" description="Media Delete"/>
-  </permissions>
   <registry>
     <table name="media"/>
     <param name="upload_size" value="4194304" type="INTEGER"/>
@@ -38,4 +25,17 @@
   UNIQUE KEY `path` (`path`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
   </database>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/media</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Media View"/>
+    <perm name="add" description="Media Add"/>
+    <perm name="edit" description="Media Edit"/>
+    <perm name="delete" description="Media Delete"/>
+  </permissions>
 </service>

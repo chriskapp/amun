@@ -1,28 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org">
+<service>
   <status>normal</status>
   <path>/news</path>
   <namespace>AmunService\News</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/news</type>
-  <api>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/news</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/</uri>
-    </service>
-  </api>
-  <activity>
-    <template type="INSERT" verb="add" table="news" path="view?id={record.id}"><![CDATA[
-<p><a href="{user.profileUrl}">{user.name}</a> has created a <a href="{object.url}">news</a></p><blockquote>{record.text}</blockquote>
-]]></template>
-  </activity>
-  <permissions>
-    <perm name="view" description="News View"/>
-    <perm name="add" description="News Add"/>
-    <perm name="edit" description="News Edit"/>
-    <perm name="delete" description="News Delete"/>
-    <perm name="comment_add" description="News Comment Add"/>
-  </permissions>
   <registry>
     <table name="news"/>
   </registry>
@@ -40,4 +21,23 @@
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
   </database>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/news</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="News View"/>
+    <perm name="add" description="News Add"/>
+    <perm name="edit" description="News Edit"/>
+    <perm name="delete" description="News Delete"/>
+    <perm name="comment_add" description="News Comment Add"/>
+  </permissions>
+  <activity>
+    <template type="INSERT" verb="add" table="news" path="view?id={record.id}"><![CDATA[
+<p><a href="{user.profileUrl}">{user.name}</a> has created a <a href="{object.url}">news</a></p><blockquote>{record.text}</blockquote>
+]]></template>
+  </activity>
 </service>

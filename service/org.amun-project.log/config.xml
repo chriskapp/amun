@@ -1,25 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org">
+<service>
   <status>system</status>
   <path>/log</path>
   <namespace>AmunService\Log</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/log</type>
-  <api>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/log</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/</uri>
-    </service>
-  </api>
-  <permissions>
-    <perm name="view" description="Log view"/>
-  </permissions>
-  <registry>
-    <table name="log"/>
-  </registry>
   <event>
     <listener name="core.record_change" class="\AmunService\Log\RecordListener"/>
   </event>
+  <registry>
+    <table name="log"/>
+  </registry>
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.log}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -31,4 +21,14 @@
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii]]></query>
   </database>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/log</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Log view"/>
+  </permissions>
 </service>

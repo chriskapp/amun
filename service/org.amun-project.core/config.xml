@@ -1,62 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org">
+<service>
   <status>system</status>
   <path>/core</path>
   <namespace>AmunService\Core</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/core</type>
-  <api>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/core/service</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/service</uri>
-    </service>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/core/approval</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/approval</uri>
-    </service>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/core/approval/record</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/approval/record</uri>
-    </service>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/core/host</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/host</uri>
-    </service>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/core/registry</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/registry</uri>
-    </service>
-  </api>
-  <permissions>
-    <perm name="view" description="Core view"/>
-    <perm name="add" description="Core add"/>
-    <perm name="edit" description="Core edit"/>
-    <perm name="delete" description="Core delete"/>
-    <perm name="service_view" description="Core Service view"/>
-    <perm name="service_add" description="Core Service add"/>
-    <perm name="service_edit" description="Core Service edit"/>
-    <perm name="service_delete" description="Core Service delete"/>
-    <perm name="approval_view" description="Core Approval view"/>
-    <perm name="approval_add" description="Core Approval add"/>
-    <perm name="approval_edit" description="Core Approval edit"/>
-    <perm name="approval_delete" description="Core Approval delete"/>
-    <perm name="approval_record_view" description="Core Approval Record view"/>
-    <perm name="approval_record_add" description="Core Approval Record add"/>
-    <perm name="approval_record_edit" description="Core Approval Record edit"/>
-    <perm name="approval_record_delete" description="Core Approval Record delete"/>
-    <perm name="host_view" description="Core Host view"/>
-    <perm name="host_add" description="Core Host add"/>
-    <perm name="host_edit" description="Core Host edit"/>
-    <perm name="host_delete" description="Core Host delete"/>
-    <perm name="registry_view" description="Core Registry view"/>
-    <perm name="registry_add" description="Core Registry add"/>
-    <perm name="registry_edit" description="Core Registry edit"/>
-    <perm name="registry_delete" description="Core Registry delete"/>
-  </permissions>
+  <event>
+    <publisher name="core.service_install" description="Notifies if a service gets installed"/>
+    <publisher name="core.record_change" description="Notifies if a record has changed"/>
+  </event>
   <registry>
     <table name="core_service"/>
     <table name="core_service_option"/>
@@ -83,10 +34,6 @@
     <param name="pw_numeric" value="2" type="INTEGER"/>
     <param name="pw_special" value="0" type="INTEGER"/>
   </registry>
-  <event>
-    <publisher name="core.service_install" description="Notifies if a service gets installed"/>
-    <publisher name="core.record_change" description="Notifies if a record has changed"/>
-  </event>
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.core_service}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -165,4 +112,57 @@
   UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8]]></query>
   </database>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/core/service</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/service</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/core/approval</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/approval</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/core/approval/record</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/approval/record</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/core/host</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/host</uri>
+    </service>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/core/registry</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/registry</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Core view"/>
+    <perm name="add" description="Core add"/>
+    <perm name="edit" description="Core edit"/>
+    <perm name="delete" description="Core delete"/>
+    <perm name="service_view" description="Core Service view"/>
+    <perm name="service_add" description="Core Service add"/>
+    <perm name="service_edit" description="Core Service edit"/>
+    <perm name="service_delete" description="Core Service delete"/>
+    <perm name="approval_view" description="Core Approval view"/>
+    <perm name="approval_add" description="Core Approval add"/>
+    <perm name="approval_edit" description="Core Approval edit"/>
+    <perm name="approval_delete" description="Core Approval delete"/>
+    <perm name="approval_record_view" description="Core Approval Record view"/>
+    <perm name="approval_record_add" description="Core Approval Record add"/>
+    <perm name="approval_record_edit" description="Core Approval Record edit"/>
+    <perm name="approval_record_delete" description="Core Approval Record delete"/>
+    <perm name="host_view" description="Core Host view"/>
+    <perm name="host_add" description="Core Host add"/>
+    <perm name="host_edit" description="Core Host edit"/>
+    <perm name="host_delete" description="Core Host delete"/>
+    <perm name="registry_view" description="Core Registry view"/>
+    <perm name="registry_add" description="Core Registry add"/>
+    <perm name="registry_edit" description="Core Registry edit"/>
+    <perm name="registry_delete" description="Core Registry delete"/>
+  </permissions>
 </service>

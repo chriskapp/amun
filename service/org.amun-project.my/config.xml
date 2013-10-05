@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org">
+<service>
   <status>normal</status>
   <path>/my</path>
   <namespace>AmunService\My</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/my</type>
+  <registry>
+    <param name="max_group_count" value="12" type="INTEGER"/>
+  </registry>
   <api>
     <service>
       <type>http://portablecontacts.net/spec/1.0</type>
@@ -26,7 +29,4 @@
     <perm name="activities_view" description="My Activites View"/>
     <perm name="settings_view" description="My Settings View"/>
   </permissions>
-  <registry>
-    <param name="max_group_count" value="12" type="INTEGER"/>
-  </registry>
 </service>

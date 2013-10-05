@@ -1,22 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org">
+<service>
   <status>normal</status>
   <path>/redirect</path>
   <namespace>AmunService\Redirect</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/redirect</type>
-  <api>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/redirect</type>
-      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
-      <uri>/</uri>
-    </service>
-  </api>
-  <permissions>
-    <perm name="view" description="Redirect View"/>
-    <perm name="add" description="Redirect Add"/>
-    <perm name="edit" description="Redirect Edit"/>
-    <perm name="delete" description="Redirect Delete"/>
-  </permissions>
   <registry>
     <table name="redirect"/>
   </registry>
@@ -32,4 +19,17 @@
   UNIQUE KEY `globalId` (`globalId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></query>
   </database>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/redirect</type>
+      <type>http://ns.amun-project.org/2011/amun/data/1.0</type>
+      <uri>/</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Redirect View"/>
+    <perm name="add" description="Redirect Add"/>
+    <perm name="edit" description="Redirect Edit"/>
+    <perm name="delete" description="Redirect Delete"/>
+  </permissions>
 </service>

@@ -1,25 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service xmlns="http://amun-project.org">
+<service>
   <status>system</status>
   <path>/xrds</path>
   <namespace>AmunService\Xrds</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/xrds</type>
-  <api>
-    <service>
-      <type>http://ns.amun-project.org/2011/amun/service/xrds</type>
-      <uri>/</uri>
-    </service>
-  </api>
-  <permissions>
-    <perm name="view" description="XRDS View"/>
-  </permissions>
+  <event>
+    <listener name="core.service_install" class="\AmunService\Xrds\ConfigListener"/>
+  </event>
   <registry>
     <table name="xrds"/>
     <table name="xrds_type"/>
   </registry>
-  <event>
-    <listener name="core.service_install" class="\AmunService\Xrds\ConfigListener"/>
-  </event>
   <database>
     <query><![CDATA[CREATE TABLE IF NOT EXISTS `{table.xrds}` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -37,4 +28,13 @@
   UNIQUE KEY `apiId_type` (`apiId`,`type`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>
   </database>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/xrds</type>
+      <uri>/</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="XRDS View"/>
+  </permissions>
 </service>
