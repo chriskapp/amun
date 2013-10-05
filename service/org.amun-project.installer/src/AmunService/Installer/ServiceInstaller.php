@@ -30,6 +30,7 @@ use Composer\IO\IOInterface;
 use Composer\Package\PackageInterface;
 use Composer\Installer\LibraryInstaller;
 use Composer\Repository\InstalledRepositoryInterface;
+use Composer\Repository\PlatformRepository;
 use Monolog\Logger;
 use PSX\Bootstrap;
 use PSX\DependencyInterface;
@@ -165,16 +166,24 @@ class ServiceInstaller extends LibraryInstaller
 		$map      = array();
 		$map      = array_merge($map, $this->getAutoloadMapForPackage($package));
 		$requires = $package->getRequires();
+		$repo     = $this->composer->getRepositoryManager()->getLocalRepository();
+		$packages = $repo->getPackages();
 
 		if(!empty($requires))
 		{
-			foreach($requires as $name => $version)
+			foreach($requires as $name => $link)
 			{
-				$package = $this->composer->getRepositoryManager()->findPackage($name, $version);
-
-				if($package instanceof RepositoryInterface)
+				if(preg_match(PlatformRepository::PLATFORM_PACKAGE_REGEX, $link->getTarget()))
 				{
-					$map = array_merge($map, $this->getAutoloadMapForPackage($package));
+					continue;
+				}
+
+				foreach($packages as $installedPackage)
+				{
+					if($installedPackage->getName() == $name)
+					{
+						$map = array_merge($map, $this->getAutoloadMap($installedPackage));
+					}
 				}
 			}
 		}
