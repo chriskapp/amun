@@ -83,21 +83,9 @@ class ServiceInstaller extends LibraryInstaller
 
 		if(is_file($config))
 		{
-			// make service autoloadable if not available
-			$generator = $this->composer->getAutoloadGenerator();
-			$autoload  = $package->getAutoload();
-
-			if(isset($autoload['psr-0']) && is_array($autoload['psr-0']))
-			{
-				$map = array();
-				foreach($autoload['psr-0'] as $ns => $src)
-				{
-					$map['psr-0'][$ns] = $dir . '/' . $package->getName() . '/' . $src;
-				}
-
-				$classLoader = $generator->createLoader($map);
-				$classLoader->register();
-			}
+			// make service autoloadable
+			$classLoader = $this->getClassLoader($package);
+			$classLoader->register();
 
 			try
 			{
@@ -129,6 +117,8 @@ class ServiceInstaller extends LibraryInstaller
 			{
 				$this->container->get('logger')->error($e->getMessage());
 			}
+
+			$classLoader->unregister();
 		}
 	}
 
@@ -155,6 +145,58 @@ class ServiceInstaller extends LibraryInstaller
 		}
 
 		throw new \Exception('Could not find namespace in autoload psr-0');
+	}
+
+	/**
+	 * Registers an autoloader
+	 *
+	 * @param PackageInterface $package
+	 */
+	protected function getClassLoader(PackageInterface $package)
+	{
+		$map       = $this->getAutoloadMap($package);
+		$generator = $this->composer->getAutoloadGenerator();
+
+		return $generator->createLoader(array('psr-0' => $map));
+	}
+
+	protected function getAutoloadMap(PackageInterface $package)
+	{
+		$map      = array();
+		$map      = array_merge($map, $this->getAutoloadMapForPackage($package));
+		$requires = $package->getRequires();
+
+		if(!empty($requires))
+		{
+			foreach($requires as $name => $version)
+			{
+				$package = $this->composer->getRepositoryManager()->findPackage($name, $version);
+
+				if($package instanceof RepositoryInterface)
+				{
+					$map = array_merge($map, $this->getAutoloadMapForPackage($package));
+				}
+			}
+		}
+
+		return $map;
+	}
+
+	protected function getAutoloadMapForPackage(PackageInterface $package)
+	{
+		$dir      = $this->composer->getConfig()->get('vendor-dir');
+		$autoload = $package->getAutoload();
+		$map      = array();
+
+		if(isset($autoload['psr-0']) && is_array($autoload['psr-0']))
+		{
+			foreach($autoload['psr-0'] as $ns => $src)
+			{
+				$map[$ns] = $dir . '/' . $package->getName() . '/' . $src;
+			}
+		}
+
+		return $map;
 	}
 
 	/**
