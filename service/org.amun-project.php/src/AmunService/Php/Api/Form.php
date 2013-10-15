@@ -22,6 +22,7 @@
 
 namespace AmunService\Php\Api;
 
+use Amun\Exception\ForbiddenException;
 use Amun\Module\FormAbstract;
 
 /**
@@ -35,6 +36,13 @@ class Form extends FormAbstract
 {
 	protected function getCreateForm()
 	{
-		return $this->form->create($this->get->pageId('integer'));
+		if($this->user->hasRight($this->service->getShortName() . '_add'))
+		{
+			return $this->form->create($this->get->pageId('integer'));
+		}
+		else
+		{
+			throw new ForbiddenException('Access not allowed');
+		}
 	}
 }

@@ -29,6 +29,6 @@ namespace Amun\Exception;
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class Forbidden extends \Amun\Exception
+class ForbiddenException extends \Amun\Exception
 {
 }

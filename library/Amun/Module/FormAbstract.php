@@ -24,6 +24,7 @@ namespace Amun\Module;
 
 use Amun\Module\ApiAbstract;
 use Amun\Exception;
+use Amun\Exception\ForbiddenException;
 use PSX\Data\Message;
 
 /**
@@ -59,67 +60,90 @@ abstract class FormAbstract extends ApiAbstract
 	 */
 	public function doForm()
 	{
-		if($this->user->hasRight($this->service->getShortName() . '_view'))
+		try
 		{
-			try
+			if(!$this->user->hasRight($this->service->getShortName() . '_view'))
 			{
-				$this->method = $this->getInputGet()->method('string');
-				$this->form   = $this->getForm();
-
-				if($this->form === null)
-				{
-					throw new Exception('Form class not available'); 
-				}
-
-				switch($this->method)
-				{
-					case 'create':
-						$form = $this->getCreateForm();
-						break;
-
-					case 'update':
-						$form = $this->getUpdateForm();
-						break;
-
-					case 'delete':
-						$form = $this->getDeleteForm();
-						break;
-
-					default:
-						throw new Exception('Invalid method');
-						break;
-				}
-
-				$this->setResponse($form);
+				throw new ForbiddenException('Access not allowed');
 			}
-			catch(\Exception $e)
+
+			$this->method = $this->getInputGet()->method('string');
+			$this->form   = $this->getForm();
+
+			if($this->form === null)
 			{
-				$msg = new Message($e->getMessage(), false);
-
-				$this->setResponse($msg);
+				throw new Exception('Form class not available'); 
 			}
+
+			switch($this->method)
+			{
+				case 'create':
+					$form = $this->getCreateForm();
+					break;
+
+				case 'update':
+					$form = $this->getUpdateForm();
+					break;
+
+				case 'delete':
+					$form = $this->getDeleteForm();
+					break;
+
+				default:
+					throw new Exception('Invalid method');
+					break;
+			}
+
+			$this->setResponse($form);
 		}
-		else
+		catch(ForbiddenException $e)
 		{
 			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}
+		catch(\Exception $e)
+		{
+			$msg = new Message($e->getMessage(), false);
+
+			$this->setResponse($msg);
+		}
 	}
 
 	protected function getCreateForm()
 	{
-		return $this->form->create();
+		if($this->user->hasRight($this->service->getShortName() . '_add'))
+		{
+			return $this->form->create();
+		}
+		else
+		{
+			throw new ForbiddenException('Access not allowed');
+		}
 	}
 
 	protected function getUpdateForm()
 	{
-		return $this->form->update($this->get->id('integer'));
+		if($this->user->hasRight($this->service->getShortName() . '_edit'))
+		{
+			return $this->form->update($this->get->id('integer'));
+		}
+		else
+		{
+			throw new ForbiddenException('Access not allowed');
+		}
 	}
 
 	protected function getDeleteForm()
 	{
-		return $this->form->delete($this->get->id('integer'));
+		if($this->user->hasRight($this->service->getShortName() . '_delete'))
+		{
+			return $this->form->delete($this->get->id('integer'));
+		}
+		else
+		{
+			throw new ForbiddenException('Access not allowed');
+		}
 	}
 
 	protected function getForm($name = null)
