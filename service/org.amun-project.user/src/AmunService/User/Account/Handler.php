@@ -75,13 +75,23 @@ class Handler extends HandlerAbstract
 		if($record->hasFields('groupId', 'status', 'identity', 'name', 'pw'))
 		{
 			// check whether identity exists
-			$con = new Condition(array('identity', '=', $record->identity));
+			$con = new Condition();
+			$con->add('identity', '=', $record->identity);
 
 			if($this->table->count($con) > 0)
 			{
 				throw new Exception('Identity already exists');
 			}
 
+			// check whether name and hostid exists
+			$con = new Condition();
+			$con->add('hostId', '=', !empty($record->hostId) ? $record->hostId : 0);
+			$con->add('name', '=', $record->name);
+
+			if($this->table->count($con) > 0)
+			{
+				throw new Exception('Identity already exists');
+			}
 
 			// default values
 			if(!isset($record->countryId))
