@@ -1,6 +1,10 @@
 
 [FEATURES]
 
+[ ] Check inheritance how easy it is to overwrite an existing service with i.e.
+    another template
+[ ] Fix page update time
+[x] Setup class is not executed on composer require (probably autoloading issue)
 [ ] make api message "Missing field in record" more verbose
 [ ] option to create page aliases so that a page refers to another page
 [ ] add service installation through backend by executing composer as process
@@ -9,19 +13,10 @@
 [ ] anonymous user is created under the name of the admin in the sample service
 [ ] test openid authentication where amun is the openid provider
 [ ] improve right system probably with inheritance. Add page specific rights
-[ ] clean up handler selection methods
+[x] clean up handler selection methods
 [ ] test approval system
 [ ] build backend for approval system
-[ ] extend navigation to show a dropdown if child pages are available
 [ ] add api bulk operations by accepting resultset in an post
-[ ] the next step in the amun infrastructure is to build an packetmanager for
-    services. That means we need a host service wich offers a list of services 
-    and a client service wich can connect to an host service and install it from
-    there.
-    [x] the service infrastructure is now based on composer using an custom 
-        composer plugin as installer to register events execute sql queries etc
-        All services are hosted at http://package.amun-project.org
-    [ ] make specific actions when update a service
 [ ] check and clean up not used api endpoints
 [ ] openid login activity "... created an Account" is not created
 [ ] option for module to register event wich is loaded on page load (probably
@@ -45,43 +40,23 @@
     we have to create a remote user for the author of the topic if the user id
     doesnt exist. (should be done in the PSHB service)
 [ ] test ostatus remote subscription interoperability
-[x] improve sample installation when setting username, password, email 
-    possibility to enter wrong values so taht the installer asks again
-[x] backend service panel is not listed under System
-[/] fix explorer service
-[/] implement page option 
-[x] solve composer install problem that a db connection is needed if we want to
-    setup tables on composer installation
-    Is solved the installer marks the package as installed if the db entries
-    are available
-[x] fix php_view right .. php code is returned by the api
-[x] fix and test service ui with bootstrap 3
-[x] test oauth authentication
-[x] fix page multi colum template
-[x] fix workbench service install
-[x] fix gadget system
-[x] add page and gadget caching
-[x] remove window dialog from footer since css from the footer is applied on the 
-    window
-[x] add loading animation to user group right save
-[x] fix activity stream handling
-[x] fix api field default selection (restricted field authorPw etc.)
-[x] fix installer
-[x] added modal window to add or edit records on the website
-[x] Implement reference input field in backend
-[x] add api to preview render an markdown text
-[x] implement content page sort api to reorder pages
 
 
 [SERVICES]
 
-[ ] add general payment service with an event publisher if an payments is 
-    executed and an backend where its possible to see all transactions
-[/] write a plugin with that you can donwload plugins from a server ... the
-    client gets a list of all plugins via an xml or json list if he want to
-    install a paticular plugin the client donwload all files in an xml format
-    and create the files and directories in the plugin dir (this is a big task)
-    replaced through new service composer system
+[ ] Add authoring service wich offers the possibility to edit a page by an 
+    editor user group and pages can be activated by admins. An editor has to add
+    an message to every change and it is possible to restore older versions
+    [ ] Build authoring tool in java where you can edit and comment changes
+[ ] Add social media service where it is possible to publish news through 
+    different channels i.e. facebook, twitter, etc
+[x] add elastic search service using http://elastica.io/
+[ ] add stackoverflow like service
+[ ] add Model service where users can create dynamically models wich have an API
+    endpoint these API endpoints can be used by the form service
+[ ] add form service where users can build dynamic forms
+[ ] add general payment service with an event publisher if an payments is
+    executed and an backend where its possible to see / browse all transactions
 [ ] implement http://xing.github.com/wysihtml5/ as service for page editing
 [ ] add database backend service (like phpmyadmin)
 [ ] add tent (https://tent.io/) service wich can post and receive messages for 
@@ -106,9 +81,6 @@
 [ ] add pm (private message) plugin where users can post and receive messages
     from other users. (should be hooked into the my service)
 [ ] group service where users can join a group like on myspace or facebook etc
-[/] write media plugin where users can add videos by simply add an URL into an
-    textfield. We use oEmbed to discover the video like in the gallery plugin.
-    Not needed at the moment comments are parsing oembed endpoints
 [ ] write wiki plugin
 [ ] write statistic plugin ... the plugin logs all site access etc ... maybe you
     can add analytics key and the plugin requests the google API
@@ -135,6 +107,52 @@
 
 [DONE]
 
+[/] write a plugin with that you can donwload plugins from a server ... the
+    client gets a list of all plugins via an xml or json list if he want to
+    install a paticular plugin the client donwload all files in an xml format
+    and create the files and directories in the plugin dir (this is a big task)
+    replaced through new service composer system
+[/] write media plugin where users can add videos by simply add an URL into an
+    textfield. We use oEmbed to discover the video like in the gallery plugin.
+    Not needed at the moment comments are parsing oembed endpoints
+[x] remove amun_service_path from config
+[/] extend navigation to show a dropdown if child pages are available
+    there is no efficient way to load subpages if needed a custom navigation can 
+    be added to the nav.tpl
+[x] the next step in the amun infrastructure is to build an packetmanager for
+    services. That means we need a host service wich offers a list of services 
+    and a client service wich can connect to an host service and install it from
+    there.
+    [x] the service infrastructure is now based on composer using an custom 
+        composer plugin as installer to register events execute sql queries etc
+        All services are hosted at http://package.amun-project.org
+    [x] make specific actions when update a service
+[x] improve sample installation when setting username, password, email 
+    possibility to enter wrong values so taht the installer asks again
+[x] backend service panel is not listed under System
+[/] fix explorer service
+[/] implement page option 
+[x] solve composer install problem that a db connection is needed if we want to
+    setup tables on composer installation
+    Is solved the installer marks the package as installed if the db entries
+    are available
+[x] fix php_view right .. php code is returned by the api
+[x] fix and test service ui with bootstrap 3
+[x] test oauth authentication
+[x] fix page multi colum template
+[x] fix workbench service install
+[x] fix gadget system
+[x] add page and gadget caching
+[x] remove window dialog from footer since css from the footer is applied on the 
+    window
+[x] add loading animation to user group right save
+[x] fix activity stream handling
+[x] fix api field default selection (restricted field authorPw etc.)
+[x] fix installer
+[x] added modal window to add or edit records on the website
+[x] Implement reference input field in backend
+[x] add api to preview render an markdown text
+[x] implement content page sort api to reorder pages
 [x] Save page as "draft" so that its not published directly. Is done through the
     publish date
 [x] add phpinfo backend service

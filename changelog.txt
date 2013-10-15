@@ -1,4 +1,13 @@
 
+1.0.2
+* Fix form information disclosure
+* Fix bug that the setup class was not executed on composer require
+* Added xsd schema file for config xml
+* Fix import media script
+* Fixed forum service
+* Added search service based on elasticsearch
+* Removed singelton from registry
+
 1.0.1
 * Updated psx to version 0.7
 * Added core.template_dir registry entry
