@@ -64,10 +64,10 @@ class Serve extends ApiAbstract
 			if(!empty($media))
 			{
 				// remove caching header
-				header('Expires:');
-				header('Last-Modified:');
-				header('Cache-Control:');
-				header('Pragma:');
+				header_remove('Expires');
+				header_remove('Last-Modified');
+				header_remove('Cache-Control');
+				header_remove('Pragma');
 
 				// check right
 				if(!empty($media['rightId']) && !$this->user->hasRightId($media['rightId']))
@@ -79,12 +79,12 @@ class Serve extends ApiAbstract
 				switch($media['mimeType'])
 				{
 					case 'application/octet-stream':
-						header('Content-type: ' . $media['mimeType']);
-						header('Content-disposition: attachment; filename="' . $media['name'] . '"');
+						header('Content-Type: ' . $media['mimeType']);
+						header('Content-Disposition: attachment; filename="' . $media['name'] . '"');
 						break;
 
 					default:
-						header('Content-type: ' . $media['mimeType']);
+						header('Content-Type: ' . $media['mimeType']);
 						break;
 				}
 
