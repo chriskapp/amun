@@ -48,6 +48,7 @@ class Record extends RecordAbstract
 	protected $_account;
 	protected $_media;
 	protected $_date;
+	protected $_file;
 
 	public function setId($id)
 	{
@@ -112,27 +113,20 @@ class Record extends RecordAbstract
 
 	public function getContent()
 	{
-		// check whether we have an absolute or relative path
-		if($this->mediaPath[0] == '/' || $this->mediaPath[1] == ':')
-		{
-			$path = $this->mediaPath;
-		}
-		else
-		{
-			$path = $this->_registry['media.path'] . '/' . $this->mediaPath;
-		}
-
-		if(!File::exists($path))
-		{
-			throw new Exception('File not found', 404);
-		}
-
 		$processor = ProcessorAbstract::factory($this->processor);
 
 		if($processor instanceof ProcessorInterface)
 		{
-			return $processor->process($path);
+			return $processor->process($this->getFile());
 		}
+	}
+
+	public function getLastModified()
+	{
+		$date = new DateTime();
+		$date->setTimestamp(filemtime($this->getFile()));
+
+		return $date;
 	}
 
 	public function getPage()
@@ -173,6 +167,31 @@ class Record extends RecordAbstract
 		}
 
 		return $this->_date;
+	}
+
+	public function getFile()
+	{
+		if($this->_file === null)
+		{
+			// check whether we have an absolute or relative path
+			if($this->mediaPath[0] == '/' || $this->mediaPath[1] == ':')
+			{
+				$file = $this->mediaPath;
+			}
+			else
+			{
+				$file = $this->_registry['media.path'] . '/' . $this->mediaPath;
+			}
+
+			if(!File::exists($file))
+			{
+				throw new Exception('File not found', 404);
+			}
+
+			$this->_file = $file;
+		}
+
+		return $this->_file;
 	}
 
 	public function getUrl()

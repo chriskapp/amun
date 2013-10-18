@@ -22,6 +22,7 @@
 
 namespace AmunService\Pipe\Application;
 
+use DateTime;
 use Amun\Module\ApplicationAbstract;
 use Amun\Exception;
 use Amun\Option;
@@ -64,6 +65,14 @@ class Index extends ApplicationAbstract
 
 			if($recordPipe instanceof Record)
 			{
+				// set header
+				header_remove('Expires');
+				header_remove('Cache-Control');
+				header_remove('Pragma');
+
+				header('Last-Modified: ' . $recordPipe->getLastModified()->format(DateTime::RFC1123));
+
+				// get content
 				$content = $recordPipe->getContent();
 			}
 
