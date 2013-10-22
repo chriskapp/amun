@@ -154,7 +154,7 @@ class Auth extends ApplicationAbstract
 					// check whether access is already allowed
 					if($this->getHandler('AmunService\Oauth\Access')->isAllowed($this->apiId, $this->user->getId()))
 					{
-						$this->allowAccess($token, $callback);
+						$this->allowAccess($token, $callback, false);
 					}
 				}
 				else
@@ -214,30 +214,31 @@ class Auth extends ApplicationAbstract
 		}
 	}
 
-	private function allowAccess($token, $callback)
+	private function allowAccess($token, $callback, $insertAccess = true)
 	{
-		// generate verifier
-		$verifier = Security::generateToken(32);
-
 		// insert or update access
-		$now = new DateTime('NOW', $this->registry['core.default_timezone']);
+		if($insertAccess)
+		{
+			$now = new DateTime('NOW', $this->registry['core.default_timezone']);
 
-		$this->getSql()->replace($this->registry['table.oauth_access'], array(
+			$this->getSql()->replace($this->registry['table.oauth_access'], array(
 
-			'apiId'   => $this->apiId,
-			'userId'  => $this->user->getId(),
-			'allowed' => 1,
-			'date'    => $now->format(DateTime::SQL),
+				'apiId'   => $this->apiId,
+				'userId'  => $this->user->getId(),
+				'allowed' => 1,
+				'date'    => $now->format(DateTime::SQL),
 
-		));
+			));
 
-		$accessId = $this->getSql()->getLastInsertId();
+			$accessId = $this->getSql()->getLastInsertId();
 
-		// insert rights
-		$this->insertAppRights($accessId);
+			// insert rights
+			$this->insertAppRights($accessId);
+		}
 
 		// approve token
-		$con = new Condition(array('token', '=', $token));
+		$verifier = Security::generateToken(32);
+		$con      = new Condition(array('token', '=', $token));
 
 		$this->getSql()->update($this->registry['table.oauth_request'], array(
 
