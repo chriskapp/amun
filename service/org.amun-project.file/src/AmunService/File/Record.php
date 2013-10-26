@@ -76,7 +76,7 @@ class Record extends RecordAbstract
 
 	public function setContentType($contentType)
 	{
-		$contentType = $this->_validate->apply($contentType, 'string', array(), 'contentType', 'Content Type');
+		$contentType = $this->_validate->apply($contentType, 'string', array(new Filter\Length(3, 128)), 'contentType', 'Content Type');
 
 		if(!$this->_validate->hasError())
 		{
