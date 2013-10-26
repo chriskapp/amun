@@ -2,7 +2,7 @@
 <title><?php echo $registry['core.title']; ?> / <?php echo $page->getTitle(); ?></title>
 <meta charset="UTF-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta http-equiv="X-XRDS-Location" content="<?php echo $url; ?>api/meta/xrds" />
+<meta http-equiv="X-XRDS-Location" content="<?php echo $url; ?>api/xrds" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script type="text/javascript">
 var amun = {};
