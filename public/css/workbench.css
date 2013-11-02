@@ -81,6 +81,12 @@
 	text-align:center;
 }
 
+.wb-overflow
+{
+	overflow-x:hidden;
+	overflow-y:auto;
+}
+
 .x-tab-bar-top .x-tab-bar-body
 {
 	border-width:1px 0 0;
@@ -93,7 +99,5 @@
 
 .amun-ace-editor
 {
-	width:640px;
-	height:300px;
 	border:1px solid #B5B8C8;
 }

@@ -42,10 +42,13 @@ Ext.require('Amun.service.user.group.Grid');
 Ext.require('Amun.service.mail.Form');
 Ext.require('Amun.service.mail.Grid');
 
+Ext.require('Amun.service.page.Editor');
+
 Ext.require('Amun.service.phpinfo.Grid');
 Ext.require('Amun.service.phpinfo.Store');
 
 Ext.require('Amun.ColumnConfig');
+Ext.require('Amun.Editor');
 Ext.require('Amun.Grid');
 
 // start application

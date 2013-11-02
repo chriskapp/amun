@@ -4,8 +4,11 @@ Ext.define('Amun.service.mail.Form', {
 
     initComponent: function(){
         var me = this;
-        me.autoScroll = true;
         me.callParent();
+
+        me.on('formLoaded', function(el){
+        	this.getFormPanel().addBodyCls('wb-overflow');
+        });
     }
 
 });

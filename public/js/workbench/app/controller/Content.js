@@ -11,8 +11,7 @@ Ext.define('Workbench.controller.Content', {
     selectedService: null,
 
     statics: {
-        recordId: null,
-        windowCache: {}
+        recordId: null
     },
 
     init: function() {

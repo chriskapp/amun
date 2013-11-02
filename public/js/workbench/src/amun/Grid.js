@@ -7,7 +7,6 @@ Ext.define('Amun.Grid', {
     selectedRecordId: null,
 
     columnConfig: false,
-    windowCache: {},
 
     columns: null,
     searchColumns: null,
@@ -32,7 +31,7 @@ Ext.define('Amun.Grid', {
         this.buildColumns(result);
 
         // create store
-        this.store = this.buildStore(service, result);
+        this.store = this.buildStore(service);
 
         // build grid
         return {
@@ -84,14 +83,14 @@ Ext.define('Amun.Grid', {
         return fields;
     },
 
-    buildStore: function(service, result){
+    buildStore: function(service){
         // define model
         var modelName = 'Amun.' + service.getNamespace() + '.Model';
         if (Ext.ClassManager.get(modelName) == null) {
             var fields = [];
-            for (var i = 0; i < result.length; i++) {
+            for (var i = 0; i < this.columns.length; i++) {
                 fields.push({
-                    name: result[i],
+                    name: this.columns[i].text,
                     type: 'string'
                 });
             }
@@ -141,139 +140,72 @@ Ext.define('Amun.Grid', {
         });
     },
 
-    loadForm: function(uri){
-        var win = this.windowCache[uri];
-        if (win == undefined) {
-            // request form
-            Ext.Ajax.request({
-                url: uri,
-                scope: this,
-                success: function(response, opts){
-                    var result = Ext.JSON.decode(response.responseText);
-
-                    // build grid
-                    this.buildForm(result, uri);
-                },
-                failure: function(response){
-                    Ext.Msg.alert('Error', response.responseText);
-                }
-            });
-        } else {
-            // hide other windows
-            for (var key in this.windowCache) {
-                this.windowCache[key].hide();
-            }
-
-            // reset form
-            var form = win.query('form');
-            if (form.length > 0) {
-                form[0].reload();
-            }
-
-            // show window
-            win.show();
-        }
-    },
-
-    buildForm: function(result, uri){
-        if (typeof(result.success) != 'undefined' && result.success == false) {
-            // add message
-            var panel = {
-                layout: 'fit',
-                border: false,
-                bodyStyle: 'padding:5px;',
-                html: result.text
-            };
-        } else {
-            // check whether we have a custom form class else we build the form 
-            // based on the json we received
-            var form;
-            var formName = 'Amun.' + this.service.getNamespace() + '.Form';
-
-            if (Ext.ClassManager.get(formName) != null) {
-                form = Ext.create(formName, {
-                    recordId: this.getSelectedRecordId(),
-                    form: result,
-                    fieldDefaults: {
-                        labelWidth: 120,
-                        width: 340
-                    }
-                });
-            } else {
-                form = Ext.create('Amun.form.Form', {
-                    recordId: this.getSelectedRecordId(),
-                    form: result,
-                    fieldDefaults: {
-                        labelWidth: 120,
-                        width: 340
-                    }
-                });
-            }
-
-            // add events
-            form.on('submit', function(el){
-                var form = el.getForm();
-                if (form.isValid()) {
-                    var params = '';
-                    if (form.hasUpload()) {
-                        params = '?format=json&htmlMime=1';
-                    }
-                    form.submit({
-                        url: el.getAction() + params,
-                        method: 'POST',
-                        headers: {
-                            'X-HTTP-Method-Override': el.getMethod(),
-                            'Accept': 'application/json'
-                        },
-                        success: function(form, action) {
-                            Ext.Msg.alert('Success', action.result.text, function(){
-                                this.reload();
-                                this.fireEvent('reload');
-                            }, this);
-                            var win = this.windowCache[uri];
-                            win.hide();
-                        },
-                        failure: function(form, action) {
-                            Ext.Msg.alert('Failed', action.result.text);
-                        },
-                        scope: this
-                    });
-                }
-            }, this);
-
-            form.on('reset', function(el){
-                var form = el.getForm();
-                form.reset();
-            }, this);
-
-            // build form
-            var panel = Ext.create('Ext.panel.Panel', {
-                layout: 'fit',
-                border: false,
-                items: [form]
+    /**
+     * Shows an create, update or delete form
+     *
+     * @param string type
+     * @param Amun.Service service
+     * @param Amun.Page page
+     */
+    showForm: function(type, service, page){
+        // if we have an type try to use this form else load the type from 
+        // the grid
+        var form = null;
+        var formName = 'Amun.' + service.getNamespace() + '.Form';
+        if (Ext.ClassManager.get(formName) != null) {
+            form = Ext.create(formName, {
+                type: type,
+                service: service,
+                page: page,
+                recordId: this.getSelectedRecordId()
             });
         }
 
-        // hide other windows
-        for (var key in this.windowCache) {
-            this.windowCache[key].hide();
+        // as fallback use the default form
+        if (form == null) {
+            form = Ext.create('Amun.form.Form', {
+                type: type,
+                service: service,
+                page: page,
+                recordId: this.getSelectedRecordId()
+            });
         }
 
-        // build window
-        win = Ext.create('widget.window', {
-            title: 'Form',
-            closable: true,
-            closeAction: 'hide',
-            width: 800,
-            height: 600,
-            resizable: false,
-            layout: 'fit',
-            items: [panel]
-        });
-        win.show();
+        // add events
+        form.on('submit', function(el){
+            var form = el.getForm();
+            if (form.isValid()) {
+                var params = '';
+                if (form.hasUpload()) {
+                    params = '?format=json&htmlMime=1';
+                }
+                form.submit({
+                    url: el.getAction() + params,
+                    method: 'POST',
+                    headers: {
+                        'X-HTTP-Method-Override': el.getMethod(),
+                        'Accept': 'application/json'
+                    },
+                    success: function(form, action) {
+                        Ext.Msg.alert('Success', action.result.text, function(){
+                            this.reload();
+                            this.fireEvent('reload');
+                        }, this);
+                    },
+                    failure: function(form, action) {
+                        Ext.Msg.alert('Failed', action.result.text);
+                    },
+                    scope: this
+                });
+            }
+        }, this);
 
-        // add to cache
-        this.windowCache[uri] = win;
+        form.on('reset', function(el){
+            var form = el.getForm();
+            form.reset();
+        }, this);
+
+        form.show();
     },
 
     getSelectedRecordId: function(){
@@ -366,28 +298,35 @@ Ext.define('Amun.Grid', {
     },
 
     onDblClick: function(el){
+        /*
+        var grid = el.findParentByType('grid');
+        var rec = grid.getSelectionModel().getSelection()[0];
+        var type = rec.raw.serviceType;
+
+        var service = Amun.xrds.Manager.findService(type);
+        if (service) {
+            this.showForm('UPDATE', service);
+        }
+        Amun.Editor
+        */
     },
 
     onAddClick: function(el, e, eOpts){
-        var uri = this.service.getUri() + '/form?method=create';
-
-        this.loadForm(uri);
+        this.showForm('CREATE', this.service);
     },
 
     onEditClick: function(el, e, eOpts){
+        /*
         var grid = el.findParentByType('grid');
         var rec = grid.getSelectionModel().getSelection()[0];
         var uri = this.service.getUri() + '/form?method=update&id=' + rec.get('id');
+        */
 
-        this.loadForm(uri);
+        this.showForm('UPDATE', this.service);
     },
 
     onDeleteClick: function(el, e, eOpts){
-        var grid = el.findParentByType('grid');
-        var rec = grid.getSelectionModel().getSelection()[0];
-        var uri = this.service.getUri() + '/form?method=delete&id=' + rec.get('id');
-
-        this.loadForm(uri);
+        this.showForm('DELETE', this.service);
     },
 
     onSearchClick: function(el){

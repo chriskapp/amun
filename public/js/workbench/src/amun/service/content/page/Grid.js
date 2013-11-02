@@ -29,9 +29,12 @@ Ext.define('Amun.service.content.page.Grid', {
     buildTree: function(){
         var store = Ext.create('Ext.data.TreeStore', {
             autoLoad: true,
+            fields: [
+                { name: 'text', type: 'string', mapping: 'title' }
+            ],
             proxy: {
                 type: 'ajax',
-                url: url + 'api/content/page/tree?format=json'
+                url: url + 'api/page/tree?format=json'
             },
             reader: {
                 type: 'json',
@@ -114,9 +117,12 @@ Ext.define('Amun.service.content.page.Grid', {
         });
 
         this.tree.on('celldblclick', function(el, td, index, rec){
-            var uri = this.grid.service.getUri() + '/form?method=update&id=' + rec.get('id');
-
-            this.grid.loadForm(uri);
+            var serviceType = rec.raw.type;
+            var service = Amun.xrds.Manager.findService(serviceType);
+            if (service) {
+                var uri = service.getUri() + '/form?method=update&id=' + rec.get('id');
+                this.grid.loadForm(uri, serviceType);
+            }
         }, this);
 
         this.tree.on('select', function(el, rec){
@@ -135,14 +141,41 @@ Ext.define('Amun.service.content.page.Grid', {
             result: this.result,
             columnConfig: {
                 id: 80,
-                title: 300,
-                template: 300,
-                date: 120
+                path: 200,
+                title: 100,
+                template: 100,
+                serviceName: 100,
+                date: 120,
+                serviceType: 100
             }
         });
 
         this.grid.on('reload', function(){
             this.tree.getStore().load();
+        }, this);
+
+        this.grid.on('celldblclick', function(el){
+            var rec = this.grid.getSelectionModel().getSelection()[0];
+            var service = Amun.xrds.Manager.findService(rec.raw.serviceType);
+            if (service) {
+                var editor = null;
+                var editorName = 'Amun.' + service.getNamespace() + '.Editor';
+                if (Ext.ClassManager.get(editorName) != null) {
+                    editor = Ext.create(editorName, {
+                        service: service,
+                        page: rec.raw
+                    });
+                }
+
+                // as fallback use the default form
+                if (editor == null) {
+                    editor = Ext.create('Amun.Editor', {
+                        service: service,
+                        page: rec.raw
+                    });
+                }
+                editor.show();
+            }
         }, this);
 
         return this.grid;

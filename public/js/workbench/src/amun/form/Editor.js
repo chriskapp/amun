@@ -11,8 +11,7 @@ Ext.define('Amun.form.Editor', {
         me.editorId = Ext.id();
 
         var config = {
-            width: 640,
-            height: 300,
+            cls: 'wb-content-form-editor',
             fieldSubTpl: [
                 '<div id="{id}" {inputAttrTpl}>',
                     '<div id="' + me.editorId + '" class="amun-ace-editor"></div>',
@@ -29,13 +28,17 @@ Ext.define('Amun.form.Editor', {
 
     afterRender: function(){
         var me = this;
-
         me.callParent(arguments);
+
+        // set width and height
+        var editor = Ext.select('#' + me.editorId);
+        editor.setWidth(this.getWidth());
+        editor.setHeight(this.getHeight());
 
         // ace editor
         me.editor = ace.edit(me.editorId);
         me.editor.setTheme('ace/theme/eclipse');
-        me.editor.getSession().setMode('ace/mode/html');
+        //me.editor.getSession().setMode('ace/mode/html');
         me.editor.setValue(me.rawValue, -1);
     },
 

@@ -2,35 +2,130 @@
 Ext.require('Amun.form.Editor');
 
 Ext.define('Amun.form.Form', {
-    extend: 'Ext.form.Panel',
+    extend: 'Ext.window.Window',
 
-    formMethod: 'POST',
-    formAction: null,
+    method: 'POST',
+    action: null,
 
     initComponent: function(){
         var me = this;
-        me.addEvents('submit', 'reset');
+        me.addEvents('submit', 'reset', 'formLoaded');
 
-        var el = this.buildForm(this.form);
+        var el = {
+            title: 'Form',
+            closable: true,
+            closeAction: 'hide',
+            width: 800,
+            height: 600,
+            resizable: false,
+            layout: 'fit',
+            items: [{
+                layout: 'fit',
+                border: false,
+                bodyStyle: 'padding:5px;',
+                html: 'Loading ...'
+            }]
+        };
         Ext.apply(me, el);
 
         me.callParent();
+
+        /*
+        me.on('boxready', function(){
+
+            this.buildForm(this.form);
+
+        });
+        */
+
+        this.loadForm();
     },
 
     reload: function(){
         this.getForm().reset();
     },
 
-    getAction: function(){
-        return this.formAction;
+    getPage: function(){
+        return this.page;
+    },
+
+    getRecordId: function(){
+        return this.recordId;
     },
 
     getMethod: function(){
-        return this.formMethod;
+        return this.method;
+    },
+
+    getAction: function(){
+        return this.action;
+    },
+
+    getFormPanel: function(){
+        return this.query('panel[cls=wb-content-form]')[0];
+    },
+
+    getForm: function(){
+        return this.getFormPanel().getForm();
+    },
+
+    loadForm: function(){
+        var uri = null;
+        if (this.type == 'CREATE') {
+            uri = this.service.getUri() + '/form?method=create';
+        } else if (this.type == 'UPDATE') {
+            uri = this.service.getUri() + '/form?method=update&id=' + this.recordId;
+        } else if (this.type == 'DELETE') {
+            uri = this.service.getUri() + '/form?method=delete&id=' + this.recordId;
+        } else {
+            console.log('Invalid type');
+        }
+
+        if (uri != null) {
+            // request form
+            Ext.Ajax.request({
+                url: uri,
+                scope: this,
+                success: function(response, opts){
+                    var result = Ext.JSON.decode(response.responseText);
+
+                    // build grid
+                    this.doFormLoaded(result);
+                },
+                failure: function(response){
+                    Ext.Msg.alert('Error', response.responseText);
+                }
+            });
+        }
+    },
+
+    doFormLoaded: function(result){
+        // remove loading panel
+        this.remove(0);
+
+        // add panel
+        if (typeof(result.success) != 'undefined' && result.success == false) {
+            // add message
+            this.add({
+                layout: 'fit',
+                border: false,
+                bodyStyle: 'padding:5px;',
+                html: result.text
+            });
+        } else {
+            this.add(this.buildForm(result));
+        }
+        this.doLayout();
+
+        this.fireEvent('formLoaded', this);
     },
 
     buildForm: function(form){
-        return this.parseElements(form);
+        return Ext.create('Ext.panel.Panel', {
+            layout: 'fit',
+            border: false,
+            items: [this.parseElements(form)]
+        });
     },
 
     buildChildren: function(item){
@@ -94,21 +189,26 @@ Ext.define('Amun.form.Form', {
 
     onForm: function(item){
         // create form panel
-        return {
-            formMethod: item.method,
-            formAction: item.action,
+        this.method = item.method;
+        this.action = item.action;
+
+        return Ext.create('Ext.form.Panel', {
             url: item.action,
             cls: 'wb-content-form',
             items: [this.parseElements(item.item)],
             border: false,
             region: 'center',
+            fieldDefaults: {
+                labelWidth: 120,
+                width: 340
+            },
             buttons: [{
                 text: 'Reset',
                 scope: this,
                 handler: function(){
                     this.fireEvent('reset', this);
                 }
-            }, {
+            },{
                 text: 'Submit',
                 formBind: true,
                 disabled: true,
@@ -117,7 +217,7 @@ Ext.define('Amun.form.Form', {
                     this.fireEvent('submit', this);
                 }
             }]
-        };
+        });
     },
 
     onTabPanel: function(item){
@@ -279,6 +379,8 @@ Ext.define('Amun.form.Form', {
     onTextarea: function(item){
         return {
             xtype: 'aceeditor',
+            width: 640,
+            height: 300,
             grow: true,
             name: item.ref,
             fieldLabel: item.label,

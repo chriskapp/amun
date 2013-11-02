@@ -73,15 +73,10 @@ Ext.define('Workbench.controller.Navigation', {
         },{
             title: 'Phpinfo',
             type: 'http://ns.amun-project.org/2011/amun/service/phpinfo'
-        },{
-            title: 'VCS Hooks',
-            type: 'http://ns.amun-project.org/2011/amun/service/vcshook'
-        },{
-            title: '┗ Authors',
-            type: 'http://ns.amun-project.org/2011/amun/service/vcshook/author'
         }]);
 
         // services
+        /*
         this.addNavItems('Service', [{
             title: 'Comment',
             type: 'http://ns.amun-project.org/2011/amun/service/comment'
@@ -107,6 +102,7 @@ Ext.define('Workbench.controller.Navigation', {
             title: 'Redirect',
             type: 'http://ns.amun-project.org/2011/amun/service/redirect'
         }]);
+        */
     },
 
     addNavItems: function(name, children){

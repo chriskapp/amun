@@ -11,8 +11,10 @@ Ext.define('Amun.service.content.page.Form', {
         var me = this;
         me.callParent();
 
-        // load group gadgets
-        this.gadgetPanel.getStore().load();
+        me.on('formLoaded', function(el){
+            // load group gadgets
+            el.gadgetPanel.getStore().load();
+        });
     },
 
     reload: function(){
@@ -23,7 +25,7 @@ Ext.define('Amun.service.content.page.Form', {
     buildForm: function(form){
         // build form
         this.formPanel = this.parseElements(form);
-        this.formPanel.items.push({
+        this.formPanel.add({
             xtype: 'hiddenfield',
             cls: 'wb-form-gadgets',
             name: 'gadgets',

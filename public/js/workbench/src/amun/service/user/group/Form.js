@@ -4,11 +4,12 @@ Ext.define('Amun.service.user.group.Form', {
 
     initComponent: function(){
         var me = this;
-        me.autoScroll = true;
         me.callParent();
 
         // load group rights
-        this.loadRights();
+        me.on('formLoaded', function(el){
+            this.loadRights();
+        });
 
         // show loading panel
         me.on('submit', function(el){
@@ -80,12 +81,13 @@ Ext.define('Amun.service.user.group.Form', {
                             xtype: 'checkboxgroup',
                             fieldLabel: 'Rights',
                             columns: 3,
-                            style: 'margin-left:5px',
+                            style: 'margin-left:5px;',
                             items: items
                         }];
 
-                        this.add(comboGroup);
-                        this.updateLayout();
+                        this.getFormPanel().addBodyCls('wb-overflow');
+                        this.getFormPanel().add(comboGroup);
+                        this.doLayout();
 
                         // load existing rights
                         if (this.recordId > 0) {
