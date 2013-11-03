@@ -8,7 +8,6 @@ Ext.define('Amun.Editor', {
         var el = {
             title: 'Editor',
             closable: true,
-            closeAction: 'hide',
             width: 820,
             height: 600,
             resizable: false,

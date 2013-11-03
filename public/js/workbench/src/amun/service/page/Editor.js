@@ -1,62 +1,26 @@
 
 Ext.define('Amun.service.page.Editor', {
-    extend: 'Amun.Editor',
+    extend: 'Amun.SplitEditor',
 
-    record: null,
-
-    initComponent: function(){
-        var me = this;
-        var el = {
-            maximized: true
-        };
-        Ext.apply(me, el);
-
-        me.callParent();
-
-        me.on('boxready', function(){
-            var editors = Ext.select('.amun-ace-editor');
-            if (editors) {
-                editors.setWidth(this.getComponent(0).getComponent(0).getWidth());
-                editors.setHeight(this.getComponent(0).getComponent(0).getHeight());
-            }
-
-            this.getComponent(0).getComponent(0).on('resize', function(el, width, height, oldWidth, oldHeight, eOpts){
-                var editors = Ext.select('.amun-ace-editor');
-                if (editors) {
-                    editors.setWidth(width);
-                    editors.setHeight(height);
+    getBbar: function(){
+        return [{
+            text: 'Preview',
+            scope: this,
+            handler: function(){
+                if (frames[0]) {
+                    var element = frames[0].document.querySelector('.amun-service-page-content');
+                    if (element) {
+                        element.innerHTML = this.getEditorValue();
+                    }
                 }
-            });
-
-            me.requestPage();
-        });
-    },
-
-    buildContainer: function(){
-        return Ext.create('Ext.panel.Panel', {
-            border: false,
-            layout: 'border',
-            items: [{
-                region: 'west',
-                width: '50%',
-                border: false,
-                split: true,
-                minWidth: 200,
-                layout: 'fit',
-                items: [{
-                    xtype: 'aceeditor',
-                    grow: true,
-                    name: 'content',
-                    value: ''
-                }]
-            },{
-                region: 'center',
-                width: '50%',
-                border: false,
-                layout: 'fit',
-                html: '<iframe src="' + url + this.page.path + '" width="100%" height="100%" />'
-            }]
-        });
+            }
+        },{
+            text: 'Publish',
+            scope: this,
+            handler: function(){
+                this.savePage();
+            }
+        }];
     },
 
     requestPage: function(){
@@ -69,16 +33,33 @@ Ext.define('Amun.service.page.Editor', {
                     this.record = result.entry[0];
 
                     // set value
-                    var editors = this.query('aceeditor');
-                    if (editors[0]) {
-                        editors[0].editor.setValue(this.record.content, -1);
-                    }
+                    this.setEditorValue(this.record.content);
                 }
             },
             failure: function(response){
                 Ext.Msg.alert('Error', response.responseText);
             }
         });
+    },
+
+    savePage: function(){
+        var method;
+        var params;
+        if (this.record) {
+            method = 'PUT';
+            params = {
+                id: this.record.id,
+                content: this.getEditorValue()
+            };
+        } else {
+            method = 'POST';
+            params = {
+                pageId: this.page.id,
+                content: this.getEditorValue()
+            };
+        }
+
+        this.submitPage(method, params);
     }
 
 });

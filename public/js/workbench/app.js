@@ -1,11 +1,9 @@
 /*
- *  $Id: workbench.js 842 2012-09-16 11:46:35Z k42b3.x@googlemail.com $
- *
  * amun
  * A social content managment system based on the psx framework. For
  * the current version and informations visit <http://amun.phpsx.org>
  *
- * Copyright (c) 2010 Christoph Kappestein <k42b3.x@gmail.com>
+ * Copyright (c) 2010-2013 Christoph Kappestein <k42b3.x@gmail.com>
  *
  * This file is part of amun. amun is free software: you can
  * redistribute it and/or modify it under the terms of the
@@ -29,27 +27,20 @@ Ext.Loader.setConfig({
 });
 
 Ext.require('Amun.form.Form');
+Ext.require('Amun.ColumnConfig');
 
 Ext.require('Amun.service.content.page.Form');
 Ext.require('Amun.service.content.page.Grid');
-
 Ext.require('Amun.service.core.registry.Grid');
 Ext.require('Amun.service.core.service.Grid');
-
 Ext.require('Amun.service.user.group.Form');
 Ext.require('Amun.service.user.group.Grid');
-
+Ext.require('Amun.service.file.Editor');
 Ext.require('Amun.service.mail.Form');
 Ext.require('Amun.service.mail.Grid');
-
 Ext.require('Amun.service.page.Editor');
-
 Ext.require('Amun.service.phpinfo.Grid');
 Ext.require('Amun.service.phpinfo.Store');
-
-Ext.require('Amun.ColumnConfig');
-Ext.require('Amun.Editor');
-Ext.require('Amun.Grid');
 
 // start application
 Ext.application({

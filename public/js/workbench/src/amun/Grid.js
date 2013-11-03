@@ -312,7 +312,7 @@ Ext.define('Amun.Grid', {
     },
 
     onAddClick: function(el, e, eOpts){
-        this.showForm('CREATE', this.service);
+        this.showForm('CREATE', this.service, this.page);
     },
 
     onEditClick: function(el, e, eOpts){
@@ -322,11 +322,11 @@ Ext.define('Amun.Grid', {
         var uri = this.service.getUri() + '/form?method=update&id=' + rec.get('id');
         */
 
-        this.showForm('UPDATE', this.service);
+        this.showForm('UPDATE', this.service, this.page);
     },
 
     onDeleteClick: function(el, e, eOpts){
-        this.showForm('DELETE', this.service);
+        this.showForm('DELETE', this.service, this.page);
     },
 
     onSearchClick: function(el){

@@ -14,7 +14,6 @@ Ext.define('Amun.form.Form', {
         var el = {
             title: 'Form',
             closable: true,
-            closeAction: 'hide',
             width: 800,
             height: 600,
             resizable: false,
@@ -29,14 +28,6 @@ Ext.define('Amun.form.Form', {
         Ext.apply(me, el);
 
         me.callParent();
-
-        /*
-        me.on('boxready', function(){
-
-            this.buildForm(this.form);
-
-        });
-        */
 
         this.loadForm();
     },
@@ -82,6 +73,11 @@ Ext.define('Amun.form.Form', {
         }
 
         if (uri != null) {
+            // add page
+            if (this.page) {
+                uri = uri + '&pageId=' + this.page.id;
+            }
+
             // request form
             Ext.Ajax.request({
                 url: uri,
