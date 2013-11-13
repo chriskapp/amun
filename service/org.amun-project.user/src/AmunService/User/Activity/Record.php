@@ -48,6 +48,16 @@ use PSX\Sql\Join;
  */
 class Record extends RecordAbstract
 {
+	protected $id;
+	protected $globalId;
+	protected $parentId;
+	protected $userId;
+	protected $scope;
+	protected $verb;
+	protected $object;
+	protected $summary;
+	protected $date;
+
 	protected $_account;
 	protected $_object;
 	protected $_date;
