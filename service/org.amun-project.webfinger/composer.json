@@ -1,6 +1,6 @@
 {
-    "name": "amun/lrdd",
-    "description": "Provides an LRDD endpoint to discover details about a page or person",
+    "name": "amun/webfinger",
+    "description": "Provides an webfinger endpoint to discover informations about an user or page",
     "homepage": "http://amun-project.org",
     "type": "amun-service",
     "license": "GPL-3.0",
@@ -14,12 +14,11 @@
     "require": {
         "php": ">=5.3",
         "amun/core": "self.version",
-        "amun/xrds": "self.version",
-        "amun/hostmeta": "self.version"
+        "amun/xrds": "self.version"
     },
     "autoload": {
         "psr-0": {
-            "AmunService\\Lrdd": "src/"
+            "AmunService\\Webfinger": "src/"
         }
     }
 }

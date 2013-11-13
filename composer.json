@@ -24,7 +24,7 @@
         "amun/log": "self.version",
         "amun/xrds": "self.version",
         "amun/hostmeta": "self.version",
-        "amun/lrdd": "self.version",
+        "amun/webfinger": "self.version",
         "amun/user": "self.version",
         "amun/asset": "self.version",
         "amun/oauth": "self.version",

@@ -15,8 +15,7 @@
         "php": ">=5.3",
         "amun/core": "self.version",
         "amun/xrds": "self.version",
-        "amun/user": "self.version",
-        "amun/lrdd": "self.version"
+        "amun/user": "self.version"
     },
     "autoload": {
         "psr-0": {

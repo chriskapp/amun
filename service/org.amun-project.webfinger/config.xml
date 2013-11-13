@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+  <status>system</status>
+  <path>/webfinger</path>
+  <namespace>AmunService\Webfinger</namespace>
+  <type>http://ns.amun-project.org/2011/amun/service/webfinger</type>
+  <api>
+    <service>
+      <type>http://ns.amun-project.org/2011/amun/service/webfinger</type>
+      <uri>/</uri>
+    </service>
+  </api>
+  <permissions>
+    <perm name="view" description="Webfinger View"/>
+  </permissions>
+</service>
