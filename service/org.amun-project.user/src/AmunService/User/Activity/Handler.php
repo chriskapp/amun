@@ -69,7 +69,7 @@ class Handler extends HandlerAbstract
 
 		if(!empty($fields))
 		{
-			$select->setColumns($fields);
+			$select->setSelectedColumns($fields);
 		}
 
 		if($con !== null && $con->hasCondition())
@@ -124,7 +124,7 @@ class Handler extends HandlerAbstract
 
 		if(!empty($fields))
 		{
-			$select->setColumns($fields);
+			$select->setSelectedColumns($fields);
 		}
 
 		if($con !== null && $con->hasCondition())

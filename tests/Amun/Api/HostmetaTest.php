@@ -23,6 +23,7 @@
 namespace Amun\Api;
 
 use PSX\Sql\Condition;
+use PSX\Json;
 use PSX\Url;
 use PSX\Http\GetRequest;
 use SimpleXMLElement;
@@ -60,9 +61,9 @@ class HostmetaTest extends ApiTest
 
 		$this->assertEquals(200, $response->getCode());
 
-		$xml = simplexml_load_string($response->getBody());
+		$document = Json::decode($response->getBody());
 
-		$this->checkHostmetaXrd($xml);
+		$this->checkHostmeta($document);
 	}
 
 	public function testWellKnownLocation()
@@ -73,29 +74,17 @@ class HostmetaTest extends ApiTest
 
 		$this->assertEquals(200, $response->getCode());
 
-		$xml = simplexml_load_string($response->getBody());
+		$document = Json::decode($response->getBody());
 
-		$this->checkHostmetaXrd($xml);
+		$this->checkHostmeta($document);
 	}
 
-	protected function checkHostmetaXrd(SimpleXMLElement $xml)
+	protected function checkHostmeta($document)
 	{
 		// check subject
-		$this->assertEquals(true, isset($xml->Subject));
-		$this->assertEquals($this->config['psx_url'], (string) $xml->Subject);
-
-		// check lrdd link in hostmeta
-		$found = false;
-		foreach($xml->Link as $link)
-		{
-			if($link['rel'] == 'lrdd')
-			{
-				$this->assertEquals('application/xrd+xml', $link['type']);
-				$this->assertEquals($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'api/lrdd?uri={uri}', (string) $link['template']);
-				$found = true;
-			}
-		}
-		$this->assertEquals(true, $found);
+		$this->assertEquals(true, isset($document['subject']));
+		$this->assertEquals(true, isset($document['properties']));
+		$this->assertEquals($this->config['psx_url'], $document['subject']);
 	}
 }
 
