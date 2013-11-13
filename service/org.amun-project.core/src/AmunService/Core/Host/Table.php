@@ -49,11 +49,10 @@ class Table extends TableAbstract
 
 			'id' => self::TYPE_INT | 10 | self::PRIMARY_KEY,
 			'status' => self::TYPE_INT | 10,
-			'name' => self::TYPE_VARCHAR | 256,
+			'name' => self::TYPE_VARCHAR | 255,
 			'consumerKey' => self::TYPE_VARCHAR | 40,
 			'consumerSecret' => self::TYPE_VARCHAR | 40,
-			'url' => self::TYPE_VARCHAR | 256,
-			'template' => self::TYPE_VARCHAR | 256,
+			'url' => self::TYPE_VARCHAR | 255,
 			'date' => self::TYPE_DATETIME,
 
 		);

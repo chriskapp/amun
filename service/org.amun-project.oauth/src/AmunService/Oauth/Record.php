@@ -110,7 +110,7 @@ class Record extends RecordAbstract
 
 	public function setUrl($url)
 	{
-		$url = $this->_validate->apply($url, 'string', array(new Filter\Length(3, 256), new Filter\Url()), 'url', 'Url');
+		$url = $this->_validate->apply($url, 'string', array(new Filter\Length(3, 255), new Filter\Url()), 'url', 'Url');
 
 		if(!$this->_validate->hasError())
 		{
@@ -152,7 +152,7 @@ class Record extends RecordAbstract
 
 	public function setCallback($callback)
 	{
-		$callback = $this->_validate->apply($callback, 'string', array(new Filter\Length(0, 256), new OauthFilter\Callback()), 'callback', 'Callback');
+		$callback = $this->_validate->apply($callback, 'string', array(new Filter\Length(0, 255), new OauthFilter\Callback()), 'callback', 'Callback');
 
 		if(!$this->_validate->hasError())
 		{

@@ -52,6 +52,13 @@ class Record extends RecordAbstract
 	protected $_object;
 	protected $_date;
 
+	public function getFields()
+	{
+		return array_merge(parent::getFields(), array(
+			'object' => $this->getObject()
+		));
+	}
+
 	public function setId($id)
 	{
 		$id = $this->_validate->apply($id, 'integer', array(new AmunFilter\Id($this->_table)), 'id', 'Id');

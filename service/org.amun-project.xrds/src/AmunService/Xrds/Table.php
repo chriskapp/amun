@@ -54,7 +54,7 @@ class Table extends TableAbstract
 			'id' => self::TYPE_INT | 10 | self::PRIMARY_KEY,
 			'serviceId' => self::TYPE_INT | 10,
 			'priority' => self::TYPE_INT | 10,
-			'endpoint' => self::TYPE_VARCHAR | 256,
+			'endpoint' => self::TYPE_VARCHAR | 255,
 
 		);
 	}

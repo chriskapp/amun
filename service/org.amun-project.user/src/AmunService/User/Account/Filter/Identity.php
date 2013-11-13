@@ -36,7 +36,7 @@ class Identity extends FilterAbstract
 	public function apply($value)
 	{
 		// check length
-		if(strlen($value) < 3 || strlen($value) > 256)
+		if(strlen($value) < 3 || strlen($value) > 255)
 		{
 			return false;
 		}

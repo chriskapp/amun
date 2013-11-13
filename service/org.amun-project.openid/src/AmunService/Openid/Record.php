@@ -94,7 +94,7 @@ class Record extends RecordAbstract
 
 	public function setClaimedId($claimedId)
 	{
-		$claimedId = $this->_validate->apply($claimedId, 'string', array(new Filter\Length(3, 256), new Filter\Url()), 'claimedId', 'Claimed Id');
+		$claimedId = $this->_validate->apply($claimedId, 'string', array(new Filter\Length(3, 255), new Filter\Url()), 'claimedId', 'Claimed Id');
 
 		if(!$this->_validate->hasError())
 		{
@@ -108,7 +108,7 @@ class Record extends RecordAbstract
 
 	public function setIdentity($identity)
 	{
-		$identity = $this->_validate->apply($identity, 'string', array(new Filter\Length(3, 256), new Filter\Url()), 'identity', 'Identity');
+		$identity = $this->_validate->apply($identity, 'string', array(new Filter\Length(3, 255), new Filter\Url()), 'identity', 'Identity');
 
 		if(!$this->_validate->hasError())
 		{
@@ -122,7 +122,7 @@ class Record extends RecordAbstract
 
 	public function setReturnTo($returnTo)
 	{
-		$returnTo = $this->_validate->apply($returnTo, 'string', array(new Filter\Length(3, 256), new Filter\Url()), 'returnTo', 'Return To');
+		$returnTo = $this->_validate->apply($returnTo, 'string', array(new Filter\Length(3, 255), new Filter\Url()), 'returnTo', 'Return To');
 
 		if(!$this->_validate->hasError())
 		{

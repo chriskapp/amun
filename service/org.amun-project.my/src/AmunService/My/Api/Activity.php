@@ -70,8 +70,8 @@ class Activity extends RestAbstract
 
 				$params    = $this->getRequestParams();
 				$fields    = (array) $params['fields'];
-				$resultSet = $this->getHandler('AmunService\User\Activity')->getPublicResultSet($this->userId, 
-					array(), 
+				$resultSet = $this->getHandler('AmunService\User\Activity')->getPublicResultSet($this->userId,
+					array('id', 'globalId', 'parentId', 'userId', 'scope', 'verb', 'object', 'summary', 'date', 'receiverId', 'receiverStatus', 'receiverActivityId', 'receiverUserId', 'authorGlobalId', 'authorName', 'authorProfileUrl', 'authorThumbnailUrl'),
 					$params['startIndex'], 
 					$params['count'], 
 					$params['sortBy'], 

@@ -51,12 +51,12 @@ class Table extends TableAbstract
 			'status' => self::TYPE_INT | 10,
 			'name' => self::TYPE_VARCHAR | 64,
 			'email' => self::TYPE_VARCHAR | 64,
-			'url' => self::TYPE_VARCHAR | 256,
+			'url' => self::TYPE_VARCHAR | 255,
 			'title' => self::TYPE_VARCHAR | 64,
 			'description' => self::TYPE_LONGTEXT,
 			'consumerKey' => self::TYPE_VARCHAR | 40,
 			'consumerSecret' => self::TYPE_VARCHAR | 40,
-			'callback' => self::TYPE_VARCHAR | 256,
+			'callback' => self::TYPE_VARCHAR | 255,
 			'date' => self::TYPE_DATETIME,
 
 		);

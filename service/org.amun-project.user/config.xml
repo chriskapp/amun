@@ -8,7 +8,6 @@
     <listener name="core.record_change" class="\AmunService\User\Activity\RecordListener"/>
     <listener name="core.service_install" class="\AmunService\User\Activity\ConfigListener"/>
     <listener name="core.service_install" class="\AmunService\User\Right\ConfigListener"/>
-    <listener name="lrdd.resource_discovery" class="\AmunService\User\LrddListener"/>
   </event>
   <registry>
     <table name="user_account"/>
@@ -36,8 +35,8 @@
   `token` varchar(40) NOT NULL,
   `ip` varchar(40) NOT NULL,
   `gender` enum('male','female','undisclosed') NOT NULL DEFAULT 'undisclosed',
-  `profileUrl` varchar(256) NOT NULL,
-  `thumbnailUrl` varchar(256) DEFAULT NULL,
+  `profileUrl` varchar(255) NOT NULL,
+  `thumbnailUrl` varchar(255) DEFAULT NULL,
   `longitude` double NOT NULL DEFAULT '0',
   `latitude` double NOT NULL DEFAULT '0',
   `timezone` varchar(32) NOT NULL DEFAULT 'UTC',
@@ -76,7 +75,7 @@
   `type` enum('INSERT','UPDATE','DELETE') NOT NULL,
   `verb` enum('post','add','cancel','checkin','delete','favorite','follow','give','ignore','invite','join','leave','like','make-friend','play','receive','remove','remove-friend','request-friend','rsvp-maybe','rsvp-no','rsvp-yes','save','share','stop-following','tag','unfavorite','unlike','unsave','update') NOT NULL,
   `table` varchar(64) NOT NULL,
-  `path` varchar(256) NOT NULL,
+  `path` varchar(255) NOT NULL,
   `summary` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `type_table` (`type`,`table`)

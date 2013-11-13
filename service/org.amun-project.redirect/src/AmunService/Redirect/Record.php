@@ -72,7 +72,7 @@ class Record extends RecordAbstract
 
 	public function setHref($href)
 	{
-		$href = $this->_validate->apply($href, 'string', array(new Filter\Length(3, 256), new Filter\Url()), 'href', 'Href');
+		$href = $this->_validate->apply($href, 'string', array(new Filter\Length(3, 512), new Filter\Url()), 'href', 'Href');
 
 		if(!$this->_validate->hasError())
 		{

@@ -50,7 +50,7 @@ class Table extends TableAbstract
 			'id' => self::TYPE_INT | 10 | self::PRIMARY_KEY,
 			'name' => self::TYPE_VARCHAR | 32,
 			'from' => self::TYPE_VARCHAR | 64,
-			'subject' => self::TYPE_VARCHAR | 256,
+			'subject' => self::TYPE_VARCHAR | 255,
 			'text' => self::TYPE_TEXT,
 			'html' => self::TYPE_TEXT,
 			'values' => self::TYPE_VARCHAR | 512,

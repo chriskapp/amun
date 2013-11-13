@@ -51,12 +51,12 @@
 
 			<p>
 				<label for="name">Name:</label>
-				<input type="text" name="name" id="name" value="<?php echo isset($name) ? $name : ''; ?>" maxlength="256" required="required" <?php echo !$registry['login.registration_enabled'] ? 'disabled="disabled"' : ''; ?> class="form-control" />
+				<input type="text" name="name" id="name" value="<?php echo isset($name) ? $name : ''; ?>" maxlength="255" required="required" <?php echo !$registry['login.registration_enabled'] ? 'disabled="disabled"' : ''; ?> class="form-control" />
 			</p>
 
 			<p>
 				<label for="identity">Email:</label>
-				<input type="email" name="identity" id="identity" value="<?php echo isset($identity) ? $identity : ''; ?>" maxlength="256" required="required" <?php echo !$registry['login.registration_enabled'] ? 'disabled="disabled"' : ''; ?> class="form-control" />
+				<input type="email" name="identity" id="identity" value="<?php echo isset($identity) ? $identity : ''; ?>" maxlength="255" required="required" <?php echo !$registry['login.registration_enabled'] ? 'disabled="disabled"' : ''; ?> class="form-control" />
 			</p>
 
 			<p>

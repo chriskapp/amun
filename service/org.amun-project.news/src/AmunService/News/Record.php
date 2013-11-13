@@ -91,7 +91,7 @@ class Record extends RecordAbstract
 
 	public function setTitle($title)
 	{
-		$title = $this->_validate->apply($title, 'string', array(new Filter\Length(3, 256), new Filter\Html()), 'title', 'Title');
+		$title = $this->_validate->apply($title, 'string', array(new Filter\Length(3, 128), new Filter\Html()), 'title', 'Title');
 
 		if(!$this->_validate->hasError())
 		{

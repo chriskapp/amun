@@ -52,12 +52,6 @@ class Handler extends HandlerAbstract
 			$record->date = $date->format(DateTime::SQL);
 
 
-			// request host meta
-			$template = $this->getLrddTemplate($record->getUrl());
-
-			$record->template = $template;
-
-
 			$this->table->insert($record->getData());
 
 
@@ -126,15 +120,7 @@ class Handler extends HandlerAbstract
 	protected function getDefaultSelect()
 	{
 		return $this->table
-			->select(array('id', 'status', 'name', 'url', 'template', 'date'));
-	}
-
-	private function getLrddTemplate(Url $url)
-	{
-		$http      = new Http();
-		$webfinger = new Webfinger($http);
-
-		return $webfinger->getLrddTemplate($url);
+			->select(array('id', 'status', 'name', 'url', 'date'));
 	}
 }
 

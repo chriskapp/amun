@@ -4,9 +4,6 @@
   <path>/content</path>
   <namespace>AmunService\Content</namespace>
   <type>http://ns.amun-project.org/2011/amun/service/content</type>
-  <event>
-    <listener name="lrdd.resource_discovery" class="\AmunService\Content\LrddListener"/>
-  </event>
   <registry>
     <table name="content_gadget"/>
     <table name="content_page"/>
@@ -40,12 +37,12 @@
   `status` int(10) NOT NULL,
   `load` int(10) NOT NULL DEFAULT '3',
   `sort` int(10) NOT NULL DEFAULT '0',
-  `path` varchar(256) NOT NULL,
+  `path` varchar(255) NOT NULL,
   `urlTitle` varchar(32) NOT NULL,
   `title` varchar(32) NOT NULL,
   `template` text NOT NULL,
-  `description` varchar(256) NOT NULL,
-  `keywords` varchar(256) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `keywords` varchar(255) NOT NULL,
   `cache` tinyint(1) NOT NULL,
   `expire` varchar(25) NOT NULL,
   `publishDate` datetime NOT NULL,

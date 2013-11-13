@@ -31,7 +31,7 @@
   `globalId` VARCHAR(36),
   `projectId` INT(10),
   `authorId` INT(10),
-  `url` VARCHAR(256),
+  `url` VARCHAR(255),
   `message` VARCHAR(512),
   `commitDate` DATETIME,
   `date` DATETIME,

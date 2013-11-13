@@ -55,9 +55,9 @@ class Table extends TableAbstract
 			'userId' => self::TYPE_INT | 10,
 			'assocId' => self::TYPE_INT | 10,
 			'status' => self::TYPE_INT | 10,
-			'claimedId' => self::TYPE_VARCHAR | 256,
-			'identity' => self::TYPE_VARCHAR | 256,
-			'returnTo' => self::TYPE_VARCHAR | 256,
+			'claimedId' => self::TYPE_VARCHAR | 255,
+			'identity' => self::TYPE_VARCHAR | 255,
+			'returnTo' => self::TYPE_VARCHAR | 255,
 			'responseNonce' => self::TYPE_VARCHAR | 32,
 			'date' => self::TYPE_DATETIME,
 

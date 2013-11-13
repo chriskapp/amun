@@ -56,7 +56,7 @@ class Table extends TableAbstract
 			'globalId' => self::TYPE_VARCHAR | 36,
 			'projectId' => self::TYPE_INT | 10,
 			'authorId' => self::TYPE_INT | 10,
-			'url' => self::TYPE_VARCHAR | 256,
+			'url' => self::TYPE_VARCHAR | 255,
 			'message' => self::TYPE_VARCHAR | 512,
 			'commitDate' => self::TYPE_DATETIME,
 			'date' => self::TYPE_DATETIME,

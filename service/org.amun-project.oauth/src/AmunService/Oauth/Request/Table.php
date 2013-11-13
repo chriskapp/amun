@@ -58,7 +58,7 @@ class Table extends TableAbstract
 			'status' => self::TYPE_INT | 10,
 			'ip' => self::TYPE_VARCHAR | 32,
 			'nonce' => self::TYPE_VARCHAR | 16,
-			'callback' => self::TYPE_VARCHAR | 256,
+			'callback' => self::TYPE_VARCHAR | 255,
 			'token' => self::TYPE_VARCHAR | 40,
 			'tokenSecret' => self::TYPE_VARCHAR | 40,
 			'verifier' => self::TYPE_VARCHAR | 32,

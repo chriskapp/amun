@@ -31,7 +31,7 @@
 
 		<div class="form-group" id="form-identity">
 			<label for="identity">Identity:</label>
-			<input type="text" name="identity" id="identity" value="" maxlength="256" placeholder="Email or OpenID" class="form-control" />
+			<input type="text" name="identity" id="identity" value="" maxlength="255" placeholder="Email or OpenID" class="form-control" />
 		</div>
 
 		<div class="form-group" id="form-pw">

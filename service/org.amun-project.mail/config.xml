@@ -15,7 +15,7 @@
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   `from` varchar(64) NOT NULL,
-  `subject` varchar(256) NOT NULL,
+  `subject` varchar(255) NOT NULL,
   `text` text NOT NULL,
   `html` text NOT NULL,
   `values` varchar(512) DEFAULT NULL,

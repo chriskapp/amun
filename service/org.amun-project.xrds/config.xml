@@ -16,7 +16,7 @@
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `serviceId` int(10) NOT NULL,
   `priority` int(10) NOT NULL DEFAULT '0',
-  `endpoint` varchar(256) NOT NULL,
+  `endpoint` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `endpoint` (`endpoint`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii;]]></query>

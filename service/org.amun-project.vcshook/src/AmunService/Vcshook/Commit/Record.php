@@ -101,7 +101,7 @@ class Record extends RecordAbstract
 
 	public function setUrl($url)
 	{
-		$url = $this->_validate->apply($url, 'string', array(new Filter\Length(3, 256), new Filter\Url()), 'url', 'Url');
+		$url = $this->_validate->apply($url, 'string', array(new Filter\Length(3, 255), new Filter\Url()), 'url', 'Url');
 
 		if(!$this->_validate->hasError())
 		{

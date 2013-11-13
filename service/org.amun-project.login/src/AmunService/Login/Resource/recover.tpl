@@ -26,7 +26,7 @@
 
 		<p>
 			<label for="email">Email</label>
-			<input type="email" name="email" id="email" maxlength="256" required="required" class="form-control" />
+			<input type="email" name="email" id="email" maxlength="255" required="required" class="form-control" />
 		</p>
 
 		<p>

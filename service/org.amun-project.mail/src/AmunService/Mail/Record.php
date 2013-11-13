@@ -88,7 +88,7 @@ class Record extends RecordAbstract
 
 	public function setSubject($subject)
 	{
-		$subject = $this->_validate->apply($subject, 'string', array(new Filter\Length(3, 256)), 'subject', 'Subject');
+		$subject = $this->_validate->apply($subject, 'string', array(new Filter\Length(3, 255)), 'subject', 'Subject');
 
 		if(!$this->_validate->hasError())
 		{

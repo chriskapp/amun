@@ -79,7 +79,7 @@ class Record extends RecordAbstract
 
 	public function setSource($source)
 	{
-		$source = $this->_validate->apply($source, 'string', array(new Filter\Length(2, 256)), 'source', 'Source');
+		$source = $this->_validate->apply($source, 'string', array(new Filter\Length(2, 255)), 'source', 'Source');
 
 		if(!$this->_validate->hasError())
 		{
@@ -93,7 +93,7 @@ class Record extends RecordAbstract
 
 	public function setAutoloadPath($autoloadPath)
 	{
-		$autoloadPath = $this->_validate->apply($autoloadPath, 'string', array(new Filter\Length(2, 256)), 'autoloadPath', 'Autoload Path');
+		$autoloadPath = $this->_validate->apply($autoloadPath, 'string', array(new Filter\Length(2, 255)), 'autoloadPath', 'Autoload Path');
 
 		if(!$this->_validate->hasError())
 		{
@@ -107,7 +107,7 @@ class Record extends RecordAbstract
 
 	public function setConfig($config)
 	{
-		$config = $this->_validate->apply($config, 'string', array(new Filter\Length(2, 256)), 'config', 'Config');
+		$config = $this->_validate->apply($config, 'string', array(new Filter\Length(2, 255)), 'config', 'Config');
 
 		if(!$this->_validate->hasError())
 		{
@@ -135,7 +135,7 @@ class Record extends RecordAbstract
 
 	public function setPath($path)
 	{
-		$path = $this->_validate->apply($path, 'string', array(new Filter\Length(2, 256)), 'path', 'Path');
+		$path = $this->_validate->apply($path, 'string', array(new Filter\Length(2, 255)), 'path', 'Path');
 
 		if(!$this->_validate->hasError())
 		{
@@ -163,7 +163,7 @@ class Record extends RecordAbstract
 
 	public function setType($type)
 	{
-		$type = $this->_validate->apply($type, 'string', array(new Filter\Length(7, 256), new Filter\Url()), 'type', 'Type');
+		$type = $this->_validate->apply($type, 'string', array(new Filter\Length(7, 255), new Filter\Url()), 'type', 'Type');
 
 		if(!$this->_validate->hasError())
 		{
@@ -177,7 +177,7 @@ class Record extends RecordAbstract
 
 	public function setLink($link)
 	{
-		$link = $this->_validate->apply($link, 'string', array(new Filter\Length(7, 256), new ServiceFilter\Link()), 'link', 'Link');
+		$link = $this->_validate->apply($link, 'string', array(new Filter\Length(7, 255), new ServiceFilter\Link()), 'link', 'Link');
 
 		if(!$this->_validate->hasError())
 		{

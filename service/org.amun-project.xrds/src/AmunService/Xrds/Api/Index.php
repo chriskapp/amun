@@ -28,7 +28,7 @@ use PSX\Data\Message;
 use PSX\Sql;
 use PSX\Sql\Join;
 use XMLWriter;
-use PSX\Xrds\Writer;
+use PSX\Xri\Xrds\Writer;
 
 /**
  * Index

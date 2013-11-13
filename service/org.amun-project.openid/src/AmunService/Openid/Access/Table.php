@@ -53,7 +53,7 @@ class Table extends TableAbstract
 
 			'id' => self::TYPE_INT | 10 | self::PRIMARY_KEY,
 			'userId' => self::TYPE_INT | 10,
-			'returnTo' => self::TYPE_VARCHAR | 256,
+			'returnTo' => self::TYPE_VARCHAR | 255,
 			'allowed' => self::TYPE_TINYINT | 1,
 			'date' => self::TYPE_DATETIME,
 

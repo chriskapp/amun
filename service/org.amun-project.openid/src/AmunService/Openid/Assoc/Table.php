@@ -48,7 +48,7 @@ class Table extends TableAbstract
 		return array(
 
 			'id' => self::TYPE_INT | 10 | self::PRIMARY_KEY,
-			'assocHandle' => self::TYPE_VARCHAR | 256,
+			'assocHandle' => self::TYPE_VARCHAR | 255,
 			'assocType' => self::TYPE_ENUM,
 			'sessionType' => self::TYPE_ENUM,
 			'secret' => self::TYPE_BLOB,

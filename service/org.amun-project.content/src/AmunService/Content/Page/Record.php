@@ -202,7 +202,7 @@ class Record extends RecordAbstract
 
 	public function setDescription($description)
 	{
-		$description = $this->_validate->apply($description, 'string', array(new Filter\Length(0, 256), new Filter\Html()));
+		$description = $this->_validate->apply($description, 'string', array(new Filter\Length(0, 255), new Filter\Html()));
 
 		if(!$this->_validate->hasError())
 		{
@@ -216,7 +216,7 @@ class Record extends RecordAbstract
 
 	public function setKeywords($keywords)
 	{
-		$keywords = $this->_validate->apply($keywords, 'string', array(new Filter\Length(0, 256), new Filter\Html()));
+		$keywords = $this->_validate->apply($keywords, 'string', array(new Filter\Length(0, 255), new Filter\Html()));
 
 		if(!$this->_validate->hasError())
 		{

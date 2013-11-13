@@ -55,7 +55,7 @@ class Table extends TableAbstract
 			'globalId' => self::TYPE_VARCHAR | 36,
 			'rightId' => self::TYPE_INT | 10,
 			'name' => self::TYPE_VARCHAR | 128,
-			'path' => self::TYPE_VARCHAR | 256,
+			'path' => self::TYPE_VARCHAR | 255,
 			'type' => self::TYPE_ENUM,
 			'size' => self::TYPE_INT | 10,
 			'mimeType' => self::TYPE_VARCHAR | 64,

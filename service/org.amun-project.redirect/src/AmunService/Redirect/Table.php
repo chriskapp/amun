@@ -56,7 +56,7 @@ class Table extends TableAbstract
 			'globalId' => self::TYPE_VARCHAR | 36,
 			'pageId' => self::TYPE_INT | 10,
 			'userId' => self::TYPE_INT | 10,
-			'href' => self::TYPE_LONGTEXT,
+			'href' => self::TYPE_VARCHAR | 512,
 			'date' => self::TYPE_DATETIME,
 
 		);
