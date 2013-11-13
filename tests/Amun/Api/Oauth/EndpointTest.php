@@ -63,7 +63,7 @@ class EndpointTest extends ApiTest
 		// get oauth request uri
 		$requestUri = null;
 
-		foreach($xrds->service as $service)
+		foreach($xrds->getService() as $service)
 		{
 			if(in_array('http://oauth.net/core/1.0/endpoint/request', $service->getType()))
 			{
@@ -99,7 +99,7 @@ class EndpointTest extends ApiTest
 		// get oauth access uri
 		$accessUri = null;
 
-		foreach($xrds->service as $service)
+		foreach($xrds->getService() as $service)
 		{
 			if(in_array('http://oauth.net/core/1.0/endpoint/access', $service->getType()))
 			{
