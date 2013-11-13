@@ -24,7 +24,9 @@ namespace AmunService\Hostmeta\Api;
 
 use Amun\Module\ApiAbstract;
 use PSX\Data\Message;
-use XMLWriter;
+use PSX\Http;
+use PSX\Hostmeta\Jrd;
+use PSX\Hostmeta\Xrd;
 
 /**
  * Index
@@ -49,53 +51,35 @@ class Index extends ApiAbstract
 	{
 		try
 		{
-			header('Content-type: application/xrd+xml');
+			$accept = $this->getHeader('Accept');
+			$format = $this->get->format('string');
 
-			$this->writer = new XMLWriter();
-			$this->writer->openURI('php://output');
-			$this->writer->setIndent(true);
-			$this->writer->startDocument('1.0', 'UTF-8');
+			if($format == 'xml' || $accept == 'application/xrd+xml')
+			{
+				header('Content-Type: application/xrd+xml');
 
-			$this->writer->startElement('XRD');
-			$this->writer->writeAttribute('xmlns', 'http://docs.oasis-open.org/ns/xri/xrd-1.0');
+				$document = new Xrd();
+			}
+			else
+			{
+				header('Content-Type: application/jrd+json');
 
-			// subject
-			$this->writer->writeElement('Subject', $this->config['psx_url']);
+				$document = new Jrd();
+			}
 
-			// host
-			$this->writer->writeElementNs('hm', 'Host', 'http://host-meta.net/xrd/1.0', $this->base->getHost());
+			$document->setSubject($this->config['psx_url']);
+			$document->addProperty('http://ns.amun-project.org/2011/meta/title', $this->registry['core.title']);
+			$document->addProperty('http://ns.amun-project.org/2011/meta/subTitle', $this->registry['core.sub_title']);
+			$document->addProperty('http://ns.amun-project.org/2011/meta/timezone', $this->registry['core.default_timezone']->getName());
 
-			// title
-			$this->writer->startElement('Property');
-			$this->writer->writeAttribute('type', 'http://ns.amun-project.org/2011/meta/title');
-			$this->writer->text($this->registry['core.title']);
-			$this->writer->endElement();
-
-			// sub title
-			$this->writer->startElement('Property');
-			$this->writer->writeAttribute('type', 'http://ns.amun-project.org/2011/meta/subTitle');
-			$this->writer->text($this->registry['core.sub_title']);
-			$this->writer->endElement();
-
-			// timezone
-			$this->writer->startElement('Property');
-			$this->writer->writeAttribute('type', 'http://ns.amun-project.org/2011/meta/timezone');
-			$this->writer->text($this->registry['core.default_timezone']->getName());
-			$this->writer->endElement();
-
-
-			$this->getEvent()->notifyListener('hostmeta.request', array($this->writer));
-
-
-			$this->writer->endElement();
-			$this->writer->endDocument();
-			$this->writer->flush();
+			echo $document->export();
 		}
 		catch(\Exception $e)
 		{
-			$msg = new Message($e->getMessage(), false);
+			$code = isset(Http::$codes[$e->getCode()]) ? $e->getCode() : 500;
+			$msg  = new Message($e->getMessage() . $e->getTraceAsString(), false);
 
-			$this->setResponse($msg);
+			$this->setResponse($msg, null, $code);
 		}
 	}
 }

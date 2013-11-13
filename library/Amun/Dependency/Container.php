@@ -59,6 +59,7 @@ class Container extends \PSX\Dependency\Container
 	{
 		$loader = new Loader($this);
 		$loader->addRoute('/.well-known/host-meta', 'api/hostmeta');
+		$loader->addRoute('/.well-known/webfinger', 'api/webfinger');
 		$loader->setLocationFinder(new LocationFinder($this->get('registry')));
 
 		return $loader;
