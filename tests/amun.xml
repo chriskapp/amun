@@ -2298,6 +2298,7 @@ echo $_SERVER['REMOTE_ADDR'];</field>
 		<field name="userId">1</field>
 		<field name="scope">0</field>
 		<field name="verb">join</field>
+		<field name="object"></field>
 		<field name="summary">test has created an account</field>
 		<field name="date">2013-04-12 20:51:10</field>
 	</row>
@@ -2308,6 +2309,7 @@ echo $_SERVER['REMOTE_ADDR'];</field>
 		<field name="userId">2</field>
 		<field name="scope">0</field>
 		<field name="verb">join</field>
+		<field name="object"></field>
 		<field name="summary">Anonymous has created an account</field>
 		<field name="date">2013-04-12 20:51:10</field>
 	</row>
@@ -2318,6 +2320,7 @@ echo $_SERVER['REMOTE_ADDR'];</field>
 		<field name="userId">1</field>
 		<field name="scope">0</field>
 		<field name="verb">add</field>
+		<field name="object">{"actor":{"displayName":"test","image":{"url":"http:\/\/www.gravatar.com\/avatar\/b642b4217b34b1e8d3bd915fc65c4452?d=http%3A%2F%2F127.0.0.1%2Fprojects%2Famun%2Fpublic%2Fimg%2Favatar%2Fno_image.png&amp;s=48"},"objectType":"person","url":"http:\/\/127.0.0.1\/index.php\/profile\/test"},"object":{"content":"&lt;p&gt;content &lt;\/p&gt;\n","displayName":"content","id":"urn:uuid:26825523-c136-5665-8aa2-22e4cfab5891","objectType":"article","published":"2013-11-16T18:35:23+00:00","url":"http:\/\/127.0.0.1\/projects\/amun\/public\/index.php\/news\/view\/3\/content"},"verb":"post"}</field>
 		<field name="summary">
 &lt;p&gt;&lt;a href=&quot;http://127.0.0.1/projects/amun/public/index.php/profile/test&quot;&gt;test&lt;/a&gt; has created a &lt;a href=&quot;http://127.0.0.1/projects/amun/public/index.php/news/view?id=1&quot;&gt;news&lt;/a&gt;&lt;/p&gt;&lt;blockquote&gt;content 
 &lt;/blockquote&gt;
