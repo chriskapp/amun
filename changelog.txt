@@ -1,5 +1,9 @@
 
 1.0.3
+* Added jsonp format for all api endpoints
+* Add jrd support for hostmeta
+* Added webfinger endpoint
+* Improved workbench backend
 * File service add length filter to content type
 * Fixed meta tag xrds location api 
 * Fixed app auth rights if already approved

@@ -1,10 +1,11 @@
 
 [FEATURES]
 
-[ ] Check inheritance how easy it is to overwrite an existing service with i.e.
+[ ] update redord classes add protected properties and getter/setter methods
+[ ] if two navigation entries start with the same name both are selected
+[ ] check inheritance how easy it is to overwrite an existing service with i.e.
     another template
-[ ] Fix page update time
-[x] Setup class is not executed on composer require (probably autoloading issue)
+[ ] fix page update time
 [ ] make api message "Missing field in record" more verbose
 [ ] option to create page aliases so that a page refers to another page
 [ ] add service installation through backend by executing composer as process
@@ -13,9 +14,10 @@
 [ ] anonymous user is created under the name of the admin in the sample service
 [ ] test openid authentication where amun is the openid provider
 [ ] improve right system probably with inheritance. Add page specific rights
-[x] clean up handler selection methods
-[ ] test approval system
-[ ] build backend for approval system
+[ ] test approval system (probably remove approval system since it is really 
+    difficult to build a general approval system better to add this to an 
+    service)
+    [ ] build backend for approval system
 [ ] add api bulk operations by accepting resultset in an post
 [ ] check and clean up not used api endpoints
 [ ] openid login activity "... created an Account" is not created
@@ -26,31 +28,33 @@
 [ ] Implement a content / template system where all templates are saved in an
     table insteadof files. We could use a custom template syntax to create
     templates wich are cached as files, reddis, etc
-[ ] A option to create a pasword protected page. This should be general so 
+[ ] a option to create a pasword protected page. This should be general so 
     that you can protect any page with an password
 [ ] my service add possibility to delete (invalidate) an account
 [ ] my service add data export function where a user can export all records wich
     he made in an XML or maybe HTML format
 [ ] oauth endpoint send invalid request method header on GET at request/access
     [ ] adding oauth scope
-[ ] support host meta to return json and xrd / jrd
+
 [ ] build general achievment system where a user based on the karma value (or
     probably other conditions) gets specific achievments on the profile
 [ ] if someone has subscribed via PSHB to a topic and we receive these messages
     we have to create a remote user for the author of the topic if the user id
     doesnt exist. (should be done in the PSHB service)
 [ ] test ostatus remote subscription interoperability
-
+[ ] add user account custom fields for i.e. services to add pubkey field
+[ ] Add an an option for services to extend the menu for each page similar to 
+    page options wich was implemented before
 
 [SERVICES]
 
-[ ] Add authoring service wich offers the possibility to edit a page by an 
+[ ] add PKI service if we have custom fields for accounts
+[ ] add authoring service wich offers the possibility to edit a page by an 
     editor user group and pages can be activated by admins. An editor has to add
     an message to every change and it is possible to restore older versions
     [ ] Build authoring tool in java where you can edit and comment changes
-[ ] Add social media service where it is possible to publish news through 
+[ ] add social media service where it is possible to publish news through 
     different channels i.e. facebook, twitter, etc
-[x] add elastic search service using http://elastica.io/
 [ ] add stackoverflow like service
 [ ] add Model service where users can create dynamically models wich have an API
     endpoint these API endpoints can be used by the form service
@@ -79,7 +83,7 @@
     different states (new, feedback, recognized, confirmed, assigned, done,
     closed). probably merge with todo plugin
 [ ] add pm (private message) plugin where users can post and receive messages
-    from other users. (should be hooked into the my service)
+    from other users / user groups. (should be hooked into the my service)
 [ ] group service where users can join a group like on myspace or facebook etc
 [ ] write wiki plugin
 [ ] write statistic plugin ... the plugin logs all site access etc ... maybe you
@@ -107,6 +111,18 @@
 
 [DONE]
 
+[/] add content / template system where users can edit all template files. Users
+    can edit templates in the template folder maybe we add an interface to edit
+    template files through an api
+[x] add activity streams test
+[x] fix user json activity stream
+[x] add well-known/webfinger api endpoint
+[x] add api jsonp format (callback GET param to define js function name)
+[x] update webfinger to RFC 7033
+[x] support host meta to return json and xrd / jrd
+[x] add elastic search service using http://elastica.io/
+[x] Setup class is not executed on composer require (probably autoloading issue)
+[x] clean up handler selection methods
 [/] write a plugin with that you can donwload plugins from a server ... the
     client gets a list of all plugins via an xml or json list if he want to
     install a paticular plugin the client donwload all files in an xml format
