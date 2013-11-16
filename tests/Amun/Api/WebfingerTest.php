@@ -55,7 +55,7 @@ class WebfingerTest extends ApiTest
 	public function testGetPage()
 	{
 		$url      = new Url($this->getEndpoint());
-		$url->addParam('resource', 'http://127.0.0.1/projects/amun/public/index.php/news');
+		$url->addParam('resource', $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'news');
 		$request  = new GetRequest($url);
 		$response = $this->http->request($request);
 
@@ -64,7 +64,7 @@ class WebfingerTest extends ApiTest
 		$document = Json::decode($response->getBody());
 
 		$this->assertArrayHasKey('subject', $document);
-		$this->assertEquals('http://127.0.0.1/projects/amun/public/index.php/news', $document['subject']);
+		$this->assertEquals($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'news', $document['subject']);
 	}
 
 	public function testGetAccount()
@@ -85,7 +85,7 @@ class WebfingerTest extends ApiTest
 	public function testWellKnownLocation()
 	{
 		$url      = new Url($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . '.well-known/webfinger');
-		$url->addParam('resource', 'http://127.0.0.1/projects/amun/public/index.php/news');
+		$url->addParam('resource', $this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'news');
 		$request  = new GetRequest($url);
 		$response = $this->http->request($request);
 
@@ -94,7 +94,7 @@ class WebfingerTest extends ApiTest
 		$document = Json::decode($response->getBody());
 
 		$this->assertArrayHasKey('subject', $document);
-		$this->assertEquals('http://127.0.0.1/projects/amun/public/index.php/news', $document['subject']);
+		$this->assertEquals($this->config['psx_url'] . '/' . $this->config['psx_dispatch'] . 'news', $document['subject']);
 	}
 
 	public function testResourceNotSet()
