@@ -277,18 +277,6 @@
 		<field name="interface" xsi:nil="true" />
 		<field name="description">Notifies if a record has changed</field>
 	</row>
-	<row>
-		<field name="id">3</field>
-		<field name="name">hostmeta.request</field>
-		<field name="interface" xsi:nil="true" />
-		<field name="description">Notifies if a hostmeta request occurs</field>
-	</row>
-	<row>
-		<field name="id">4</field>
-		<field name="name">lrdd.resource_discovery</field>
-		<field name="interface" xsi:nil="true" />
-		<field name="description">Notifies if an lrdd lookup occurs</field>
-	</row>
 	</table_data>
 	<table_data name="amun_core_event_listener">
 	<row>
@@ -302,12 +290,6 @@
 		<field name="eventId">1</field>
 		<field name="priority">0</field>
 		<field name="class">AmunService\Xrds\ConfigListener</field>
-	</row>
-	<row>
-		<field name="id">3</field>
-		<field name="eventId">3</field>
-		<field name="priority">0</field>
-		<field name="class">AmunService\Lrdd\HostmetaListener</field>
 	</row>
 	<row>
 		<field name="id">4</field>
@@ -328,28 +310,10 @@
 		<field name="class">AmunService\User\Right\ConfigListener</field>
 	</row>
 	<row>
-		<field name="id">7</field>
-		<field name="eventId">4</field>
-		<field name="priority">0</field>
-		<field name="class">AmunService\User\LrddListener</field>
-	</row>
-	<row>
-		<field name="id">8</field>
-		<field name="eventId">1</field>
-		<field name="priority">0</field>
-		<field name="class">AmunService\Core\Service\Option\ConfigListener</field>
-	</row>
-	<row>
 		<field name="id">9</field>
 		<field name="eventId">1</field>
 		<field name="priority">0</field>
 		<field name="class">AmunService\Mail\ConfigListener</field>
-	</row>
-	<row>
-		<field name="id">10</field>
-		<field name="eventId">4</field>
-		<field name="priority">0</field>
-		<field name="class">AmunService\Content\LrddListener</field>
 	</row>
 	</table_data>
 	<table_data name="amun_core_host">
@@ -899,13 +863,13 @@
 	<row>
 		<field name="id">6</field>
 		<field name="status">2</field>
-		<field name="source">org.amun-project.lrdd.zip</field>
-		<field name="autoloadPath">vendor/amun/lrdd/src/</field>
-		<field name="config">vendor/amun/lrdd/config.xml</field>
-		<field name="name">amun/lrdd</field>
-		<field name="path">/lrdd</field>
-		<field name="namespace">AmunService\Lrdd</field>
-		<field name="type">http://ns.amun-project.org/2011/amun/service/lrdd</field>
+		<field name="source">org.amun-project.webfinger.zip</field>
+		<field name="autoloadPath">vendor/amun/webfinger/src/</field>
+		<field name="config">vendor/amun/webfinger/config.xml</field>
+		<field name="name">amun/webfinger</field>
+		<field name="path">/webfinger</field>
+		<field name="namespace">AmunService\Webfinger</field>
+		<field name="type">http://ns.amun-project.org/2011/amun/service/webfinger</field>
 		<field name="link">http://amun-project.org</field>
 		<field name="license">GPL-3.0</field>
 		<field name="version">0.0.1</field>
@@ -4438,7 +4402,7 @@ echo $_SERVER['REMOTE_ADDR'];</field>
 		<field name="id">3</field>
 		<field name="serviceId">4</field>
 		<field name="priority">0</field>
-		<field name="endpoint">/lrdd</field>
+		<field name="endpoint">/webfinger</field>
 	</row>
 	<row>
 		<field name="id">4</field>
@@ -4731,7 +4695,7 @@ echo $_SERVER['REMOTE_ADDR'];</field>
 	<row>
 		<field name="id">3</field>
 		<field name="apiId">3</field>
-		<field name="type">http://ns.amun-project.org/2011/amun/service/lrdd</field>
+		<field name="type">http://ns.amun-project.org/2011/amun/service/webfinger</field>
 	</row>
 	<row>
 		<field name="id">4</field>
