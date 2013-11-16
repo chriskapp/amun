@@ -71,11 +71,11 @@ class Tree extends ApiAbstract
 
 	private function buildTreeArray()
 	{
-		$status = \AmunService\Content\Page\Record::NORMAL;
-		$sql    = <<<SQL
+		$sql = <<<SQL
 SELECT
 	`page`.`id`,
 	`page`.`globalId`,
+	`page`.`status`,
 	`page`.`sort`,
 	`page`.`path`,
 	`page`.`title`,
@@ -89,8 +89,6 @@ INNER JOIN
 ON 
 	`page`.`serviceId` = `service`.`id`
 WHERE
-	`page`.`status` = {$status}
-AND 
 	(`page`.`publishDate` = '0000-00-00 00:00:00' OR `page`.`publishDate` < NOW())
 ORDER BY 
 	`depth`, `page`.`parentId`, `page`.`sort` ASC
@@ -114,6 +112,7 @@ SQL;
 			$tree = array(
 				'id'       => $row['id'],
 				'globalId' => $row['globalId'],
+				'status'   => $row['status'],
 				'sort'     => $row['sort'],
 				'path'     => $row['path'],
 				'title'    => $row['title'],
@@ -152,6 +151,7 @@ SQL;
 						$node['children'][] = array(
 							'id'       => $row['id'],
 							'globalId' => $row['globalId'],
+							'status'   => $row['status'],
 							'sort'     => $row['sort'],
 							'path'     => $row['path'],
 							'title'    => $row['title'],
@@ -178,6 +178,7 @@ SQL;
 				$tree['children'][] = array(
 					'id'       => $row['id'],
 					'globalId' => $row['globalId'],
+					'status'   => $row['status'],
 					'sort'     => $row['sort'],
 					'path'     => $row['path'],
 					'title'    => $row['title'],
