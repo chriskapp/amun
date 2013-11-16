@@ -6,7 +6,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta http-equiv="X-XRDS-Location" content="<?php echo $url; ?>api/meta/xrds" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link rel="stylesheet" href="http://127.0.0.1/projects/amun/public/index.php/api/asset/css?services=default|page" type="text/css" />
+	<link rel="stylesheet" href="<?php echo $url; ?>api/asset/css?services=default|page" type="text/css" />
 </head>
 <body>
 
