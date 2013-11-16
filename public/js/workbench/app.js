@@ -26,10 +26,12 @@ Ext.Loader.setConfig({
     }
 });
 
+Ext.require('Amun.form.Editor');
 Ext.require('Amun.form.Form');
-Ext.require('Amun.ColumnConfig');
 
 Ext.require('Amun.service.content.page.Form');
+Ext.require('Amun.service.content.page.GadgetStore');
+Ext.require('Amun.service.content.page.Gadget');
 Ext.require('Amun.service.content.page.Grid');
 Ext.require('Amun.service.core.registry.Grid');
 Ext.require('Amun.service.core.service.Grid');
@@ -41,6 +43,17 @@ Ext.require('Amun.service.mail.Grid');
 Ext.require('Amun.service.page.Editor');
 Ext.require('Amun.service.phpinfo.Grid');
 Ext.require('Amun.service.phpinfo.Store');
+
+Ext.require('Amun.xrds.Manager');
+
+Ext.require('Amun.Application');
+Ext.require('Amun.Auth');
+Ext.require('Amun.ColumnConfig');
+Ext.require('Amun.Editor');
+Ext.require('Amun.Grid');
+Ext.require('Amun.Service');
+Ext.require('Amun.SplitEditor');
+Ext.require('Amun.User');
 
 // start application
 Ext.application({

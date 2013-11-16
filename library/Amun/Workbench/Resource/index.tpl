@@ -11,7 +11,8 @@
 	</script>
 	<script type="text/javascript" src="http://cdn.sencha.io/ext-4.2.0-gpl/ext-all.js"></script>
 	<script type="text/javascript" src="<?php echo $url; ?>api/asset/js?services=ace"></script>
-	<script type="text/javascript" src="<?php echo $base; ?>/js/workbench/app.js"></script>
+	<!--<script type="text/javascript" src="<?php echo $base; ?>/js/workbench/app.js"></script>-->
+	<script type="text/javascript" src="<?php echo $base; ?>/js/workbench/app-all.js"></script>
 </head>
 <body>
 

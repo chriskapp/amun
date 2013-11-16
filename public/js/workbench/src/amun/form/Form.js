@@ -1,6 +1,4 @@
 
-Ext.require('Amun.form.Editor');
-
 Ext.define('Amun.form.Form', {
     extend: 'Ext.window.Window',
 

@@ -1,6 +1,4 @@
 
-Ext.require('Amun.service.content.page.GadgetStore');
-
 Ext.define('Amun.service.content.page.Form', {
     extend: 'Amun.form.Form',
 

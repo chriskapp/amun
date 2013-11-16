@@ -1,7 +1,4 @@
 
-Ext.require('Amun.Auth');
-Ext.require('Amun.xrds.Manager');
-
 Ext.define('Amun.Application', {
 
     user: null,
