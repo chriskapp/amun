@@ -19,32 +19,21 @@ Ext.define('Amun.service.content.page.Grid', {
     },
 
     reload: function(){
-        // tree
-        this.tree.getStore().load();
-
         // grid
         this.grid.reload();
     },
 
     buildTree: function(){
-        var store = Ext.create('Ext.data.TreeStore', {
-            autoLoad: true,
-            fields: [
-                { name: 'text', type: 'string', mapping: 'title' }
-            ],
-            proxy: {
-                type: 'ajax',
-                url: url + 'api/page/tree?format=json'
-            },
-            reader: {
-                type: 'json',
-                root: 'tree',
-                defaultRootProperty: 'children'
-            }
-        });
 
-        store.on('load', function(el, node){
-            node.firstChild.expand();
+        Ext.Ajax.request({
+            url: url + 'api/page/tree?format=json',
+            scope: this,
+            success: function(response, opts){
+                var tree = this.buildRecTree(JSON.parse(response.responseText));
+
+                this.tree.setRootNode(tree);
+                this.tree.getRootNode().expand();
+            }
         });
 
         this.tree = Ext.create('Ext.tree.Panel', {
@@ -53,7 +42,6 @@ Ext.define('Amun.service.content.page.Grid', {
             header: false,
             border: false,
             width: 200,
-            store: store,
             viewConfig: {
                 plugins: {
                     ptype: 'treeviewdragdrop',
@@ -67,7 +55,7 @@ Ext.define('Amun.service.content.page.Grid', {
             },
             hideHeaders: true,
             useArrows: true,
-            rootVisible: false
+            rootVisible: true
         });
 
         this.tree.on('itemmove', function(el, oldParent, newParent, index, eOpts){
@@ -116,6 +104,7 @@ Ext.define('Amun.service.content.page.Grid', {
             }
         });
 
+        /*
         this.tree.on('celldblclick', function(el, td, index, rec){
             var serviceType = rec.raw.type;
             var service = Amun.xrds.Manager.findService(serviceType);
@@ -124,6 +113,7 @@ Ext.define('Amun.service.content.page.Grid', {
                 this.grid.loadForm(uri, serviceType);
             }
         }, this);
+        */
 
         this.tree.on('select', function(el, rec){
             var rec = this.grid.getStore().getById(rec.get('id'));
@@ -131,6 +121,30 @@ Ext.define('Amun.service.content.page.Grid', {
         }, this);
 
         return this.tree;
+    },
+
+    buildRecTree: function(result){
+        var children = [];
+        if (result.children && result.children.length > 0) {
+            for (var i = 0; i < result.children.length; i++) {
+                children.push(this.buildRecTree(result.children[i]));
+            }
+        }
+
+        var node = {
+            text: result.title,
+            id: result.id,
+            cls: result.status == 0 ? 'wb-tree-page-normal' : 'wb-tree-page-hidden',
+            leaf: true,
+            children: null
+        };
+
+        if (children.length > 0) {
+            node.leaf = false;
+            node.children = children;
+        }
+
+        return node;
     },
 
     buildGrid: function(){
