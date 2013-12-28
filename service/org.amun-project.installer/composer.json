@@ -14,7 +14,7 @@
     "require": {
         "php": ">=5.3",
         "composer-plugin-api": "1.0.0",
-        "psx/psx": "0.7.*@dev",
+        "psx/psx": "0.8.*@dev",
         "monolog/monolog": "1.5.*"
     },
     "autoload": {
