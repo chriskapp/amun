@@ -49,8 +49,6 @@ abstract class DefaultAbstract extends \PSX\Domain\DomainAbstract
 		$this->config   = $container->get('config');
 		$this->sql      = $container->get('sql');
 		$this->registry = $container->get('registry');
-		$this->event    = $container->get('event');
-		$this->tm       = $container->get('tableManager');
 		$this->dm       = $container->get('databaseManager');
 	}
 }

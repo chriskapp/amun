@@ -70,11 +70,6 @@ class Container extends \PSX\Dependency\DefaultContainer
 		return new Registry($this->get('config'), $this->get('sql'));
 	}
 
-	public function getEvent()
-	{
-		return new Event($this);
-	}
-
 	public function getSession()
 	{
 		$session = new Session($this->getParameter('session.name'));
@@ -137,16 +132,6 @@ class Container extends \PSX\Dependency\DefaultContainer
 	public function getGadget()
 	{
 		return new Gadget($this->getParameter('gadget.id'), $this->get('registry'), $this->get('user'));
-	}
-
-	public function getHandlerManager()
-	{
-		return new HandlerManager($this);
-	}
-
-	public function getFormManager()
-	{
-		return new FormManager($this);
 	}
 
 	public function getLogger()
