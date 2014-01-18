@@ -20,36 +20,41 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Amun\Sql;
+namespace Amun\Domain;
 
-use Amun\Registry;
+use Amun\Exception\ForbiddenException;
+use PSX\Sql\Condition;
 
 /**
- * TableAbstract
+ * QueryAbstract
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-abstract class TableAbstract extends \PSX\Sql\TableAbstract implements TableInterface
+abstract class QueryAbstract extends DefaultAbstract
 {
-	protected $registry;
-
-	public function __construct(Registry $registry)
+	public function getCollection(array $fields, $startIndex, $count, $sortBy, $sortOrder, Condition $con)
 	{
-		parent::__construct($this->registry->getSql());
-
-		$this->registry = $registry;
+		if($this->user->hasRight($this->getViewRight()))
+		{
+			return $this->getDefaultHandler()->getCollection($fields, $startIndex, $count, $sortBy, $sortOrder, $con);
+		}
+		else
+		{
+			throw new ForbiddenException('Access not allowed');
+		}
 	}
 
-	public function getRegistry()
+	public function getSupportedFields()
 	{
-		return $this->registry;
+		return $this->getDefaultHandler()->getSupportedFields();
 	}
 
-	public function getDefaultRecordClass()
-	{
-		return '\\' . substr(get_class($this), 0, -6) . '\Record';
-	}
+	/**
+	 * Returns the default handler on which the domain operates
+	 *
+	 * @return PSX\Handler\HandlerInterface
+	 */
+	abstract protected function getDefaultHandler();
 }
-

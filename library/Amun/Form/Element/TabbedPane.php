@@ -24,6 +24,7 @@ namespace Amun\Form\Element;
 
 use Amun\Form\ContainerInterface;
 use Amun\Form\ElementAbstract;
+use PSX\Data\RecordInfo;
 
 /**
  * TabbedPane
@@ -36,18 +37,11 @@ class TabbedPane extends ElementAbstract implements ContainerInterface
 {
 	protected $children = array();
 
-	public function getName()
+	public function getRecordInfo()
 	{
-		return 'tabbedPane';
-	}
-
-	public function getFields()
-	{
-		return array_merge(parent::getFields(), array(
-
+		return new RecordInfo('tabbedPane', array(
 			'children' => $this->children,
-
-		));
+		), parent::getRecordInfo());
 	}
 
 	public function add(ElementAbstract $element)

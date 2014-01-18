@@ -20,33 +20,43 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Amun\Data;
+namespace Amun\Domain;
 
 use Amun\Exception;
-use AmunService\Core\Approval\Record;
-use PSX\Data\HandlerInterface;
 use PSX\Data\RecordInterface;
 use PSX\DateTime;
+use PSX\Sql\TableInterface;
 
 /**
- * Handler wich has the ability to check whether a record needs approval. If yes
- * the record could be added to a queue instead of inserting
+ * Domain wich gives the option to add the record to an approve queue before 
+ * CUD the record
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-abstract class ApproveHandlerAbstract extends HandlerAbstract
+abstract class ApproveAbstract extends UserAbstract
 {
 	protected $ignoreApprovement = false;
 
 	/**
+	 * Sets whether the domain should ignore approvement
+	 *
+	 * @param boolean $approvement
+	 * @return void
+	 */
+	public function setIgnoreApprovement($approvement)
+	{
+		$this->ignoreApprovement = (boolean) $approvement;
+	}
+
+	/**
 	 * Returns whether the record needs to be approved
 	 *
-	 * @param PSX_Data_RecordInterface $record
+	 * @param PSX\Data\RecordInterface $record
 	 * @return boolean
 	 */
-	public function hasApproval(RecordInterface $record)
+	protected function hasApproval(RecordInterface $record)
 	{
 		if($this->ignoreApprovement === false)
 		{
@@ -57,10 +67,10 @@ SELECT
 FROM 
 	{$this->registry['table.core_approval']} `approval`
 WHERE 
-	`approval`.`table` LIKE "{$this->table->getName()}"
+	`approval`.`class` LIKE ?
 SQL;
 
-			$result = $this->sql->getAll($sql);
+			$result = $this->sql->getAll($sql, array(__CLASS__));
 
 			foreach($result as $row)
 			{
@@ -71,7 +81,9 @@ SQL;
 					return true;
 				}
 
-				if(isset($record->$field) && $record->$field == $row['approvalValue'])
+				$method = 'get' . ucfirst($field);
+
+				if(method_exists($record, $method) && $record->$method() == $row['approvalValue'])
 				{
 					return true;
 				}
@@ -85,25 +97,21 @@ SQL;
 	 * Inserts an record for approval
 	 *
 	 * @param integer $type
-	 * @param PSX_Data_RecordInterface $record
+	 * @param PSX\Data\RecordInterface $record
 	 * @return void
 	 */
-	public function approveRecord($type, RecordInterface $record)
+	protected function approveRecord($type, RecordInterface $record)
 	{
-		$type = Record::getType($type);
-
-		if($type !== false)
+		if(in_array($type, array('INSERT', 'UPDATE', 'DELETE')))
 		{
 			$date = new DateTime('NOW', $this->registry['core.default_timezone']);
 
 			$this->sql->insert($this->registry['table.core_approval_record'], array(
-
-				'userId' => $this->user->id,
+				'userId' => $this->user->getId(),
 				'type'   => $type,
-				'table'  => $this->table->getName(),
-				'record' => serialize($record->getFields()),
+				'class'  => __CLASS__,
+				'record' => serialize($record->getRecordInfo()->getFields()),
 				'date'   => $date->format(DateTime::SQL),
-
 			));
 		}
 		else
@@ -111,17 +119,4 @@ SQL;
 			throw new Exception('Invalid approve record type');
 		}
 	}
-
-	/**
-	 * Sets whether the handler should ignore approvement
-	 *
-	 * @param boolean $approvement
-	 * @return void
-	 */
-	public function setIgnoreApprovement($approvement)
-	{
-		$this->ignoreApprovement = (boolean) $approvement;
-	}
 }
-
-

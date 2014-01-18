@@ -20,37 +20,38 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Amun\Data;
+namespace Amun\Domain;
 
-use Amun\Dependency;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * FormAbstract
+ * DefaultAbstract
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-abstract class FormAbstract
+abstract class DefaultAbstract extends \PSX\Domain\DomainAbstract
 {
-	protected $container;
 	protected $base;
 	protected $config;
 	protected $sql;
 	protected $registry;
-	protected $hm;
-	protected $user;
-	protected $url;
+	protected $event;
+	protected $tm;
+	protected $dm;
 
-	public function __construct($container, $url = null)
+	public function setContainer(ContainerInterface $container = null)
 	{
-		$this->container = $container;
-		$this->base      = $container->get('base');
-		$this->config    = $container->get('config');
-		$this->sql       = $container->get('sql');
-		$this->registry  = $container->get('registry');
-		$this->hm        = $container->get('handlerManager');
-		$this->user      = $container->get('user');
-		$this->url       = $url;
+		parent::setContainer($container);
+
+		$this->base     = $container->get('base');
+		$this->config   = $container->get('config');
+		$this->sql      = $container->get('sql');
+		$this->registry = $container->get('registry');
+		$this->event    = $container->get('event');
+		$this->tm       = $container->get('tableManager');
+		$this->dm       = $container->get('databaseManager');
 	}
 }
+

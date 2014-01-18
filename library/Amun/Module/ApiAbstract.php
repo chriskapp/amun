@@ -39,11 +39,11 @@ use PSX\Loader\Location;
 abstract class ApiAbstract extends \PSX\Module\ApiAbstract
 {
 	protected $get;
+	protected $post;
+	protected $dm;
 	protected $user;
 	protected $registry;
 	protected $service;
-
-	protected $hm;
 
 	public function getRequestFilter()
 	{
@@ -59,6 +59,8 @@ abstract class ApiAbstract extends \PSX\Module\ApiAbstract
 		});
 
 		$oauth->onMissing(function(){
+			// we dont throw an exception since the user has probably an session
+			// wich can be used for authentication
 		});
 
 		return array($oauth);
@@ -82,18 +84,16 @@ abstract class ApiAbstract extends \PSX\Module\ApiAbstract
 		// dependencies
 		$this->get      = $this->getInputGet();
 		$this->post     = $this->getInputPost();
+		$this->dm       = $this->getDomainManager();
 		$this->registry = $this->getRegistry();
 		$this->session  = $this->getSession();
 		$this->user     = $this->getUser();
 		$this->service  = $this->getService();
-
-		// manager
-		$this->hm = $this->getHandlerManager();
 	}
 
-	protected function getHandler($name = null)
+	protected function getDomain($name = null)
 	{
-		return $this->hm->getHandler($name === null ? $this->service->getNamespace() : $name);
+		return $this->dm->getDomain($name === null ? $this->service->getNamespace() . '\Domain' : $name);
 	}
 }
 

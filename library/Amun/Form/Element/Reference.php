@@ -23,6 +23,7 @@
 namespace Amun\Form\Element;
 
 use Amun\Form\ElementAbstract;
+use PSX\Data\RecordInfo;
 
 /**
  * Reference
@@ -37,20 +38,13 @@ class Reference extends ElementAbstract
 	protected $labelField;
 	protected $src;
 
-	public function getName()
+	public function getRecordInfo()
 	{
-		return 'reference';
-	}
-
-	public function getFields()
-	{
-		return array_merge(parent::getFields(), array(
-
+		return new RecordInfo('reference', array(
 			'valueField' => $this->valueField,
 			'labelField' => $this->labelField,
 			'src'        => $this->src,
-
-		));
+		), parent::getRecordInfo());
 	}
 
 	public function setValueField($valueField)

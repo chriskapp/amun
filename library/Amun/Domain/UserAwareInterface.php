@@ -20,36 +20,18 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Amun\Sql;
+namespace Amun\Domain;
 
-use Amun\Registry;
+use Amun\User;
 
 /**
- * TableAbstract
+ * UserAwareInterface
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-abstract class TableAbstract extends \PSX\Sql\TableAbstract implements TableInterface
+interface UserAwareInterface
 {
-	protected $registry;
-
-	public function __construct(Registry $registry)
-	{
-		parent::__construct($this->registry->getSql());
-
-		$this->registry = $registry;
-	}
-
-	public function getRegistry()
-	{
-		return $this->registry;
-	}
-
-	public function getDefaultRecordClass()
-	{
-		return '\\' . substr(get_class($this), 0, -6) . '\Record';
-	}
+	public function setUser(User $user = null);
 }
-

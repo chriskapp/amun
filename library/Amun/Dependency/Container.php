@@ -48,7 +48,7 @@ use PSX\Session;
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://phpsx.org
  */
-class Container extends \PSX\Dependency\Container
+class Container extends \PSX\Dependency\DefaultContainer
 {
 	public function getBase()
 	{

@@ -20,36 +20,15 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Amun\Sql;
-
-use Amun\Registry;
+namespace Amun\Event;
 
 /**
- * TableAbstract
+ * Event
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-abstract class TableAbstract extends \PSX\Sql\TableAbstract implements TableInterface
+class Event extends \Symfony\Component\EventDispatcher\Event
 {
-	protected $registry;
-
-	public function __construct(Registry $registry)
-	{
-		parent::__construct($this->registry->getSql());
-
-		$this->registry = $registry;
-	}
-
-	public function getRegistry()
-	{
-		return $this->registry;
-	}
-
-	public function getDefaultRecordClass()
-	{
-		return '\\' . substr(get_class($this), 0, -6) . '\Record';
-	}
 }
-

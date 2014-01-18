@@ -20,36 +20,36 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Amun\Data;
+namespace Amun\Event;
 
-use Amun\Sql\TableAbstract;
+use PSX\Data\RecordInterface;
+use Symfony\Component\EventDispatcher\Event;
 
 /**
- * StreamAbstract
+ * RecordManipulationEvent
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-abstract class StreamAbstract
+class RecordManipulationEvent extends Event
 {
-	protected $table;
-	protected $registry;
-	protected $sql;
-	protected $config;
+	protected $type;
+	protected $record;
 
-	public function __construct(TableAbstract $table)
+	public function __construct($type, RecordInterface $record)
 	{
-		$this->table    = $table;
-		$this->registry = $table->getRegistry();
-		$this->sql      = $this->registry->getSql();
-		$this->config   = $this->registry->getConfig();
+		$this->type   = $type;
+		$this->record = $record;
 	}
 
-	/**
-	 * Returns the activity streams object representation of the record
-	 *
-	 * @return PSX_ActivityStream_TypeAbstract
-	 */
-	abstract public function getObject($id);
+	public function getType()
+	{
+		return $this->type;
+	}
+
+	public function getRecord()
+	{
+		return $this->record;
+	}
 }
