@@ -23,7 +23,6 @@
 namespace Amun\Form\Element;
 
 use Amun\Form\ElementAbstract;
-use PSX\Data\RecordInfo;
 
 /**
  * Input
@@ -36,11 +35,18 @@ class Input extends ElementAbstract
 {
 	protected $type;
 
-	public function getRecordInfo()
+	public function getName()
 	{
-		return new RecordInfo('input', array(
+		return 'input';
+	}
+
+	public function getFields()
+	{
+		return array_merge(parent::getFields(), array(
+
 			'type' => $this->type,
-		), parent::getRecordInfo());
+
+		));
 	}
 
 	public function setType($type)

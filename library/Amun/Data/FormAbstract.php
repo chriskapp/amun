@@ -20,36 +20,37 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Amun\Event;
+namespace Amun\Data;
 
-use PSX\Data\RecordInterface;
-use Symfony\Component\EventDispatcher\Event;
+use Amun\Dependency;
 
 /**
- * RecordManipulationEvent
+ * FormAbstract
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-class RecordManipulationEvent extends Event
+abstract class FormAbstract
 {
-	protected $type;
-	protected $record;
+	protected $container;
+	protected $base;
+	protected $config;
+	protected $sql;
+	protected $registry;
+	protected $hm;
+	protected $user;
+	protected $url;
 
-	public function __construct($type, RecordInterface $record)
+	public function __construct($container, $url = null)
 	{
-		$this->type   = $type;
-		$this->record = $record;
-	}
-
-	public function getType()
-	{
-		return $this->type;
-	}
-
-	public function getRecord()
-	{
-		return $this->record;
+		$this->container = $container;
+		$this->base      = $container->get('base');
+		$this->config    = $container->get('config');
+		$this->sql       = $container->get('sql');
+		$this->registry  = $container->get('registry');
+		$this->hm        = $container->get('handlerManager');
+		$this->user      = $container->get('user');
+		$this->url       = $url;
 	}
 }

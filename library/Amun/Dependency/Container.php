@@ -48,7 +48,7 @@ use PSX\Session;
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://phpsx.org
  */
-class Container extends \PSX\Dependency\DefaultContainer
+class Container extends \PSX\Dependency\Container
 {
 	public function getBase()
 	{
@@ -68,6 +68,11 @@ class Container extends \PSX\Dependency\DefaultContainer
 	public function getRegistry()
 	{
 		return new Registry($this->get('config'), $this->get('sql'));
+	}
+
+	public function getEvent()
+	{
+		return new Event($this);
 	}
 
 	public function getSession()
@@ -132,6 +137,16 @@ class Container extends \PSX\Dependency\DefaultContainer
 	public function getGadget()
 	{
 		return new Gadget($this->getParameter('gadget.id'), $this->get('registry'), $this->get('user'));
+	}
+
+	public function getHandlerManager()
+	{
+		return new HandlerManager($this);
+	}
+
+	public function getFormManager()
+	{
+		return new FormManager($this);
 	}
 
 	public function getLogger()

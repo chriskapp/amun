@@ -23,7 +23,6 @@
 namespace Amun\Form;
 
 use PSX\Data\RecordAbstract;
-use PSX\Data\RecordInfo;
 
 /**
  * ElementAbstract
@@ -48,15 +47,17 @@ abstract class ElementAbstract extends RecordAbstract
 		$this->value = $value;
 	}
 
-	public function getRecordInfo()
+	public function getFields()
 	{
-		return new RecordInfo('element', array(
+		return array(
+
 			'class'    => $this->class,
 			'ref'      => $this->ref,
 			'label'    => $this->label,
 			'value'    => $this->value,
 			'disabled' => $this->disabled,
-		));
+
+		);
 	}
 
 	public function setClass($class)
@@ -64,19 +65,9 @@ abstract class ElementAbstract extends RecordAbstract
 		$this->class = $class;
 	}
 
-	public function getClass()
-	{
-		return $this->class;
-	}
-
 	public function setRef($ref)
 	{
 		$this->ref = $ref;
-	}
-
-	public function getRef()
-	{
-		return $this->ref;
 	}
 
 	public function setLabel($label)
@@ -84,14 +75,24 @@ abstract class ElementAbstract extends RecordAbstract
 		$this->label = $label;
 	}
 
-	public function getLabel()
-	{
-		return $this->label;
-	}
-
 	public function setValue($value)
 	{
 		$this->value = $value;
+	}
+
+	public function getClass()
+	{
+		return $this->class;
+	}
+
+	public function getRef()
+	{
+		return $this->ref;
+	}
+
+	public function getLabel()
+	{
+		return $this->label;
 	}
 
 	public function getValue()

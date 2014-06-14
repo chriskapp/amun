@@ -24,7 +24,6 @@ namespace Amun\Form\Element;
 
 use Amun\Form\ElementAbstract;
 use Amun\Exception;
-use PSX\Data\RecordInfo;
 
 /**
  * Select
@@ -38,11 +37,18 @@ class Select extends ElementAbstract
 	protected $children = array();
 	protected $options;
 
-	public function getRecordInfo()
+	public function getName()
 	{
-		return new RecordInfo('select', array(
+		return 'select';
+	}
+
+	public function getFields()
+	{
+		return array_merge(parent::getFields(), array(
+
 			'children' => $this->children,
-		), parent::getRecordInfo());
+
+		));
 	}
 
 	public function setOptions(array $options)

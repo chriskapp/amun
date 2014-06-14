@@ -40,7 +40,6 @@ abstract class GadgetAbstract extends ViewAbstract
 {
 	protected $get;
 	protected $post;
-	protected $dm;
 	protected $registry;
 	protected $session;
 	protected $user;
@@ -59,12 +58,14 @@ abstract class GadgetAbstract extends ViewAbstract
 		// dependencies
 		$this->get      = $this->getInputGet();
 		$this->post     = $this->getInputPost();
-		$this->dm       = $this->getDomainManager();
 		$this->registry = $this->getRegistry();
 		$this->session  = $this->getSession();
 		$this->user     = $this->getUser();
 		$this->gadget   = $this->getGadget();
 		$this->args     = $this->gadget->getArgs();
+
+		// manager
+		$this->hm = $this->getHandlerManager();
 
 		// load cache
 		if($this->gadget->hasCache() && Base::getRequestMethod() == 'GET')
@@ -85,9 +86,9 @@ abstract class GadgetAbstract extends ViewAbstract
 		}
 	}
 
-	protected function getDomain($name = null)
+	protected function getHandler($name = null)
 	{
-		return $this->dm->getDomain($name === null ? $this->service->getNamespace() . '\Domain' : $name);
+		return $this->hm->getHandler($name === null ? $this->service->getNamespace() : $name);
 	}
 }
 

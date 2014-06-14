@@ -24,7 +24,6 @@ namespace Amun\Form\Element;
 
 use Amun\Form\ContainerInterface;
 use Amun\Form\ElementAbstract;
-use PSX\Data\RecordInfo;
 
 /**
  * Panel
@@ -37,11 +36,18 @@ class Panel extends ElementAbstract implements ContainerInterface
 {
 	protected $children = array();
 
-	public function getRecordInfo()
+	public function getName()
 	{
-		return new RecordInfo('panel', array(
+		return 'panel';
+	}
+
+	public function getFields()
+	{
+		return array_merge(parent::getFields(), array(
+
 			'children' => $this->children,
-		), parent::getRecordInfo());
+
+		));
 	}
 
 	public function add(ElementAbstract $element)

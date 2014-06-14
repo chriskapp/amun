@@ -43,16 +43,16 @@ use PSX\Sql\Condition;
  */
 abstract class ApplicationAbstract extends ViewAbstract
 {
-	protected $validate;
 	protected $get;
 	protected $post;
-	protected $dm;
 	protected $registry;
 	protected $session;
 	protected $user;
 	protected $page;
 	protected $service;
 	protected $template;
+
+	protected $hm;
 
 	protected $navigation;
 	protected $path;
@@ -77,13 +77,15 @@ abstract class ApplicationAbstract extends ViewAbstract
 		$this->validate = $this->getValidate();
 		$this->get      = $this->getInputGet();
 		$this->post     = $this->getInputPost();
-		$this->dm       = $this->getDomainManager();
 		$this->registry = $this->getRegistry();
 		$this->session  = $this->getSession();
 		$this->user     = $this->getUser();
 		$this->page     = $this->getPage();
 		$this->service  = $this->getService();
 		$this->template = $this->getTemplate();
+
+		// manager
+		$this->hm = $this->getHandlerManager();
 
 		// load nav
 		if($this->page->hasNav())
@@ -121,7 +123,7 @@ abstract class ApplicationAbstract extends ViewAbstract
 			header('Expires: ' . $expires->format(DateTime::RFC1123));
 			header('Last-Modified: ' . $modified->format(DateTime::RFC1123));
 			header('Cache-Control: ' . $type . ', max-age=' . $maxAge);
-			header_remove('Pragma'); // remove pragma header
+			header('Pragma:'); // remove pragma header
 		}
 
 		// template dependencies
@@ -300,9 +302,9 @@ HTML;
 		$this->template->assign('options', $options);
 	}
 
-	protected function getDomain($name = null)
+	protected function getHandler($name = null)
 	{
-		return $this->dm->getDomain($name === null ? $this->service->getNamespace() . '\Domain' : $name);
+		return $this->hm->getHandler($name === null ? $this->service->getNamespace() : $name);
 	}
 
 	protected function getRequestCondition()

@@ -17,7 +17,7 @@
         "ext-dom": "*",
         "ext-simplexml": "*",
         "ext-hash": "*",
-        "psx/psx": "0.8.*@dev",
+        "psx/psx": "0.7.*@dev",
         "monolog/monolog": "1.5.*",
         "amun/installer": "self.version",
         "amun/core": "self.version",

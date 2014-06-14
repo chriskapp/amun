@@ -23,7 +23,6 @@
 namespace Amun\Form\Element;
 
 use Amun\Form\ElementAbstract;
-use PSX\Data\RecordInfo;
 
 /**
  * CheckboxList
@@ -36,11 +35,18 @@ class CheckboxList extends ElementAbstract
 {
 	protected $src;
 
-	public function getRecordInfo()
+	public function getName()
 	{
-		return new RecordInfo('checkboxList', array(
+		return 'checkboxList';
+	}
+
+	public function getFields()
+	{
+		return array_merge(parent::getFields(), array(
+
 			'src' => $this->src,
-		), parent::getRecordInfo());
+
+		));
 	}
 
 	public function setSrc($src)

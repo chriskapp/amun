@@ -24,7 +24,6 @@ namespace Amun;
 
 use Amun\Form\ContainerInterface;
 use PSX\Data\RecordAbstract;
-use PSX\Data\RecordInfo;
 
 /**
  * Form
@@ -50,16 +49,23 @@ class Form extends RecordAbstract
 		$this->enctype = $enctype;
 	}
 
-	public function getRecordInfo()
+	public function getName()
 	{
-		return new RecordInfo('form', array(
+		return 'form';
+	}
+
+	public function getFields()
+	{
+		return array(
+
 			'class'   => $this->class,
 			'ref'     => substr(md5($this->method . $this->action), 0, 8),
 			'method'  => $this->method,
 			'action'  => $this->action,
 			'enctype' => $this->enctype,
 			'item'    => $this->item,
-		));
+
+		);
 	}
 
 	public function setContainer(ContainerInterface $container)

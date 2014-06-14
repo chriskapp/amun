@@ -37,9 +37,9 @@ abstract class TableAbstract extends \PSX\Sql\TableAbstract implements TableInte
 
 	public function __construct(Registry $registry)
 	{
-		parent::__construct($this->registry->getSql());
-
 		$this->registry = $registry;
+
+		parent::__construct($this->registry->getSql());
 	}
 
 	public function getRegistry()

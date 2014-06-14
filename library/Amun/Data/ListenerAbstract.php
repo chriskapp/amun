@@ -20,36 +20,38 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Amun\Domain;
+namespace Amun\Data;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Amun\Dependency;
+use Amun\User;
 
 /**
- * DefaultAbstract
+ * ListenerAbstract
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-abstract class DefaultAbstract extends \PSX\Domain\DomainAbstract
+abstract class ListenerAbstract
 {
+	protected $container;
 	protected $base;
 	protected $config;
 	protected $sql;
 	protected $registry;
 	protected $event;
-	protected $tm;
-	protected $dm;
+	protected $hm;
+	protected $user;
 
-	public function setContainer(ContainerInterface $container = null)
+	public function __construct($container, User $user = null)
 	{
-		parent::setContainer($container);
-
-		$this->base     = $container->get('base');
-		$this->config   = $container->get('config');
-		$this->sql      = $container->get('sql');
-		$this->registry = $container->get('registry');
-		$this->dm       = $container->get('databaseManager');
+		$this->container = $container;
+		$this->base      = $container->get('base');
+		$this->config    = $container->get('config');
+		$this->sql       = $container->get('sql');
+		$this->registry  = $container->get('registry');
+		$this->event     = $container->get('event');
+		$this->hm        = $container->get('handlerManager');
+		$this->user      = $user !== null ? $user : $container->get('user');
 	}
 }
-

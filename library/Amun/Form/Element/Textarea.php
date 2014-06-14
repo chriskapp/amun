@@ -23,7 +23,6 @@
 namespace Amun\Form\Element;
 
 use Amun\Form\ElementAbstract;
-use PSX\Data\RecordInfo;
 
 /**
  * Textarea
@@ -36,11 +35,18 @@ class Textarea extends ElementAbstract
 {
 	protected $role;
 
-	public function getRecordInfo()
+	public function getName()
 	{
-		return new RecordInfo('textarea', array(
+		return 'textarea';
+	}
+
+	public function getFields()
+	{
+		return array_merge(parent::getFields(), array(
+
 			'role' => $this->role,
-		), parent::getRecordInfo());
+
+		));
 	}
 
 	public function setRole($role)

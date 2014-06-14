@@ -20,23 +20,36 @@
  * along with amun. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Amun\Event;
+namespace Amun\Data;
 
-use Symfony\Component\EventDispatcher\Event;
+use Amun\Sql\TableAbstract;
 
 /**
- * DispatchableInterface
+ * StreamAbstract
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GPLv3
  * @link    http://amun.phpsx.org
  */
-interface DispatchableInterface
+abstract class StreamAbstract
 {
+	protected $table;
+	protected $registry;
+	protected $sql;
+	protected $config;
+
+	public function __construct(TableAbstract $table)
+	{
+		$this->table    = $table;
+		$this->registry = $table->getRegistry();
+		$this->sql      = $this->registry->getSql();
+		$this->config   = $this->registry->getConfig();
+	}
+
 	/**
-	 * Returns an array of event names which can be dispatched
+	 * Returns the activity streams object representation of the record
 	 *
-	 * @return array
+	 * @return PSX_ActivityStream_TypeAbstract
 	 */
-	public function getDispatchableEvents();
+	abstract public function getObject($id);
 }

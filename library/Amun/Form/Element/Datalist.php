@@ -23,7 +23,6 @@
 namespace Amun\Form\Element;
 
 use Amun\Form\ElementAbstract;
-use PSX\Data\RecordInfo;
 
 /**
  * Datalist

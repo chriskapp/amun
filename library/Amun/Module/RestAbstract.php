@@ -23,11 +23,10 @@
 namespace Amun\Module;
 
 use Amun\Exception;
-use Amun\Exception\ForbiddenException;
 use Amun\Captcha;
 use Amun\Data\RecordAbstract;
 use Amun\Module\ApiAbstract;
-use PSX\Data\Record;
+use PSX\Data\ArrayList;
 use PSX\Data\Message;
 use PSX\DateTime;
 use PSX\Sql;
@@ -56,40 +55,38 @@ abstract class RestAbstract extends ApiAbstract
 	 * @parameter [query filterOp string contains|equals|startsWith|present]
 	 * @parameter [query filterValue string]
 	 * @parameter [query updatedSince DateTime]
-	 * @responseClass PSX\Data\Collection
+	 * @responseClass PSX_Data_ResultSet
 	 */
 	public function getRecords()
 	{
-		try
+		if($this->user->hasRight($this->getHandler()->getViewRight()))
 		{
-			if($this->isWriter(WriterInterface::ATOM))
+			try
 			{
-				$this->setResponse($this->getQueryDomain()->getAtom());
-			}
-			else
-			{
-				$params = $this->getRequestParams();
-
-				$this->setResponse($this->getQueryDomain()->getCollection($params['fields'],
+				$params    = $this->getRequestParams();
+				$fields    = (array) $params['fields'];
+				$resultSet = $this->getHandler()->getResultSet($fields, 
 					$params['startIndex'], 
 					$params['count'], 
 					$params['sortBy'], 
 					$params['sortOrder'], 
-					$this->getRequestCondition()
-				));
+					$this->getRequestCondition(),
+					$this->getMode());
+
+				$this->setResponse($resultSet);
+			}
+			catch(\Exception $e)
+			{
+				$msg = new Message($e->getMessage(), false);
+
+				$this->setResponse($msg);
 			}
 		}
-		catch(ForbiddenException $e)
+		else
 		{
 			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
-		}
-		catch(\Exception $e)
-		{
-			$msg = new Message($e->getMessage(), false);
-
-			$this->setResponse($msg);
 		}
 	}
 
@@ -99,23 +96,31 @@ abstract class RestAbstract extends ApiAbstract
 	 * @httpMethod GET
 	 * @path /@supportedFields
 	 * @nickname getSupportedFields
-	 * @responseClass PSX\Data\Record
+	 * @responseClass PSX_Data_Array
 	 */
 	public function getSupportedFields()
 	{
-		try
+		if($this->user->hasRight($this->getHandler()->getViewRight()))
 		{
-			$array = new Record('fields', array(
-				'items' => $this->getQueryDomain()->getSupportedFields(),
-			));
+			try
+			{
+				$fields = array_values(array_diff($this->getHandler()->getSupportedFields(), $this->getRestrictedFields()));
+				$array  = new ArrayList($fields);
 
-			$this->setResponse($array);
+				$this->setResponse($array);
+			}
+			catch(\Exception $e)
+			{
+				$msg = new Message($e->getMessage(), false);
+
+				$this->setResponse($msg);
+			}
 		}
-		catch(\Exception $e)
+		else
 		{
-			$msg = new Message($e->getMessage(), false);
+			$msg = new Message('Access not allowed', false);
 
-			$this->setResponse($msg);
+			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}
 	}
 
@@ -125,37 +130,40 @@ abstract class RestAbstract extends ApiAbstract
 	 * @httpMethod POST
 	 * @path /
 	 * @nickname insertRecord
-	 * @responseClass PSX\Data\Record
+	 * @responseClass PSX_Data_Message
 	 */
 	public function insertRecord()
 	{
-		try
+		if($this->user->hasRight($this->getHandler()->getAddRight()))
 		{
-			// import record
-			$record = $this->import($this->getManipulationDomain()->getRecord());
+			try
+			{
+				$record = $this->getHandler()->getRecord();
+				$record->import($this->getRequest());
 
-			// check captcha
-			$this->handleCaptcha($record);
+				// check captcha
+				$this->handleCaptcha($record);
 
-			// insert
-			$this->getManipulationDomain()->create($record);
+				// insert
+				$this->getHandler()->create($record);
 
 
-			$msg = new Message('You have successful create a ' . $record->getName(), true);
+				$msg = new Message('You have successful create a ' . $record->getName(), true);
 
-			$this->setResponse($msg);
+				$this->setResponse($msg);
+			}
+			catch(\Exception $e)
+			{
+				$msg = new Message($e->getMessage(), false);
+
+				$this->setResponse($msg);
+			}
 		}
-		catch(ForbiddenException $e)
+		else
 		{
 			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
-		}
-		catch(\Exception $e)
-		{
-			$msg = new Message($e->getMessage(), false);
-
-			$this->setResponse($msg);
 		}
 	}
 
@@ -165,43 +173,46 @@ abstract class RestAbstract extends ApiAbstract
 	 * @httpMethod PUT
 	 * @path /
 	 * @nickname updateRecord
-	 * @responseClass PSX\Data\Record
+	 * @responseClass PSX_Data_Message
 	 */
 	public function updateRecord()
 	{
-		try
+		if($this->user->hasRight($this->getHandler()->getEditRight()))
 		{
-			// import record
-			$record = $this->import($this->getManipulationDomain()->getRecord());
-
-			// check owner
-			if(!$this->getManipulationDomain()->isOwner($record))
+			try
 			{
-				throw new Exception('You are not the owner of the record');
+				$record = $this->getHandler()->getRecord();
+				$record->import($this->getRequest());
+
+				// check owner
+				if(!$this->isOwner($record))
+				{
+					throw new Exception('You are not the owner of the record');
+				}
+
+				// check captcha
+				$this->handleCaptcha($record);
+
+				// update
+				$this->getHandler()->update($record);
+
+
+				$msg = new Message('You have successful edit a ' . $record->getName(), true);
+
+				$this->setResponse($msg);
 			}
+			catch(\Exception $e)
+			{
+				$msg = new Message($e->getMessage(), false);
 
-			// check captcha
-			$this->handleCaptcha($record);
-
-			// update
-			$this->getManipulationDomain()->update($record);
-
-
-			$msg = new Message('You have successful edit a ' . $record->getName(), true);
-
-			$this->setResponse($msg);
+				$this->setResponse($msg);
+			}
 		}
-		catch(ForbiddenException $e)
+		else
 		{
 			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
-		}
-		catch(\Exception $e)
-		{
-			$msg = new Message($e->getMessage(), false);
-
-			$this->setResponse($msg);
 		}
 	}
 
@@ -211,44 +222,52 @@ abstract class RestAbstract extends ApiAbstract
 	 * @httpMethod DELETE
 	 * @path /
 	 * @nickname deleteRecord
-	 * @responseClass PSX\Data\Record
+	 * @responseClass PSX_Data_Message
 	 */
 	public function deleteRecord()
 	{
-		try
+		if($this->user->hasRight($this->getHandler()->getDeleteRight()))
 		{
-			// import record
-			$record = $this->import($this->getManipulationDomain()->getRecord());
-
-			// check owner
-			if(!$this->getManipulationDomain()->isOwner($record))
+			try
 			{
-				throw new Exception('You are not the owner of the record');
+				$record = $this->getHandler()->getRecord();
+				$record->import($this->getRequest());
+
+				// check owner
+				if(!$this->isOwner($record))
+				{
+					throw new Exception('You are not the owner of the record');
+				}
+
+				// check captcha
+				$this->handleCaptcha($record);
+
+				// delete
+				$this->getHandler()->delete($record);
+
+
+				$msg = new Message('You have successful delete a ' . $record->getName(), true);
+
+				$this->setResponse($msg);
 			}
+			catch(\Exception $e)
+			{
+				$msg = new Message($e->getMessage(), false);
 
-			// check captcha
-			$this->handleCaptcha($record);
-
-			// delete
-			$this->getManipulationDomain()->delete($record);
-
-
-			$msg = new Message('You have successful delete a ' . $record->getName(), true);
-
-			$this->setResponse($msg);
+				$this->setResponse($msg);
+			}
 		}
-		catch(ForbiddenException $e)
+		else
 		{
 			$msg = new Message('Access not allowed', false);
 
 			$this->setResponse($msg, null, $this->user->isAnonymous() ? 401 : 403);
 		}
-		catch(\Exception $e)
-		{
-			$msg = new Message($e->getMessage(), false);
+	}
 
-			$this->setResponse($msg);
-		}
+	protected function isOwner(RecordAbstract $record)
+	{
+		return $this->getHandler()->isOwner($record);
 	}
 
 	protected function handleCaptcha(RecordAbstract $record)
@@ -268,18 +287,21 @@ abstract class RestAbstract extends ApiAbstract
 		}
 	}
 
-	/**
-	 * Returns the query domain
-	 *
-	 * @return Amun\Domain\QueryAbstract
-	 */
-	abstract protected function getQueryDomain();
+	protected function getRequestParams()
+	{
+		$params = parent::getRequestParams();
 
-	/**
-	 * Returns the manipulation domain
-	 *
-	 * @return Amun\Domain\ManipulationAbstract
-	 */
-	abstract protected function getManipulationDomain();
+		if(!empty($params['fields']))
+		{
+			$params['fields'] = array_diff($params['fields'], $this->getRestrictedFields());
+		}
+
+		return $params;
+	}
+
+	protected function getRestrictedFields()
+	{
+		return array();
+	}
 }
 
